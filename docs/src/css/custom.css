@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+:root {
+  --ifm-color-primary: #695609; 
+  --ifm-color-primary-dark: #eab308;
+  --ifm-color-primary-darker: #92400e;
+  --ifm-color-primary-darkest: #78350f;
+  --ifm-color-primary-light: #f59e0b;
+  --ifm-color-primary-lighter: #fbbf24;
+  --ifm-color-primary-lightest: #fcd34d;
+  
+  --ifm-code-font-size: 95%;
+  --ifm-border-radius-base: 10px;
+  --ifm-font-family-base: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+.button--primary {
+  color: #fff !important;
+  font-weight: bold;
+}
+
+[data-theme='dark'] {
+  --ifm-color-primary: #facc15; 
+  --ifm-color-primary-dark: #eab308;
+  --ifm-color-primary-darker: #ca8a04;
+  --ifm-color-primary-darkest: #854d0e;
+  --ifm-color-primary-light: #fde047;
+  --ifm-color-primary-lighter: #fef08a;
+  --ifm-color-primary-lightest: #fef9c3;
+
+  --ifm-background-color: #151515;
+  --ifm-navbar-background-color: #121212;
+  --ifm-card-background-color: #171717;
+  --ifm-footer-background-color: #050505;
+
+  --docusaurus-highlighted-code-line-bg: rgba(250, 204, 21, 0.1);
+}
+
+[data-theme='dark'] .button--primary {
+  color: #000 !important;
+}
+
+.card {
+  border: 1px solid rgba(161, 92, 0, 0.1);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+[data-theme='dark'] .card {
+  border: 1px solid rgba(250, 204, 21, 0.1);
+}
+
+.card:hover {
+  border-color: var(--ifm-color-primary);
+  transform: translateY(-2px);
+}
+
+.menu__link--active {
+  background-color: rgba(250, 204, 21, 0.1) !important;
+  border-left: 4px solid var(--ifm-color-primary);
+}
+
+.footer {
+  background-color: #f1f1f1; 
+  color: #000000;
+  border-top: 2px solid var(--ifm-color-primary);
+  padding: 3rem 1rem;
+  [data-theme='dark'] & {
+    background-color: #131313; 
+    color: #ffffff;
+  }
+}
+
+.footer__title {
+  color: var(--ifm-color-primary);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.footer__link-item {
+  color: #a3a3a3;
+  transition: color 0.2s ease;
+}
+
+.footer__link-item:hover {
+  color: var(--ifm-color-primary);
+  text-decoration: none;
+}
+
+.footer__copyright {
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 2rem;
+}
+
+.footer__logo {
+  transition: opacity 0.2s ease;
+}
+
+.footer__logo:hover {
+  opacity: 0.8;
+}
