@@ -1,0 +1,13 @@
+# Dependencias
+node_modules/
+.pnpm-debug.log
+
+# Docusaurus
+docs/.docusaurus/
+docs/build/
+docs/.env*
+
+# Flutter
+.dart_tool/
+build/
+.pub-cache/
