@@ -8,12 +8,12 @@ const config: Config = {
   favicon: "img/favicon.ico",
 
   url: "https://abrahdev.github.io",
-  baseUrl: "/",
+  baseUrl: "/karter/",
   organizationName: "abrahdev",
   projectName: "karter",
 
   future: {
-    v4: true, // Improve compatibility with the upcoming Docusaurus v4
+    v4: true,
   },
 
   onBrokenLinks: "warn",
@@ -31,7 +31,10 @@ const config: Config = {
         docs: {
           sidebarPath: "./sidebars.ts",
           editUrl: "https://github.com/abrahdev/karter/tree/main/docs/",
+          // Esto hace que la documentación sea la página principal
+          routeBasePath: '/', 
         },
+        blog: false, // Aseguramos que el blog esté apagado
         theme: {
           customCss: "./src/css/custom.css",
         },
@@ -46,7 +49,7 @@ const config: Config = {
       logo: {
         alt: "Karter Logo",
         src: "img/logo.svg",
-        href: "/docs/intro",
+        href: "/", // Redirigir a la raíz
       },
       items: [
         {
@@ -55,6 +58,7 @@ const config: Config = {
         },
         {
           type: "localeDropdown",
+          position: "right",
         },
         {
           type: "docSidebar",
@@ -75,14 +79,15 @@ const config: Config = {
         {
           title: "Overview",
           items: [
-            { label: "Manifest", to: "/docs/intro" },
-            { label: "Development", to: "docs/category/developer" },
-            { label: "Contributing", to: "/docs/contributing/" },
+            // Eliminado el prefijo /docs/ de todos los enlaces
+            { label: "Manifest", to: "/" }, 
+            { label: "Development", to: "/category/developer" },
+            { label: "Contributing", to: "/contributing" },
           ],
         },
         {
           title: "Documentation",
-          items: [{ label: "Roadmap", to: "/docs/roadmap" }],
+          items: [{ label: "Roadmap", to: "/roadmap" }],
         },
         {
           title: "Community & Support",
@@ -107,9 +112,12 @@ const config: Config = {
       require.resolve("@easyops-cn/docusaurus-search-local"),
       {
         hashed: true,
-        language: ["en", "en"],
+        language: ["en"],
         highlightSearchTermsOnTargetPage: true,
+        indexBlog: false,
         explicitSearchResultPath: true,
+        // Sincronizar el buscador con la nueva ruta raíz
+        docsRouteBasePath: "/", 
       },
     ],
   ],
