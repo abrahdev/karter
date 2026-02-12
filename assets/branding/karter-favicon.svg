@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="34.096527mm"
+   height="34.096527mm"
+   viewBox="0 0 34.096527 34.096527"
+   version="1.1"
+   id="svg1"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <g
+     id="layer4"
+     transform="matrix(0.72785286,0,0,0.72785286,-58.185597,-141.56324)">
+    <rect
+       style="fill:#ffffff;fill-opacity:0.99;stroke:#ffffff;stroke-width:2.767;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:100;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+       id="rect2"
+       width="31.329527"
+       height="31.329527"
+       x="4.3332949"
+       y="2.3334892"
+       rx="4.1999998"
+       transform="matrix(1.3739041,0,0,1.3739041,75.888693,193.18912)" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:5.00092;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:100;stroke-dasharray:none;paint-order:stroke fill markers"
+       d="m 85.670153,232.5567 35.047057,-0.037"
+       id="path1-6-3" />
+    <path
+       style="fill:#ffcc00;stroke:#ffcc00;stroke-width:5.51555;stroke-linejoin:round;stroke-miterlimit:100;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+       d="M 87.918353,224.65181 H 118.2132 l -15.00758,-22.66058 z"
+       id="path2-3-9" />
+  </g>
+</svg>

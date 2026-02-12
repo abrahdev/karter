@@ -5,7 +5,7 @@ import type * as Preset from "@docusaurus/preset-classic";
 const config: Config = {
   title: "Karter",
   tagline: "Open Source Vehicle Maintenance & Social Impact",
-  favicon: "img/favicon.ico",
+  favicon: "img/karter-favicon.svg",
 
   url: "https://abrahdev.github.io",
   baseUrl: "/karter/",
@@ -47,7 +47,7 @@ const config: Config = {
       title: "Karter Docs",
       logo: {
         alt: "Karter Logo",
-        src: "/assets/branding/karter-logo-inlne.svg",
+        src: "img/karter-logo.svg",
         href: "/",
       },
       items: [
