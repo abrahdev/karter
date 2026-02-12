@@ -3,7 +3,7 @@ import type { Config } from "@docusaurus/types";
 import type * as Preset from "@docusaurus/preset-classic";
 
 const config: Config = {
-  title: "Karter",
+  title: "Karter Docs",
   tagline: "Open Source Vehicle Maintenance & Social Impact",
   favicon: "img/karter-favicon.svg",
 
