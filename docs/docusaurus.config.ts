@@ -31,10 +31,9 @@ const config: Config = {
         docs: {
           sidebarPath: "./sidebars.ts",
           editUrl: "https://github.com/abrahdev/karter/tree/main/docs/",
-          // Esto hace que la documentación sea la página principal
           routeBasePath: '/', 
         },
-        blog: false, // Aseguramos que el blog esté apagado
+        blog: false,
         theme: {
           customCss: "./src/css/custom.css",
         },
@@ -48,8 +47,8 @@ const config: Config = {
       title: "Karter Docs",
       logo: {
         alt: "Karter Logo",
-        src: "img/logo.svg",
-        href: "/", // Redirigir a la raíz
+        src: "/assets/branding/karter-logo-inlne.svg",
+        href: "/",
       },
       items: [
         {
@@ -79,7 +78,6 @@ const config: Config = {
         {
           title: "Overview",
           items: [
-            // Eliminado el prefijo /docs/ de todos los enlaces
             { label: "Manifest", to: "/" }, 
             { label: "Development", to: "/category/developer" },
             { label: "Contributing", to: "/contributing" },
@@ -116,7 +114,6 @@ const config: Config = {
         highlightSearchTermsOnTargetPage: true,
         indexBlog: false,
         explicitSearchResultPath: true,
-        // Sincronizar el buscador con la nueva ruta raíz
         docsRouteBasePath: "/", 
       },
     ],
