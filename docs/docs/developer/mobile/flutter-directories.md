@@ -1,6 +1,6 @@
 ---
 sidebar_position: 2
-title: Development Setup
+title: Flutter Directory Structure
 ---
 
 ## Directory Structure
@@ -55,7 +55,7 @@ lib/
 * **Purpose:** To display information to the user and capture their interactions.
 * **Flow:** The `pages` consume `providers` (or controllers). The `providers` communicate with the `services` (use cases) from the Domain layer. The UI must never make direct calls to the API or the database.
 
-## ecommended Data Flow
+## Recommended Data Flow
 
 1. **User Interaction:** The user taps a button in `presentation/pages`.
 2. **State Management:** The view notifies the provider in `presentation/providers`.

@@ -1,5 +1,6 @@
 ---
 title: Directories
+sidebar_position: 3
 ---
 
 # Repository Folder Structure
