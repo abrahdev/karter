@@ -24,6 +24,12 @@ const config: Config = {
     locales: ["en"],
   },
 
+  markdown: {
+    mermaid: true,
+  },
+
+  themes: ["@docusaurus/theme-mermaid"],
+
   presets: [
     [
       "classic",
@@ -43,6 +49,9 @@ const config: Config = {
 
   themeConfig: {
     image: "img/karter-social-card.jpg",
+    mermaid: {
+      theme: { light: 'neutral', dark: 'forest' },
+    },
     navbar: {
       title: "Karter Docs",
       logo: {
@@ -51,14 +60,8 @@ const config: Config = {
         href: "/",
       },
       items: [
-        {
-          type: "docsVersionDropdown",
-          position: "right",
-        },
-        {
-          type: "localeDropdown",
-          position: "right",
-        },
+        { type: "docsVersionDropdown", position: "right" },
+        { type: "localeDropdown", position: "right" },
         {
           type: "docSidebar",
           sidebarId: "tutorialSidebar",
