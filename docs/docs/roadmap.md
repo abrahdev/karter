@@ -4,6 +4,7 @@
 - Auth/Registration via **Supabase**.
 - Vehicle CRUD (Create, Read, Update, Delete).
 - Basic maintenance algorithm (Mileage -> Alert).
+- ODB II integration for real-time tracking.
 
 ### Phase 2: Monetization & Local-First
 - Affiliate integration (Amazon, Autodoc).
