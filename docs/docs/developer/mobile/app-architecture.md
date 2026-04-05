@@ -99,12 +99,29 @@ class Vin {
         +matches(Vehicle vehicle) boolean
     }
 
+    class Consumption {
+        +double value
+        +DistanceUnit distanceUnit
+        +VolumeUnit volumeUnit
+    }
+
+    class Brand {
+        +String value
+    }
+
+    class Model {
+        +String value
+    }
+
     class Vehicle {
         +String id
         +String name
-        +String brand
-        +String model
+        +Brand brand
+        +Model model
         +int year
+        +Plate plate
+        +Vin vin
+        +Odometer currentOdometer
         +DateTime createdAt
         +bool isSynced
         +Vehicle(...)
@@ -117,7 +134,7 @@ class Vin {
         +DateTime date
         +bool isSynced
         +FuelLog(...)
-        +get calculatedConsumption() double
+        +get calculatedConsumption() consumption
     }
 
     class MaintenanceLog {

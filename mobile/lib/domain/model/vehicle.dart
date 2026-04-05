@@ -1,4 +1,6 @@
-// lib/domain/models/vehicle.dart
+import '../value_objects/plate.dart';
+import '../value_objects/vin.dart';
+import '../value_objects/odometer.dart';
 
 class Vehicle {
   final String id;
@@ -6,11 +8,12 @@ class Vehicle {
   final String brand;
   final String model;
   final int year;
-  final String plate;
-  final double currentDistance;
   final DateTime createdAt;
-  
   final bool isSynced;
+
+  final Plate plate;
+  final Vin vin;
+  final Odometer currentOdometer;
 
   Vehicle({
     required this.id,
@@ -18,26 +21,36 @@ class Vehicle {
     required this.brand,
     required this.model,
     required this.year,
-    this.plate = '',
-    this.currentDistance = 0,
     required this.createdAt,
-    this.isSynced = false,
+    required this.isSynced,
+    required this.plate,
+    required this.vin,
+    required this.currentOdometer,
   });
 
   Vehicle copyWith({
-    double? currentDistance,
+    String? id,
+    String? name,
+    String? brand,
+    String? model,
+    int? year,
+    DateTime? createdAt,
     bool? isSynced,
+    Plate? plate,
+    Vin? vin,
+    Odometer? currentOdometer,
   }) {
     return Vehicle(
-      id: id,
-      name: name,
-      brand: brand,
-      model: model,
-      year: year,
-      plate: plate,
-      currentDistance: currentDistance ?? this.currentDistance,
-      createdAt: createdAt,
+      id: id ?? this.id,
+      name: name ?? this.name,
+      brand: brand ?? this.brand,
+      model: model ?? this.model,
+      year: year ?? this.year,
+      createdAt: createdAt ?? this.createdAt,
       isSynced: isSynced ?? this.isSynced,
+      plate: plate ?? this.plate,
+      vin: vin ?? this.vin,
+      currentOdometer: currentOdometer ?? this.currentOdometer,
     );
   }
 }

@@ -1,0 +1,4 @@
+enum VolumeUnit {
+  liters,
+  gallons,
+}
