@@ -1,34 +1,41 @@
 # Domain Layer
 
-This directory contains the domain layer of Immich. The domain layer is responsible for the business logic of the app. It includes interfaces for repositories, models, services and utilities. This layer should never depend on anything from the presentation layer or from the infrastructure layer.
+This directory contains the **domain layer** of Karter. The domain layer is responsible for the **business logic** of the app. It includes **entities**, **value objects**, **repository interfaces**, and **use cases**. This layer should **never depend** on anything from the presentation layer or the data/infrastructure layer.
 
 ## Structure
 
-- **[Interfaces](./interfaces/)**: These are the interfaces that define the contract for data operations.
-- **[Models](./models/)**: These are the core data classes that represent the business models.
-- **[Services](./services/)**: These are the classes that contain the business logic and interact with the repositories.
-- **[Utils](./utils/)**: These are utility classes and functions that provide common functionalities used across the domain layer.
+* **[Entities](./entities/)**: Core data classes that represent the main business objects (e.g., `Vehicle`, `FuelLog`, `MaintenanceLog`).
+* **[Value Objects](./value_objects/)**: Classes that encapsulate single domain concepts with validation (e.g., `Plate`, `Vin`, `Odometer`).
+* **[Repositories](./repositories/)**: Abstract interfaces that define **contracts for data operations**. Implementations are provided in the data layer.
+* **[UseCases](./usecases/)**: Classes that implement the **business actions** of the app, consuming repositories to perform tasks (e.g., `AddVehicle`, `GetVehicles`, `AddFuelLog`).
 
 ```
 domain/
-├── interfaces/
-│   └── user.interface.dart
-├── models/
-│   └── user.model.dart
-├── services/
-│   └── user.service.dart
-└── utils/
-    └── date_utils.dart
+├── entities/
+│   └── vehicle.dart
+├── value_objects/
+│   └── plate.dart
+├── repositories/
+│   └── vehicle_repository.dart
+├── usecases/
+│   └── add_vehicle.dart
 ```
+
+---
 
 ## Usage
 
-The domain layer provides services that implement the business logic by consuming repositories through dependency injection. Services are exposed through Riverpod providers in the root `providers` directory.
+The domain layer exposes **use cases** that implement the business logic by consuming repositories through **dependency injection**.
 
 ```dart
 // In presentation layer
-final userService = ref.watch(userServiceProvider);
-final user = await userService.getUser(userId);
+final addVehicleUseCase = ref.watch(addVehicleUseCaseProvider);
+await addVehicleUseCase(vehicle);
+
+final getVehiclesUseCase = ref.watch(getVehiclesUseCaseProvider);
+final vehicles = await getVehiclesUseCase();
 ```
 
-The presentation layer should never directly use repositories, but instead interact with the domain layer through services.
+> The presentation layer should **never interact directly with repositories**, but always go through the domain layer via **use cases**.
+
+
