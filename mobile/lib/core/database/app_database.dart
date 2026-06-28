@@ -77,7 +77,10 @@ class MaintenanceIntervals extends Table {
   TextColumn get vehicleId => text().references(Vehicles, #id)();
   TextColumn get label => text()();
   IntColumn get kmInterval => integer()();
+  IntColumn get monthsInterval => integer().nullable()();
+  TextColumn get description => text().nullable()();
   RealColumn get lastResetKm => real().withDefault(const Constant(0.0))();
+  DateTimeColumn get lastResetDate => dateTime().nullable()();
   BoolColumn get isEnabled => boolean().withDefault(const Constant(true))();
   BoolColumn get isCustom => boolean().withDefault(const Constant(false))();
 
@@ -98,7 +101,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
   @override
-  int get schemaVersion => 3;
+  int get schemaVersion => 4;
 
   @override
   MigrationStrategy get migration {
@@ -115,6 +118,14 @@ class AppDatabase extends _$AppDatabase {
         if (from < 3) {
           await m.database.customStatement(
               'ALTER TABLE vehicles ADD COLUMN alias TEXT');
+        }
+        if (from < 4) {
+          await m.database.customStatement(
+              'ALTER TABLE maintenance_intervals ADD COLUMN months_interval INTEGER');
+          await m.database.customStatement(
+              'ALTER TABLE maintenance_intervals ADD COLUMN description TEXT');
+          await m.database.customStatement(
+              'ALTER TABLE maintenance_intervals ADD COLUMN last_reset_date TEXT');
         }
       },
     );

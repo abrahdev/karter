@@ -3,7 +3,10 @@ class MaintenanceInterval {
   final String vehicleId;
   final String label;
   final int kmInterval;
+  final int? monthsInterval;
+  final String? description;
   final double lastResetKm;
+  final DateTime? lastResetDate;
   final bool isEnabled;
   final bool isCustom;
 
@@ -12,7 +15,10 @@ class MaintenanceInterval {
     required this.vehicleId,
     required this.label,
     required this.kmInterval,
+    this.monthsInterval,
+    this.description,
     this.lastResetKm = 0,
+    this.lastResetDate,
     this.isEnabled = true,
     this.isCustom = false,
   });
@@ -22,7 +28,10 @@ class MaintenanceInterval {
     String? vehicleId,
     String? label,
     int? kmInterval,
+    int? monthsInterval,
+    String? description,
     double? lastResetKm,
+    DateTime? lastResetDate,
     bool? isEnabled,
     bool? isCustom,
   }) {
@@ -31,7 +40,10 @@ class MaintenanceInterval {
       vehicleId: vehicleId ?? this.vehicleId,
       label: label ?? this.label,
       kmInterval: kmInterval ?? this.kmInterval,
+      monthsInterval: monthsInterval ?? this.monthsInterval,
+      description: description ?? this.description,
       lastResetKm: lastResetKm ?? this.lastResetKm,
+      lastResetDate: lastResetDate ?? this.lastResetDate,
       isEnabled: isEnabled ?? this.isEnabled,
       isCustom: isCustom ?? this.isCustom,
     );

@@ -37,7 +37,7 @@ class MaintenanceSettingsPage extends ConsumerWidget {
                     ref.invalidate(
                         maintenanceIntervalsProvider(vehicleId));
                   },
-                  onEditKm: () => _editKm(context, interval, ref),
+                  onEdit: () => _editInterval(context, interval, ref),
                   onDelete: interval.isCustom
                       ? () {
                           final repo = ref
@@ -60,34 +60,86 @@ class MaintenanceSettingsPage extends ConsumerWidget {
     );
   }
 
-  void _editKm(BuildContext context, MaintenanceInterval interval,
+  void _editInterval(BuildContext context, MaintenanceInterval interval,
       WidgetRef ref) {
-    final controller =
+    final kmCtrl =
         TextEditingController(text: interval.kmInterval.toString());
+    final monthsCtrl = interval.monthsInterval != null
+        ? TextEditingController(text: interval.monthsInterval.toString())
+        : TextEditingController();
+    var hasMonths = interval.monthsInterval != null;
+
+    showDialog(
+      context: context,
+      builder: (ctx) => StatefulBuilder(
+        builder: (ctx, setDialogState) => AlertDialog(
+          title: Text(interval.label),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: kmCtrl,
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(labelText: 'km'),
+              ),
+              const SizedBox(height: 12),
+              SwitchListTile(
+                title: const Text('Tiempo (meses)'),
+                value: hasMonths,
+                contentPadding: EdgeInsets.zero,
+                onChanged: (v) =>
+                    setDialogState(() => hasMonths = v),
+              ),
+              if (hasMonths) ...[
+                const SizedBox(height: 8),
+                TextField(
+                  controller: monthsCtrl,
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(labelText: 'meses'),
+                ),
+              ],
+            ],
+          ),
+          actions: [
+            TextButton(
+                onPressed: () => Navigator.pop(ctx),
+                child: const Text('Cancelar')),
+            FilledButton(
+              onPressed: () {
+                final km = int.tryParse(kmCtrl.text.trim());
+                final months = hasMonths && monthsCtrl.text.trim().isNotEmpty
+                    ? int.tryParse(monthsCtrl.text.trim())
+                    : null;
+                if (km != null && km > 0) {
+                  final repo =
+                      ref.read(maintenanceIntervalRepositoryProvider);
+                  repo.save(interval.copyWith(
+                    kmInterval: km,
+                    monthsInterval: months,
+                  ));
+                  ref.invalidate(
+                      maintenanceIntervalsProvider(vehicleId));
+                }
+                Navigator.pop(ctx);
+              },
+              child: const Text('Guardar'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showDescription(BuildContext context, MaintenanceInterval interval) {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text('${interval.label} — km'),
-        content: TextField(
-          controller: controller,
-          keyboardType: TextInputType.number,
-          decoration: const InputDecoration(labelText: 'km'),
-        ),
+        title: Text(interval.label),
+        content: Text(interval.description ?? ''),
         actions: [
           TextButton(
-              onPressed: () => Navigator.pop(ctx),
-              child: const Text('Cancelar')),
-          FilledButton(
-            onPressed: () {
-              final km = int.tryParse(controller.text.trim());
-              if (km != null && km > 0) {
-                final repo = ref.read(maintenanceIntervalRepositoryProvider);
-                repo.save(interval.copyWith(kmInterval: km));
-                ref.invalidate(maintenanceIntervalsProvider(vehicleId));
-              }
-              Navigator.pop(ctx);
-            },
-            child: const Text('Guardar'),
+            onPressed: () => Navigator.pop(ctx),
+            child: const Text('Cerrar'),
           ),
         ],
       ),
@@ -97,51 +149,77 @@ class MaintenanceSettingsPage extends ConsumerWidget {
   void _addCustomInterval(BuildContext context, WidgetRef ref) {
     final nameCtrl = TextEditingController();
     final kmCtrl = TextEditingController();
+    final monthsCtrl = TextEditingController();
+    var hasMonths = false;
+
     showDialog(
       context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Nuevo intervalo'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(
-              controller: nameCtrl,
-              decoration: const InputDecoration(labelText: 'Nombre'),
-            ),
-            const SizedBox(height: 12),
-            TextField(
-              controller: kmCtrl,
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(labelText: 'km'),
+      builder: (ctx) => StatefulBuilder(
+        builder: (ctx, setDialogState) => AlertDialog(
+          title: const Text('Nuevo intervalo'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: nameCtrl,
+                decoration: const InputDecoration(labelText: 'Nombre'),
+              ),
+              const SizedBox(height: 12),
+              TextField(
+                controller: kmCtrl,
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(labelText: 'km'),
+              ),
+              const SizedBox(height: 12),
+              SwitchListTile(
+                title: const Text('Tiempo (meses)'),
+                value: hasMonths,
+                contentPadding: EdgeInsets.zero,
+                onChanged: (v) =>
+                    setDialogState(() => hasMonths = v),
+              ),
+              if (hasMonths) ...[
+                const SizedBox(height: 8),
+                TextField(
+                  controller: monthsCtrl,
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(labelText: 'meses'),
+                ),
+              ],
+            ],
+          ),
+          actions: [
+            TextButton(
+                onPressed: () => Navigator.pop(ctx),
+                child: const Text('Cancelar')),
+            FilledButton(
+              onPressed: () {
+                final name = nameCtrl.text.trim();
+                final km = int.tryParse(kmCtrl.text.trim());
+                final months = hasMonths && monthsCtrl.text.trim().isNotEmpty
+                    ? int.tryParse(monthsCtrl.text.trim())
+                    : null;
+                if (name.isNotEmpty && km != null && km > 0) {
+                  final interval = MaintenanceInterval(
+                    id: uuid.v4(),
+                    vehicleId: vehicleId,
+                    label: name,
+                    kmInterval: km,
+                    monthsInterval: months,
+                    isCustom: true,
+                  );
+                  final repo =
+                      ref.read(maintenanceIntervalRepositoryProvider);
+                  repo.save(interval);
+                  ref.invalidate(
+                      maintenanceIntervalsProvider(vehicleId));
+                }
+                Navigator.pop(ctx);
+              },
+              child: const Text('Agregar'),
             ),
           ],
         ),
-        actions: [
-          TextButton(
-              onPressed: () => Navigator.pop(ctx),
-              child: const Text('Cancelar')),
-          FilledButton(
-            onPressed: () {
-              final name = nameCtrl.text.trim();
-              final km = int.tryParse(kmCtrl.text.trim());
-              if (name.isNotEmpty && km != null && km > 0) {
-                final interval = MaintenanceInterval(
-                  id: uuid.v4(),
-                  vehicleId: vehicleId,
-                  label: name,
-                  kmInterval: km,
-                  isCustom: true,
-                );
-                final repo =
-                    ref.read(maintenanceIntervalRepositoryProvider);
-                repo.save(interval);
-                ref.invalidate(maintenanceIntervalsProvider(vehicleId));
-              }
-              Navigator.pop(ctx);
-            },
-            child: const Text('Agregar'),
-          ),
-        ],
       ),
     );
   }
@@ -150,19 +228,26 @@ class MaintenanceSettingsPage extends ConsumerWidget {
 class _IntervalTile extends StatelessWidget {
   final MaintenanceInterval interval;
   final ValueChanged<bool> onToggle;
-  final VoidCallback onEditKm;
+  final VoidCallback onEdit;
   final VoidCallback? onDelete;
 
   const _IntervalTile({
     required this.interval,
     required this.onToggle,
-    required this.onEditKm,
+    required this.onEdit,
     this.onDelete,
   });
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
+    final parts = <String>['cada ${_formatKm(interval.kmInterval)}'];
+    if (interval.monthsInterval != null) {
+      parts.add('${interval.monthsInterval} meses');
+    }
+    final subtitle = parts.join(' / ');
+
     return Card(
       child: ListTile(
         title: Text(
@@ -171,14 +256,20 @@ class _IntervalTile extends StatelessWidget {
             color: interval.isEnabled ? null : theme.colorScheme.outline,
           ),
         ),
-        subtitle: Text('cada ${_formatKm(interval.kmInterval)}'),
+        subtitle: Text(subtitle),
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
+            if (interval.description != null)
+              IconButton(
+                icon: const Icon(Icons.info_outline),
+                onPressed: () => _showDescription(context),
+                tooltip: 'Información',
+              ),
             IconButton(
               icon: const Icon(Icons.edit),
-              onPressed: onEditKm,
-              tooltip: 'Editar km',
+              onPressed: onEdit,
+              tooltip: 'Editar',
             ),
             if (onDelete != null)
               IconButton(
@@ -192,6 +283,23 @@ class _IntervalTile extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  void _showDescription(BuildContext context) {
+    if (interval.description == null) return;
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(interval.label),
+        content: Text(interval.description!),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: const Text('Cerrar'),
+          ),
+        ],
       ),
     );
   }

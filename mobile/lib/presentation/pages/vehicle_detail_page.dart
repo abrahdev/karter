@@ -159,12 +159,44 @@ class VehicleDetailPage extends ConsumerWidget {
                   }
                   return Column(
                     children: enabled.map((interval) {
-                      final effectiveKm = interval.lastResetKm > 0
+                      final kmElapsed = interval.lastResetKm > 0
                           ? distanceKm - interval.lastResetKm
                           : distanceKm;
-                      final elapsed = effectiveKm % interval.kmInterval;
-                      final remaining = interval.kmInterval - elapsed;
-                      final isDue = elapsed / interval.kmInterval > 0.9;
+                      final kmRemaining =
+                          interval.kmInterval - (kmElapsed % interval.kmInterval);
+                      final isKmDue = kmElapsed / interval.kmInterval > 0.9;
+
+                      String? monthsDue;
+                      bool isMonthsDue = false;
+                      if (interval.monthsInterval != null &&
+                          interval.lastResetDate != null) {
+                        final elapsedMonths = DateTime.now()
+                            .difference(interval.lastResetDate!)
+                            .inDays /
+                            30.44;
+                        monthsDue =
+                            '${(interval.monthsInterval! - elapsedMonths).round()} meses';
+                        isMonthsDue = elapsedMonths >= interval.monthsInterval!;
+                      } else if (interval.monthsInterval != null &&
+                          interval.lastResetDate == null) {
+                        isMonthsDue = false;
+                        monthsDue = '${interval.monthsInterval} meses';
+                      }
+
+                      final isDue = isKmDue || isMonthsDue;
+
+                      String subtitle;
+                      if (isDue) {
+                        subtitle = 'Vencido — realizá el servicio';
+                      } else {
+                        final parts = <String>[];
+                        if (interval.kmInterval < 999999) {
+                          parts.add(
+                              '${kmRemaining.toStringAsFixed(0)} km');
+                        }
+                        if (monthsDue != null) parts.add(monthsDue);
+                        subtitle = 'Próximo en ${parts.join(' / ')}';
+                      }
 
                       return Card(
                         color: isDue
@@ -185,20 +217,32 @@ class VehicleDetailPage extends ConsumerWidget {
                                   : null,
                             ),
                           ),
-                          subtitle: Text(
-                            isDue
-                                ? 'Vencido — realizá el servicio'
-                                : 'Próximo en ${remaining.toStringAsFixed(0)} km',
-                          ),
-                          trailing: TextButton(
-                            onPressed: () => context.push(
-                              '/vehicle/$vehicleId/maintenance/new',
-                              extra: {
-                                'description': interval.label,
-                                'intervalId': interval.id,
-                              },
-                            ),
-                            child: const Text('Registrar'),
+                          subtitle: Text(subtitle),
+                          trailing: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              if (interval.description != null)
+                                IconButton(
+                                  icon: Icon(Icons.info_outline,
+                                      color: isDue
+                                          ? theme
+                                              .colorScheme.onErrorContainer
+                                          : null),
+                                  onPressed: () =>
+                                      _showDescription(
+                                          context, interval),
+                                ),
+                              TextButton(
+                                onPressed: () => context.push(
+                                  '/vehicle/$vehicleId/maintenance/new',
+                                  extra: {
+                                    'description': interval.label,
+                                    'intervalId': interval.id,
+                                  },
+                                ),
+                                child: const Text('Registrar'),
+                              ),
+                            ],
                           ),
                         ),
                       );
@@ -228,6 +272,23 @@ class VehicleDetailPage extends ConsumerWidget {
       error: (error, _) => Scaffold(
         appBar: AppBar(),
         body: Center(child: Text('Error: $error')),
+      ),
+    );
+  }
+
+  void _showDescription(
+      BuildContext context, dynamic interval) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(interval.label),
+        content: Text(interval.description ?? ''),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: const Text('Cerrar'),
+          ),
+        ],
       ),
     );
   }

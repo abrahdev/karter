@@ -36,7 +36,10 @@ class MaintenanceIntervalRepositoryImpl
   Future<void> resetInterval(String id, double currentKm) async {
     await (_db.update(_db.maintenanceIntervals)
           ..where((t) => t.id.equals(id)))
-        .write(const MaintenanceIntervalsCompanion(lastResetKm: drift.Value(0)));
+        .write(MaintenanceIntervalsCompanion(
+          lastResetKm: drift.Value(currentKm),
+          lastResetDate: drift.Value(DateTime.now()),
+        ));
   }
 
   MaintenanceInterval _toEntity(MaintenanceIntervalEntry entry) {
@@ -45,7 +48,10 @@ class MaintenanceIntervalRepositoryImpl
       vehicleId: entry.vehicleId,
       label: entry.label,
       kmInterval: entry.kmInterval,
+      monthsInterval: entry.monthsInterval,
+      description: entry.description,
       lastResetKm: entry.lastResetKm,
+      lastResetDate: entry.lastResetDate,
       isEnabled: entry.isEnabled,
       isCustom: entry.isCustom,
     );
@@ -57,7 +63,10 @@ class MaintenanceIntervalRepositoryImpl
       vehicleId: drift.Value(interval.vehicleId),
       label: drift.Value(interval.label),
       kmInterval: drift.Value(interval.kmInterval),
+      monthsInterval: drift.Value(interval.monthsInterval),
+      description: drift.Value(interval.description),
       lastResetKm: drift.Value(interval.lastResetKm),
+      lastResetDate: drift.Value(interval.lastResetDate),
       isEnabled: drift.Value(interval.isEnabled),
       isCustom: drift.Value(interval.isCustom),
     );

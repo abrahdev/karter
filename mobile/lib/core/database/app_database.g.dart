@@ -2310,6 +2310,28 @@ class $MaintenanceIntervalsTable extends MaintenanceIntervals
     type: DriftSqlType.int,
     requiredDuringInsert: true,
   );
+  static const VerificationMeta _monthsIntervalMeta = const VerificationMeta(
+    'monthsInterval',
+  );
+  @override
+  late final GeneratedColumn<int> monthsInterval = GeneratedColumn<int>(
+    'months_interval',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _descriptionMeta = const VerificationMeta(
+    'description',
+  );
+  @override
+  late final GeneratedColumn<String> description = GeneratedColumn<String>(
+    'description',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
   static const VerificationMeta _lastResetKmMeta = const VerificationMeta(
     'lastResetKm',
   );
@@ -2322,6 +2344,18 @@ class $MaintenanceIntervalsTable extends MaintenanceIntervals
     requiredDuringInsert: false,
     defaultValue: const Constant(0.0),
   );
+  static const VerificationMeta _lastResetDateMeta = const VerificationMeta(
+    'lastResetDate',
+  );
+  @override
+  late final GeneratedColumn<DateTime> lastResetDate =
+      GeneratedColumn<DateTime>(
+        'last_reset_date',
+        aliasedName,
+        true,
+        type: DriftSqlType.dateTime,
+        requiredDuringInsert: false,
+      );
   static const VerificationMeta _isEnabledMeta = const VerificationMeta(
     'isEnabled',
   );
@@ -2358,7 +2392,10 @@ class $MaintenanceIntervalsTable extends MaintenanceIntervals
     vehicleId,
     label,
     kmInterval,
+    monthsInterval,
+    description,
     lastResetKm,
+    lastResetDate,
     isEnabled,
     isCustom,
   ];
@@ -2403,12 +2440,39 @@ class $MaintenanceIntervalsTable extends MaintenanceIntervals
     } else if (isInserting) {
       context.missing(_kmIntervalMeta);
     }
+    if (data.containsKey('months_interval')) {
+      context.handle(
+        _monthsIntervalMeta,
+        monthsInterval.isAcceptableOrUnknown(
+          data['months_interval']!,
+          _monthsIntervalMeta,
+        ),
+      );
+    }
+    if (data.containsKey('description')) {
+      context.handle(
+        _descriptionMeta,
+        description.isAcceptableOrUnknown(
+          data['description']!,
+          _descriptionMeta,
+        ),
+      );
+    }
     if (data.containsKey('last_reset_km')) {
       context.handle(
         _lastResetKmMeta,
         lastResetKm.isAcceptableOrUnknown(
           data['last_reset_km']!,
           _lastResetKmMeta,
+        ),
+      );
+    }
+    if (data.containsKey('last_reset_date')) {
+      context.handle(
+        _lastResetDateMeta,
+        lastResetDate.isAcceptableOrUnknown(
+          data['last_reset_date']!,
+          _lastResetDateMeta,
         ),
       );
     }
@@ -2452,10 +2516,22 @@ class $MaintenanceIntervalsTable extends MaintenanceIntervals
         DriftSqlType.int,
         data['${effectivePrefix}km_interval'],
       )!,
+      monthsInterval: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}months_interval'],
+      ),
+      description: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}description'],
+      ),
       lastResetKm: attachedDatabase.typeMapping.read(
         DriftSqlType.double,
         data['${effectivePrefix}last_reset_km'],
       )!,
+      lastResetDate: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}last_reset_date'],
+      ),
       isEnabled: attachedDatabase.typeMapping.read(
         DriftSqlType.bool,
         data['${effectivePrefix}is_enabled'],
@@ -2479,7 +2555,10 @@ class MaintenanceIntervalEntry extends DataClass
   final String vehicleId;
   final String label;
   final int kmInterval;
+  final int? monthsInterval;
+  final String? description;
   final double lastResetKm;
+  final DateTime? lastResetDate;
   final bool isEnabled;
   final bool isCustom;
   const MaintenanceIntervalEntry({
@@ -2487,7 +2566,10 @@ class MaintenanceIntervalEntry extends DataClass
     required this.vehicleId,
     required this.label,
     required this.kmInterval,
+    this.monthsInterval,
+    this.description,
     required this.lastResetKm,
+    this.lastResetDate,
     required this.isEnabled,
     required this.isCustom,
   });
@@ -2498,7 +2580,16 @@ class MaintenanceIntervalEntry extends DataClass
     map['vehicle_id'] = Variable<String>(vehicleId);
     map['label'] = Variable<String>(label);
     map['km_interval'] = Variable<int>(kmInterval);
+    if (!nullToAbsent || monthsInterval != null) {
+      map['months_interval'] = Variable<int>(monthsInterval);
+    }
+    if (!nullToAbsent || description != null) {
+      map['description'] = Variable<String>(description);
+    }
     map['last_reset_km'] = Variable<double>(lastResetKm);
+    if (!nullToAbsent || lastResetDate != null) {
+      map['last_reset_date'] = Variable<DateTime>(lastResetDate);
+    }
     map['is_enabled'] = Variable<bool>(isEnabled);
     map['is_custom'] = Variable<bool>(isCustom);
     return map;
@@ -2510,7 +2601,16 @@ class MaintenanceIntervalEntry extends DataClass
       vehicleId: Value(vehicleId),
       label: Value(label),
       kmInterval: Value(kmInterval),
+      monthsInterval: monthsInterval == null && nullToAbsent
+          ? const Value.absent()
+          : Value(monthsInterval),
+      description: description == null && nullToAbsent
+          ? const Value.absent()
+          : Value(description),
       lastResetKm: Value(lastResetKm),
+      lastResetDate: lastResetDate == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lastResetDate),
       isEnabled: Value(isEnabled),
       isCustom: Value(isCustom),
     );
@@ -2526,7 +2626,10 @@ class MaintenanceIntervalEntry extends DataClass
       vehicleId: serializer.fromJson<String>(json['vehicleId']),
       label: serializer.fromJson<String>(json['label']),
       kmInterval: serializer.fromJson<int>(json['kmInterval']),
+      monthsInterval: serializer.fromJson<int?>(json['monthsInterval']),
+      description: serializer.fromJson<String?>(json['description']),
       lastResetKm: serializer.fromJson<double>(json['lastResetKm']),
+      lastResetDate: serializer.fromJson<DateTime?>(json['lastResetDate']),
       isEnabled: serializer.fromJson<bool>(json['isEnabled']),
       isCustom: serializer.fromJson<bool>(json['isCustom']),
     );
@@ -2539,7 +2642,10 @@ class MaintenanceIntervalEntry extends DataClass
       'vehicleId': serializer.toJson<String>(vehicleId),
       'label': serializer.toJson<String>(label),
       'kmInterval': serializer.toJson<int>(kmInterval),
+      'monthsInterval': serializer.toJson<int?>(monthsInterval),
+      'description': serializer.toJson<String?>(description),
       'lastResetKm': serializer.toJson<double>(lastResetKm),
+      'lastResetDate': serializer.toJson<DateTime?>(lastResetDate),
       'isEnabled': serializer.toJson<bool>(isEnabled),
       'isCustom': serializer.toJson<bool>(isCustom),
     };
@@ -2550,7 +2656,10 @@ class MaintenanceIntervalEntry extends DataClass
     String? vehicleId,
     String? label,
     int? kmInterval,
+    Value<int?> monthsInterval = const Value.absent(),
+    Value<String?> description = const Value.absent(),
     double? lastResetKm,
+    Value<DateTime?> lastResetDate = const Value.absent(),
     bool? isEnabled,
     bool? isCustom,
   }) => MaintenanceIntervalEntry(
@@ -2558,7 +2667,14 @@ class MaintenanceIntervalEntry extends DataClass
     vehicleId: vehicleId ?? this.vehicleId,
     label: label ?? this.label,
     kmInterval: kmInterval ?? this.kmInterval,
+    monthsInterval: monthsInterval.present
+        ? monthsInterval.value
+        : this.monthsInterval,
+    description: description.present ? description.value : this.description,
     lastResetKm: lastResetKm ?? this.lastResetKm,
+    lastResetDate: lastResetDate.present
+        ? lastResetDate.value
+        : this.lastResetDate,
     isEnabled: isEnabled ?? this.isEnabled,
     isCustom: isCustom ?? this.isCustom,
   );
@@ -2572,9 +2688,18 @@ class MaintenanceIntervalEntry extends DataClass
       kmInterval: data.kmInterval.present
           ? data.kmInterval.value
           : this.kmInterval,
+      monthsInterval: data.monthsInterval.present
+          ? data.monthsInterval.value
+          : this.monthsInterval,
+      description: data.description.present
+          ? data.description.value
+          : this.description,
       lastResetKm: data.lastResetKm.present
           ? data.lastResetKm.value
           : this.lastResetKm,
+      lastResetDate: data.lastResetDate.present
+          ? data.lastResetDate.value
+          : this.lastResetDate,
       isEnabled: data.isEnabled.present ? data.isEnabled.value : this.isEnabled,
       isCustom: data.isCustom.present ? data.isCustom.value : this.isCustom,
     );
@@ -2587,7 +2712,10 @@ class MaintenanceIntervalEntry extends DataClass
           ..write('vehicleId: $vehicleId, ')
           ..write('label: $label, ')
           ..write('kmInterval: $kmInterval, ')
+          ..write('monthsInterval: $monthsInterval, ')
+          ..write('description: $description, ')
           ..write('lastResetKm: $lastResetKm, ')
+          ..write('lastResetDate: $lastResetDate, ')
           ..write('isEnabled: $isEnabled, ')
           ..write('isCustom: $isCustom')
           ..write(')'))
@@ -2600,7 +2728,10 @@ class MaintenanceIntervalEntry extends DataClass
     vehicleId,
     label,
     kmInterval,
+    monthsInterval,
+    description,
     lastResetKm,
+    lastResetDate,
     isEnabled,
     isCustom,
   );
@@ -2612,7 +2743,10 @@ class MaintenanceIntervalEntry extends DataClass
           other.vehicleId == this.vehicleId &&
           other.label == this.label &&
           other.kmInterval == this.kmInterval &&
+          other.monthsInterval == this.monthsInterval &&
+          other.description == this.description &&
           other.lastResetKm == this.lastResetKm &&
+          other.lastResetDate == this.lastResetDate &&
           other.isEnabled == this.isEnabled &&
           other.isCustom == this.isCustom);
 }
@@ -2623,7 +2757,10 @@ class MaintenanceIntervalsCompanion
   final Value<String> vehicleId;
   final Value<String> label;
   final Value<int> kmInterval;
+  final Value<int?> monthsInterval;
+  final Value<String?> description;
   final Value<double> lastResetKm;
+  final Value<DateTime?> lastResetDate;
   final Value<bool> isEnabled;
   final Value<bool> isCustom;
   final Value<int> rowid;
@@ -2632,7 +2769,10 @@ class MaintenanceIntervalsCompanion
     this.vehicleId = const Value.absent(),
     this.label = const Value.absent(),
     this.kmInterval = const Value.absent(),
+    this.monthsInterval = const Value.absent(),
+    this.description = const Value.absent(),
     this.lastResetKm = const Value.absent(),
+    this.lastResetDate = const Value.absent(),
     this.isEnabled = const Value.absent(),
     this.isCustom = const Value.absent(),
     this.rowid = const Value.absent(),
@@ -2642,7 +2782,10 @@ class MaintenanceIntervalsCompanion
     required String vehicleId,
     required String label,
     required int kmInterval,
+    this.monthsInterval = const Value.absent(),
+    this.description = const Value.absent(),
     this.lastResetKm = const Value.absent(),
+    this.lastResetDate = const Value.absent(),
     this.isEnabled = const Value.absent(),
     this.isCustom = const Value.absent(),
     this.rowid = const Value.absent(),
@@ -2655,7 +2798,10 @@ class MaintenanceIntervalsCompanion
     Expression<String>? vehicleId,
     Expression<String>? label,
     Expression<int>? kmInterval,
+    Expression<int>? monthsInterval,
+    Expression<String>? description,
     Expression<double>? lastResetKm,
+    Expression<DateTime>? lastResetDate,
     Expression<bool>? isEnabled,
     Expression<bool>? isCustom,
     Expression<int>? rowid,
@@ -2665,7 +2811,10 @@ class MaintenanceIntervalsCompanion
       if (vehicleId != null) 'vehicle_id': vehicleId,
       if (label != null) 'label': label,
       if (kmInterval != null) 'km_interval': kmInterval,
+      if (monthsInterval != null) 'months_interval': monthsInterval,
+      if (description != null) 'description': description,
       if (lastResetKm != null) 'last_reset_km': lastResetKm,
+      if (lastResetDate != null) 'last_reset_date': lastResetDate,
       if (isEnabled != null) 'is_enabled': isEnabled,
       if (isCustom != null) 'is_custom': isCustom,
       if (rowid != null) 'rowid': rowid,
@@ -2677,7 +2826,10 @@ class MaintenanceIntervalsCompanion
     Value<String>? vehicleId,
     Value<String>? label,
     Value<int>? kmInterval,
+    Value<int?>? monthsInterval,
+    Value<String?>? description,
     Value<double>? lastResetKm,
+    Value<DateTime?>? lastResetDate,
     Value<bool>? isEnabled,
     Value<bool>? isCustom,
     Value<int>? rowid,
@@ -2687,7 +2839,10 @@ class MaintenanceIntervalsCompanion
       vehicleId: vehicleId ?? this.vehicleId,
       label: label ?? this.label,
       kmInterval: kmInterval ?? this.kmInterval,
+      monthsInterval: monthsInterval ?? this.monthsInterval,
+      description: description ?? this.description,
       lastResetKm: lastResetKm ?? this.lastResetKm,
+      lastResetDate: lastResetDate ?? this.lastResetDate,
       isEnabled: isEnabled ?? this.isEnabled,
       isCustom: isCustom ?? this.isCustom,
       rowid: rowid ?? this.rowid,
@@ -2709,8 +2864,17 @@ class MaintenanceIntervalsCompanion
     if (kmInterval.present) {
       map['km_interval'] = Variable<int>(kmInterval.value);
     }
+    if (monthsInterval.present) {
+      map['months_interval'] = Variable<int>(monthsInterval.value);
+    }
+    if (description.present) {
+      map['description'] = Variable<String>(description.value);
+    }
     if (lastResetKm.present) {
       map['last_reset_km'] = Variable<double>(lastResetKm.value);
+    }
+    if (lastResetDate.present) {
+      map['last_reset_date'] = Variable<DateTime>(lastResetDate.value);
     }
     if (isEnabled.present) {
       map['is_enabled'] = Variable<bool>(isEnabled.value);
@@ -2731,7 +2895,10 @@ class MaintenanceIntervalsCompanion
           ..write('vehicleId: $vehicleId, ')
           ..write('label: $label, ')
           ..write('kmInterval: $kmInterval, ')
+          ..write('monthsInterval: $monthsInterval, ')
+          ..write('description: $description, ')
           ..write('lastResetKm: $lastResetKm, ')
+          ..write('lastResetDate: $lastResetDate, ')
           ..write('isEnabled: $isEnabled, ')
           ..write('isCustom: $isCustom, ')
           ..write('rowid: $rowid')
@@ -4667,7 +4834,10 @@ typedef $$MaintenanceIntervalsTableCreateCompanionBuilder =
       required String vehicleId,
       required String label,
       required int kmInterval,
+      Value<int?> monthsInterval,
+      Value<String?> description,
       Value<double> lastResetKm,
+      Value<DateTime?> lastResetDate,
       Value<bool> isEnabled,
       Value<bool> isCustom,
       Value<int> rowid,
@@ -4678,7 +4848,10 @@ typedef $$MaintenanceIntervalsTableUpdateCompanionBuilder =
       Value<String> vehicleId,
       Value<String> label,
       Value<int> kmInterval,
+      Value<int?> monthsInterval,
+      Value<String?> description,
       Value<double> lastResetKm,
+      Value<DateTime?> lastResetDate,
       Value<bool> isEnabled,
       Value<bool> isCustom,
       Value<int> rowid,
@@ -4741,8 +4914,23 @@ class $$MaintenanceIntervalsTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
+  ColumnFilters<int> get monthsInterval => $composableBuilder(
+    column: $table.monthsInterval,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnFilters(column),
+  );
+
   ColumnFilters<double> get lastResetKm => $composableBuilder(
     column: $table.lastResetKm,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get lastResetDate => $composableBuilder(
+    column: $table.lastResetDate,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -4804,8 +4992,23 @@ class $$MaintenanceIntervalsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<int> get monthsInterval => $composableBuilder(
+    column: $table.monthsInterval,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<double> get lastResetKm => $composableBuilder(
     column: $table.lastResetKm,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get lastResetDate => $composableBuilder(
+    column: $table.lastResetDate,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -4863,8 +5066,23 @@ class $$MaintenanceIntervalsTableAnnotationComposer
     builder: (column) => column,
   );
 
+  GeneratedColumn<int> get monthsInterval => $composableBuilder(
+    column: $table.monthsInterval,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => column,
+  );
+
   GeneratedColumn<double> get lastResetKm => $composableBuilder(
     column: $table.lastResetKm,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get lastResetDate => $composableBuilder(
+    column: $table.lastResetDate,
     builder: (column) => column,
   );
 
@@ -4938,7 +5156,10 @@ class $$MaintenanceIntervalsTableTableManager
                 Value<String> vehicleId = const Value.absent(),
                 Value<String> label = const Value.absent(),
                 Value<int> kmInterval = const Value.absent(),
+                Value<int?> monthsInterval = const Value.absent(),
+                Value<String?> description = const Value.absent(),
                 Value<double> lastResetKm = const Value.absent(),
+                Value<DateTime?> lastResetDate = const Value.absent(),
                 Value<bool> isEnabled = const Value.absent(),
                 Value<bool> isCustom = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
@@ -4947,7 +5168,10 @@ class $$MaintenanceIntervalsTableTableManager
                 vehicleId: vehicleId,
                 label: label,
                 kmInterval: kmInterval,
+                monthsInterval: monthsInterval,
+                description: description,
                 lastResetKm: lastResetKm,
+                lastResetDate: lastResetDate,
                 isEnabled: isEnabled,
                 isCustom: isCustom,
                 rowid: rowid,
@@ -4958,7 +5182,10 @@ class $$MaintenanceIntervalsTableTableManager
                 required String vehicleId,
                 required String label,
                 required int kmInterval,
+                Value<int?> monthsInterval = const Value.absent(),
+                Value<String?> description = const Value.absent(),
                 Value<double> lastResetKm = const Value.absent(),
+                Value<DateTime?> lastResetDate = const Value.absent(),
                 Value<bool> isEnabled = const Value.absent(),
                 Value<bool> isCustom = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
@@ -4967,7 +5194,10 @@ class $$MaintenanceIntervalsTableTableManager
                 vehicleId: vehicleId,
                 label: label,
                 kmInterval: kmInterval,
+                monthsInterval: monthsInterval,
+                description: description,
                 lastResetKm: lastResetKm,
+                lastResetDate: lastResetDate,
                 isEnabled: isEnabled,
                 isCustom: isCustom,
                 rowid: rowid,
