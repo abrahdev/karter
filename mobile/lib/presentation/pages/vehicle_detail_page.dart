@@ -223,9 +223,10 @@ class VehicleDetailPage extends ConsumerWidget {
                           trailing: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              if (interval.description != null)
+                              if (interval.description != null &&
+                                  interval.description!.isNotEmpty)
                                 IconButton(
-                                  icon: Icon(Icons.info_outline,
+                                  icon: Icon(Icons.info,
                                       color: isDue
                                           ? theme
                                               .colorScheme.onErrorContainer
@@ -280,11 +281,13 @@ class VehicleDetailPage extends ConsumerWidget {
 
   void _showDescription(
       BuildContext context, dynamic interval) {
+    final text = interval.description ??
+        'Sin descripción disponible. Ve a Ajustes de mantenimiento para añadir una.';
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
         title: Text(interval.label),
-        content: Text(interval.description ?? ''),
+        content: Text(text),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),

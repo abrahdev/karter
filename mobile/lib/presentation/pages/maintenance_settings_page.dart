@@ -67,6 +67,8 @@ class MaintenanceSettingsPage extends ConsumerWidget {
     final monthsCtrl = interval.monthsInterval != null
         ? TextEditingController(text: interval.monthsInterval.toString())
         : TextEditingController();
+    final descCtrl =
+        TextEditingController(text: interval.description ?? '');
     var hasMonths = interval.monthsInterval != null;
 
     showDialog(
@@ -98,6 +100,16 @@ class MaintenanceSettingsPage extends ConsumerWidget {
                   decoration: const InputDecoration(labelText: 'meses'),
                 ),
               ],
+              const SizedBox(height: 12),
+              TextField(
+                controller: descCtrl,
+                maxLines: 3,
+                minLines: 2,
+                decoration: const InputDecoration(
+                  labelText: 'Descripción',
+                  border: OutlineInputBorder(),
+                ),
+              ),
             ],
           ),
           actions: [
@@ -116,6 +128,9 @@ class MaintenanceSettingsPage extends ConsumerWidget {
                   repo.save(interval.copyWith(
                     kmInterval: km,
                     monthsInterval: months,
+                    description: descCtrl.text.trim().isEmpty
+                        ? null
+                        : descCtrl.text.trim(),
                   ));
                   ref.invalidate(
                       maintenanceIntervalsProvider(vehicleId));
@@ -150,6 +165,7 @@ class MaintenanceSettingsPage extends ConsumerWidget {
     final nameCtrl = TextEditingController();
     final kmCtrl = TextEditingController();
     final monthsCtrl = TextEditingController();
+    final descCtrl = TextEditingController();
     var hasMonths = false;
 
     showDialog(
@@ -186,6 +202,16 @@ class MaintenanceSettingsPage extends ConsumerWidget {
                   decoration: const InputDecoration(labelText: 'meses'),
                 ),
               ],
+              const SizedBox(height: 12),
+              TextField(
+                controller: descCtrl,
+                maxLines: 3,
+                minLines: 2,
+                decoration: const InputDecoration(
+                  labelText: 'Descripción',
+                  border: OutlineInputBorder(),
+                ),
+              ),
             ],
           ),
           actions: [
@@ -206,6 +232,9 @@ class MaintenanceSettingsPage extends ConsumerWidget {
                     label: name,
                     kmInterval: km,
                     monthsInterval: months,
+                    description: descCtrl.text.trim().isEmpty
+                        ? null
+                        : descCtrl.text.trim(),
                     isCustom: true,
                   );
                   final repo =
@@ -260,12 +289,13 @@ class _IntervalTile extends StatelessWidget {
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            if (interval.description != null)
-              IconButton(
-                icon: const Icon(Icons.info_outline),
-                onPressed: () => _showDescription(context),
-                tooltip: 'Información',
-              ),
+              if (interval.description != null &&
+                  interval.description!.isNotEmpty)
+                IconButton(
+                  icon: const Icon(Icons.info),
+                  onPressed: () => _showDescription(context),
+                  tooltip: 'Información',
+                ),
             IconButton(
               icon: const Icon(Icons.edit),
               onPressed: onEdit,
@@ -288,12 +318,13 @@ class _IntervalTile extends StatelessWidget {
   }
 
   void _showDescription(BuildContext context) {
-    if (interval.description == null) return;
+    final text = interval.description ??
+        'Sin descripción disponible. Pulsa "Editar" para añadir una.';
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
         title: Text(interval.label),
-        content: Text(interval.description!),
+        content: Text(text),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
