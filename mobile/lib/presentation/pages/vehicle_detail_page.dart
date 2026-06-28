@@ -4,7 +4,9 @@ import 'package:go_router/go_router.dart';
 import 'package:mobile/core/database/app_database.dart';
 import 'package:mobile/domain/enums/distance_unit.dart';
 import 'package:mobile/domain/enums/vehicle_type.dart';
+import 'package:mobile/domain/value_objects/odometer.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
+import 'package:mobile/presentation/widgets/odometer_dialog.dart';
 
 class VehicleDetailPage extends ConsumerWidget {
   final String vehicleId;
@@ -295,45 +297,26 @@ class VehicleDetailPage extends ConsumerWidget {
 
   void _updateOdometer(
       BuildContext context, String vehicleId, WidgetRef ref) {
-    final controller = TextEditingController();
     showDialog(
       context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Actualizar odómetro'),
-        content: TextField(
-          controller: controller,
-          keyboardType: TextInputType.number,
-          decoration: const InputDecoration(
-            labelText: 'Nuevo valor',
-            hintText: '0',
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx),
-            child: const Text('Cancelar'),
-          ),
-          FilledButton(
-            onPressed: () async {
-              final value = double.tryParse(controller.text.trim());
-              if (value == null || value < 0) return;
-              final repo = ref.read(vehicleRepositoryProvider);
-              final vehicle = await repo.getById(vehicleId);
-              if (vehicle != null) {
-                final updated = vehicle.copyWith(
-                  currentOdometer: vehicle.currentOdometer.add(
-                    value - vehicle.currentOdometer.distance,
-                  ),
-                );
-                await repo.save(updated);
-                ref.invalidate(vehicleProvider(vehicleId));
-                ref.invalidate(vehicleListProvider);
-              }
-              if (ctx.mounted) Navigator.pop(ctx);
-            },
-            child: const Text('Guardar'),
-          ),
-        ],
+      builder: (ctx) => OdometerDialog(
+        current: ref.read(vehicleProvider(vehicleId)).valueOrNull
+                ?.currentOdometer ??
+            Odometer(0, DistanceUnit.kilometers),
+        onSave: (double newDistance) async {
+          final repo = ref.read(vehicleRepositoryProvider);
+          final vehicle = await repo.getById(vehicleId);
+          if (vehicle != null) {
+            final updated = vehicle.copyWith(
+              currentOdometer: vehicle.currentOdometer.add(
+                newDistance - vehicle.currentOdometer.distance,
+              ),
+            );
+            await repo.save(updated);
+            ref.invalidate(vehicleProvider(vehicleId));
+            ref.invalidate(vehicleListProvider);
+          }
+        },
       ),
     );
   }
