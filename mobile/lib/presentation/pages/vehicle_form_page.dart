@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:mobile/core/database/app_database.dart';
 import 'package:mobile/domain/entities/vehicle.dart';
 import 'package:mobile/domain/enums/distance_unit.dart';
+import 'package:mobile/domain/enums/vehicle_type.dart';
 import 'package:mobile/domain/value_objects/odometer.dart';
 import 'package:mobile/domain/value_objects/plate.dart';
 import 'package:mobile/domain/value_objects/vin.dart';
@@ -29,6 +30,7 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
   final _odometerController = TextEditingController();
 
   DistanceUnit _odometerUnit = DistanceUnit.kilometers;
+  VehicleType _vehicleType = VehicleType.combustion;
   bool _isLoading = false;
   bool _isEditing = false;
 
@@ -54,6 +56,7 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
       _odometerController.text =
           vehicle.currentOdometer.distance.toStringAsFixed(0);
       _odometerUnit = vehicle.currentOdometer.unit;
+      _vehicleType = vehicle.type;
     }
   }
 
@@ -84,6 +87,7 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
         year: int.parse(_yearController.text.trim()),
         createdAt: DateTime.now(),
         isSynced: false,
+        type: _vehicleType,
         plate: Plate(_plateController.text.trim()),
         vin: Vin(_vinController.text.trim()),
         currentOdometer: Odometer(
@@ -152,6 +156,32 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
                 }
                 return null;
               },
+            ),
+            const SizedBox(height: 12),
+            Text('Tipo de vehículo',
+                style: Theme.of(context).textTheme.titleSmall),
+            const SizedBox(height: 8),
+            SegmentedButton<VehicleType>(
+              segments: const [
+                ButtonSegment(
+                  value: VehicleType.combustion,
+                  label: Text('Combustión'),
+                  icon: Icon(Icons.local_gas_station),
+                ),
+                ButtonSegment(
+                  value: VehicleType.electric,
+                  label: Text('Eléctrico'),
+                  icon: Icon(Icons.electric_car),
+                ),
+                ButtonSegment(
+                  value: VehicleType.motorcycle,
+                  label: Text('Moto'),
+                  icon: Icon(Icons.motorcycle),
+                ),
+              ],
+              selected: {_vehicleType},
+              onSelectionChanged: (v) =>
+                  setState(() => _vehicleType = v.first),
             ),
             const SizedBox(height: 12),
             TextFormField(

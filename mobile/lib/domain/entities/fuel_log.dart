@@ -11,6 +11,8 @@ class FuelLog {
 
   final Volume fueledVolume;
   final Odometer odometerAtFueling;
+  final double? pricePerUnit;
+  final bool isFullTank;
 
   FuelLog({
     required this.id,
@@ -19,6 +21,8 @@ class FuelLog {
     required this.isSynced,
     required this.fueledVolume,
     required this.odometerAtFueling,
+    this.pricePerUnit,
+    this.isFullTank = false,
   });
 
   double get calculatedConsumption {

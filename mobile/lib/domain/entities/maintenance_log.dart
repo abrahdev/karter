@@ -5,6 +5,7 @@ class MaintenanceLog {
   final String vehicleId;
   final DateTime date;
   final String description;
+  final double odometerAtService;
   final bool isSynced;
 
   final List<ReplacedPart> replacedParts;
@@ -15,6 +16,7 @@ class MaintenanceLog {
     required this.date,
     required this.description,
     required this.isSynced,
+    this.odometerAtService = 0,
     this.replacedParts = const [],
   });
 }

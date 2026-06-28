@@ -1,6 +1,8 @@
 import 'package:mobile/core/database/app_database.dart';
+import 'package:mobile/data/repositories/seed_intervals.dart';
 import 'package:mobile/domain/entities/vehicle.dart';
 import 'package:mobile/domain/enums/distance_unit.dart';
+import 'package:mobile/domain/enums/vehicle_type.dart';
 import 'package:mobile/domain/repositories/vehicle_repository.dart';
 import 'package:mobile/domain/value_objects/odometer.dart';
 import 'package:mobile/domain/value_objects/plate.dart';
@@ -28,9 +30,31 @@ class VehicleRepositoryImpl implements VehicleRepository {
 
   @override
   Future<void> save(Vehicle vehicle) async {
+    final existing = await (_db.select(_db.vehicles)
+          ..where((t) => t.id.equals(vehicle.id)))
+        .getSingleOrNull();
+    final isNew = existing == null;
+
     await _db.into(_db.vehicles).insertOnConflictUpdate(
           _toEntry(vehicle),
         );
+
+    if (isNew) {
+      final intervals = defaultIntervalsFor(vehicle.type, vehicle.id);
+      for (final interval in intervals) {
+        await _db.into(_db.maintenanceIntervals).insert(
+              MaintenanceIntervalsCompanion(
+                id: drift.Value(interval.id),
+                vehicleId: drift.Value(interval.vehicleId),
+                label: drift.Value(interval.label),
+                kmInterval: drift.Value(interval.kmInterval),
+                lastResetKm: drift.Value(interval.lastResetKm),
+                isEnabled: drift.Value(interval.isEnabled),
+                isCustom: drift.Value(interval.isCustom),
+              ),
+            );
+      }
+    }
   }
 
   @override
@@ -53,6 +77,7 @@ class VehicleRepositoryImpl implements VehicleRepository {
         entry.odometerDistance,
         DistanceUnit.values.firstWhere((u) => u.name == entry.odometerUnit),
       ),
+      type: VehicleType.values.firstWhere((t) => t.name == entry.type),
     );
   }
 
@@ -69,6 +94,7 @@ class VehicleRepositoryImpl implements VehicleRepository {
       odometerUnit: drift.Value(vehicle.currentOdometer.unit.name),
       createdAt: drift.Value(vehicle.createdAt),
       isSynced: drift.Value(vehicle.isSynced),
+      type: drift.Value(vehicle.type.name),
     );
   }
 }

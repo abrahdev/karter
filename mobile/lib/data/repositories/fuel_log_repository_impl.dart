@@ -45,6 +45,8 @@ class FuelLogRepositoryImpl implements FuelLogRepository {
         entry.odometerDistance,
         DistanceUnit.values.firstWhere((u) => u.name == entry.odometerUnit),
       ),
+      pricePerUnit: entry.pricePerUnit,
+      isFullTank: entry.isFullTank,
     );
   }
 
@@ -58,6 +60,8 @@ class FuelLogRepositoryImpl implements FuelLogRepository {
       volumeUnit: drift.Value(log.fueledVolume.unit.name),
       odometerDistance: drift.Value(log.odometerAtFueling.distance),
       odometerUnit: drift.Value(log.odometerAtFueling.unit.name),
+      isFullTank: drift.Value(log.isFullTank),
+      pricePerUnit: drift.Value(log.pricePerUnit),
     );
   }
 }

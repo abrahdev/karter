@@ -1,7 +1,16 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/core/database/app_database.dart';
+import 'package:mobile/data/repositories/fuel_log_repository_impl.dart';
+import 'package:mobile/data/repositories/maintenance_interval_repository_impl.dart';
+import 'package:mobile/data/repositories/maintenance_log_repository_impl.dart';
 import 'package:mobile/data/repositories/vehicle_repository_impl.dart';
+import 'package:mobile/domain/entities/fuel_log.dart';
+import 'package:mobile/domain/entities/maintenance_interval.dart';
+import 'package:mobile/domain/entities/maintenance_log.dart';
 import 'package:mobile/domain/entities/vehicle.dart';
+import 'package:mobile/domain/repositories/fuel_log_repository.dart';
+import 'package:mobile/domain/repositories/maintenance_interval_repository.dart';
+import 'package:mobile/domain/repositories/maintenance_log_repository.dart';
 import 'package:mobile/domain/repositories/vehicle_repository.dart';
 
 final appDatabaseProvider = Provider<AppDatabase>((ref) {
@@ -10,6 +19,19 @@ final appDatabaseProvider = Provider<AppDatabase>((ref) {
 
 final vehicleRepositoryProvider = Provider<VehicleRepository>((ref) {
   return VehicleRepositoryImpl(ref.watch(appDatabaseProvider));
+});
+
+final fuelLogRepositoryProvider = Provider<FuelLogRepository>((ref) {
+  return FuelLogRepositoryImpl(ref.watch(appDatabaseProvider));
+});
+
+final maintenanceLogRepositoryProvider = Provider<MaintenanceLogRepository>(
+  (ref) => MaintenanceLogRepositoryImpl(ref.watch(appDatabaseProvider)),
+);
+
+final maintenanceIntervalRepositoryProvider =
+    Provider<MaintenanceIntervalRepository>((ref) {
+  return MaintenanceIntervalRepositoryImpl(ref.watch(appDatabaseProvider));
 });
 
 final vehicleListProvider = FutureProvider<List<Vehicle>>((ref) async {
@@ -21,5 +43,27 @@ final vehicleProvider = FutureProvider.family<Vehicle?, String>(
   (ref, id) async {
     final repo = ref.watch(vehicleRepositoryProvider);
     return repo.getById(id);
+  },
+);
+
+final fuelLogsProvider =
+    FutureProvider.family<List<FuelLog>, String>((ref, vehicleId) async {
+  final repo = ref.watch(fuelLogRepositoryProvider);
+  return repo.getByVehicle(vehicleId);
+});
+
+final maintenanceLogsProvider =
+    FutureProvider.family<List<MaintenanceLog>, String>(
+  (ref, vehicleId) async {
+    final repo = ref.watch(maintenanceLogRepositoryProvider);
+    return repo.getByVehicle(vehicleId);
+  },
+);
+
+final maintenanceIntervalsProvider =
+    FutureProvider.family<List<MaintenanceInterval>, String>(
+  (ref, vehicleId) async {
+    final repo = ref.watch(maintenanceIntervalRepositoryProvider);
+    return repo.getByVehicle(vehicleId);
   },
 );

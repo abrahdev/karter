@@ -37,6 +37,7 @@ class MaintenanceLogRepositoryImpl implements MaintenanceLogRepository {
       vehicleId: entry.vehicleId,
       date: entry.date,
       description: entry.description,
+      odometerAtService: entry.odometerAtService,
       isSynced: entry.isSynced,
     );
   }
@@ -47,6 +48,7 @@ class MaintenanceLogRepositoryImpl implements MaintenanceLogRepository {
       vehicleId: drift.Value(log.vehicleId),
       date: drift.Value(log.date),
       description: drift.Value(log.description),
+      odometerAtService: drift.Value(log.odometerAtService),
       isSynced: drift.Value(log.isSynced),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/domain/entities/vehicle.dart';
+import 'package:mobile/domain/enums/vehicle_type.dart';
 
 class VehicleCard extends StatelessWidget {
   final Vehicle vehicle;
@@ -20,14 +21,13 @@ class VehicleCard extends StatelessWidget {
       child: ListTile(
         leading: CircleAvatar(
           backgroundColor: theme.colorScheme.primaryContainer,
-          child: Text(
-            vehicle.brand.isNotEmpty
-                ? vehicle.brand[0].toUpperCase()
-                : '?',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: theme.colorScheme.onPrimaryContainer,
-            ),
+          child: Icon(
+            switch (vehicle.type) {
+              VehicleType.combustion => Icons.local_gas_station,
+              VehicleType.electric => Icons.electric_car,
+              VehicleType.motorcycle => Icons.motorcycle,
+            },
+            color: theme.colorScheme.onPrimaryContainer,
           ),
         ),
         title: Text(vehicle.name),

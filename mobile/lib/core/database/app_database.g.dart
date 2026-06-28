@@ -119,6 +119,16 @@ class $VehiclesTable extends Vehicles
       'CHECK ("is_synced" IN (0, 1))',
     ),
   );
+  static const VerificationMeta _typeMeta = const VerificationMeta('type');
+  @override
+  late final GeneratedColumn<String> type = GeneratedColumn<String>(
+    'type',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('combustion'),
+  );
   @override
   List<GeneratedColumn> get $columns => [
     id,
@@ -132,6 +142,7 @@ class $VehiclesTable extends Vehicles
     odometerUnit,
     createdAt,
     isSynced,
+    type,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -236,6 +247,12 @@ class $VehiclesTable extends Vehicles
     } else if (isInserting) {
       context.missing(_isSyncedMeta);
     }
+    if (data.containsKey('type')) {
+      context.handle(
+        _typeMeta,
+        type.isAcceptableOrUnknown(data['type']!, _typeMeta),
+      );
+    }
     return context;
   }
 
@@ -289,6 +306,10 @@ class $VehiclesTable extends Vehicles
         DriftSqlType.bool,
         data['${effectivePrefix}is_synced'],
       )!,
+      type: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}type'],
+      )!,
     );
   }
 
@@ -310,6 +331,7 @@ class VehicleEntry extends DataClass implements Insertable<VehicleEntry> {
   final String odometerUnit;
   final DateTime createdAt;
   final bool isSynced;
+  final String type;
   const VehicleEntry({
     required this.id,
     required this.name,
@@ -322,6 +344,7 @@ class VehicleEntry extends DataClass implements Insertable<VehicleEntry> {
     required this.odometerUnit,
     required this.createdAt,
     required this.isSynced,
+    required this.type,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -337,6 +360,7 @@ class VehicleEntry extends DataClass implements Insertable<VehicleEntry> {
     map['odometer_unit'] = Variable<String>(odometerUnit);
     map['created_at'] = Variable<DateTime>(createdAt);
     map['is_synced'] = Variable<bool>(isSynced);
+    map['type'] = Variable<String>(type);
     return map;
   }
 
@@ -353,6 +377,7 @@ class VehicleEntry extends DataClass implements Insertable<VehicleEntry> {
       odometerUnit: Value(odometerUnit),
       createdAt: Value(createdAt),
       isSynced: Value(isSynced),
+      type: Value(type),
     );
   }
 
@@ -373,6 +398,7 @@ class VehicleEntry extends DataClass implements Insertable<VehicleEntry> {
       odometerUnit: serializer.fromJson<String>(json['odometerUnit']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
       isSynced: serializer.fromJson<bool>(json['isSynced']),
+      type: serializer.fromJson<String>(json['type']),
     );
   }
   @override
@@ -390,6 +416,7 @@ class VehicleEntry extends DataClass implements Insertable<VehicleEntry> {
       'odometerUnit': serializer.toJson<String>(odometerUnit),
       'createdAt': serializer.toJson<DateTime>(createdAt),
       'isSynced': serializer.toJson<bool>(isSynced),
+      'type': serializer.toJson<String>(type),
     };
   }
 
@@ -405,6 +432,7 @@ class VehicleEntry extends DataClass implements Insertable<VehicleEntry> {
     String? odometerUnit,
     DateTime? createdAt,
     bool? isSynced,
+    String? type,
   }) => VehicleEntry(
     id: id ?? this.id,
     name: name ?? this.name,
@@ -417,6 +445,7 @@ class VehicleEntry extends DataClass implements Insertable<VehicleEntry> {
     odometerUnit: odometerUnit ?? this.odometerUnit,
     createdAt: createdAt ?? this.createdAt,
     isSynced: isSynced ?? this.isSynced,
+    type: type ?? this.type,
   );
   VehicleEntry copyWithCompanion(VehiclesCompanion data) {
     return VehicleEntry(
@@ -435,6 +464,7 @@ class VehicleEntry extends DataClass implements Insertable<VehicleEntry> {
           : this.odometerUnit,
       createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
       isSynced: data.isSynced.present ? data.isSynced.value : this.isSynced,
+      type: data.type.present ? data.type.value : this.type,
     );
   }
 
@@ -451,7 +481,8 @@ class VehicleEntry extends DataClass implements Insertable<VehicleEntry> {
           ..write('odometerDistance: $odometerDistance, ')
           ..write('odometerUnit: $odometerUnit, ')
           ..write('createdAt: $createdAt, ')
-          ..write('isSynced: $isSynced')
+          ..write('isSynced: $isSynced, ')
+          ..write('type: $type')
           ..write(')'))
         .toString();
   }
@@ -469,6 +500,7 @@ class VehicleEntry extends DataClass implements Insertable<VehicleEntry> {
     odometerUnit,
     createdAt,
     isSynced,
+    type,
   );
   @override
   bool operator ==(Object other) =>
@@ -484,7 +516,8 @@ class VehicleEntry extends DataClass implements Insertable<VehicleEntry> {
           other.odometerDistance == this.odometerDistance &&
           other.odometerUnit == this.odometerUnit &&
           other.createdAt == this.createdAt &&
-          other.isSynced == this.isSynced);
+          other.isSynced == this.isSynced &&
+          other.type == this.type);
 }
 
 class VehiclesCompanion extends UpdateCompanion<VehicleEntry> {
@@ -499,6 +532,7 @@ class VehiclesCompanion extends UpdateCompanion<VehicleEntry> {
   final Value<String> odometerUnit;
   final Value<DateTime> createdAt;
   final Value<bool> isSynced;
+  final Value<String> type;
   final Value<int> rowid;
   const VehiclesCompanion({
     this.id = const Value.absent(),
@@ -512,6 +546,7 @@ class VehiclesCompanion extends UpdateCompanion<VehicleEntry> {
     this.odometerUnit = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.isSynced = const Value.absent(),
+    this.type = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   VehiclesCompanion.insert({
@@ -526,6 +561,7 @@ class VehiclesCompanion extends UpdateCompanion<VehicleEntry> {
     required String odometerUnit,
     required DateTime createdAt,
     required bool isSynced,
+    this.type = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : id = Value(id),
        name = Value(name),
@@ -550,6 +586,7 @@ class VehiclesCompanion extends UpdateCompanion<VehicleEntry> {
     Expression<String>? odometerUnit,
     Expression<DateTime>? createdAt,
     Expression<bool>? isSynced,
+    Expression<String>? type,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -564,6 +601,7 @@ class VehiclesCompanion extends UpdateCompanion<VehicleEntry> {
       if (odometerUnit != null) 'odometer_unit': odometerUnit,
       if (createdAt != null) 'created_at': createdAt,
       if (isSynced != null) 'is_synced': isSynced,
+      if (type != null) 'type': type,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -580,6 +618,7 @@ class VehiclesCompanion extends UpdateCompanion<VehicleEntry> {
     Value<String>? odometerUnit,
     Value<DateTime>? createdAt,
     Value<bool>? isSynced,
+    Value<String>? type,
     Value<int>? rowid,
   }) {
     return VehiclesCompanion(
@@ -594,6 +633,7 @@ class VehiclesCompanion extends UpdateCompanion<VehicleEntry> {
       odometerUnit: odometerUnit ?? this.odometerUnit,
       createdAt: createdAt ?? this.createdAt,
       isSynced: isSynced ?? this.isSynced,
+      type: type ?? this.type,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -634,6 +674,9 @@ class VehiclesCompanion extends UpdateCompanion<VehicleEntry> {
     if (isSynced.present) {
       map['is_synced'] = Variable<bool>(isSynced.value);
     }
+    if (type.present) {
+      map['type'] = Variable<String>(type.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -654,6 +697,7 @@ class VehiclesCompanion extends UpdateCompanion<VehicleEntry> {
           ..write('odometerUnit: $odometerUnit, ')
           ..write('createdAt: $createdAt, ')
           ..write('isSynced: $isSynced, ')
+          ..write('type: $type, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -756,6 +800,32 @@ class $FuelLogsTable extends FuelLogs
       'CHECK ("is_synced" IN (0, 1))',
     ),
   );
+  static const VerificationMeta _isFullTankMeta = const VerificationMeta(
+    'isFullTank',
+  );
+  @override
+  late final GeneratedColumn<bool> isFullTank = GeneratedColumn<bool>(
+    'is_full_tank',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_full_tank" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _pricePerUnitMeta = const VerificationMeta(
+    'pricePerUnit',
+  );
+  @override
+  late final GeneratedColumn<double> pricePerUnit = GeneratedColumn<double>(
+    'price_per_unit',
+    aliasedName,
+    true,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+  );
   @override
   List<GeneratedColumn> get $columns => [
     id,
@@ -766,6 +836,8 @@ class $FuelLogsTable extends FuelLogs
     odometerDistance,
     odometerUnit,
     isSynced,
+    isFullTank,
+    pricePerUnit,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -849,6 +921,24 @@ class $FuelLogsTable extends FuelLogs
     } else if (isInserting) {
       context.missing(_isSyncedMeta);
     }
+    if (data.containsKey('is_full_tank')) {
+      context.handle(
+        _isFullTankMeta,
+        isFullTank.isAcceptableOrUnknown(
+          data['is_full_tank']!,
+          _isFullTankMeta,
+        ),
+      );
+    }
+    if (data.containsKey('price_per_unit')) {
+      context.handle(
+        _pricePerUnitMeta,
+        pricePerUnit.isAcceptableOrUnknown(
+          data['price_per_unit']!,
+          _pricePerUnitMeta,
+        ),
+      );
+    }
     return context;
   }
 
@@ -890,6 +980,14 @@ class $FuelLogsTable extends FuelLogs
         DriftSqlType.bool,
         data['${effectivePrefix}is_synced'],
       )!,
+      isFullTank: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_full_tank'],
+      )!,
+      pricePerUnit: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}price_per_unit'],
+      ),
     );
   }
 
@@ -908,6 +1006,8 @@ class FuelLogEntry extends DataClass implements Insertable<FuelLogEntry> {
   final double odometerDistance;
   final String odometerUnit;
   final bool isSynced;
+  final bool isFullTank;
+  final double? pricePerUnit;
   const FuelLogEntry({
     required this.id,
     required this.vehicleId,
@@ -917,6 +1017,8 @@ class FuelLogEntry extends DataClass implements Insertable<FuelLogEntry> {
     required this.odometerDistance,
     required this.odometerUnit,
     required this.isSynced,
+    required this.isFullTank,
+    this.pricePerUnit,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -929,6 +1031,10 @@ class FuelLogEntry extends DataClass implements Insertable<FuelLogEntry> {
     map['odometer_distance'] = Variable<double>(odometerDistance);
     map['odometer_unit'] = Variable<String>(odometerUnit);
     map['is_synced'] = Variable<bool>(isSynced);
+    map['is_full_tank'] = Variable<bool>(isFullTank);
+    if (!nullToAbsent || pricePerUnit != null) {
+      map['price_per_unit'] = Variable<double>(pricePerUnit);
+    }
     return map;
   }
 
@@ -942,6 +1048,10 @@ class FuelLogEntry extends DataClass implements Insertable<FuelLogEntry> {
       odometerDistance: Value(odometerDistance),
       odometerUnit: Value(odometerUnit),
       isSynced: Value(isSynced),
+      isFullTank: Value(isFullTank),
+      pricePerUnit: pricePerUnit == null && nullToAbsent
+          ? const Value.absent()
+          : Value(pricePerUnit),
     );
   }
 
@@ -959,6 +1069,8 @@ class FuelLogEntry extends DataClass implements Insertable<FuelLogEntry> {
       odometerDistance: serializer.fromJson<double>(json['odometerDistance']),
       odometerUnit: serializer.fromJson<String>(json['odometerUnit']),
       isSynced: serializer.fromJson<bool>(json['isSynced']),
+      isFullTank: serializer.fromJson<bool>(json['isFullTank']),
+      pricePerUnit: serializer.fromJson<double?>(json['pricePerUnit']),
     );
   }
   @override
@@ -973,6 +1085,8 @@ class FuelLogEntry extends DataClass implements Insertable<FuelLogEntry> {
       'odometerDistance': serializer.toJson<double>(odometerDistance),
       'odometerUnit': serializer.toJson<String>(odometerUnit),
       'isSynced': serializer.toJson<bool>(isSynced),
+      'isFullTank': serializer.toJson<bool>(isFullTank),
+      'pricePerUnit': serializer.toJson<double?>(pricePerUnit),
     };
   }
 
@@ -985,6 +1099,8 @@ class FuelLogEntry extends DataClass implements Insertable<FuelLogEntry> {
     double? odometerDistance,
     String? odometerUnit,
     bool? isSynced,
+    bool? isFullTank,
+    Value<double?> pricePerUnit = const Value.absent(),
   }) => FuelLogEntry(
     id: id ?? this.id,
     vehicleId: vehicleId ?? this.vehicleId,
@@ -994,6 +1110,8 @@ class FuelLogEntry extends DataClass implements Insertable<FuelLogEntry> {
     odometerDistance: odometerDistance ?? this.odometerDistance,
     odometerUnit: odometerUnit ?? this.odometerUnit,
     isSynced: isSynced ?? this.isSynced,
+    isFullTank: isFullTank ?? this.isFullTank,
+    pricePerUnit: pricePerUnit.present ? pricePerUnit.value : this.pricePerUnit,
   );
   FuelLogEntry copyWithCompanion(FuelLogsCompanion data) {
     return FuelLogEntry(
@@ -1013,6 +1131,12 @@ class FuelLogEntry extends DataClass implements Insertable<FuelLogEntry> {
           ? data.odometerUnit.value
           : this.odometerUnit,
       isSynced: data.isSynced.present ? data.isSynced.value : this.isSynced,
+      isFullTank: data.isFullTank.present
+          ? data.isFullTank.value
+          : this.isFullTank,
+      pricePerUnit: data.pricePerUnit.present
+          ? data.pricePerUnit.value
+          : this.pricePerUnit,
     );
   }
 
@@ -1026,7 +1150,9 @@ class FuelLogEntry extends DataClass implements Insertable<FuelLogEntry> {
           ..write('volumeUnit: $volumeUnit, ')
           ..write('odometerDistance: $odometerDistance, ')
           ..write('odometerUnit: $odometerUnit, ')
-          ..write('isSynced: $isSynced')
+          ..write('isSynced: $isSynced, ')
+          ..write('isFullTank: $isFullTank, ')
+          ..write('pricePerUnit: $pricePerUnit')
           ..write(')'))
         .toString();
   }
@@ -1041,6 +1167,8 @@ class FuelLogEntry extends DataClass implements Insertable<FuelLogEntry> {
     odometerDistance,
     odometerUnit,
     isSynced,
+    isFullTank,
+    pricePerUnit,
   );
   @override
   bool operator ==(Object other) =>
@@ -1053,7 +1181,9 @@ class FuelLogEntry extends DataClass implements Insertable<FuelLogEntry> {
           other.volumeUnit == this.volumeUnit &&
           other.odometerDistance == this.odometerDistance &&
           other.odometerUnit == this.odometerUnit &&
-          other.isSynced == this.isSynced);
+          other.isSynced == this.isSynced &&
+          other.isFullTank == this.isFullTank &&
+          other.pricePerUnit == this.pricePerUnit);
 }
 
 class FuelLogsCompanion extends UpdateCompanion<FuelLogEntry> {
@@ -1065,6 +1195,8 @@ class FuelLogsCompanion extends UpdateCompanion<FuelLogEntry> {
   final Value<double> odometerDistance;
   final Value<String> odometerUnit;
   final Value<bool> isSynced;
+  final Value<bool> isFullTank;
+  final Value<double?> pricePerUnit;
   final Value<int> rowid;
   const FuelLogsCompanion({
     this.id = const Value.absent(),
@@ -1075,6 +1207,8 @@ class FuelLogsCompanion extends UpdateCompanion<FuelLogEntry> {
     this.odometerDistance = const Value.absent(),
     this.odometerUnit = const Value.absent(),
     this.isSynced = const Value.absent(),
+    this.isFullTank = const Value.absent(),
+    this.pricePerUnit = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   FuelLogsCompanion.insert({
@@ -1086,6 +1220,8 @@ class FuelLogsCompanion extends UpdateCompanion<FuelLogEntry> {
     required double odometerDistance,
     required String odometerUnit,
     required bool isSynced,
+    this.isFullTank = const Value.absent(),
+    this.pricePerUnit = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : id = Value(id),
        vehicleId = Value(vehicleId),
@@ -1104,6 +1240,8 @@ class FuelLogsCompanion extends UpdateCompanion<FuelLogEntry> {
     Expression<double>? odometerDistance,
     Expression<String>? odometerUnit,
     Expression<bool>? isSynced,
+    Expression<bool>? isFullTank,
+    Expression<double>? pricePerUnit,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -1115,6 +1253,8 @@ class FuelLogsCompanion extends UpdateCompanion<FuelLogEntry> {
       if (odometerDistance != null) 'odometer_distance': odometerDistance,
       if (odometerUnit != null) 'odometer_unit': odometerUnit,
       if (isSynced != null) 'is_synced': isSynced,
+      if (isFullTank != null) 'is_full_tank': isFullTank,
+      if (pricePerUnit != null) 'price_per_unit': pricePerUnit,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -1128,6 +1268,8 @@ class FuelLogsCompanion extends UpdateCompanion<FuelLogEntry> {
     Value<double>? odometerDistance,
     Value<String>? odometerUnit,
     Value<bool>? isSynced,
+    Value<bool>? isFullTank,
+    Value<double?>? pricePerUnit,
     Value<int>? rowid,
   }) {
     return FuelLogsCompanion(
@@ -1139,6 +1281,8 @@ class FuelLogsCompanion extends UpdateCompanion<FuelLogEntry> {
       odometerDistance: odometerDistance ?? this.odometerDistance,
       odometerUnit: odometerUnit ?? this.odometerUnit,
       isSynced: isSynced ?? this.isSynced,
+      isFullTank: isFullTank ?? this.isFullTank,
+      pricePerUnit: pricePerUnit ?? this.pricePerUnit,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -1170,6 +1314,12 @@ class FuelLogsCompanion extends UpdateCompanion<FuelLogEntry> {
     if (isSynced.present) {
       map['is_synced'] = Variable<bool>(isSynced.value);
     }
+    if (isFullTank.present) {
+      map['is_full_tank'] = Variable<bool>(isFullTank.value);
+    }
+    if (pricePerUnit.present) {
+      map['price_per_unit'] = Variable<double>(pricePerUnit.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -1187,6 +1337,8 @@ class FuelLogsCompanion extends UpdateCompanion<FuelLogEntry> {
           ..write('odometerDistance: $odometerDistance, ')
           ..write('odometerUnit: $odometerUnit, ')
           ..write('isSynced: $isSynced, ')
+          ..write('isFullTank: $isFullTank, ')
+          ..write('pricePerUnit: $pricePerUnit, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -1242,6 +1394,19 @@ class $MaintenanceLogsTable extends MaintenanceLogs
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
+  static const VerificationMeta _odometerAtServiceMeta = const VerificationMeta(
+    'odometerAtService',
+  );
+  @override
+  late final GeneratedColumn<double> odometerAtService =
+      GeneratedColumn<double>(
+        'odometer_at_service',
+        aliasedName,
+        false,
+        type: DriftSqlType.double,
+        requiredDuringInsert: false,
+        defaultValue: const Constant(0.0),
+      );
   static const VerificationMeta _isSyncedMeta = const VerificationMeta(
     'isSynced',
   );
@@ -1262,6 +1427,7 @@ class $MaintenanceLogsTable extends MaintenanceLogs
     vehicleId,
     date,
     description,
+    odometerAtService,
     isSynced,
   ];
   @override
@@ -1308,6 +1474,15 @@ class $MaintenanceLogsTable extends MaintenanceLogs
     } else if (isInserting) {
       context.missing(_descriptionMeta);
     }
+    if (data.containsKey('odometer_at_service')) {
+      context.handle(
+        _odometerAtServiceMeta,
+        odometerAtService.isAcceptableOrUnknown(
+          data['odometer_at_service']!,
+          _odometerAtServiceMeta,
+        ),
+      );
+    }
     if (data.containsKey('is_synced')) {
       context.handle(
         _isSyncedMeta,
@@ -1341,6 +1516,10 @@ class $MaintenanceLogsTable extends MaintenanceLogs
         DriftSqlType.string,
         data['${effectivePrefix}description'],
       )!,
+      odometerAtService: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}odometer_at_service'],
+      )!,
       isSynced: attachedDatabase.typeMapping.read(
         DriftSqlType.bool,
         data['${effectivePrefix}is_synced'],
@@ -1360,12 +1539,14 @@ class MaintenanceLogEntry extends DataClass
   final String vehicleId;
   final DateTime date;
   final String description;
+  final double odometerAtService;
   final bool isSynced;
   const MaintenanceLogEntry({
     required this.id,
     required this.vehicleId,
     required this.date,
     required this.description,
+    required this.odometerAtService,
     required this.isSynced,
   });
   @override
@@ -1375,6 +1556,7 @@ class MaintenanceLogEntry extends DataClass
     map['vehicle_id'] = Variable<String>(vehicleId);
     map['date'] = Variable<DateTime>(date);
     map['description'] = Variable<String>(description);
+    map['odometer_at_service'] = Variable<double>(odometerAtService);
     map['is_synced'] = Variable<bool>(isSynced);
     return map;
   }
@@ -1385,6 +1567,7 @@ class MaintenanceLogEntry extends DataClass
       vehicleId: Value(vehicleId),
       date: Value(date),
       description: Value(description),
+      odometerAtService: Value(odometerAtService),
       isSynced: Value(isSynced),
     );
   }
@@ -1399,6 +1582,7 @@ class MaintenanceLogEntry extends DataClass
       vehicleId: serializer.fromJson<String>(json['vehicleId']),
       date: serializer.fromJson<DateTime>(json['date']),
       description: serializer.fromJson<String>(json['description']),
+      odometerAtService: serializer.fromJson<double>(json['odometerAtService']),
       isSynced: serializer.fromJson<bool>(json['isSynced']),
     );
   }
@@ -1410,6 +1594,7 @@ class MaintenanceLogEntry extends DataClass
       'vehicleId': serializer.toJson<String>(vehicleId),
       'date': serializer.toJson<DateTime>(date),
       'description': serializer.toJson<String>(description),
+      'odometerAtService': serializer.toJson<double>(odometerAtService),
       'isSynced': serializer.toJson<bool>(isSynced),
     };
   }
@@ -1419,12 +1604,14 @@ class MaintenanceLogEntry extends DataClass
     String? vehicleId,
     DateTime? date,
     String? description,
+    double? odometerAtService,
     bool? isSynced,
   }) => MaintenanceLogEntry(
     id: id ?? this.id,
     vehicleId: vehicleId ?? this.vehicleId,
     date: date ?? this.date,
     description: description ?? this.description,
+    odometerAtService: odometerAtService ?? this.odometerAtService,
     isSynced: isSynced ?? this.isSynced,
   );
   MaintenanceLogEntry copyWithCompanion(MaintenanceLogsCompanion data) {
@@ -1435,6 +1622,9 @@ class MaintenanceLogEntry extends DataClass
       description: data.description.present
           ? data.description.value
           : this.description,
+      odometerAtService: data.odometerAtService.present
+          ? data.odometerAtService.value
+          : this.odometerAtService,
       isSynced: data.isSynced.present ? data.isSynced.value : this.isSynced,
     );
   }
@@ -1446,13 +1636,21 @@ class MaintenanceLogEntry extends DataClass
           ..write('vehicleId: $vehicleId, ')
           ..write('date: $date, ')
           ..write('description: $description, ')
+          ..write('odometerAtService: $odometerAtService, ')
           ..write('isSynced: $isSynced')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, vehicleId, date, description, isSynced);
+  int get hashCode => Object.hash(
+    id,
+    vehicleId,
+    date,
+    description,
+    odometerAtService,
+    isSynced,
+  );
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -1461,6 +1659,7 @@ class MaintenanceLogEntry extends DataClass
           other.vehicleId == this.vehicleId &&
           other.date == this.date &&
           other.description == this.description &&
+          other.odometerAtService == this.odometerAtService &&
           other.isSynced == this.isSynced);
 }
 
@@ -1469,6 +1668,7 @@ class MaintenanceLogsCompanion extends UpdateCompanion<MaintenanceLogEntry> {
   final Value<String> vehicleId;
   final Value<DateTime> date;
   final Value<String> description;
+  final Value<double> odometerAtService;
   final Value<bool> isSynced;
   final Value<int> rowid;
   const MaintenanceLogsCompanion({
@@ -1476,6 +1676,7 @@ class MaintenanceLogsCompanion extends UpdateCompanion<MaintenanceLogEntry> {
     this.vehicleId = const Value.absent(),
     this.date = const Value.absent(),
     this.description = const Value.absent(),
+    this.odometerAtService = const Value.absent(),
     this.isSynced = const Value.absent(),
     this.rowid = const Value.absent(),
   });
@@ -1484,6 +1685,7 @@ class MaintenanceLogsCompanion extends UpdateCompanion<MaintenanceLogEntry> {
     required String vehicleId,
     required DateTime date,
     required String description,
+    this.odometerAtService = const Value.absent(),
     required bool isSynced,
     this.rowid = const Value.absent(),
   }) : id = Value(id),
@@ -1496,6 +1698,7 @@ class MaintenanceLogsCompanion extends UpdateCompanion<MaintenanceLogEntry> {
     Expression<String>? vehicleId,
     Expression<DateTime>? date,
     Expression<String>? description,
+    Expression<double>? odometerAtService,
     Expression<bool>? isSynced,
     Expression<int>? rowid,
   }) {
@@ -1504,6 +1707,7 @@ class MaintenanceLogsCompanion extends UpdateCompanion<MaintenanceLogEntry> {
       if (vehicleId != null) 'vehicle_id': vehicleId,
       if (date != null) 'date': date,
       if (description != null) 'description': description,
+      if (odometerAtService != null) 'odometer_at_service': odometerAtService,
       if (isSynced != null) 'is_synced': isSynced,
       if (rowid != null) 'rowid': rowid,
     });
@@ -1514,6 +1718,7 @@ class MaintenanceLogsCompanion extends UpdateCompanion<MaintenanceLogEntry> {
     Value<String>? vehicleId,
     Value<DateTime>? date,
     Value<String>? description,
+    Value<double>? odometerAtService,
     Value<bool>? isSynced,
     Value<int>? rowid,
   }) {
@@ -1522,6 +1727,7 @@ class MaintenanceLogsCompanion extends UpdateCompanion<MaintenanceLogEntry> {
       vehicleId: vehicleId ?? this.vehicleId,
       date: date ?? this.date,
       description: description ?? this.description,
+      odometerAtService: odometerAtService ?? this.odometerAtService,
       isSynced: isSynced ?? this.isSynced,
       rowid: rowid ?? this.rowid,
     );
@@ -1542,6 +1748,9 @@ class MaintenanceLogsCompanion extends UpdateCompanion<MaintenanceLogEntry> {
     if (description.present) {
       map['description'] = Variable<String>(description.value);
     }
+    if (odometerAtService.present) {
+      map['odometer_at_service'] = Variable<double>(odometerAtService.value);
+    }
     if (isSynced.present) {
       map['is_synced'] = Variable<bool>(isSynced.value);
     }
@@ -1558,6 +1767,7 @@ class MaintenanceLogsCompanion extends UpdateCompanion<MaintenanceLogEntry> {
           ..write('vehicleId: $vehicleId, ')
           ..write('date: $date, ')
           ..write('description: $description, ')
+          ..write('odometerAtService: $odometerAtService, ')
           ..write('isSynced: $isSynced, ')
           ..write('rowid: $rowid')
           ..write(')'))
@@ -2006,6 +2216,485 @@ class ReplacedPartsCompanion extends UpdateCompanion<ReplacedPartEntry> {
   }
 }
 
+class $MaintenanceIntervalsTable extends MaintenanceIntervals
+    with TableInfo<$MaintenanceIntervalsTable, MaintenanceIntervalEntry> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $MaintenanceIntervalsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _vehicleIdMeta = const VerificationMeta(
+    'vehicleId',
+  );
+  @override
+  late final GeneratedColumn<String> vehicleId = GeneratedColumn<String>(
+    'vehicle_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES vehicles (id)',
+    ),
+  );
+  static const VerificationMeta _labelMeta = const VerificationMeta('label');
+  @override
+  late final GeneratedColumn<String> label = GeneratedColumn<String>(
+    'label',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _kmIntervalMeta = const VerificationMeta(
+    'kmInterval',
+  );
+  @override
+  late final GeneratedColumn<int> kmInterval = GeneratedColumn<int>(
+    'km_interval',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _lastResetKmMeta = const VerificationMeta(
+    'lastResetKm',
+  );
+  @override
+  late final GeneratedColumn<double> lastResetKm = GeneratedColumn<double>(
+    'last_reset_km',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0.0),
+  );
+  static const VerificationMeta _isEnabledMeta = const VerificationMeta(
+    'isEnabled',
+  );
+  @override
+  late final GeneratedColumn<bool> isEnabled = GeneratedColumn<bool>(
+    'is_enabled',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_enabled" IN (0, 1))',
+    ),
+    defaultValue: const Constant(true),
+  );
+  static const VerificationMeta _isCustomMeta = const VerificationMeta(
+    'isCustom',
+  );
+  @override
+  late final GeneratedColumn<bool> isCustom = GeneratedColumn<bool>(
+    'is_custom',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_custom" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    vehicleId,
+    label,
+    kmInterval,
+    lastResetKm,
+    isEnabled,
+    isCustom,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'maintenance_intervals';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<MaintenanceIntervalEntry> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('vehicle_id')) {
+      context.handle(
+        _vehicleIdMeta,
+        vehicleId.isAcceptableOrUnknown(data['vehicle_id']!, _vehicleIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_vehicleIdMeta);
+    }
+    if (data.containsKey('label')) {
+      context.handle(
+        _labelMeta,
+        label.isAcceptableOrUnknown(data['label']!, _labelMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_labelMeta);
+    }
+    if (data.containsKey('km_interval')) {
+      context.handle(
+        _kmIntervalMeta,
+        kmInterval.isAcceptableOrUnknown(data['km_interval']!, _kmIntervalMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_kmIntervalMeta);
+    }
+    if (data.containsKey('last_reset_km')) {
+      context.handle(
+        _lastResetKmMeta,
+        lastResetKm.isAcceptableOrUnknown(
+          data['last_reset_km']!,
+          _lastResetKmMeta,
+        ),
+      );
+    }
+    if (data.containsKey('is_enabled')) {
+      context.handle(
+        _isEnabledMeta,
+        isEnabled.isAcceptableOrUnknown(data['is_enabled']!, _isEnabledMeta),
+      );
+    }
+    if (data.containsKey('is_custom')) {
+      context.handle(
+        _isCustomMeta,
+        isCustom.isAcceptableOrUnknown(data['is_custom']!, _isCustomMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  MaintenanceIntervalEntry map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return MaintenanceIntervalEntry(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      vehicleId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}vehicle_id'],
+      )!,
+      label: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}label'],
+      )!,
+      kmInterval: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}km_interval'],
+      )!,
+      lastResetKm: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}last_reset_km'],
+      )!,
+      isEnabled: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_enabled'],
+      )!,
+      isCustom: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_custom'],
+      )!,
+    );
+  }
+
+  @override
+  $MaintenanceIntervalsTable createAlias(String alias) {
+    return $MaintenanceIntervalsTable(attachedDatabase, alias);
+  }
+}
+
+class MaintenanceIntervalEntry extends DataClass
+    implements Insertable<MaintenanceIntervalEntry> {
+  final String id;
+  final String vehicleId;
+  final String label;
+  final int kmInterval;
+  final double lastResetKm;
+  final bool isEnabled;
+  final bool isCustom;
+  const MaintenanceIntervalEntry({
+    required this.id,
+    required this.vehicleId,
+    required this.label,
+    required this.kmInterval,
+    required this.lastResetKm,
+    required this.isEnabled,
+    required this.isCustom,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['vehicle_id'] = Variable<String>(vehicleId);
+    map['label'] = Variable<String>(label);
+    map['km_interval'] = Variable<int>(kmInterval);
+    map['last_reset_km'] = Variable<double>(lastResetKm);
+    map['is_enabled'] = Variable<bool>(isEnabled);
+    map['is_custom'] = Variable<bool>(isCustom);
+    return map;
+  }
+
+  MaintenanceIntervalsCompanion toCompanion(bool nullToAbsent) {
+    return MaintenanceIntervalsCompanion(
+      id: Value(id),
+      vehicleId: Value(vehicleId),
+      label: Value(label),
+      kmInterval: Value(kmInterval),
+      lastResetKm: Value(lastResetKm),
+      isEnabled: Value(isEnabled),
+      isCustom: Value(isCustom),
+    );
+  }
+
+  factory MaintenanceIntervalEntry.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return MaintenanceIntervalEntry(
+      id: serializer.fromJson<String>(json['id']),
+      vehicleId: serializer.fromJson<String>(json['vehicleId']),
+      label: serializer.fromJson<String>(json['label']),
+      kmInterval: serializer.fromJson<int>(json['kmInterval']),
+      lastResetKm: serializer.fromJson<double>(json['lastResetKm']),
+      isEnabled: serializer.fromJson<bool>(json['isEnabled']),
+      isCustom: serializer.fromJson<bool>(json['isCustom']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'vehicleId': serializer.toJson<String>(vehicleId),
+      'label': serializer.toJson<String>(label),
+      'kmInterval': serializer.toJson<int>(kmInterval),
+      'lastResetKm': serializer.toJson<double>(lastResetKm),
+      'isEnabled': serializer.toJson<bool>(isEnabled),
+      'isCustom': serializer.toJson<bool>(isCustom),
+    };
+  }
+
+  MaintenanceIntervalEntry copyWith({
+    String? id,
+    String? vehicleId,
+    String? label,
+    int? kmInterval,
+    double? lastResetKm,
+    bool? isEnabled,
+    bool? isCustom,
+  }) => MaintenanceIntervalEntry(
+    id: id ?? this.id,
+    vehicleId: vehicleId ?? this.vehicleId,
+    label: label ?? this.label,
+    kmInterval: kmInterval ?? this.kmInterval,
+    lastResetKm: lastResetKm ?? this.lastResetKm,
+    isEnabled: isEnabled ?? this.isEnabled,
+    isCustom: isCustom ?? this.isCustom,
+  );
+  MaintenanceIntervalEntry copyWithCompanion(
+    MaintenanceIntervalsCompanion data,
+  ) {
+    return MaintenanceIntervalEntry(
+      id: data.id.present ? data.id.value : this.id,
+      vehicleId: data.vehicleId.present ? data.vehicleId.value : this.vehicleId,
+      label: data.label.present ? data.label.value : this.label,
+      kmInterval: data.kmInterval.present
+          ? data.kmInterval.value
+          : this.kmInterval,
+      lastResetKm: data.lastResetKm.present
+          ? data.lastResetKm.value
+          : this.lastResetKm,
+      isEnabled: data.isEnabled.present ? data.isEnabled.value : this.isEnabled,
+      isCustom: data.isCustom.present ? data.isCustom.value : this.isCustom,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MaintenanceIntervalEntry(')
+          ..write('id: $id, ')
+          ..write('vehicleId: $vehicleId, ')
+          ..write('label: $label, ')
+          ..write('kmInterval: $kmInterval, ')
+          ..write('lastResetKm: $lastResetKm, ')
+          ..write('isEnabled: $isEnabled, ')
+          ..write('isCustom: $isCustom')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    vehicleId,
+    label,
+    kmInterval,
+    lastResetKm,
+    isEnabled,
+    isCustom,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is MaintenanceIntervalEntry &&
+          other.id == this.id &&
+          other.vehicleId == this.vehicleId &&
+          other.label == this.label &&
+          other.kmInterval == this.kmInterval &&
+          other.lastResetKm == this.lastResetKm &&
+          other.isEnabled == this.isEnabled &&
+          other.isCustom == this.isCustom);
+}
+
+class MaintenanceIntervalsCompanion
+    extends UpdateCompanion<MaintenanceIntervalEntry> {
+  final Value<String> id;
+  final Value<String> vehicleId;
+  final Value<String> label;
+  final Value<int> kmInterval;
+  final Value<double> lastResetKm;
+  final Value<bool> isEnabled;
+  final Value<bool> isCustom;
+  final Value<int> rowid;
+  const MaintenanceIntervalsCompanion({
+    this.id = const Value.absent(),
+    this.vehicleId = const Value.absent(),
+    this.label = const Value.absent(),
+    this.kmInterval = const Value.absent(),
+    this.lastResetKm = const Value.absent(),
+    this.isEnabled = const Value.absent(),
+    this.isCustom = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  MaintenanceIntervalsCompanion.insert({
+    required String id,
+    required String vehicleId,
+    required String label,
+    required int kmInterval,
+    this.lastResetKm = const Value.absent(),
+    this.isEnabled = const Value.absent(),
+    this.isCustom = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       vehicleId = Value(vehicleId),
+       label = Value(label),
+       kmInterval = Value(kmInterval);
+  static Insertable<MaintenanceIntervalEntry> custom({
+    Expression<String>? id,
+    Expression<String>? vehicleId,
+    Expression<String>? label,
+    Expression<int>? kmInterval,
+    Expression<double>? lastResetKm,
+    Expression<bool>? isEnabled,
+    Expression<bool>? isCustom,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (vehicleId != null) 'vehicle_id': vehicleId,
+      if (label != null) 'label': label,
+      if (kmInterval != null) 'km_interval': kmInterval,
+      if (lastResetKm != null) 'last_reset_km': lastResetKm,
+      if (isEnabled != null) 'is_enabled': isEnabled,
+      if (isCustom != null) 'is_custom': isCustom,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  MaintenanceIntervalsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? vehicleId,
+    Value<String>? label,
+    Value<int>? kmInterval,
+    Value<double>? lastResetKm,
+    Value<bool>? isEnabled,
+    Value<bool>? isCustom,
+    Value<int>? rowid,
+  }) {
+    return MaintenanceIntervalsCompanion(
+      id: id ?? this.id,
+      vehicleId: vehicleId ?? this.vehicleId,
+      label: label ?? this.label,
+      kmInterval: kmInterval ?? this.kmInterval,
+      lastResetKm: lastResetKm ?? this.lastResetKm,
+      isEnabled: isEnabled ?? this.isEnabled,
+      isCustom: isCustom ?? this.isCustom,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (vehicleId.present) {
+      map['vehicle_id'] = Variable<String>(vehicleId.value);
+    }
+    if (label.present) {
+      map['label'] = Variable<String>(label.value);
+    }
+    if (kmInterval.present) {
+      map['km_interval'] = Variable<int>(kmInterval.value);
+    }
+    if (lastResetKm.present) {
+      map['last_reset_km'] = Variable<double>(lastResetKm.value);
+    }
+    if (isEnabled.present) {
+      map['is_enabled'] = Variable<bool>(isEnabled.value);
+    }
+    if (isCustom.present) {
+      map['is_custom'] = Variable<bool>(isCustom.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MaintenanceIntervalsCompanion(')
+          ..write('id: $id, ')
+          ..write('vehicleId: $vehicleId, ')
+          ..write('label: $label, ')
+          ..write('kmInterval: $kmInterval, ')
+          ..write('lastResetKm: $lastResetKm, ')
+          ..write('isEnabled: $isEnabled, ')
+          ..write('isCustom: $isCustom, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -2015,6 +2704,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     this,
   );
   late final $ReplacedPartsTable replacedParts = $ReplacedPartsTable(this);
+  late final $MaintenanceIntervalsTable maintenanceIntervals =
+      $MaintenanceIntervalsTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -2024,6 +2715,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     fuelLogs,
     maintenanceLogs,
     replacedParts,
+    maintenanceIntervals,
   ];
 }
 
@@ -2040,6 +2732,7 @@ typedef $$VehiclesTableCreateCompanionBuilder =
       required String odometerUnit,
       required DateTime createdAt,
       required bool isSynced,
+      Value<String> type,
       Value<int> rowid,
     });
 typedef $$VehiclesTableUpdateCompanionBuilder =
@@ -2055,6 +2748,7 @@ typedef $$VehiclesTableUpdateCompanionBuilder =
       Value<String> odometerUnit,
       Value<DateTime> createdAt,
       Value<bool> isSynced,
+      Value<String> type,
       Value<int> rowid,
     });
 
@@ -2097,6 +2791,34 @@ final class $$VehiclesTableReferences
 
     final cache = $_typedResult.readTableOrNull(
       _maintenanceLogsRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $MaintenanceIntervalsTable,
+    List<MaintenanceIntervalEntry>
+  >
+  _maintenanceIntervalsRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.maintenanceIntervals,
+        aliasName: $_aliasNameGenerator(
+          db.vehicles.id,
+          db.maintenanceIntervals.vehicleId,
+        ),
+      );
+
+  $$MaintenanceIntervalsTableProcessedTableManager
+  get maintenanceIntervalsRefs {
+    final manager = $$MaintenanceIntervalsTableTableManager(
+      $_db,
+      $_db.maintenanceIntervals,
+    ).filter((f) => f.vehicleId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _maintenanceIntervalsRefsTable($_db),
     );
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: cache),
@@ -2168,6 +2890,11 @@ class $$VehiclesTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
+  ColumnFilters<String> get type => $composableBuilder(
+    column: $table.type,
+    builder: (column) => ColumnFilters(column),
+  );
+
   Expression<bool> fuelLogsRefs(
     Expression<bool> Function($$FuelLogsTableFilterComposer f) f,
   ) {
@@ -2209,6 +2936,31 @@ class $$VehiclesTableFilterComposer
           }) => $$MaintenanceLogsTableFilterComposer(
             $db: $db,
             $table: $db.maintenanceLogs,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> maintenanceIntervalsRefs(
+    Expression<bool> Function($$MaintenanceIntervalsTableFilterComposer f) f,
+  ) {
+    final $$MaintenanceIntervalsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.maintenanceIntervals,
+      getReferencedColumn: (t) => t.vehicleId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MaintenanceIntervalsTableFilterComposer(
+            $db: $db,
+            $table: $db.maintenanceIntervals,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -2282,6 +3034,11 @@ class $$VehiclesTableOrderingComposer
     column: $table.isSynced,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<String> get type => $composableBuilder(
+    column: $table.type,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$VehiclesTableAnnotationComposer
@@ -2329,6 +3086,9 @@ class $$VehiclesTableAnnotationComposer
 
   GeneratedColumn<bool> get isSynced =>
       $composableBuilder(column: $table.isSynced, builder: (column) => column);
+
+  GeneratedColumn<String> get type =>
+      $composableBuilder(column: $table.type, builder: (column) => column);
 
   Expression<T> fuelLogsRefs<T extends Object>(
     Expression<T> Function($$FuelLogsTableAnnotationComposer a) f,
@@ -2379,6 +3139,32 @@ class $$VehiclesTableAnnotationComposer
     );
     return f(composer);
   }
+
+  Expression<T> maintenanceIntervalsRefs<T extends Object>(
+    Expression<T> Function($$MaintenanceIntervalsTableAnnotationComposer a) f,
+  ) {
+    final $$MaintenanceIntervalsTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.maintenanceIntervals,
+          getReferencedColumn: (t) => t.vehicleId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$MaintenanceIntervalsTableAnnotationComposer(
+                $db: $db,
+                $table: $db.maintenanceIntervals,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
 }
 
 class $$VehiclesTableTableManager
@@ -2394,7 +3180,11 @@ class $$VehiclesTableTableManager
           $$VehiclesTableUpdateCompanionBuilder,
           (VehicleEntry, $$VehiclesTableReferences),
           VehicleEntry,
-          PrefetchHooks Function({bool fuelLogsRefs, bool maintenanceLogsRefs})
+          PrefetchHooks Function({
+            bool fuelLogsRefs,
+            bool maintenanceLogsRefs,
+            bool maintenanceIntervalsRefs,
+          })
         > {
   $$VehiclesTableTableManager(_$AppDatabase db, $VehiclesTable table)
     : super(
@@ -2420,6 +3210,7 @@ class $$VehiclesTableTableManager
                 Value<String> odometerUnit = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<bool> isSynced = const Value.absent(),
+                Value<String> type = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => VehiclesCompanion(
                 id: id,
@@ -2433,6 +3224,7 @@ class $$VehiclesTableTableManager
                 odometerUnit: odometerUnit,
                 createdAt: createdAt,
                 isSynced: isSynced,
+                type: type,
                 rowid: rowid,
               ),
           createCompanionCallback:
@@ -2448,6 +3240,7 @@ class $$VehiclesTableTableManager
                 required String odometerUnit,
                 required DateTime createdAt,
                 required bool isSynced,
+                Value<String> type = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => VehiclesCompanion.insert(
                 id: id,
@@ -2461,6 +3254,7 @@ class $$VehiclesTableTableManager
                 odometerUnit: odometerUnit,
                 createdAt: createdAt,
                 isSynced: isSynced,
+                type: type,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
@@ -2472,12 +3266,17 @@ class $$VehiclesTableTableManager
               )
               .toList(),
           prefetchHooksCallback:
-              ({fuelLogsRefs = false, maintenanceLogsRefs = false}) {
+              ({
+                fuelLogsRefs = false,
+                maintenanceLogsRefs = false,
+                maintenanceIntervalsRefs = false,
+              }) {
                 return PrefetchHooks(
                   db: db,
                   explicitlyWatchedTables: [
                     if (fuelLogsRefs) db.fuelLogs,
                     if (maintenanceLogsRefs) db.maintenanceLogs,
+                    if (maintenanceIntervalsRefs) db.maintenanceIntervals,
                   ],
                   addJoins: null,
                   getPrefetchedDataCallback: (items) async {
@@ -2524,6 +3323,27 @@ class $$VehiclesTableTableManager
                               ),
                           typedResults: items,
                         ),
+                      if (maintenanceIntervalsRefs)
+                        await $_getPrefetchedData<
+                          VehicleEntry,
+                          $VehiclesTable,
+                          MaintenanceIntervalEntry
+                        >(
+                          currentTable: table,
+                          referencedTable: $$VehiclesTableReferences
+                              ._maintenanceIntervalsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$VehiclesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).maintenanceIntervalsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.vehicleId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
                     ];
                   },
                 );
@@ -2544,7 +3364,11 @@ typedef $$VehiclesTableProcessedTableManager =
       $$VehiclesTableUpdateCompanionBuilder,
       (VehicleEntry, $$VehiclesTableReferences),
       VehicleEntry,
-      PrefetchHooks Function({bool fuelLogsRefs, bool maintenanceLogsRefs})
+      PrefetchHooks Function({
+        bool fuelLogsRefs,
+        bool maintenanceLogsRefs,
+        bool maintenanceIntervalsRefs,
+      })
     >;
 typedef $$FuelLogsTableCreateCompanionBuilder =
     FuelLogsCompanion Function({
@@ -2556,6 +3380,8 @@ typedef $$FuelLogsTableCreateCompanionBuilder =
       required double odometerDistance,
       required String odometerUnit,
       required bool isSynced,
+      Value<bool> isFullTank,
+      Value<double?> pricePerUnit,
       Value<int> rowid,
     });
 typedef $$FuelLogsTableUpdateCompanionBuilder =
@@ -2568,6 +3394,8 @@ typedef $$FuelLogsTableUpdateCompanionBuilder =
       Value<double> odometerDistance,
       Value<String> odometerUnit,
       Value<bool> isSynced,
+      Value<bool> isFullTank,
+      Value<double?> pricePerUnit,
       Value<int> rowid,
     });
 
@@ -2634,6 +3462,16 @@ class $$FuelLogsTableFilterComposer
 
   ColumnFilters<bool> get isSynced => $composableBuilder(
     column: $table.isSynced,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isFullTank => $composableBuilder(
+    column: $table.isFullTank,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get pricePerUnit => $composableBuilder(
+    column: $table.pricePerUnit,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -2705,6 +3543,16 @@ class $$FuelLogsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<bool> get isFullTank => $composableBuilder(
+    column: $table.isFullTank,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get pricePerUnit => $composableBuilder(
+    column: $table.pricePerUnit,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   $$VehiclesTableOrderingComposer get vehicleId {
     final $$VehiclesTableOrderingComposer composer = $composerBuilder(
       composer: this,
@@ -2767,6 +3615,16 @@ class $$FuelLogsTableAnnotationComposer
   GeneratedColumn<bool> get isSynced =>
       $composableBuilder(column: $table.isSynced, builder: (column) => column);
 
+  GeneratedColumn<bool> get isFullTank => $composableBuilder(
+    column: $table.isFullTank,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get pricePerUnit => $composableBuilder(
+    column: $table.pricePerUnit,
+    builder: (column) => column,
+  );
+
   $$VehiclesTableAnnotationComposer get vehicleId {
     final $$VehiclesTableAnnotationComposer composer = $composerBuilder(
       composer: this,
@@ -2827,6 +3685,8 @@ class $$FuelLogsTableTableManager
                 Value<double> odometerDistance = const Value.absent(),
                 Value<String> odometerUnit = const Value.absent(),
                 Value<bool> isSynced = const Value.absent(),
+                Value<bool> isFullTank = const Value.absent(),
+                Value<double?> pricePerUnit = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => FuelLogsCompanion(
                 id: id,
@@ -2837,6 +3697,8 @@ class $$FuelLogsTableTableManager
                 odometerDistance: odometerDistance,
                 odometerUnit: odometerUnit,
                 isSynced: isSynced,
+                isFullTank: isFullTank,
+                pricePerUnit: pricePerUnit,
                 rowid: rowid,
               ),
           createCompanionCallback:
@@ -2849,6 +3711,8 @@ class $$FuelLogsTableTableManager
                 required double odometerDistance,
                 required String odometerUnit,
                 required bool isSynced,
+                Value<bool> isFullTank = const Value.absent(),
+                Value<double?> pricePerUnit = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => FuelLogsCompanion.insert(
                 id: id,
@@ -2859,6 +3723,8 @@ class $$FuelLogsTableTableManager
                 odometerDistance: odometerDistance,
                 odometerUnit: odometerUnit,
                 isSynced: isSynced,
+                isFullTank: isFullTank,
+                pricePerUnit: pricePerUnit,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
@@ -2934,6 +3800,7 @@ typedef $$MaintenanceLogsTableCreateCompanionBuilder =
       required String vehicleId,
       required DateTime date,
       required String description,
+      Value<double> odometerAtService,
       required bool isSynced,
       Value<int> rowid,
     });
@@ -2943,6 +3810,7 @@ typedef $$MaintenanceLogsTableUpdateCompanionBuilder =
       Value<String> vehicleId,
       Value<DateTime> date,
       Value<String> description,
+      Value<double> odometerAtService,
       Value<bool> isSynced,
       Value<int> rowid,
     });
@@ -3025,6 +3893,11 @@ class $$MaintenanceLogsTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
+  ColumnFilters<double> get odometerAtService => $composableBuilder(
+    column: $table.odometerAtService,
+    builder: (column) => ColumnFilters(column),
+  );
+
   ColumnFilters<bool> get isSynced => $composableBuilder(
     column: $table.isSynced,
     builder: (column) => ColumnFilters(column),
@@ -3103,6 +3976,11 @@ class $$MaintenanceLogsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<double> get odometerAtService => $composableBuilder(
+    column: $table.odometerAtService,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<bool> get isSynced => $composableBuilder(
     column: $table.isSynced,
     builder: (column) => ColumnOrderings(column),
@@ -3149,6 +4027,11 @@ class $$MaintenanceLogsTableAnnotationComposer
 
   GeneratedColumn<String> get description => $composableBuilder(
     column: $table.description,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get odometerAtService => $composableBuilder(
+    column: $table.odometerAtService,
     builder: (column) => column,
   );
 
@@ -3238,6 +4121,7 @@ class $$MaintenanceLogsTableTableManager
                 Value<String> vehicleId = const Value.absent(),
                 Value<DateTime> date = const Value.absent(),
                 Value<String> description = const Value.absent(),
+                Value<double> odometerAtService = const Value.absent(),
                 Value<bool> isSynced = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => MaintenanceLogsCompanion(
@@ -3245,6 +4129,7 @@ class $$MaintenanceLogsTableTableManager
                 vehicleId: vehicleId,
                 date: date,
                 description: description,
+                odometerAtService: odometerAtService,
                 isSynced: isSynced,
                 rowid: rowid,
               ),
@@ -3254,6 +4139,7 @@ class $$MaintenanceLogsTableTableManager
                 required String vehicleId,
                 required DateTime date,
                 required String description,
+                Value<double> odometerAtService = const Value.absent(),
                 required bool isSynced,
                 Value<int> rowid = const Value.absent(),
               }) => MaintenanceLogsCompanion.insert(
@@ -3261,6 +4147,7 @@ class $$MaintenanceLogsTableTableManager
                 vehicleId: vehicleId,
                 date: date,
                 description: description,
+                odometerAtService: odometerAtService,
                 isSynced: isSynced,
                 rowid: rowid,
               ),
@@ -3710,6 +4597,386 @@ typedef $$ReplacedPartsTableProcessedTableManager =
       ReplacedPartEntry,
       PrefetchHooks Function({bool maintenanceLogId})
     >;
+typedef $$MaintenanceIntervalsTableCreateCompanionBuilder =
+    MaintenanceIntervalsCompanion Function({
+      required String id,
+      required String vehicleId,
+      required String label,
+      required int kmInterval,
+      Value<double> lastResetKm,
+      Value<bool> isEnabled,
+      Value<bool> isCustom,
+      Value<int> rowid,
+    });
+typedef $$MaintenanceIntervalsTableUpdateCompanionBuilder =
+    MaintenanceIntervalsCompanion Function({
+      Value<String> id,
+      Value<String> vehicleId,
+      Value<String> label,
+      Value<int> kmInterval,
+      Value<double> lastResetKm,
+      Value<bool> isEnabled,
+      Value<bool> isCustom,
+      Value<int> rowid,
+    });
+
+final class $$MaintenanceIntervalsTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $MaintenanceIntervalsTable,
+          MaintenanceIntervalEntry
+        > {
+  $$MaintenanceIntervalsTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $VehiclesTable _vehicleIdTable(_$AppDatabase db) =>
+      db.vehicles.createAlias(
+        $_aliasNameGenerator(db.maintenanceIntervals.vehicleId, db.vehicles.id),
+      );
+
+  $$VehiclesTableProcessedTableManager get vehicleId {
+    final $_column = $_itemColumn<String>('vehicle_id')!;
+
+    final manager = $$VehiclesTableTableManager(
+      $_db,
+      $_db.vehicles,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_vehicleIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$MaintenanceIntervalsTableFilterComposer
+    extends Composer<_$AppDatabase, $MaintenanceIntervalsTable> {
+  $$MaintenanceIntervalsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get label => $composableBuilder(
+    column: $table.label,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get kmInterval => $composableBuilder(
+    column: $table.kmInterval,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get lastResetKm => $composableBuilder(
+    column: $table.lastResetKm,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isEnabled => $composableBuilder(
+    column: $table.isEnabled,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isCustom => $composableBuilder(
+    column: $table.isCustom,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$VehiclesTableFilterComposer get vehicleId {
+    final $$VehiclesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.vehicleId,
+      referencedTable: $db.vehicles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$VehiclesTableFilterComposer(
+            $db: $db,
+            $table: $db.vehicles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$MaintenanceIntervalsTableOrderingComposer
+    extends Composer<_$AppDatabase, $MaintenanceIntervalsTable> {
+  $$MaintenanceIntervalsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get label => $composableBuilder(
+    column: $table.label,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get kmInterval => $composableBuilder(
+    column: $table.kmInterval,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get lastResetKm => $composableBuilder(
+    column: $table.lastResetKm,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isEnabled => $composableBuilder(
+    column: $table.isEnabled,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isCustom => $composableBuilder(
+    column: $table.isCustom,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$VehiclesTableOrderingComposer get vehicleId {
+    final $$VehiclesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.vehicleId,
+      referencedTable: $db.vehicles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$VehiclesTableOrderingComposer(
+            $db: $db,
+            $table: $db.vehicles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$MaintenanceIntervalsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $MaintenanceIntervalsTable> {
+  $$MaintenanceIntervalsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get label =>
+      $composableBuilder(column: $table.label, builder: (column) => column);
+
+  GeneratedColumn<int> get kmInterval => $composableBuilder(
+    column: $table.kmInterval,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get lastResetKm => $composableBuilder(
+    column: $table.lastResetKm,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get isEnabled =>
+      $composableBuilder(column: $table.isEnabled, builder: (column) => column);
+
+  GeneratedColumn<bool> get isCustom =>
+      $composableBuilder(column: $table.isCustom, builder: (column) => column);
+
+  $$VehiclesTableAnnotationComposer get vehicleId {
+    final $$VehiclesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.vehicleId,
+      referencedTable: $db.vehicles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$VehiclesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.vehicles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$MaintenanceIntervalsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $MaintenanceIntervalsTable,
+          MaintenanceIntervalEntry,
+          $$MaintenanceIntervalsTableFilterComposer,
+          $$MaintenanceIntervalsTableOrderingComposer,
+          $$MaintenanceIntervalsTableAnnotationComposer,
+          $$MaintenanceIntervalsTableCreateCompanionBuilder,
+          $$MaintenanceIntervalsTableUpdateCompanionBuilder,
+          (MaintenanceIntervalEntry, $$MaintenanceIntervalsTableReferences),
+          MaintenanceIntervalEntry,
+          PrefetchHooks Function({bool vehicleId})
+        > {
+  $$MaintenanceIntervalsTableTableManager(
+    _$AppDatabase db,
+    $MaintenanceIntervalsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$MaintenanceIntervalsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$MaintenanceIntervalsTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$MaintenanceIntervalsTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> vehicleId = const Value.absent(),
+                Value<String> label = const Value.absent(),
+                Value<int> kmInterval = const Value.absent(),
+                Value<double> lastResetKm = const Value.absent(),
+                Value<bool> isEnabled = const Value.absent(),
+                Value<bool> isCustom = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => MaintenanceIntervalsCompanion(
+                id: id,
+                vehicleId: vehicleId,
+                label: label,
+                kmInterval: kmInterval,
+                lastResetKm: lastResetKm,
+                isEnabled: isEnabled,
+                isCustom: isCustom,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String vehicleId,
+                required String label,
+                required int kmInterval,
+                Value<double> lastResetKm = const Value.absent(),
+                Value<bool> isEnabled = const Value.absent(),
+                Value<bool> isCustom = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => MaintenanceIntervalsCompanion.insert(
+                id: id,
+                vehicleId: vehicleId,
+                label: label,
+                kmInterval: kmInterval,
+                lastResetKm: lastResetKm,
+                isEnabled: isEnabled,
+                isCustom: isCustom,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$MaintenanceIntervalsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({vehicleId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (vehicleId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.vehicleId,
+                                referencedTable:
+                                    $$MaintenanceIntervalsTableReferences
+                                        ._vehicleIdTable(db),
+                                referencedColumn:
+                                    $$MaintenanceIntervalsTableReferences
+                                        ._vehicleIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$MaintenanceIntervalsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $MaintenanceIntervalsTable,
+      MaintenanceIntervalEntry,
+      $$MaintenanceIntervalsTableFilterComposer,
+      $$MaintenanceIntervalsTableOrderingComposer,
+      $$MaintenanceIntervalsTableAnnotationComposer,
+      $$MaintenanceIntervalsTableCreateCompanionBuilder,
+      $$MaintenanceIntervalsTableUpdateCompanionBuilder,
+      (MaintenanceIntervalEntry, $$MaintenanceIntervalsTableReferences),
+      MaintenanceIntervalEntry,
+      PrefetchHooks Function({bool vehicleId})
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -3722,4 +4989,6 @@ class $AppDatabaseManager {
       $$MaintenanceLogsTableTableManager(_db, _db.maintenanceLogs);
   $$ReplacedPartsTableTableManager get replacedParts =>
       $$ReplacedPartsTableTableManager(_db, _db.replacedParts);
+  $$MaintenanceIntervalsTableTableManager get maintenanceIntervals =>
+      $$MaintenanceIntervalsTableTableManager(_db, _db.maintenanceIntervals);
 }
