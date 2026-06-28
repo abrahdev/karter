@@ -33,7 +33,7 @@ class VehicleDetailPage extends ConsumerWidget {
 
         return Scaffold(
           appBar: AppBar(
-            title: Text(vehicle.name),
+            title: Text(vehicle.displayName),
             actions: [
               IconButton(
                 icon: const Icon(Icons.edit),
@@ -63,8 +63,21 @@ class VehicleDetailPage extends ConsumerWidget {
                             size: 20,
                           ),
                           const SizedBox(width: 8),
-                          Text(vehicle.name,
-                              style: theme.textTheme.headlineSmall),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(vehicle.displayName,
+                                    style: theme.textTheme.headlineSmall),
+                                if (vehicle.alias != null &&
+                                    vehicle.alias!.isNotEmpty)
+                                  Text(
+                                    '${vehicle.brand} ${vehicle.model} ${vehicle.year}',
+                                    style: theme.textTheme.bodySmall,
+                                  ),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
                       const SizedBox(height: 8),
@@ -177,9 +190,15 @@ class VehicleDetailPage extends ConsumerWidget {
                                 ? 'Vencido — realizá el servicio'
                                 : 'Próximo en ${remaining.toStringAsFixed(0)} km',
                           ),
-                          trailing: Text(
-                            'cada ${_formatKm(interval.kmInterval)}',
-                            style: theme.textTheme.bodySmall,
+                          trailing: TextButton(
+                            onPressed: () => context.push(
+                              '/vehicle/$vehicleId/maintenance/new',
+                              extra: {
+                                'description': interval.label,
+                                'intervalId': interval.id,
+                              },
+                            ),
+                            child: const Text('Registrar'),
                           ),
                         ),
                       );
@@ -271,10 +290,5 @@ class VehicleDetailPage extends ConsumerWidget {
         ],
       ),
     );
-  }
-
-  String _formatKm(int km) {
-    if (km >= 1000) return '${km ~/ 1000}k km';
-    return '$km km';
   }
 }

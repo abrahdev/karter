@@ -10,7 +10,6 @@ void main() {
     test('create vehicle successfully', () {
       final vehicle = Vehicle(
         id: '1',
-        name: 'My Car',
         brand: 'Toyota',
         model: 'Corolla',
         year: 2020,
@@ -21,8 +20,26 @@ void main() {
         currentOdometer: Odometer(10000, DistanceUnit.kilometers),
       );
 
-      expect(vehicle.name, 'My Car');
+      expect(vehicle.displayName, 'Toyota Corolla 2020');
+      expect(vehicle.alias, isNull);
       expect(vehicle.currentOdometer.distance, 10000);
+    });
+
+    test('displayName returns alias when set', () {
+      final vehicle = Vehicle(
+        id: '1',
+        brand: 'Toyota',
+        model: 'Corolla',
+        year: 2020,
+        alias: 'Mi nave',
+        createdAt: DateTime.now(),
+        isSynced: false,
+        plate: Plate('ABC-123'),
+        vin: Vin('1HGCM82633A004352'),
+        currentOdometer: Odometer(10000, DistanceUnit.kilometers),
+      );
+
+      expect(vehicle.displayName, 'Mi nave');
     });
   });
 }

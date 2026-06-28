@@ -14,7 +14,6 @@ Vehicle _makeVehicle({
 }) {
   return Vehicle(
     id: '1',
-    name: 'Test',
     brand: brand,
     model: model,
     year: year,

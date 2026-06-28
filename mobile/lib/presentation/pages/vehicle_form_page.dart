@@ -21,18 +21,19 @@ class VehicleFormPage extends ConsumerStatefulWidget {
 
 class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
   final _formKey = GlobalKey<FormState>();
-  final _nameController = TextEditingController();
   final _brandController = TextEditingController();
   final _modelController = TextEditingController();
   final _yearController = TextEditingController();
   final _plateController = TextEditingController();
   final _vinController = TextEditingController();
   final _odometerController = TextEditingController();
+  final _aliasController = TextEditingController();
 
   DistanceUnit _odometerUnit = DistanceUnit.kilometers;
   VehicleType _vehicleType = VehicleType.combustion;
   bool _isLoading = false;
   bool _isEditing = false;
+  bool _showAlias = false;
 
   @override
   void initState() {
@@ -47,7 +48,6 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
     final vehicle =
         await ref.read(vehicleProvider(widget.vehicleId!).future);
     if (vehicle != null && mounted) {
-      _nameController.text = vehicle.name;
       _brandController.text = vehicle.brand;
       _modelController.text = vehicle.model;
       _yearController.text = vehicle.year.toString();
@@ -57,18 +57,22 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
           vehicle.currentOdometer.distance.toStringAsFixed(0);
       _odometerUnit = vehicle.currentOdometer.unit;
       _vehicleType = vehicle.type;
+      if (vehicle.alias != null && vehicle.alias!.isNotEmpty) {
+        _showAlias = true;
+        _aliasController.text = vehicle.alias!;
+      }
     }
   }
 
   @override
   void dispose() {
-    _nameController.dispose();
     _brandController.dispose();
     _modelController.dispose();
     _yearController.dispose();
     _plateController.dispose();
     _vinController.dispose();
     _odometerController.dispose();
+    _aliasController.dispose();
     super.dispose();
   }
 
@@ -81,10 +85,10 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
       final id = _isEditing ? widget.vehicleId! : uuid.v4();
       final vehicle = Vehicle(
         id: id,
-        name: _nameController.text.trim(),
         brand: _brandController.text.trim(),
         model: _modelController.text.trim(),
         year: int.parse(_yearController.text.trim()),
+        alias: _showAlias ? _aliasController.text.trim() : null,
         createdAt: DateTime.now(),
         isSynced: false,
         type: _vehicleType,
@@ -114,6 +118,10 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
 
   @override
   Widget build(BuildContext context) {
+    final composite = '${_brandController.text.trim()} '
+        '${_modelController.text.trim()} '
+        '${_yearController.text.trim()}'.trim();
+
     return Scaffold(
       appBar: AppBar(
         title: Text(_isEditing ? 'Editar vehículo' : 'Nuevo vehículo'),
@@ -123,13 +131,14 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
         child: ListView(
           padding: const EdgeInsets.all(16),
           children: [
-            TextFormField(
-              controller: _nameController,
-              decoration: const InputDecoration(labelText: 'Nombre'),
-              validator: (v) =>
-                  v == null || v.trim().isEmpty ? 'Requerido' : null,
-            ),
-            const SizedBox(height: 12),
+            if (composite.isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 16),
+                child: Text(
+                  composite,
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+              ),
             TextFormField(
               controller: _brandController,
               decoration: const InputDecoration(labelText: 'Marca'),
@@ -229,6 +238,25 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
                 ),
               ],
             ),
+            const SizedBox(height: 16),
+            SwitchListTile(
+              title: const Text('Alias (opcional)'),
+              subtitle: _showAlias && _aliasController.text.isNotEmpty
+                  ? Text(_aliasController.text)
+                  : null,
+              value: _showAlias,
+              onChanged: (v) => setState(() => _showAlias = v),
+            ),
+            if (_showAlias) ...[
+              const SizedBox(height: 8),
+              TextFormField(
+                controller: _aliasController,
+                decoration: const InputDecoration(
+                  labelText: 'Alias',
+                  hintText: 'Ej: Mi nave, La bestia, etc.',
+                ),
+              ),
+            ],
             const SizedBox(height: 24),
             FilledButton(
               onPressed: _isLoading ? null : _save,

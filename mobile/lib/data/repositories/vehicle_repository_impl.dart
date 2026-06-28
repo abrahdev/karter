@@ -65,10 +65,10 @@ class VehicleRepositoryImpl implements VehicleRepository {
   Vehicle _toEntity(VehicleEntry entry) {
     return Vehicle(
       id: entry.id,
-      name: entry.name,
       brand: entry.brand,
       model: entry.model,
       year: entry.year,
+      alias: entry.alias,
       createdAt: entry.createdAt,
       isSynced: entry.isSynced,
       plate: Plate(entry.plate),
@@ -84,10 +84,10 @@ class VehicleRepositoryImpl implements VehicleRepository {
   VehiclesCompanion _toEntry(Vehicle vehicle) {
     return VehiclesCompanion(
       id: drift.Value(vehicle.id),
-      name: drift.Value(vehicle.name),
       brand: drift.Value(vehicle.brand),
       model: drift.Value(vehicle.model),
       year: drift.Value(vehicle.year),
+      alias: drift.Value(vehicle.alias),
       plate: drift.Value(vehicle.plate.value),
       vin: drift.Value(vehicle.vin.code),
       odometerDistance: drift.Value(vehicle.currentOdometer.distance),

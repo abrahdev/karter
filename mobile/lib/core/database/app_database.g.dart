@@ -25,7 +25,17 @@ class $VehiclesTable extends Vehicles
     aliasedName,
     false,
     type: DriftSqlType.string,
-    requiredDuringInsert: true,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _aliasMeta = const VerificationMeta('alias');
+  @override
+  late final GeneratedColumn<String> alias = GeneratedColumn<String>(
+    'alias',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
   );
   static const VerificationMeta _brandMeta = const VerificationMeta('brand');
   @override
@@ -133,6 +143,7 @@ class $VehiclesTable extends Vehicles
   List<GeneratedColumn> get $columns => [
     id,
     name,
+    alias,
     brand,
     model,
     year,
@@ -166,8 +177,12 @@ class $VehiclesTable extends Vehicles
         _nameMeta,
         name.isAcceptableOrUnknown(data['name']!, _nameMeta),
       );
-    } else if (isInserting) {
-      context.missing(_nameMeta);
+    }
+    if (data.containsKey('alias')) {
+      context.handle(
+        _aliasMeta,
+        alias.isAcceptableOrUnknown(data['alias']!, _aliasMeta),
+      );
     }
     if (data.containsKey('brand')) {
       context.handle(
@@ -270,6 +285,10 @@ class $VehiclesTable extends Vehicles
         DriftSqlType.string,
         data['${effectivePrefix}name'],
       )!,
+      alias: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}alias'],
+      ),
       brand: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}brand'],
@@ -322,6 +341,7 @@ class $VehiclesTable extends Vehicles
 class VehicleEntry extends DataClass implements Insertable<VehicleEntry> {
   final String id;
   final String name;
+  final String? alias;
   final String brand;
   final String model;
   final int year;
@@ -335,6 +355,7 @@ class VehicleEntry extends DataClass implements Insertable<VehicleEntry> {
   const VehicleEntry({
     required this.id,
     required this.name,
+    this.alias,
     required this.brand,
     required this.model,
     required this.year,
@@ -351,6 +372,9 @@ class VehicleEntry extends DataClass implements Insertable<VehicleEntry> {
     final map = <String, Expression>{};
     map['id'] = Variable<String>(id);
     map['name'] = Variable<String>(name);
+    if (!nullToAbsent || alias != null) {
+      map['alias'] = Variable<String>(alias);
+    }
     map['brand'] = Variable<String>(brand);
     map['model'] = Variable<String>(model);
     map['year'] = Variable<int>(year);
@@ -368,6 +392,9 @@ class VehicleEntry extends DataClass implements Insertable<VehicleEntry> {
     return VehiclesCompanion(
       id: Value(id),
       name: Value(name),
+      alias: alias == null && nullToAbsent
+          ? const Value.absent()
+          : Value(alias),
       brand: Value(brand),
       model: Value(model),
       year: Value(year),
@@ -389,6 +416,7 @@ class VehicleEntry extends DataClass implements Insertable<VehicleEntry> {
     return VehicleEntry(
       id: serializer.fromJson<String>(json['id']),
       name: serializer.fromJson<String>(json['name']),
+      alias: serializer.fromJson<String?>(json['alias']),
       brand: serializer.fromJson<String>(json['brand']),
       model: serializer.fromJson<String>(json['model']),
       year: serializer.fromJson<int>(json['year']),
@@ -407,6 +435,7 @@ class VehicleEntry extends DataClass implements Insertable<VehicleEntry> {
     return <String, dynamic>{
       'id': serializer.toJson<String>(id),
       'name': serializer.toJson<String>(name),
+      'alias': serializer.toJson<String?>(alias),
       'brand': serializer.toJson<String>(brand),
       'model': serializer.toJson<String>(model),
       'year': serializer.toJson<int>(year),
@@ -423,6 +452,7 @@ class VehicleEntry extends DataClass implements Insertable<VehicleEntry> {
   VehicleEntry copyWith({
     String? id,
     String? name,
+    Value<String?> alias = const Value.absent(),
     String? brand,
     String? model,
     int? year,
@@ -436,6 +466,7 @@ class VehicleEntry extends DataClass implements Insertable<VehicleEntry> {
   }) => VehicleEntry(
     id: id ?? this.id,
     name: name ?? this.name,
+    alias: alias.present ? alias.value : this.alias,
     brand: brand ?? this.brand,
     model: model ?? this.model,
     year: year ?? this.year,
@@ -451,6 +482,7 @@ class VehicleEntry extends DataClass implements Insertable<VehicleEntry> {
     return VehicleEntry(
       id: data.id.present ? data.id.value : this.id,
       name: data.name.present ? data.name.value : this.name,
+      alias: data.alias.present ? data.alias.value : this.alias,
       brand: data.brand.present ? data.brand.value : this.brand,
       model: data.model.present ? data.model.value : this.model,
       year: data.year.present ? data.year.value : this.year,
@@ -473,6 +505,7 @@ class VehicleEntry extends DataClass implements Insertable<VehicleEntry> {
     return (StringBuffer('VehicleEntry(')
           ..write('id: $id, ')
           ..write('name: $name, ')
+          ..write('alias: $alias, ')
           ..write('brand: $brand, ')
           ..write('model: $model, ')
           ..write('year: $year, ')
@@ -491,6 +524,7 @@ class VehicleEntry extends DataClass implements Insertable<VehicleEntry> {
   int get hashCode => Object.hash(
     id,
     name,
+    alias,
     brand,
     model,
     year,
@@ -508,6 +542,7 @@ class VehicleEntry extends DataClass implements Insertable<VehicleEntry> {
       (other is VehicleEntry &&
           other.id == this.id &&
           other.name == this.name &&
+          other.alias == this.alias &&
           other.brand == this.brand &&
           other.model == this.model &&
           other.year == this.year &&
@@ -523,6 +558,7 @@ class VehicleEntry extends DataClass implements Insertable<VehicleEntry> {
 class VehiclesCompanion extends UpdateCompanion<VehicleEntry> {
   final Value<String> id;
   final Value<String> name;
+  final Value<String?> alias;
   final Value<String> brand;
   final Value<String> model;
   final Value<int> year;
@@ -537,6 +573,7 @@ class VehiclesCompanion extends UpdateCompanion<VehicleEntry> {
   const VehiclesCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
+    this.alias = const Value.absent(),
     this.brand = const Value.absent(),
     this.model = const Value.absent(),
     this.year = const Value.absent(),
@@ -551,7 +588,8 @@ class VehiclesCompanion extends UpdateCompanion<VehicleEntry> {
   });
   VehiclesCompanion.insert({
     required String id,
-    required String name,
+    this.name = const Value.absent(),
+    this.alias = const Value.absent(),
     required String brand,
     required String model,
     required int year,
@@ -564,7 +602,6 @@ class VehiclesCompanion extends UpdateCompanion<VehicleEntry> {
     this.type = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : id = Value(id),
-       name = Value(name),
        brand = Value(brand),
        model = Value(model),
        year = Value(year),
@@ -577,6 +614,7 @@ class VehiclesCompanion extends UpdateCompanion<VehicleEntry> {
   static Insertable<VehicleEntry> custom({
     Expression<String>? id,
     Expression<String>? name,
+    Expression<String>? alias,
     Expression<String>? brand,
     Expression<String>? model,
     Expression<int>? year,
@@ -592,6 +630,7 @@ class VehiclesCompanion extends UpdateCompanion<VehicleEntry> {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (name != null) 'name': name,
+      if (alias != null) 'alias': alias,
       if (brand != null) 'brand': brand,
       if (model != null) 'model': model,
       if (year != null) 'year': year,
@@ -609,6 +648,7 @@ class VehiclesCompanion extends UpdateCompanion<VehicleEntry> {
   VehiclesCompanion copyWith({
     Value<String>? id,
     Value<String>? name,
+    Value<String?>? alias,
     Value<String>? brand,
     Value<String>? model,
     Value<int>? year,
@@ -624,6 +664,7 @@ class VehiclesCompanion extends UpdateCompanion<VehicleEntry> {
     return VehiclesCompanion(
       id: id ?? this.id,
       name: name ?? this.name,
+      alias: alias ?? this.alias,
       brand: brand ?? this.brand,
       model: model ?? this.model,
       year: year ?? this.year,
@@ -646,6 +687,9 @@ class VehiclesCompanion extends UpdateCompanion<VehicleEntry> {
     }
     if (name.present) {
       map['name'] = Variable<String>(name.value);
+    }
+    if (alias.present) {
+      map['alias'] = Variable<String>(alias.value);
     }
     if (brand.present) {
       map['brand'] = Variable<String>(brand.value);
@@ -688,6 +732,7 @@ class VehiclesCompanion extends UpdateCompanion<VehicleEntry> {
     return (StringBuffer('VehiclesCompanion(')
           ..write('id: $id, ')
           ..write('name: $name, ')
+          ..write('alias: $alias, ')
           ..write('brand: $brand, ')
           ..write('model: $model, ')
           ..write('year: $year, ')
@@ -2722,7 +2767,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
 typedef $$VehiclesTableCreateCompanionBuilder =
     VehiclesCompanion Function({
       required String id,
-      required String name,
+      Value<String> name,
+      Value<String?> alias,
       required String brand,
       required String model,
       required int year,
@@ -2739,6 +2785,7 @@ typedef $$VehiclesTableUpdateCompanionBuilder =
     VehiclesCompanion Function({
       Value<String> id,
       Value<String> name,
+      Value<String?> alias,
       Value<String> brand,
       Value<String> model,
       Value<int> year,
@@ -2842,6 +2889,11 @@ class $$VehiclesTableFilterComposer
 
   ColumnFilters<String> get name => $composableBuilder(
     column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get alias => $composableBuilder(
+    column: $table.alias,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -2990,6 +3042,11 @@ class $$VehiclesTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get alias => $composableBuilder(
+    column: $table.alias,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<String> get brand => $composableBuilder(
     column: $table.brand,
     builder: (column) => ColumnOrderings(column),
@@ -3055,6 +3112,9 @@ class $$VehiclesTableAnnotationComposer
 
   GeneratedColumn<String> get name =>
       $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get alias =>
+      $composableBuilder(column: $table.alias, builder: (column) => column);
 
   GeneratedColumn<String> get brand =>
       $composableBuilder(column: $table.brand, builder: (column) => column);
@@ -3201,6 +3261,7 @@ class $$VehiclesTableTableManager
               ({
                 Value<String> id = const Value.absent(),
                 Value<String> name = const Value.absent(),
+                Value<String?> alias = const Value.absent(),
                 Value<String> brand = const Value.absent(),
                 Value<String> model = const Value.absent(),
                 Value<int> year = const Value.absent(),
@@ -3215,6 +3276,7 @@ class $$VehiclesTableTableManager
               }) => VehiclesCompanion(
                 id: id,
                 name: name,
+                alias: alias,
                 brand: brand,
                 model: model,
                 year: year,
@@ -3230,7 +3292,8 @@ class $$VehiclesTableTableManager
           createCompanionCallback:
               ({
                 required String id,
-                required String name,
+                Value<String> name = const Value.absent(),
+                Value<String?> alias = const Value.absent(),
                 required String brand,
                 required String model,
                 required int year,
@@ -3245,6 +3308,7 @@ class $$VehiclesTableTableManager
               }) => VehiclesCompanion.insert(
                 id: id,
                 name: name,
+                alias: alias,
                 brand: brand,
                 model: model,
                 year: year,

@@ -30,9 +30,11 @@ class VehicleCard extends StatelessWidget {
             color: theme.colorScheme.onPrimaryContainer,
           ),
         ),
-        title: Text(vehicle.name),
+        title: Text(vehicle.displayName),
         subtitle: Text(
-          '${vehicle.brand} ${vehicle.model} ${vehicle.year}',
+          vehicle.alias != null && vehicle.alias!.isNotEmpty
+              ? '${vehicle.brand} ${vehicle.model} ${vehicle.year}'
+              : '${vehicle.currentOdometer.distance.toStringAsFixed(0)} ${vehicle.currentOdometer.unit.name == 'kilometers' ? 'km' : 'mi'}',
         ),
         trailing: Row(
           mainAxisSize: MainAxisSize.min,

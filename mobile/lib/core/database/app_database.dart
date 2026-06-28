@@ -10,7 +10,8 @@ part 'app_database.g.dart';
 @DataClassName('VehicleEntry')
 class Vehicles extends Table {
   TextColumn get id => text()();
-  TextColumn get name => text()();
+  TextColumn get name => text().withDefault(const Constant(''))();
+  TextColumn get alias => text().nullable()();
   TextColumn get brand => text()();
   TextColumn get model => text()();
   IntColumn get year => integer()();
@@ -97,7 +98,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 3;
 
   @override
   MigrationStrategy get migration {
@@ -110,6 +111,9 @@ class AppDatabase extends _$AppDatabase {
           await m.addColumn(fuelLogs, fuelLogs.pricePerUnit);
           await m.addColumn(maintenanceLogs, maintenanceLogs.odometerAtService);
           await m.createTable(maintenanceIntervals);
+        }
+        if (from < 3) {
+          await m.addColumn(vehicles, vehicles.alias);
         }
       },
     );

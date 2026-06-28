@@ -53,9 +53,20 @@ final _router = GoRouter(
           routes: [
             GoRoute(
               path: 'new',
-              builder: (_, state) => MaintenanceLogFormPage(
-                vehicleId: state.pathParameters['id']!,
-              ),
+              builder: (_, state) {
+            final extra = state.extra;
+            String? description;
+            String? intervalId;
+            if (extra is Map<String, String>) {
+              description = extra['description'];
+              intervalId = extra['intervalId'];
+            }
+            return MaintenanceLogFormPage(
+              vehicleId: state.pathParameters['id']!,
+              initialDescription: description,
+              initialIntervalId: intervalId,
+            );
+          },
             ),
             GoRoute(
               path: 'settings',

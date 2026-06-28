@@ -5,10 +5,10 @@ import '../value_objects/odometer.dart';
 
 class Vehicle {
   final String id;
-  final String name;
   final String brand;
   final String model;
   final int year;
+  final String? alias;
   final DateTime createdAt;
   final bool isSynced;
   final VehicleType type;
@@ -19,7 +19,6 @@ class Vehicle {
 
   Vehicle({
     required this.id,
-    required this.name,
     required this.brand,
     required this.model,
     required this.year,
@@ -28,15 +27,21 @@ class Vehicle {
     required this.plate,
     required this.vin,
     required this.currentOdometer,
+    this.alias,
     this.type = VehicleType.combustion,
   });
 
+  String get displayName {
+    if (alias != null && alias!.isNotEmpty) return alias!;
+    return '$brand $model $year';
+  }
+
   Vehicle copyWith({
     String? id,
-    String? name,
     String? brand,
     String? model,
     int? year,
+    String? alias,
     DateTime? createdAt,
     bool? isSynced,
     Plate? plate,
@@ -46,10 +51,10 @@ class Vehicle {
   }) {
     return Vehicle(
       id: id ?? this.id,
-      name: name ?? this.name,
       brand: brand ?? this.brand,
       model: model ?? this.model,
       year: year ?? this.year,
+      alias: alias ?? this.alias,
       createdAt: createdAt ?? this.createdAt,
       isSynced: isSynced ?? this.isSynced,
       plate: plate ?? this.plate,

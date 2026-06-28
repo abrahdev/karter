@@ -8,8 +8,15 @@ import 'package:mobile/presentation/providers/vehicle_providers.dart';
 
 class MaintenanceLogFormPage extends ConsumerStatefulWidget {
   final String vehicleId;
+  final String? initialDescription;
+  final String? initialIntervalId;
 
-  const MaintenanceLogFormPage({super.key, required this.vehicleId});
+  const MaintenanceLogFormPage({
+    super.key,
+    required this.vehicleId,
+    this.initialDescription,
+    this.initialIntervalId,
+  });
 
   @override
   ConsumerState<MaintenanceLogFormPage> createState() =>
@@ -25,6 +32,28 @@ class _MaintenanceLogFormPageState
   DateTime _date = DateTime.now();
   String? _selectedIntervalId;
   bool _isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.initialDescription != null) {
+      _descriptionController.text = widget.initialDescription!;
+    }
+    _selectedIntervalId = widget.initialIntervalId;
+    WidgetsBinding.instance.addPostFrameCallback((_) => _autoFillOdometer());
+  }
+
+  Future<void> _autoFillOdometer() async {
+    if (_odometerController.text.isNotEmpty) return;
+    final vehicle =
+        await ref.read(vehicleProvider(widget.vehicleId).future);
+    if (vehicle != null && mounted) {
+      setState(() {
+        _odometerController.text =
+            vehicle.currentOdometer.distance.toStringAsFixed(0);
+      });
+    }
+  }
 
   @override
   void dispose() {
@@ -56,6 +85,7 @@ class _MaintenanceLogFormPageState
         vehicleId: widget.vehicleId,
         date: _date,
         description: _descriptionController.text.trim(),
+        odometerAtService: odo,
         isSynced: false,
       );
 
