@@ -113,7 +113,8 @@ class AppDatabase extends _$AppDatabase {
           await m.createTable(maintenanceIntervals);
         }
         if (from < 3) {
-          await m.addColumn(vehicles, vehicles.alias);
+          await m.database.customStatement(
+              'ALTER TABLE vehicles ADD COLUMN alias TEXT');
         }
       },
     );
