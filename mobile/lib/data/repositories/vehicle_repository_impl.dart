@@ -84,6 +84,7 @@ class VehicleRepositoryImpl implements VehicleRepository {
   VehiclesCompanion _toEntry(Vehicle vehicle) {
     return VehiclesCompanion(
       id: drift.Value(vehicle.id),
+      name: drift.Value(''),
       brand: drift.Value(vehicle.brand),
       model: drift.Value(vehicle.model),
       year: drift.Value(vehicle.year),
