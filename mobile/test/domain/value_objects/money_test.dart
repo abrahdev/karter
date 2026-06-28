@@ -1,48 +1,47 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mobile/domain/value_objects/vin.dart';
 import 'package:mobile/domain/errors/domain_exception.dart';
+import 'package:mobile/domain/value_objects/money.dart';
 
 void main() {
-  group('Vin', () {
-    test('valid VIN should be created', () {
-      final vin = Vin('1HGCM82633A004352');
+  group('Money', () {
+    test('valid money should be created', () {
+      final money = Money(100.50, 'USD');
 
-      expect(vin.code, '1HGCM82633A004352');
+      expect(money.amount, 100.50);
+      expect(money.currency, 'USD');
     });
 
-    test('invalid VIN length should throw', () {
-      expect(() => Vin('123'), throwsA(isA<DomainException>()));
-    });
-
-    test('VIN with forbidden characters should throw', () {
+    test('negative amount should throw', () {
       expect(
-        () => Vin('1HGCM82633A00I352'),
+        () => Money(-10, 'USD'),
         throwsA(isA<DomainException>()),
       );
     });
 
-    test('manufacturer should be first 3 chars', () {
-      final vin = Vin('1HGCM82633A004352');
+    test('add should sum amounts', () {
+      final a = Money(50, 'USD');
+      final b = Money(30, 'USD');
+      final result = a.add(b);
 
-      expect(vin.getManufacturer(), '1HG');
+      expect(result.amount, 80);
     });
 
-    test('vehicle description should be chars 4-9', () {
-      final vin = Vin('1HGCM82633A004352');
+    test('add with different currencies should throw', () {
+      final a = Money(50, 'USD');
+      final b = Money(30, 'EUR');
 
-      expect(vin.getVehicleDescription(), 'CM8263');
+      expect(
+        () => a.add(b),
+        throwsA(isA<ArgumentError>()),
+      );
     });
 
-    test('check digit should be char 9', () {
-      final vin = Vin('1HGCM82633A004352');
+    test('multiply should scale the amount', () {
+      final money = Money(10, 'USD');
+      final result = money.multiply(3);
 
-      expect(vin.getCheckDigit(), '3');
-    });
-
-    test('serial number should be last characters', () {
-      final vin = Vin('1HGCM82633A004352');
-
-      expect(vin.getSerialNumber(), '004352');
+      expect(result.amount, 30);
+      expect(result.currency, 'USD');
     });
   });
 }

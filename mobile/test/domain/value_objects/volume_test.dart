@@ -1,48 +1,39 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mobile/domain/value_objects/vin.dart';
-import 'package:mobile/domain/errors/domain_exception.dart';
+import 'package:mobile/domain/enums/volume_unit.dart';
+import 'package:mobile/domain/value_objects/volume.dart';
 
 void main() {
-  group('Vin', () {
-    test('valid VIN should be created', () {
-      final vin = Vin('1HGCM82633A004352');
+  group('Volume', () {
+    test('valid volume should be created', () {
+      final vol = Volume(50, VolumeUnit.liters);
 
-      expect(vin.code, '1HGCM82633A004352');
+      expect(vol.amount, 50);
+      expect(vol.unit, VolumeUnit.liters);
     });
 
-    test('invalid VIN length should throw', () {
-      expect(() => Vin('123'), throwsA(isA<DomainException>()));
-    });
-
-    test('VIN with forbidden characters should throw', () {
+    test('negative amount should throw', () {
       expect(
-        () => Vin('1HGCM82633A00I352'),
-        throwsA(isA<DomainException>()),
+        () => Volume(-5, VolumeUnit.liters),
+        throwsA(isA<ArgumentError>()),
       );
     });
 
-    test('manufacturer should be first 3 chars', () {
-      final vin = Vin('1HGCM82633A004352');
+    test('add should sum volumes', () {
+      final a = Volume(30, VolumeUnit.liters);
+      final b = Volume(20, VolumeUnit.liters);
+      final result = a.add(b);
 
-      expect(vin.getManufacturer(), '1HG');
+      expect(result.amount, 50);
     });
 
-    test('vehicle description should be chars 4-9', () {
-      final vin = Vin('1HGCM82633A004352');
+    test('add with different units should throw', () {
+      final a = Volume(30, VolumeUnit.liters);
+      final b = Volume(5, VolumeUnit.gallons);
 
-      expect(vin.getVehicleDescription(), 'CM8263');
-    });
-
-    test('check digit should be char 9', () {
-      final vin = Vin('1HGCM82633A004352');
-
-      expect(vin.getCheckDigit(), '3');
-    });
-
-    test('serial number should be last characters', () {
-      final vin = Vin('1HGCM82633A004352');
-
-      expect(vin.getSerialNumber(), '004352');
+      expect(
+        () => a.add(b),
+        throwsA(isA<ArgumentError>()),
+      );
     });
   });
 }

@@ -1,48 +1,38 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mobile/domain/value_objects/vin.dart';
+import 'package:mobile/domain/enums/distance_unit.dart';
 import 'package:mobile/domain/errors/domain_exception.dart';
+import 'package:mobile/domain/value_objects/odometer.dart';
 
 void main() {
-  group('Vin', () {
-    test('valid VIN should be created', () {
-      final vin = Vin('1HGCM82633A004352');
+  group('Odometer', () {
+    test('valid odometer should be created', () {
+      final odo = Odometer(1000, DistanceUnit.kilometers);
 
-      expect(vin.code, '1HGCM82633A004352');
+      expect(odo.distance, 1000);
+      expect(odo.unit, DistanceUnit.kilometers);
     });
 
-    test('invalid VIN length should throw', () {
-      expect(() => Vin('123'), throwsA(isA<DomainException>()));
-    });
-
-    test('VIN with forbidden characters should throw', () {
+    test('negative distance should throw', () {
       expect(
-        () => Vin('1HGCM82633A00I352'),
+        () => Odometer(-10, DistanceUnit.kilometers),
         throwsA(isA<DomainException>()),
       );
     });
 
-    test('manufacturer should be first 3 chars', () {
-      final vin = Vin('1HGCM82633A004352');
+    test('add should increase distance', () {
+      final odo = Odometer(1000, DistanceUnit.kilometers);
+      final result = odo.add(500);
 
-      expect(vin.getManufacturer(), '1HG');
+      expect(result.distance, 1500);
     });
 
-    test('vehicle description should be chars 4-9', () {
-      final vin = Vin('1HGCM82633A004352');
+    test('add with negative value should throw', () {
+      final odo = Odometer(1000, DistanceUnit.kilometers);
 
-      expect(vin.getVehicleDescription(), 'CM8263');
-    });
-
-    test('check digit should be char 9', () {
-      final vin = Vin('1HGCM82633A004352');
-
-      expect(vin.getCheckDigit(), '3');
-    });
-
-    test('serial number should be last characters', () {
-      final vin = Vin('1HGCM82633A004352');
-
-      expect(vin.getSerialNumber(), '004352');
+      expect(
+        () => odo.add(-100),
+        throwsA(isA<DomainException>()),
+      );
     });
   });
 }
