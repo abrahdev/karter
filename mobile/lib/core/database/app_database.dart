@@ -120,12 +120,17 @@ class AppDatabase extends _$AppDatabase {
               'ALTER TABLE vehicles ADD COLUMN alias TEXT');
         }
         if (from < 4) {
-          await m.database.customStatement(
-              'ALTER TABLE maintenance_intervals ADD COLUMN months_interval INTEGER');
-          await m.database.customStatement(
-              'ALTER TABLE maintenance_intervals ADD COLUMN description TEXT');
-          await m.database.customStatement(
-              'ALTER TABLE maintenance_intervals ADD COLUMN last_reset_date TEXT');
+          for (final stmt in [
+            'ALTER TABLE maintenance_intervals ADD COLUMN months_interval INTEGER',
+            'ALTER TABLE maintenance_intervals ADD COLUMN description TEXT',
+            'ALTER TABLE maintenance_intervals ADD COLUMN last_reset_date TEXT',
+          ]) {
+            try {
+              await m.database.customStatement(stmt);
+            } catch (_) {
+              // column may already exist
+            }
+          }
         }
       },
     );
