@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MorePage extends StatelessWidget {
@@ -34,6 +35,14 @@ class MorePage extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 8),
+        ListTile(
+          leading: const Icon(Icons.storage),
+          title: const Text('Exportar / Importar datos'),
+          subtitle: const Text('Respaldar o transferir tu información'),
+          trailing: const Icon(Icons.chevron_right),
+          onTap: () => context.push('/data'),
+        ),
+        const Divider(),
         ListTile(
           leading: const Icon(Icons.menu_book),
           title: const Text('Documentación'),

@@ -19,4 +19,23 @@ class MaintenanceLog {
     this.odometerAtService = 0,
     this.replacedParts = const [],
   });
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'vehicleId': vehicleId,
+        'date': date.toIso8601String(),
+        'description': description,
+        'odometerAtService': odometerAtService,
+        'isSynced': isSynced,
+      };
+
+  factory MaintenanceLog.fromJson(Map<String, dynamic> json) =>
+      MaintenanceLog(
+        id: json['id'],
+        vehicleId: json['vehicleId'],
+        date: DateTime.parse(json['date']),
+        description: json['description'],
+        odometerAtService: (json['odometerAtService'] as num?)?.toDouble() ?? 0,
+        isSynced: json['isSynced'],
+      );
 }

@@ -1,7 +1,7 @@
-import '../value_objects/odometer.dart';
-import '../value_objects/volume.dart';
 import '../enums/distance_unit.dart';
 import '../enums/volume_unit.dart';
+import '../value_objects/odometer.dart';
+import '../value_objects/volume.dart';
 
 class FuelLog {
   final String id;
@@ -26,7 +26,6 @@ class FuelLog {
   });
 
   double get calculatedConsumption {
-    // Consumption is calculated as (volume / distance) * 100 to get liters per 100km
     if (odometerAtFueling.distance == 0) return 0;
     final distanceInKm = odometerAtFueling.unit == DistanceUnit.kilometers
         ? odometerAtFueling.distance
@@ -38,4 +37,34 @@ class FuelLog {
 
     return (volumeInLiters / distanceInKm) * 100;
   }
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'vehicleId': vehicleId,
+        'date': date.toIso8601String(),
+        'isSynced': isSynced,
+        'fueledVolumeAmount': fueledVolume.amount,
+        'fueledVolumeUnit': fueledVolume.unit.name,
+        'odometerAtFuelingDistance': odometerAtFueling.distance,
+        'odometerAtFuelingUnit': odometerAtFueling.unit.name,
+        'pricePerUnit': pricePerUnit,
+        'isFullTank': isFullTank,
+      };
+
+  factory FuelLog.fromJson(Map<String, dynamic> json) => FuelLog(
+        id: json['id'],
+        vehicleId: json['vehicleId'],
+        date: DateTime.parse(json['date']),
+        isSynced: json['isSynced'],
+        fueledVolume: Volume(
+          (json['fueledVolumeAmount'] as num).toDouble(),
+          VolumeUnit.values.byName(json['fueledVolumeUnit']),
+        ),
+        odometerAtFueling: Odometer(
+          (json['odometerAtFuelingDistance'] as num).toDouble(),
+          DistanceUnit.values.byName(json['odometerAtFuelingUnit']),
+        ),
+        pricePerUnit: (json['pricePerUnit'] as num?)?.toDouble(),
+        isFullTank: json['isFullTank'] ?? false,
+      );
 }

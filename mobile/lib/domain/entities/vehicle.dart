@@ -1,7 +1,8 @@
+import '../enums/distance_unit.dart';
 import '../enums/vehicle_type.dart';
+import '../value_objects/odometer.dart';
 import '../value_objects/plate.dart';
 import '../value_objects/vin.dart';
-import '../value_objects/odometer.dart';
 
 class Vehicle {
   final String id;
@@ -63,4 +64,36 @@ class Vehicle {
       type: type ?? this.type,
     );
   }
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'brand': brand,
+        'model': model,
+        'year': year,
+        'alias': alias,
+        'createdAt': createdAt.toIso8601String(),
+        'isSynced': isSynced,
+        'type': type.name,
+        'plate': plate.value,
+        'vin': vin.code,
+        'currentOdometerDistance': currentOdometer.distance,
+        'currentOdometerUnit': currentOdometer.unit.name,
+      };
+
+  factory Vehicle.fromJson(Map<String, dynamic> json) => Vehicle(
+        id: json['id'],
+        brand: json['brand'],
+        model: json['model'],
+        year: json['year'],
+        alias: json['alias'],
+        createdAt: DateTime.parse(json['createdAt']),
+        isSynced: json['isSynced'],
+        type: VehicleType.values.byName(json['type']),
+        plate: Plate(json['plate']),
+        vin: Vin(json['vin']),
+        currentOdometer: Odometer(
+          (json['currentOdometerDistance'] as num).toDouble(),
+          DistanceUnit.values.byName(json['currentOdometerUnit']),
+        ),
+      );
 }

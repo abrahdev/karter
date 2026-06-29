@@ -48,4 +48,33 @@ class MaintenanceInterval {
       isCustom: isCustom ?? this.isCustom,
     );
   }
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'vehicleId': vehicleId,
+        'label': label,
+        'kmInterval': kmInterval,
+        'monthsInterval': monthsInterval,
+        'description': description,
+        'lastResetKm': lastResetKm,
+        'lastResetDate': lastResetDate?.toIso8601String(),
+        'isEnabled': isEnabled,
+        'isCustom': isCustom,
+      };
+
+  factory MaintenanceInterval.fromJson(Map<String, dynamic> json) =>
+      MaintenanceInterval(
+        id: json['id'],
+        vehicleId: json['vehicleId'],
+        label: json['label'],
+        kmInterval: json['kmInterval'],
+        monthsInterval: json['monthsInterval'],
+        description: json['description'],
+        lastResetKm: (json['lastResetKm'] as num?)?.toDouble() ?? 0,
+        lastResetDate: json['lastResetDate'] != null
+            ? DateTime.parse(json['lastResetDate'])
+            : null,
+        isEnabled: json['isEnabled'] ?? true,
+        isCustom: json['isCustom'] ?? false,
+      );
 }

@@ -4,6 +4,7 @@ import 'package:mobile/data/repositories/fuel_log_repository_impl.dart';
 import 'package:mobile/data/repositories/maintenance_interval_repository_impl.dart';
 import 'package:mobile/data/repositories/maintenance_log_repository_impl.dart';
 import 'package:mobile/data/repositories/vehicle_repository_impl.dart';
+import 'package:mobile/data/services/export_service.dart';
 import 'package:mobile/domain/entities/fuel_log.dart';
 import 'package:mobile/domain/entities/maintenance_interval.dart';
 import 'package:mobile/domain/entities/maintenance_log.dart';
@@ -67,3 +68,12 @@ final maintenanceIntervalsProvider =
     return repo.getByVehicle(vehicleId);
   },
 );
+
+final exportServiceProvider = Provider<ExportService>((ref) {
+  return ExportService(
+    ref.watch(vehicleRepositoryProvider),
+    ref.watch(fuelLogRepositoryProvider),
+    ref.watch(maintenanceLogRepositoryProvider),
+    ref.watch(maintenanceIntervalRepositoryProvider),
+  );
+});
