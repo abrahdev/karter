@@ -43,11 +43,6 @@ class HomePage extends ConsumerWidget {
               return VehicleCard(
                 vehicle: vehicle,
                 onTap: () => context.push('/vehicle/${vehicle.id}'),
-                onDelete: () async {
-                  final repo = ref.read(vehicleRepositoryProvider);
-                  await repo.delete(vehicle.id);
-                  ref.invalidate(vehicleListProvider);
-                },
               );
             },
           );

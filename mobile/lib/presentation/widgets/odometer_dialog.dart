@@ -87,6 +87,9 @@ class _OdometerDialogState extends State<OdometerDialog> {
     final theme = Theme.of(context);
     final currentKm = widget.current.distance;
 
+    final mediaQuery = MediaQuery.of(context);
+    final isNarrow = mediaQuery.size.width < 480;
+
     return AlertDialog(
       title: const Text('Actualizar odómetro'),
       content: Column(
@@ -99,41 +102,81 @@ class _OdometerDialogState extends State<OdometerDialog> {
             ),
           ),
           const SizedBox(height: 16),
-          Row(
-            children: [
-              _quickBtn(Icons.remove_circle_outline, -10, theme),
-              const SizedBox(width: 4),
-              _quickBtn(null, -1, theme),
-              const SizedBox(width: 8),
-              Expanded(
-                child: TextField(
-                  controller: _controller,
-                  keyboardType: TextInputType.number,
-                  textAlign: TextAlign.center,
-                  style: theme.textTheme.headlineMedium,
-                  inputFormatters: [
-                    FilteringTextInputFormatter.allow(RegExp(r'[\d.]')),
-                  ],
-                  decoration: InputDecoration(
-                    suffixText: _unitLabel(),
-                    border: const OutlineInputBorder(),
-                    contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 8, vertical: 12),
-                  ),
-                  onChanged: (v) {
-                    setState(() {
-                      _rawValue = _parse(v);
-                      _validate();
-                    });
-                  },
-                ),
+          if (isNarrow) ...[
+            TextField(
+              controller: _controller,
+              keyboardType: TextInputType.number,
+              textAlign: TextAlign.center,
+              style: theme.textTheme.headlineMedium,
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(RegExp(r'[\d.]')),
+              ],
+              decoration: InputDecoration(
+                suffixText: _unitLabel(),
+                border: const OutlineInputBorder(),
+                contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 8, vertical: 12),
               ),
-              const SizedBox(width: 8),
-              _quickBtn(null, 1, theme),
-              const SizedBox(width: 4),
-              _quickBtn(Icons.add_circle_outline, 10, theme),
-            ],
-          ),
+              onChanged: (v) {
+                setState(() {
+                  _rawValue = _parse(v);
+                  _validate();
+                });
+              },
+            ),
+            const SizedBox(height: 8),
+            Wrap(
+              spacing: 4,
+              runSpacing: 4,
+              alignment: WrapAlignment.center,
+              children: [
+                _quickBtn(
+                    Icons.remove_circle_outline, -10, theme),
+                _quickBtn(null, -1, theme),
+                _quickBtn(null, 1, theme),
+                _quickBtn(Icons.add_circle_outline, 10, theme),
+              ],
+            ),
+          ] else ...[
+            Row(
+              children: [
+                _quickBtn(
+                    Icons.remove_circle_outline, -10, theme),
+                const SizedBox(width: 4),
+                _quickBtn(null, -1, theme),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: TextField(
+                    controller: _controller,
+                    keyboardType: TextInputType.number,
+                    textAlign: TextAlign.center,
+                    style: theme.textTheme.headlineMedium,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(
+                          RegExp(r'[\d.]')),
+                    ],
+                    decoration: InputDecoration(
+                      suffixText: _unitLabel(),
+                      border: const OutlineInputBorder(),
+                      contentPadding:
+                          const EdgeInsets.symmetric(
+                              horizontal: 8, vertical: 12),
+                    ),
+                    onChanged: (v) {
+                      setState(() {
+                        _rawValue = _parse(v);
+                        _validate();
+                      });
+                    },
+                  ),
+                ),
+                const SizedBox(width: 8),
+                _quickBtn(null, 1, theme),
+                const SizedBox(width: 4),
+                _quickBtn(Icons.add_circle_outline, 10, theme),
+              ],
+            ),
+          ],
           const SizedBox(height: 8),
           Wrap(
             spacing: 6,
@@ -156,7 +199,8 @@ class _OdometerDialogState extends State<OdometerDialog> {
               child: Row(
                 children: [
                   Icon(Icons.warning_amber_rounded,
-                      color: theme.colorScheme.onErrorContainer, size: 20),
+                      color: theme.colorScheme.onErrorContainer,
+                      size: 20),
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(

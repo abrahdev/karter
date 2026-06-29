@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile/core/database/app_database.dart';
+import 'package:mobile/domain/entities/maintenance_interval.dart';
 import 'package:mobile/domain/enums/distance_unit.dart';
 import 'package:mobile/domain/enums/vehicle_type.dart';
 import 'package:mobile/domain/value_objects/odometer.dart';
@@ -142,12 +143,15 @@ class VehicleDetailPage extends ConsumerWidget {
                 ),
               ),
               const SizedBox(height: 16),
-              Text('Mantenimiento',
+              Text('Proximo Mantenimiento',
                   style: theme.textTheme.titleMedium),
               const SizedBox(height: 8),
               intervalsAsync.when(
                 data: (intervals) {
-                  final enabled = intervals.where((i) => i.isEnabled);
+                  final enabled = intervals
+                      .where((i) => i.isEnabled)
+                      .toList();
+
                   if (enabled.isEmpty) {
                     return Card(
                       child: Padding(
@@ -159,67 +163,48 @@ class VehicleDetailPage extends ConsumerWidget {
                       ),
                     );
                   }
-                  return Column(
-                    children: enabled.map((interval) {
-                      final kmElapsed = interval.lastResetKm > 0
-                          ? distanceKm - interval.lastResetKm
-                          : distanceKm;
-                      final kmRemaining =
-                          interval.kmInterval - (kmElapsed % interval.kmInterval);
-                      final isKmDue = kmElapsed / interval.kmInterval > 0.9;
 
-                      String? monthsDue;
-                      bool isMonthsDue = false;
-                      if (interval.monthsInterval != null &&
-                          interval.lastResetDate != null) {
-                        final elapsedMonths = DateTime.now()
-                            .difference(interval.lastResetDate!)
-                            .inDays /
-                            30.44;
-                        monthsDue =
-                            '${(interval.monthsInterval! - elapsedMonths).round()} meses';
-                        isMonthsDue = elapsedMonths >= interval.monthsInterval!;
-                      } else if (interval.monthsInterval != null &&
-                          interval.lastResetDate == null) {
-                        isMonthsDue = false;
-                        monthsDue = '${interval.monthsInterval} meses';
+                  final intervalData = enabled
+                      .map((i) => _IntervalData.compute(i, distanceKm))
+                      .toList()
+                    ..sort((a, b) {
+                      if (a.isDue != b.isDue) return a.isDue ? -1 : 1;
+                      if (a.isApproaching != b.isApproaching) {
+                        return a.isApproaching ? -1 : 1;
                       }
+                      return a.sortKey.compareTo(b.sortKey);
+                    });
 
-                      final isDue = isKmDue || isMonthsDue;
-
-                      String subtitle;
-                      if (isDue) {
-                        subtitle = 'Vencido — realizá el servicio';
-                      } else {
-                        final parts = <String>[];
-                        if (interval.kmInterval < 999999) {
-                          parts.add(
-                              '${kmRemaining.toStringAsFixed(0)} km');
-                        }
-                        if (monthsDue != null) parts.add(monthsDue);
-                        subtitle = 'Próximo en ${parts.join(' / ')}';
+                  return Column(
+                    children: intervalData.map((data) {
+                      final interval = data.interval;
+                      Color? cardColor;
+                      Color? accentColor;
+                      if (data.isDue) {
+                        cardColor = theme.colorScheme.errorContainer;
+                        accentColor =
+                            theme.colorScheme.onErrorContainer;
+                      } else if (data.isApproaching) {
+                        cardColor = Colors.amber.withValues(alpha: 0.25);
+                        accentColor = Colors.amber.shade800;
                       }
 
                       return Card(
-                        color: isDue
-                            ? theme.colorScheme.errorContainer
-                            : null,
+                        color: cardColor,
                         child: ListTile(
                           leading: Icon(
                             Icons.build_circle_outlined,
-                            color: isDue
-                                ? theme.colorScheme.onErrorContainer
-                                : null,
+                            color: accentColor,
                           ),
                           title: Text(
                             interval.label,
                             style: TextStyle(
-                              fontWeight: isDue
+                              fontWeight: data.isDue
                                   ? FontWeight.bold
                                   : null,
                             ),
                           ),
-                          subtitle: Text(subtitle),
+                          subtitle: Text(data.subtitle),
                           trailing: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
@@ -227,10 +212,7 @@ class VehicleDetailPage extends ConsumerWidget {
                                   interval.description!.isNotEmpty)
                                 IconButton(
                                   icon: Icon(Icons.info,
-                                      color: isDue
-                                          ? theme
-                                              .colorScheme.onErrorContainer
-                                          : null),
+                                      color: accentColor),
                                   onPressed: () =>
                                       _showDescription(
                                           context, interval),
@@ -243,7 +225,12 @@ class VehicleDetailPage extends ConsumerWidget {
                                     'intervalId': interval.id,
                                   },
                                 ),
-                                child: const Text('Registrar'),
+                                child: Text(
+                                  'Registrar',
+                                  style: accentColor != null
+                                      ? TextStyle(color: accentColor)
+                                      : null,
+                                ),
                               ),
                             ],
                           ),
@@ -336,6 +323,83 @@ class VehicleDetailPage extends ConsumerWidget {
           Expanded(child: Text(value)),
         ],
       ),
+    );
+  }
+}
+
+class _IntervalData {
+  final MaintenanceInterval interval;
+  final double kmRemaining;
+  final double? monthsRemaining;
+  final bool isDue;
+  final bool isApproaching;
+  final String subtitle;
+  final double sortKey;
+
+  _IntervalData._({
+    required this.interval,
+    required this.kmRemaining,
+    required this.monthsRemaining,
+    required this.isDue,
+    required this.isApproaching,
+    required this.subtitle,
+    required this.sortKey,
+  });
+
+  static _IntervalData compute(MaintenanceInterval interval, double distanceKm) {
+    final kmSinceReset = interval.lastResetKm > 0 && distanceKm >= interval.lastResetKm
+        ? distanceKm - interval.lastResetKm
+        : distanceKm;
+    final kmRemaining = interval.kmInterval - kmSinceReset;
+    final isKmDue = kmSinceReset >= interval.kmInterval;
+
+    double? monthsRemaining;
+    bool isMonthsDue = false;
+    if (interval.monthsInterval != null && interval.lastResetDate != null) {
+      final monthsSinceReset =
+          DateTime.now().difference(interval.lastResetDate!).inDays / 30.44;
+      monthsRemaining = interval.monthsInterval! - monthsSinceReset;
+      isMonthsDue = monthsSinceReset >= interval.monthsInterval!;
+    }
+
+    final isDue = isKmDue || isMonthsDue;
+    final isApproaching = !isDue &&
+        ((kmRemaining > 0 && kmRemaining <= 100) ||
+            (monthsRemaining != null && monthsRemaining > 0 && monthsRemaining <= 1));
+
+    String subtitle;
+    if (isDue) {
+      subtitle = 'Vencido — realizá el servicio';
+    } else {
+      final parts = <String>[];
+      if (interval.kmInterval < 999999) {
+        final kmShow = kmRemaining > 0 ? kmRemaining.toStringAsFixed(0) : '0';
+        parts.add('$kmShow km');
+      }
+      if (monthsRemaining != null) {
+        parts.add('${monthsRemaining.round()} meses');
+      }
+      subtitle = 'Próximo en ${parts.join(' / ')}';
+    }
+
+    final kmProgress = interval.kmInterval < 999999 && kmSinceReset > 0
+        ? kmSinceReset / interval.kmInterval
+        : 0.0;
+    final timeProgress = interval.monthsInterval != null && interval.lastResetDate != null
+        ? DateTime.now().difference(interval.lastResetDate!).inDays /
+            30.44 /
+            interval.monthsInterval!
+        : 0.0;
+    final sortKey = kmProgress > timeProgress ? kmProgress : timeProgress;
+
+    return _IntervalData._(
+      interval: interval,
+      kmRemaining: kmRemaining,
+      monthsRemaining: monthsRemaining,
+      isDue: isDue,
+      isApproaching: isApproaching,
+      subtitle: subtitle,
+      sortKey: sortKey,
     );
   }
 }

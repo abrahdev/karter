@@ -76,6 +76,54 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
     super.dispose();
   }
 
+  Future<void> _delete() async {
+    if (!_isEditing || widget.vehicleId == null) return;
+
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Eliminar vehículo'),
+        content: const Text(
+          'Esta acción no se puede deshacer. '
+          'Se eliminarán todos los registros de combustible, '
+          'mantenimiento e intervalos asociados.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, false),
+            child: const Text('Cancelar'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(ctx, true),
+            style: FilledButton.styleFrom(
+              backgroundColor: Theme.of(context).colorScheme.error,
+            ),
+            child: const Text('Eliminar'),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed != true) return;
+
+    setState(() => _isLoading = true);
+
+    try {
+      final repo = ref.read(vehicleRepositoryProvider);
+      await repo.delete(widget.vehicleId!);
+      ref.invalidate(vehicleListProvider);
+      if (mounted) context.go('/');
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error: $e')),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
+  }
+
   Future<void> _save() async {
     if (!_formKey.currentState!.validate()) return;
 
@@ -268,6 +316,20 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
                     )
                   : Text(_isEditing ? 'Guardar cambios' : 'Agregar vehículo'),
             ),
+            if (_isEditing) ...[
+              const SizedBox(height: 12),
+              OutlinedButton.icon(
+                onPressed: _isLoading ? null : _delete,
+                icon: const Icon(Icons.delete),
+                label: const Text('Eliminar vehículo'),
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: Theme.of(context).colorScheme.error,
+                  side: BorderSide(
+                    color: Theme.of(context).colorScheme.error,
+                  ),
+                ),
+              ),
+            ],
           ],
         ),
       ),

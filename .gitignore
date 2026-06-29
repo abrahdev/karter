@@ -12,3 +12,4 @@ docs/.env*
 build/
 .pub-cache/
 .idea/
+.vscode/

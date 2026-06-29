@@ -51,6 +51,10 @@ class MaintenanceLogListPage extends ConsumerWidget {
                           '${log.odometerAtService.toStringAsFixed(0)} km',
                           style: theme.textTheme.bodySmall)
                       : null,
+                  onTap: () => context.push(
+                    '/vehicle/$vehicleId/maintenance/${log.id}',
+                    extra: log,
+                  ),
                 ),
               );
             },

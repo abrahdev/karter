@@ -25,6 +25,7 @@ migrate_working_dir/
 
 # Flutter/Dart/Pub related
 **/doc/api/
+devtools_options.yaml
 **/ios/Flutter/.last_build_id
 .dart_tool/
 .flutter-plugins-dependencies
@@ -43,3 +44,7 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Android keystore (contains passwords)
+/key.properties
+*.jks

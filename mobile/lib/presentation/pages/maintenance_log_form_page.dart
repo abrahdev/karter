@@ -8,12 +8,14 @@ import 'package:mobile/presentation/providers/vehicle_providers.dart';
 
 class MaintenanceLogFormPage extends ConsumerStatefulWidget {
   final String vehicleId;
+  final String? logId;
   final String? initialDescription;
   final String? initialIntervalId;
 
   const MaintenanceLogFormPage({
     super.key,
     required this.vehicleId,
+    this.logId,
     this.initialDescription,
     this.initialIntervalId,
   });
@@ -32,6 +34,7 @@ class _MaintenanceLogFormPageState
   DateTime _date = DateTime.now();
   String? _selectedIntervalId;
   bool _isLoading = false;
+  bool _isEditing = false;
 
   @override
   void initState() {
@@ -40,6 +43,7 @@ class _MaintenanceLogFormPageState
       _descriptionController.text = widget.initialDescription!;
     }
     _selectedIntervalId = widget.initialIntervalId;
+    _isEditing = widget.logId != null;
     WidgetsBinding.instance.addPostFrameCallback((_) => _autoFillOdometer());
   }
 
@@ -77,7 +81,7 @@ class _MaintenanceLogFormPageState
     setState(() => _isLoading = true);
 
     try {
-      final logId = uuid.v4();
+      final logId = _isEditing ? widget.logId! : uuid.v4();
       final odo = double.tryParse(_odometerController.text.trim()) ?? 0;
 
       final log = MaintenanceLog(
@@ -92,7 +96,7 @@ class _MaintenanceLogFormPageState
       final repo = ref.read(maintenanceLogRepositoryProvider);
       await repo.save(log);
 
-      if (_selectedIntervalId != null && odo > 0) {
+      if (!_isEditing && _selectedIntervalId != null && odo > 0) {
         final intervalRepo =
             ref.read(maintenanceIntervalRepositoryProvider);
         await intervalRepo.resetInterval(_selectedIntervalId!, odo);
@@ -112,13 +116,59 @@ class _MaintenanceLogFormPageState
     }
   }
 
+  Future<void> _delete() async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Eliminar servicio'),
+        content: const Text('¿Estás seguro de eliminar este servicio?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, false),
+            child: const Text('Cancelar'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(ctx, true),
+            style: FilledButton.styleFrom(
+              backgroundColor: Theme.of(ctx).colorScheme.error,
+              foregroundColor: Theme.of(ctx).colorScheme.onError,
+            ),
+            child: const Text('Eliminar'),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed != true) return;
+    setState(() => _isLoading = true);
+
+    try {
+      final repo = ref.read(maintenanceLogRepositoryProvider);
+      await repo.delete(widget.logId!);
+
+      ref.invalidate(maintenanceLogsProvider(widget.vehicleId));
+
+      if (mounted) context.pop();
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('Error: $e')));
+      }
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final intervalsAsync =
         ref.watch(maintenanceIntervalsProvider(widget.vehicleId));
+    final theme = Theme.of(context);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Nuevo servicio')),
+      appBar: AppBar(
+        title: Text(_isEditing ? 'Editar servicio' : 'Nuevo servicio'),
+      ),
       body: Form(
         key: _formKey,
         child: ListView(
@@ -178,8 +228,20 @@ class _MaintenanceLogFormPageState
                       width: 20,
                       child: CircularProgressIndicator(strokeWidth: 2),
                     )
-                  : const Text('Guardar servicio'),
+                  : Text(_isEditing ? 'Guardar cambios' : 'Guardar servicio'),
             ),
+            if (_isEditing) ...[
+              const SizedBox(height: 12),
+              OutlinedButton.icon(
+                onPressed: _isLoading ? null : _delete,
+                icon: const Icon(Icons.delete_outline),
+                label: const Text('Eliminar servicio'),
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: theme.colorScheme.error,
+                  side: BorderSide(color: theme.colorScheme.error),
+                ),
+              ),
+            ],
           ],
         ),
       ),

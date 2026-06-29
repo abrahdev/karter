@@ -5,13 +5,11 @@ import 'package:mobile/domain/enums/vehicle_type.dart';
 class VehicleCard extends StatelessWidget {
   final Vehicle vehicle;
   final VoidCallback onTap;
-  final VoidCallback? onDelete;
 
   const VehicleCard({
     super.key,
     required this.vehicle,
     required this.onTap,
-    this.onDelete,
   });
 
   @override
@@ -36,19 +34,9 @@ class VehicleCard extends StatelessWidget {
               ? '${vehicle.brand} ${vehicle.model} ${vehicle.year}'
               : '${vehicle.currentOdometer.distance.toStringAsFixed(0)} ${vehicle.currentOdometer.unit.name == 'kilometers' ? 'km' : 'mi'}',
         ),
-        trailing: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              '${vehicle.currentOdometer.distance.toStringAsFixed(0)} ${vehicle.currentOdometer.unit.name == 'kilometers' ? 'km' : 'mi'}',
-              style: theme.textTheme.bodySmall,
-            ),
-            if (onDelete != null)
-              IconButton(
-                icon: const Icon(Icons.delete_outline),
-                onPressed: onDelete,
-              ),
-          ],
+        trailing: Text(
+          '${vehicle.currentOdometer.distance.toStringAsFixed(0)} ${vehicle.currentOdometer.unit.name == 'kilometers' ? 'km' : 'mi'}',
+          style: theme.textTheme.bodySmall,
         ),
         onTap: onTap,
       ),
