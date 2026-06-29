@@ -1466,6 +1466,40 @@ class $MaintenanceLogsTable extends MaintenanceLogs
       'CHECK ("is_synced" IN (0, 1))',
     ),
   );
+  static const VerificationMeta _resetIntervalIdMeta = const VerificationMeta(
+    'resetIntervalId',
+  );
+  @override
+  late final GeneratedColumn<String> resetIntervalId = GeneratedColumn<String>(
+    'reset_interval_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _restoreResetKmMeta = const VerificationMeta(
+    'restoreResetKm',
+  );
+  @override
+  late final GeneratedColumn<double> restoreResetKm = GeneratedColumn<double>(
+    'restore_reset_km',
+    aliasedName,
+    true,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _restoreResetDateMeta = const VerificationMeta(
+    'restoreResetDate',
+  );
+  @override
+  late final GeneratedColumn<DateTime> restoreResetDate =
+      GeneratedColumn<DateTime>(
+        'restore_reset_date',
+        aliasedName,
+        true,
+        type: DriftSqlType.dateTime,
+        requiredDuringInsert: false,
+      );
   @override
   List<GeneratedColumn> get $columns => [
     id,
@@ -1474,6 +1508,9 @@ class $MaintenanceLogsTable extends MaintenanceLogs
     description,
     odometerAtService,
     isSynced,
+    resetIntervalId,
+    restoreResetKm,
+    restoreResetDate,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -1536,6 +1573,33 @@ class $MaintenanceLogsTable extends MaintenanceLogs
     } else if (isInserting) {
       context.missing(_isSyncedMeta);
     }
+    if (data.containsKey('reset_interval_id')) {
+      context.handle(
+        _resetIntervalIdMeta,
+        resetIntervalId.isAcceptableOrUnknown(
+          data['reset_interval_id']!,
+          _resetIntervalIdMeta,
+        ),
+      );
+    }
+    if (data.containsKey('restore_reset_km')) {
+      context.handle(
+        _restoreResetKmMeta,
+        restoreResetKm.isAcceptableOrUnknown(
+          data['restore_reset_km']!,
+          _restoreResetKmMeta,
+        ),
+      );
+    }
+    if (data.containsKey('restore_reset_date')) {
+      context.handle(
+        _restoreResetDateMeta,
+        restoreResetDate.isAcceptableOrUnknown(
+          data['restore_reset_date']!,
+          _restoreResetDateMeta,
+        ),
+      );
+    }
     return context;
   }
 
@@ -1569,6 +1633,18 @@ class $MaintenanceLogsTable extends MaintenanceLogs
         DriftSqlType.bool,
         data['${effectivePrefix}is_synced'],
       )!,
+      resetIntervalId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}reset_interval_id'],
+      ),
+      restoreResetKm: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}restore_reset_km'],
+      ),
+      restoreResetDate: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}restore_reset_date'],
+      ),
     );
   }
 
@@ -1586,6 +1662,9 @@ class MaintenanceLogEntry extends DataClass
   final String description;
   final double odometerAtService;
   final bool isSynced;
+  final String? resetIntervalId;
+  final double? restoreResetKm;
+  final DateTime? restoreResetDate;
   const MaintenanceLogEntry({
     required this.id,
     required this.vehicleId,
@@ -1593,6 +1672,9 @@ class MaintenanceLogEntry extends DataClass
     required this.description,
     required this.odometerAtService,
     required this.isSynced,
+    this.resetIntervalId,
+    this.restoreResetKm,
+    this.restoreResetDate,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -1603,6 +1685,15 @@ class MaintenanceLogEntry extends DataClass
     map['description'] = Variable<String>(description);
     map['odometer_at_service'] = Variable<double>(odometerAtService);
     map['is_synced'] = Variable<bool>(isSynced);
+    if (!nullToAbsent || resetIntervalId != null) {
+      map['reset_interval_id'] = Variable<String>(resetIntervalId);
+    }
+    if (!nullToAbsent || restoreResetKm != null) {
+      map['restore_reset_km'] = Variable<double>(restoreResetKm);
+    }
+    if (!nullToAbsent || restoreResetDate != null) {
+      map['restore_reset_date'] = Variable<DateTime>(restoreResetDate);
+    }
     return map;
   }
 
@@ -1614,6 +1705,15 @@ class MaintenanceLogEntry extends DataClass
       description: Value(description),
       odometerAtService: Value(odometerAtService),
       isSynced: Value(isSynced),
+      resetIntervalId: resetIntervalId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(resetIntervalId),
+      restoreResetKm: restoreResetKm == null && nullToAbsent
+          ? const Value.absent()
+          : Value(restoreResetKm),
+      restoreResetDate: restoreResetDate == null && nullToAbsent
+          ? const Value.absent()
+          : Value(restoreResetDate),
     );
   }
 
@@ -1629,6 +1729,11 @@ class MaintenanceLogEntry extends DataClass
       description: serializer.fromJson<String>(json['description']),
       odometerAtService: serializer.fromJson<double>(json['odometerAtService']),
       isSynced: serializer.fromJson<bool>(json['isSynced']),
+      resetIntervalId: serializer.fromJson<String?>(json['resetIntervalId']),
+      restoreResetKm: serializer.fromJson<double?>(json['restoreResetKm']),
+      restoreResetDate: serializer.fromJson<DateTime?>(
+        json['restoreResetDate'],
+      ),
     );
   }
   @override
@@ -1641,6 +1746,9 @@ class MaintenanceLogEntry extends DataClass
       'description': serializer.toJson<String>(description),
       'odometerAtService': serializer.toJson<double>(odometerAtService),
       'isSynced': serializer.toJson<bool>(isSynced),
+      'resetIntervalId': serializer.toJson<String?>(resetIntervalId),
+      'restoreResetKm': serializer.toJson<double?>(restoreResetKm),
+      'restoreResetDate': serializer.toJson<DateTime?>(restoreResetDate),
     };
   }
 
@@ -1651,6 +1759,9 @@ class MaintenanceLogEntry extends DataClass
     String? description,
     double? odometerAtService,
     bool? isSynced,
+    Value<String?> resetIntervalId = const Value.absent(),
+    Value<double?> restoreResetKm = const Value.absent(),
+    Value<DateTime?> restoreResetDate = const Value.absent(),
   }) => MaintenanceLogEntry(
     id: id ?? this.id,
     vehicleId: vehicleId ?? this.vehicleId,
@@ -1658,6 +1769,15 @@ class MaintenanceLogEntry extends DataClass
     description: description ?? this.description,
     odometerAtService: odometerAtService ?? this.odometerAtService,
     isSynced: isSynced ?? this.isSynced,
+    resetIntervalId: resetIntervalId.present
+        ? resetIntervalId.value
+        : this.resetIntervalId,
+    restoreResetKm: restoreResetKm.present
+        ? restoreResetKm.value
+        : this.restoreResetKm,
+    restoreResetDate: restoreResetDate.present
+        ? restoreResetDate.value
+        : this.restoreResetDate,
   );
   MaintenanceLogEntry copyWithCompanion(MaintenanceLogsCompanion data) {
     return MaintenanceLogEntry(
@@ -1671,6 +1791,15 @@ class MaintenanceLogEntry extends DataClass
           ? data.odometerAtService.value
           : this.odometerAtService,
       isSynced: data.isSynced.present ? data.isSynced.value : this.isSynced,
+      resetIntervalId: data.resetIntervalId.present
+          ? data.resetIntervalId.value
+          : this.resetIntervalId,
+      restoreResetKm: data.restoreResetKm.present
+          ? data.restoreResetKm.value
+          : this.restoreResetKm,
+      restoreResetDate: data.restoreResetDate.present
+          ? data.restoreResetDate.value
+          : this.restoreResetDate,
     );
   }
 
@@ -1682,7 +1811,10 @@ class MaintenanceLogEntry extends DataClass
           ..write('date: $date, ')
           ..write('description: $description, ')
           ..write('odometerAtService: $odometerAtService, ')
-          ..write('isSynced: $isSynced')
+          ..write('isSynced: $isSynced, ')
+          ..write('resetIntervalId: $resetIntervalId, ')
+          ..write('restoreResetKm: $restoreResetKm, ')
+          ..write('restoreResetDate: $restoreResetDate')
           ..write(')'))
         .toString();
   }
@@ -1695,6 +1827,9 @@ class MaintenanceLogEntry extends DataClass
     description,
     odometerAtService,
     isSynced,
+    resetIntervalId,
+    restoreResetKm,
+    restoreResetDate,
   );
   @override
   bool operator ==(Object other) =>
@@ -1705,7 +1840,10 @@ class MaintenanceLogEntry extends DataClass
           other.date == this.date &&
           other.description == this.description &&
           other.odometerAtService == this.odometerAtService &&
-          other.isSynced == this.isSynced);
+          other.isSynced == this.isSynced &&
+          other.resetIntervalId == this.resetIntervalId &&
+          other.restoreResetKm == this.restoreResetKm &&
+          other.restoreResetDate == this.restoreResetDate);
 }
 
 class MaintenanceLogsCompanion extends UpdateCompanion<MaintenanceLogEntry> {
@@ -1715,6 +1853,9 @@ class MaintenanceLogsCompanion extends UpdateCompanion<MaintenanceLogEntry> {
   final Value<String> description;
   final Value<double> odometerAtService;
   final Value<bool> isSynced;
+  final Value<String?> resetIntervalId;
+  final Value<double?> restoreResetKm;
+  final Value<DateTime?> restoreResetDate;
   final Value<int> rowid;
   const MaintenanceLogsCompanion({
     this.id = const Value.absent(),
@@ -1723,6 +1864,9 @@ class MaintenanceLogsCompanion extends UpdateCompanion<MaintenanceLogEntry> {
     this.description = const Value.absent(),
     this.odometerAtService = const Value.absent(),
     this.isSynced = const Value.absent(),
+    this.resetIntervalId = const Value.absent(),
+    this.restoreResetKm = const Value.absent(),
+    this.restoreResetDate = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   MaintenanceLogsCompanion.insert({
@@ -1732,6 +1876,9 @@ class MaintenanceLogsCompanion extends UpdateCompanion<MaintenanceLogEntry> {
     required String description,
     this.odometerAtService = const Value.absent(),
     required bool isSynced,
+    this.resetIntervalId = const Value.absent(),
+    this.restoreResetKm = const Value.absent(),
+    this.restoreResetDate = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : id = Value(id),
        vehicleId = Value(vehicleId),
@@ -1745,6 +1892,9 @@ class MaintenanceLogsCompanion extends UpdateCompanion<MaintenanceLogEntry> {
     Expression<String>? description,
     Expression<double>? odometerAtService,
     Expression<bool>? isSynced,
+    Expression<String>? resetIntervalId,
+    Expression<double>? restoreResetKm,
+    Expression<DateTime>? restoreResetDate,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -1754,6 +1904,9 @@ class MaintenanceLogsCompanion extends UpdateCompanion<MaintenanceLogEntry> {
       if (description != null) 'description': description,
       if (odometerAtService != null) 'odometer_at_service': odometerAtService,
       if (isSynced != null) 'is_synced': isSynced,
+      if (resetIntervalId != null) 'reset_interval_id': resetIntervalId,
+      if (restoreResetKm != null) 'restore_reset_km': restoreResetKm,
+      if (restoreResetDate != null) 'restore_reset_date': restoreResetDate,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -1765,6 +1918,9 @@ class MaintenanceLogsCompanion extends UpdateCompanion<MaintenanceLogEntry> {
     Value<String>? description,
     Value<double>? odometerAtService,
     Value<bool>? isSynced,
+    Value<String?>? resetIntervalId,
+    Value<double?>? restoreResetKm,
+    Value<DateTime?>? restoreResetDate,
     Value<int>? rowid,
   }) {
     return MaintenanceLogsCompanion(
@@ -1774,6 +1930,9 @@ class MaintenanceLogsCompanion extends UpdateCompanion<MaintenanceLogEntry> {
       description: description ?? this.description,
       odometerAtService: odometerAtService ?? this.odometerAtService,
       isSynced: isSynced ?? this.isSynced,
+      resetIntervalId: resetIntervalId ?? this.resetIntervalId,
+      restoreResetKm: restoreResetKm ?? this.restoreResetKm,
+      restoreResetDate: restoreResetDate ?? this.restoreResetDate,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -1799,6 +1958,15 @@ class MaintenanceLogsCompanion extends UpdateCompanion<MaintenanceLogEntry> {
     if (isSynced.present) {
       map['is_synced'] = Variable<bool>(isSynced.value);
     }
+    if (resetIntervalId.present) {
+      map['reset_interval_id'] = Variable<String>(resetIntervalId.value);
+    }
+    if (restoreResetKm.present) {
+      map['restore_reset_km'] = Variable<double>(restoreResetKm.value);
+    }
+    if (restoreResetDate.present) {
+      map['restore_reset_date'] = Variable<DateTime>(restoreResetDate.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -1814,6 +1982,9 @@ class MaintenanceLogsCompanion extends UpdateCompanion<MaintenanceLogEntry> {
           ..write('description: $description, ')
           ..write('odometerAtService: $odometerAtService, ')
           ..write('isSynced: $isSynced, ')
+          ..write('resetIntervalId: $resetIntervalId, ')
+          ..write('restoreResetKm: $restoreResetKm, ')
+          ..write('restoreResetDate: $restoreResetDate, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -4033,6 +4204,9 @@ typedef $$MaintenanceLogsTableCreateCompanionBuilder =
       required String description,
       Value<double> odometerAtService,
       required bool isSynced,
+      Value<String?> resetIntervalId,
+      Value<double?> restoreResetKm,
+      Value<DateTime?> restoreResetDate,
       Value<int> rowid,
     });
 typedef $$MaintenanceLogsTableUpdateCompanionBuilder =
@@ -4043,6 +4217,9 @@ typedef $$MaintenanceLogsTableUpdateCompanionBuilder =
       Value<String> description,
       Value<double> odometerAtService,
       Value<bool> isSynced,
+      Value<String?> resetIntervalId,
+      Value<double?> restoreResetKm,
+      Value<DateTime?> restoreResetDate,
       Value<int> rowid,
     });
 
@@ -4134,6 +4311,21 @@ class $$MaintenanceLogsTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
+  ColumnFilters<String> get resetIntervalId => $composableBuilder(
+    column: $table.resetIntervalId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get restoreResetKm => $composableBuilder(
+    column: $table.restoreResetKm,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get restoreResetDate => $composableBuilder(
+    column: $table.restoreResetDate,
+    builder: (column) => ColumnFilters(column),
+  );
+
   $$VehiclesTableFilterComposer get vehicleId {
     final $$VehiclesTableFilterComposer composer = $composerBuilder(
       composer: this,
@@ -4217,6 +4409,21 @@ class $$MaintenanceLogsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get resetIntervalId => $composableBuilder(
+    column: $table.resetIntervalId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get restoreResetKm => $composableBuilder(
+    column: $table.restoreResetKm,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get restoreResetDate => $composableBuilder(
+    column: $table.restoreResetDate,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   $$VehiclesTableOrderingComposer get vehicleId {
     final $$VehiclesTableOrderingComposer composer = $composerBuilder(
       composer: this,
@@ -4268,6 +4475,21 @@ class $$MaintenanceLogsTableAnnotationComposer
 
   GeneratedColumn<bool> get isSynced =>
       $composableBuilder(column: $table.isSynced, builder: (column) => column);
+
+  GeneratedColumn<String> get resetIntervalId => $composableBuilder(
+    column: $table.resetIntervalId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get restoreResetKm => $composableBuilder(
+    column: $table.restoreResetKm,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get restoreResetDate => $composableBuilder(
+    column: $table.restoreResetDate,
+    builder: (column) => column,
+  );
 
   $$VehiclesTableAnnotationComposer get vehicleId {
     final $$VehiclesTableAnnotationComposer composer = $composerBuilder(
@@ -4354,6 +4576,9 @@ class $$MaintenanceLogsTableTableManager
                 Value<String> description = const Value.absent(),
                 Value<double> odometerAtService = const Value.absent(),
                 Value<bool> isSynced = const Value.absent(),
+                Value<String?> resetIntervalId = const Value.absent(),
+                Value<double?> restoreResetKm = const Value.absent(),
+                Value<DateTime?> restoreResetDate = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => MaintenanceLogsCompanion(
                 id: id,
@@ -4362,6 +4587,9 @@ class $$MaintenanceLogsTableTableManager
                 description: description,
                 odometerAtService: odometerAtService,
                 isSynced: isSynced,
+                resetIntervalId: resetIntervalId,
+                restoreResetKm: restoreResetKm,
+                restoreResetDate: restoreResetDate,
                 rowid: rowid,
               ),
           createCompanionCallback:
@@ -4372,6 +4600,9 @@ class $$MaintenanceLogsTableTableManager
                 required String description,
                 Value<double> odometerAtService = const Value.absent(),
                 required bool isSynced,
+                Value<String?> resetIntervalId = const Value.absent(),
+                Value<double?> restoreResetKm = const Value.absent(),
+                Value<DateTime?> restoreResetDate = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => MaintenanceLogsCompanion.insert(
                 id: id,
@@ -4380,6 +4611,9 @@ class $$MaintenanceLogsTableTableManager
                 description: description,
                 odometerAtService: odometerAtService,
                 isSynced: isSynced,
+                resetIntervalId: resetIntervalId,
+                restoreResetKm: restoreResetKm,
+                restoreResetDate: restoreResetDate,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0

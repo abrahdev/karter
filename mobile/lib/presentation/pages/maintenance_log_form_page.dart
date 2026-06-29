@@ -39,23 +39,35 @@ class _MaintenanceLogFormPageState
   @override
   void initState() {
     super.initState();
-    if (widget.initialDescription != null) {
-      _descriptionController.text = widget.initialDescription!;
-    }
-    _selectedIntervalId = widget.initialIntervalId;
     _isEditing = widget.logId != null;
-    WidgetsBinding.instance.addPostFrameCallback((_) => _autoFillOdometer());
+    WidgetsBinding.instance.addPostFrameCallback((_) => _loadInitialData());
   }
 
-  Future<void> _autoFillOdometer() async {
-    if (_odometerController.text.isNotEmpty) return;
-    final vehicle =
-        await ref.read(vehicleProvider(widget.vehicleId).future);
-    if (vehicle != null && mounted) {
-      setState(() {
+  Future<void> _loadInitialData() async {
+    if (_isEditing) {
+      final repo = ref.read(maintenanceLogRepositoryProvider);
+      final log = await repo.getById(widget.logId!);
+      if (log != null && mounted) {
+        setState(() {
+          _date = log.date;
+          _descriptionController.text = log.description;
+          if (log.odometerAtService > 0) {
+            _odometerController.text =
+                log.odometerAtService.toStringAsFixed(0);
+          }
+        });
+      }
+    } else {
+      if (widget.initialDescription != null) {
+        _descriptionController.text = widget.initialDescription!;
+      }
+      _selectedIntervalId = widget.initialIntervalId;
+      final vehicle =
+          await ref.read(vehicleProvider(widget.vehicleId).future);
+      if (vehicle != null && mounted) {
         _odometerController.text =
             vehicle.currentOdometer.distance.toStringAsFixed(0);
-      });
+      }
     }
   }
 
@@ -84,6 +96,22 @@ class _MaintenanceLogFormPageState
       final logId = _isEditing ? widget.logId! : uuid.v4();
       final odo = double.tryParse(_odometerController.text.trim()) ?? 0;
 
+      String? resetIntervalId;
+      double? restoreResetKm;
+      DateTime? restoreResetDate;
+
+      if (!_isEditing && _selectedIntervalId != null && odo > 0) {
+        final intervalRepo =
+            ref.read(maintenanceIntervalRepositoryProvider);
+        final interval =
+            await intervalRepo.getById(_selectedIntervalId!);
+        if (interval != null) {
+          resetIntervalId = _selectedIntervalId;
+          restoreResetKm = interval.lastResetKm;
+          restoreResetDate = interval.lastResetDate;
+        }
+      }
+
       final log = MaintenanceLog(
         id: logId,
         vehicleId: widget.vehicleId,
@@ -91,15 +119,18 @@ class _MaintenanceLogFormPageState
         description: _descriptionController.text.trim(),
         odometerAtService: odo,
         isSynced: false,
+        resetIntervalId: resetIntervalId,
+        restoreResetKm: restoreResetKm,
+        restoreResetDate: restoreResetDate,
       );
 
       final repo = ref.read(maintenanceLogRepositoryProvider);
       await repo.save(log);
 
-      if (!_isEditing && _selectedIntervalId != null && odo > 0) {
+      if (resetIntervalId != null) {
         final intervalRepo =
             ref.read(maintenanceIntervalRepositoryProvider);
-        await intervalRepo.resetInterval(_selectedIntervalId!, odo);
+        await intervalRepo.resetInterval(resetIntervalId, odo);
       }
 
       ref.invalidate(maintenanceLogsProvider(widget.vehicleId));
@@ -144,9 +175,27 @@ class _MaintenanceLogFormPageState
 
     try {
       final repo = ref.read(maintenanceLogRepositoryProvider);
+      final log = await repo.getById(widget.logId!);
+
+      if (log != null &&
+          log.resetIntervalId != null &&
+          log.restoreResetKm != null) {
+        final intervalRepo =
+            ref.read(maintenanceIntervalRepositoryProvider);
+        final interval =
+            await intervalRepo.getById(log.resetIntervalId!);
+        if (interval != null) {
+          await intervalRepo.save(interval.copyWith(
+            lastResetKm: log.restoreResetKm!,
+            lastResetDate: log.restoreResetDate,
+          ));
+        }
+      }
+
       await repo.delete(widget.logId!);
 
       ref.invalidate(maintenanceLogsProvider(widget.vehicleId));
+      ref.invalidate(maintenanceIntervalsProvider(widget.vehicleId));
 
       if (mounted) context.pop();
     } catch (e) {
@@ -196,29 +245,31 @@ class _MaintenanceLogFormPageState
               ),
               keyboardType: TextInputType.number,
             ),
-            const SizedBox(height: 12),
-            intervalsAsync.when(
-              data: (intervals) {
-                final enabled = intervals.where((i) => i.isEnabled).toList();
-                if (enabled.isEmpty) return const SizedBox.shrink();
-                return DropdownButtonFormField<String>(
-                  value: _selectedIntervalId,
-                  decoration: const InputDecoration(
-                    labelText: 'Resetear intervalo (opcional)',
-                  ),
-                  items: enabled
-                      .map((i) => DropdownMenuItem(
-                            value: i.id,
-                            child: Text(i.label),
-                          ))
-                      .toList(),
-                  onChanged: (v) =>
-                      setState(() => _selectedIntervalId = v),
-                );
-              },
-              loading: () => const SizedBox.shrink(),
-              error: (_, __) => const SizedBox.shrink(),
-            ),
+            if (!_isEditing) ...[
+              const SizedBox(height: 12),
+              intervalsAsync.when(
+                data: (intervals) {
+                  final enabled = intervals.where((i) => i.isEnabled).toList();
+                  if (enabled.isEmpty) return const SizedBox.shrink();
+                  return DropdownButtonFormField<String>(
+                    value: _selectedIntervalId,
+                    decoration: const InputDecoration(
+                      labelText: 'Resetear intervalo (opcional)',
+                    ),
+                    items: enabled
+                        .map((i) => DropdownMenuItem(
+                              value: i.id,
+                              child: Text(i.label),
+                            ))
+                        .toList(),
+                    onChanged: (v) =>
+                        setState(() => _selectedIntervalId = v),
+                  );
+                },
+                loading: () => const SizedBox.shrink(),
+                error: (_, __) => const SizedBox.shrink(),
+              ),
+            ],
             const SizedBox(height: 24),
             FilledButton(
               onPressed: _isLoading ? null : _save,

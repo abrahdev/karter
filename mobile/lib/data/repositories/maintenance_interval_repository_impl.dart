@@ -26,6 +26,14 @@ class MaintenanceIntervalRepositoryImpl
   }
 
   @override
+  Future<MaintenanceInterval?> getById(String id) async {
+    final entry = await (_db.select(_db.maintenanceIntervals)
+          ..where((t) => t.id.equals(id)))
+        .getSingleOrNull();
+    return entry != null ? _toEntity(entry) : null;
+  }
+
+  @override
   Future<void> delete(String id) async {
     await (_db.delete(_db.maintenanceIntervals)
           ..where((t) => t.id.equals(id)))

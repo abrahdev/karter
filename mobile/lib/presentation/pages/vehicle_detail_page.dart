@@ -172,7 +172,7 @@ class VehicleDetailPage extends ConsumerWidget {
                       if (a.isApproaching != b.isApproaching) {
                         return a.isApproaching ? -1 : 1;
                       }
-                      return a.sortKey.compareTo(b.sortKey);
+                      return b.sortKey.compareTo(a.sortKey);
                     });
 
                   return Column(
@@ -355,11 +355,15 @@ class _IntervalData {
 
     double? monthsRemaining;
     bool isMonthsDue = false;
-    if (interval.monthsInterval != null && interval.lastResetDate != null) {
-      final monthsSinceReset =
-          DateTime.now().difference(interval.lastResetDate!).inDays / 30.44;
-      monthsRemaining = interval.monthsInterval! - monthsSinceReset;
-      isMonthsDue = monthsSinceReset >= interval.monthsInterval!;
+    if (interval.monthsInterval != null) {
+      if (interval.lastResetDate != null) {
+        final monthsSinceReset =
+            DateTime.now().difference(interval.lastResetDate!).inDays / 30.44;
+        monthsRemaining = interval.monthsInterval! - monthsSinceReset;
+        isMonthsDue = monthsSinceReset >= interval.monthsInterval!;
+      } else {
+        monthsRemaining = interval.monthsInterval!.toDouble();
+      }
     }
 
     final isDue = isKmDue || isMonthsDue;

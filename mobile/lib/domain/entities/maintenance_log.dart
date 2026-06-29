@@ -7,6 +7,9 @@ class MaintenanceLog {
   final String description;
   final double odometerAtService;
   final bool isSynced;
+  final String? resetIntervalId;
+  final double? restoreResetKm;
+  final DateTime? restoreResetDate;
 
   final List<ReplacedPart> replacedParts;
 
@@ -17,6 +20,9 @@ class MaintenanceLog {
     required this.description,
     required this.isSynced,
     this.odometerAtService = 0,
+    this.resetIntervalId,
+    this.restoreResetKm,
+    this.restoreResetDate,
     this.replacedParts = const [],
   });
 
@@ -27,6 +33,9 @@ class MaintenanceLog {
         'description': description,
         'odometerAtService': odometerAtService,
         'isSynced': isSynced,
+        'resetIntervalId': resetIntervalId,
+        'restoreResetKm': restoreResetKm,
+        'restoreResetDate': restoreResetDate?.toIso8601String(),
       };
 
   factory MaintenanceLog.fromJson(Map<String, dynamic> json) =>
@@ -37,5 +46,10 @@ class MaintenanceLog {
         description: json['description'],
         odometerAtService: (json['odometerAtService'] as num?)?.toDouble() ?? 0,
         isSynced: json['isSynced'],
+        resetIntervalId: json['resetIntervalId'],
+        restoreResetKm: (json['restoreResetKm'] as num?)?.toDouble(),
+        restoreResetDate: json['restoreResetDate'] != null
+            ? DateTime.parse(json['restoreResetDate'])
+            : null,
       );
 }

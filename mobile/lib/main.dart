@@ -86,6 +86,12 @@ final _router = GoRouter(
               },
             ),
             GoRoute(
+              path: 'settings',
+              builder: (_, state) => MaintenanceSettingsPage(
+                vehicleId: state.pathParameters['id']!,
+              ),
+            ),
+            GoRoute(
               path: ':logId',
               builder: (_, state) {
                 final extra = state.extra;
@@ -97,12 +103,6 @@ final _router = GoRouter(
                   initialDescription: log?.description,
                 );
               },
-            ),
-            GoRoute(
-              path: 'settings',
-              builder: (_, state) => MaintenanceSettingsPage(
-                vehicleId: state.pathParameters['id']!,
-              ),
             ),
           ],
         ),

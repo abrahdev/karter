@@ -25,6 +25,14 @@ class MaintenanceLogRepositoryImpl implements MaintenanceLogRepository {
   }
 
   @override
+  Future<MaintenanceLog?> getById(String id) async {
+    final entry = await (_db.select(_db.maintenanceLogs)
+          ..where((t) => t.id.equals(id)))
+        .getSingleOrNull();
+    return entry != null ? _toEntity(entry) : null;
+  }
+
+  @override
   Future<void> delete(String id) async {
     await (_db.delete(_db.maintenanceLogs)
           ..where((t) => t.id.equals(id)))
@@ -39,6 +47,9 @@ class MaintenanceLogRepositoryImpl implements MaintenanceLogRepository {
       description: entry.description,
       odometerAtService: entry.odometerAtService,
       isSynced: entry.isSynced,
+      resetIntervalId: entry.resetIntervalId,
+      restoreResetKm: entry.restoreResetKm,
+      restoreResetDate: entry.restoreResetDate,
     );
   }
 
@@ -50,6 +61,9 @@ class MaintenanceLogRepositoryImpl implements MaintenanceLogRepository {
       description: drift.Value(log.description),
       odometerAtService: drift.Value(log.odometerAtService),
       isSynced: drift.Value(log.isSynced),
+      resetIntervalId: drift.Value(log.resetIntervalId),
+      restoreResetKm: drift.Value(log.restoreResetKm),
+      restoreResetDate: drift.Value(log.restoreResetDate),
     );
   }
 }

@@ -52,6 +52,9 @@ class MaintenanceLogs extends Table {
   TextColumn get description => text()();
   RealColumn get odometerAtService => real().withDefault(const Constant(0.0))();
   BoolColumn get isSynced => boolean()();
+  TextColumn get resetIntervalId => text().nullable()();
+  RealColumn get restoreResetKm => real().nullable()();
+  DateTimeColumn get restoreResetDate => dateTime().nullable()();
 
   @override
   Set<Column> get primaryKey => {id};
@@ -101,7 +104,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
   @override
-  int get schemaVersion => 4;
+  int get schemaVersion => 5;
 
   @override
   MigrationStrategy get migration {
@@ -131,6 +134,20 @@ class AppDatabase extends _$AppDatabase {
               // column may already exist
             }
           }
+        }
+        if (from < 5) {
+          try {
+            await m.addColumn(
+                maintenanceLogs, maintenanceLogs.resetIntervalId);
+          } catch (_) {}
+          try {
+            await m.addColumn(
+                maintenanceLogs, maintenanceLogs.restoreResetKm);
+          } catch (_) {}
+          try {
+            await m.addColumn(
+                maintenanceLogs, maintenanceLogs.restoreResetDate);
+          } catch (_) {}
         }
       },
     );
