@@ -113,17 +113,39 @@ class Vin {
         +String value
     }
 
+    class VehicleType {
+        <<enumeration>>
+        combustion
+        electric
+        motorcycle
+    }
+
+    class MaintenanceInterval {
+        +String id
+        +String vehicleId
+        +String label
+        +int kmInterval
+        +int? monthsInterval
+        +String? description
+        +double lastResetKm
+        +DateTime? lastResetDate
+        +bool isEnabled
+        +bool isCustom
+    }
+
     class Vehicle {
         +String id
-        +String name
-        +Brand brand
-        +Model model
+        +String brand
+        +String model
         +int year
+        +String? alias
+        +VehicleType type
         +Plate plate
         +Vin vin
         +Odometer currentOdometer
         +DateTime createdAt
         +bool isSynced
+        +String get displayName
         +Vehicle(...)
         +copyWith(...) Vehicle
     }
@@ -166,6 +188,8 @@ class Vin {
 
     Vehicle "1" <-- "*" FuelLog : references by vehicleId
     Vehicle "1" <-- "*" MaintenanceLog : references by vehicleId
+    Vehicle "1" <-- "*" MaintenanceInterval : references by vehicleId
+    Vehicle --> VehicleType
 ```
 
  ## Objects
@@ -315,14 +339,37 @@ The root aggregate of the domain. It acts as the central hub tying the immutable
 classDiagram
     class Vehicle {
         +String id
-        +String name
         +String brand
         +String model
         +int year
+        +String? alias
+        +VehicleType type
         +DateTime createdAt
         +bool isSynced
+        +String get displayName
         +Vehicle(...)
         +copyWith(...) Vehicle
+    }
+
+    class VehicleType {
+        <<enumeration>>
+        combustion
+        electric
+        motorcycle
+    }
+
+    class MaintenanceInterval {
+        +String id
+        +String vehicleId
+        +String label
+        +int kmInterval
+        +int? monthsInterval
+        +String? description
+        +double lastResetKm
+        +DateTime? lastResetDate
+        +bool isEnabled
+        +bool isCustom
+        +MaintenanceInterval(...)
     }
 
 ```
