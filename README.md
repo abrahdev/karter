@@ -88,4 +88,4 @@ This project follows a [Code of Conduct](https://github.com/abrahdev/karter/blob
 
 [GNU Affero General Public License v3](LICENSE)
 
-20% of donations go to environmental causes.
+20% of donations and future revenue goes to organizations dedicated to traffic accidents
