@@ -19,6 +19,12 @@ jobs:
         with:
           flutter-version: '3.44.4'
 
+      - uses: actions/cache@v4
+        with:
+          path: ~/.pub-cache
+          key: flutter-pub-${{ hashFiles('mobile/pubspec.lock') }}
+          restore-keys: flutter-pub-
+
       - run: flutter pub get
         working-directory: mobile
 

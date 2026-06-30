@@ -1,0 +1,9 @@
+Initial alpha release.
+
+• Vehicle management (add, edit, delete)
+• Fuel consumption logging with economy calculations
+• Maintenance log with part replacement tracking
+• Customizable service interval reminders
+• CSV data export
+• Odometer tracking (km/mi)
+• Dark mode support

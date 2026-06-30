@@ -1,0 +1,19 @@
+Karter is an open source, local-first vehicle maintenance tracker.
+
+Track fuel consumption, log maintenance and repairs, monitor service intervals, and manage your vehicle fleet — all offline, no account required.
+
+Features:
+• Multi-vehicle management
+• Fuel economy tracking (MPG, L/100km, km/L)
+• Maintenance log with customizable intervals
+• Spare parts and replacement tracking
+• CSV export
+• Odometer readings (km/mi)
+• OBD-II integration (ELM327) — coming soon
+• Material Design 3 with dark mode
+
+Privacy-first: all data stays on your device. No telemetry, no tracking, no accounts.
+
+Built with Flutter. Licensed under AGPL v3.
+
+20% of donations go to environmental causes.
