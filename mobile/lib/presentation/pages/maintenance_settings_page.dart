@@ -145,22 +145,6 @@ class MaintenanceSettingsPage extends ConsumerWidget {
     );
   }
 
-  void _showDescription(BuildContext context, MaintenanceInterval interval) {
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(interval.label),
-        content: Text(interval.description ?? ''),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx),
-            child: const Text('Cerrar'),
-          ),
-        ],
-      ),
-    );
-  }
-
   void _addCustomInterval(BuildContext context, WidgetRef ref) {
     final nameCtrl = TextEditingController();
     final kmCtrl = TextEditingController();

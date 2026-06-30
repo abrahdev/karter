@@ -22,7 +22,6 @@ class _OdometerDialogState extends State<OdometerDialog> {
   double _rawValue = 0;
   String? _warning;
 
-  static const _kDeltaUnit = 1.0;
   static const _kOutlierThreshold = 5000.0;
 
   @override

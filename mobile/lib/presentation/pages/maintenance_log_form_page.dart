@@ -252,7 +252,7 @@ class _MaintenanceLogFormPageState
                   final enabled = intervals.where((i) => i.isEnabled).toList();
                   if (enabled.isEmpty) return const SizedBox.shrink();
                   return DropdownButtonFormField<String>(
-                    value: _selectedIntervalId,
+                    initialValue: _selectedIntervalId,
                     decoration: const InputDecoration(
                       labelText: 'Resetear intervalo (opcional)',
                     ),
@@ -267,7 +267,7 @@ class _MaintenanceLogFormPageState
                   );
                 },
                 loading: () => const SizedBox.shrink(),
-                error: (_, __) => const SizedBox.shrink(),
+                error: (_, _) => const SizedBox.shrink(),
               ),
             ],
             const SizedBox(height: 24),

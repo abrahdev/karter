@@ -2,10 +2,10 @@ import 'fitment_rule.dart';
 import 'vehicle.dart';
 
 enum PartCategory {
-  FLUIDS,
-  BRAKES,
-  FILTERS,
-  ELECTRONICS,
+  fluids,
+  brakes,
+  filters,
+  electronics,
 }
 
 class SparePart {

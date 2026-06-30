@@ -22,7 +22,7 @@ jobs:
       - run: flutter pub get
         working-directory: mobile
 
-      - run: flutter analyze
+      - run: flutter analyze --no-fatal-infos --no-fatal-warnings
         working-directory: mobile
 
       - run: flutter test

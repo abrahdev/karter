@@ -8,12 +8,12 @@ void main() {
         sku: 'OIL-5W30-5L',
         name: 'Engine Oil 5W-30',
         brand: 'Castrol',
-        category: PartCategory.FLUIDS,
+        category: PartCategory.fluids,
         attributes: {'Viscosity': '5W-30', 'Volume': '5L'},
       );
 
       expect(part.sku, 'OIL-5W30-5L');
-      expect(part.category, PartCategory.FLUIDS);
+      expect(part.category, PartCategory.fluids);
     });
 
     test('getAttribute returns correct value', () {
@@ -21,7 +21,7 @@ void main() {
         sku: 'BAT-001',
         name: 'Battery',
         brand: 'Bosch',
-        category: PartCategory.ELECTRONICS,
+        category: PartCategory.electronics,
         attributes: {'Voltage': '12V'},
       );
 
@@ -34,7 +34,7 @@ void main() {
         sku: 'OIL-5W30-5L',
         name: 'Engine Oil',
         brand: 'Castrol',
-        category: PartCategory.FLUIDS,
+        category: PartCategory.fluids,
       );
 
       // Needs a vehicle to test against; no rules means compatible

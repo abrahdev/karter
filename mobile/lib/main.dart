@@ -19,22 +19,22 @@ final _router = GoRouter(
   initialLocation: '/',
   routes: [
     ShellRoute(
-      builder: (_, __, child) => _Shell(child: child),
+      builder: (_, _, child) => _Shell(child: child),
       routes: [
         GoRoute(
           path: '/dashboard',
-          builder: (_, __) => const DashboardPage(),
+          builder: (_, _) => const DashboardPage(),
         ),
-        GoRoute(path: '/', builder: (_, __) => const HomePage()),
+        GoRoute(path: '/', builder: (_, _) => const HomePage()),
         GoRoute(
           path: '/more',
-          builder: (_, __) => const MorePage(),
+          builder: (_, _) => const MorePage(),
         ),
       ],
     ),
     GoRoute(
       path: '/vehicle/new',
-      builder: (_, __) => const VehicleFormPage(),
+      builder: (_, _) => const VehicleFormPage(),
     ),
     GoRoute(
       path: '/vehicle/:id',
@@ -110,7 +110,7 @@ final _router = GoRouter(
     ),
     GoRoute(
       path: '/data',
-      builder: (_, __) => const DataManagerPage(),
+      builder: (_, _) => const DataManagerPage(),
     ),
   ],
 );

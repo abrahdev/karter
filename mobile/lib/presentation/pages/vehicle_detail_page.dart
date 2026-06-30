@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mobile/core/database/app_database.dart';
 import 'package:mobile/domain/entities/maintenance_interval.dart';
 import 'package:mobile/domain/enums/distance_unit.dart';
 import 'package:mobile/domain/enums/vehicle_type.dart';
@@ -241,7 +240,7 @@ class VehicleDetailPage extends ConsumerWidget {
                 },
                 loading: () => const Center(
                     child: CircularProgressIndicator()),
-                error: (_, __) => const SizedBox.shrink(),
+                error: (_, _) => const SizedBox.shrink(),
               ),
               const SizedBox(height: 24),
               OutlinedButton.icon(
