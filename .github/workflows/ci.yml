@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+    paths-ignore:
+      - "VERSION"
+      - "docs/**"
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: stable
+
+      - run: flutter pub get
+        working-directory: mobile
+
+      - run: flutter analyze
+        working-directory: mobile
+
+      - run: flutter test
+        working-directory: mobile
+
+      - run: flutter build apk --debug
+        working-directory: mobile

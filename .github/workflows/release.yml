@@ -1,0 +1,98 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "VERSION"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: stable
+
+      - run: flutter pub get
+        working-directory: mobile
+
+      - run: flutter analyze
+        working-directory: mobile
+
+      - run: flutter test
+        working-directory: mobile
+
+      - name: Setup keystore
+        run: |
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > /tmp/upload-keystore.jks
+          echo "storeFile=/tmp/upload-keystore.jks" > mobile/android/key.properties
+          echo "storePassword=${{ secrets.KEYSTORE_PASSWORD }}" >> mobile/android/key.properties
+          echo "keyPassword=${{ secrets.KEYSTORE_PASSWORD }}" >> mobile/android/key.properties
+          echo "keyAlias=${{ secrets.KEYSTORE_ALIAS }}" >> mobile/android/key.properties
+
+      - run: flutter build apk --release
+        working-directory: mobile
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: app-release-apk
+          path: mobile/build/app/outputs/flutter-apk/app-release.apk
+
+  deploy-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+
+      - run: pnpm install
+
+      - run: cd docs && pnpm build
+
+      - uses: actions/configure-pages@v4
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/build
+
+      - uses: actions/deploy-pages@v4
+
+  release:
+    runs-on: ubuntu-latest
+    needs: [build-android, deploy-docs]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: app-release-apk
+
+      - name: Create GitHub Release
+        run: |
+          VERSION=$(cat VERSION)
+          gh release create "v$VERSION" \
+            --title "v$VERSION" \
+            --generate-notes \
+            app-release.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

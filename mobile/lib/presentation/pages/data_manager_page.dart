@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'dart:io' show File, Platform;
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -126,16 +126,34 @@ class _DataManagerPageState extends ConsumerState<DataManagerPage> {
     try {
       final service = ref.read(exportServiceProvider);
       final json = await service.exportVehicles(_selectedIds);
+      final fileName =
+          'karter-export-${DateTime.now().millisecondsSinceEpoch}.json';
 
-      final dir = await getTemporaryDirectory();
-      final file = File(
-          '${dir.path}/karter-export-${DateTime.now().millisecondsSinceEpoch}.json');
-      await file.writeAsString(json);
+      if (Platform.isLinux) {
+        final path = await FilePicker.platform.saveFile(
+          dialogTitle: 'Guardar exportación',
+          fileName: fileName,
+          type: FileType.custom,
+          allowedExtensions: ['json'],
+        );
+        if (path != null) {
+          await File(path).writeAsString(json);
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Exportado en $path')),
+            );
+          }
+        }
+      } else {
+        final dir = await getTemporaryDirectory();
+        final file = File('${dir.path}/$fileName');
+        await file.writeAsString(json);
 
-      await Share.shareXFiles(
-        [XFile(file.path)],
-        text: 'Exportación Karter - ${_selectedIds.length} vehículo(s)',
-      );
+        await Share.shareXFiles(
+          [XFile(file.path)],
+          text: 'Exportación Karter - ${_selectedIds.length} vehículo(s)',
+        );
+      }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
