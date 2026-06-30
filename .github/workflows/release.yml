@@ -46,10 +46,16 @@ jobs:
       - run: flutter build apk --release
         working-directory: mobile
 
+      - name: Rename APK
+        run: |
+          VERSION=$(cat VERSION)
+          cp mobile/build/app/outputs/flutter-apk/app-release.apk \
+             "karter-${VERSION}.apk"
+
       - uses: actions/upload-artifact@v4
         with:
           name: app-release-apk
-          path: mobile/build/app/outputs/flutter-apk/app-release.apk
+          path: karter-*.apk
 
   deploy-docs:
     runs-on: ubuntu-latest
@@ -99,13 +105,14 @@ jobs:
 
       - name: Package Linux bundle
         run: |
+          VERSION=$(cat VERSION)
           cd mobile/build/linux/x64/release
-          tar czf ../../../../../karter-linux-x64.tar.gz bundle/
+          tar czf "${GITHUB_WORKSPACE}/karter-${VERSION}-linux-x64.tar.gz" bundle/
 
       - uses: actions/upload-artifact@v4
         with:
           name: karter-linux-x64
-          path: karter-linux-x64.tar.gz
+          path: karter-*-linux-x64.tar.gz
 
   release:
     runs-on: ubuntu-latest
@@ -127,7 +134,7 @@ jobs:
           gh release create "v$VERSION" \
             --title "v$VERSION" \
             --generate-notes \
-            app-release.apk \
-            karter-linux-x64.tar.gz
+            karter-*.apk \
+            karter-*-linux-x64.tar.gz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
