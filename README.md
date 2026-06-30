@@ -8,7 +8,7 @@
 [![CI](https://github.com/abrahdev/karter/actions/workflows/ci.yml/badge.svg)](https://github.com/abrahdev/karter/actions/workflows/ci.yml)
 [![Release](https://github.com/abrahdev/karter/actions/workflows/release.yml/badge.svg)](https://github.com/abrahdev/karter/actions/workflows/release.yml)
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](LICENSE)
-![Version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fabrahdev%2Fkarter%2Fmain%2FVERSION&query=%24&label=version&color=%23facc15)
+![Version](https://img.shields.io/github/v/release/abrahdev/karter?filter=v*&label=version&color=facc15)
 [![Docs](https://img.shields.io/badge/docs-karter-%23695609)](https://abrahdev.github.io/karter/)
 [![F-Droid](https://img.shields.io/badge/F--Droid-coming_soon-%2300b341)](https://f-droid.org)
 
