@@ -71,32 +71,6 @@ jobs:
           name: app-release-apk
           path: karter-*.apk
 
-  deploy-docs:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: pnpm/action-setup@v3
-        with:
-          version: 9
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: "pnpm"
-
-      - run: pnpm install
-
-      - run: cd docs && pnpm build
-
-      - uses: actions/configure-pages@v4
-
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: docs/build
-
-      - uses: actions/deploy-pages@v4
-
   build-linux:
     runs-on: ubuntu-latest
     steps:
@@ -136,7 +110,7 @@ jobs:
 
   release:
     runs-on: ubuntu-latest
-    needs: [build-android, build-linux, deploy-docs]
+    needs: [build-android, build-linux]
     steps:
       - uses: actions/checkout@v4
 

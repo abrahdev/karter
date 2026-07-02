@@ -8,6 +8,11 @@ const appVersion = fs
   .readFileSync(path.join(__dirname, "..", "VERSION"), "utf-8")
   .trim();
 
+const versionsJson = JSON.parse(
+  fs.readFileSync(path.join(__dirname, "versions.json"), "utf-8")
+);
+const lastVersion = versionsJson[0];
+
 const config: Config = {
   title: `Karter v${appVersion}`,
   tagline: "Open Source Vehicle Maintenance & Social Impact",
@@ -27,7 +32,6 @@ const config: Config = {
   },
 
   onBrokenLinks: "warn",
-  onBrokenMarkdownLinks: "warn",
 
   i18n: {
     defaultLocale: "en",
@@ -36,6 +40,9 @@ const config: Config = {
 
   markdown: {
     mermaid: true,
+    hooks: {
+      onBrokenMarkdownLinks: "warn",
+    },
   },
 
   themes: ["@docusaurus/theme-mermaid"],
@@ -48,7 +55,7 @@ const config: Config = {
           sidebarPath: "./sidebars.ts",
           editUrl: "https://github.com/abrahdev/karter/edit/main/docs/",
           routeBasePath: '/',
-          lastVersion: appVersion,
+          lastVersion,
           versions: {
             current: {
               label: `Next (${appVersion})`,
