@@ -47,7 +47,13 @@ const config: Config = {
         docs: {
           sidebarPath: "./sidebars.ts",
           editUrl: "https://github.com/abrahdev/karter/edit/main/docs/",
-          routeBasePath: '/', 
+          routeBasePath: '/',
+          lastVersion: appVersion,
+          versions: {
+            current: {
+              label: `Next (${appVersion})`,
+            },
+          },
         },
         blog: false,
         theme: {
@@ -76,6 +82,7 @@ const config: Config = {
           position: "right",
           label: "Docs",
         },
+        { type: "docsVersionDropdown", position: "right" },
         {
           href: "https://github.com/abrahdev/karter",
           label: "GitHub",
