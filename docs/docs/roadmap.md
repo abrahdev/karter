@@ -17,7 +17,7 @@
 
 ### Phase 2: Dashboard & Data (Current)
 - Dashboard with charts and statistics.
-- Export / import data (JSON / CSV).
+- Export / import data (JSON).
 - Search and filter logs by date, type, cost.
 
 ### Phase 3: Sync & Notifications

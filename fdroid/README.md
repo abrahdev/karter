@@ -29,7 +29,7 @@ Description: |
   • Fuel economy tracking (MPG, L/100km, km/L)
   • Maintenance log with customizable intervals
   • Spare parts and replacement tracking
-  • CSV export
+  • JSON export
   • Odometer readings (km/mi)
   • OBD-II integration (ELM327) - coming soon
   • Material Design 3 with dark mode

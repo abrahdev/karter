@@ -21,7 +21,7 @@
 - **Maintenance log** — track repairs, part replacements, and service history
 - **Service intervals** — set custom reminders based on distance or time
 - **Spare parts** — catalog and track replacement parts with costs
-- **CSV export** — export all data for external analysis
+- **JSON export** — export all data for external analysis
 - **Odometer tracking** — log readings in km or mi
 - **OBD-II integration** — ELM327 support (coming soon)
 - **Material Design 3** — with dark mode support

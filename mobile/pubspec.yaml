@@ -41,7 +41,7 @@ flutter_launcher_icons:
   android: true
   ios: true
   image_path: "assets/branding/karter-icon-1024.png"
-  adaptive_icon_background: "#695609"
+  adaptive_icon_background: "#ffffff"
   adaptive_icon_foreground: "assets/branding/karter-icon-1024.png"
   min_sdk_android: 21
   remove_alpha_ios: true
