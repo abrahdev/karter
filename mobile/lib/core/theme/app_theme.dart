@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
 class AppTheme {
+  static const fallbackSeed = Colors.amber;
+
   static ThemeData from(ColorScheme? colorScheme, Brightness brightness) {
     final scheme = colorScheme ??
         ColorScheme.fromSeed(
-          seedColor: Colors.amber,
+          seedColor: fallbackSeed,
           brightness: brightness,
         );
 

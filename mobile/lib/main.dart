@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile/core/theme/app_theme.dart';
-import 'package:dynamic_color/dynamic_color.dart';
+import 'package:system_theme/system_theme.dart';
 import 'package:mobile/presentation/pages/dashboard_page.dart';
 import 'package:mobile/presentation/pages/data_manager_page.dart';
 import 'package:mobile/presentation/pages/fuel_log_form_page.dart';
@@ -167,26 +167,41 @@ class _Shell extends StatelessWidget {
 }
 
 class KarterApp extends StatelessWidget {
-  const KarterApp({super.key});
+  final Color? accentColor;
+
+  const KarterApp({super.key, this.accentColor});
 
   @override
   Widget build(BuildContext context) {
-    return DynamicColorBuilder(
-      builder: (lightDynamic, darkDynamic) {
-        return MaterialApp.router(
-          title: 'Karter',
-          theme: AppTheme.from(lightDynamic, Brightness.light),
-          darkTheme: AppTheme.from(darkDynamic, Brightness.dark),
-          routerConfig: _router,
-          debugShowCheckedModeBanner: false,
-        );
-      },
+    final lightScheme = accentColor != null
+        ? ColorScheme.fromSeed(
+            seedColor: accentColor!,
+            brightness: Brightness.light,
+          )
+        : null;
+    final darkScheme = accentColor != null
+        ? ColorScheme.fromSeed(
+            seedColor: accentColor!,
+            brightness: Brightness.dark,
+          )
+        : null;
+
+    return MaterialApp.router(
+      title: 'Karter',
+      theme: AppTheme.from(lightScheme, Brightness.light),
+      darkTheme: AppTheme.from(darkScheme, Brightness.dark),
+      routerConfig: _router,
+      debugShowCheckedModeBanner: false,
     );
   }
 }
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemTheme.fallbackColor = AppTheme.fallbackSeed;
+  await SystemTheme.accentColor.load();
+  final accent = SystemTheme.accentColor.accent;
   runApp(
-    const ProviderScope(child: KarterApp()),
+    ProviderScope(child: KarterApp(accentColor: accent)),
   );
 }
