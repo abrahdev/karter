@@ -270,16 +270,13 @@ class _IntervalTile extends StatelessWidget {
           ),
         ),
         subtitle: Text(subtitle),
+        onTap: interval.description != null &&
+                interval.description!.isNotEmpty
+            ? () => _showDescription(context)
+            : null,
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-              if (interval.description != null &&
-                  interval.description!.isNotEmpty)
-                IconButton(
-                  icon: const Icon(Icons.info),
-                  onPressed: () => _showDescription(context),
-                  tooltip: 'Información',
-                ),
             IconButton(
               icon: const Icon(Icons.edit),
               onPressed: onEdit,

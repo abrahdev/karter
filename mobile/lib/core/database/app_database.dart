@@ -15,8 +15,8 @@ class Vehicles extends Table {
   TextColumn get brand => text()();
   TextColumn get model => text()();
   IntColumn get year => integer()();
-  TextColumn get plate => text()();
-  TextColumn get vin => text()();
+  TextColumn get plate => text().nullable()();
+  TextColumn get vin => text().nullable()();
   RealColumn get odometerDistance => real()();
   TextColumn get odometerUnit => text()();
   DateTimeColumn get createdAt => dateTime()();
@@ -104,7 +104,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
   @override
-  int get schemaVersion => 5;
+  int get schemaVersion => 6;
 
   @override
   MigrationStrategy get migration {
@@ -148,6 +148,41 @@ class AppDatabase extends _$AppDatabase {
             await m.addColumn(
                 maintenanceLogs, maintenanceLogs.restoreResetDate);
           } catch (_) {}
+        }
+        if (from < 6) {
+          await m.database.customStatement('PRAGMA foreign_keys = OFF');
+          await m.database.customStatement('''
+            CREATE TABLE IF NOT EXISTS vehicles_new (
+              id TEXT NOT NULL PRIMARY KEY,
+              name TEXT NOT NULL DEFAULT '',
+              alias TEXT,
+              brand TEXT NOT NULL,
+              model TEXT NOT NULL,
+              year INTEGER NOT NULL,
+              plate TEXT,
+              vin TEXT,
+              odometer_distance REAL NOT NULL,
+              odometer_unit TEXT NOT NULL,
+              created_at TEXT NOT NULL,
+              is_synced INTEGER NOT NULL,
+              type TEXT NOT NULL DEFAULT 'combustion'
+            )
+          ''');
+          await m.database.customStatement('''
+            INSERT INTO vehicles_new (
+              id, name, alias, brand, model, year, plate, vin,
+              odometer_distance, odometer_unit, created_at, is_synced, type
+            )
+            SELECT
+              id, name, alias, brand, model, year, plate, vin,
+              odometer_distance, odometer_unit, created_at, is_synced,
+              COALESCE(type, 'combustion')
+            FROM vehicles
+          ''');
+          await m.database.customStatement('DROP TABLE vehicles');
+          await m.database.customStatement(
+              'ALTER TABLE vehicles_new RENAME TO vehicles');
+          await m.database.customStatement('PRAGMA foreign_keys = ON');
         }
       },
     );

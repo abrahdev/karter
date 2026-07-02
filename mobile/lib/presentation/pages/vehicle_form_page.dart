@@ -51,8 +51,8 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
       _brandController.text = vehicle.brand;
       _modelController.text = vehicle.model;
       _yearController.text = vehicle.year.toString();
-      _plateController.text = vehicle.plate.value;
-      _vinController.text = vehicle.vin.code;
+      _plateController.text = vehicle.plate?.value ?? '';
+      _vinController.text = vehicle.vin?.code ?? '';
       _odometerController.text =
           vehicle.currentOdometer.distance.toStringAsFixed(0);
       _odometerUnit = vehicle.currentOdometer.unit;
@@ -140,8 +140,12 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
         createdAt: DateTime.now(),
         isSynced: false,
         type: _vehicleType,
-        plate: Plate(_plateController.text.trim()),
-        vin: Vin(_vinController.text.trim()),
+        plate: _plateController.text.trim().isNotEmpty
+            ? Plate(_plateController.text.trim())
+            : null,
+        vin: _vinController.text.trim().isNotEmpty
+            ? Vin(_vinController.text.trim())
+            : null,
         currentOdometer: Odometer(
           double.parse(_odometerController.text.trim()),
           _odometerUnit,
@@ -243,19 +247,19 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
             const SizedBox(height: 12),
             TextFormField(
               controller: _plateController,
-              decoration: const InputDecoration(labelText: 'Placa'),
+              decoration: const InputDecoration(
+                labelText: 'Placa (opcional)',
+              ),
               textCapitalization: TextCapitalization.characters,
-              validator: (v) =>
-                  v == null || v.trim().isEmpty ? 'Requerido' : null,
             ),
             const SizedBox(height: 12),
             TextFormField(
               controller: _vinController,
-              decoration: const InputDecoration(labelText: 'VIN'),
+              decoration: const InputDecoration(
+                labelText: 'VIN (opcional)',
+              ),
               textCapitalization: TextCapitalization.characters,
               maxLength: 17,
-              validator: (v) =>
-                  v == null || v.trim().isEmpty ? 'Requerido' : null,
             ),
             const SizedBox(height: 12),
             Row(

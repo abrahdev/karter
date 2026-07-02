@@ -83,8 +83,10 @@ class VehicleDetailPage extends ConsumerWidget {
                         ],
                       ),
                       const SizedBox(height: 8),
-                      _infoRow(Icons.badge, 'Placa', vehicle.plate.value),
-                      _infoRow(Icons.qr_code, 'VIN', vehicle.vin.code),
+                      if (vehicle.plate != null)
+                        _infoRow(Icons.badge, 'Placa', vehicle.plate!.value),
+                      if (vehicle.vin != null)
+                        _infoRow(Icons.qr_code, 'VIN', vehicle.vin!.code),
                       _infoRow(Icons.directions_car,
                           'Marca / Modelo',
                           '${vehicle.brand} ${vehicle.model}'),
@@ -204,18 +206,14 @@ class VehicleDetailPage extends ConsumerWidget {
                             ),
                           ),
                           subtitle: Text(data.subtitle),
+                          onTap: interval.description != null &&
+                                  interval.description!.isNotEmpty
+                              ? () => _showDescription(
+                                  context, interval)
+                              : null,
                           trailing: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              if (interval.description != null &&
-                                  interval.description!.isNotEmpty)
-                                IconButton(
-                                  icon: Icon(Icons.info,
-                                      color: accentColor),
-                                  onPressed: () =>
-                                      _showDescription(
-                                          context, interval),
-                                ),
                               TextButton(
                                 onPressed: () => context.push(
                                   '/vehicle/$vehicleId/maintenance/new',

@@ -10,7 +10,12 @@ class Vin {
     }
   }
 
+  Vin._(this.code);
+
+  factory Vin.nullable(String? code) => Vin._((code ?? '').toUpperCase());
+
   bool _isValid(String code) {
+    if (code.isEmpty) return true;
     // VIN estándar: 17 caracteres sin I, O, Q
     if (code.length != 17) return false;
 

@@ -20,7 +20,7 @@ class FitmentRule {
     final makeMatch = vehicle.brand == make;
     final modelMatch = vehicle.model == model;
 
-    final engineMatch = requiredEngineCode == null || vehicle.vin.getVehicleDescription().contains(requiredEngineCode!);
+    final engineMatch = requiredEngineCode == null || (vehicle.vin != null && vehicle.vin!.getVehicleDescription().contains(requiredEngineCode!));
 
     return yearMatch && makeMatch && modelMatch && engineMatch;
   }

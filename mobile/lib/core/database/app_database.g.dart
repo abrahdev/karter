@@ -69,18 +69,18 @@ class $VehiclesTable extends Vehicles
   late final GeneratedColumn<String> plate = GeneratedColumn<String>(
     'plate',
     aliasedName,
-    false,
+    true,
     type: DriftSqlType.string,
-    requiredDuringInsert: true,
+    requiredDuringInsert: false,
   );
   static const VerificationMeta _vinMeta = const VerificationMeta('vin');
   @override
   late final GeneratedColumn<String> vin = GeneratedColumn<String>(
     'vin',
     aliasedName,
-    false,
+    true,
     type: DriftSqlType.string,
-    requiredDuringInsert: true,
+    requiredDuringInsert: false,
   );
   static const VerificationMeta _odometerDistanceMeta = const VerificationMeta(
     'odometerDistance',
@@ -213,16 +213,12 @@ class $VehiclesTable extends Vehicles
         _plateMeta,
         plate.isAcceptableOrUnknown(data['plate']!, _plateMeta),
       );
-    } else if (isInserting) {
-      context.missing(_plateMeta);
     }
     if (data.containsKey('vin')) {
       context.handle(
         _vinMeta,
         vin.isAcceptableOrUnknown(data['vin']!, _vinMeta),
       );
-    } else if (isInserting) {
-      context.missing(_vinMeta);
     }
     if (data.containsKey('odometer_distance')) {
       context.handle(
@@ -304,11 +300,11 @@ class $VehiclesTable extends Vehicles
       plate: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}plate'],
-      )!,
+      ),
       vin: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}vin'],
-      )!,
+      ),
       odometerDistance: attachedDatabase.typeMapping.read(
         DriftSqlType.double,
         data['${effectivePrefix}odometer_distance'],
@@ -345,8 +341,8 @@ class VehicleEntry extends DataClass implements Insertable<VehicleEntry> {
   final String brand;
   final String model;
   final int year;
-  final String plate;
-  final String vin;
+  final String? plate;
+  final String? vin;
   final double odometerDistance;
   final String odometerUnit;
   final DateTime createdAt;
@@ -359,8 +355,8 @@ class VehicleEntry extends DataClass implements Insertable<VehicleEntry> {
     required this.brand,
     required this.model,
     required this.year,
-    required this.plate,
-    required this.vin,
+    this.plate,
+    this.vin,
     required this.odometerDistance,
     required this.odometerUnit,
     required this.createdAt,
@@ -378,8 +374,12 @@ class VehicleEntry extends DataClass implements Insertable<VehicleEntry> {
     map['brand'] = Variable<String>(brand);
     map['model'] = Variable<String>(model);
     map['year'] = Variable<int>(year);
-    map['plate'] = Variable<String>(plate);
-    map['vin'] = Variable<String>(vin);
+    if (!nullToAbsent || plate != null) {
+      map['plate'] = Variable<String>(plate);
+    }
+    if (!nullToAbsent || vin != null) {
+      map['vin'] = Variable<String>(vin);
+    }
     map['odometer_distance'] = Variable<double>(odometerDistance);
     map['odometer_unit'] = Variable<String>(odometerUnit);
     map['created_at'] = Variable<DateTime>(createdAt);
@@ -398,8 +398,10 @@ class VehicleEntry extends DataClass implements Insertable<VehicleEntry> {
       brand: Value(brand),
       model: Value(model),
       year: Value(year),
-      plate: Value(plate),
-      vin: Value(vin),
+      plate: plate == null && nullToAbsent
+          ? const Value.absent()
+          : Value(plate),
+      vin: vin == null && nullToAbsent ? const Value.absent() : Value(vin),
       odometerDistance: Value(odometerDistance),
       odometerUnit: Value(odometerUnit),
       createdAt: Value(createdAt),
@@ -420,8 +422,8 @@ class VehicleEntry extends DataClass implements Insertable<VehicleEntry> {
       brand: serializer.fromJson<String>(json['brand']),
       model: serializer.fromJson<String>(json['model']),
       year: serializer.fromJson<int>(json['year']),
-      plate: serializer.fromJson<String>(json['plate']),
-      vin: serializer.fromJson<String>(json['vin']),
+      plate: serializer.fromJson<String?>(json['plate']),
+      vin: serializer.fromJson<String?>(json['vin']),
       odometerDistance: serializer.fromJson<double>(json['odometerDistance']),
       odometerUnit: serializer.fromJson<String>(json['odometerUnit']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
@@ -439,8 +441,8 @@ class VehicleEntry extends DataClass implements Insertable<VehicleEntry> {
       'brand': serializer.toJson<String>(brand),
       'model': serializer.toJson<String>(model),
       'year': serializer.toJson<int>(year),
-      'plate': serializer.toJson<String>(plate),
-      'vin': serializer.toJson<String>(vin),
+      'plate': serializer.toJson<String?>(plate),
+      'vin': serializer.toJson<String?>(vin),
       'odometerDistance': serializer.toJson<double>(odometerDistance),
       'odometerUnit': serializer.toJson<String>(odometerUnit),
       'createdAt': serializer.toJson<DateTime>(createdAt),
@@ -456,8 +458,8 @@ class VehicleEntry extends DataClass implements Insertable<VehicleEntry> {
     String? brand,
     String? model,
     int? year,
-    String? plate,
-    String? vin,
+    Value<String?> plate = const Value.absent(),
+    Value<String?> vin = const Value.absent(),
     double? odometerDistance,
     String? odometerUnit,
     DateTime? createdAt,
@@ -470,8 +472,8 @@ class VehicleEntry extends DataClass implements Insertable<VehicleEntry> {
     brand: brand ?? this.brand,
     model: model ?? this.model,
     year: year ?? this.year,
-    plate: plate ?? this.plate,
-    vin: vin ?? this.vin,
+    plate: plate.present ? plate.value : this.plate,
+    vin: vin.present ? vin.value : this.vin,
     odometerDistance: odometerDistance ?? this.odometerDistance,
     odometerUnit: odometerUnit ?? this.odometerUnit,
     createdAt: createdAt ?? this.createdAt,
@@ -562,8 +564,8 @@ class VehiclesCompanion extends UpdateCompanion<VehicleEntry> {
   final Value<String> brand;
   final Value<String> model;
   final Value<int> year;
-  final Value<String> plate;
-  final Value<String> vin;
+  final Value<String?> plate;
+  final Value<String?> vin;
   final Value<double> odometerDistance;
   final Value<String> odometerUnit;
   final Value<DateTime> createdAt;
@@ -593,8 +595,8 @@ class VehiclesCompanion extends UpdateCompanion<VehicleEntry> {
     required String brand,
     required String model,
     required int year,
-    required String plate,
-    required String vin,
+    this.plate = const Value.absent(),
+    this.vin = const Value.absent(),
     required double odometerDistance,
     required String odometerUnit,
     required DateTime createdAt,
@@ -605,8 +607,6 @@ class VehiclesCompanion extends UpdateCompanion<VehicleEntry> {
        brand = Value(brand),
        model = Value(model),
        year = Value(year),
-       plate = Value(plate),
-       vin = Value(vin),
        odometerDistance = Value(odometerDistance),
        odometerUnit = Value(odometerUnit),
        createdAt = Value(createdAt),
@@ -652,8 +652,8 @@ class VehiclesCompanion extends UpdateCompanion<VehicleEntry> {
     Value<String>? brand,
     Value<String>? model,
     Value<int>? year,
-    Value<String>? plate,
-    Value<String>? vin,
+    Value<String?>? plate,
+    Value<String?>? vin,
     Value<double>? odometerDistance,
     Value<String>? odometerUnit,
     Value<DateTime>? createdAt,
@@ -3110,8 +3110,8 @@ typedef $$VehiclesTableCreateCompanionBuilder =
       required String brand,
       required String model,
       required int year,
-      required String plate,
-      required String vin,
+      Value<String?> plate,
+      Value<String?> vin,
       required double odometerDistance,
       required String odometerUnit,
       required DateTime createdAt,
@@ -3127,8 +3127,8 @@ typedef $$VehiclesTableUpdateCompanionBuilder =
       Value<String> brand,
       Value<String> model,
       Value<int> year,
-      Value<String> plate,
-      Value<String> vin,
+      Value<String?> plate,
+      Value<String?> vin,
       Value<double> odometerDistance,
       Value<String> odometerUnit,
       Value<DateTime> createdAt,
@@ -3603,8 +3603,8 @@ class $$VehiclesTableTableManager
                 Value<String> brand = const Value.absent(),
                 Value<String> model = const Value.absent(),
                 Value<int> year = const Value.absent(),
-                Value<String> plate = const Value.absent(),
-                Value<String> vin = const Value.absent(),
+                Value<String?> plate = const Value.absent(),
+                Value<String?> vin = const Value.absent(),
                 Value<double> odometerDistance = const Value.absent(),
                 Value<String> odometerUnit = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
@@ -3635,8 +3635,8 @@ class $$VehiclesTableTableManager
                 required String brand,
                 required String model,
                 required int year,
-                required String plate,
-                required String vin,
+                Value<String?> plate = const Value.absent(),
+                Value<String?> vin = const Value.absent(),
                 required double odometerDistance,
                 required String odometerUnit,
                 required DateTime createdAt,

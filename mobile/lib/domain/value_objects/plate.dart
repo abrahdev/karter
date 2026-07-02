@@ -14,6 +14,10 @@ class Plate {
     }
   }
 
+  Plate._(this.value);
+
+  factory Plate.nullable(String? value) => Plate._((value ?? '').toUpperCase());
+
   bool _isValid(String value) {
     return true; // To-do Implement validation logic
   }

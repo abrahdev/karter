@@ -14,8 +14,8 @@ class Vehicle {
   final bool isSynced;
   final VehicleType type;
 
-  final Plate plate;
-  final Vin vin;
+  final Plate? plate;
+  final Vin? vin;
   final Odometer currentOdometer;
 
   Vehicle({
@@ -25,8 +25,8 @@ class Vehicle {
     required this.year,
     required this.createdAt,
     required this.isSynced,
-    required this.plate,
-    required this.vin,
+    this.plate,
+    this.vin,
     required this.currentOdometer,
     this.alias,
     this.type = VehicleType.combustion,
@@ -74,8 +74,8 @@ class Vehicle {
         'createdAt': createdAt.toIso8601String(),
         'isSynced': isSynced,
         'type': type.name,
-        'plate': plate.value,
-        'vin': vin.code,
+        'plate': plate?.value,
+        'vin': vin?.code,
         'currentOdometerDistance': currentOdometer.distance,
         'currentOdometerUnit': currentOdometer.unit.name,
       };
@@ -89,8 +89,8 @@ class Vehicle {
         createdAt: DateTime.parse(json['createdAt']),
         isSynced: json['isSynced'],
         type: VehicleType.values.byName(json['type']),
-        plate: Plate(json['plate']),
-        vin: Vin(json['vin']),
+        plate: json['plate'] != null ? Plate(json['plate']) : null,
+        vin: json['vin'] != null ? Vin(json['vin']) : null,
         currentOdometer: Odometer(
           (json['currentOdometerDistance'] as num).toDouble(),
           DistanceUnit.values.byName(json['currentOdometerUnit']),
