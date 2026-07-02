@@ -12,7 +12,7 @@ class HomePage extends ConsumerWidget {
     final vehiclesAsync = ref.watch(vehicleListProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Karter')),
+      appBar: AppBar(),
       body: vehiclesAsync.when(
         data: (vehicles) {
           if (vehicles.isEmpty) {

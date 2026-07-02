@@ -116,10 +116,17 @@ final _router = GoRouter(
   ],
 );
 
-class _Shell extends StatelessWidget {
+class _Shell extends StatefulWidget {
   final Widget child;
 
   const _Shell({required this.child});
+
+  @override
+  State<_Shell> createState() => _ShellState();
+}
+
+class _ShellState extends State<_Shell> {
+  bool _extended = true;
 
   @override
   Widget build(BuildContext context) {
@@ -130,68 +137,130 @@ class _Shell extends StatelessWidget {
             ? 2
             : 1;
 
-    return Scaffold(
-      body: child,
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: currentIndex,
-        onDestinationSelected: (i) {
-          switch (i) {
-            case 0:
-              context.go('/dashboard');
-            case 1:
-              context.go('/');
-            case 2:
-              context.go('/more');
-          }
-        },
-        destinations: const [
-          NavigationDestination(
-            icon: Icon(Icons.dashboard_outlined),
-            selectedIcon: Icon(Icons.dashboard),
-            label: 'Dashboard',
+    void onDestinationSelected(int i) {
+      switch (i) {
+        case 0:
+          context.go('/dashboard');
+        case 1:
+          context.go('/');
+        case 2:
+          context.go('/more');
+      }
+    }
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        if (constraints.maxWidth >= 768) {
+          final canExtend = constraints.maxWidth >= 1024;
+          if (!canExtend && _extended) _extended = false;
+
+          final extended = canExtend && _extended;
+
+          return Scaffold(
+            body: Row(
+              children: [
+                NavigationRail(
+                  selectedIndex: currentIndex,
+                  onDestinationSelected: onDestinationSelected,
+                  labelType: extended ? null : NavigationRailLabelType.all,
+                  extended: extended,
+                  trailingAtBottom: true,
+                  leading: Padding(
+                    padding: EdgeInsets.all(extended ? 6 : 4),
+                    child: Image(
+                      image: const AssetImage('assets/branding/karter-icon-1024.png'),
+                      width: extended ? 40 : 28,
+                      height: extended ? 40 : 28,
+                    ),
+                  ),
+                  trailing: canExtend
+                      ? IconButton(
+                          icon: Icon(extended ? Icons.chevron_left : Icons.chevron_right),
+                          onPressed: () => setState(() => _extended = !_extended),
+                        )
+                      : null,
+                  destinations: const [
+                    NavigationRailDestination(
+                      icon: Icon(Icons.dashboard_outlined),
+                      selectedIcon: Icon(Icons.dashboard),
+                      label: Text('Dashboard'),
+                    ),
+                    NavigationRailDestination(
+                      icon: Icon(Icons.directions_car_outlined),
+                      selectedIcon: Icon(Icons.directions_car),
+                      label: Text('Vehículos'),
+                    ),
+                    NavigationRailDestination(
+                      icon: Icon(Icons.more_horiz_outlined),
+                      selectedIcon: Icon(Icons.more_horiz),
+                      label: Text('Más'),
+                    ),
+                  ],
+                ),
+                const VerticalDivider(width: 1),
+                Expanded(child: widget.child),
+              ],
+            ),
+          );
+        }
+
+        return Scaffold(
+          body: widget.child,
+          bottomNavigationBar: NavigationBar(
+            selectedIndex: currentIndex,
+            onDestinationSelected: onDestinationSelected,
+            destinations: const [
+              NavigationDestination(
+                icon: Icon(Icons.dashboard_outlined),
+                selectedIcon: Icon(Icons.dashboard),
+                label: 'Dashboard',
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.directions_car_outlined),
+                selectedIcon: Icon(Icons.directions_car),
+                label: 'Vehículos',
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.more_horiz_outlined),
+                selectedIcon: Icon(Icons.more_horiz),
+                label: 'Más',
+              ),
+            ],
           ),
-          NavigationDestination(
-            icon: Icon(Icons.directions_car_outlined),
-            selectedIcon: Icon(Icons.directions_car),
-            label: 'Vehículos',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.more_horiz_outlined),
-            selectedIcon: Icon(Icons.more_horiz),
-            label: 'Más',
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
 
 class KarterApp extends StatelessWidget {
-  final Color? accentColor;
+  final Color initialAccent;
 
-  const KarterApp({super.key, this.accentColor});
+  const KarterApp({super.key, required this.initialAccent});
 
   @override
   Widget build(BuildContext context) {
-    final lightScheme = accentColor != null
-        ? ColorScheme.fromSeed(
-            seedColor: accentColor!,
-            brightness: Brightness.light,
-          )
-        : null;
-    final darkScheme = accentColor != null
-        ? ColorScheme.fromSeed(
-            seedColor: accentColor!,
-            brightness: Brightness.dark,
-          )
-        : null;
+    return StreamBuilder<SystemAccentColor>(
+      stream: SystemTheme.onChange,
+      builder: (context, snapshot) {
+        final color = snapshot.data?.accent ?? initialAccent;
+        final lightScheme = ColorScheme.fromSeed(
+          seedColor: color,
+          brightness: Brightness.light,
+        );
+        final darkScheme = ColorScheme.fromSeed(
+          seedColor: color,
+          brightness: Brightness.dark,
+        );
 
-    return MaterialApp.router(
-      title: 'Karter',
-      theme: AppTheme.from(lightScheme, Brightness.light),
-      darkTheme: AppTheme.from(darkScheme, Brightness.dark),
-      routerConfig: _router,
-      debugShowCheckedModeBanner: false,
+        return MaterialApp.router(
+          title: 'Karter',
+          theme: AppTheme.from(lightScheme, Brightness.light),
+          darkTheme: AppTheme.from(darkScheme, Brightness.dark),
+          routerConfig: _router,
+          debugShowCheckedModeBanner: false,
+        );
+      },
     );
   }
 }
@@ -200,8 +269,9 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemTheme.fallbackColor = AppTheme.fallbackSeed;
   await SystemTheme.accentColor.load();
-  final accent = SystemTheme.accentColor.accent;
   runApp(
-    ProviderScope(child: KarterApp(accentColor: accent)),
+    ProviderScope(
+      child: KarterApp(initialAccent: SystemTheme.accentColor.accent),
+    ),
   );
 }
