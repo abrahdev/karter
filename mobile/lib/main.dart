@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile/core/theme/app_theme.dart';
+import 'package:dynamic_color/dynamic_color.dart';
 import 'package:mobile/presentation/pages/dashboard_page.dart';
 import 'package:mobile/presentation/pages/data_manager_page.dart';
 import 'package:mobile/presentation/pages/fuel_log_form_page.dart';
@@ -170,12 +171,16 @@ class KarterApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      title: 'Karter',
-      theme: AppTheme.light,
-      darkTheme: AppTheme.dark,
-      routerConfig: _router,
-      debugShowCheckedModeBanner: false,
+    return DynamicColorBuilder(
+      builder: (lightDynamic, darkDynamic) {
+        return MaterialApp.router(
+          title: 'Karter',
+          theme: AppTheme.from(lightDynamic, Brightness.light),
+          darkTheme: AppTheme.from(darkDynamic, Brightness.dark),
+          routerConfig: _router,
+          debugShowCheckedModeBanner: false,
+        );
+      },
     );
   }
 }
