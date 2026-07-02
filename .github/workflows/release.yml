@@ -57,7 +57,7 @@ jobs:
           echo "keyPassword=${{ secrets.KEYSTORE_PASSWORD }}" >> mobile/android/key.properties
           echo "keyAlias=${{ secrets.KEYSTORE_ALIAS }}" >> mobile/android/key.properties
 
-      - run: flutter build apk --release
+      - run: flutter build apk --release --build-name=$(cat ../VERSION)
         working-directory: mobile
 
       - name: Rename APK

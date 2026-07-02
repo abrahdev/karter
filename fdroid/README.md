@@ -10,10 +10,10 @@ To include Karter in the official F-Droid repository, add the following metadata
 ```yaml
 Categories: Utilities, Sports
 License: AGPL-3.0-or-later
-WebSite: https://abrahdev.github.io/karter/
+WebSite: https://karter.abrah.dev/
 SourceCode: https://github.com/abrahdev/karter
 IssueTracker: https://github.com/abrahdev/karter/issues
-Changelog: https://abrahdev.github.io/karter/roadmap
+Changelog: https://karter.abrah.dev/roadmap
 
 Name: Karter
 AutoName: Karter

@@ -1,16 +1,26 @@
 import { themes as prismThemes } from "prism-react-renderer";
 import type { Config } from "@docusaurus/types";
 import type * as Preset from "@docusaurus/preset-classic";
+import fs from "fs";
+import path from "path";
+
+const appVersion = fs
+  .readFileSync(path.join(__dirname, "..", "VERSION"), "utf-8")
+  .trim();
 
 const config: Config = {
-  title: "Karter Docs",
+  title: `Karter v${appVersion}`,
   tagline: "Open Source Vehicle Maintenance & Social Impact",
   favicon: "img/karter-favicon.svg",
 
-  url: "https://abrahdev.github.io",
-  baseUrl: "/karter/",
+  url: "https://karter.abrah.dev",
+  baseUrl: "/",
   organizationName: "abrahdev",
   projectName: "karter",
+
+  customFields: {
+    appVersion,
+  },
 
   future: {
     v4: true,
@@ -36,7 +46,7 @@ const config: Config = {
       {
         docs: {
           sidebarPath: "./sidebars.ts",
-          editUrl: "https://github.com/abrahdev/karter/tree/main/docs/",
+          editUrl: "https://github.com/abrahdev/karter/edit/main/docs/",
           routeBasePath: '/', 
         },
         blog: false,
@@ -53,15 +63,13 @@ const config: Config = {
       theme: { light: 'neutral', dark: 'forest' },
     },
     navbar: {
-      title: "Karter Docs",
+      title: `Karter v${appVersion}`,
       logo: {
         alt: "Karter Logo",
         src: "img/karter-logo.svg",
         href: "/",
       },
       items: [
-        { type: "docsVersionDropdown", position: "right" },
-        { type: "localeDropdown", position: "right" },
         {
           type: "docSidebar",
           sidebarId: "tutorialSidebar",
@@ -100,7 +108,7 @@ const config: Config = {
           ],
         },
       ],
-      copyright: `Karter uses GNU AGPL v3 License. Built with Docusaurus.`,
+      copyright: `Karter v${appVersion} uses GNU AGPL v3 License. Built with Docusaurus.`,
     },
     prism: {
       theme: prismThemes.github,

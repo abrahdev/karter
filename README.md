@@ -9,7 +9,7 @@
 [![Release](https://github.com/abrahdev/karter/actions/workflows/release.yml/badge.svg)](https://github.com/abrahdev/karter/actions/workflows/release.yml)
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](LICENSE)
 ![Version](https://img.shields.io/github/v/release/abrahdev/karter?filter=v*&label=version&color=facc15)
-[![Docs](https://img.shields.io/badge/docs-karter-%23695609)](https://abrahdev.github.io/karter/)
+[![Docs](https://img.shields.io/badge/docs-karter-%23695609)](https://karter.abrah.dev/)
 [![F-Droid](https://img.shields.io/badge/F--Droid-coming_soon-%2300b341)](https://f-droid.org)
 
 ---
@@ -68,17 +68,17 @@ The APK will be at `mobile/build/app/outputs/flutter-apk/app-release.apk`.
 
 ## Documentation
 
-Full documentation is available at [abrahdev.github.io/karter](https://abrahdev.github.io/karter/).
+Full documentation is available at [karter.abrah.dev](https://karter.abrah.dev/).
 
-- [Architecture](https://abrahdev.github.io/karter/developer/mobile/app-architecture)
-- [Contributing](https://abrahdev.github.io/karter/contributing/contributing)
-- [Roadmap](https://abrahdev.github.io/karter/roadmap)
+- [Architecture](https://karter.abrah.dev/developer/mobile/app-architecture)
+- [Contributing](https://karter.abrah.dev/contributing/contributing)
+- [Roadmap](https://karter.abrah.dev/roadmap)
 
 ---
 
 ## Contributing
 
-See the [Contributing Guide](https://abrahdev.github.io/karter/contributing/contributing).
+See the [Contributing Guide](https://karter.abrah.dev/contributing/contributing).
 
 This project follows a [Code of Conduct](https://github.com/abrahdev/karter/blob/main/docs/docs/contributing/contributing.md).
 
