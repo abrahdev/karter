@@ -106,6 +106,7 @@ const config: Config = {
             { label: "Manifest", to: "/" }, 
             { label: "Development", to: "/category/developer" },
             { label: "Contributing", to: "/contributing" },
+            { label: "Privacy Policy", to: "/privacy" },
           ],
         },
         {

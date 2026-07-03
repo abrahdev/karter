@@ -1,4 +1,4 @@
-package com.abrahdev.karter
+package dev.abrah.karter
 
 import io.flutter.embedding.android.FlutterActivity
 

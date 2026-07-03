@@ -8,7 +8,7 @@ plugins {
 }
 
 android {
-    namespace = "com.abrahdev.karter"
+    namespace = "dev.abrah.karter"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -22,7 +22,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.abrahdev.karter"
+        applicationId = "dev.abrah.karter"
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode

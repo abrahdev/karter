@@ -5,6 +5,10 @@
 
 **Open source vehicle maintenance tracker**
 
+**Short description:** Track your vehicle's fuel, maintenance, and service intervals — all offline, no account needed.
+
+**Long description:** Karter is a privacy-first, open source vehicle maintenance tracker built with Flutter. Log fuel fill-ups with automatic economy calculations (MPG, L/100km, km/L), track repairs and part replacements, set service intervals by distance or time, and catalog spare parts. All data stays on your device — no accounts, no telemetry, no tracking. Multi-vehicle support, Material Design 3 with dynamic colors, OBD-II integration coming soon.
+
 [![CI](https://github.com/abrahdev/karter/actions/workflows/ci.yml/badge.svg)](https://github.com/abrahdev/karter/actions/workflows/ci.yml)
 [![Release](https://github.com/abrahdev/karter/actions/workflows/release.yml/badge.svg)](https://github.com/abrahdev/karter/actions/workflows/release.yml)
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](LICENSE)
