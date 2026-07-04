@@ -1,0 +1,60 @@
+{
+  "id": "toyota-corolla-e210-1-8-hybrid",
+  "extends": [
+    "_base/combustion.json",
+    "_base/electric.json",
+    "toyota/corolla/base.json"
+  ],
+  "meta": {
+    "make": "Toyota",
+    "model": "Corolla",
+    "generation": "E210",
+    "years": [2018, 2025],
+    "engine": {
+      "code": "2ZR-FXE",
+      "fuel": "hybrid",
+      "displacement_cc": 1798,
+      "power_hp": 140
+    },
+    "market": ["EU", "US", "JP"],
+    "author": "karter",
+    "version": "1.0.0",
+    "sources": ["Toyota official maintenance schedule", "toyotanation.com"]
+  },
+  "maintenance_items": [
+    {
+      "id": "oil-change",
+      "interval_km": 15000,
+      "interval_months": 12,
+      "description": "Use 0W16 synthetic for hybrid. The Atkinson cycle engine operates at different RPM ranges."
+    },
+    {
+      "id": "coolant",
+      "interval_km": 160000,
+      "interval_months": 96,
+      "description": "Toyota specifies super-long-life coolant. First change at 160k km, then every 80k km."
+    },
+    {
+      "id": "spark-plugs",
+      "interval_km": 120000,
+      "description": "Hybrid Atkinson engine runs fewer hours per km. Iridium plugs last longer."
+    },
+    {
+      "id": "hybrid-battery-filter",
+      "label": "Hybrid battery cooling filter",
+      "interval_km": 40000,
+      "description": "The hybrid battery has a dedicated cooling fan with an intake filter. Clean annually; replace if clogged."
+    },
+    {
+      "id": "inverter-coolant",
+      "interval_km": 160000,
+      "interval_months": 96,
+      "description": "Toyota specifies the same super-long-life coolant for the inverter circuit."
+    },
+    {
+      "id": "timing-belt",
+      "remove": true,
+      "description": "The 2ZR-FXE uses a timing chain. No replacement needed."
+    }
+  ]
+}

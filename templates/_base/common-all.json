@@ -1,0 +1,46 @@
+{
+  "id": "common-all",
+  "meta": {
+    "make": "_base",
+    "model": "Common (all vehicles)",
+    "author": "karter",
+    "version": "1.0.0"
+  },
+  "maintenance_items": [
+    {
+      "id": "brake-pads",
+      "label": "Brake pads",
+      "interval_km": 30000,
+      "interval_months": null,
+      "description": "Friction compound wears with use. Below 3mm thickness, braking distance increases dangerously."
+    },
+    {
+      "id": "tires",
+      "label": "Tires",
+      "interval_km": 50000,
+      "interval_months": null,
+      "description": "Tires degrade both by mileage and age. Incorrect pressure or uneven wear compromises grip and safety."
+    },
+    {
+      "id": "brake-fluid",
+      "label": "Brake fluid",
+      "interval_km": 40000,
+      "interval_months": 24,
+      "description": "Brake fluid is hygroscopic: it absorbs moisture, reducing its boiling point and braking effectiveness."
+    },
+    {
+      "id": "cabin-filter",
+      "label": "Cabin filter",
+      "interval_km": 20000,
+      "interval_months": null,
+      "description": "The cabin filter purifies the air entering the interior. A saturated filter reduces HVAC efficiency and can generate odors."
+    },
+    {
+      "id": "coolant",
+      "label": "Coolant",
+      "interval_km": 60000,
+      "interval_months": 36,
+      "description": "Coolant loses its antifreeze and anticorrosive properties over time, potentially damaging the engine's internal circuit."
+    }
+  ]
+}

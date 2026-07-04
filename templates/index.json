@@ -1,0 +1,155 @@
+{
+  "generated_at": "2026-07-04T00:00:00Z",
+  "schema_version": "1",
+  "templates": [
+    {
+      "id": "combustion",
+      "path": "_base/combustion.json",
+      "meta": {
+        "make": "_base",
+        "model": "Combustion engine (gasoline & diesel)",
+        "generation": "",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 5,
+      "extends": [
+        "_base/common-all.json"
+      ]
+    },
+    {
+      "id": "common-all",
+      "path": "_base/common-all.json",
+      "meta": {
+        "make": "_base",
+        "model": "Common (all vehicles)",
+        "generation": "",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 5,
+      "extends": []
+    },
+    {
+      "id": "diesel",
+      "path": "_base/diesel.json",
+      "meta": {
+        "make": "_base",
+        "model": "Diesel engine",
+        "generation": "",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 6,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "electric",
+      "path": "_base/electric.json",
+      "meta": {
+        "make": "_base",
+        "model": "Electric vehicle",
+        "generation": "",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 5,
+      "extends": [
+        "_base/common-all.json"
+      ]
+    },
+    {
+      "id": "toyota-corolla",
+      "path": "toyota/corolla/base.json",
+      "meta": {
+        "make": "Toyota",
+        "model": "Corolla",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 3,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "toyota-corolla-e210-1-8-hybrid",
+      "path": "toyota/corolla/e210-1-8-hybrid.json",
+      "meta": {
+        "make": "Toyota",
+        "model": "Corolla",
+        "generation": "E210",
+        "years": [
+          2018,
+          2025
+        ],
+        "engine": {
+          "fuel": "hybrid",
+          "displacement_cc": 1798
+        },
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 6,
+      "extends": [
+        "_base/combustion.json",
+        "_base/electric.json",
+        "toyota/corolla/base.json"
+      ]
+    },
+    {
+      "id": "vw-golf",
+      "path": "volkswagen/golf/base.json",
+      "meta": {
+        "make": "Volkswagen",
+        "model": "Golf",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 1,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "vw-golf-mk7-1-6tdi",
+      "path": "volkswagen/golf/mk7-1-6tdi.json",
+      "meta": {
+        "make": "Volkswagen",
+        "model": "Golf",
+        "generation": "MK7",
+        "years": [
+          2013,
+          2020
+        ],
+        "engine": {
+          "fuel": "diesel",
+          "displacement_cc": 1598
+        },
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 4,
+      "extends": [
+        "_base/diesel.json",
+        "volkswagen/golf/base.json"
+      ]
+    }
+  ]
+}

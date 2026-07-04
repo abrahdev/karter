@@ -1,0 +1,47 @@
+{
+  "id": "vw-golf-mk7-1-6tdi",
+  "extends": [
+    "_base/diesel.json",
+    "volkswagen/golf/base.json"
+  ],
+  "meta": {
+    "make": "Volkswagen",
+    "model": "Golf",
+    "generation": "MK7",
+    "years": [2013, 2020],
+    "engine": {
+      "code": "CXXB",
+      "fuel": "diesel",
+      "displacement_cc": 1598,
+      "power_hp": 115
+    },
+    "market": ["EU"],
+    "author": "karter",
+    "version": "1.0.0",
+    "sources": ["VW official maintenance schedule", "forums.vwvortex.com"]
+  },
+  "maintenance_items": [
+    {
+      "id": "oil-change",
+      "interval_km": 15000,
+      "interval_months": 12,
+      "description": "Use VW 507.00 approved oil (5W30). This engine is sensitive to incorrect oil specification."
+    },
+    {
+      "id": "timing-belt",
+      "interval_km": 210000,
+      "description": "The 1.6 TDI uses a belt, not a chain. Change interval is 210k km per VW spec. Replace water pump at the same time."
+    },
+    {
+      "id": "dpf-cleaning",
+      "interval_km": 120000,
+      "description": "The 1.6 TDI DPF tends to clog earlier in city driving. Consider forced regeneration if warning appears."
+    },
+    {
+      "id": "adblue-refill",
+      "label": "AdBlue / DEF refill",
+      "interval_km": 15000,
+      "description": "The SCR system consumes AdBlue. Refill at each service or when warning appears."
+    }
+  ]
+}

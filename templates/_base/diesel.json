@@ -1,0 +1,51 @@
+{
+  "id": "diesel",
+  "extends": ["_base/combustion.json"],
+  "meta": {
+    "make": "_base",
+    "model": "Diesel engine",
+    "author": "karter",
+    "version": "1.0.0"
+  },
+  "maintenance_items": [
+    {
+      "id": "oil-change",
+      "interval_km": 15000,
+      "interval_months": 12,
+      "description": "Diesel engines put more stress on oil. Use low-ash oil (C3/C4) to protect the DPF."
+    },
+    {
+      "id": "spark-plugs",
+      "remove": true,
+      "description": "Diesel engines use compression ignition; they have no spark plugs."
+    },
+    {
+      "id": "fuel-filter",
+      "label": "Fuel filter",
+      "interval_km": 30000,
+      "interval_months": 24,
+      "description": "The fuel filter traps water and contaminants. A clogged filter causes power loss and hard starting."
+    },
+    {
+      "id": "egr-cleaning",
+      "label": "EGR cleaning",
+      "interval_km": 60000,
+      "interval_months": null,
+      "description": "Diesel peculiarity: the EGR valve accumulates soot over time. Cleaning restores engine efficiency and reduces emissions."
+    },
+    {
+      "id": "dpf-cleaning",
+      "label": "DPF / FAP cleaning",
+      "interval_km": 150000,
+      "interval_months": null,
+      "description": "The diesel particulate filter accumulates ash. If not regenerated properly, it may need professional cleaning or replacement."
+    },
+    {
+      "id": "glow-plugs",
+      "label": "Glow plugs",
+      "interval_km": 80000,
+      "interval_months": null,
+      "description": "Glow plugs preheat the combustion chamber for cold starts. A failed plug causes misfiring and white smoke."
+    }
+  ]
+}

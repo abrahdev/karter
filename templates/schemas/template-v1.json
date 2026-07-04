@@ -1,0 +1,86 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://karter.abrah.dev/schemas/template-v1.json",
+  "type": "object",
+  "required": ["id", "meta", "maintenance_items"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "description": "Slug único global, ej: vw-golf-mk7-1-6tdi"
+    },
+    "extends": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^(\\.\\./|[a-z])" },
+      "description": "Rutas relativas a los templates que extiende, en orden de aplicación"
+    },
+    "meta": {
+      "type": "object",
+      "required": ["make", "model", "author", "version"],
+      "properties": {
+        "make": { "type": "string", "description": "Marca del vehículo" },
+        "model": { "type": "string", "description": "Modelo del vehículo" },
+        "generation": { "type": "string", "description": "Generación / código de chasis" },
+        "years": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": { "type": "integer" },
+          "description": "Año desde / hasta"
+        },
+        "engine": {
+          "type": "object",
+          "properties": {
+            "code": { "type": "string", "description": "Código del motor" },
+            "fuel": {
+              "type": "string",
+              "enum": ["gasoline", "diesel", "hybrid", "electric", "plugin-hybrid"]
+            },
+            "displacement_cc": { "type": "integer", "description": "Cilindrada en cc" },
+            "power_hp": { "type": "integer", "description": "Potencia en HP" }
+          }
+        },
+        "market": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Mercados objetivo: EU, US, JP, etc."
+        },
+        "author": { "type": "string" },
+        "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+        "sources": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Fuentes de información (manual oficial, foros, etc.)"
+        }
+      }
+    },
+    "maintenance_items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id"],
+        "oneOf": [
+          { "required": ["interval_km"], "not": { "required": ["remove"] } },
+          { "required": ["remove"] }
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "ID del ítem. Si ya existe en el padre, lo reemplaza. Si no, lo agrega."
+          },
+          "interval_km": { "type": "integer", "minimum": 1 },
+          "interval_months": { "type": "integer", "minimum": 1 },
+          "label": {
+            "type": "string",
+            "description": "Solo necesario si es un ítem nuevo (no heredado). Si es un replace, toma el label del padre."
+          },
+          "description": { "type": "string" },
+          "remove": {
+            "type": "boolean",
+            "description": "true → elimina este ítem del padre (útil cuando un modelo no tiene cierta tarea del genérico)"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "id": "electric",
+  "extends": ["_base/common-all.json"],
+  "meta": {
+    "make": "_base",
+    "model": "Electric vehicle",
+    "author": "karter",
+    "version": "1.0.0"
+  },
+  "maintenance_items": [
+    {
+      "id": "brake-pads",
+      "interval_km": 50000,
+      "description": "EVs use regenerative braking, so friction brakes wear much slower. Still, inspect annually for corrosion."
+    },
+    {
+      "id": "battery-cooling",
+      "label": "Battery cooling system",
+      "interval_km": 60000,
+      "interval_months": null,
+      "description": "The battery cooling system is vital for maintaining optimal temperature and prolonging cell life."
+    },
+    {
+      "id": "inverter-coolant",
+      "label": "Inverter / motor coolant",
+      "interval_km": 80000,
+      "interval_months": 36,
+      "description": "The power electronics and electric motor generate heat. Coolant prevents overheating and component failure."
+    },
+    {
+      "id": "drive-unit-oil",
+      "label": "Drive unit oil",
+      "interval_km": 100000,
+      "interval_months": null,
+      "description": "The reduction gear in the drive unit has its own oil. Change intervals vary by manufacturer."
+    },
+    {
+      "id": "cabin-filter",
+      "interval_km": 15000,
+      "description": "EVs recirculate cabin air more frequently. Replace sooner for better air quality, especially with climate control use."
+    }
+  ]
+}

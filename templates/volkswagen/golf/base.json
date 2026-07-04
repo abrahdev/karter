@@ -1,0 +1,19 @@
+{
+  "id": "vw-golf",
+  "extends": ["_base/combustion.json"],
+  "meta": {
+    "make": "Volkswagen",
+    "model": "Golf",
+    "generation": "All",
+    "author": "karter",
+    "version": "1.0.0"
+  },
+  "maintenance_items": [
+    {
+      "id": "timing-belt",
+      "interval_km": 120000,
+      "interval_months": 60,
+      "description": "VW specifies timing belt replacement at 120k km for most Golf generations. Replace water pump simultaneously."
+    }
+  ]
+}
