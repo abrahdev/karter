@@ -239,7 +239,7 @@ export default function TemplatesPage() {
   const [fuelFilters, setFuelFilters] = useState<Set<string>>(new Set());
 
   useEffect(() => {
-    fetch(INDEX_URL)
+    fetch(INDEX_URL, { cache: "no-store" })
       .then((r) => {
         if (!r.ok) throw new Error(`HTTP ${r.status}`);
         return r.json();
