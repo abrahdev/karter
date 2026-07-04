@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
 import Layout from "@theme/Layout";
 import Link from "@docusaurus/Link";
 
@@ -14,8 +14,8 @@ interface Meta {
   make: string;
   model: string;
   generation?: string;
-  years?: [number, number];
-  engine?: Engine;
+  years?: [number, number] | null;
+  engine?: Engine | null;
   author: string;
   version: string;
 }
@@ -39,6 +39,7 @@ const FUEL_LABELS: Record<string, string> = {
   diesel: "Diesel",
   hybrid: "Hybrid",
   electric: "Electric",
+  hydrogen: "Hydrogen",
   "plugin-hybrid": "Plugin Hybrid",
 };
 
@@ -47,6 +48,7 @@ const FUEL_COLORS: Record<string, string> = {
   diesel: "#2563eb",
   hybrid: "#16a34a",
   electric: "#8b5cf6",
+  hydrogen: "#06b6d4",
   "plugin-hybrid": "#0891b2",
 };
 
@@ -176,20 +178,192 @@ const STYLES: Record<string, React.CSSProperties> = {
   },
 };
 
-function Card({ t }: { t: TemplateEntry }) {
+function Modal({
+  t,
+  onClose,
+}: {
+  t: TemplateEntry;
+  onClose: () => void;
+}) {
+  const m = t.meta;
+  const fuel = m.engine?.fuel;
+
+  const years =
+    m.years ? `${m.years[0]}–${m.years[1]}` : null;
+  const displacement = m.engine?.displacement_cc
+    ? `${m.engine.displacement_cc}cc`
+    : null;
+
+  const rows: [string, string][] = [
+    ["ID", t.id],
+    ["Path", t.path],
+    ["Make", m.make],
+    ["Model", m.model],
+  ];
+  if (m.generation) rows.push(["Generation", m.generation]);
+  if (years) rows.push(["Years", years]);
+  if (displacement) rows.push(["Displacement", displacement]);
+  if (fuel) rows.push(["Fuel", FUEL_LABELS[fuel] || fuel]);
+  rows.push(["Author", m.author]);
+  rows.push(["Version", m.version]);
+  rows.push(["Items", String(t.item_count)]);
+  if (t.extends.length > 0)
+    rows.push(["Extends", t.extends.join(", ")]);
+
+  return (
+    <div
+      onClick={onClose}
+      style={{
+        position: "fixed",
+        inset: 0,
+        zIndex: 9999,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        background: "rgba(0,0,0,0.6)",
+        backdropFilter: "blur(2px)",
+        padding: "1rem",
+      }}
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        style={{
+          maxWidth: 560,
+          width: "100%",
+          borderRadius: 12,
+          border: "1px solid var(--ifm-color-emphasis-300)",
+          background: "var(--ifm-background-color)",
+          padding: 0,
+          overflow: "hidden",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "flex-start",
+            padding: "1.5rem 1.5rem 0.75rem",
+          }}
+        >
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <h2 style={{ margin: 0, fontSize: "1.25rem" }}>
+              {m.make} {m.model}
+              {m.generation ? ` ${m.generation}` : ""}
+            </h2>
+            {fuel && (
+              <span
+                style={{
+                  ...STYLES.badge,
+                  backgroundColor: FUEL_COLORS[fuel] || "#666",
+                  marginTop: "0.4rem",
+                }}
+              >
+                {FUEL_LABELS[fuel] || fuel}
+              </span>
+            )}
+          </div>
+          <button
+            onClick={onClose}
+            style={{
+              background: "none",
+              border: "none",
+              fontSize: "1.5rem",
+              cursor: "pointer",
+              color: "var(--ifm-color-emphasis-500)",
+              lineHeight: 1,
+              padding: "0.25rem",
+            }}
+          >
+            ✕
+          </button>
+        </div>
+
+        <table
+          style={{
+            width: "100%",
+            borderCollapse: "collapse",
+            fontSize: "0.875rem",
+          }}
+        >
+          <tbody>
+            {rows.map(([label, value]) => (
+              <tr
+                key={label}
+                style={{
+                  borderTop: "1px solid var(--ifm-color-emphasis-200)",
+                }}
+              >
+                <td
+                  style={{
+                    padding: "0.65rem 1.5rem",
+                    fontWeight: 600,
+                    color: "var(--ifm-color-emphasis-700)",
+                    whiteSpace: "nowrap",
+                    width: 120,
+                  }}
+                >
+                  {label}
+                </td>
+                <td
+                  style={{
+                    padding: "0.65rem 1.5rem 0.65rem 0",
+                    color: "var(--ifm-font-color-base)",
+                    wordBreak: "break-word",
+                  }}
+                >
+                  {value}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
+        <div
+          style={{
+            padding: "0.75rem 1.5rem 1.5rem",
+            display: "flex",
+            justifyContent: "flex-end",
+          }}
+        >
+          <button
+            onClick={onClose}
+            style={{
+              padding: "0.5rem 1.25rem",
+              borderRadius: 6,
+              border: "1px solid var(--ifm-color-emphasis-300)",
+              background: "var(--ifm-card-background-color)",
+              color: "var(--ifm-font-color-base)",
+              cursor: "pointer",
+              fontSize: "0.875rem",
+            }}
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Card({
+  t,
+  onClick,
+}: {
+  t: TemplateEntry;
+  onClick: () => void;
+}) {
   const m = t.meta;
   const fuel = m.engine?.fuel;
   const years =
-    m.years
-      ? `${m.years[0]}–${m.years[1]}`
-      : "";
+    m.years ? `${m.years[0]}–${m.years[1]}` : "";
   const engine =
-    m.engine
-      ? `${m.engine.displacement_cc ? `${m.engine.displacement_cc}cc` : ""}`
+    m.engine?.displacement_cc
+      ? `${m.engine.displacement_cc}cc`
       : "";
 
   return (
     <div
+      onClick={onClick}
       style={STYLES.card}
       onMouseEnter={(e) => {
         e.currentTarget.style.borderColor = "var(--ifm-color-primary)";
@@ -238,6 +412,10 @@ export default function TemplatesPage() {
   const [selectedGeneration, setSelectedGeneration] = useState("");
   const [fuelFilters, setFuelFilters] = useState<Set<string>>(new Set());
 
+  const [modalTemplate, setModalTemplate] = useState<TemplateEntry | null>(
+    null
+  );
+
   useEffect(() => {
     fetch(INDEX_URL, { cache: "no-store" })
       .then((r) => {
@@ -252,6 +430,14 @@ export default function TemplatesPage() {
         setError(e.message);
         setLoading(false);
       });
+  }, []);
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setModalTemplate(null);
+    };
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
   }, []);
 
   const visible = useMemo(() => {
@@ -357,10 +543,7 @@ export default function TemplatesPage() {
     fuelFilters.size > 0;
 
   const makeOptions = useMemo(
-    () =>
-      makes.filter(
-        (m) => m !== "_base"
-      ),
+    () => makes.filter((m) => m !== "_base"),
     [makes]
   );
 
@@ -498,9 +681,17 @@ export default function TemplatesPage() {
             </p>
 
             {visible.map((t) => (
-              <Card key={t.id} t={t} />
+              <Card
+                key={t.id}
+                t={t}
+                onClick={() => setModalTemplate(t)}
+              />
             ))}
           </>
+        )}
+
+        {modalTemplate && (
+          <Modal t={modalTemplate} onClose={() => setModalTemplate(null)} />
         )}
       </div>
     </Layout>
