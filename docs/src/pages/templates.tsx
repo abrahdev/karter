@@ -517,17 +517,8 @@ export default function TemplatesPage() {
   );
 
   const allFuels = useMemo(
-    () =>
-      data
-        ? [
-            ...new Set(
-              data.templates
-                .map((t) => t.meta.engine?.fuel)
-                .filter((f): f is string => !!f)
-            ),
-          ].sort()
-        : [],
-    [data]
+    () => Object.keys(FUEL_LABELS).sort(),
+    []
   );
 
   function toggleFuel(fuel: string) {
