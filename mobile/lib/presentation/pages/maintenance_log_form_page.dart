@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile/core/database/app_database.dart';
 import 'package:mobile/domain/entities/maintenance_log.dart';
+import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
 
 class MaintenanceLogFormPage extends ConsumerStatefulWidget {
@@ -140,7 +141,7 @@ class _MaintenanceLogFormPageState
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text('Error: $e')));
+            .showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.homeError(e.toString()))));
       }
     } finally {
       if (mounted) setState(() => _isLoading = false);
@@ -150,24 +151,27 @@ class _MaintenanceLogFormPageState
   Future<void> _delete() async {
     final confirmed = await showDialog<bool>(
       context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Eliminar servicio'),
-        content: const Text('¿Estás seguro de eliminar este servicio?'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Cancelar'),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.pop(ctx, true),
-            style: FilledButton.styleFrom(
-              backgroundColor: Theme.of(ctx).colorScheme.error,
-              foregroundColor: Theme.of(ctx).colorScheme.onError,
+      builder: (ctx) {
+        final l = AppLocalizations.of(ctx)!;
+        return AlertDialog(
+          title: Text(l.deleteService),
+          content: Text(l.deleteServiceConfirm),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx, false),
+              child: Text(l.cancel),
             ),
-            child: const Text('Eliminar'),
-          ),
-        ],
-      ),
+            FilledButton(
+              onPressed: () => Navigator.pop(ctx, true),
+              style: FilledButton.styleFrom(
+                backgroundColor: Theme.of(ctx).colorScheme.error,
+                foregroundColor: Theme.of(ctx).colorScheme.onError,
+              ),
+              child: Text(l.delete),
+            ),
+          ],
+        );
+      },
     );
 
     if (confirmed != true) return;
@@ -201,7 +205,7 @@ class _MaintenanceLogFormPageState
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text('Error: $e')));
+            .showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.homeError(e.toString()))));
       }
     } finally {
       if (mounted) setState(() => _isLoading = false);
@@ -210,13 +214,14 @@ class _MaintenanceLogFormPageState
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     final intervalsAsync =
         ref.watch(maintenanceIntervalsProvider(widget.vehicleId));
     final theme = Theme.of(context);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(_isEditing ? 'Editar servicio' : 'Nuevo servicio'),
+        title: Text(_isEditing ? l.maintenanceLogTitleEdit : l.maintenanceLogTitleNew),
       ),
       body: Form(
         key: _formKey,
@@ -225,22 +230,22 @@ class _MaintenanceLogFormPageState
           children: [
             ListTile(
               leading: const Icon(Icons.calendar_today),
-              title: Text('Fecha: ${DateFormat('dd/MM/yyyy').format(_date)}'),
+              title: Text(l.date(DateFormat('dd/MM/yyyy').format(_date))),
               onTap: _pickDate,
             ),
             const SizedBox(height: 12),
             TextFormField(
               controller: _descriptionController,
-              decoration: const InputDecoration(labelText: 'Descripción'),
+              decoration: InputDecoration(labelText: l.descriptionRequired),
               maxLines: 3,
               validator: (v) =>
-                  v == null || v.trim().isEmpty ? 'Requerido' : null,
+                  v == null || v.trim().isEmpty ? l.required : null,
             ),
             const SizedBox(height: 12),
             TextFormField(
               controller: _odometerController,
-              decoration: const InputDecoration(
-                labelText: 'Odómetro al servicio (opcional)',
+              decoration: InputDecoration(
+                labelText: l.odometerAtService,
                 hintText: '0',
               ),
               keyboardType: TextInputType.number,
@@ -253,8 +258,8 @@ class _MaintenanceLogFormPageState
                   if (enabled.isEmpty) return const SizedBox.shrink();
                   return DropdownButtonFormField<String>(
                     initialValue: _selectedIntervalId,
-                    decoration: const InputDecoration(
-                      labelText: 'Resetear intervalo (opcional)',
+                    decoration: InputDecoration(
+                      labelText: l.resetInterval,
                     ),
                     items: enabled
                         .map((i) => DropdownMenuItem(
@@ -279,14 +284,14 @@ class _MaintenanceLogFormPageState
                       width: 20,
                       child: CircularProgressIndicator(strokeWidth: 2),
                     )
-                  : Text(_isEditing ? 'Guardar cambios' : 'Guardar servicio'),
+                  : Text(_isEditing ? l.saveChangesShort : l.saveService),
             ),
             if (_isEditing) ...[
               const SizedBox(height: 12),
               OutlinedButton.icon(
                 onPressed: _isLoading ? null : _delete,
                 icon: const Icon(Icons.delete_outline),
-                label: const Text('Eliminar servicio'),
+                label: Text(l.deleteService),
                 style: OutlinedButton.styleFrom(
                   foregroundColor: theme.colorScheme.error,
                   side: BorderSide(color: theme.colorScheme.error),

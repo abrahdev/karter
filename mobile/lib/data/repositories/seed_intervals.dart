@@ -1,6 +1,6 @@
-import 'package:mobile/domain/enums/vehicle_type.dart';
-import 'package:mobile/domain/entities/maintenance_interval.dart';
 import 'package:mobile/core/database/app_database.dart';
+import 'package:mobile/domain/entities/maintenance_interval.dart';
+import 'package:mobile/domain/enums/vehicle_type.dart';
 
 typedef _Preset = ({String label, int km, int? months, String? description});
 
@@ -23,224 +23,224 @@ List<MaintenanceInterval> defaultIntervalsFor(
 const _presetsByType = {
   VehicleType.combustion: <_Preset>[
     (
-      label: 'Cambio de aceite',
+      label: 'Oil change',
       km: 10000,
       months: 12,
       description:
-          'El aceite pierde propiedades lubricantes con los kilómetros y el tiempo. '
-          'Un cambio regular protege el motor del desgaste prematuro.',
+          'Oil loses its lubricating properties with mileage and time. '
+          'Regular changes protect the engine from premature wear.',
     ),
     (
-      label: 'Filtro de aceite',
+      label: 'Oil filter',
       km: 10000,
       months: 12,
       description:
-          'El filtro de aceite retiene partículas y contaminantes. '
-          'Si se satura, el aceite circula sin filtrar y acelera el desgaste del motor.',
+          'The oil filter traps particles and contaminants. '
+          'If saturated, oil circulates unfiltered and accelerates engine wear.',
     ),
     (
-      label: 'Filtro de aire',
+      label: 'Air filter',
       km: 20000,
       months: null,
       description:
-          'Un filtro de aire sucio reduce la potencia, aumenta el consumo '
-          'y puede dañar los sensores de admisión.',
+          'A dirty air filter reduces power, increases consumption, '
+          'and can damage intake sensors.',
     ),
     (
-      label: 'Pastillas de freno',
+      label: 'Brake pads',
       km: 30000,
       months: null,
       description:
-          'El compuesto de fricción se desgasta con el uso. '
-          'Por debajo de 3mm de grosor, la distancia de frenado aumenta peligrosamente.',
+          'Friction compound wears with use. '
+          'Below 3mm thickness, braking distance increases dangerously.',
     ),
     (
-      label: 'Neumáticos',
+      label: 'Tires',
       km: 50000,
       months: null,
       description:
-          'Los neumáticos se degradan tanto por kilometraje como por edad. '
-          'La presión incorrecta o el desgaste irregular comprometen el agarre y la seguridad.',
+          'Tires degrade both by mileage and age. '
+          'Incorrect pressure or uneven wear compromises grip and safety.',
     ),
     (
-      label: 'Bujías',
+      label: 'Spark plugs',
       km: 40000,
       months: null,
       description:
-          'Las bujías desgastadas aumentan el consumo, dificultan el arranque '
-          'y pueden dañar la bobina de encendido.',
+          'Worn spark plugs increase consumption, make starting difficult, '
+          'and can damage the ignition coil.',
     ),
     (
-      label: 'Correa de distribución',
+      label: 'Timing belt',
       km: 100000,
       months: 60,
       description:
-          'La correa de distribución es crítica: si se rompe, el motor sufre daños graves. '
-          'Debe cambiarse según el intervalo del fabricante sin excepción.',
+          'The timing belt is critical: if it breaks, the engine suffers severe damage. '
+          'It must be changed at the manufacturer\'s interval without exception.',
     ),
     (
-      label: 'Líquido de frenos',
+      label: 'Brake fluid',
       km: 40000,
       months: 24,
       description:
-          'El líquido de frenos es higroscópico: absorbe humedad, lo que reduce '
-          'su punto de ebullición y la eficacia de la frenada.',
+          'Brake fluid is hygroscopic: it absorbs moisture, reducing its '
+          'boiling point and braking effectiveness.',
     ),
     (
-      label: 'Líquido refrigerante',
+      label: 'Coolant',
       km: 60000,
       months: 36,
       description:
-          'El refrigerante pierde propiedades anticongelantes y anticorrosivas '
-          'con el tiempo, pudiendo dañar el circuito interno del motor.',
+          'Coolant loses its antifreeze and anticorrosive properties '
+          'over time, potentially damaging the engine\'s internal circuit.',
     ),
   ],
   VehicleType.electric: <_Preset>[
     (
-      label: 'Pastillas de freno',
+      label: 'Brake pads',
       km: 30000,
       months: null,
       description:
-          'El compuesto de fricción se desgasta con el uso. '
-          'Por debajo de 3mm de grosor, la distancia de frenado aumenta peligrosamente.',
+          'Friction compound wears with use. '
+          'Below 3mm thickness, braking distance increases dangerously.',
     ),
     (
-      label: 'Neumáticos',
+      label: 'Tires',
       km: 50000,
       months: null,
       description:
-          'Los neumáticos se degradan tanto por kilometraje como por edad. '
-          'La presión incorrecta o el desgaste irregular comprometen el agarre y la seguridad.',
+          'Tires degrade both by mileage and age. '
+          'Incorrect pressure or uneven wear compromises grip and safety.',
     ),
     (
-      label: 'Refrigeración batería',
+      label: 'Battery cooling',
       km: 60000,
       months: null,
       description:
-          'El sistema de refrigeración de la batería es vital para mantener '
-          'la temperatura óptima y prolongar la vida útil de las celdas.',
+          'The battery cooling system is vital for maintaining optimal '
+          'temperature and prolonging cell life.',
     ),
     (
-      label: 'Filtro habitáculo',
+      label: 'Cabin filter',
       km: 20000,
       months: null,
       description:
-          'El filtro del habitáculo purifica el aire que ingresa al interior. '
-          'Un filtro saturado reduce la eficiencia del climatizador y puede generar malos olores.',
+          'The cabin filter purifies the air entering the interior. '
+          'A saturated filter reduces HVAC efficiency and can generate odors.',
     ),
     (
-      label: 'Líquido de frenos',
+      label: 'Brake fluid',
       km: 40000,
       months: 24,
       description:
-          'El líquido de frenos es higroscópico: absorbe humedad, lo que reduce '
-          'su punto de ebullición y la eficacia de la frenada.',
+          'Brake fluid is hygroscopic: it absorbs moisture, reducing its '
+          'boiling point and braking effectiveness.',
     ),
     (
-      label: 'Líquido refrigerante',
+      label: 'Coolant',
       km: 80000,
       months: 36,
       description:
-          'El refrigerante pierde propiedades anticongelantes y anticorrosivas '
-          'con el tiempo, pudiendo dañar el circuito interno.',
+          'Coolant loses its antifreeze and anticorrosive properties '
+          'over time, potentially damaging the internal circuit.',
     ),
   ],
   VehicleType.motorcycle: <_Preset>[
     (
-      label: 'Cadena (Limpieza y engrase)',
+      label: 'Chain (Clean and lube)',
       km: 1000,
       months: null,
       description:
-          'La cadena es el componente que más desgaste sufre. '
-          'Una lubrificación regular prolonga su vida útil y evita roturas peligrosas.',
+          'The chain is the component that suffers the most wear. '
+          'Regular lubrication extends its life and prevents dangerous breakage.',
     ),
     (
-      label: 'Presión y estado de neumáticos',
+      label: 'Tire pressure and condition',
       km: 1000,
       months: null,
       description:
-          'Los neumáticos se degradan tanto por kilometraje como por edad. '
-          'La presión incorrecta o el desgaste irregular comprometen gravemente el agarre.',
+          'Tires degrade both by mileage and age. '
+          'Incorrect pressure or uneven wear severely compromises grip.',
     ),
     (
-      label: 'Aceite de motor y filtro',
+      label: 'Engine oil and filter',
       km: 10000,
       months: 12,
       description:
-          'El aceite pierde propiedades lubricantes con los kilómetros y el tiempo. '
-          'Un cambio regular protege el motor del desgaste prematuro.',
+          'Oil loses its lubricating properties with mileage and time. '
+          'Regular changes protect the engine from premature wear.',
     ),
     (
-      label: 'Filtro de aire',
+      label: 'Air filter',
       km: 10000,
       months: null,
       description:
-          'Un filtro de aire sucio reduce la potencia, aumenta el consumo '
-          'y puede dañar los sensores de admisión.',
+          'A dirty air filter reduces power, increases consumption, '
+          'and can damage intake sensors.',
     ),
     (
-      label: 'Pastillas de freno',
+      label: 'Brake pads',
       km: 5000,
       months: null,
       description:
-          'El compuesto de fricción se desgasta con el uso. '
-          'Por debajo de 1.5mm de grosor, la seguridad se ve comprometida.',
+          'Friction compound wears with use. '
+          'Below 1.5mm thickness, safety is compromised.',
     ),
     (
-      label: 'Líquido de frenos',
+      label: 'Brake fluid',
       km: 999999,
       months: 24,
       description:
-          'El líquido de frenos es higroscópico: absorbe humedad, lo que reduce '
-          'su punto de ebullición y la eficacia de la frenada.',
+          'Brake fluid is hygroscopic: it absorbs moisture, reducing its '
+          'boiling point and braking effectiveness.',
     ),
     (
-      label: 'Bujías',
+      label: 'Spark plugs',
       km: 20000,
       months: null,
       description:
-          'Las bujías desgastadas aumentan el consumo, dificultan el arranque '
-          'y pueden dañar la bobina de encendido.',
+          'Worn spark plugs increase consumption, make starting difficult, '
+          'and can damage the ignition coil.',
     ),
     (
-      label: 'Reglaje de válvulas',
+      label: 'Valve adjustment',
       km: 24000,
       months: null,
       description:
-          'El ajuste de válvulas mantiene la compresión correcta '
-          'y evita desgastes prematuros en la culata.',
+          'Valve adjustment maintains proper compression and prevents '
+          'premature wear on the cylinder head.',
     ),
     (
-      label: 'Kit de arrastre (Cadena, piñón y corona)',
+      label: 'Drive kit (Chain, sprocket, crown)',
       km: 20000,
       months: null,
       description:
-          'Cadena, piñón y corona se desgastan como conjunto. '
-          'Cambiarlos por separado acelera el desgaste del componente nuevo.',
+          'Chain, sprocket, and crown wear as a set. '
+          'Replacing them separately accelerates wear on the new component.',
     ),
     (
-      label: 'Aceite de horquilla',
+      label: 'Fork oil',
       km: 30000,
       months: 36,
       description:
-          'Con el tiempo se descompone, perdiendo densidad y empeorando '
-          'el comportamiento de la suspensión delantera.',
+          'Over time it breaks down, losing density and worsening '
+          'front suspension behavior.',
     ),
     (
-      label: 'Líquido refrigerante',
+      label: 'Coolant',
       km: 40000,
       months: 36,
       description:
-          'El refrigerante pierde propiedades anticongelantes y anticorrosivas '
-          'con el tiempo, pudiendo dañar el circuito interno.',
+          'Coolant loses its antifreeze and anticorrosive properties '
+          'over time, potentially damaging the internal circuit.',
     ),
     (
-      label: 'Batería',
+      label: 'Battery',
       km: 50000,
       months: 48,
       description:
-          'La batería pierde capacidad con los ciclos de carga y el tiempo. '
-          'El uso de mantenedores en invierno prolonga su vida útil.',
+          'Battery loses capacity with charge cycles and time. '
+          'Using maintainers in winter prolongs its useful life.',
     ),
   ],
 };

@@ -1,0 +1,1104 @@
+import 'dart:async';
+
+import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:intl/intl.dart' as intl;
+
+import 'app_localizations_en.dart';
+import 'app_localizations_es.dart';
+
+// ignore_for_file: type=lint
+
+/// Callers can lookup localized strings with an instance of AppLocalizations
+/// returned by `AppLocalizations.of(context)`.
+///
+/// Applications need to include `AppLocalizations.delegate()` in their app's
+/// `localizationDelegates` list, and the locales they support in the app's
+/// `supportedLocales` list. For example:
+///
+/// ```dart
+/// import 'l10n/app_localizations.dart';
+///
+/// return MaterialApp(
+///   localizationsDelegates: AppLocalizations.localizationsDelegates,
+///   supportedLocales: AppLocalizations.supportedLocales,
+///   home: MyApplicationHome(),
+/// );
+/// ```
+///
+/// ## Update pubspec.yaml
+///
+/// Please make sure to update your pubspec.yaml to include the following
+/// packages:
+///
+/// ```yaml
+/// dependencies:
+///   # Internationalization support.
+///   flutter_localizations:
+///     sdk: flutter
+///   intl: any # Use the pinned version from flutter_localizations
+///
+///   # Rest of dependencies
+/// ```
+///
+/// ## iOS Applications
+///
+/// iOS applications define key application metadata, including supported
+/// locales, in an Info.plist file that is built into the application bundle.
+/// To configure the locales supported by your app, you’ll need to edit this
+/// file.
+///
+/// First, open your project’s ios/Runner.xcworkspace Xcode workspace file.
+/// Then, in the Project Navigator, open the Info.plist file under the Runner
+/// project’s Runner folder.
+///
+/// Next, select the Information Property List item, select Add Item from the
+/// Editor menu, then select Localizations from the pop-up menu.
+///
+/// Select and expand the newly-created Localizations item then, for each
+/// locale your application supports, add a new item and select the locale
+/// you wish to add from the pop-up menu in the Value field. This list should
+/// be consistent with the languages listed in the AppLocalizations.supportedLocales
+/// property.
+abstract class AppLocalizations {
+  AppLocalizations(String locale)
+    : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+
+  final String localeName;
+
+  static AppLocalizations? of(BuildContext context) {
+    return Localizations.of<AppLocalizations>(context, AppLocalizations);
+  }
+
+  static const LocalizationsDelegate<AppLocalizations> delegate =
+      _AppLocalizationsDelegate();
+
+  /// A list of this localizations delegate along with the default localizations
+  /// delegates.
+  ///
+  /// Returns a list of localizations delegates containing this delegate along with
+  /// GlobalMaterialLocalizations.delegate, GlobalCupertinoLocalizations.delegate,
+  /// and GlobalWidgetsLocalizations.delegate.
+  ///
+  /// Additional delegates can be added by appending to this list in
+  /// MaterialApp. This list does not have to be used at all if a custom list
+  /// of delegates is preferred or required.
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
+      <LocalizationsDelegate<dynamic>>[
+        delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ];
+
+  /// A list of this localizations delegate's supported locales.
+  static const List<Locale> supportedLocales = <Locale>[
+    Locale('es'),
+    Locale('en'),
+  ];
+
+  /// No description provided for @appTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Karter'**
+  String get appTitle;
+
+  /// No description provided for @navDashboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Dashboard'**
+  String get navDashboard;
+
+  /// No description provided for @navVehicles.
+  ///
+  /// In en, this message translates to:
+  /// **'Vehicles'**
+  String get navVehicles;
+
+  /// No description provided for @navMore.
+  ///
+  /// In en, this message translates to:
+  /// **'More'**
+  String get navMore;
+
+  /// No description provided for @homeEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No vehicles'**
+  String get homeEmptyTitle;
+
+  /// No description provided for @homeEmptySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add your first vehicle'**
+  String get homeEmptySubtitle;
+
+  /// No description provided for @homeError.
+  ///
+  /// In en, this message translates to:
+  /// **'Error: {error}'**
+  String homeError(Object error);
+
+  /// No description provided for @dashboardTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Dashboard'**
+  String get dashboardTitle;
+
+  /// No description provided for @dashboardComingSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Coming Soon'**
+  String get dashboardComingSoon;
+
+  /// No description provided for @vehicleDetailTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Vehicle'**
+  String get vehicleDetailTitle;
+
+  /// No description provided for @vehicleNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Vehicle not found'**
+  String get vehicleNotFound;
+
+  /// No description provided for @plate.
+  ///
+  /// In en, this message translates to:
+  /// **'Plate'**
+  String get plate;
+
+  /// No description provided for @vin.
+  ///
+  /// In en, this message translates to:
+  /// **'VIN'**
+  String get vin;
+
+  /// No description provided for @brandModel.
+  ///
+  /// In en, this message translates to:
+  /// **'Brand / Model'**
+  String get brandModel;
+
+  /// No description provided for @year.
+  ///
+  /// In en, this message translates to:
+  /// **'Year'**
+  String get year;
+
+  /// No description provided for @odometer.
+  ///
+  /// In en, this message translates to:
+  /// **'Odometer'**
+  String get odometer;
+
+  /// No description provided for @update.
+  ///
+  /// In en, this message translates to:
+  /// **'Update'**
+  String get update;
+
+  /// No description provided for @actions.
+  ///
+  /// In en, this message translates to:
+  /// **'Actions'**
+  String get actions;
+
+  /// No description provided for @fuelLogs.
+  ///
+  /// In en, this message translates to:
+  /// **'Fuel logs'**
+  String get fuelLogs;
+
+  /// No description provided for @maintenanceHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'Maintenance history'**
+  String get maintenanceHistory;
+
+  /// No description provided for @configureIntervals.
+  ///
+  /// In en, this message translates to:
+  /// **'Configure intervals'**
+  String get configureIntervals;
+
+  /// No description provided for @nextMaintenance.
+  ///
+  /// In en, this message translates to:
+  /// **'Next Maintenance'**
+  String get nextMaintenance;
+
+  /// No description provided for @allIntervalsDisabled.
+  ///
+  /// In en, this message translates to:
+  /// **'All intervals are disabled.'**
+  String get allIntervalsDisabled;
+
+  /// No description provided for @register.
+  ///
+  /// In en, this message translates to:
+  /// **'Register'**
+  String get register;
+
+  /// No description provided for @registerService.
+  ///
+  /// In en, this message translates to:
+  /// **'Register service'**
+  String get registerService;
+
+  /// No description provided for @noDescriptionAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'No description available. Go to Maintenance settings to add one.'**
+  String get noDescriptionAvailable;
+
+  /// No description provided for @close.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get close;
+
+  /// No description provided for @overduePerformService.
+  ///
+  /// In en, this message translates to:
+  /// **'Overdue — perform service'**
+  String get overduePerformService;
+
+  /// No description provided for @nextIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Next in {parts}'**
+  String nextIn(Object parts);
+
+  /// No description provided for @vehicleFormNew.
+  ///
+  /// In en, this message translates to:
+  /// **'New vehicle'**
+  String get vehicleFormNew;
+
+  /// No description provided for @vehicleFormEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit vehicle'**
+  String get vehicleFormEdit;
+
+  /// No description provided for @brand.
+  ///
+  /// In en, this message translates to:
+  /// **'Brand'**
+  String get brand;
+
+  /// No description provided for @model.
+  ///
+  /// In en, this message translates to:
+  /// **'Model'**
+  String get model;
+
+  /// No description provided for @required.
+  ///
+  /// In en, this message translates to:
+  /// **'Required'**
+  String get required;
+
+  /// No description provided for @invalidYear.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid year'**
+  String get invalidYear;
+
+  /// No description provided for @vehicleType.
+  ///
+  /// In en, this message translates to:
+  /// **'Vehicle type'**
+  String get vehicleType;
+
+  /// No description provided for @combustion.
+  ///
+  /// In en, this message translates to:
+  /// **'Combustion'**
+  String get combustion;
+
+  /// No description provided for @electric.
+  ///
+  /// In en, this message translates to:
+  /// **'Electric'**
+  String get electric;
+
+  /// No description provided for @motorcycle.
+  ///
+  /// In en, this message translates to:
+  /// **'Motorcycle'**
+  String get motorcycle;
+
+  /// No description provided for @plateOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Plate (optional)'**
+  String get plateOptional;
+
+  /// No description provided for @vinOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'VIN (optional)'**
+  String get vinOptional;
+
+  /// No description provided for @invalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid'**
+  String get invalid;
+
+  /// No description provided for @aliasOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Alias (optional)'**
+  String get aliasOptional;
+
+  /// No description provided for @aliasHint.
+  ///
+  /// In en, this message translates to:
+  /// **'E.g.: My ride, The beast, etc.'**
+  String get aliasHint;
+
+  /// No description provided for @saveChanges.
+  ///
+  /// In en, this message translates to:
+  /// **'Save changes'**
+  String get saveChanges;
+
+  /// No description provided for @addVehicle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add vehicle'**
+  String get addVehicle;
+
+  /// No description provided for @deleteVehicle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete vehicle'**
+  String get deleteVehicle;
+
+  /// No description provided for @deleteVehicleConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'This action cannot be undone. All fuel logs, maintenance records, and intervals associated will be deleted.'**
+  String get deleteVehicleConfirm;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get delete;
+
+  /// No description provided for @dataManagerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Export / Import data'**
+  String get dataManagerTitle;
+
+  /// No description provided for @selectAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Select all'**
+  String get selectAll;
+
+  /// No description provided for @exporting.
+  ///
+  /// In en, this message translates to:
+  /// **'Exporting...'**
+  String get exporting;
+
+  /// No description provided for @export.
+  ///
+  /// In en, this message translates to:
+  /// **'Export'**
+  String get export;
+
+  /// No description provided for @importing.
+  ///
+  /// In en, this message translates to:
+  /// **'Importing...'**
+  String get importing;
+
+  /// No description provided for @import.
+  ///
+  /// In en, this message translates to:
+  /// **'Import'**
+  String get import;
+
+  /// No description provided for @saveExport.
+  ///
+  /// In en, this message translates to:
+  /// **'Save export'**
+  String get saveExport;
+
+  /// No description provided for @exportedAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Exported at {path}'**
+  String exportedAt(Object path);
+
+  /// No description provided for @exportError.
+  ///
+  /// In en, this message translates to:
+  /// **'Export error: {error}'**
+  String exportError(Object error);
+
+  /// No description provided for @importData.
+  ///
+  /// In en, this message translates to:
+  /// **'Import data'**
+  String get importData;
+
+  /// No description provided for @importPreview.
+  ///
+  /// In en, this message translates to:
+  /// **'Found:\n• {vehicles} vehicle(s)\n• {fuelLogs} fuel log(s)\n• {maintenanceLogs} maintenance log(s)\n\nImport? Existing data with the same ID will be overwritten.'**
+  String importPreview(
+    Object fuelLogs,
+    Object maintenanceLogs,
+    Object vehicles,
+  );
+
+  /// No description provided for @importSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Data imported successfully'**
+  String get importSuccess;
+
+  /// No description provided for @importError.
+  ///
+  /// In en, this message translates to:
+  /// **'Import error: {error}'**
+  String importError(Object error);
+
+  /// No description provided for @invalidJson.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid JSON file'**
+  String get invalidJson;
+
+  /// No description provided for @exportShareText.
+  ///
+  /// In en, this message translates to:
+  /// **'Karter Export — {count} vehicle(s)'**
+  String exportShareText(Object count);
+
+  /// No description provided for @maintenanceSettingsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Maintenance intervals'**
+  String get maintenanceSettingsTitle;
+
+  /// No description provided for @maintenanceSettingsInstruction.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable or disable items according to your vehicle\'s needs. Custom intervals can be deleted.'**
+  String get maintenanceSettingsInstruction;
+
+  /// No description provided for @km.
+  ///
+  /// In en, this message translates to:
+  /// **'km'**
+  String get km;
+
+  /// No description provided for @timeMonths.
+  ///
+  /// In en, this message translates to:
+  /// **'Time (months)'**
+  String get timeMonths;
+
+  /// No description provided for @months.
+  ///
+  /// In en, this message translates to:
+  /// **'months'**
+  String get months;
+
+  /// No description provided for @description.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get description;
+
+  /// No description provided for @newInterval.
+  ///
+  /// In en, this message translates to:
+  /// **'New interval'**
+  String get newInterval;
+
+  /// No description provided for @name.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get name;
+
+  /// No description provided for @add.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get add;
+
+  /// No description provided for @edit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get edit;
+
+  /// No description provided for @deleteInterval.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get deleteInterval;
+
+  /// No description provided for @noDescriptionAvailableSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'No description available. Press \"Edit\" to add one.'**
+  String get noDescriptionAvailableSettings;
+
+  /// No description provided for @formattedKmK.
+  ///
+  /// In en, this message translates to:
+  /// **'{km}k km'**
+  String formattedKmK(Object km);
+
+  /// No description provided for @formattedKm.
+  ///
+  /// In en, this message translates to:
+  /// **'{km} km'**
+  String formattedKm(Object km);
+
+  /// No description provided for @intervalSubtitleKm.
+  ///
+  /// In en, this message translates to:
+  /// **'every {km}'**
+  String intervalSubtitleKm(Object km);
+
+  /// No description provided for @intervalSubtitleMonths.
+  ///
+  /// In en, this message translates to:
+  /// **'{months} months'**
+  String intervalSubtitleMonths(Object months);
+
+  /// No description provided for @maintenanceLogTitleEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit service'**
+  String get maintenanceLogTitleEdit;
+
+  /// No description provided for @maintenanceLogTitleNew.
+  ///
+  /// In en, this message translates to:
+  /// **'New service'**
+  String get maintenanceLogTitleNew;
+
+  /// No description provided for @date.
+  ///
+  /// In en, this message translates to:
+  /// **'Date: {date}'**
+  String date(Object date);
+
+  /// No description provided for @descriptionRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get descriptionRequired;
+
+  /// No description provided for @odometerAtService.
+  ///
+  /// In en, this message translates to:
+  /// **'Odometer at service (optional)'**
+  String get odometerAtService;
+
+  /// No description provided for @resetInterval.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset interval (optional)'**
+  String get resetInterval;
+
+  /// No description provided for @saveChangesShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Save changes'**
+  String get saveChangesShort;
+
+  /// No description provided for @saveService.
+  ///
+  /// In en, this message translates to:
+  /// **'Save service'**
+  String get saveService;
+
+  /// No description provided for @deleteService.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete service'**
+  String get deleteService;
+
+  /// No description provided for @deleteServiceConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this service?'**
+  String get deleteServiceConfirm;
+
+  /// No description provided for @maintenanceListTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Maintenance'**
+  String get maintenanceListTitle;
+
+  /// No description provided for @maintenanceEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No services recorded'**
+  String get maintenanceEmpty;
+
+  /// No description provided for @fuelFormTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'New fuel-up'**
+  String get fuelFormTitle;
+
+  /// No description provided for @volume.
+  ///
+  /// In en, this message translates to:
+  /// **'Volume'**
+  String get volume;
+
+  /// No description provided for @unitL.
+  ///
+  /// In en, this message translates to:
+  /// **'L'**
+  String get unitL;
+
+  /// No description provided for @unitGal.
+  ///
+  /// In en, this message translates to:
+  /// **'gal'**
+  String get unitGal;
+
+  /// No description provided for @unitKm.
+  ///
+  /// In en, this message translates to:
+  /// **'km'**
+  String get unitKm;
+
+  /// No description provided for @unitMi.
+  ///
+  /// In en, this message translates to:
+  /// **'mi'**
+  String get unitMi;
+
+  /// No description provided for @pricePerUnit.
+  ///
+  /// In en, this message translates to:
+  /// **'Price per unit (optional)'**
+  String get pricePerUnit;
+
+  /// No description provided for @fullTank.
+  ///
+  /// In en, this message translates to:
+  /// **'Full tank'**
+  String get fullTank;
+
+  /// No description provided for @saveFuelUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Save fuel-up'**
+  String get saveFuelUp;
+
+  /// No description provided for @fuelListTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Fuel logs'**
+  String get fuelListTitle;
+
+  /// No description provided for @fuelEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No fuel-ups recorded'**
+  String get fuelEmpty;
+
+  /// No description provided for @moreAbout.
+  ///
+  /// In en, this message translates to:
+  /// **'About Karter'**
+  String get moreAbout;
+
+  /// No description provided for @moreDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Karter is a local-first, open source vehicle maintenance app that respects your privacy.'**
+  String get moreDescription;
+
+  /// No description provided for @moreExport.
+  ///
+  /// In en, this message translates to:
+  /// **'Export / Import data'**
+  String get moreExport;
+
+  /// No description provided for @moreExportSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Back up or transfer your information'**
+  String get moreExportSubtitle;
+
+  /// No description provided for @moreDocs.
+  ///
+  /// In en, this message translates to:
+  /// **'Documentation'**
+  String get moreDocs;
+
+  /// No description provided for @moreDocsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Usage guide and features'**
+  String get moreDocsSubtitle;
+
+  /// No description provided for @moreSource.
+  ///
+  /// In en, this message translates to:
+  /// **'Source code'**
+  String get moreSource;
+
+  /// No description provided for @moreSourceSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'GitHub repository'**
+  String get moreSourceSubtitle;
+
+  /// No description provided for @moreDonate.
+  ///
+  /// In en, this message translates to:
+  /// **'Donate'**
+  String get moreDonate;
+
+  /// No description provided for @moreDonateSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Support development on GitHub Sponsors'**
+  String get moreDonateSubtitle;
+
+  /// No description provided for @moreFooter.
+  ///
+  /// In en, this message translates to:
+  /// **'Made with ❤️ by abrahdev'**
+  String get moreFooter;
+
+  /// No description provided for @moreUrlError.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not open {url}'**
+  String moreUrlError(Object url);
+
+  /// No description provided for @language.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get language;
+
+  /// No description provided for @selectLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'Select language'**
+  String get selectLanguage;
+
+  /// No description provided for @english.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get english;
+
+  /// No description provided for @spanish.
+  ///
+  /// In en, this message translates to:
+  /// **'Spanish'**
+  String get spanish;
+
+  /// No description provided for @odometerUpdateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Update odometer'**
+  String get odometerUpdateTitle;
+
+  /// No description provided for @odometerLastReading.
+  ///
+  /// In en, this message translates to:
+  /// **'Last: {value} {unit}'**
+  String odometerLastReading(Object unit, Object value);
+
+  /// No description provided for @odometerLowerWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'The value is lower than the last record ({value} {unit}).'**
+  String odometerLowerWarning(Object unit, Object value);
+
+  /// No description provided for @odometerDeltaWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'You drove {delta} {unit} since last time. Is this correct?'**
+  String odometerDeltaWarning(Object delta, Object unit);
+
+  /// No description provided for @odometerSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get odometerSave;
+
+  /// No description provided for @odometerCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get odometerCancel;
+
+  /// No description provided for @seedIntervalOilChange.
+  ///
+  /// In en, this message translates to:
+  /// **'Oil change'**
+  String get seedIntervalOilChange;
+
+  /// No description provided for @seedIntervalOilFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'Oil filter'**
+  String get seedIntervalOilFilter;
+
+  /// No description provided for @seedIntervalAirFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'Air filter'**
+  String get seedIntervalAirFilter;
+
+  /// No description provided for @seedIntervalBrakePads.
+  ///
+  /// In en, this message translates to:
+  /// **'Brake pads'**
+  String get seedIntervalBrakePads;
+
+  /// No description provided for @seedIntervalTires.
+  ///
+  /// In en, this message translates to:
+  /// **'Tires'**
+  String get seedIntervalTires;
+
+  /// No description provided for @seedIntervalSparkPlugs.
+  ///
+  /// In en, this message translates to:
+  /// **'Spark plugs'**
+  String get seedIntervalSparkPlugs;
+
+  /// No description provided for @seedIntervalTimingBelt.
+  ///
+  /// In en, this message translates to:
+  /// **'Timing belt'**
+  String get seedIntervalTimingBelt;
+
+  /// No description provided for @seedIntervalBrakeFluid.
+  ///
+  /// In en, this message translates to:
+  /// **'Brake fluid'**
+  String get seedIntervalBrakeFluid;
+
+  /// No description provided for @seedIntervalCoolant.
+  ///
+  /// In en, this message translates to:
+  /// **'Coolant'**
+  String get seedIntervalCoolant;
+
+  /// No description provided for @seedIntervalBatteryCooling.
+  ///
+  /// In en, this message translates to:
+  /// **'Battery cooling'**
+  String get seedIntervalBatteryCooling;
+
+  /// No description provided for @seedIntervalCabinFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'Cabin filter'**
+  String get seedIntervalCabinFilter;
+
+  /// No description provided for @seedIntervalChain.
+  ///
+  /// In en, this message translates to:
+  /// **'Chain (Clean and lube)'**
+  String get seedIntervalChain;
+
+  /// No description provided for @seedIntervalTirePressure.
+  ///
+  /// In en, this message translates to:
+  /// **'Tire pressure and condition'**
+  String get seedIntervalTirePressure;
+
+  /// No description provided for @seedIntervalEngineOilFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'Engine oil and filter'**
+  String get seedIntervalEngineOilFilter;
+
+  /// No description provided for @seedIntervalValveAdjustment.
+  ///
+  /// In en, this message translates to:
+  /// **'Valve adjustment'**
+  String get seedIntervalValveAdjustment;
+
+  /// No description provided for @seedIntervalDriveKit.
+  ///
+  /// In en, this message translates to:
+  /// **'Drive kit (Chain, sprocket, crown)'**
+  String get seedIntervalDriveKit;
+
+  /// No description provided for @seedIntervalForkOil.
+  ///
+  /// In en, this message translates to:
+  /// **'Fork oil'**
+  String get seedIntervalForkOil;
+
+  /// No description provided for @seedIntervalBattery.
+  ///
+  /// In en, this message translates to:
+  /// **'Battery'**
+  String get seedIntervalBattery;
+
+  /// No description provided for @seedDescOilChange.
+  ///
+  /// In en, this message translates to:
+  /// **'Oil loses its lubricating properties with mileage and time. Regular changes protect the engine from premature wear.'**
+  String get seedDescOilChange;
+
+  /// No description provided for @seedDescOilFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'The oil filter traps particles and contaminants. If saturated, oil circulates unfiltered and accelerates engine wear.'**
+  String get seedDescOilFilter;
+
+  /// No description provided for @seedDescAirFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'A dirty air filter reduces power, increases consumption, and can damage intake sensors.'**
+  String get seedDescAirFilter;
+
+  /// No description provided for @seedDescBrakePads.
+  ///
+  /// In en, this message translates to:
+  /// **'Friction compound wears with use. Below 3mm thickness, braking distance increases dangerously.'**
+  String get seedDescBrakePads;
+
+  /// No description provided for @seedDescTires.
+  ///
+  /// In en, this message translates to:
+  /// **'Tires degrade both by mileage and age. Incorrect pressure or uneven wear compromises grip and safety.'**
+  String get seedDescTires;
+
+  /// No description provided for @seedDescSparkPlugs.
+  ///
+  /// In en, this message translates to:
+  /// **'Worn spark plugs increase consumption, make starting difficult, and can damage the ignition coil.'**
+  String get seedDescSparkPlugs;
+
+  /// No description provided for @seedDescTimingBelt.
+  ///
+  /// In en, this message translates to:
+  /// **'The timing belt is critical: if it breaks, the engine suffers severe damage. It must be changed at the manufacturer\'s interval without exception.'**
+  String get seedDescTimingBelt;
+
+  /// No description provided for @seedDescBrakeFluid.
+  ///
+  /// In en, this message translates to:
+  /// **'Brake fluid is hygroscopic: it absorbs moisture, reducing its boiling point and braking effectiveness.'**
+  String get seedDescBrakeFluid;
+
+  /// No description provided for @seedDescCoolant.
+  ///
+  /// In en, this message translates to:
+  /// **'Coolant loses its antifreeze and anticorrosive properties over time, potentially damaging the engine\'s internal circuit.'**
+  String get seedDescCoolant;
+
+  /// No description provided for @seedDescBatteryCooling.
+  ///
+  /// In en, this message translates to:
+  /// **'The battery cooling system is vital for maintaining optimal temperature and prolonging cell life.'**
+  String get seedDescBatteryCooling;
+
+  /// No description provided for @seedDescCabinFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'The cabin filter purifies the air entering the interior. A saturated filter reduces HVAC efficiency and can generate odors.'**
+  String get seedDescCabinFilter;
+
+  /// No description provided for @seedDescChain.
+  ///
+  /// In en, this message translates to:
+  /// **'The chain is the component that suffers the most wear. Regular lubrication extends its life and prevents dangerous breakage.'**
+  String get seedDescChain;
+
+  /// No description provided for @seedDescMotorcycleBrakePads.
+  ///
+  /// In en, this message translates to:
+  /// **'Friction compound wears with use. Below 1.5mm thickness, safety is compromised.'**
+  String get seedDescMotorcycleBrakePads;
+
+  /// No description provided for @seedDescValveAdjustment.
+  ///
+  /// In en, this message translates to:
+  /// **'Valve adjustment maintains proper compression and prevents premature wear on the cylinder head.'**
+  String get seedDescValveAdjustment;
+
+  /// No description provided for @seedDescDriveKit.
+  ///
+  /// In en, this message translates to:
+  /// **'Chain, sprocket, and crown wear as a set. Replacing them separately accelerates wear on the new component.'**
+  String get seedDescDriveKit;
+
+  /// No description provided for @seedDescForkOil.
+  ///
+  /// In en, this message translates to:
+  /// **'Over time it breaks down, losing density and worsening front suspension behavior.'**
+  String get seedDescForkOil;
+
+  /// No description provided for @seedDescBatteryMaintenance.
+  ///
+  /// In en, this message translates to:
+  /// **'Battery loses capacity with charge cycles and time. Using maintainers in winter prolongs its useful life.'**
+  String get seedDescBatteryMaintenance;
+}
+
+class _AppLocalizationsDelegate
+    extends LocalizationsDelegate<AppLocalizations> {
+  const _AppLocalizationsDelegate();
+
+  @override
+  Future<AppLocalizations> load(Locale locale) {
+    return SynchronousFuture<AppLocalizations>(lookupAppLocalizations(locale));
+  }
+
+  @override
+  bool isSupported(Locale locale) =>
+      <String>['en', 'es'].contains(locale.languageCode);
+
+  @override
+  bool shouldReload(_AppLocalizationsDelegate old) => false;
+}
+
+AppLocalizations lookupAppLocalizations(Locale locale) {
+  // Lookup logic when only language code is specified.
+  switch (locale.languageCode) {
+    case 'en':
+      return AppLocalizationsEn();
+    case 'es':
+      return AppLocalizationsEs();
+  }
+
+  throw FlutterError(
+    'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
+    'an issue with the localizations generation tool. Please file an issue '
+    'on GitHub with a reproducible sample app and the gen-l10n configuration '
+    'that was used.',
+  );
+}

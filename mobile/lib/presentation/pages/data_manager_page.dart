@@ -4,6 +4,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/data/services/export_service.dart';
+import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
@@ -23,17 +24,18 @@ class _DataManagerPageState extends ConsumerState<DataManagerPage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l = AppLocalizations.of(context)!;
     final vehiclesAsync = ref.watch(vehicleListProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Exportar / Importar datos')),
+      appBar: AppBar(title: Text(l.dataManagerTitle)),
       body: vehiclesAsync.when(
         data: (vehicles) => Column(
           children: [
             Expanded(
               child: vehicles.isEmpty
                   ? Center(
-                      child: Text('No hay vehículos',
+                      child: Text(l.homeEmptyTitle,
                           style: theme.textTheme.bodyLarge),
                     )
                   : ListView.builder(
@@ -59,7 +61,7 @@ class _DataManagerPageState extends ConsumerState<DataManagerPage> {
             ),
             if (vehicles.isNotEmpty)
               CheckboxListTile(
-                title: const Text('Seleccionar todos'),
+                title: Text(l.selectAll),
                 value: _selectedIds.length == vehicles.length,
                 onChanged: (checked) {
                   setState(() {
@@ -90,7 +92,7 @@ class _DataManagerPageState extends ConsumerState<DataManagerPage> {
                             )
                           : const Icon(Icons.upload),
                       label: Text(
-                          _isExporting ? 'Exportando...' : 'Exportar'),
+                          _isExporting ? l.exporting : l.export),
                     ),
                   ),
                   const SizedBox(height: 12),
@@ -107,7 +109,7 @@ class _DataManagerPageState extends ConsumerState<DataManagerPage> {
                             )
                           : const Icon(Icons.download),
                       label: Text(
-                          _isImporting ? 'Importando...' : 'Importar'),
+                          _isImporting ? l.importing : l.import),
                     ),
                   ),
                 ],
@@ -122,6 +124,7 @@ class _DataManagerPageState extends ConsumerState<DataManagerPage> {
   }
 
   Future<void> _export() async {
+    final l = AppLocalizations.of(context)!;
     setState(() => _isExporting = true);
     try {
       final service = ref.read(exportServiceProvider);
@@ -131,7 +134,7 @@ class _DataManagerPageState extends ConsumerState<DataManagerPage> {
 
       if (Platform.isLinux) {
         final path = await FilePicker.platform.saveFile(
-          dialogTitle: 'Guardar exportación',
+          dialogTitle: l.saveExport,
           fileName: fileName,
           type: FileType.custom,
           allowedExtensions: ['json'],
@@ -140,7 +143,7 @@ class _DataManagerPageState extends ConsumerState<DataManagerPage> {
           await File(path).writeAsString(json);
           if (mounted) {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Exportado en $path')),
+              SnackBar(content: Text(l.exportedAt(path))),
             );
           }
         }
@@ -151,13 +154,13 @@ class _DataManagerPageState extends ConsumerState<DataManagerPage> {
 
         await Share.shareXFiles(
           [XFile(file.path)],
-          text: 'Exportación Karter - ${_selectedIds.length} vehículo(s)',
+          text: l.exportShareText(_selectedIds.length.toString()),
         );
       }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error al exportar: $e')),
+          SnackBar(content: Text(l.exportError(e.toString()))),
         );
       }
     } finally {
@@ -166,6 +169,7 @@ class _DataManagerPageState extends ConsumerState<DataManagerPage> {
   }
 
   Future<void> _import() async {
+    final l = AppLocalizations.of(context)!;
     final result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
       allowedExtensions: ['json'],
@@ -180,7 +184,7 @@ class _DataManagerPageState extends ConsumerState<DataManagerPage> {
     if (preview == null) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Archivo JSON inválido')),
+          SnackBar(content: Text(l.invalidJson)),
         );
       }
       return;
@@ -190,24 +194,20 @@ class _DataManagerPageState extends ConsumerState<DataManagerPage> {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Importar datos'),
-        content: Text(
-          'Se encontraron:\n'
-          '• ${preview.vehicles.length} vehículo(s)\n'
-          '• ${preview.fuelLogs.length} registro(s) de combustible\n'
-          '• ${preview.maintenanceLogs.length} servicio(s)\n'
-          '• ${preview.maintenanceIntervals.length} intervalo(s)\n\n'
-          '¿Importar? Los datos existentes con el mismo ID serán '
-          'sobrescritos.',
-        ),
+        title: Text(l.importData),
+        content: Text(l.importPreview(
+          preview.fuelLogs.length.toString(),
+          preview.maintenanceLogs.length.toString(),
+          preview.vehicles.length.toString(),
+        )),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Cancelar'),
+            child: Text(l.cancel),
           ),
           FilledButton(
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Importar'),
+            child: Text(l.import),
           ),
         ],
       ),
@@ -224,13 +224,13 @@ class _DataManagerPageState extends ConsumerState<DataManagerPage> {
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Datos importados correctamente')),
+          SnackBar(content: Text(l.importSuccess)),
         );
       }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error al importar: $e')),
+          SnackBar(content: Text(l.importError(e.toString()))),
         );
       }
     } finally {

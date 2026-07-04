@@ -5,6 +5,7 @@ import 'package:mobile/domain/entities/maintenance_interval.dart';
 import 'package:mobile/domain/enums/distance_unit.dart';
 import 'package:mobile/domain/enums/vehicle_type.dart';
 import 'package:mobile/domain/value_objects/odometer.dart';
+import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
 import 'package:mobile/presentation/widgets/odometer_dialog.dart';
 
@@ -18,13 +19,14 @@ class VehicleDetailPage extends ConsumerWidget {
     final vehicleAsync = ref.watch(vehicleProvider(vehicleId));
     final intervalsAsync = ref.watch(maintenanceIntervalsProvider(vehicleId));
     final theme = Theme.of(context);
+    final l = AppLocalizations.of(context)!;
 
     return vehicleAsync.when(
       data: (vehicle) {
         if (vehicle == null) {
           return Scaffold(
-            appBar: AppBar(title: const Text('Vehículo')),
-            body: const Center(child: Text('Vehículo no encontrado')),
+            appBar: AppBar(title: Text(l.vehicleDetailTitle)),
+            body: Center(child: Text(l.vehicleNotFound)),
           );
         }
 
@@ -84,14 +86,14 @@ class VehicleDetailPage extends ConsumerWidget {
                       ),
                       const SizedBox(height: 8),
                       if (vehicle.plate != null)
-                        _infoRow(Icons.badge, 'Placa', vehicle.plate!.value),
+                        _infoRow(Icons.badge, l.plate, vehicle.plate!.value),
                       if (vehicle.vin != null)
-                        _infoRow(Icons.qr_code, 'VIN', vehicle.vin!.code),
+                        _infoRow(Icons.qr_code, l.vin, vehicle.vin!.code),
                       _infoRow(Icons.directions_car,
-                          'Marca / Modelo',
+                          l.brandModel,
                           '${vehicle.brand} ${vehicle.model}'),
                       _infoRow(Icons.calendar_today,
-                          'Año', vehicle.year.toString()),
+                          l.year, vehicle.year.toString()),
                     ],
                   ),
                 ),
@@ -100,26 +102,26 @@ class VehicleDetailPage extends ConsumerWidget {
                 child: ListTile(
                   leading: const Icon(Icons.speed),
                   title: Text(
-                    '${distance.toStringAsFixed(0)} ${isKm ? 'km' : 'mi'}',
+                    '${distance.toStringAsFixed(0)} ${isKm ? l.unitKm : l.unitMi}',
                     style: theme.textTheme.titleMedium,
                   ),
-                  subtitle: const Text('Odómetro'),
+                  subtitle: Text(l.odometer),
                   trailing: FilledButton.tonal(
                     onPressed: () =>
                         _updateOdometer(context, vehicle.id, ref),
-                    child: const Text('Actualizar'),
+                    child: Text(l.update),
                   ),
                 ),
               ),
               const SizedBox(height: 16),
-              Text('Acciones', style: theme.textTheme.titleMedium),
+              Text(l.actions, style: theme.textTheme.titleMedium),
               const SizedBox(height: 8),
               Card(
                 child: Column(
                   children: [
                     ListTile(
                       leading: const Icon(Icons.local_gas_station),
-                      title: const Text('Cargas de combustible'),
+                      title: Text(l.fuelLogs),
                       trailing: const Icon(Icons.chevron_right),
                       onTap: () =>
                           context.push('/vehicle/$vehicleId/fuel'),
@@ -127,7 +129,7 @@ class VehicleDetailPage extends ConsumerWidget {
                     const Divider(height: 1),
                     ListTile(
                       leading: const Icon(Icons.build),
-                      title: const Text('Historial de mantenimiento'),
+                      title: Text(l.maintenanceHistory),
                       trailing: const Icon(Icons.chevron_right),
                       onTap: () => context
                           .push('/vehicle/$vehicleId/maintenance'),
@@ -135,7 +137,7 @@ class VehicleDetailPage extends ConsumerWidget {
                     const Divider(height: 1),
                     ListTile(
                       leading: const Icon(Icons.tune),
-                      title: const Text('Configurar intervalos'),
+                      title: Text(l.configureIntervals),
                       trailing: const Icon(Icons.chevron_right),
                       onTap: () => context
                           .push('/vehicle/$vehicleId/maintenance/settings'),
@@ -144,7 +146,7 @@ class VehicleDetailPage extends ConsumerWidget {
                 ),
               ),
               const SizedBox(height: 16),
-              Text('Proximo Mantenimiento',
+              Text(l.nextMaintenance,
                   style: theme.textTheme.titleMedium),
               const SizedBox(height: 8),
               intervalsAsync.when(
@@ -158,7 +160,7 @@ class VehicleDetailPage extends ConsumerWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(16),
                         child: Text(
-                          'Todos los intervalos están desactivados.',
+                          l.allIntervalsDisabled,
                           style: theme.textTheme.bodyMedium,
                         ),
                       ),
@@ -166,7 +168,7 @@ class VehicleDetailPage extends ConsumerWidget {
                   }
 
                   final intervalData = enabled
-                      .map((i) => _IntervalData.compute(i, distanceKm))
+                      .map((i) => _IntervalData.compute(i, distanceKm, l))
                       .toList()
                     ..sort((a, b) {
                       if (a.isDue != b.isDue) return a.isDue ? -1 : 1;
@@ -223,7 +225,7 @@ class VehicleDetailPage extends ConsumerWidget {
                                   },
                                 ),
                                 child: Text(
-                                  'Registrar',
+                                  l.register,
                                   style: accentColor != null
                                       ? TextStyle(color: accentColor)
                                       : null,
@@ -245,7 +247,7 @@ class VehicleDetailPage extends ConsumerWidget {
                 onPressed: () => context
                     .push('/vehicle/$vehicleId/maintenance/new'),
                 icon: const Icon(Icons.add),
-                label: const Text('Registrar servicio'),
+                label: Text(l.registerService),
               ),
               const SizedBox(height: 16),
             ],
@@ -265,8 +267,9 @@ class VehicleDetailPage extends ConsumerWidget {
 
   void _showDescription(
       BuildContext context, dynamic interval) {
+    final l = AppLocalizations.of(context)!;
     final text = interval.description ??
-        'Sin descripción disponible. Ve a Ajustes de mantenimiento para añadir una.';
+        l.noDescriptionAvailable;
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
@@ -275,7 +278,7 @@ class VehicleDetailPage extends ConsumerWidget {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: const Text('Cerrar'),
+            child: Text(l.close),
           ),
         ],
       ),
@@ -343,7 +346,7 @@ class _IntervalData {
     required this.sortKey,
   });
 
-  static _IntervalData compute(MaintenanceInterval interval, double distanceKm) {
+  static _IntervalData compute(MaintenanceInterval interval, double distanceKm, AppLocalizations l) {
     final kmSinceReset = interval.lastResetKm > 0 && distanceKm >= interval.lastResetKm
         ? distanceKm - interval.lastResetKm
         : distanceKm;
@@ -370,17 +373,17 @@ class _IntervalData {
 
     String subtitle;
     if (isDue) {
-      subtitle = 'Vencido — realizá el servicio';
+      subtitle = l.overduePerformService;
     } else {
       final parts = <String>[];
       if (interval.kmInterval < 999999) {
         final kmShow = kmRemaining > 0 ? kmRemaining.toStringAsFixed(0) : '0';
-        parts.add('$kmShow km');
+        parts.add('$kmShow ${l.unitKm}');
       }
       if (monthsRemaining != null) {
-        parts.add('${monthsRemaining.round()} meses');
+        parts.add('${monthsRemaining.round()} ${l.months}');
       }
-      subtitle = 'Próximo en ${parts.join(' / ')}';
+      subtitle = l.nextIn(parts.join(' / '));
     }
 
     final kmProgress = interval.kmInterval < 999999 && kmSinceReset > 0

@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile/domain/enums/distance_unit.dart';
 import 'package:mobile/domain/enums/volume_unit.dart';
+import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
 
 class FuelLogListPage extends ConsumerWidget {
@@ -15,9 +16,10 @@ class FuelLogListPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final logsAsync = ref.watch(fuelLogsProvider(vehicleId));
     final theme = Theme.of(context);
+    final l = AppLocalizations.of(context)!;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Cargas de combustible')),
+      appBar: AppBar(title: Text(l.fuelListTitle)),
       body: logsAsync.when(
         data: (logs) {
           if (logs.isEmpty) {
@@ -28,7 +30,7 @@ class FuelLogListPage extends ConsumerWidget {
                   Icon(Icons.local_gas_station,
                       size: 64, color: theme.colorScheme.outline),
                   const SizedBox(height: 16),
-                  Text('Sin cargas registradas',
+                  Text(l.fuelEmpty,
                       style: theme.textTheme.titleMedium),
                 ],
               ),
@@ -65,7 +67,7 @@ class FuelLogListPage extends ConsumerWidget {
           );
         },
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, _) => Center(child: Text('Error: $e')),
+        error: (e, _) => Center(child: Text(l.homeError(e.toString()))),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => context.push('/vehicle/$vehicleId/fuel/new'),

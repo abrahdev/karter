@@ -8,6 +8,7 @@ import 'package:mobile/domain/enums/distance_unit.dart';
 import 'package:mobile/domain/enums/volume_unit.dart';
 import 'package:mobile/domain/value_objects/odometer.dart';
 import 'package:mobile/domain/value_objects/volume.dart';
+import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
 
 class FuelLogFormPage extends ConsumerStatefulWidget {
@@ -81,7 +82,7 @@ class _FuelLogFormPageState extends ConsumerState<FuelLogFormPage> {
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text('Error: $e')));
+            .showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.homeError(e.toString()))));
       }
     } finally {
       if (mounted) setState(() => _isLoading = false);
@@ -90,8 +91,10 @@ class _FuelLogFormPageState extends ConsumerState<FuelLogFormPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Nueva carga')),
+      appBar: AppBar(title: Text(l.fuelFormTitle)),
       body: Form(
         key: _formKey,
         child: ListView(
@@ -99,7 +102,7 @@ class _FuelLogFormPageState extends ConsumerState<FuelLogFormPage> {
           children: [
             ListTile(
               leading: const Icon(Icons.calendar_today),
-              title: Text('Fecha: ${DateFormat('dd/MM/yyyy').format(_date)}'),
+              title: Text(l.date(DateFormat('dd/MM/yyyy').format(_date))),
               onTap: _pickDate,
             ),
             const SizedBox(height: 12),
@@ -108,24 +111,24 @@ class _FuelLogFormPageState extends ConsumerState<FuelLogFormPage> {
                 Expanded(
                   child: TextFormField(
                     controller: _volumeController,
-                    decoration: const InputDecoration(
-                        labelText: 'Volumen', hintText: '0.0'),
+                    decoration: InputDecoration(
+                        labelText: l.volume, hintText: '0.0'),
                     keyboardType:
                         const TextInputType.numberWithOptions(decimal: true),
                     validator: (v) {
-                      if (v == null || v.trim().isEmpty) return 'Requerido';
+                      if (v == null || v.trim().isEmpty) return l.required;
                       final n = double.tryParse(v);
-                      if (n == null || n <= 0) return 'Inválido';
+                      if (n == null || n <= 0) return l.invalid;
                       return null;
                     },
                   ),
                 ),
                 const SizedBox(width: 12),
                 SegmentedButton<VolumeUnit>(
-                  segments: const [
-                    ButtonSegment(value: VolumeUnit.liters, label: Text('L')),
+                  segments: [
+                    ButtonSegment(value: VolumeUnit.liters, label: Text(l.unitL)),
                     ButtonSegment(
-                        value: VolumeUnit.gallons, label: Text('gal')),
+                        value: VolumeUnit.gallons, label: Text(l.unitGal)),
                   ],
                   selected: {_volumeUnit},
                   onSelectionChanged: (v) =>
@@ -139,24 +142,24 @@ class _FuelLogFormPageState extends ConsumerState<FuelLogFormPage> {
                 Expanded(
                   child: TextFormField(
                     controller: _odometerController,
-                    decoration: const InputDecoration(
-                        labelText: 'Odómetro', hintText: '0'),
+                    decoration: InputDecoration(
+                        labelText: l.odometer, hintText: '0'),
                     keyboardType: TextInputType.number,
                     validator: (v) {
-                      if (v == null || v.trim().isEmpty) return 'Requerido';
+                      if (v == null || v.trim().isEmpty) return l.required;
                       final n = double.tryParse(v);
-                      if (n == null || n < 0) return 'Inválido';
+                      if (n == null || n < 0) return l.invalid;
                       return null;
                     },
                   ),
                 ),
                 const SizedBox(width: 12),
                 SegmentedButton<DistanceUnit>(
-                  segments: const [
+                  segments: [
                     ButtonSegment(
-                        value: DistanceUnit.kilometers, label: Text('km')),
+                        value: DistanceUnit.kilometers, label: Text(l.unitKm)),
                     ButtonSegment(
-                        value: DistanceUnit.miles, label: Text('mi')),
+                        value: DistanceUnit.miles, label: Text(l.unitMi)),
                   ],
                   selected: {_odoUnit},
                   onSelectionChanged: (v) =>
@@ -167,8 +170,8 @@ class _FuelLogFormPageState extends ConsumerState<FuelLogFormPage> {
             const SizedBox(height: 12),
             TextFormField(
               controller: _priceController,
-              decoration: const InputDecoration(
-                labelText: 'Precio por unidad (opcional)',
+              decoration: InputDecoration(
+                labelText: l.pricePerUnit,
                 hintText: '0.00',
                 prefixText: '\$',
               ),
@@ -177,7 +180,7 @@ class _FuelLogFormPageState extends ConsumerState<FuelLogFormPage> {
             ),
             const SizedBox(height: 12),
             SwitchListTile(
-              title: const Text('Tanque lleno'),
+              title: Text(l.fullTank),
               value: _isFullTank,
               onChanged: (v) => setState(() => _isFullTank = v),
             ),
@@ -190,7 +193,7 @@ class _FuelLogFormPageState extends ConsumerState<FuelLogFormPage> {
                       width: 20,
                       child: CircularProgressIndicator(strokeWidth: 2),
                     )
-                  : const Text('Guardar carga'),
+                  : Text(l.saveFuelUp),
             ),
           ],
         ),

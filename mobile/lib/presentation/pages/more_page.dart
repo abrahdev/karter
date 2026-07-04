@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mobile/l10n/app_localizations.dart';
+import 'package:mobile/presentation/providers/locale_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class MorePage extends StatelessWidget {
+class MorePage extends ConsumerWidget {
   const MorePage({super.key});
 
   static const _repoUrl = 'https://github.com/abrahdev/karter';
@@ -10,8 +13,10 @@ class MorePage extends StatelessWidget {
   static const _sponsorsUrl = 'https://github.com/sponsors/abrahdev';
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
+    final l = AppLocalizations.of(context)!;
+    final locale = ref.watch(localeProvider);
 
     return ListView(
       padding: const EdgeInsets.fromLTRB(16, 32, 16, 16),
@@ -22,12 +27,11 @@ class MorePage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Acerca de Karter',
+                Text(l.moreAbout,
                     style: theme.textTheme.titleMedium),
                 const SizedBox(height: 8),
                 Text(
-                  'Karter es una app de mantenimiento de vehículos '
-                  'local-first, open source y respetuosa con tu privacidad.',
+                  l.moreDescription,
                   style: theme.textTheme.bodyMedium,
                 ),
               ],
@@ -37,37 +41,45 @@ class MorePage extends StatelessWidget {
         const SizedBox(height: 8),
         ListTile(
           leading: const Icon(Icons.storage),
-          title: const Text('Exportar / Importar datos'),
-          subtitle: const Text('Respaldar o transferir tu información'),
+          title: Text(l.moreExport),
+          subtitle: Text(l.moreExportSubtitle),
           trailing: const Icon(Icons.chevron_right),
           onTap: () => context.push('/data'),
         ),
         const Divider(),
         ListTile(
+          leading: const Icon(Icons.language),
+          title: Text(l.language),
+          subtitle: Text(locale.languageCode == 'en' ? l.english : l.spanish),
+          trailing: const Icon(Icons.chevron_right),
+          onTap: () => _showLanguagePicker(context, ref),
+        ),
+        const Divider(),
+        ListTile(
           leading: const Icon(Icons.menu_book),
-          title: const Text('Documentación'),
-          subtitle: const Text('Guía de uso y características'),
+          title: Text(l.moreDocs),
+          subtitle: Text(l.moreDocsSubtitle),
           trailing: const Icon(Icons.open_in_new),
           onTap: () => _openUrl(context, _docsUrl),
         ),
         ListTile(
           leading: const Icon(Icons.code),
-          title: const Text('Código fuente'),
-          subtitle: const Text('Repositorio en GitHub'),
+          title: Text(l.moreSource),
+          subtitle: Text(l.moreSourceSubtitle),
           trailing: const Icon(Icons.open_in_new),
           onTap: () => _openUrl(context, _repoUrl),
         ),
         ListTile(
           leading: const Icon(Icons.favorite, color: Colors.red),
-          title: const Text('Donar'),
-          subtitle: const Text('Apoya el desarrollo en GitHub Sponsors'),
+          title: Text(l.moreDonate),
+          subtitle: Text(l.moreDonateSubtitle),
           trailing: const Icon(Icons.open_in_new),
           onTap: () => _openUrl(context, _sponsorsUrl),
         ),
         const SizedBox(height: 24),
         Center(
           child: Text(
-            'Hecho con ❤️ por abrahdev',
+            l.moreFooter,
             style: theme.textTheme.bodySmall?.copyWith(
               color: theme.colorScheme.onSurfaceVariant,
             ),
@@ -78,15 +90,47 @@ class MorePage extends StatelessWidget {
   }
 
   Future<void> _openUrl(BuildContext context, String url) async {
+    final l = AppLocalizations.of(context)!;
     final uri = Uri.parse(url);
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri, mode: LaunchMode.externalApplication);
     } else {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('No se pudo abrir $url')),
+          SnackBar(content: Text(l.moreUrlError(url))),
         );
       }
     }
+  }
+
+  void _showLanguagePicker(BuildContext context, WidgetRef ref) {
+    final l = AppLocalizations.of(context)!;
+    final currentCode = ref.read(localeProvider).languageCode;
+    showDialog(
+      context: context,
+      builder: (ctx) => SimpleDialog(
+        title: Text(l.selectLanguage),
+        children: [
+          RadioListTile<String>(
+            title: Text(l.english),
+            value: 'en',
+            groupValue: currentCode,
+            onChanged: (v) {
+              ref.read(localeProvider.notifier).setLocale(v!);
+              Navigator.pop(ctx);
+            },
+          ),
+          RadioListTile<String>(
+            title: Text(l.spanish),
+            value: 'es',
+            groupValue: currentCode,
+            onChanged: (v) {
+              ref.read(localeProvider.notifier).setLocale(v!);
+              Navigator.pop(ctx);
+            },
+          ),
+        ],
+      ),
+    );
   }
 }

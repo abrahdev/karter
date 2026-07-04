@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
 
 class MaintenanceLogListPage extends ConsumerWidget {
@@ -13,9 +14,10 @@ class MaintenanceLogListPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final logsAsync = ref.watch(maintenanceLogsProvider(vehicleId));
     final theme = Theme.of(context);
+    final l = AppLocalizations.of(context)!;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Mantenimiento')),
+      appBar: AppBar(title: Text(l.maintenanceListTitle)),
       body: logsAsync.when(
         data: (logs) {
           if (logs.isEmpty) {
@@ -26,7 +28,7 @@ class MaintenanceLogListPage extends ConsumerWidget {
                   Icon(Icons.build,
                       size: 64, color: theme.colorScheme.outline),
                   const SizedBox(height: 16),
-                  Text('Sin servicios registrados',
+                  Text(l.maintenanceEmpty,
                       style: theme.textTheme.titleMedium),
                 ],
               ),
@@ -61,7 +63,7 @@ class MaintenanceLogListPage extends ConsumerWidget {
           );
         },
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, _) => Center(child: Text('Error: $e')),
+        error: (e, _) => Center(child: Text(l.homeError(e.toString()))),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () =>

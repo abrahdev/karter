@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile/core/theme/app_theme.dart';
+import 'package:mobile/l10n/app_localizations.dart';
+import 'package:mobile/presentation/providers/locale_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:system_theme/system_theme.dart';
 import 'package:mobile/presentation/pages/dashboard_page.dart';
 import 'package:mobile/presentation/pages/data_manager_page.dart';
@@ -150,6 +153,8 @@ class _ShellState extends State<_Shell> {
 
     return LayoutBuilder(
       builder: (context, constraints) {
+        final l = AppLocalizations.of(context)!;
+
         if (constraints.maxWidth >= 768) {
           final canExtend = constraints.maxWidth >= 1024;
           if (!canExtend && _extended) _extended = false;
@@ -179,21 +184,21 @@ class _ShellState extends State<_Shell> {
                           onPressed: () => setState(() => _extended = !_extended),
                         )
                       : null,
-                  destinations: const [
+                  destinations: [
                     NavigationRailDestination(
                       icon: Icon(Icons.dashboard_outlined),
                       selectedIcon: Icon(Icons.dashboard),
-                      label: Text('Dashboard'),
+                      label: Text(l.navDashboard),
                     ),
                     NavigationRailDestination(
                       icon: Icon(Icons.directions_car_outlined),
                       selectedIcon: Icon(Icons.directions_car),
-                      label: Text('Vehículos'),
+                      label: Text(l.navVehicles),
                     ),
                     NavigationRailDestination(
                       icon: Icon(Icons.more_horiz_outlined),
                       selectedIcon: Icon(Icons.more_horiz),
-                      label: Text('Más'),
+                      label: Text(l.navMore),
                     ),
                   ],
                 ),
@@ -209,21 +214,21 @@ class _ShellState extends State<_Shell> {
           bottomNavigationBar: NavigationBar(
             selectedIndex: currentIndex,
             onDestinationSelected: onDestinationSelected,
-            destinations: const [
+            destinations: [
               NavigationDestination(
                 icon: Icon(Icons.dashboard_outlined),
                 selectedIcon: Icon(Icons.dashboard),
-                label: 'Dashboard',
+                label: l.navDashboard,
               ),
               NavigationDestination(
                 icon: Icon(Icons.directions_car_outlined),
                 selectedIcon: Icon(Icons.directions_car),
-                label: 'Vehículos',
+                label: l.navVehicles,
               ),
               NavigationDestination(
                 icon: Icon(Icons.more_horiz_outlined),
                 selectedIcon: Icon(Icons.more_horiz),
-                label: 'Más',
+                label: l.navMore,
               ),
             ],
           ),
@@ -233,13 +238,14 @@ class _ShellState extends State<_Shell> {
   }
 }
 
-class KarterApp extends StatelessWidget {
+class KarterApp extends ConsumerWidget {
   final Color initialAccent;
 
   const KarterApp({super.key, required this.initialAccent});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final locale = ref.watch(localeProvider);
     return StreamBuilder<SystemAccentColor>(
       stream: SystemTheme.onChange,
       builder: (context, snapshot) {
@@ -255,6 +261,9 @@ class KarterApp extends StatelessWidget {
 
         return MaterialApp.router(
           title: 'Karter',
+          locale: locale,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
           theme: AppTheme.from(lightScheme, Brightness.light),
           darkTheme: AppTheme.from(darkScheme, Brightness.dark),
           routerConfig: _router,
@@ -269,8 +278,13 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemTheme.fallbackColor = AppTheme.fallbackSeed;
   await SystemTheme.accentColor.load();
+  final prefs = await SharedPreferences.getInstance();
+  final savedLocale = prefs.getString('locale') ?? 'es';
   runApp(
     ProviderScope(
+      overrides: [
+        localeProvider.overrideWith(() => createLocaleNotifier(savedLocale)),
+      ],
       child: KarterApp(initialAccent: SystemTheme.accentColor.accent),
     ),
   );

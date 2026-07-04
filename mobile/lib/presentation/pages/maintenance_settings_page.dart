@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/core/database/app_database.dart';
 import 'package:mobile/domain/entities/maintenance_interval.dart';
+import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
 
 class MaintenanceSettingsPage extends ConsumerWidget {
@@ -13,16 +14,16 @@ class MaintenanceSettingsPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final intervalsAsync = ref.watch(maintenanceIntervalsProvider(vehicleId));
     final theme = Theme.of(context);
+    final l = AppLocalizations.of(context)!;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Intervalos de mantenimiento')),
+      appBar: AppBar(title: Text(l.maintenanceSettingsTitle)),
       body: intervalsAsync.when(
         data: (intervals) => ListView(
           padding: const EdgeInsets.all(16),
           children: [
             Text(
-              'Activa o desactiva los ítems según las necesidades de tu vehículo. '
-              'Los intervalos personalizados se pueden eliminar.',
+              l.maintenanceSettingsInstruction,
               style: theme.textTheme.bodyMedium?.copyWith(
                 color: theme.colorScheme.onSurfaceVariant,
               ),
@@ -55,6 +56,7 @@ class MaintenanceSettingsPage extends ConsumerWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _addCustomInterval(context, ref),
+        tooltip: l.add,
         child: const Icon(Icons.add),
       ),
     );
@@ -62,6 +64,7 @@ class MaintenanceSettingsPage extends ConsumerWidget {
 
   void _editInterval(BuildContext context, MaintenanceInterval interval,
       WidgetRef ref) {
+    final l = AppLocalizations.of(context)!;
     final kmCtrl =
         TextEditingController(text: interval.kmInterval.toString());
     final monthsCtrl = interval.monthsInterval != null
@@ -82,11 +85,11 @@ class MaintenanceSettingsPage extends ConsumerWidget {
               TextField(
                 controller: kmCtrl,
                 keyboardType: TextInputType.number,
-                decoration: const InputDecoration(labelText: 'km'),
+                decoration: InputDecoration(labelText: l.unitKm),
               ),
               const SizedBox(height: 12),
               SwitchListTile(
-                title: const Text('Tiempo (meses)'),
+                title: Text(l.timeMonths),
                 value: hasMonths,
                 contentPadding: EdgeInsets.zero,
                 onChanged: (v) =>
@@ -97,7 +100,7 @@ class MaintenanceSettingsPage extends ConsumerWidget {
                 TextField(
                   controller: monthsCtrl,
                   keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(labelText: 'meses'),
+                  decoration: InputDecoration(labelText: l.months),
                 ),
               ],
               const SizedBox(height: 12),
@@ -105,8 +108,8 @@ class MaintenanceSettingsPage extends ConsumerWidget {
                 controller: descCtrl,
                 maxLines: 3,
                 minLines: 2,
-                decoration: const InputDecoration(
-                  labelText: 'Descripción',
+                decoration: InputDecoration(
+                  labelText: l.description,
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -115,7 +118,7 @@ class MaintenanceSettingsPage extends ConsumerWidget {
           actions: [
             TextButton(
                 onPressed: () => Navigator.pop(ctx),
-                child: const Text('Cancelar')),
+                child: Text(l.cancel)),
             FilledButton(
               onPressed: () {
                 final km = int.tryParse(kmCtrl.text.trim());
@@ -137,7 +140,7 @@ class MaintenanceSettingsPage extends ConsumerWidget {
                 }
                 Navigator.pop(ctx);
               },
-              child: const Text('Guardar'),
+              child: Text(l.saveChanges),
             ),
           ],
         ),
@@ -146,6 +149,7 @@ class MaintenanceSettingsPage extends ConsumerWidget {
   }
 
   void _addCustomInterval(BuildContext context, WidgetRef ref) {
+    final l = AppLocalizations.of(context)!;
     final nameCtrl = TextEditingController();
     final kmCtrl = TextEditingController();
     final monthsCtrl = TextEditingController();
@@ -156,23 +160,23 @@ class MaintenanceSettingsPage extends ConsumerWidget {
       context: context,
       builder: (ctx) => StatefulBuilder(
         builder: (ctx, setDialogState) => AlertDialog(
-          title: const Text('Nuevo intervalo'),
+          title: Text(l.newInterval),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
                 controller: nameCtrl,
-                decoration: const InputDecoration(labelText: 'Nombre'),
+                decoration: InputDecoration(labelText: l.name),
               ),
               const SizedBox(height: 12),
               TextField(
                 controller: kmCtrl,
                 keyboardType: TextInputType.number,
-                decoration: const InputDecoration(labelText: 'km'),
+                decoration: InputDecoration(labelText: l.unitKm),
               ),
               const SizedBox(height: 12),
               SwitchListTile(
-                title: const Text('Tiempo (meses)'),
+                title: Text(l.timeMonths),
                 value: hasMonths,
                 contentPadding: EdgeInsets.zero,
                 onChanged: (v) =>
@@ -183,7 +187,7 @@ class MaintenanceSettingsPage extends ConsumerWidget {
                 TextField(
                   controller: monthsCtrl,
                   keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(labelText: 'meses'),
+                  decoration: InputDecoration(labelText: l.months),
                 ),
               ],
               const SizedBox(height: 12),
@@ -191,8 +195,8 @@ class MaintenanceSettingsPage extends ConsumerWidget {
                 controller: descCtrl,
                 maxLines: 3,
                 minLines: 2,
-                decoration: const InputDecoration(
-                  labelText: 'Descripción',
+                decoration: InputDecoration(
+                  labelText: l.description,
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -201,7 +205,7 @@ class MaintenanceSettingsPage extends ConsumerWidget {
           actions: [
             TextButton(
                 onPressed: () => Navigator.pop(ctx),
-                child: const Text('Cancelar')),
+                child: Text(l.cancel)),
             FilledButton(
               onPressed: () {
                 final name = nameCtrl.text.trim();
@@ -229,7 +233,7 @@ class MaintenanceSettingsPage extends ConsumerWidget {
                 }
                 Navigator.pop(ctx);
               },
-              child: const Text('Agregar'),
+              child: Text(l.add),
             ),
           ],
         ),
@@ -254,10 +258,11 @@ class _IntervalTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l = AppLocalizations.of(context)!;
 
-    final parts = <String>['cada ${_formatKm(interval.kmInterval)}'];
+    final parts = <String>[l.intervalSubtitleKm(_formatKm(interval.kmInterval, l))];
     if (interval.monthsInterval != null) {
-      parts.add('${interval.monthsInterval} meses');
+      parts.add(l.intervalSubtitleMonths(interval.monthsInterval.toString()));
     }
     final subtitle = parts.join(' / ');
 
@@ -280,13 +285,13 @@ class _IntervalTile extends StatelessWidget {
             IconButton(
               icon: const Icon(Icons.edit),
               onPressed: onEdit,
-              tooltip: 'Editar',
+              tooltip: l.edit,
             ),
             if (onDelete != null)
               IconButton(
                 icon: const Icon(Icons.delete_outline),
                 onPressed: onDelete,
-                tooltip: 'Eliminar',
+                tooltip: l.delete,
               ),
             Switch(
               value: interval.isEnabled,
@@ -299,8 +304,9 @@ class _IntervalTile extends StatelessWidget {
   }
 
   void _showDescription(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     final text = interval.description ??
-        'Sin descripción disponible. Pulsa "Editar" para añadir una.';
+        l.noDescriptionAvailableSettings;
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
@@ -309,15 +315,15 @@ class _IntervalTile extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: const Text('Cerrar'),
+            child: Text(l.close),
           ),
         ],
       ),
     );
   }
 
-  String _formatKm(int km) {
-    if (km >= 1000) return '${km ~/ 1000}k km';
-    return '$km km';
+  String _formatKm(int km, AppLocalizations l) {
+    if (km >= 1000) return l.formattedKmK((km ~/ 1000).toString());
+    return l.formattedKm(km.toString());
   }
 }

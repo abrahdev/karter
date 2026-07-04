@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mobile/domain/enums/distance_unit.dart';
 import 'package:mobile/domain/value_objects/odometer.dart';
+import 'package:mobile/l10n/app_localizations.dart';
 
 class OdometerDialog extends StatefulWidget {
   final Odometer current;
@@ -64,14 +65,15 @@ class _OdometerDialogState extends State<OdometerDialog> {
   }
 
   void _validate() {
+    final l = AppLocalizations.of(context);
+    if (l == null) return;
     final currentKm = widget.current.distance;
     final delta = _rawValue - currentKm;
 
     if (delta < 0) {
-      _warning = 'El valor es menor al último registro (${_format(currentKm)} km).';
+      _warning = l.odometerLowerWarning(_unitLabel(), _format(currentKm));
     } else if (delta > _kOutlierThreshold) {
-      _warning =
-          'Recorriste ${_format(delta)} km desde la última vez. ¿Es correcto?';
+      _warning = l.odometerDeltaWarning(_format(delta), _unitLabel());
     } else {
       _warning = null;
     }
@@ -84,18 +86,19 @@ class _OdometerDialogState extends State<OdometerDialog> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l = AppLocalizations.of(context)!;
     final currentKm = widget.current.distance;
 
     final mediaQuery = MediaQuery.of(context);
     final isNarrow = mediaQuery.size.width < 480;
 
     return AlertDialog(
-      title: const Text('Actualizar odómetro'),
+      title: Text(l.odometerUpdateTitle),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            'Último: ${_format(currentKm)} ${_unitLabel()}',
+            l.odometerLastReading(_unitLabel(), _format(currentKm)),
             style: theme.textTheme.bodyMedium?.copyWith(
               color: theme.colorScheme.onSurfaceVariant,
             ),
@@ -218,7 +221,7 @@ class _OdometerDialogState extends State<OdometerDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Cancelar'),
+          child: Text(l.odometerCancel),
         ),
         FilledButton(
           onPressed: _rawValue >= 0 && _rawValue != currentKm
@@ -227,7 +230,7 @@ class _OdometerDialogState extends State<OdometerDialog> {
                   if (context.mounted) Navigator.pop(context);
                 }
               : null,
-          child: const Text('Guardar'),
+          child: Text(l.odometerSave),
         ),
       ],
     );

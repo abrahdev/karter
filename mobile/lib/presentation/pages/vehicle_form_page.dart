@@ -8,6 +8,7 @@ import 'package:mobile/domain/enums/vehicle_type.dart';
 import 'package:mobile/domain/value_objects/odometer.dart';
 import 'package:mobile/domain/value_objects/plate.dart';
 import 'package:mobile/domain/value_objects/vin.dart';
+import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
 
 class VehicleFormPage extends ConsumerStatefulWidget {
@@ -81,27 +82,26 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
 
     final confirmed = await showDialog<bool>(
       context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Eliminar vehículo'),
-        content: const Text(
-          'Esta acción no se puede deshacer. '
-          'Se eliminarán todos los registros de combustible, '
-          'mantenimiento e intervalos asociados.',
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Cancelar'),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.pop(ctx, true),
-            style: FilledButton.styleFrom(
-              backgroundColor: Theme.of(context).colorScheme.error,
+      builder: (ctx) {
+        final l = AppLocalizations.of(ctx)!;
+        return AlertDialog(
+          title: Text(l.deleteVehicle),
+          content: Text(l.deleteVehicleConfirm),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx, false),
+              child: Text(l.cancel),
             ),
-            child: const Text('Eliminar'),
-          ),
-        ],
-      ),
+            FilledButton(
+              onPressed: () => Navigator.pop(ctx, true),
+              style: FilledButton.styleFrom(
+                backgroundColor: Theme.of(ctx).colorScheme.error,
+              ),
+              child: Text(l.delete),
+            ),
+          ],
+        );
+      },
     );
 
     if (confirmed != true) return;
@@ -116,7 +116,7 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error: $e')),
+          SnackBar(content: Text(AppLocalizations.of(context)!.homeError(e.toString()))),
         );
       }
     } finally {
@@ -160,7 +160,7 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error: $e')),
+          SnackBar(content: Text(AppLocalizations.of(context)!.homeError(e.toString()))),
         );
       }
     } finally {
@@ -170,13 +170,14 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     final composite = '${_brandController.text.trim()} '
         '${_modelController.text.trim()} '
         '${_yearController.text.trim()}'.trim();
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(_isEditing ? 'Editar vehículo' : 'Nuevo vehículo'),
+        title: Text(_isEditing ? l.vehicleFormEdit : l.vehicleFormNew),
       ),
       body: Form(
         key: _formKey,
@@ -193,50 +194,50 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
               ),
             TextFormField(
               controller: _brandController,
-              decoration: const InputDecoration(labelText: 'Marca'),
+              decoration: InputDecoration(labelText: l.brand),
               validator: (v) =>
-                  v == null || v.trim().isEmpty ? 'Requerido' : null,
+                  v == null || v.trim().isEmpty ? l.required : null,
             ),
             const SizedBox(height: 12),
             TextFormField(
               controller: _modelController,
-              decoration: const InputDecoration(labelText: 'Modelo'),
+              decoration: InputDecoration(labelText: l.model),
               validator: (v) =>
-                  v == null || v.trim().isEmpty ? 'Requerido' : null,
+                  v == null || v.trim().isEmpty ? l.required : null,
             ),
             const SizedBox(height: 12),
             TextFormField(
               controller: _yearController,
-              decoration: const InputDecoration(labelText: 'Año'),
+              decoration: InputDecoration(labelText: l.year),
               keyboardType: TextInputType.number,
               validator: (v) {
-                if (v == null || v.trim().isEmpty) return 'Requerido';
+                if (v == null || v.trim().isEmpty) return l.required;
                 final year = int.tryParse(v);
                 if (year == null || year < 1886 || year > DateTime.now().year + 1) {
-                  return 'Año inválido';
+                  return l.invalidYear;
                 }
                 return null;
               },
             ),
             const SizedBox(height: 12),
-            Text('Tipo de vehículo',
+            Text(l.vehicleType,
                 style: Theme.of(context).textTheme.titleSmall),
             const SizedBox(height: 8),
             SegmentedButton<VehicleType>(
-              segments: const [
+              segments: [
                 ButtonSegment(
                   value: VehicleType.combustion,
-                  label: Text('Combustión'),
+                  label: Text(l.combustion),
                   icon: Icon(Icons.local_gas_station),
                 ),
                 ButtonSegment(
                   value: VehicleType.electric,
-                  label: Text('Eléctrico'),
+                  label: Text(l.electric),
                   icon: Icon(Icons.electric_car),
                 ),
                 ButtonSegment(
                   value: VehicleType.motorcycle,
-                  label: Text('Moto'),
+                  label: Text(l.motorcycle),
                   icon: Icon(Icons.motorcycle),
                 ),
               ],
@@ -247,16 +248,16 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
             const SizedBox(height: 12),
             TextFormField(
               controller: _plateController,
-              decoration: const InputDecoration(
-                labelText: 'Placa (opcional)',
+              decoration: InputDecoration(
+                labelText: l.plateOptional,
               ),
               textCapitalization: TextCapitalization.characters,
             ),
             const SizedBox(height: 12),
             TextFormField(
               controller: _vinController,
-              decoration: const InputDecoration(
-                labelText: 'VIN (opcional)',
+              decoration: InputDecoration(
+                labelText: l.vinOptional,
               ),
               textCapitalization: TextCapitalization.characters,
               maxLength: 17,
@@ -268,21 +269,21 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
                   child: TextFormField(
                     controller: _odometerController,
                     decoration:
-                        const InputDecoration(labelText: 'Odómetro'),
+                        InputDecoration(labelText: l.odometer),
                     keyboardType: TextInputType.number,
                     validator: (v) {
-                      if (v == null || v.trim().isEmpty) return 'Requerido';
+                      if (v == null || v.trim().isEmpty) return l.required;
                       final num = double.tryParse(v);
-                      if (num == null || num < 0) return 'Inválido';
+                      if (num == null || num < 0) return l.invalid;
                       return null;
                     },
                   ),
                 ),
                 const SizedBox(width: 12),
                 SegmentedButton<DistanceUnit>(
-                  segments: const [
-                    ButtonSegment(value: DistanceUnit.kilometers, label: Text('km')),
-                    ButtonSegment(value: DistanceUnit.miles, label: Text('mi')),
+                  segments: [
+                    ButtonSegment(value: DistanceUnit.kilometers, label: Text(l.unitKm)),
+                    ButtonSegment(value: DistanceUnit.miles, label: Text(l.unitMi)),
                   ],
                   selected: {_odometerUnit},
                   onSelectionChanged: (v) =>
@@ -292,7 +293,7 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
             ),
             const SizedBox(height: 16),
             SwitchListTile(
-              title: const Text('Alias (opcional)'),
+              title: Text(l.aliasOptional),
               subtitle: _showAlias && _aliasController.text.isNotEmpty
                   ? Text(_aliasController.text)
                   : null,
@@ -303,9 +304,9 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
               const SizedBox(height: 8),
               TextFormField(
                 controller: _aliasController,
-                decoration: const InputDecoration(
-                  labelText: 'Alias',
-                  hintText: 'Ej: Mi nave, La bestia, etc.',
+                decoration: InputDecoration(
+                  labelText: l.aliasOptional,
+                  hintText: l.aliasHint,
                 ),
               ),
             ],
@@ -318,14 +319,14 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
                       width: 20,
                       child: CircularProgressIndicator(strokeWidth: 2),
                     )
-                  : Text(_isEditing ? 'Guardar cambios' : 'Agregar vehículo'),
+                  : Text(_isEditing ? l.saveChanges : l.addVehicle),
             ),
             if (_isEditing) ...[
               const SizedBox(height: 12),
               OutlinedButton.icon(
                 onPressed: _isLoading ? null : _delete,
                 icon: const Icon(Icons.delete),
-                label: const Text('Eliminar vehículo'),
+                label: Text(l.deleteVehicle),
                 style: OutlinedButton.styleFrom(
                   foregroundColor: Theme.of(context).colorScheme.error,
                   side: BorderSide(
