@@ -5,6 +5,7 @@ import 'package:mobile/data/repositories/maintenance_interval_repository_impl.da
 import 'package:mobile/data/repositories/maintenance_log_repository_impl.dart';
 import 'package:mobile/data/repositories/vehicle_repository_impl.dart';
 import 'package:mobile/data/services/export_service.dart';
+import 'package:mobile/data/services/template_resolver.dart';
 import 'package:mobile/domain/entities/fuel_log.dart';
 import 'package:mobile/domain/entities/maintenance_interval.dart';
 import 'package:mobile/domain/entities/maintenance_log.dart';
@@ -76,4 +77,8 @@ final exportServiceProvider = Provider<ExportService>((ref) {
     ref.watch(maintenanceLogRepositoryProvider),
     ref.watch(maintenanceIntervalRepositoryProvider),
   );
+});
+
+final templateResolverProvider = Provider<TemplateResolver>((ref) {
+  return TemplateResolver();
 });

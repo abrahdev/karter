@@ -966,6 +966,54 @@ abstract class AppLocalizations {
   /// **'Battery'**
   String get seedIntervalBattery;
 
+  /// No description provided for @seedIntervalFuelFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'Fuel filter'**
+  String get seedIntervalFuelFilter;
+
+  /// No description provided for @seedIntervalEgrCleaning.
+  ///
+  /// In en, this message translates to:
+  /// **'EGR cleaning'**
+  String get seedIntervalEgrCleaning;
+
+  /// No description provided for @seedIntervalDpfCleaning.
+  ///
+  /// In en, this message translates to:
+  /// **'DPF / FAP cleaning'**
+  String get seedIntervalDpfCleaning;
+
+  /// No description provided for @seedIntervalGlowPlugs.
+  ///
+  /// In en, this message translates to:
+  /// **'Glow plugs'**
+  String get seedIntervalGlowPlugs;
+
+  /// No description provided for @seedIntervalInverterCoolant.
+  ///
+  /// In en, this message translates to:
+  /// **'Inverter / motor coolant'**
+  String get seedIntervalInverterCoolant;
+
+  /// No description provided for @seedIntervalDriveUnitOil.
+  ///
+  /// In en, this message translates to:
+  /// **'Drive unit oil'**
+  String get seedIntervalDriveUnitOil;
+
+  /// No description provided for @seedIntervalHybridBatteryFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'Hybrid battery cooling filter'**
+  String get seedIntervalHybridBatteryFilter;
+
+  /// No description provided for @seedIntervalAdblueRefill.
+  ///
+  /// In en, this message translates to:
+  /// **'AdBlue / DEF refill'**
+  String get seedIntervalAdblueRefill;
+
   /// No description provided for @seedDescOilChange.
   ///
   /// In en, this message translates to:
@@ -1067,6 +1115,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Battery loses capacity with charge cycles and time. Using maintainers in winter prolongs its useful life.'**
   String get seedDescBatteryMaintenance;
+
+  /// No description provided for @seedDescFuelFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'The fuel filter traps water and contaminants. A clogged filter causes power loss and hard starting.'**
+  String get seedDescFuelFilter;
+
+  /// No description provided for @seedDescEgrCleaning.
+  ///
+  /// In en, this message translates to:
+  /// **'Diesel peculiarity: the EGR valve accumulates soot over time. Cleaning restores engine efficiency and reduces emissions.'**
+  String get seedDescEgrCleaning;
+
+  /// No description provided for @seedDescDpfCleaning.
+  ///
+  /// In en, this message translates to:
+  /// **'The diesel particulate filter accumulates ash. If not regenerated properly, it may need professional cleaning or replacement.'**
+  String get seedDescDpfCleaning;
+
+  /// No description provided for @seedDescGlowPlugs.
+  ///
+  /// In en, this message translates to:
+  /// **'Glow plugs preheat the combustion chamber for cold starts. A failed plug causes misfiring and white smoke.'**
+  String get seedDescGlowPlugs;
+
+  /// No description provided for @seedDescInverterCoolant.
+  ///
+  /// In en, this message translates to:
+  /// **'The power electronics and electric motor generate heat. Coolant prevents overheating and component failure.'**
+  String get seedDescInverterCoolant;
+
+  /// No description provided for @seedDescDriveUnitOil.
+  ///
+  /// In en, this message translates to:
+  /// **'The reduction gear in the drive unit has its own oil. Change intervals vary by manufacturer.'**
+  String get seedDescDriveUnitOil;
+
+  /// No description provided for @seedDescHybridBatteryFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'The hybrid battery has a dedicated cooling fan with an intake filter. Clean annually; replace if clogged.'**
+  String get seedDescHybridBatteryFilter;
+
+  /// No description provided for @seedDescAdblueRefill.
+  ///
+  /// In en, this message translates to:
+  /// **'The SCR system consumes AdBlue. Refill at each service or when warning appears.'**
+  String get seedDescAdblueRefill;
 }
 
 class _AppLocalizationsDelegate

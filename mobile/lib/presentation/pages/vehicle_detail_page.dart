@@ -7,6 +7,7 @@ import 'package:mobile/domain/enums/vehicle_type.dart';
 import 'package:mobile/domain/value_objects/odometer.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
+import 'package:mobile/presentation/utils/maintenance_localizer.dart';
 import 'package:mobile/presentation/widgets/odometer_dialog.dart';
 
 class VehicleDetailPage extends ConsumerWidget {
@@ -200,7 +201,7 @@ class VehicleDetailPage extends ConsumerWidget {
                             color: accentColor,
                           ),
                           title: Text(
-                            interval.label,
+                            localizedLabel(l, interval.i18nKey, interval.label),
                             style: TextStyle(
                               fontWeight: data.isDue
                                   ? FontWeight.bold
@@ -208,11 +209,8 @@ class VehicleDetailPage extends ConsumerWidget {
                             ),
                           ),
                           subtitle: Text(data.subtitle),
-                          onTap: interval.description != null &&
-                                  interval.description!.isNotEmpty
-                              ? () => _showDescription(
-                                  context, interval)
-                              : null,
+                          onTap: () => _showDescription(
+                                  context, l, interval),
                           trailing: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
@@ -220,7 +218,8 @@ class VehicleDetailPage extends ConsumerWidget {
                                 onPressed: () => context.push(
                                   '/vehicle/$vehicleId/maintenance/new',
                                   extra: {
-                                    'description': interval.label,
+                                    'description':
+                                        localizedLabel(l, interval.i18nKey, interval.label),
                                     'intervalId': interval.id,
                                   },
                                 ),
@@ -266,14 +265,16 @@ class VehicleDetailPage extends ConsumerWidget {
   }
 
   void _showDescription(
-      BuildContext context, dynamic interval) {
-    final l = AppLocalizations.of(context)!;
-    final text = interval.description ??
-        l.noDescriptionAvailable;
+      BuildContext context, AppLocalizations l, dynamic interval) {
+    final label = localizedLabel(
+        l, interval.i18nKey, interval.label ?? '');
+    final desc = localizedDesc(
+        l, interval.descI18nKey, interval.description ?? '');
+    final text = desc.isEmpty ? l.noDescriptionAvailable : desc;
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text(interval.label),
+        title: Text(label),
         content: Text(text),
         actions: [
           TextButton(

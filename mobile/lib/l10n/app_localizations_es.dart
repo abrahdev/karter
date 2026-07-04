@@ -482,6 +482,31 @@ class AppLocalizationsEs extends AppLocalizations {
   String get seedIntervalBattery => 'Batería';
 
   @override
+  String get seedIntervalFuelFilter => 'Filtro de combustible';
+
+  @override
+  String get seedIntervalEgrCleaning => 'Limpieza de EGR';
+
+  @override
+  String get seedIntervalDpfCleaning => 'Limpieza de DPF / FAP';
+
+  @override
+  String get seedIntervalGlowPlugs => 'Bujías de precalentamiento';
+
+  @override
+  String get seedIntervalInverterCoolant => 'Refrigerante del inversor / motor';
+
+  @override
+  String get seedIntervalDriveUnitOil => 'Aceite de la unidad de transmisión';
+
+  @override
+  String get seedIntervalHybridBatteryFilter =>
+      'Filtro de refrigeración batería híbrida';
+
+  @override
+  String get seedIntervalAdblueRefill => 'Recarga de AdBlue / DEF';
+
+  @override
   String get seedDescOilChange =>
       'El aceite pierde propiedades lubricantes con los kilómetros y el tiempo. Un cambio regular protege el motor del desgaste prematuro.';
 
@@ -548,4 +573,36 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get seedDescBatteryMaintenance =>
       'La batería pierde capacidad con los ciclos de carga y el tiempo. El uso de mantenedores en invierno prolonga su vida útil.';
+
+  @override
+  String get seedDescFuelFilter =>
+      'El filtro de combustible retiene agua y contaminantes. Un filtro obstruido causa pérdida de potencia y dificultad de arranque.';
+
+  @override
+  String get seedDescEgrCleaning =>
+      'Particularidad diésel: la válvula EGR acumula hollín con el tiempo. La limpieza restaura la eficiencia del motor y reduce emisiones.';
+
+  @override
+  String get seedDescDpfCleaning =>
+      'El filtro de partículas diésel acumula cenizas. Si no se regenera correctamente, puede necesitar limpieza profesional o reemplazo.';
+
+  @override
+  String get seedDescGlowPlugs =>
+      'Las bujías de precalentamiento calientan la cámara de combustión para arranques en frío. Una bujía fallada causa tirones y humo blanco.';
+
+  @override
+  String get seedDescInverterCoolant =>
+      'Los electrónicos de potencia y el motor eléctrico generan calor. El refrigerante evita el sobrecalentamiento y la falla de componentes.';
+
+  @override
+  String get seedDescDriveUnitOil =>
+      'El engranaje reductor de la unidad de transmisión tiene su propio aceite. Los intervalos de cambio varían según el fabricante.';
+
+  @override
+  String get seedDescHybridBatteryFilter =>
+      'La batería híbrida tiene un ventilador de refrigeración con filtro de admisión. Limpiar anualmente; reemplazar si está obstruido.';
+
+  @override
+  String get seedDescAdblueRefill =>
+      'El sistema SCR consume AdBlue. Recargar en cada servicio o cuando aparezca el aviso.';
 }

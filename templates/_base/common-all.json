@@ -10,6 +10,8 @@
     {
       "id": "brake-pads",
       "label": "Brake pads",
+      "i18n_key": "seed_interval_brake_pads",
+      "desc_i18n_key": "seed_desc_brake_pads",
       "interval_km": 30000,
       "interval_months": null,
       "description": "Friction compound wears with use. Below 3mm thickness, braking distance increases dangerously."
@@ -17,6 +19,8 @@
     {
       "id": "tires",
       "label": "Tires",
+      "i18n_key": "seed_interval_tires",
+      "desc_i18n_key": "seed_desc_tires",
       "interval_km": 50000,
       "interval_months": null,
       "description": "Tires degrade both by mileage and age. Incorrect pressure or uneven wear compromises grip and safety."
@@ -24,6 +28,8 @@
     {
       "id": "brake-fluid",
       "label": "Brake fluid",
+      "i18n_key": "seed_interval_brake_fluid",
+      "desc_i18n_key": "seed_desc_brake_fluid",
       "interval_km": 40000,
       "interval_months": 24,
       "description": "Brake fluid is hygroscopic: it absorbs moisture, reducing its boiling point and braking effectiveness."
@@ -31,6 +37,8 @@
     {
       "id": "cabin-filter",
       "label": "Cabin filter",
+      "i18n_key": "seed_interval_cabin_filter",
+      "desc_i18n_key": "seed_desc_cabin_filter",
       "interval_km": 20000,
       "interval_months": null,
       "description": "The cabin filter purifies the air entering the interior. A saturated filter reduces HVAC efficiency and can generate odors."
@@ -38,6 +46,8 @@
     {
       "id": "coolant",
       "label": "Coolant",
+      "i18n_key": "seed_interval_coolant",
+      "desc_i18n_key": "seed_desc_coolant",
       "interval_km": 60000,
       "interval_months": 36,
       "description": "Coolant loses its antifreeze and anticorrosive properties over time, potentially damaging the engine's internal circuit."

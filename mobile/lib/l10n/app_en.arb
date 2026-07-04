@@ -162,6 +162,15 @@
   "seedIntervalForkOil": "Fork oil",
   "seedIntervalBattery": "Battery",
 
+  "seedIntervalFuelFilter": "Fuel filter",
+  "seedIntervalEgrCleaning": "EGR cleaning",
+  "seedIntervalDpfCleaning": "DPF / FAP cleaning",
+  "seedIntervalGlowPlugs": "Glow plugs",
+  "seedIntervalInverterCoolant": "Inverter / motor coolant",
+  "seedIntervalDriveUnitOil": "Drive unit oil",
+  "seedIntervalHybridBatteryFilter": "Hybrid battery cooling filter",
+  "seedIntervalAdblueRefill": "AdBlue / DEF refill",
+
   "seedDescOilChange": "Oil loses its lubricating properties with mileage and time. Regular changes protect the engine from premature wear.",
   "seedDescOilFilter": "The oil filter traps particles and contaminants. If saturated, oil circulates unfiltered and accelerates engine wear.",
   "seedDescAirFilter": "A dirty air filter reduces power, increases consumption, and can damage intake sensors.",
@@ -178,5 +187,14 @@
   "seedDescValveAdjustment": "Valve adjustment maintains proper compression and prevents premature wear on the cylinder head.",
   "seedDescDriveKit": "Chain, sprocket, and crown wear as a set. Replacing them separately accelerates wear on the new component.",
   "seedDescForkOil": "Over time it breaks down, losing density and worsening front suspension behavior.",
-  "seedDescBatteryMaintenance": "Battery loses capacity with charge cycles and time. Using maintainers in winter prolongs its useful life."
+  "seedDescBatteryMaintenance": "Battery loses capacity with charge cycles and time. Using maintainers in winter prolongs its useful life.",
+
+  "seedDescFuelFilter": "The fuel filter traps water and contaminants. A clogged filter causes power loss and hard starting.",
+  "seedDescEgrCleaning": "Diesel peculiarity: the EGR valve accumulates soot over time. Cleaning restores engine efficiency and reduces emissions.",
+  "seedDescDpfCleaning": "The diesel particulate filter accumulates ash. If not regenerated properly, it may need professional cleaning or replacement.",
+  "seedDescGlowPlugs": "Glow plugs preheat the combustion chamber for cold starts. A failed plug causes misfiring and white smoke.",
+  "seedDescInverterCoolant": "The power electronics and electric motor generate heat. Coolant prevents overheating and component failure.",
+  "seedDescDriveUnitOil": "The reduction gear in the drive unit has its own oil. Change intervals vary by manufacturer.",
+  "seedDescHybridBatteryFilter": "The hybrid battery has a dedicated cooling fan with an intake filter. Clean annually; replace if clogged.",
+  "seedDescAdblueRefill": "The SCR system consumes AdBlue. Refill at each service or when warning appears."
 }

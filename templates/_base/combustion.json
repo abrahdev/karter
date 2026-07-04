@@ -11,6 +11,8 @@
     {
       "id": "oil-change",
       "label": "Oil change",
+      "i18n_key": "seed_interval_oil_change",
+      "desc_i18n_key": "seed_desc_oil_change",
       "interval_km": 10000,
       "interval_months": 12,
       "description": "Oil loses its lubricating properties with mileage and time. Regular changes protect the engine from premature wear."
@@ -18,6 +20,8 @@
     {
       "id": "oil-filter",
       "label": "Oil filter",
+      "i18n_key": "seed_interval_oil_filter",
+      "desc_i18n_key": "seed_desc_oil_filter",
       "interval_km": 10000,
       "interval_months": 12,
       "description": "The oil filter traps particles and contaminants. If saturated, oil circulates unfiltered and accelerates engine wear."
@@ -25,6 +29,8 @@
     {
       "id": "air-filter",
       "label": "Air filter",
+      "i18n_key": "seed_interval_air_filter",
+      "desc_i18n_key": "seed_desc_air_filter",
       "interval_km": 20000,
       "interval_months": null,
       "description": "A dirty air filter reduces power, increases consumption, and can damage intake sensors."
@@ -32,6 +38,8 @@
     {
       "id": "spark-plugs",
       "label": "Spark plugs",
+      "i18n_key": "seed_interval_spark_plugs",
+      "desc_i18n_key": "seed_desc_spark_plugs",
       "interval_km": 40000,
       "interval_months": null,
       "description": "Worn spark plugs increase consumption, make starting difficult, and can damage the ignition coil."
@@ -39,6 +47,8 @@
     {
       "id": "timing-belt",
       "label": "Timing belt",
+      "i18n_key": "seed_interval_timing_belt",
+      "desc_i18n_key": "seed_desc_timing_belt",
       "interval_km": 100000,
       "interval_months": 60,
       "description": "The timing belt is critical: if it breaks, the engine suffers severe damage. It must be changed at the manufacturer's interval without exception."

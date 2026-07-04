@@ -42,6 +42,8 @@
     {
       "id": "hybrid-battery-filter",
       "label": "Hybrid battery cooling filter",
+      "i18n_key": "seed_interval_hybrid_battery_filter",
+      "desc_i18n_key": "seed_desc_hybrid_battery_filter",
       "interval_km": 40000,
       "description": "The hybrid battery has a dedicated cooling fan with an intake filter. Clean annually; replace if clogged."
     },

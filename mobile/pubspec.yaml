@@ -56,3 +56,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/branding/
+    - templates/index.json
+    - templates/_base/
+    - templates/toyota/corolla/
+    - templates/volkswagen/golf/

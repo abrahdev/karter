@@ -483,6 +483,30 @@ class AppLocalizationsEn extends AppLocalizations {
   String get seedIntervalBattery => 'Battery';
 
   @override
+  String get seedIntervalFuelFilter => 'Fuel filter';
+
+  @override
+  String get seedIntervalEgrCleaning => 'EGR cleaning';
+
+  @override
+  String get seedIntervalDpfCleaning => 'DPF / FAP cleaning';
+
+  @override
+  String get seedIntervalGlowPlugs => 'Glow plugs';
+
+  @override
+  String get seedIntervalInverterCoolant => 'Inverter / motor coolant';
+
+  @override
+  String get seedIntervalDriveUnitOil => 'Drive unit oil';
+
+  @override
+  String get seedIntervalHybridBatteryFilter => 'Hybrid battery cooling filter';
+
+  @override
+  String get seedIntervalAdblueRefill => 'AdBlue / DEF refill';
+
+  @override
   String get seedDescOilChange =>
       'Oil loses its lubricating properties with mileage and time. Regular changes protect the engine from premature wear.';
 
@@ -549,4 +573,36 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get seedDescBatteryMaintenance =>
       'Battery loses capacity with charge cycles and time. Using maintainers in winter prolongs its useful life.';
+
+  @override
+  String get seedDescFuelFilter =>
+      'The fuel filter traps water and contaminants. A clogged filter causes power loss and hard starting.';
+
+  @override
+  String get seedDescEgrCleaning =>
+      'Diesel peculiarity: the EGR valve accumulates soot over time. Cleaning restores engine efficiency and reduces emissions.';
+
+  @override
+  String get seedDescDpfCleaning =>
+      'The diesel particulate filter accumulates ash. If not regenerated properly, it may need professional cleaning or replacement.';
+
+  @override
+  String get seedDescGlowPlugs =>
+      'Glow plugs preheat the combustion chamber for cold starts. A failed plug causes misfiring and white smoke.';
+
+  @override
+  String get seedDescInverterCoolant =>
+      'The power electronics and electric motor generate heat. Coolant prevents overheating and component failure.';
+
+  @override
+  String get seedDescDriveUnitOil =>
+      'The reduction gear in the drive unit has its own oil. Change intervals vary by manufacturer.';
+
+  @override
+  String get seedDescHybridBatteryFilter =>
+      'The hybrid battery has a dedicated cooling fan with an intake filter. Clean annually; replace if clogged.';
+
+  @override
+  String get seedDescAdblueRefill =>
+      'The SCR system consumes AdBlue. Refill at each service or when warning appears.';
 }

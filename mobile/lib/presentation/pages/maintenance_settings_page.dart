@@ -4,6 +4,7 @@ import 'package:mobile/core/database/app_database.dart';
 import 'package:mobile/domain/entities/maintenance_interval.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
+import 'package:mobile/presentation/utils/maintenance_localizer.dart';
 
 class MaintenanceSettingsPage extends ConsumerWidget {
   final String vehicleId;
@@ -78,7 +79,8 @@ class MaintenanceSettingsPage extends ConsumerWidget {
       context: context,
       builder: (ctx) => StatefulBuilder(
         builder: (ctx, setDialogState) => AlertDialog(
-          title: Text(interval.label),
+          title: Text(
+              localizedLabel(l, interval.i18nKey, interval.label)),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -269,16 +271,19 @@ class _IntervalTile extends StatelessWidget {
     return Card(
       child: ListTile(
         title: Text(
-          interval.label,
+          localizedLabel(l, interval.i18nKey, interval.label),
           style: TextStyle(
             color: interval.isEnabled ? null : theme.colorScheme.outline,
           ),
         ),
         subtitle: Text(subtitle),
-        onTap: interval.description != null &&
-                interval.description!.isNotEmpty
-            ? () => _showDescription(context)
-            : null,
+        onTap: () {
+          final desc = localizedDesc(
+              l, interval.descI18nKey, interval.description ?? '');
+          if (desc.isNotEmpty) {
+            _showDescription(context, l);
+          }
+        },
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -303,14 +308,15 @@ class _IntervalTile extends StatelessWidget {
     );
   }
 
-  void _showDescription(BuildContext context) {
-    final l = AppLocalizations.of(context)!;
-    final text = interval.description ??
-        l.noDescriptionAvailableSettings;
+  void _showDescription(BuildContext context, AppLocalizations l) {
+    final label =
+        localizedLabel(l, interval.i18nKey, interval.label);
+    final text = localizedDesc(
+            l, interval.descI18nKey, interval.description ?? '');
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text(interval.label),
+        title: Text(label),
         content: Text(text),
         actions: [
           TextButton(

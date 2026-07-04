@@ -22,6 +22,8 @@
     {
       "id": "fuel-filter",
       "label": "Fuel filter",
+      "i18n_key": "seed_interval_fuel_filter",
+      "desc_i18n_key": "seed_desc_fuel_filter",
       "interval_km": 30000,
       "interval_months": 24,
       "description": "The fuel filter traps water and contaminants. A clogged filter causes power loss and hard starting."
@@ -29,6 +31,8 @@
     {
       "id": "egr-cleaning",
       "label": "EGR cleaning",
+      "i18n_key": "seed_interval_egr_cleaning",
+      "desc_i18n_key": "seed_desc_egr_cleaning",
       "interval_km": 60000,
       "interval_months": null,
       "description": "Diesel peculiarity: the EGR valve accumulates soot over time. Cleaning restores engine efficiency and reduces emissions."
@@ -36,6 +40,8 @@
     {
       "id": "dpf-cleaning",
       "label": "DPF / FAP cleaning",
+      "i18n_key": "seed_interval_dpf_cleaning",
+      "desc_i18n_key": "seed_desc_dpf_cleaning",
       "interval_km": 150000,
       "interval_months": null,
       "description": "The diesel particulate filter accumulates ash. If not regenerated properly, it may need professional cleaning or replacement."
@@ -43,6 +49,8 @@
     {
       "id": "glow-plugs",
       "label": "Glow plugs",
+      "i18n_key": "seed_interval_glow_plugs",
+      "desc_i18n_key": "seed_desc_glow_plugs",
       "interval_km": 80000,
       "interval_months": null,
       "description": "Glow plugs preheat the combustion chamber for cold starts. A failed plug causes misfiring and white smoke."

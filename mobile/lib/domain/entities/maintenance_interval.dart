@@ -9,6 +9,8 @@ class MaintenanceInterval {
   final DateTime? lastResetDate;
   final bool isEnabled;
   final bool isCustom;
+  final String? i18nKey;
+  final String? descI18nKey;
 
   MaintenanceInterval({
     required this.id,
@@ -21,6 +23,8 @@ class MaintenanceInterval {
     this.lastResetDate,
     this.isEnabled = true,
     this.isCustom = false,
+    this.i18nKey,
+    this.descI18nKey,
   });
 
   MaintenanceInterval copyWith({
@@ -34,6 +38,8 @@ class MaintenanceInterval {
     DateTime? lastResetDate,
     bool? isEnabled,
     bool? isCustom,
+    String? i18nKey,
+    String? descI18nKey,
   }) {
     return MaintenanceInterval(
       id: id ?? this.id,
@@ -46,6 +52,8 @@ class MaintenanceInterval {
       lastResetDate: lastResetDate ?? this.lastResetDate,
       isEnabled: isEnabled ?? this.isEnabled,
       isCustom: isCustom ?? this.isCustom,
+      i18nKey: i18nKey ?? this.i18nKey,
+      descI18nKey: descI18nKey ?? this.descI18nKey,
     );
   }
 

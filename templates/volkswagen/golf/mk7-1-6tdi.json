@@ -40,6 +40,8 @@
     {
       "id": "adblue-refill",
       "label": "AdBlue / DEF refill",
+      "i18n_key": "seed_interval_adblue_refill",
+      "desc_i18n_key": "seed_desc_adblue_refill",
       "interval_km": 15000,
       "description": "The SCR system consumes AdBlue. Refill at each service or when warning appears."
     }

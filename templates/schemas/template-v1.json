@@ -74,6 +74,14 @@
             "type": "string",
             "description": "Solo necesario si es un ítem nuevo (no heredado). Si es un replace, toma el label del padre."
           },
+          "i18n_key": {
+            "type": "string",
+            "description": "Clave de traducción para el label, ej: seed_interval_oil_change"
+          },
+          "desc_i18n_key": {
+            "type": "string",
+            "description": "Clave de traducción para la descripción, ej: seed_desc_oil_change"
+          },
           "description": { "type": "string" },
           "remove": {
             "type": "boolean",

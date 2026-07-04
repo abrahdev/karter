@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile/core/database/app_database.dart';
+import 'package:mobile/domain/entities/maintenance_interval.dart';
 import 'package:mobile/domain/entities/vehicle.dart';
 import 'package:mobile/domain/enums/distance_unit.dart';
 import 'package:mobile/domain/enums/vehicle_type.dart';
@@ -35,6 +36,9 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
   bool _isLoading = false;
   bool _isEditing = false;
   bool _showAlias = false;
+
+  List<MaintenanceInterval>? _templateIntervals;
+  String? _templateName;
 
   @override
   void initState() {
@@ -124,6 +128,199 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
     }
   }
 
+  Future<void> _searchTemplate() async {
+    final brand = _brandController.text.trim();
+    final model = _modelController.text.trim();
+    final yearStr = _yearController.text.trim();
+
+    if (brand.isEmpty || model.isEmpty || yearStr.isEmpty) return;
+
+    final year = int.tryParse(yearStr);
+    if (year == null) return;
+
+    setState(() => _isLoading = true);
+
+    try {
+      final resolver = ref.read(templateResolverProvider);
+      final resolution = await resolver.findBestMatch(
+        make: brand,
+        model: model,
+        year: year,
+      );
+
+      if (!mounted) return;
+
+      if (resolution != null) {
+        final intervals = resolution.items.map((r) {
+          return MaintenanceInterval(
+            id: uuid.v4(),
+            vehicleId: '',
+            label: r.label,
+            i18nKey: r.i18nKey,
+            descI18nKey: r.descI18nKey,
+            kmInterval: r.intervalKm,
+            monthsInterval: r.intervalMonths,
+            description: r.description,
+            isCustom: false,
+          );
+        }).toList();
+
+        final templateMeta = resolution.entry.meta;
+        final name = [
+          templateMeta.make,
+          templateMeta.model,
+          if (templateMeta.generation != null) templateMeta.generation,
+        ].join(' ');
+
+        final accepted = await _showTemplatePreview(name, intervals);
+
+        if (accepted && mounted) {
+          setState(() {
+            _templateIntervals = intervals;
+            _templateName = name;
+          });
+        }
+      } else {
+        final searchParams =
+            '$brand $model $year';
+        await _showNoTemplateFound(searchParams);
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error: $e')),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
+  }
+
+  Future<bool> _showTemplatePreview(
+      String name, List<MaintenanceInterval> intervals) async {
+    final result = await showDialog<bool>(
+          context: context,
+          builder: (ctx) {
+            final theme = Theme.of(ctx);
+            return AlertDialog(
+              title: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Plantilla encontrada'),
+                  const SizedBox(height: 4),
+                  Text(
+                    name,
+                    style: theme.textTheme.bodyMedium
+                        ?.copyWith(color: theme.colorScheme.primary),
+                  ),
+                ],
+              ),
+              content: SizedBox(
+                width: double.maxFinite,
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: intervals.length,
+                  itemBuilder: (ctx, i) {
+                    final interval = intervals[i];
+                    final parts = <String>[
+                      '${interval.kmInterval} km',
+                    ];
+                    if (interval.monthsInterval != null) {
+                      parts.add('${interval.monthsInterval} meses');
+                    }
+                    return ListTile(
+                      dense: true,
+                      title: Text(interval.label),
+                      subtitle: interval.description != null
+                          ? Text(
+                              interval.description!,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            )
+                          : null,
+                      trailing: Text(
+                        parts.join(' / '),
+                        style: theme.textTheme.bodySmall,
+                      ),
+                    );
+                  },
+                ),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(ctx, false),
+                  child: const Text('Cancelar'),
+                ),
+                FilledButton(
+                  onPressed: () => Navigator.pop(ctx, true),
+                  child: const Text('Usar plantilla'),
+                ),
+              ],
+            );
+          },
+        );
+    return result ?? false;
+  }
+
+  Future<void> _showNoTemplateFound(String searchParams) async {
+    await showDialog(
+      context: context,
+      builder: (ctx) {
+        final theme = Theme.of(ctx);
+        return AlertDialog(
+          title: const Text('Sin resultados'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Icon(Icons.search_off,
+                      color: theme.colorScheme.outline, size: 48),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: Text(
+                      'No se encontró ninguna plantilla para los datos ingresados.',
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+              Text('Parámetros de búsqueda:',
+                  style: theme.textTheme.labelMedium),
+              const SizedBox(height: 4),
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: theme.colorScheme.surfaceContainerHighest,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text(
+                  searchParams,
+                  style: theme.textTheme.bodyMedium
+                      ?.copyWith(fontFamily: 'monospace'),
+                ),
+              ),
+              const SizedBox(height: 12),
+              Text(
+                'El vehículo se creará con los intervalos por defecto.',
+                style: theme.textTheme.bodySmall
+                    ?.copyWith(color: theme.colorScheme.outline),
+              ),
+            ],
+          ),
+          actions: [
+            FilledButton(
+              onPressed: () => Navigator.pop(ctx),
+              child: const Text('Entendido'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   Future<void> _save() async {
     if (!_formKey.currentState!.validate()) return;
 
@@ -153,7 +350,26 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
       );
 
       final repo = ref.read(vehicleRepositoryProvider);
-      await repo.save(vehicle);
+
+      if (_templateIntervals != null) {
+        final intervals = _templateIntervals!
+            .map((i) => MaintenanceInterval(
+                  id: uuid.v4(),
+                  vehicleId: id,
+                  label: i.label,
+                  i18nKey: i.i18nKey,
+                  descI18nKey: i.descI18nKey,
+                  kmInterval: i.kmInterval,
+                  monthsInterval: i.monthsInterval,
+                  description: i.description,
+                  isCustom: false,
+                ))
+            .toList();
+        await repo.save(vehicle, intervals: intervals);
+      } else {
+        await repo.save(vehicle);
+      }
+
       ref.invalidate(vehicleListProvider);
 
       if (mounted) context.pop();
@@ -311,6 +527,21 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
               ),
             ],
             const SizedBox(height: 24),
+            if (!_isEditing) ...[
+              OutlinedButton.icon(
+                onPressed:
+                    _isLoading ? null : _searchTemplate,
+                icon: _templateIntervals != null
+                    ? const Icon(Icons.check_circle, color: Colors.green)
+                    : const Icon(Icons.search),
+                label: Text(
+                  _templateIntervals != null
+                      ? 'Plantilla: $_templateName'
+                      : 'Buscar plantilla',
+                ),
+              ),
+              const SizedBox(height: 12),
+            ],
             FilledButton(
               onPressed: _isLoading ? null : _save,
               child: _isLoading

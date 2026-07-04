@@ -16,6 +16,8 @@
     {
       "id": "battery-cooling",
       "label": "Battery cooling system",
+      "i18n_key": "seed_interval_battery_cooling",
+      "desc_i18n_key": "seed_desc_battery_cooling",
       "interval_km": 60000,
       "interval_months": null,
       "description": "The battery cooling system is vital for maintaining optimal temperature and prolonging cell life."
@@ -23,6 +25,8 @@
     {
       "id": "inverter-coolant",
       "label": "Inverter / motor coolant",
+      "i18n_key": "seed_interval_inverter_coolant",
+      "desc_i18n_key": "seed_desc_inverter_coolant",
       "interval_km": 80000,
       "interval_months": 36,
       "description": "The power electronics and electric motor generate heat. Coolant prevents overheating and component failure."
@@ -30,6 +34,8 @@
     {
       "id": "drive-unit-oil",
       "label": "Drive unit oil",
+      "i18n_key": "seed_interval_drive_unit_oil",
+      "desc_i18n_key": "seed_desc_drive_unit_oil",
       "interval_km": 100000,
       "interval_months": null,
       "description": "The reduction gear in the drive unit has its own oil. Change intervals vary by manufacturer."

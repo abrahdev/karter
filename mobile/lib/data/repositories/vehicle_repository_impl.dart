@@ -1,5 +1,6 @@
 import 'package:mobile/core/database/app_database.dart';
 import 'package:mobile/data/repositories/seed_intervals.dart';
+import 'package:mobile/domain/entities/maintenance_interval.dart';
 import 'package:mobile/domain/entities/vehicle.dart';
 import 'package:mobile/domain/enums/distance_unit.dart';
 import 'package:mobile/domain/enums/vehicle_type.dart';
@@ -29,7 +30,7 @@ class VehicleRepositoryImpl implements VehicleRepository {
   }
 
   @override
-  Future<void> save(Vehicle vehicle) async {
+  Future<void> save(Vehicle vehicle, {List<MaintenanceInterval>? intervals}) async {
     final existing = await (_db.select(_db.vehicles)
           ..where((t) => t.id.equals(vehicle.id)))
         .getSingleOrNull();
@@ -40,8 +41,9 @@ class VehicleRepositoryImpl implements VehicleRepository {
         );
 
     if (isNew) {
-      final intervals = defaultIntervalsFor(vehicle.type, vehicle.id);
-      for (final interval in intervals) {
+      final seedIntervals =
+          intervals ?? defaultIntervalsFor(vehicle.type, vehicle.id);
+      for (final interval in seedIntervals) {
         await _db.into(_db.maintenanceIntervals).insert(
               MaintenanceIntervalsCompanion(
                 id: drift.Value(interval.id),

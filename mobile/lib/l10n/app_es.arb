@@ -162,6 +162,15 @@
   "seedIntervalForkOil": "Aceite de horquilla",
   "seedIntervalBattery": "Batería",
 
+  "seedIntervalFuelFilter": "Filtro de combustible",
+  "seedIntervalEgrCleaning": "Limpieza de EGR",
+  "seedIntervalDpfCleaning": "Limpieza de DPF / FAP",
+  "seedIntervalGlowPlugs": "Bujías de precalentamiento",
+  "seedIntervalInverterCoolant": "Refrigerante del inversor / motor",
+  "seedIntervalDriveUnitOil": "Aceite de la unidad de transmisión",
+  "seedIntervalHybridBatteryFilter": "Filtro de refrigeración batería híbrida",
+  "seedIntervalAdblueRefill": "Recarga de AdBlue / DEF",
+
   "seedDescOilChange": "El aceite pierde propiedades lubricantes con los kilómetros y el tiempo. Un cambio regular protege el motor del desgaste prematuro.",
   "seedDescOilFilter": "El filtro de aceite retiene partículas y contaminantes. Si se satura, el aceite circula sin filtrar y acelera el desgaste del motor.",
   "seedDescAirFilter": "Un filtro de aire sucio reduce la potencia, aumenta el consumo y puede dañar los sensores de admisión.",
@@ -178,5 +187,14 @@
   "seedDescValveAdjustment": "El ajuste de válvulas mantiene la compresión correcta y evita desgastes prematuros en la culata.",
   "seedDescDriveKit": "Cadena, piñón y corona se desgastan como conjunto. Cambiarlos por separado acelera el desgaste del componente nuevo.",
   "seedDescForkOil": "Con el tiempo se descompone, perdiendo densidad y empeorando el comportamiento de la suspensión delantera.",
-  "seedDescBatteryMaintenance": "La batería pierde capacidad con los ciclos de carga y el tiempo. El uso de mantenedores en invierno prolonga su vida útil."
+  "seedDescBatteryMaintenance": "La batería pierde capacidad con los ciclos de carga y el tiempo. El uso de mantenedores en invierno prolonga su vida útil.",
+
+  "seedDescFuelFilter": "El filtro de combustible retiene agua y contaminantes. Un filtro obstruido causa pérdida de potencia y dificultad de arranque.",
+  "seedDescEgrCleaning": "Particularidad diésel: la válvula EGR acumula hollín con el tiempo. La limpieza restaura la eficiencia del motor y reduce emisiones.",
+  "seedDescDpfCleaning": "El filtro de partículas diésel acumula cenizas. Si no se regenera correctamente, puede necesitar limpieza profesional o reemplazo.",
+  "seedDescGlowPlugs": "Las bujías de precalentamiento calientan la cámara de combustión para arranques en frío. Una bujía fallada causa tirones y humo blanco.",
+  "seedDescInverterCoolant": "Los electrónicos de potencia y el motor eléctrico generan calor. El refrigerante evita el sobrecalentamiento y la falla de componentes.",
+  "seedDescDriveUnitOil": "El engranaje reductor de la unidad de transmisión tiene su propio aceite. Los intervalos de cambio varían según el fabricante.",
+  "seedDescHybridBatteryFilter": "La batería híbrida tiene un ventilador de refrigeración con filtro de admisión. Limpiar anualmente; reemplazar si está obstruido.",
+  "seedDescAdblueRefill": "El sistema SCR consume AdBlue. Recargar en cada servicio o cuando aparezca el aviso."
 }

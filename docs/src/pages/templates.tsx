@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo, useCallback } from "react";
+import React, { useEffect, useState, useMemo, useRef } from "react";
 import Layout from "@theme/Layout";
 import Link from "@docusaurus/Link";
 
@@ -100,19 +100,7 @@ const STYLES: Record<string, React.CSSProperties> = {
     fontSize: "0.9rem",
     cursor: "pointer",
   },
-  fuelCheckboxes: {
-    display: "flex",
-    flexWrap: "wrap" as const,
-    gap: "0.5rem",
-    marginTop: "0.25rem",
-  },
-  fuelCheck: {
-    display: "flex",
-    alignItems: "center",
-    gap: "0.3rem",
-    fontSize: "0.85rem",
-    cursor: "pointer",
-  },
+
   card: {
     border: "1px solid var(--ifm-color-emphasis-300)",
     borderRadius: 10,
@@ -355,6 +343,163 @@ function Modal({
   );
 }
 
+function SelectDropdown({
+  value,
+  options,
+  onChange,
+  placeholder,
+  disabled,
+  getDotColor,
+  getLabel,
+}: {
+  value: string;
+  options: string[];
+  onChange: (v: string) => void;
+  placeholder: string;
+  disabled?: boolean;
+  getDotColor?: (v: string) => string | undefined;
+  getLabel?: (v: string) => string;
+}) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
+
+  const display = value
+    ? getLabel
+      ? getLabel(value)
+      : value
+    : placeholder;
+
+  return (
+    <div
+      ref={ref}
+      style={{
+        position: "relative",
+        width: "100%",
+        opacity: disabled ? 0.45 : 1,
+        pointerEvents: disabled ? "none" : "auto",
+      }}
+    >
+      <button
+        type="button"
+        onClick={() => setOpen(!open)}
+        style={{
+          ...STYLES.select,
+          width: "100%",
+          display: "flex",
+          alignItems: "center",
+          gap: "0.5rem",
+          textAlign: "left",
+        }}
+      >
+        {value && getDotColor?.(value) && (
+          <span
+            style={{
+              width: 10,
+              height: 10,
+              borderRadius: "50%",
+              backgroundColor: getDotColor(value) || "#666",
+              flexShrink: 0,
+            }}
+          />
+        )}
+        <span style={{ flex: 1 }}>{display}</span>
+        <span style={{ fontSize: "0.65rem", color: "var(--ifm-color-emphasis-500)" }}>
+          ▾
+        </span>
+      </button>
+
+      {open && (
+        <div
+          style={{
+            position: "absolute",
+            top: "100%",
+            left: 0,
+            right: 0,
+            marginTop: 4,
+            borderRadius: 8,
+            border: "1px solid var(--ifm-color-emphasis-300)",
+            background: "var(--ifm-background-color)",
+            zIndex: 100,
+            overflow: "hidden",
+          }}
+        >
+          <div
+            onClick={() => {
+              onChange("");
+              setOpen(false);
+            }}
+            style={{
+              padding: "0.5rem 0.75rem",
+              cursor: "pointer",
+              fontSize: "0.875rem",
+              color: "var(--ifm-color-emphasis-600)",
+            }}
+          >
+            {placeholder}
+          </div>
+          {options.map((opt) => {
+            const label = getLabel ? getLabel(opt) : opt;
+            const dotColor = getDotColor?.(opt);
+            return (
+              <div
+                key={opt}
+                onClick={() => {
+                  onChange(opt);
+                  setOpen(false);
+                }}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.5rem",
+                  padding: "0.5rem 0.75rem",
+                  cursor: "pointer",
+                  fontSize: "0.875rem",
+                  color: "var(--ifm-font-color-base)",
+                  borderTop: "1px solid var(--ifm-color-emphasis-200)",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = "var(--ifm-hover-overlay)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = "transparent";
+                }}
+              >
+                {dotColor && (
+                  <span
+                    style={{
+                      width: 10,
+                      height: 10,
+                      borderRadius: "50%",
+                      backgroundColor: dotColor,
+                      flexShrink: 0,
+                    }}
+                  />
+                )}
+                {label}
+                {opt === value && (
+                  <span style={{ marginLeft: "auto", fontSize: "0.75rem", color: "var(--ifm-color-primary)" }}>
+                    ✓
+                  </span>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}
+
 function Card({
   t,
   onClick,
@@ -420,7 +565,7 @@ export default function TemplatesPage() {
   const [selectedMake, setSelectedMake] = useState("");
   const [selectedModel, setSelectedModel] = useState("");
   const [selectedGeneration, setSelectedGeneration] = useState("");
-  const [fuelFilters, setFuelFilters] = useState<Set<string>>(new Set());
+  const [selectedFuel, setSelectedFuel] = useState("");
 
   const [modalTemplate, setModalTemplate] = useState<TemplateEntry | null>(
     null
@@ -454,8 +599,12 @@ export default function TemplatesPage() {
     if (!data) return [];
     let list = data.templates;
 
-    if (selectedMake) {
+    if (selectedMake === "_base") {
+      list = list.filter((t) => t.meta.make === "_base");
+    } else if (selectedMake) {
       list = list.filter((t) => t.meta.make === selectedMake);
+    } else {
+      list = list.filter((t) => t.meta.make !== "_base");
     }
     if (selectedModel) {
       list = list.filter((t) => t.meta.model === selectedModel);
@@ -465,14 +614,14 @@ export default function TemplatesPage() {
         (t) => t.meta.generation === selectedGeneration
       );
     }
-    if (fuelFilters.size > 0) {
+    if (selectedFuel) {
       list = list.filter(
-        (t) => t.meta.engine?.fuel && fuelFilters.has(t.meta.engine.fuel)
+        (t) => t.meta.engine?.fuel === selectedFuel
       );
     }
 
     return list;
-  }, [data, selectedMake, selectedModel, selectedGeneration, fuelFilters]);
+  }, [data, selectedMake, selectedModel, selectedGeneration, selectedFuel]);
 
   const makes = useMemo(
     () =>
@@ -521,30 +670,21 @@ export default function TemplatesPage() {
     []
   );
 
-  function toggleFuel(fuel: string) {
-    setFuelFilters((prev) => {
-      const next = new Set(prev);
-      if (next.has(fuel)) next.delete(fuel);
-      else next.add(fuel);
-      return next;
-    });
-  }
-
   function resetFilters() {
     setSelectedMake("");
     setSelectedModel("");
     setSelectedGeneration("");
-    setFuelFilters(new Set());
+    setSelectedFuel("");
   }
 
   const hasFilters =
     selectedMake ||
     selectedModel ||
     selectedGeneration ||
-    fuelFilters.size > 0;
+    selectedFuel;
 
   const makeOptions = useMemo(
-    () => makes.filter((m) => m !== "_base"),
+    () => makes,
     [makes]
   );
 
@@ -590,84 +730,53 @@ export default function TemplatesPage() {
             <div style={STYLES.filters}>
               <div style={STYLES.filterGroup}>
                 <span style={STYLES.label}>Make</span>
-                <select
-                  style={STYLES.select}
+                <SelectDropdown
                   value={selectedMake}
-                  onChange={(e) => {
-                    setSelectedMake(e.target.value);
+                  options={makeOptions}
+                  onChange={(v) => {
+                    setSelectedMake(v);
                     setSelectedModel("");
                     setSelectedGeneration("");
                   }}
-                >
-                  <option value="">All makes</option>
-                  {makeOptions.map((m) => (
-                    <option key={m} value={m}>
-                      {m}
-                    </option>
-                  ))}
-                </select>
+                  placeholder="All makes"
+                />
               </div>
 
               <div style={STYLES.filterGroup}>
                 <span style={STYLES.label}>Model</span>
-                <select
-                  style={STYLES.select}
+                <SelectDropdown
                   value={selectedModel}
-                  onChange={(e) => {
-                    setSelectedModel(e.target.value);
+                  options={models}
+                  onChange={(v) => {
+                    setSelectedModel(v);
                     setSelectedGeneration("");
                   }}
+                  placeholder="All models"
                   disabled={!selectedMake}
-                >
-                  <option value="">All models</option>
-                  {models.map((m) => (
-                    <option key={m} value={m}>
-                      {m}
-                    </option>
-                  ))}
-                </select>
+                />
               </div>
 
               <div style={STYLES.filterGroup}>
                 <span style={STYLES.label}>Generation</span>
-                <select
-                  style={STYLES.select}
+                <SelectDropdown
                   value={selectedGeneration}
-                  onChange={(e) => setSelectedGeneration(e.target.value)}
+                  options={generations}
+                  onChange={setSelectedGeneration}
+                  placeholder="All generations"
                   disabled={!selectedModel}
-                >
-                  <option value="">All generations</option>
-                  {generations.map((g) => (
-                    <option key={g} value={g}>
-                      {g}
-                    </option>
-                  ))}
-                </select>
+                />
               </div>
 
               <div style={STYLES.filterGroup}>
                 <span style={STYLES.label}>Fuel</span>
-                <div style={STYLES.fuelCheckboxes}>
-                  {allFuels.map((f) => (
-                    <label key={f} style={STYLES.fuelCheck}>
-                      <input
-                        type="checkbox"
-                        checked={fuelFilters.has(f)}
-                        onChange={() => toggleFuel(f)}
-                      />
-                      <span
-                        style={{
-                          display: "inline-block",
-                          width: 10,
-                          height: 10,
-                          borderRadius: "50%",
-                          backgroundColor: FUEL_COLORS[f] || "#666",
-                        }}
-                      />
-                      {FUEL_LABELS[f] || f}
-                    </label>
-                  ))}
-                </div>
+                <SelectDropdown
+                  value={selectedFuel}
+                  options={allFuels}
+                  onChange={setSelectedFuel}
+                  placeholder="All fuels"
+                  getDotColor={(f) => FUEL_COLORS[f]}
+                  getLabel={(f) => FUEL_LABELS[f] || f}
+                />
               </div>
 
               {hasFilters && (
