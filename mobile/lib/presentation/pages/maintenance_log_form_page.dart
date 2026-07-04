@@ -41,6 +41,12 @@ class _MaintenanceLogFormPageState
   void initState() {
     super.initState();
     _isEditing = widget.logId != null;
+    if (!_isEditing) {
+      if (widget.initialDescription != null) {
+        _descriptionController.text = widget.initialDescription!;
+      }
+      _selectedIntervalId = widget.initialIntervalId;
+    }
     WidgetsBinding.instance.addPostFrameCallback((_) => _loadInitialData());
   }
 
@@ -59,10 +65,6 @@ class _MaintenanceLogFormPageState
         });
       }
     } else {
-      if (widget.initialDescription != null) {
-        _descriptionController.text = widget.initialDescription!;
-      }
-      _selectedIntervalId = widget.initialIntervalId;
       final vehicle =
           await ref.read(vehicleProvider(widget.vehicleId).future);
       if (vehicle != null && mounted) {

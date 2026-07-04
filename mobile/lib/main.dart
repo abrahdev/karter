@@ -170,14 +170,6 @@ class _ShellState extends State<_Shell> {
                   labelType: extended ? null : NavigationRailLabelType.all,
                   extended: extended,
                   trailingAtBottom: true,
-                  leading: Padding(
-                    padding: EdgeInsets.all(extended ? 6 : 4),
-                    child: Image(
-                      image: const AssetImage('assets/branding/karter-icon-1024.png'),
-                      width: extended ? 40 : 28,
-                      height: extended ? 40 : 28,
-                    ),
-                  ),
                   trailing: canExtend
                       ? IconButton(
                           icon: Icon(extended ? Icons.chevron_left : Icons.chevron_right),
