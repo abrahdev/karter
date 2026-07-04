@@ -194,21 +194,24 @@ function Modal({
     ? `${m.engine.displacement_cc}cc`
     : null;
 
-  const rows: [string, string][] = [
-    ["ID", t.id],
-    ["Path", t.path],
-    ["Make", m.make],
-    ["Model", m.model],
+  const sourceUrl = `https://github.com/abrahdev/karter/blob/main/templates/${t.path}`;
+
+  const fields: { label: string; value: string | null }[] = [
+    { label: "ID", value: t.id },
+    { label: "Make", value: m.make },
+    { label: "Model", value: m.model },
+    { label: "Generation", value: m.generation ?? null },
+    { label: "Years", value: years },
+    { label: "Displacement", value: displacement },
+    { label: "Fuel", value: fuel ? FUEL_LABELS[fuel] || fuel : null },
+    { label: "Author", value: m.author },
+    { label: "Version", value: m.version },
+    { label: "Items", value: String(t.item_count) },
+    {
+      label: "Extends",
+      value: t.extends.length > 0 ? t.extends.join(", ") : null,
+    },
   ];
-  if (m.generation) rows.push(["Generation", m.generation]);
-  if (years) rows.push(["Years", years]);
-  if (displacement) rows.push(["Displacement", displacement]);
-  if (fuel) rows.push(["Fuel", FUEL_LABELS[fuel] || fuel]);
-  rows.push(["Author", m.author]);
-  rows.push(["Version", m.version]);
-  rows.push(["Items", String(t.item_count)]);
-  if (t.extends.length > 0)
-    rows.push(["Extends", t.extends.join(", ")]);
 
   return (
     <div
@@ -246,7 +249,7 @@ function Modal({
           }}
         >
           <div style={{ flex: 1, minWidth: 0 }}>
-            <h2 style={{ margin: 0, fontSize: "1.25rem" }}>
+            <h2 style={{ margin: 0, fontSize: "1.25rem", color: "var(--ifm-font-color-base)" }}>
               {m.make} {m.model}
               {m.generation ? ` ${m.generation}` : ""}
             </h2>
@@ -278,53 +281,60 @@ function Modal({
           </button>
         </div>
 
-        <table
-          style={{
-            width: "100%",
-            borderCollapse: "collapse",
-            fontSize: "0.875rem",
-          }}
-        >
-          <tbody>
-            {rows.map(([label, value]) => (
-              <tr
-                key={label}
-                style={{
-                  borderTop: "1px solid var(--ifm-color-emphasis-200)",
-                }}
-              >
-                <td
+        <div style={{ borderTop: "1px solid var(--ifm-color-emphasis-200)" }}>
+          {fields.map(
+            (f) =>
+              f.value && (
+                <div
+                  key={f.label}
                   style={{
+                    display: "flex",
                     padding: "0.65rem 1.5rem",
-                    fontWeight: 600,
-                    color: "var(--ifm-color-emphasis-700)",
-                    whiteSpace: "nowrap",
-                    width: 120,
+                    borderBottom: "1px solid var(--ifm-color-emphasis-200)",
+                    fontSize: "0.875rem",
                   }}
                 >
-                  {label}
-                </td>
-                <td
-                  style={{
-                    padding: "0.65rem 1.5rem 0.65rem 0",
-                    color: "var(--ifm-font-color-base)",
-                    wordBreak: "break-word",
-                  }}
-                >
-                  {value}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                  <span
+                    style={{
+                      fontWeight: 600,
+                      color: "var(--ifm-color-emphasis-600)",
+                      width: 120,
+                      flexShrink: 0,
+                    }}
+                  >
+                    {f.label}
+                  </span>
+                  <span
+                    style={{
+                      color: "var(--ifm-font-color-base)",
+                      wordBreak: "break-word",
+                    }}
+                  >
+                    {f.value}
+                  </span>
+                </div>
+              )
+          )}
+        </div>
 
         <div
           style={{
-            padding: "0.75rem 1.5rem 1.5rem",
+            padding: "1rem 1.5rem",
             display: "flex",
-            justifyContent: "flex-end",
+            justifyContent: "space-between",
+            alignItems: "center",
           }}
         >
+          <Link
+            to={sourceUrl}
+            style={{
+              fontSize: "0.8rem",
+              color: "var(--ifm-color-primary)",
+              textDecoration: "none",
+            }}
+          >
+            View source on GitHub →
+          </Link>
           <button
             onClick={onClose}
             style={{
