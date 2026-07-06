@@ -91,6 +91,24 @@ class MaintenanceIntervals extends Table {
   Set<Column> get primaryKey => {id};
 }
 
+@DataClassName('VehicleDocumentEntry')
+class VehicleDocuments extends Table {
+  TextColumn get id => text()();
+  TextColumn get vehicleId => text().references(Vehicles, #id)();
+  TextColumn get type => text()();
+  TextColumn get name => text()();
+  TextColumn get fileName => text()();
+  TextColumn get filePath => text()();
+  TextColumn get mimeType => text().nullable()();
+  RealColumn get fileSize => real().nullable()();
+  TextColumn get notes => text().nullable()();
+  DateTimeColumn get expiryDate => dateTime().nullable()();
+  DateTimeColumn get createdAt => dateTime()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
 @DriftDatabase(
   tables: [
     Vehicles,
@@ -98,13 +116,14 @@ class MaintenanceIntervals extends Table {
     MaintenanceLogs,
     ReplacedParts,
     MaintenanceIntervals,
+    VehicleDocuments,
   ],
 )
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
   @override
-  int get schemaVersion => 6;
+  int get schemaVersion => 7;
 
   @override
   MigrationStrategy get migration {
@@ -148,6 +167,9 @@ class AppDatabase extends _$AppDatabase {
             await m.addColumn(
                 maintenanceLogs, maintenanceLogs.restoreResetDate);
           } catch (_) {}
+        }
+        if (from < 7) {
+          await m.createTable(vehicleDocuments);
         }
         if (from < 6) {
           await m.database.customStatement('PRAGMA foreign_keys = OFF');

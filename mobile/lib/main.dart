@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:system_theme/system_theme.dart';
 import 'package:mobile/presentation/pages/dashboard_page.dart';
 import 'package:mobile/presentation/pages/data_manager_page.dart';
+import 'package:mobile/presentation/pages/document_list_page.dart';
 import 'package:mobile/presentation/pages/fuel_log_form_page.dart';
 import 'package:mobile/presentation/pages/fuel_log_list_page.dart';
 import 'package:mobile/presentation/pages/home_page.dart';
@@ -52,22 +53,28 @@ final _router = GoRouter(
             vehicleId: state.pathParameters['id']!,
           ),
         ),
-        GoRoute(
-          path: 'fuel',
-          builder: (_, state) => FuelLogListPage(
-            vehicleId: state.pathParameters['id']!,
-          ),
-          routes: [
             GoRoute(
-              path: 'new',
-              builder: (_, state) => FuelLogFormPage(
+              path: 'fuel',
+              builder: (_, state) => FuelLogListPage(
+                vehicleId: state.pathParameters['id']!,
+              ),
+              routes: [
+                GoRoute(
+                  path: 'new',
+                  builder: (_, state) => FuelLogFormPage(
+                    vehicleId: state.pathParameters['id']!,
+                  ),
+                ),
+              ],
+            ),
+            GoRoute(
+              path: 'documents',
+              builder: (_, state) => DocumentListPage(
                 vehicleId: state.pathParameters['id']!,
               ),
             ),
-          ],
-        ),
-        GoRoute(
-          path: 'maintenance',
+            GoRoute(
+              path: 'maintenance',
           builder: (_, state) => MaintenanceLogListPage(
             vehicleId: state.pathParameters['id']!,
           ),

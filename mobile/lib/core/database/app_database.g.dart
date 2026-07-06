@@ -3078,6 +3078,666 @@ class MaintenanceIntervalsCompanion
   }
 }
 
+class $VehicleDocumentsTable extends VehicleDocuments
+    with TableInfo<$VehicleDocumentsTable, VehicleDocumentEntry> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $VehicleDocumentsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _vehicleIdMeta = const VerificationMeta(
+    'vehicleId',
+  );
+  @override
+  late final GeneratedColumn<String> vehicleId = GeneratedColumn<String>(
+    'vehicle_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES vehicles (id)',
+    ),
+  );
+  static const VerificationMeta _typeMeta = const VerificationMeta('type');
+  @override
+  late final GeneratedColumn<String> type = GeneratedColumn<String>(
+    'type',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _fileNameMeta = const VerificationMeta(
+    'fileName',
+  );
+  @override
+  late final GeneratedColumn<String> fileName = GeneratedColumn<String>(
+    'file_name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _filePathMeta = const VerificationMeta(
+    'filePath',
+  );
+  @override
+  late final GeneratedColumn<String> filePath = GeneratedColumn<String>(
+    'file_path',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _mimeTypeMeta = const VerificationMeta(
+    'mimeType',
+  );
+  @override
+  late final GeneratedColumn<String> mimeType = GeneratedColumn<String>(
+    'mime_type',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _fileSizeMeta = const VerificationMeta(
+    'fileSize',
+  );
+  @override
+  late final GeneratedColumn<double> fileSize = GeneratedColumn<double>(
+    'file_size',
+    aliasedName,
+    true,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _notesMeta = const VerificationMeta('notes');
+  @override
+  late final GeneratedColumn<String> notes = GeneratedColumn<String>(
+    'notes',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _expiryDateMeta = const VerificationMeta(
+    'expiryDate',
+  );
+  @override
+  late final GeneratedColumn<DateTime> expiryDate = GeneratedColumn<DateTime>(
+    'expiry_date',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    vehicleId,
+    type,
+    name,
+    fileName,
+    filePath,
+    mimeType,
+    fileSize,
+    notes,
+    expiryDate,
+    createdAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'vehicle_documents';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<VehicleDocumentEntry> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('vehicle_id')) {
+      context.handle(
+        _vehicleIdMeta,
+        vehicleId.isAcceptableOrUnknown(data['vehicle_id']!, _vehicleIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_vehicleIdMeta);
+    }
+    if (data.containsKey('type')) {
+      context.handle(
+        _typeMeta,
+        type.isAcceptableOrUnknown(data['type']!, _typeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_typeMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('file_name')) {
+      context.handle(
+        _fileNameMeta,
+        fileName.isAcceptableOrUnknown(data['file_name']!, _fileNameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_fileNameMeta);
+    }
+    if (data.containsKey('file_path')) {
+      context.handle(
+        _filePathMeta,
+        filePath.isAcceptableOrUnknown(data['file_path']!, _filePathMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_filePathMeta);
+    }
+    if (data.containsKey('mime_type')) {
+      context.handle(
+        _mimeTypeMeta,
+        mimeType.isAcceptableOrUnknown(data['mime_type']!, _mimeTypeMeta),
+      );
+    }
+    if (data.containsKey('file_size')) {
+      context.handle(
+        _fileSizeMeta,
+        fileSize.isAcceptableOrUnknown(data['file_size']!, _fileSizeMeta),
+      );
+    }
+    if (data.containsKey('notes')) {
+      context.handle(
+        _notesMeta,
+        notes.isAcceptableOrUnknown(data['notes']!, _notesMeta),
+      );
+    }
+    if (data.containsKey('expiry_date')) {
+      context.handle(
+        _expiryDateMeta,
+        expiryDate.isAcceptableOrUnknown(data['expiry_date']!, _expiryDateMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  VehicleDocumentEntry map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return VehicleDocumentEntry(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      vehicleId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}vehicle_id'],
+      )!,
+      type: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}type'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      fileName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}file_name'],
+      )!,
+      filePath: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}file_path'],
+      )!,
+      mimeType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}mime_type'],
+      ),
+      fileSize: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}file_size'],
+      ),
+      notes: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}notes'],
+      ),
+      expiryDate: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}expiry_date'],
+      ),
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+    );
+  }
+
+  @override
+  $VehicleDocumentsTable createAlias(String alias) {
+    return $VehicleDocumentsTable(attachedDatabase, alias);
+  }
+}
+
+class VehicleDocumentEntry extends DataClass
+    implements Insertable<VehicleDocumentEntry> {
+  final String id;
+  final String vehicleId;
+  final String type;
+  final String name;
+  final String fileName;
+  final String filePath;
+  final String? mimeType;
+  final double? fileSize;
+  final String? notes;
+  final DateTime? expiryDate;
+  final DateTime createdAt;
+  const VehicleDocumentEntry({
+    required this.id,
+    required this.vehicleId,
+    required this.type,
+    required this.name,
+    required this.fileName,
+    required this.filePath,
+    this.mimeType,
+    this.fileSize,
+    this.notes,
+    this.expiryDate,
+    required this.createdAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['vehicle_id'] = Variable<String>(vehicleId);
+    map['type'] = Variable<String>(type);
+    map['name'] = Variable<String>(name);
+    map['file_name'] = Variable<String>(fileName);
+    map['file_path'] = Variable<String>(filePath);
+    if (!nullToAbsent || mimeType != null) {
+      map['mime_type'] = Variable<String>(mimeType);
+    }
+    if (!nullToAbsent || fileSize != null) {
+      map['file_size'] = Variable<double>(fileSize);
+    }
+    if (!nullToAbsent || notes != null) {
+      map['notes'] = Variable<String>(notes);
+    }
+    if (!nullToAbsent || expiryDate != null) {
+      map['expiry_date'] = Variable<DateTime>(expiryDate);
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    return map;
+  }
+
+  VehicleDocumentsCompanion toCompanion(bool nullToAbsent) {
+    return VehicleDocumentsCompanion(
+      id: Value(id),
+      vehicleId: Value(vehicleId),
+      type: Value(type),
+      name: Value(name),
+      fileName: Value(fileName),
+      filePath: Value(filePath),
+      mimeType: mimeType == null && nullToAbsent
+          ? const Value.absent()
+          : Value(mimeType),
+      fileSize: fileSize == null && nullToAbsent
+          ? const Value.absent()
+          : Value(fileSize),
+      notes: notes == null && nullToAbsent
+          ? const Value.absent()
+          : Value(notes),
+      expiryDate: expiryDate == null && nullToAbsent
+          ? const Value.absent()
+          : Value(expiryDate),
+      createdAt: Value(createdAt),
+    );
+  }
+
+  factory VehicleDocumentEntry.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return VehicleDocumentEntry(
+      id: serializer.fromJson<String>(json['id']),
+      vehicleId: serializer.fromJson<String>(json['vehicleId']),
+      type: serializer.fromJson<String>(json['type']),
+      name: serializer.fromJson<String>(json['name']),
+      fileName: serializer.fromJson<String>(json['fileName']),
+      filePath: serializer.fromJson<String>(json['filePath']),
+      mimeType: serializer.fromJson<String?>(json['mimeType']),
+      fileSize: serializer.fromJson<double?>(json['fileSize']),
+      notes: serializer.fromJson<String?>(json['notes']),
+      expiryDate: serializer.fromJson<DateTime?>(json['expiryDate']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'vehicleId': serializer.toJson<String>(vehicleId),
+      'type': serializer.toJson<String>(type),
+      'name': serializer.toJson<String>(name),
+      'fileName': serializer.toJson<String>(fileName),
+      'filePath': serializer.toJson<String>(filePath),
+      'mimeType': serializer.toJson<String?>(mimeType),
+      'fileSize': serializer.toJson<double?>(fileSize),
+      'notes': serializer.toJson<String?>(notes),
+      'expiryDate': serializer.toJson<DateTime?>(expiryDate),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+    };
+  }
+
+  VehicleDocumentEntry copyWith({
+    String? id,
+    String? vehicleId,
+    String? type,
+    String? name,
+    String? fileName,
+    String? filePath,
+    Value<String?> mimeType = const Value.absent(),
+    Value<double?> fileSize = const Value.absent(),
+    Value<String?> notes = const Value.absent(),
+    Value<DateTime?> expiryDate = const Value.absent(),
+    DateTime? createdAt,
+  }) => VehicleDocumentEntry(
+    id: id ?? this.id,
+    vehicleId: vehicleId ?? this.vehicleId,
+    type: type ?? this.type,
+    name: name ?? this.name,
+    fileName: fileName ?? this.fileName,
+    filePath: filePath ?? this.filePath,
+    mimeType: mimeType.present ? mimeType.value : this.mimeType,
+    fileSize: fileSize.present ? fileSize.value : this.fileSize,
+    notes: notes.present ? notes.value : this.notes,
+    expiryDate: expiryDate.present ? expiryDate.value : this.expiryDate,
+    createdAt: createdAt ?? this.createdAt,
+  );
+  VehicleDocumentEntry copyWithCompanion(VehicleDocumentsCompanion data) {
+    return VehicleDocumentEntry(
+      id: data.id.present ? data.id.value : this.id,
+      vehicleId: data.vehicleId.present ? data.vehicleId.value : this.vehicleId,
+      type: data.type.present ? data.type.value : this.type,
+      name: data.name.present ? data.name.value : this.name,
+      fileName: data.fileName.present ? data.fileName.value : this.fileName,
+      filePath: data.filePath.present ? data.filePath.value : this.filePath,
+      mimeType: data.mimeType.present ? data.mimeType.value : this.mimeType,
+      fileSize: data.fileSize.present ? data.fileSize.value : this.fileSize,
+      notes: data.notes.present ? data.notes.value : this.notes,
+      expiryDate: data.expiryDate.present
+          ? data.expiryDate.value
+          : this.expiryDate,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('VehicleDocumentEntry(')
+          ..write('id: $id, ')
+          ..write('vehicleId: $vehicleId, ')
+          ..write('type: $type, ')
+          ..write('name: $name, ')
+          ..write('fileName: $fileName, ')
+          ..write('filePath: $filePath, ')
+          ..write('mimeType: $mimeType, ')
+          ..write('fileSize: $fileSize, ')
+          ..write('notes: $notes, ')
+          ..write('expiryDate: $expiryDate, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    vehicleId,
+    type,
+    name,
+    fileName,
+    filePath,
+    mimeType,
+    fileSize,
+    notes,
+    expiryDate,
+    createdAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is VehicleDocumentEntry &&
+          other.id == this.id &&
+          other.vehicleId == this.vehicleId &&
+          other.type == this.type &&
+          other.name == this.name &&
+          other.fileName == this.fileName &&
+          other.filePath == this.filePath &&
+          other.mimeType == this.mimeType &&
+          other.fileSize == this.fileSize &&
+          other.notes == this.notes &&
+          other.expiryDate == this.expiryDate &&
+          other.createdAt == this.createdAt);
+}
+
+class VehicleDocumentsCompanion extends UpdateCompanion<VehicleDocumentEntry> {
+  final Value<String> id;
+  final Value<String> vehicleId;
+  final Value<String> type;
+  final Value<String> name;
+  final Value<String> fileName;
+  final Value<String> filePath;
+  final Value<String?> mimeType;
+  final Value<double?> fileSize;
+  final Value<String?> notes;
+  final Value<DateTime?> expiryDate;
+  final Value<DateTime> createdAt;
+  final Value<int> rowid;
+  const VehicleDocumentsCompanion({
+    this.id = const Value.absent(),
+    this.vehicleId = const Value.absent(),
+    this.type = const Value.absent(),
+    this.name = const Value.absent(),
+    this.fileName = const Value.absent(),
+    this.filePath = const Value.absent(),
+    this.mimeType = const Value.absent(),
+    this.fileSize = const Value.absent(),
+    this.notes = const Value.absent(),
+    this.expiryDate = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  VehicleDocumentsCompanion.insert({
+    required String id,
+    required String vehicleId,
+    required String type,
+    required String name,
+    required String fileName,
+    required String filePath,
+    this.mimeType = const Value.absent(),
+    this.fileSize = const Value.absent(),
+    this.notes = const Value.absent(),
+    this.expiryDate = const Value.absent(),
+    required DateTime createdAt,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       vehicleId = Value(vehicleId),
+       type = Value(type),
+       name = Value(name),
+       fileName = Value(fileName),
+       filePath = Value(filePath),
+       createdAt = Value(createdAt);
+  static Insertable<VehicleDocumentEntry> custom({
+    Expression<String>? id,
+    Expression<String>? vehicleId,
+    Expression<String>? type,
+    Expression<String>? name,
+    Expression<String>? fileName,
+    Expression<String>? filePath,
+    Expression<String>? mimeType,
+    Expression<double>? fileSize,
+    Expression<String>? notes,
+    Expression<DateTime>? expiryDate,
+    Expression<DateTime>? createdAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (vehicleId != null) 'vehicle_id': vehicleId,
+      if (type != null) 'type': type,
+      if (name != null) 'name': name,
+      if (fileName != null) 'file_name': fileName,
+      if (filePath != null) 'file_path': filePath,
+      if (mimeType != null) 'mime_type': mimeType,
+      if (fileSize != null) 'file_size': fileSize,
+      if (notes != null) 'notes': notes,
+      if (expiryDate != null) 'expiry_date': expiryDate,
+      if (createdAt != null) 'created_at': createdAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  VehicleDocumentsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? vehicleId,
+    Value<String>? type,
+    Value<String>? name,
+    Value<String>? fileName,
+    Value<String>? filePath,
+    Value<String?>? mimeType,
+    Value<double?>? fileSize,
+    Value<String?>? notes,
+    Value<DateTime?>? expiryDate,
+    Value<DateTime>? createdAt,
+    Value<int>? rowid,
+  }) {
+    return VehicleDocumentsCompanion(
+      id: id ?? this.id,
+      vehicleId: vehicleId ?? this.vehicleId,
+      type: type ?? this.type,
+      name: name ?? this.name,
+      fileName: fileName ?? this.fileName,
+      filePath: filePath ?? this.filePath,
+      mimeType: mimeType ?? this.mimeType,
+      fileSize: fileSize ?? this.fileSize,
+      notes: notes ?? this.notes,
+      expiryDate: expiryDate ?? this.expiryDate,
+      createdAt: createdAt ?? this.createdAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (vehicleId.present) {
+      map['vehicle_id'] = Variable<String>(vehicleId.value);
+    }
+    if (type.present) {
+      map['type'] = Variable<String>(type.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (fileName.present) {
+      map['file_name'] = Variable<String>(fileName.value);
+    }
+    if (filePath.present) {
+      map['file_path'] = Variable<String>(filePath.value);
+    }
+    if (mimeType.present) {
+      map['mime_type'] = Variable<String>(mimeType.value);
+    }
+    if (fileSize.present) {
+      map['file_size'] = Variable<double>(fileSize.value);
+    }
+    if (notes.present) {
+      map['notes'] = Variable<String>(notes.value);
+    }
+    if (expiryDate.present) {
+      map['expiry_date'] = Variable<DateTime>(expiryDate.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('VehicleDocumentsCompanion(')
+          ..write('id: $id, ')
+          ..write('vehicleId: $vehicleId, ')
+          ..write('type: $type, ')
+          ..write('name: $name, ')
+          ..write('fileName: $fileName, ')
+          ..write('filePath: $filePath, ')
+          ..write('mimeType: $mimeType, ')
+          ..write('fileSize: $fileSize, ')
+          ..write('notes: $notes, ')
+          ..write('expiryDate: $expiryDate, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -3089,6 +3749,9 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $ReplacedPartsTable replacedParts = $ReplacedPartsTable(this);
   late final $MaintenanceIntervalsTable maintenanceIntervals =
       $MaintenanceIntervalsTable(this);
+  late final $VehicleDocumentsTable vehicleDocuments = $VehicleDocumentsTable(
+    this,
+  );
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -3099,6 +3762,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     maintenanceLogs,
     replacedParts,
     maintenanceIntervals,
+    vehicleDocuments,
   ];
 }
 
@@ -3204,6 +3868,29 @@ final class $$VehiclesTableReferences
 
     final cache = $_typedResult.readTableOrNull(
       _maintenanceIntervalsRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$VehicleDocumentsTable, List<VehicleDocumentEntry>>
+  _vehicleDocumentsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.vehicleDocuments,
+    aliasName: $_aliasNameGenerator(
+      db.vehicles.id,
+      db.vehicleDocuments.vehicleId,
+    ),
+  );
+
+  $$VehicleDocumentsTableProcessedTableManager get vehicleDocumentsRefs {
+    final manager = $$VehicleDocumentsTableTableManager(
+      $_db,
+      $_db.vehicleDocuments,
+    ).filter((f) => f.vehicleId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _vehicleDocumentsRefsTable($_db),
     );
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: cache),
@@ -3351,6 +4038,31 @@ class $$VehiclesTableFilterComposer
           }) => $$MaintenanceIntervalsTableFilterComposer(
             $db: $db,
             $table: $db.maintenanceIntervals,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> vehicleDocumentsRefs(
+    Expression<bool> Function($$VehicleDocumentsTableFilterComposer f) f,
+  ) {
+    final $$VehicleDocumentsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.vehicleDocuments,
+      getReferencedColumn: (t) => t.vehicleId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$VehicleDocumentsTableFilterComposer(
+            $db: $db,
+            $table: $db.vehicleDocuments,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -3563,6 +4275,31 @@ class $$VehiclesTableAnnotationComposer
         );
     return f(composer);
   }
+
+  Expression<T> vehicleDocumentsRefs<T extends Object>(
+    Expression<T> Function($$VehicleDocumentsTableAnnotationComposer a) f,
+  ) {
+    final $$VehicleDocumentsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.vehicleDocuments,
+      getReferencedColumn: (t) => t.vehicleId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$VehicleDocumentsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.vehicleDocuments,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
 }
 
 class $$VehiclesTableTableManager
@@ -3582,6 +4319,7 @@ class $$VehiclesTableTableManager
             bool fuelLogsRefs,
             bool maintenanceLogsRefs,
             bool maintenanceIntervalsRefs,
+            bool vehicleDocumentsRefs,
           })
         > {
   $$VehiclesTableTableManager(_$AppDatabase db, $VehiclesTable table)
@@ -3672,6 +4410,7 @@ class $$VehiclesTableTableManager
                 fuelLogsRefs = false,
                 maintenanceLogsRefs = false,
                 maintenanceIntervalsRefs = false,
+                vehicleDocumentsRefs = false,
               }) {
                 return PrefetchHooks(
                   db: db,
@@ -3679,6 +4418,7 @@ class $$VehiclesTableTableManager
                     if (fuelLogsRefs) db.fuelLogs,
                     if (maintenanceLogsRefs) db.maintenanceLogs,
                     if (maintenanceIntervalsRefs) db.maintenanceIntervals,
+                    if (vehicleDocumentsRefs) db.vehicleDocuments,
                   ],
                   addJoins: null,
                   getPrefetchedDataCallback: (items) async {
@@ -3746,6 +4486,27 @@ class $$VehiclesTableTableManager
                               ),
                           typedResults: items,
                         ),
+                      if (vehicleDocumentsRefs)
+                        await $_getPrefetchedData<
+                          VehicleEntry,
+                          $VehiclesTable,
+                          VehicleDocumentEntry
+                        >(
+                          currentTable: table,
+                          referencedTable: $$VehiclesTableReferences
+                              ._vehicleDocumentsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$VehiclesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).vehicleDocumentsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.vehicleId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
                     ];
                   },
                 );
@@ -3770,6 +4531,7 @@ typedef $$VehiclesTableProcessedTableManager =
         bool fuelLogsRefs,
         bool maintenanceLogsRefs,
         bool maintenanceIntervalsRefs,
+        bool vehicleDocumentsRefs,
       })
     >;
 typedef $$FuelLogsTableCreateCompanionBuilder =
@@ -5505,6 +6267,454 @@ typedef $$MaintenanceIntervalsTableProcessedTableManager =
       MaintenanceIntervalEntry,
       PrefetchHooks Function({bool vehicleId})
     >;
+typedef $$VehicleDocumentsTableCreateCompanionBuilder =
+    VehicleDocumentsCompanion Function({
+      required String id,
+      required String vehicleId,
+      required String type,
+      required String name,
+      required String fileName,
+      required String filePath,
+      Value<String?> mimeType,
+      Value<double?> fileSize,
+      Value<String?> notes,
+      Value<DateTime?> expiryDate,
+      required DateTime createdAt,
+      Value<int> rowid,
+    });
+typedef $$VehicleDocumentsTableUpdateCompanionBuilder =
+    VehicleDocumentsCompanion Function({
+      Value<String> id,
+      Value<String> vehicleId,
+      Value<String> type,
+      Value<String> name,
+      Value<String> fileName,
+      Value<String> filePath,
+      Value<String?> mimeType,
+      Value<double?> fileSize,
+      Value<String?> notes,
+      Value<DateTime?> expiryDate,
+      Value<DateTime> createdAt,
+      Value<int> rowid,
+    });
+
+final class $$VehicleDocumentsTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $VehicleDocumentsTable,
+          VehicleDocumentEntry
+        > {
+  $$VehicleDocumentsTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $VehiclesTable _vehicleIdTable(_$AppDatabase db) =>
+      db.vehicles.createAlias(
+        $_aliasNameGenerator(db.vehicleDocuments.vehicleId, db.vehicles.id),
+      );
+
+  $$VehiclesTableProcessedTableManager get vehicleId {
+    final $_column = $_itemColumn<String>('vehicle_id')!;
+
+    final manager = $$VehiclesTableTableManager(
+      $_db,
+      $_db.vehicles,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_vehicleIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$VehicleDocumentsTableFilterComposer
+    extends Composer<_$AppDatabase, $VehicleDocumentsTable> {
+  $$VehicleDocumentsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get type => $composableBuilder(
+    column: $table.type,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get fileName => $composableBuilder(
+    column: $table.fileName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get filePath => $composableBuilder(
+    column: $table.filePath,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get mimeType => $composableBuilder(
+    column: $table.mimeType,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get fileSize => $composableBuilder(
+    column: $table.fileSize,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get notes => $composableBuilder(
+    column: $table.notes,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get expiryDate => $composableBuilder(
+    column: $table.expiryDate,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$VehiclesTableFilterComposer get vehicleId {
+    final $$VehiclesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.vehicleId,
+      referencedTable: $db.vehicles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$VehiclesTableFilterComposer(
+            $db: $db,
+            $table: $db.vehicles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$VehicleDocumentsTableOrderingComposer
+    extends Composer<_$AppDatabase, $VehicleDocumentsTable> {
+  $$VehicleDocumentsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get type => $composableBuilder(
+    column: $table.type,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get fileName => $composableBuilder(
+    column: $table.fileName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get filePath => $composableBuilder(
+    column: $table.filePath,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get mimeType => $composableBuilder(
+    column: $table.mimeType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get fileSize => $composableBuilder(
+    column: $table.fileSize,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get notes => $composableBuilder(
+    column: $table.notes,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get expiryDate => $composableBuilder(
+    column: $table.expiryDate,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$VehiclesTableOrderingComposer get vehicleId {
+    final $$VehiclesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.vehicleId,
+      referencedTable: $db.vehicles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$VehiclesTableOrderingComposer(
+            $db: $db,
+            $table: $db.vehicles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$VehicleDocumentsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $VehicleDocumentsTable> {
+  $$VehicleDocumentsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get type =>
+      $composableBuilder(column: $table.type, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get fileName =>
+      $composableBuilder(column: $table.fileName, builder: (column) => column);
+
+  GeneratedColumn<String> get filePath =>
+      $composableBuilder(column: $table.filePath, builder: (column) => column);
+
+  GeneratedColumn<String> get mimeType =>
+      $composableBuilder(column: $table.mimeType, builder: (column) => column);
+
+  GeneratedColumn<double> get fileSize =>
+      $composableBuilder(column: $table.fileSize, builder: (column) => column);
+
+  GeneratedColumn<String> get notes =>
+      $composableBuilder(column: $table.notes, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get expiryDate => $composableBuilder(
+    column: $table.expiryDate,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  $$VehiclesTableAnnotationComposer get vehicleId {
+    final $$VehiclesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.vehicleId,
+      referencedTable: $db.vehicles,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$VehiclesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.vehicles,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$VehicleDocumentsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $VehicleDocumentsTable,
+          VehicleDocumentEntry,
+          $$VehicleDocumentsTableFilterComposer,
+          $$VehicleDocumentsTableOrderingComposer,
+          $$VehicleDocumentsTableAnnotationComposer,
+          $$VehicleDocumentsTableCreateCompanionBuilder,
+          $$VehicleDocumentsTableUpdateCompanionBuilder,
+          (VehicleDocumentEntry, $$VehicleDocumentsTableReferences),
+          VehicleDocumentEntry,
+          PrefetchHooks Function({bool vehicleId})
+        > {
+  $$VehicleDocumentsTableTableManager(
+    _$AppDatabase db,
+    $VehicleDocumentsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$VehicleDocumentsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$VehicleDocumentsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$VehicleDocumentsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> vehicleId = const Value.absent(),
+                Value<String> type = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<String> fileName = const Value.absent(),
+                Value<String> filePath = const Value.absent(),
+                Value<String?> mimeType = const Value.absent(),
+                Value<double?> fileSize = const Value.absent(),
+                Value<String?> notes = const Value.absent(),
+                Value<DateTime?> expiryDate = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => VehicleDocumentsCompanion(
+                id: id,
+                vehicleId: vehicleId,
+                type: type,
+                name: name,
+                fileName: fileName,
+                filePath: filePath,
+                mimeType: mimeType,
+                fileSize: fileSize,
+                notes: notes,
+                expiryDate: expiryDate,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String vehicleId,
+                required String type,
+                required String name,
+                required String fileName,
+                required String filePath,
+                Value<String?> mimeType = const Value.absent(),
+                Value<double?> fileSize = const Value.absent(),
+                Value<String?> notes = const Value.absent(),
+                Value<DateTime?> expiryDate = const Value.absent(),
+                required DateTime createdAt,
+                Value<int> rowid = const Value.absent(),
+              }) => VehicleDocumentsCompanion.insert(
+                id: id,
+                vehicleId: vehicleId,
+                type: type,
+                name: name,
+                fileName: fileName,
+                filePath: filePath,
+                mimeType: mimeType,
+                fileSize: fileSize,
+                notes: notes,
+                expiryDate: expiryDate,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$VehicleDocumentsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({vehicleId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (vehicleId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.vehicleId,
+                                referencedTable:
+                                    $$VehicleDocumentsTableReferences
+                                        ._vehicleIdTable(db),
+                                referencedColumn:
+                                    $$VehicleDocumentsTableReferences
+                                        ._vehicleIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$VehicleDocumentsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $VehicleDocumentsTable,
+      VehicleDocumentEntry,
+      $$VehicleDocumentsTableFilterComposer,
+      $$VehicleDocumentsTableOrderingComposer,
+      $$VehicleDocumentsTableAnnotationComposer,
+      $$VehicleDocumentsTableCreateCompanionBuilder,
+      $$VehicleDocumentsTableUpdateCompanionBuilder,
+      (VehicleDocumentEntry, $$VehicleDocumentsTableReferences),
+      VehicleDocumentEntry,
+      PrefetchHooks Function({bool vehicleId})
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -5519,4 +6729,6 @@ class $AppDatabaseManager {
       $$ReplacedPartsTableTableManager(_db, _db.replacedParts);
   $$MaintenanceIntervalsTableTableManager get maintenanceIntervals =>
       $$MaintenanceIntervalsTableTableManager(_db, _db.maintenanceIntervals);
+  $$VehicleDocumentsTableTableManager get vehicleDocuments =>
+      $$VehicleDocumentsTableTableManager(_db, _db.vehicleDocuments);
 }

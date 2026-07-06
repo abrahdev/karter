@@ -738,6 +738,108 @@ abstract class AppLocalizations {
   /// **'Odometer'**
   String get maintenanceReportOdometerHeader;
 
+  /// No description provided for @addDocument.
+  ///
+  /// In en, this message translates to:
+  /// **'Add document'**
+  String get addDocument;
+
+  /// No description provided for @documentType.
+  ///
+  /// In en, this message translates to:
+  /// **'Document type'**
+  String get documentType;
+
+  /// No description provided for @selectFile.
+  ///
+  /// In en, this message translates to:
+  /// **'Select file'**
+  String get selectFile;
+
+  /// No description provided for @noFileSelected.
+  ///
+  /// In en, this message translates to:
+  /// **'No file selected'**
+  String get noFileSelected;
+
+  /// No description provided for @notesOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes (optional)'**
+  String get notesOptional;
+
+  /// No description provided for @expiryDateOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Expiry date (optional)'**
+  String get expiryDateOptional;
+
+  /// No description provided for @pleaseSelectFile.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a file'**
+  String get pleaseSelectFile;
+
+  /// No description provided for @documentSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Document saved'**
+  String get documentSaved;
+
+  /// No description provided for @docTypeFine.
+  ///
+  /// In en, this message translates to:
+  /// **'Fine'**
+  String get docTypeFine;
+
+  /// No description provided for @docTypeParkingFee.
+  ///
+  /// In en, this message translates to:
+  /// **'Parking fee'**
+  String get docTypeParkingFee;
+
+  /// No description provided for @docTypeInsurance.
+  ///
+  /// In en, this message translates to:
+  /// **'Insurance'**
+  String get docTypeInsurance;
+
+  /// No description provided for @docTypeVehicleCheck.
+  ///
+  /// In en, this message translates to:
+  /// **'Vehicle check'**
+  String get docTypeVehicleCheck;
+
+  /// No description provided for @docTypeTax.
+  ///
+  /// In en, this message translates to:
+  /// **'Tax'**
+  String get docTypeTax;
+
+  /// No description provided for @docTypeComplexInsurance.
+  ///
+  /// In en, this message translates to:
+  /// **'Complex insurance'**
+  String get docTypeComplexInsurance;
+
+  /// No description provided for @docTypeVehicleRegister.
+  ///
+  /// In en, this message translates to:
+  /// **'Vehicle register'**
+  String get docTypeVehicleRegister;
+
+  /// No description provided for @docTypeOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get docTypeOther;
+
+  /// No description provided for @vehicleDocuments.
+  ///
+  /// In en, this message translates to:
+  /// **'Documents'**
+  String get vehicleDocuments;
+
   /// No description provided for @fuelFormTitle.
   ///
   /// In en, this message translates to:

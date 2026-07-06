@@ -8,17 +8,26 @@ import 'package:mobile/domain/value_objects/odometer.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
 import 'package:mobile/presentation/utils/maintenance_localizer.dart';
+import 'package:mobile/presentation/widgets/add_document_modal.dart';
 import 'package:mobile/presentation/widgets/odometer_dialog.dart';
 
-class VehicleDetailPage extends ConsumerWidget {
+class VehicleDetailPage extends ConsumerStatefulWidget {
   final String vehicleId;
 
   const VehicleDetailPage({super.key, required this.vehicleId});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final vehicleAsync = ref.watch(vehicleProvider(vehicleId));
-    final intervalsAsync = ref.watch(maintenanceIntervalsProvider(vehicleId));
+  ConsumerState<VehicleDetailPage> createState() => _VehicleDetailPageState();
+}
+
+class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
+  bool _fabOpen = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final vehicleAsync = ref.watch(vehicleProvider(widget.vehicleId));
+    final intervalsAsync =
+        ref.watch(maintenanceIntervalsProvider(widget.vehicleId));
     final theme = Theme.of(context);
     final l = AppLocalizations.of(context)!;
 
@@ -43,7 +52,7 @@ class VehicleDetailPage extends ConsumerWidget {
               IconButton(
                 icon: const Icon(Icons.edit),
                 onPressed: () =>
-                    context.push('/vehicle/$vehicleId/edit'),
+                    context.push('/vehicle/${widget.vehicleId}/edit'),
               ),
             ],
           ),
@@ -70,15 +79,18 @@ class VehicleDetailPage extends ConsumerWidget {
                           const SizedBox(width: 8),
                           Expanded(
                             child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                              crossAxisAlignment:
+                                  CrossAxisAlignment.start,
                               children: [
                                 Text(vehicle.displayName,
-                                    style: theme.textTheme.headlineSmall),
+                                    style: theme
+                                        .textTheme.headlineSmall),
                                 if (vehicle.alias != null &&
                                     vehicle.alias!.isNotEmpty)
                                   Text(
                                     '${vehicle.brand} ${vehicle.model} ${vehicle.year}',
-                                    style: theme.textTheme.bodySmall,
+                                    style:
+                                        theme.textTheme.bodySmall,
                                   ),
                               ],
                             ),
@@ -87,9 +99,11 @@ class VehicleDetailPage extends ConsumerWidget {
                       ),
                       const SizedBox(height: 8),
                       if (vehicle.plate != null)
-                        _infoRow(Icons.badge, l.plate, vehicle.plate!.value),
+                        _infoRow(
+                            Icons.badge, l.plate, vehicle.plate!.value),
                       if (vehicle.vin != null)
-                        _infoRow(Icons.qr_code, l.vin, vehicle.vin!.code),
+                        _infoRow(
+                            Icons.qr_code, l.vin, vehicle.vin!.code),
                       _infoRow(Icons.directions_car,
                           l.brandModel,
                           '${vehicle.brand} ${vehicle.model}'),
@@ -125,7 +139,7 @@ class VehicleDetailPage extends ConsumerWidget {
                       title: Text(l.fuelLogs),
                       trailing: const Icon(Icons.chevron_right),
                       onTap: () =>
-                          context.push('/vehicle/$vehicleId/fuel'),
+                          context.push('/vehicle/${widget.vehicleId}/fuel'),
                     ),
                     const Divider(height: 1),
                     ListTile(
@@ -133,7 +147,15 @@ class VehicleDetailPage extends ConsumerWidget {
                       title: Text(l.maintenanceHistory),
                       trailing: const Icon(Icons.chevron_right),
                       onTap: () => context
-                          .push('/vehicle/$vehicleId/maintenance'),
+                          .push('/vehicle/${widget.vehicleId}/maintenance'),
+                    ),
+                    const Divider(height: 1),
+                    ListTile(
+                      leading: const Icon(Icons.description),
+                      title: Text(l.vehicleDocuments),
+                      trailing: const Icon(Icons.chevron_right),
+                      onTap: () => context
+                          .push('/vehicle/${widget.vehicleId}/documents'),
                     ),
                     const Divider(height: 1),
                     ListTile(
@@ -141,7 +163,7 @@ class VehicleDetailPage extends ConsumerWidget {
                       title: Text(l.configureIntervals),
                       trailing: const Icon(Icons.chevron_right),
                       onTap: () => context
-                          .push('/vehicle/$vehicleId/maintenance/settings'),
+                          .push('/vehicle/${widget.vehicleId}/maintenance/settings'),
                     ),
                   ],
                 ),
@@ -152,9 +174,8 @@ class VehicleDetailPage extends ConsumerWidget {
               const SizedBox(height: 8),
               intervalsAsync.when(
                 data: (intervals) {
-                  final enabled = intervals
-                      .where((i) => i.isEnabled)
-                      .toList();
+                  final enabled =
+                      intervals.where((i) => i.isEnabled).toList();
 
                   if (enabled.isEmpty) {
                     return Card(
@@ -169,10 +190,13 @@ class VehicleDetailPage extends ConsumerWidget {
                   }
 
                   final intervalData = enabled
-                      .map((i) => _IntervalData.compute(i, distanceKm, l))
+                      .map((i) => _IntervalData.compute(
+                          i, distanceKm, l))
                       .toList()
                     ..sort((a, b) {
-                      if (a.isDue != b.isDue) return a.isDue ? -1 : 1;
+                      if (a.isDue != b.isDue) {
+                        return a.isDue ? -1 : 1;
+                      }
                       if (a.isApproaching != b.isApproaching) {
                         return a.isApproaching ? -1 : 1;
                       }
@@ -185,11 +209,13 @@ class VehicleDetailPage extends ConsumerWidget {
                       Color? cardColor;
                       Color? accentColor;
                       if (data.isDue) {
-                        cardColor = theme.colorScheme.errorContainer;
+                        cardColor =
+                            theme.colorScheme.errorContainer;
                         accentColor =
                             theme.colorScheme.onErrorContainer;
                       } else if (data.isApproaching) {
-                        cardColor = Colors.amber.withValues(alpha: 0.25);
+                        cardColor =
+                            Colors.amber.withValues(alpha: 0.25);
                         accentColor = Colors.amber.shade800;
                       }
 
@@ -201,7 +227,8 @@ class VehicleDetailPage extends ConsumerWidget {
                             color: accentColor,
                           ),
                           title: Text(
-                            localizedLabel(l, interval.i18nKey, interval.label),
+                            localizedLabel(l, interval.i18nKey,
+                                interval.label),
                             style: TextStyle(
                               fontWeight: data.isDue
                                   ? FontWeight.bold
@@ -210,23 +237,26 @@ class VehicleDetailPage extends ConsumerWidget {
                           ),
                           subtitle: Text(data.subtitle),
                           onTap: () => _showDescription(
-                                  context, l, interval),
+                              context, l, interval),
                           trailing: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               TextButton(
                                 onPressed: () => context.push(
-                                  '/vehicle/$vehicleId/maintenance/new',
+                                  '/vehicle/${widget.vehicleId}/maintenance/new',
                                   extra: {
-                                    'description':
-                                        localizedLabel(l, interval.i18nKey, interval.label),
+                                    'description': localizedLabel(
+                                        l,
+                                        interval.i18nKey,
+                                        interval.label),
                                     'intervalId': interval.id,
                                   },
                                 ),
                                 child: Text(
                                   l.register,
                                   style: accentColor != null
-                                      ? TextStyle(color: accentColor)
+                                      ? TextStyle(
+                                          color: accentColor)
                                       : null,
                                 ),
                               ),
@@ -242,13 +272,50 @@ class VehicleDetailPage extends ConsumerWidget {
                 error: (_, _) => const SizedBox.shrink(),
               ),
               const SizedBox(height: 24),
-              OutlinedButton.icon(
-                onPressed: () => context
-                    .push('/vehicle/$vehicleId/maintenance/new'),
-                icon: const Icon(Icons.add),
-                label: Text(l.registerService),
+            ],
+          ),
+          floatingActionButton: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (_fabOpen) ...[
+                FloatingActionButton.small(
+                  heroTag: 'add_doc',
+                  backgroundColor:
+                      theme.colorScheme.secondaryContainer,
+                  onPressed: () {
+                    setState(() => _fabOpen = false);
+                    showAddDocumentModal(
+                      context,
+                      vehicleId: widget.vehicleId,
+                      onSaved: () {
+                        ref.invalidate(
+                            vehicleDocumentsProvider(
+                                widget.vehicleId));
+                      },
+                    );
+                  },
+                  child: const Icon(Icons.description),
+                ),
+                const SizedBox(height: 8),
+                FloatingActionButton.small(
+                  heroTag: 'add_service',
+                  backgroundColor:
+                      theme.colorScheme.secondaryContainer,
+                  onPressed: () {
+                    setState(() => _fabOpen = false);
+                    context.push(
+                        '/vehicle/${widget.vehicleId}/maintenance/new');
+                  },
+                  child: const Icon(Icons.build),
+                ),
+                const SizedBox(height: 8),
+              ],
+              FloatingActionButton(
+                heroTag: 'main_fab',
+                onPressed: () =>
+                    setState(() => _fabOpen = !_fabOpen),
+                child: Icon(_fabOpen ? Icons.close : Icons.add),
               ),
-              const SizedBox(height: 16),
             ],
           ),
         );
@@ -320,7 +387,8 @@ class VehicleDetailPage extends ConsumerWidget {
           Icon(icon, size: 18),
           const SizedBox(width: 8),
           Text('$label: ',
-              style: const TextStyle(fontWeight: FontWeight.w500)),
+              style:
+                  const TextStyle(fontWeight: FontWeight.w500)),
           Expanded(child: Text(value)),
         ],
       ),
@@ -347,8 +415,10 @@ class _IntervalData {
     required this.sortKey,
   });
 
-  static _IntervalData compute(MaintenanceInterval interval, double distanceKm, AppLocalizations l) {
-    final kmSinceReset = interval.lastResetKm > 0 && distanceKm >= interval.lastResetKm
+  static _IntervalData compute(
+      MaintenanceInterval interval, double distanceKm, AppLocalizations l) {
+    final kmSinceReset = interval.lastResetKm > 0 &&
+            distanceKm >= interval.lastResetKm
         ? distanceKm - interval.lastResetKm
         : distanceKm;
     final kmRemaining = interval.kmInterval - kmSinceReset;
@@ -358,10 +428,14 @@ class _IntervalData {
     bool isMonthsDue = false;
     if (interval.monthsInterval != null) {
       if (interval.lastResetDate != null) {
-        final monthsSinceReset =
-            DateTime.now().difference(interval.lastResetDate!).inDays / 30.44;
-        monthsRemaining = interval.monthsInterval! - monthsSinceReset;
-        isMonthsDue = monthsSinceReset >= interval.monthsInterval!;
+        final monthsSinceReset = DateTime.now()
+                .difference(interval.lastResetDate!)
+                .inDays /
+            30.44;
+        monthsRemaining =
+            interval.monthsInterval! - monthsSinceReset;
+        isMonthsDue =
+            monthsSinceReset >= interval.monthsInterval!;
       } else {
         monthsRemaining = interval.monthsInterval!.toDouble();
       }
@@ -370,7 +444,9 @@ class _IntervalData {
     final isDue = isKmDue || isMonthsDue;
     final isApproaching = !isDue &&
         ((kmRemaining > 0 && kmRemaining <= 100) ||
-            (monthsRemaining != null && monthsRemaining > 0 && monthsRemaining <= 1));
+            (monthsRemaining != null &&
+                monthsRemaining > 0 &&
+                monthsRemaining <= 1));
 
     String subtitle;
     if (isDue) {
@@ -378,7 +454,8 @@ class _IntervalData {
     } else {
       final parts = <String>[];
       if (interval.kmInterval < 999999) {
-        final kmShow = kmRemaining > 0 ? kmRemaining.toStringAsFixed(0) : '0';
+        final kmShow =
+            kmRemaining > 0 ? kmRemaining.toStringAsFixed(0) : '0';
         parts.add('$kmShow ${l.unitKm}');
       }
       if (monthsRemaining != null) {
@@ -390,12 +467,14 @@ class _IntervalData {
     final kmProgress = interval.kmInterval < 999999 && kmSinceReset > 0
         ? kmSinceReset / interval.kmInterval
         : 0.0;
-    final timeProgress = interval.monthsInterval != null && interval.lastResetDate != null
+    final timeProgress = interval.monthsInterval != null &&
+            interval.lastResetDate != null
         ? DateTime.now().difference(interval.lastResetDate!).inDays /
             30.44 /
             interval.monthsInterval!
         : 0.0;
-    final sortKey = kmProgress > timeProgress ? kmProgress : timeProgress;
+    final sortKey =
+        kmProgress > timeProgress ? kmProgress : timeProgress;
 
     return _IntervalData._(
       interval: interval,

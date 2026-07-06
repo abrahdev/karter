@@ -118,6 +118,26 @@
   "maintenanceReportDescHeader": "Descripción",
   "maintenanceReportOdometerHeader": "Odómetro",
 
+  "addDocument": "Agregar documento",
+  "documentType": "Tipo de documento",
+  "selectFile": "Seleccionar archivo",
+  "noFileSelected": "Ningún archivo seleccionado",
+  "notesOptional": "Notas (opcional)",
+  "expiryDateOptional": "Fecha de vencimiento (opcional)",
+  "pleaseSelectFile": "Por favor seleccioná un archivo",
+  "documentSaved": "Documento guardado",
+
+  "docTypeFine": "Multa",
+  "docTypeParkingFee": "Estacionamiento",
+  "docTypeInsurance": "Seguro",
+  "docTypeVehicleCheck": "Revisión técnica",
+  "docTypeTax": "Impuesto",
+  "docTypeComplexInsurance": "Seguro complejo",
+  "docTypeVehicleRegister": "Registro del vehículo",
+  "docTypeOther": "Otro",
+
+  "vehicleDocuments": "Documentos",
+
   "fuelFormTitle": "Nueva carga",
   "volume": "Volumen",
   "unitL": "L",

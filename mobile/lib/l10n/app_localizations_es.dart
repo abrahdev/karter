@@ -367,6 +367,57 @@ class AppLocalizationsEs extends AppLocalizations {
   String get maintenanceReportOdometerHeader => 'Odómetro';
 
   @override
+  String get addDocument => 'Agregar documento';
+
+  @override
+  String get documentType => 'Tipo de documento';
+
+  @override
+  String get selectFile => 'Seleccionar archivo';
+
+  @override
+  String get noFileSelected => 'Ningún archivo seleccionado';
+
+  @override
+  String get notesOptional => 'Notas (opcional)';
+
+  @override
+  String get expiryDateOptional => 'Fecha de vencimiento (opcional)';
+
+  @override
+  String get pleaseSelectFile => 'Por favor seleccioná un archivo';
+
+  @override
+  String get documentSaved => 'Documento guardado';
+
+  @override
+  String get docTypeFine => 'Multa';
+
+  @override
+  String get docTypeParkingFee => 'Estacionamiento';
+
+  @override
+  String get docTypeInsurance => 'Seguro';
+
+  @override
+  String get docTypeVehicleCheck => 'Revisión técnica';
+
+  @override
+  String get docTypeTax => 'Impuesto';
+
+  @override
+  String get docTypeComplexInsurance => 'Seguro complejo';
+
+  @override
+  String get docTypeVehicleRegister => 'Registro del vehículo';
+
+  @override
+  String get docTypeOther => 'Otro';
+
+  @override
+  String get vehicleDocuments => 'Documentos';
+
+  @override
   String get fuelFormTitle => 'Nueva carga';
 
   @override

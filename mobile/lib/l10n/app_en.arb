@@ -118,6 +118,26 @@
   "maintenanceReportDescHeader": "Description",
   "maintenanceReportOdometerHeader": "Odometer",
 
+  "addDocument": "Add document",
+  "documentType": "Document type",
+  "selectFile": "Select file",
+  "noFileSelected": "No file selected",
+  "notesOptional": "Notes (optional)",
+  "expiryDateOptional": "Expiry date (optional)",
+  "pleaseSelectFile": "Please select a file",
+  "documentSaved": "Document saved",
+
+  "docTypeFine": "Fine",
+  "docTypeParkingFee": "Parking fee",
+  "docTypeInsurance": "Insurance",
+  "docTypeVehicleCheck": "Vehicle check",
+  "docTypeTax": "Tax",
+  "docTypeComplexInsurance": "Complex insurance",
+  "docTypeVehicleRegister": "Vehicle register",
+  "docTypeOther": "Other",
+
+  "vehicleDocuments": "Documents",
+
   "fuelFormTitle": "New fuel-up",
   "volume": "Volume",
   "unitL": "L",

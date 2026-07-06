@@ -3,6 +3,7 @@ import 'package:mobile/core/database/app_database.dart';
 import 'package:mobile/data/repositories/fuel_log_repository_impl.dart';
 import 'package:mobile/data/repositories/maintenance_interval_repository_impl.dart';
 import 'package:mobile/data/repositories/maintenance_log_repository_impl.dart';
+import 'package:mobile/data/repositories/vehicle_document_repository_impl.dart';
 import 'package:mobile/data/repositories/vehicle_repository_impl.dart';
 import 'package:mobile/data/services/export_service.dart';
 import 'package:mobile/data/services/pdf_export_service.dart';
@@ -11,9 +12,11 @@ import 'package:mobile/domain/entities/fuel_log.dart';
 import 'package:mobile/domain/entities/maintenance_interval.dart';
 import 'package:mobile/domain/entities/maintenance_log.dart';
 import 'package:mobile/domain/entities/vehicle.dart';
+import 'package:mobile/domain/entities/vehicle_document.dart';
 import 'package:mobile/domain/repositories/fuel_log_repository.dart';
 import 'package:mobile/domain/repositories/maintenance_interval_repository.dart';
 import 'package:mobile/domain/repositories/maintenance_log_repository.dart';
+import 'package:mobile/domain/repositories/vehicle_document_repository.dart';
 import 'package:mobile/domain/repositories/vehicle_repository.dart';
 
 final appDatabaseProvider = Provider<AppDatabase>((ref) {
@@ -87,3 +90,16 @@ final templateResolverProvider = Provider<TemplateResolver>((ref) {
 final pdfExportServiceProvider = Provider<PdfExportService>((ref) {
   return PdfExportService();
 });
+
+final vehicleDocumentRepositoryProvider =
+    Provider<VehicleDocumentRepository>((ref) {
+  return VehicleDocumentRepositoryImpl(ref.watch(appDatabaseProvider));
+});
+
+final vehicleDocumentsProvider =
+    FutureProvider.family<List<VehicleDocument>, String>(
+  (ref, vehicleId) async {
+    final repo = ref.watch(vehicleDocumentRepositoryProvider);
+    return repo.getByVehicle(vehicleId);
+  },
+);
