@@ -11,6 +11,7 @@ import 'package:mobile/domain/value_objects/plate.dart';
 import 'package:mobile/domain/value_objects/vin.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class VehicleFormPage extends ConsumerStatefulWidget {
   final String? vehicleId;
@@ -39,6 +40,7 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
 
   List<MaintenanceInterval>? _templateIntervals;
   String? _templateName;
+  bool _validatingForSearch = false;
 
   @override
   void initState() {
@@ -129,11 +131,14 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
   }
 
   Future<void> _searchTemplate() async {
+    setState(() => _validatingForSearch = true);
+    final valid = _formKey.currentState!.validate();
+    setState(() => _validatingForSearch = false);
+    if (!valid) return;
+
     final brand = _brandController.text.trim();
     final model = _modelController.text.trim();
     final yearStr = _yearController.text.trim();
-
-    if (brand.isEmpty || model.isEmpty || yearStr.isEmpty) return;
 
     final year = int.tryParse(yearStr);
     if (year == null) return;
@@ -172,18 +177,28 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
           if (templateMeta.generation != null) templateMeta.generation,
         ].join(' ');
 
-        final accepted = await _showTemplatePreview(name, intervals);
+        final choice = await _showTemplatePreview(name, intervals);
 
-        if (accepted && mounted) {
+        if (mounted) {
           setState(() {
-            _templateIntervals = intervals;
-            _templateName = name;
+            if (choice == 'template') {
+              _templateIntervals = intervals;
+              _templateName = name;
+            } else {
+              _templateIntervals = null;
+              _templateName = null;
+            }
           });
         }
       } else {
-        final searchParams =
-            '$brand $model $year';
+        final searchParams = '$brand $model $year';
         await _showNoTemplateFound(searchParams);
+        if (mounted) {
+          setState(() {
+            _templateIntervals = null;
+            _templateName = null;
+          });
+        }
       }
     } catch (e) {
       if (mounted) {
@@ -196,70 +211,74 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
     }
   }
 
-  Future<bool> _showTemplatePreview(
+  Future<String?> _showTemplatePreview(
       String name, List<MaintenanceInterval> intervals) async {
-    final result = await showDialog<bool>(
-          context: context,
-          builder: (ctx) {
-            final theme = Theme.of(ctx);
-            return AlertDialog(
-              title: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Plantilla encontrada'),
-                  const SizedBox(height: 4),
-                  Text(
-                    name,
-                    style: theme.textTheme.bodyMedium
-                        ?.copyWith(color: theme.colorScheme.primary),
+    final result = await showDialog<String>(
+      context: context,
+      builder: (ctx) {
+        final theme = Theme.of(ctx);
+        return AlertDialog(
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Plantilla encontrada'),
+              const SizedBox(height: 4),
+              Text(
+                name,
+                style: theme.textTheme.bodyMedium
+                    ?.copyWith(color: theme.colorScheme.primary),
+              ),
+            ],
+          ),
+          content: SizedBox(
+            width: double.maxFinite,
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: intervals.length,
+              itemBuilder: (ctx, i) {
+                final interval = intervals[i];
+                final parts = <String>[
+                  '${interval.kmInterval} km',
+                ];
+                if (interval.monthsInterval != null) {
+                  parts.add('${interval.monthsInterval} meses');
+                }
+                return ListTile(
+                  dense: true,
+                  title: Text(interval.label),
+                  subtitle: interval.description != null
+                      ? Text(
+                          interval.description!,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        )
+                      : null,
+                  trailing: Text(
+                    parts.join(' / '),
+                    style: theme.textTheme.bodySmall,
                   ),
-                ],
-              ),
-              content: SizedBox(
-                width: double.maxFinite,
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: intervals.length,
-                  itemBuilder: (ctx, i) {
-                    final interval = intervals[i];
-                    final parts = <String>[
-                      '${interval.kmInterval} km',
-                    ];
-                    if (interval.monthsInterval != null) {
-                      parts.add('${interval.monthsInterval} meses');
-                    }
-                    return ListTile(
-                      dense: true,
-                      title: Text(interval.label),
-                      subtitle: interval.description != null
-                          ? Text(
-                              interval.description!,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            )
-                          : null,
-                      trailing: Text(
-                        parts.join(' / '),
-                        style: theme.textTheme.bodySmall,
-                      ),
-                    );
-                  },
-                ),
-              ),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.pop(ctx, false),
-                  child: const Text('Cancelar'),
-                ),
-                FilledButton(
-                  onPressed: () => Navigator.pop(ctx, true),
-                  child: const Text('Usar plantilla'),
-                ),
-              ],
-            );
-          },
+                );
+              },
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx),
+              child: const Text('Cancelar'),
+            ),
+            OutlinedButton(
+              onPressed: () => Navigator.pop(ctx, 'defaults'),
+              child: const Text('Usar defaults por tipo'),
+            ),
+            FilledButton(
+              onPressed: () => Navigator.pop(ctx, 'template'),
+              child: const Text('Usar plantilla'),
+            ),
+          ],
         );
-    return result ?? false;
+      },
+    );
+    return result;
   }
 
   Future<void> _showNoTemplateFound(String searchParams) async {
@@ -311,6 +330,14 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
             ],
           ),
           actions: [
+            OutlinedButton.icon(
+              onPressed: () => launchUrl(
+                Uri.parse('https://karter.abrah.dev/templates'),
+                mode: LaunchMode.externalApplication,
+              ),
+              icon: const Icon(Icons.open_in_new, size: 18),
+              label: const Text('Ver todas las plantillas'),
+            ),
             FilledButton(
               onPressed: () => Navigator.pop(ctx),
               child: const Text('Entendido'),
@@ -436,6 +463,21 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
               },
             ),
             const SizedBox(height: 12),
+            if (!_isEditing) ...[
+              OutlinedButton.icon(
+                onPressed:
+                    _isLoading ? null : _searchTemplate,
+                icon: _templateIntervals != null
+                    ? const Icon(Icons.check_circle, color: Colors.green)
+                    : const Icon(Icons.search),
+                label: Text(
+                  _templateIntervals != null
+                      ? 'Plantilla: $_templateName'
+                      : 'Buscar plantilla',
+                ),
+              ),
+              const SizedBox(height: 12),
+            ],
             Text(l.vehicleType,
                 style: Theme.of(context).textTheme.titleSmall),
             const SizedBox(height: 8),
@@ -488,6 +530,7 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
                         InputDecoration(labelText: l.odometer),
                     keyboardType: TextInputType.number,
                     validator: (v) {
+                      if (_validatingForSearch) return null;
                       if (v == null || v.trim().isEmpty) return l.required;
                       final num = double.tryParse(v);
                       if (num == null || num < 0) return l.invalid;
@@ -527,21 +570,6 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
               ),
             ],
             const SizedBox(height: 24),
-            if (!_isEditing) ...[
-              OutlinedButton.icon(
-                onPressed:
-                    _isLoading ? null : _searchTemplate,
-                icon: _templateIntervals != null
-                    ? const Icon(Icons.check_circle, color: Colors.green)
-                    : const Icon(Icons.search),
-                label: Text(
-                  _templateIntervals != null
-                      ? 'Plantilla: $_templateName'
-                      : 'Buscar plantilla',
-                ),
-              ),
-              const SizedBox(height: 12),
-            ],
             FilledButton(
               onPressed: _isLoading ? null : _save,
               child: _isLoading
