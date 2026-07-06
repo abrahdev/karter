@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile/core/database/app_database.dart';
 import 'package:mobile/domain/entities/fuel_log.dart';
+import 'package:mobile/domain/entities/vehicle.dart';
 import 'package:mobile/domain/enums/distance_unit.dart';
 import 'package:mobile/domain/enums/volume_unit.dart';
 import 'package:mobile/domain/value_objects/odometer.dart';
@@ -28,16 +29,25 @@ class _FuelLogFormPageState extends ConsumerState<FuelLogFormPage> {
 
   DateTime _date = DateTime.now();
   VolumeUnit _volumeUnit = VolumeUnit.liters;
-  DistanceUnit _odoUnit = DistanceUnit.kilometers;
+  String _vehicleCurrency = 'USD';
   bool _isFullTank = false;
   bool _isLoading = false;
 
   @override
-  void dispose() {
-    _volumeController.dispose();
-    _odometerController.dispose();
-    _priceController.dispose();
-    super.dispose();
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _loadVehicleData());
+  }
+
+  Future<void> _loadVehicleData() async {
+    final vehicle =
+        await ref.read(vehicleProvider(widget.vehicleId).future);
+    if (vehicle != null && mounted) {
+      _odometerController.text =
+          vehicle.currentOdometer.distance.toStringAsFixed(0);
+      _volumeUnit = vehicle.fuelVolumeUnit;
+      _vehicleCurrency = vehicle.currency;
+    }
   }
 
   Future<void> _pickDate() async {
@@ -55,6 +65,9 @@ class _FuelLogFormPageState extends ConsumerState<FuelLogFormPage> {
     setState(() => _isLoading = true);
 
     try {
+      final vehicle =
+          await ref.read(vehicleProvider(widget.vehicleId).future);
+
       final log = FuelLog(
         id: uuid.v4(),
         vehicleId: widget.vehicleId,
@@ -66,7 +79,7 @@ class _FuelLogFormPageState extends ConsumerState<FuelLogFormPage> {
         ),
         odometerAtFueling: Odometer(
           double.parse(_odometerController.text.trim()),
-          _odoUnit,
+          vehicle?.currentOdometer.unit ?? DistanceUnit.kilometers,
         ),
         pricePerUnit: _priceController.text.trim().isEmpty
             ? null
@@ -106,66 +119,34 @@ class _FuelLogFormPageState extends ConsumerState<FuelLogFormPage> {
               onTap: _pickDate,
             ),
             const SizedBox(height: 12),
-            Row(
-              children: [
-                Expanded(
-                  child: TextFormField(
-                    controller: _volumeController,
-                    decoration: InputDecoration(
-                        labelText: l.volume, hintText: '0.0'),
-                    keyboardType:
-                        const TextInputType.numberWithOptions(decimal: true),
-                    validator: (v) {
-                      if (v == null || v.trim().isEmpty) return l.required;
-                      final n = double.tryParse(v);
-                      if (n == null || n <= 0) return l.invalid;
-                      return null;
-                    },
-                  ),
-                ),
-                const SizedBox(width: 12),
-                SegmentedButton<VolumeUnit>(
-                  segments: [
-                    ButtonSegment(value: VolumeUnit.liters, label: Text(l.unitL)),
-                    ButtonSegment(
-                        value: VolumeUnit.gallons, label: Text(l.unitGal)),
-                  ],
-                  selected: {_volumeUnit},
-                  onSelectionChanged: (v) =>
-                      setState(() => _volumeUnit = v.first),
-                ),
-              ],
+            TextFormField(
+              controller: _volumeController,
+              decoration: InputDecoration(
+                labelText:
+                    '${l.volume} (${_volumeUnit == VolumeUnit.liters ? l.unitL : l.unitGal})',
+                hintText: '0.0',
+              ),
+              keyboardType:
+                  const TextInputType.numberWithOptions(decimal: true),
+              validator: (v) {
+                if (v == null || v.trim().isEmpty) return l.required;
+                final n = double.tryParse(v);
+                if (n == null || n <= 0) return l.invalid;
+                return null;
+              },
             ),
             const SizedBox(height: 12),
-            Row(
-              children: [
-                Expanded(
-                  child: TextFormField(
-                    controller: _odometerController,
-                    decoration: InputDecoration(
-                        labelText: l.odometer, hintText: '0'),
-                    keyboardType: TextInputType.number,
-                    validator: (v) {
-                      if (v == null || v.trim().isEmpty) return l.required;
-                      final n = double.tryParse(v);
-                      if (n == null || n < 0) return l.invalid;
-                      return null;
-                    },
-                  ),
-                ),
-                const SizedBox(width: 12),
-                SegmentedButton<DistanceUnit>(
-                  segments: [
-                    ButtonSegment(
-                        value: DistanceUnit.kilometers, label: Text(l.unitKm)),
-                    ButtonSegment(
-                        value: DistanceUnit.miles, label: Text(l.unitMi)),
-                  ],
-                  selected: {_odoUnit},
-                  onSelectionChanged: (v) =>
-                      setState(() => _odoUnit = v.first),
-                ),
-              ],
+            TextFormField(
+              controller: _odometerController,
+              decoration:
+                  InputDecoration(labelText: l.odometer, hintText: '0'),
+              keyboardType: TextInputType.number,
+              validator: (v) {
+                if (v == null || v.trim().isEmpty) return l.required;
+                final n = double.tryParse(v);
+                if (n == null || n < 0) return l.invalid;
+                return null;
+              },
             ),
             const SizedBox(height: 12),
             TextFormField(
@@ -173,7 +154,8 @@ class _FuelLogFormPageState extends ConsumerState<FuelLogFormPage> {
               decoration: InputDecoration(
                 labelText: l.pricePerUnit,
                 hintText: '0.00',
-                prefixText: '\$',
+                prefixText:
+                    '${Vehicle.currencySymbol(_vehicleCurrency)} ',
               ),
               keyboardType:
                   const TextInputType.numberWithOptions(decimal: true),

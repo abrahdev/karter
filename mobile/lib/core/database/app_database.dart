@@ -22,6 +22,10 @@ class Vehicles extends Table {
   DateTimeColumn get createdAt => dateTime()();
   BoolColumn get isSynced => boolean()();
   TextColumn get type => text().withDefault(const Constant('combustion'))();
+  TextColumn get fuelVolumeUnit =>
+      text().withDefault(const Constant('liters'))();
+  TextColumn get currency =>
+      text().withDefault(const Constant('USD'))();
 
   @override
   Set<Column> get primaryKey => {id};
@@ -55,6 +59,9 @@ class MaintenanceLogs extends Table {
   TextColumn get resetIntervalId => text().nullable()();
   RealColumn get restoreResetKm => real().nullable()();
   DateTimeColumn get restoreResetDate => dateTime().nullable()();
+  TextColumn get photoPaths => text().nullable()();
+  RealColumn get costAmount => real().nullable()();
+  TextColumn get costCurrency => text().nullable()();
 
   @override
   Set<Column> get primaryKey => {id};
@@ -123,7 +130,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
   @override
-  int get schemaVersion => 7;
+  int get schemaVersion => 10;
 
   @override
   MigrationStrategy get migration {
@@ -170,6 +177,30 @@ class AppDatabase extends _$AppDatabase {
         }
         if (from < 7) {
           await m.createTable(vehicleDocuments);
+        }
+        if (from < 8) {
+          try {
+            await m.addColumn(
+                maintenanceLogs, maintenanceLogs.photoPaths);
+          } catch (_) {}
+        }
+        if (from < 9) {
+          try {
+            await m.addColumn(vehicles, vehicles.fuelVolumeUnit);
+          } catch (_) {}
+        }
+        if (from < 10) {
+          try {
+            await m.addColumn(vehicles, vehicles.currency);
+          } catch (_) {}
+          try {
+            await m.addColumn(
+                maintenanceLogs, maintenanceLogs.costAmount);
+          } catch (_) {}
+          try {
+            await m.addColumn(
+                maintenanceLogs, maintenanceLogs.costCurrency);
+          } catch (_) {}
         }
         if (from < 6) {
           await m.database.customStatement('PRAGMA foreign_keys = OFF');

@@ -6,6 +6,7 @@ import 'package:mobile/domain/entities/maintenance_interval.dart';
 import 'package:mobile/domain/entities/vehicle.dart';
 import 'package:mobile/domain/enums/distance_unit.dart';
 import 'package:mobile/domain/enums/vehicle_type.dart';
+import 'package:mobile/domain/enums/volume_unit.dart';
 import 'package:mobile/domain/value_objects/odometer.dart';
 import 'package:mobile/domain/value_objects/plate.dart';
 import 'package:mobile/domain/value_objects/vin.dart';
@@ -33,6 +34,8 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
   final _aliasController = TextEditingController();
 
   DistanceUnit _odometerUnit = DistanceUnit.kilometers;
+  VolumeUnit _fuelVolumeUnit = VolumeUnit.liters;
+  String _currency = 'USD';
   VehicleType _vehicleType = VehicleType.combustion;
   bool _isLoading = false;
   bool _isEditing = false;
@@ -63,6 +66,8 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
       _odometerController.text =
           vehicle.currentOdometer.distance.toStringAsFixed(0);
       _odometerUnit = vehicle.currentOdometer.unit;
+      _fuelVolumeUnit = vehicle.fuelVolumeUnit;
+      _currency = vehicle.currency;
       _vehicleType = vehicle.type;
       if (vehicle.alias != null && vehicle.alias!.isNotEmpty) {
         _showAlias = true;
@@ -374,6 +379,8 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
           double.parse(_odometerController.text.trim()),
           _odometerUnit,
         ),
+        fuelVolumeUnit: _fuelVolumeUnit,
+        currency: _currency,
       );
 
       final repo = ref.read(vehicleRepositoryProvider);
@@ -549,6 +556,41 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
                       setState(() => _odometerUnit = v.first),
                 ),
               ],
+            ),
+            const SizedBox(height: 16),
+            Text(l.volumeUnit,
+                style: Theme.of(context).textTheme.titleSmall),
+            const SizedBox(height: 8),
+            SegmentedButton<VolumeUnit>(
+              segments: [
+                ButtonSegment(
+                    value: VolumeUnit.liters, label: Text(l.unitL)),
+                ButtonSegment(
+                    value: VolumeUnit.gallons, label: Text(l.unitGal)),
+              ],
+              selected: {_fuelVolumeUnit},
+              onSelectionChanged: (v) =>
+                  setState(() => _fuelVolumeUnit = v.first),
+            ),
+            const SizedBox(height: 16),
+            Text(l.currency,
+                style: Theme.of(context).textTheme.titleSmall),
+            const SizedBox(height: 8),
+            DropdownButtonFormField<String>(
+              initialValue: _currency,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+              ),
+              items: Vehicle.currencies
+                  .map((c) => DropdownMenuItem(
+                        value: c,
+                        child: Text(
+                            '${Vehicle.currencySymbol(c)}  $c'),
+                      ))
+                  .toList(),
+              onChanged: (v) {
+                if (v != null) setState(() => _currency = v);
+              },
             ),
             const SizedBox(height: 16),
             SwitchListTile(

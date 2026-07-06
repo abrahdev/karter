@@ -99,6 +99,8 @@
   "resetInterval": "Reset interval (optional)",
   "saveChangesShort": "Save changes",
   "saveService": "Save service",
+  "addPhoto": "Add photo",
+  "photos": "photos",
   "deleteService": "Delete service",
   "deleteServiceConfirm": "Are you sure you want to delete this service?",
 
@@ -146,6 +148,9 @@
   "unitMi": "mi",
   "pricePerUnit": "Price per unit (optional)",
   "fullTank": "Full tank",
+  "volumeUnit": "Fuel volume unit",
+  "currency": "Currency",
+  "cost": "Cost (optional)",
   "saveFuelUp": "Save fuel-up",
 
   "fuelListTitle": "Fuel logs",

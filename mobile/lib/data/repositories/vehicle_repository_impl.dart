@@ -4,6 +4,7 @@ import 'package:mobile/domain/entities/maintenance_interval.dart';
 import 'package:mobile/domain/entities/vehicle.dart';
 import 'package:mobile/domain/enums/distance_unit.dart';
 import 'package:mobile/domain/enums/vehicle_type.dart';
+import 'package:mobile/domain/enums/volume_unit.dart';
 import 'package:mobile/domain/repositories/vehicle_repository.dart';
 import 'package:mobile/domain/value_objects/odometer.dart';
 import 'package:mobile/domain/value_objects/plate.dart';
@@ -83,6 +84,9 @@ class VehicleRepositoryImpl implements VehicleRepository {
         DistanceUnit.values.firstWhere((u) => u.name == entry.odometerUnit),
       ),
       type: VehicleType.values.firstWhere((t) => t.name == entry.type),
+      fuelVolumeUnit:
+          VolumeUnit.values.firstWhere((u) => u.name == entry.fuelVolumeUnit),
+      currency: entry.currency,
     );
   }
 
@@ -101,6 +105,8 @@ class VehicleRepositoryImpl implements VehicleRepository {
       createdAt: drift.Value(vehicle.createdAt),
       isSynced: drift.Value(vehicle.isSynced),
       type: drift.Value(vehicle.type.name),
+      fuelVolumeUnit: drift.Value(vehicle.fuelVolumeUnit.name),
+      currency: drift.Value(vehicle.currency),
     );
   }
 }

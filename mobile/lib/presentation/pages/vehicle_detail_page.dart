@@ -9,6 +9,8 @@ import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
 import 'package:mobile/presentation/utils/maintenance_localizer.dart';
 import 'package:mobile/presentation/widgets/add_document_modal.dart';
+import 'package:mobile/presentation/widgets/add_fuel_log_modal.dart';
+import 'package:mobile/presentation/widgets/add_maintenance_log_modal.dart';
 import 'package:mobile/presentation/widgets/odometer_dialog.dart';
 
 class VehicleDetailPage extends ConsumerStatefulWidget {
@@ -242,14 +244,24 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               TextButton(
-                                onPressed: () => context.push(
-                                  '/vehicle/${widget.vehicleId}/maintenance/new',
-                                  extra: {
-                                    'description': localizedLabel(
-                                        l,
-                                        interval.i18nKey,
-                                        interval.label),
-                                    'intervalId': interval.id,
+                                onPressed: () =>
+                                    showAddMaintenanceLogModal(
+                                  context,
+                                  vehicleId: widget.vehicleId,
+                                  initialDescription:
+                                      localizedLabel(
+                                    l,
+                                    interval.i18nKey,
+                                    interval.label,
+                                  ),
+                                  initialIntervalId: interval.id,
+                                  onSaved: () {
+                                    ref.invalidate(
+                                        maintenanceLogsProvider(
+                                            widget.vehicleId));
+                                    ref.invalidate(
+                                        maintenanceIntervalsProvider(
+                                            widget.vehicleId));
                                   },
                                 ),
                                 child: Text(
@@ -298,13 +310,41 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
                 ),
                 const SizedBox(height: 8),
                 FloatingActionButton.small(
+                  heroTag: 'add_fuel',
+                  backgroundColor:
+                      theme.colorScheme.secondaryContainer,
+                  onPressed: () {
+                    setState(() => _fabOpen = false);
+                    showAddFuelLogModal(
+                      context,
+                      vehicleId: widget.vehicleId,
+                      onSaved: () {
+                        ref.invalidate(
+                            fuelLogsProvider(widget.vehicleId));
+                      },
+                    );
+                  },
+                  child: const Icon(Icons.local_gas_station),
+                ),
+                const SizedBox(height: 8),
+                FloatingActionButton.small(
                   heroTag: 'add_service',
                   backgroundColor:
                       theme.colorScheme.secondaryContainer,
                   onPressed: () {
                     setState(() => _fabOpen = false);
-                    context.push(
-                        '/vehicle/${widget.vehicleId}/maintenance/new');
+                    showAddMaintenanceLogModal(
+                      context,
+                      vehicleId: widget.vehicleId,
+                      onSaved: () {
+                        ref.invalidate(
+                            maintenanceLogsProvider(
+                                widget.vehicleId));
+                        ref.invalidate(
+                            maintenanceIntervalsProvider(
+                                widget.vehicleId));
+                      },
+                    );
                   },
                   child: const Icon(Icons.build),
                 ),

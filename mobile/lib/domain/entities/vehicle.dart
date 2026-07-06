@@ -1,5 +1,6 @@
 import '../enums/distance_unit.dart';
 import '../enums/vehicle_type.dart';
+import '../enums/volume_unit.dart';
 import '../value_objects/odometer.dart';
 import '../value_objects/plate.dart';
 import '../value_objects/vin.dart';
@@ -17,6 +18,28 @@ class Vehicle {
   final Plate? plate;
   final Vin? vin;
   final Odometer currentOdometer;
+  final VolumeUnit fuelVolumeUnit;
+  final String currency;
+
+  static const List<String> currencies = [
+    'USD', 'ARS', 'EUR', 'GBP', 'BRL', 'CLP', 'COP', 'MXN', 'PEN', 'UYU',
+  ];
+
+  static String currencySymbol(String code) {
+    switch (code) {
+      case 'USD': return '\$';
+      case 'ARS': return '\$';
+      case 'EUR': return '€';
+      case 'GBP': return '£';
+      case 'BRL': return 'R\$';
+      case 'CLP': return '\$';
+      case 'COP': return '\$';
+      case 'MXN': return '\$';
+      case 'PEN': return 'S/';
+      case 'UYU': return '\$U';
+      default: return '\$';
+    }
+  }
 
   Vehicle({
     required this.id,
@@ -30,6 +53,8 @@ class Vehicle {
     required this.currentOdometer,
     this.alias,
     this.type = VehicleType.combustion,
+    this.fuelVolumeUnit = VolumeUnit.liters,
+    this.currency = 'USD',
   });
 
   String get displayName {
@@ -49,6 +74,8 @@ class Vehicle {
     Vin? vin,
     Odometer? currentOdometer,
     VehicleType? type,
+    VolumeUnit? fuelVolumeUnit,
+    String? currency,
   }) {
     return Vehicle(
       id: id ?? this.id,
@@ -62,6 +89,8 @@ class Vehicle {
       vin: vin ?? this.vin,
       currentOdometer: currentOdometer ?? this.currentOdometer,
       type: type ?? this.type,
+      fuelVolumeUnit: fuelVolumeUnit ?? this.fuelVolumeUnit,
+      currency: currency ?? this.currency,
     );
   }
 
@@ -78,6 +107,8 @@ class Vehicle {
         'vin': vin?.code,
         'currentOdometerDistance': currentOdometer.distance,
         'currentOdometerUnit': currentOdometer.unit.name,
+        'fuelVolumeUnit': fuelVolumeUnit.name,
+        'currency': currency,
       };
 
   factory Vehicle.fromJson(Map<String, dynamic> json) => Vehicle(
@@ -95,5 +126,9 @@ class Vehicle {
           (json['currentOdometerDistance'] as num).toDouble(),
           DistanceUnit.values.byName(json['currentOdometerUnit']),
         ),
+        fuelVolumeUnit: json['fuelVolumeUnit'] != null
+            ? VolumeUnit.values.byName(json['fuelVolumeUnit'])
+            : VolumeUnit.liters,
+        currency: json['currency'] ?? 'USD',
       );
 }

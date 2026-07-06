@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:mobile/domain/entities/maintenance_log.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
+import 'package:mobile/presentation/widgets/add_maintenance_log_modal.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -335,8 +336,17 @@ class _MaintenanceLogListPageState
       ),
       floatingActionButton: _tabController.index == 0
           ? FloatingActionButton(
-              onPressed: () => context.push(
-                  '/vehicle/${widget.vehicleId}/maintenance/new'),
+              onPressed: () => showAddMaintenanceLogModal(
+                context,
+                vehicleId: widget.vehicleId,
+                onSaved: () {
+                  ref.invalidate(
+                      maintenanceLogsProvider(widget.vehicleId));
+                  ref.invalidate(
+                      maintenanceIntervalsProvider(
+                          widget.vehicleId));
+                },
+              ),
               child: const Icon(Icons.add),
             )
           : null,

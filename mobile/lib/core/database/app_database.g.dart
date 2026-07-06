@@ -139,6 +139,30 @@ class $VehiclesTable extends Vehicles
     requiredDuringInsert: false,
     defaultValue: const Constant('combustion'),
   );
+  static const VerificationMeta _fuelVolumeUnitMeta = const VerificationMeta(
+    'fuelVolumeUnit',
+  );
+  @override
+  late final GeneratedColumn<String> fuelVolumeUnit = GeneratedColumn<String>(
+    'fuel_volume_unit',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('liters'),
+  );
+  static const VerificationMeta _currencyMeta = const VerificationMeta(
+    'currency',
+  );
+  @override
+  late final GeneratedColumn<String> currency = GeneratedColumn<String>(
+    'currency',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('USD'),
+  );
   @override
   List<GeneratedColumn> get $columns => [
     id,
@@ -154,6 +178,8 @@ class $VehiclesTable extends Vehicles
     createdAt,
     isSynced,
     type,
+    fuelVolumeUnit,
+    currency,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -264,6 +290,21 @@ class $VehiclesTable extends Vehicles
         type.isAcceptableOrUnknown(data['type']!, _typeMeta),
       );
     }
+    if (data.containsKey('fuel_volume_unit')) {
+      context.handle(
+        _fuelVolumeUnitMeta,
+        fuelVolumeUnit.isAcceptableOrUnknown(
+          data['fuel_volume_unit']!,
+          _fuelVolumeUnitMeta,
+        ),
+      );
+    }
+    if (data.containsKey('currency')) {
+      context.handle(
+        _currencyMeta,
+        currency.isAcceptableOrUnknown(data['currency']!, _currencyMeta),
+      );
+    }
     return context;
   }
 
@@ -325,6 +366,14 @@ class $VehiclesTable extends Vehicles
         DriftSqlType.string,
         data['${effectivePrefix}type'],
       )!,
+      fuelVolumeUnit: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}fuel_volume_unit'],
+      )!,
+      currency: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}currency'],
+      )!,
     );
   }
 
@@ -348,6 +397,8 @@ class VehicleEntry extends DataClass implements Insertable<VehicleEntry> {
   final DateTime createdAt;
   final bool isSynced;
   final String type;
+  final String fuelVolumeUnit;
+  final String currency;
   const VehicleEntry({
     required this.id,
     required this.name,
@@ -362,6 +413,8 @@ class VehicleEntry extends DataClass implements Insertable<VehicleEntry> {
     required this.createdAt,
     required this.isSynced,
     required this.type,
+    required this.fuelVolumeUnit,
+    required this.currency,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -385,6 +438,8 @@ class VehicleEntry extends DataClass implements Insertable<VehicleEntry> {
     map['created_at'] = Variable<DateTime>(createdAt);
     map['is_synced'] = Variable<bool>(isSynced);
     map['type'] = Variable<String>(type);
+    map['fuel_volume_unit'] = Variable<String>(fuelVolumeUnit);
+    map['currency'] = Variable<String>(currency);
     return map;
   }
 
@@ -407,6 +462,8 @@ class VehicleEntry extends DataClass implements Insertable<VehicleEntry> {
       createdAt: Value(createdAt),
       isSynced: Value(isSynced),
       type: Value(type),
+      fuelVolumeUnit: Value(fuelVolumeUnit),
+      currency: Value(currency),
     );
   }
 
@@ -429,6 +486,8 @@ class VehicleEntry extends DataClass implements Insertable<VehicleEntry> {
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
       isSynced: serializer.fromJson<bool>(json['isSynced']),
       type: serializer.fromJson<String>(json['type']),
+      fuelVolumeUnit: serializer.fromJson<String>(json['fuelVolumeUnit']),
+      currency: serializer.fromJson<String>(json['currency']),
     );
   }
   @override
@@ -448,6 +507,8 @@ class VehicleEntry extends DataClass implements Insertable<VehicleEntry> {
       'createdAt': serializer.toJson<DateTime>(createdAt),
       'isSynced': serializer.toJson<bool>(isSynced),
       'type': serializer.toJson<String>(type),
+      'fuelVolumeUnit': serializer.toJson<String>(fuelVolumeUnit),
+      'currency': serializer.toJson<String>(currency),
     };
   }
 
@@ -465,6 +526,8 @@ class VehicleEntry extends DataClass implements Insertable<VehicleEntry> {
     DateTime? createdAt,
     bool? isSynced,
     String? type,
+    String? fuelVolumeUnit,
+    String? currency,
   }) => VehicleEntry(
     id: id ?? this.id,
     name: name ?? this.name,
@@ -479,6 +542,8 @@ class VehicleEntry extends DataClass implements Insertable<VehicleEntry> {
     createdAt: createdAt ?? this.createdAt,
     isSynced: isSynced ?? this.isSynced,
     type: type ?? this.type,
+    fuelVolumeUnit: fuelVolumeUnit ?? this.fuelVolumeUnit,
+    currency: currency ?? this.currency,
   );
   VehicleEntry copyWithCompanion(VehiclesCompanion data) {
     return VehicleEntry(
@@ -499,6 +564,10 @@ class VehicleEntry extends DataClass implements Insertable<VehicleEntry> {
       createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
       isSynced: data.isSynced.present ? data.isSynced.value : this.isSynced,
       type: data.type.present ? data.type.value : this.type,
+      fuelVolumeUnit: data.fuelVolumeUnit.present
+          ? data.fuelVolumeUnit.value
+          : this.fuelVolumeUnit,
+      currency: data.currency.present ? data.currency.value : this.currency,
     );
   }
 
@@ -517,7 +586,9 @@ class VehicleEntry extends DataClass implements Insertable<VehicleEntry> {
           ..write('odometerUnit: $odometerUnit, ')
           ..write('createdAt: $createdAt, ')
           ..write('isSynced: $isSynced, ')
-          ..write('type: $type')
+          ..write('type: $type, ')
+          ..write('fuelVolumeUnit: $fuelVolumeUnit, ')
+          ..write('currency: $currency')
           ..write(')'))
         .toString();
   }
@@ -537,6 +608,8 @@ class VehicleEntry extends DataClass implements Insertable<VehicleEntry> {
     createdAt,
     isSynced,
     type,
+    fuelVolumeUnit,
+    currency,
   );
   @override
   bool operator ==(Object other) =>
@@ -554,7 +627,9 @@ class VehicleEntry extends DataClass implements Insertable<VehicleEntry> {
           other.odometerUnit == this.odometerUnit &&
           other.createdAt == this.createdAt &&
           other.isSynced == this.isSynced &&
-          other.type == this.type);
+          other.type == this.type &&
+          other.fuelVolumeUnit == this.fuelVolumeUnit &&
+          other.currency == this.currency);
 }
 
 class VehiclesCompanion extends UpdateCompanion<VehicleEntry> {
@@ -571,6 +646,8 @@ class VehiclesCompanion extends UpdateCompanion<VehicleEntry> {
   final Value<DateTime> createdAt;
   final Value<bool> isSynced;
   final Value<String> type;
+  final Value<String> fuelVolumeUnit;
+  final Value<String> currency;
   final Value<int> rowid;
   const VehiclesCompanion({
     this.id = const Value.absent(),
@@ -586,6 +663,8 @@ class VehiclesCompanion extends UpdateCompanion<VehicleEntry> {
     this.createdAt = const Value.absent(),
     this.isSynced = const Value.absent(),
     this.type = const Value.absent(),
+    this.fuelVolumeUnit = const Value.absent(),
+    this.currency = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   VehiclesCompanion.insert({
@@ -602,6 +681,8 @@ class VehiclesCompanion extends UpdateCompanion<VehicleEntry> {
     required DateTime createdAt,
     required bool isSynced,
     this.type = const Value.absent(),
+    this.fuelVolumeUnit = const Value.absent(),
+    this.currency = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : id = Value(id),
        brand = Value(brand),
@@ -625,6 +706,8 @@ class VehiclesCompanion extends UpdateCompanion<VehicleEntry> {
     Expression<DateTime>? createdAt,
     Expression<bool>? isSynced,
     Expression<String>? type,
+    Expression<String>? fuelVolumeUnit,
+    Expression<String>? currency,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -641,6 +724,8 @@ class VehiclesCompanion extends UpdateCompanion<VehicleEntry> {
       if (createdAt != null) 'created_at': createdAt,
       if (isSynced != null) 'is_synced': isSynced,
       if (type != null) 'type': type,
+      if (fuelVolumeUnit != null) 'fuel_volume_unit': fuelVolumeUnit,
+      if (currency != null) 'currency': currency,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -659,6 +744,8 @@ class VehiclesCompanion extends UpdateCompanion<VehicleEntry> {
     Value<DateTime>? createdAt,
     Value<bool>? isSynced,
     Value<String>? type,
+    Value<String>? fuelVolumeUnit,
+    Value<String>? currency,
     Value<int>? rowid,
   }) {
     return VehiclesCompanion(
@@ -675,6 +762,8 @@ class VehiclesCompanion extends UpdateCompanion<VehicleEntry> {
       createdAt: createdAt ?? this.createdAt,
       isSynced: isSynced ?? this.isSynced,
       type: type ?? this.type,
+      fuelVolumeUnit: fuelVolumeUnit ?? this.fuelVolumeUnit,
+      currency: currency ?? this.currency,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -721,6 +810,12 @@ class VehiclesCompanion extends UpdateCompanion<VehicleEntry> {
     if (type.present) {
       map['type'] = Variable<String>(type.value);
     }
+    if (fuelVolumeUnit.present) {
+      map['fuel_volume_unit'] = Variable<String>(fuelVolumeUnit.value);
+    }
+    if (currency.present) {
+      map['currency'] = Variable<String>(currency.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -743,6 +838,8 @@ class VehiclesCompanion extends UpdateCompanion<VehicleEntry> {
           ..write('createdAt: $createdAt, ')
           ..write('isSynced: $isSynced, ')
           ..write('type: $type, ')
+          ..write('fuelVolumeUnit: $fuelVolumeUnit, ')
+          ..write('currency: $currency, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -1500,6 +1597,39 @@ class $MaintenanceLogsTable extends MaintenanceLogs
         type: DriftSqlType.dateTime,
         requiredDuringInsert: false,
       );
+  static const VerificationMeta _photoPathsMeta = const VerificationMeta(
+    'photoPaths',
+  );
+  @override
+  late final GeneratedColumn<String> photoPaths = GeneratedColumn<String>(
+    'photo_paths',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _costAmountMeta = const VerificationMeta(
+    'costAmount',
+  );
+  @override
+  late final GeneratedColumn<double> costAmount = GeneratedColumn<double>(
+    'cost_amount',
+    aliasedName,
+    true,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _costCurrencyMeta = const VerificationMeta(
+    'costCurrency',
+  );
+  @override
+  late final GeneratedColumn<String> costCurrency = GeneratedColumn<String>(
+    'cost_currency',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
   @override
   List<GeneratedColumn> get $columns => [
     id,
@@ -1511,6 +1641,9 @@ class $MaintenanceLogsTable extends MaintenanceLogs
     resetIntervalId,
     restoreResetKm,
     restoreResetDate,
+    photoPaths,
+    costAmount,
+    costCurrency,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -1600,6 +1733,27 @@ class $MaintenanceLogsTable extends MaintenanceLogs
         ),
       );
     }
+    if (data.containsKey('photo_paths')) {
+      context.handle(
+        _photoPathsMeta,
+        photoPaths.isAcceptableOrUnknown(data['photo_paths']!, _photoPathsMeta),
+      );
+    }
+    if (data.containsKey('cost_amount')) {
+      context.handle(
+        _costAmountMeta,
+        costAmount.isAcceptableOrUnknown(data['cost_amount']!, _costAmountMeta),
+      );
+    }
+    if (data.containsKey('cost_currency')) {
+      context.handle(
+        _costCurrencyMeta,
+        costCurrency.isAcceptableOrUnknown(
+          data['cost_currency']!,
+          _costCurrencyMeta,
+        ),
+      );
+    }
     return context;
   }
 
@@ -1645,6 +1799,18 @@ class $MaintenanceLogsTable extends MaintenanceLogs
         DriftSqlType.dateTime,
         data['${effectivePrefix}restore_reset_date'],
       ),
+      photoPaths: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}photo_paths'],
+      ),
+      costAmount: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}cost_amount'],
+      ),
+      costCurrency: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}cost_currency'],
+      ),
     );
   }
 
@@ -1665,6 +1831,9 @@ class MaintenanceLogEntry extends DataClass
   final String? resetIntervalId;
   final double? restoreResetKm;
   final DateTime? restoreResetDate;
+  final String? photoPaths;
+  final double? costAmount;
+  final String? costCurrency;
   const MaintenanceLogEntry({
     required this.id,
     required this.vehicleId,
@@ -1675,6 +1844,9 @@ class MaintenanceLogEntry extends DataClass
     this.resetIntervalId,
     this.restoreResetKm,
     this.restoreResetDate,
+    this.photoPaths,
+    this.costAmount,
+    this.costCurrency,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -1693,6 +1865,15 @@ class MaintenanceLogEntry extends DataClass
     }
     if (!nullToAbsent || restoreResetDate != null) {
       map['restore_reset_date'] = Variable<DateTime>(restoreResetDate);
+    }
+    if (!nullToAbsent || photoPaths != null) {
+      map['photo_paths'] = Variable<String>(photoPaths);
+    }
+    if (!nullToAbsent || costAmount != null) {
+      map['cost_amount'] = Variable<double>(costAmount);
+    }
+    if (!nullToAbsent || costCurrency != null) {
+      map['cost_currency'] = Variable<String>(costCurrency);
     }
     return map;
   }
@@ -1714,6 +1895,15 @@ class MaintenanceLogEntry extends DataClass
       restoreResetDate: restoreResetDate == null && nullToAbsent
           ? const Value.absent()
           : Value(restoreResetDate),
+      photoPaths: photoPaths == null && nullToAbsent
+          ? const Value.absent()
+          : Value(photoPaths),
+      costAmount: costAmount == null && nullToAbsent
+          ? const Value.absent()
+          : Value(costAmount),
+      costCurrency: costCurrency == null && nullToAbsent
+          ? const Value.absent()
+          : Value(costCurrency),
     );
   }
 
@@ -1734,6 +1924,9 @@ class MaintenanceLogEntry extends DataClass
       restoreResetDate: serializer.fromJson<DateTime?>(
         json['restoreResetDate'],
       ),
+      photoPaths: serializer.fromJson<String?>(json['photoPaths']),
+      costAmount: serializer.fromJson<double?>(json['costAmount']),
+      costCurrency: serializer.fromJson<String?>(json['costCurrency']),
     );
   }
   @override
@@ -1749,6 +1942,9 @@ class MaintenanceLogEntry extends DataClass
       'resetIntervalId': serializer.toJson<String?>(resetIntervalId),
       'restoreResetKm': serializer.toJson<double?>(restoreResetKm),
       'restoreResetDate': serializer.toJson<DateTime?>(restoreResetDate),
+      'photoPaths': serializer.toJson<String?>(photoPaths),
+      'costAmount': serializer.toJson<double?>(costAmount),
+      'costCurrency': serializer.toJson<String?>(costCurrency),
     };
   }
 
@@ -1762,6 +1958,9 @@ class MaintenanceLogEntry extends DataClass
     Value<String?> resetIntervalId = const Value.absent(),
     Value<double?> restoreResetKm = const Value.absent(),
     Value<DateTime?> restoreResetDate = const Value.absent(),
+    Value<String?> photoPaths = const Value.absent(),
+    Value<double?> costAmount = const Value.absent(),
+    Value<String?> costCurrency = const Value.absent(),
   }) => MaintenanceLogEntry(
     id: id ?? this.id,
     vehicleId: vehicleId ?? this.vehicleId,
@@ -1778,6 +1977,9 @@ class MaintenanceLogEntry extends DataClass
     restoreResetDate: restoreResetDate.present
         ? restoreResetDate.value
         : this.restoreResetDate,
+    photoPaths: photoPaths.present ? photoPaths.value : this.photoPaths,
+    costAmount: costAmount.present ? costAmount.value : this.costAmount,
+    costCurrency: costCurrency.present ? costCurrency.value : this.costCurrency,
   );
   MaintenanceLogEntry copyWithCompanion(MaintenanceLogsCompanion data) {
     return MaintenanceLogEntry(
@@ -1800,6 +2002,15 @@ class MaintenanceLogEntry extends DataClass
       restoreResetDate: data.restoreResetDate.present
           ? data.restoreResetDate.value
           : this.restoreResetDate,
+      photoPaths: data.photoPaths.present
+          ? data.photoPaths.value
+          : this.photoPaths,
+      costAmount: data.costAmount.present
+          ? data.costAmount.value
+          : this.costAmount,
+      costCurrency: data.costCurrency.present
+          ? data.costCurrency.value
+          : this.costCurrency,
     );
   }
 
@@ -1814,7 +2025,10 @@ class MaintenanceLogEntry extends DataClass
           ..write('isSynced: $isSynced, ')
           ..write('resetIntervalId: $resetIntervalId, ')
           ..write('restoreResetKm: $restoreResetKm, ')
-          ..write('restoreResetDate: $restoreResetDate')
+          ..write('restoreResetDate: $restoreResetDate, ')
+          ..write('photoPaths: $photoPaths, ')
+          ..write('costAmount: $costAmount, ')
+          ..write('costCurrency: $costCurrency')
           ..write(')'))
         .toString();
   }
@@ -1830,6 +2044,9 @@ class MaintenanceLogEntry extends DataClass
     resetIntervalId,
     restoreResetKm,
     restoreResetDate,
+    photoPaths,
+    costAmount,
+    costCurrency,
   );
   @override
   bool operator ==(Object other) =>
@@ -1843,7 +2060,10 @@ class MaintenanceLogEntry extends DataClass
           other.isSynced == this.isSynced &&
           other.resetIntervalId == this.resetIntervalId &&
           other.restoreResetKm == this.restoreResetKm &&
-          other.restoreResetDate == this.restoreResetDate);
+          other.restoreResetDate == this.restoreResetDate &&
+          other.photoPaths == this.photoPaths &&
+          other.costAmount == this.costAmount &&
+          other.costCurrency == this.costCurrency);
 }
 
 class MaintenanceLogsCompanion extends UpdateCompanion<MaintenanceLogEntry> {
@@ -1856,6 +2076,9 @@ class MaintenanceLogsCompanion extends UpdateCompanion<MaintenanceLogEntry> {
   final Value<String?> resetIntervalId;
   final Value<double?> restoreResetKm;
   final Value<DateTime?> restoreResetDate;
+  final Value<String?> photoPaths;
+  final Value<double?> costAmount;
+  final Value<String?> costCurrency;
   final Value<int> rowid;
   const MaintenanceLogsCompanion({
     this.id = const Value.absent(),
@@ -1867,6 +2090,9 @@ class MaintenanceLogsCompanion extends UpdateCompanion<MaintenanceLogEntry> {
     this.resetIntervalId = const Value.absent(),
     this.restoreResetKm = const Value.absent(),
     this.restoreResetDate = const Value.absent(),
+    this.photoPaths = const Value.absent(),
+    this.costAmount = const Value.absent(),
+    this.costCurrency = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   MaintenanceLogsCompanion.insert({
@@ -1879,6 +2105,9 @@ class MaintenanceLogsCompanion extends UpdateCompanion<MaintenanceLogEntry> {
     this.resetIntervalId = const Value.absent(),
     this.restoreResetKm = const Value.absent(),
     this.restoreResetDate = const Value.absent(),
+    this.photoPaths = const Value.absent(),
+    this.costAmount = const Value.absent(),
+    this.costCurrency = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : id = Value(id),
        vehicleId = Value(vehicleId),
@@ -1895,6 +2124,9 @@ class MaintenanceLogsCompanion extends UpdateCompanion<MaintenanceLogEntry> {
     Expression<String>? resetIntervalId,
     Expression<double>? restoreResetKm,
     Expression<DateTime>? restoreResetDate,
+    Expression<String>? photoPaths,
+    Expression<double>? costAmount,
+    Expression<String>? costCurrency,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -1907,6 +2139,9 @@ class MaintenanceLogsCompanion extends UpdateCompanion<MaintenanceLogEntry> {
       if (resetIntervalId != null) 'reset_interval_id': resetIntervalId,
       if (restoreResetKm != null) 'restore_reset_km': restoreResetKm,
       if (restoreResetDate != null) 'restore_reset_date': restoreResetDate,
+      if (photoPaths != null) 'photo_paths': photoPaths,
+      if (costAmount != null) 'cost_amount': costAmount,
+      if (costCurrency != null) 'cost_currency': costCurrency,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -1921,6 +2156,9 @@ class MaintenanceLogsCompanion extends UpdateCompanion<MaintenanceLogEntry> {
     Value<String?>? resetIntervalId,
     Value<double?>? restoreResetKm,
     Value<DateTime?>? restoreResetDate,
+    Value<String?>? photoPaths,
+    Value<double?>? costAmount,
+    Value<String?>? costCurrency,
     Value<int>? rowid,
   }) {
     return MaintenanceLogsCompanion(
@@ -1933,6 +2171,9 @@ class MaintenanceLogsCompanion extends UpdateCompanion<MaintenanceLogEntry> {
       resetIntervalId: resetIntervalId ?? this.resetIntervalId,
       restoreResetKm: restoreResetKm ?? this.restoreResetKm,
       restoreResetDate: restoreResetDate ?? this.restoreResetDate,
+      photoPaths: photoPaths ?? this.photoPaths,
+      costAmount: costAmount ?? this.costAmount,
+      costCurrency: costCurrency ?? this.costCurrency,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -1967,6 +2208,15 @@ class MaintenanceLogsCompanion extends UpdateCompanion<MaintenanceLogEntry> {
     if (restoreResetDate.present) {
       map['restore_reset_date'] = Variable<DateTime>(restoreResetDate.value);
     }
+    if (photoPaths.present) {
+      map['photo_paths'] = Variable<String>(photoPaths.value);
+    }
+    if (costAmount.present) {
+      map['cost_amount'] = Variable<double>(costAmount.value);
+    }
+    if (costCurrency.present) {
+      map['cost_currency'] = Variable<String>(costCurrency.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -1985,6 +2235,9 @@ class MaintenanceLogsCompanion extends UpdateCompanion<MaintenanceLogEntry> {
           ..write('resetIntervalId: $resetIntervalId, ')
           ..write('restoreResetKm: $restoreResetKm, ')
           ..write('restoreResetDate: $restoreResetDate, ')
+          ..write('photoPaths: $photoPaths, ')
+          ..write('costAmount: $costAmount, ')
+          ..write('costCurrency: $costCurrency, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -3781,6 +4034,8 @@ typedef $$VehiclesTableCreateCompanionBuilder =
       required DateTime createdAt,
       required bool isSynced,
       Value<String> type,
+      Value<String> fuelVolumeUnit,
+      Value<String> currency,
       Value<int> rowid,
     });
 typedef $$VehiclesTableUpdateCompanionBuilder =
@@ -3798,6 +4053,8 @@ typedef $$VehiclesTableUpdateCompanionBuilder =
       Value<DateTime> createdAt,
       Value<bool> isSynced,
       Value<String> type,
+      Value<String> fuelVolumeUnit,
+      Value<String> currency,
       Value<int> rowid,
     });
 
@@ -3969,6 +4226,16 @@ class $$VehiclesTableFilterComposer
 
   ColumnFilters<String> get type => $composableBuilder(
     column: $table.type,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get fuelVolumeUnit => $composableBuilder(
+    column: $table.fuelVolumeUnit,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get currency => $composableBuilder(
+    column: $table.currency,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -4146,6 +4413,16 @@ class $$VehiclesTableOrderingComposer
     column: $table.type,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<String> get fuelVolumeUnit => $composableBuilder(
+    column: $table.fuelVolumeUnit,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get currency => $composableBuilder(
+    column: $table.currency,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$VehiclesTableAnnotationComposer
@@ -4199,6 +4476,14 @@ class $$VehiclesTableAnnotationComposer
 
   GeneratedColumn<String> get type =>
       $composableBuilder(column: $table.type, builder: (column) => column);
+
+  GeneratedColumn<String> get fuelVolumeUnit => $composableBuilder(
+    column: $table.fuelVolumeUnit,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get currency =>
+      $composableBuilder(column: $table.currency, builder: (column) => column);
 
   Expression<T> fuelLogsRefs<T extends Object>(
     Expression<T> Function($$FuelLogsTableAnnotationComposer a) f,
@@ -4348,6 +4633,8 @@ class $$VehiclesTableTableManager
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<bool> isSynced = const Value.absent(),
                 Value<String> type = const Value.absent(),
+                Value<String> fuelVolumeUnit = const Value.absent(),
+                Value<String> currency = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => VehiclesCompanion(
                 id: id,
@@ -4363,6 +4650,8 @@ class $$VehiclesTableTableManager
                 createdAt: createdAt,
                 isSynced: isSynced,
                 type: type,
+                fuelVolumeUnit: fuelVolumeUnit,
+                currency: currency,
                 rowid: rowid,
               ),
           createCompanionCallback:
@@ -4380,6 +4669,8 @@ class $$VehiclesTableTableManager
                 required DateTime createdAt,
                 required bool isSynced,
                 Value<String> type = const Value.absent(),
+                Value<String> fuelVolumeUnit = const Value.absent(),
+                Value<String> currency = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => VehiclesCompanion.insert(
                 id: id,
@@ -4395,6 +4686,8 @@ class $$VehiclesTableTableManager
                 createdAt: createdAt,
                 isSynced: isSynced,
                 type: type,
+                fuelVolumeUnit: fuelVolumeUnit,
+                currency: currency,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
@@ -4969,6 +5262,9 @@ typedef $$MaintenanceLogsTableCreateCompanionBuilder =
       Value<String?> resetIntervalId,
       Value<double?> restoreResetKm,
       Value<DateTime?> restoreResetDate,
+      Value<String?> photoPaths,
+      Value<double?> costAmount,
+      Value<String?> costCurrency,
       Value<int> rowid,
     });
 typedef $$MaintenanceLogsTableUpdateCompanionBuilder =
@@ -4982,6 +5278,9 @@ typedef $$MaintenanceLogsTableUpdateCompanionBuilder =
       Value<String?> resetIntervalId,
       Value<double?> restoreResetKm,
       Value<DateTime?> restoreResetDate,
+      Value<String?> photoPaths,
+      Value<double?> costAmount,
+      Value<String?> costCurrency,
       Value<int> rowid,
     });
 
@@ -5088,6 +5387,21 @@ class $$MaintenanceLogsTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
+  ColumnFilters<String> get photoPaths => $composableBuilder(
+    column: $table.photoPaths,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get costAmount => $composableBuilder(
+    column: $table.costAmount,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get costCurrency => $composableBuilder(
+    column: $table.costCurrency,
+    builder: (column) => ColumnFilters(column),
+  );
+
   $$VehiclesTableFilterComposer get vehicleId {
     final $$VehiclesTableFilterComposer composer = $composerBuilder(
       composer: this,
@@ -5186,6 +5500,21 @@ class $$MaintenanceLogsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get photoPaths => $composableBuilder(
+    column: $table.photoPaths,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get costAmount => $composableBuilder(
+    column: $table.costAmount,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get costCurrency => $composableBuilder(
+    column: $table.costCurrency,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   $$VehiclesTableOrderingComposer get vehicleId {
     final $$VehiclesTableOrderingComposer composer = $composerBuilder(
       composer: this,
@@ -5250,6 +5579,21 @@ class $$MaintenanceLogsTableAnnotationComposer
 
   GeneratedColumn<DateTime> get restoreResetDate => $composableBuilder(
     column: $table.restoreResetDate,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get photoPaths => $composableBuilder(
+    column: $table.photoPaths,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get costAmount => $composableBuilder(
+    column: $table.costAmount,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get costCurrency => $composableBuilder(
+    column: $table.costCurrency,
     builder: (column) => column,
   );
 
@@ -5341,6 +5685,9 @@ class $$MaintenanceLogsTableTableManager
                 Value<String?> resetIntervalId = const Value.absent(),
                 Value<double?> restoreResetKm = const Value.absent(),
                 Value<DateTime?> restoreResetDate = const Value.absent(),
+                Value<String?> photoPaths = const Value.absent(),
+                Value<double?> costAmount = const Value.absent(),
+                Value<String?> costCurrency = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => MaintenanceLogsCompanion(
                 id: id,
@@ -5352,6 +5699,9 @@ class $$MaintenanceLogsTableTableManager
                 resetIntervalId: resetIntervalId,
                 restoreResetKm: restoreResetKm,
                 restoreResetDate: restoreResetDate,
+                photoPaths: photoPaths,
+                costAmount: costAmount,
+                costCurrency: costCurrency,
                 rowid: rowid,
               ),
           createCompanionCallback:
@@ -5365,6 +5715,9 @@ class $$MaintenanceLogsTableTableManager
                 Value<String?> resetIntervalId = const Value.absent(),
                 Value<double?> restoreResetKm = const Value.absent(),
                 Value<DateTime?> restoreResetDate = const Value.absent(),
+                Value<String?> photoPaths = const Value.absent(),
+                Value<double?> costAmount = const Value.absent(),
+                Value<String?> costCurrency = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => MaintenanceLogsCompanion.insert(
                 id: id,
@@ -5376,6 +5729,9 @@ class $$MaintenanceLogsTableTableManager
                 resetIntervalId: resetIntervalId,
                 restoreResetKm: restoreResetKm,
                 restoreResetDate: restoreResetDate,
+                photoPaths: photoPaths,
+                costAmount: costAmount,
+                costCurrency: costCurrency,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0

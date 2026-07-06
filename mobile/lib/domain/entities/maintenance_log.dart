@@ -12,6 +12,9 @@ class MaintenanceLog {
   final DateTime? restoreResetDate;
 
   final List<ReplacedPart> replacedParts;
+  final List<String> photoPaths;
+  final double? costAmount;
+  final String? costCurrency;
 
   MaintenanceLog({
     required this.id,
@@ -24,6 +27,9 @@ class MaintenanceLog {
     this.restoreResetKm,
     this.restoreResetDate,
     this.replacedParts = const [],
+    this.photoPaths = const [],
+    this.costAmount,
+    this.costCurrency,
   });
 
   Map<String, dynamic> toJson() => {

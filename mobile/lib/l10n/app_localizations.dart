@@ -636,6 +636,18 @@ abstract class AppLocalizations {
   /// **'Save service'**
   String get saveService;
 
+  /// No description provided for @addPhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Add photo'**
+  String get addPhoto;
+
+  /// No description provided for @photos.
+  ///
+  /// In en, this message translates to:
+  /// **'photos'**
+  String get photos;
+
   /// No description provided for @deleteService.
   ///
   /// In en, this message translates to:
@@ -887,6 +899,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Full tank'**
   String get fullTank;
+
+  /// No description provided for @volumeUnit.
+  ///
+  /// In en, this message translates to:
+  /// **'Fuel volume unit'**
+  String get volumeUnit;
+
+  /// No description provided for @currency.
+  ///
+  /// In en, this message translates to:
+  /// **'Currency'**
+  String get currency;
+
+  /// No description provided for @cost.
+  ///
+  /// In en, this message translates to:
+  /// **'Cost (optional)'**
+  String get cost;
 
   /// No description provided for @saveFuelUp.
   ///

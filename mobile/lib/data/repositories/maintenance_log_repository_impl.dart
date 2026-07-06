@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:drift/drift.dart' as drift;
 import 'package:mobile/core/database/app_database.dart';
 import 'package:mobile/domain/entities/maintenance_log.dart';
@@ -50,6 +52,9 @@ class MaintenanceLogRepositoryImpl implements MaintenanceLogRepository {
       resetIntervalId: entry.resetIntervalId,
       restoreResetKm: entry.restoreResetKm,
       restoreResetDate: entry.restoreResetDate,
+      photoPaths: _decodePaths(entry.photoPaths),
+      costAmount: entry.costAmount,
+      costCurrency: entry.costCurrency,
     );
   }
 
@@ -64,6 +69,23 @@ class MaintenanceLogRepositoryImpl implements MaintenanceLogRepository {
       resetIntervalId: drift.Value(log.resetIntervalId),
       restoreResetKm: drift.Value(log.restoreResetKm),
       restoreResetDate: drift.Value(log.restoreResetDate),
+      photoPaths: drift.Value(_encodePaths(log.photoPaths)),
+      costAmount: drift.Value(log.costAmount),
+      costCurrency: drift.Value(log.costCurrency),
     );
+  }
+
+  List<String> _decodePaths(String? raw) {
+    if (raw == null || raw.isEmpty) return [];
+    try {
+      return (jsonDecode(raw) as List).cast<String>();
+    } catch (_) {
+      return [];
+    }
+  }
+
+  String? _encodePaths(List<String> paths) {
+    if (paths.isEmpty) return null;
+    return jsonEncode(paths);
   }
 }

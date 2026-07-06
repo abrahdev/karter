@@ -308,6 +308,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get saveService => 'Guardar servicio';
 
   @override
+  String get addPhoto => 'Agregar foto';
+
+  @override
+  String get photos => 'fotos';
+
+  @override
   String get deleteService => 'Eliminar servicio';
 
   @override
@@ -440,6 +446,15 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get fullTank => 'Tanque lleno';
+
+  @override
+  String get volumeUnit => 'Unidad de volumen';
+
+  @override
+  String get currency => 'Moneda';
+
+  @override
+  String get cost => 'Costo (opcional)';
 
   @override
   String get saveFuelUp => 'Guardar carga';

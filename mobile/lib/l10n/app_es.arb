@@ -99,6 +99,8 @@
   "resetInterval": "Resetear intervalo (opcional)",
   "saveChangesShort": "Guardar cambios",
   "saveService": "Guardar servicio",
+  "addPhoto": "Agregar foto",
+  "photos": "fotos",
   "deleteService": "Eliminar servicio",
   "deleteServiceConfirm": "¿Estás seguro de eliminar este servicio?",
 
@@ -146,6 +148,9 @@
   "unitMi": "mi",
   "pricePerUnit": "Precio por unidad (opcional)",
   "fullTank": "Tanque lleno",
+  "volumeUnit": "Unidad de volumen",
+  "currency": "Moneda",
+  "cost": "Costo (opcional)",
   "saveFuelUp": "Guardar carga",
 
   "fuelListTitle": "Cargas de combustible",
