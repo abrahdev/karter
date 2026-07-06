@@ -320,6 +320,53 @@ class AppLocalizationsEs extends AppLocalizations {
   String get maintenanceEmpty => 'Sin servicios registrados';
 
   @override
+  String get maintenanceHistoryTab => 'Historial';
+
+  @override
+  String get maintenancePdfExportTab => 'Exportar PDF';
+
+  @override
+  String maintenanceServicesInPeriod(Object count) {
+    return '$count servicio(s) en este período';
+  }
+
+  @override
+  String maintenanceMoreServices(Object count) {
+    return '... y $count más';
+  }
+
+  @override
+  String get maintenanceNoServicesInRange =>
+      'Sin servicios en este rango de fechas.';
+
+  @override
+  String get maintenanceExportPdf => 'Exportar PDF';
+
+  @override
+  String get maintenanceSharePdf => 'Compartir';
+
+  @override
+  String get maintenanceReportTitle => 'Informe de mantenimiento';
+
+  @override
+  String maintenanceReportGenerated(Object date, Object time) {
+    return 'Generado $date $time';
+  }
+
+  @override
+  String get maintenanceReportEmpty =>
+      'Sin registros de mantenimiento en este período.';
+
+  @override
+  String get maintenanceReportDateHeader => 'Fecha';
+
+  @override
+  String get maintenanceReportDescHeader => 'Descripción';
+
+  @override
+  String get maintenanceReportOdometerHeader => 'Odómetro';
+
+  @override
   String get fuelFormTitle => 'Nueva carga';
 
   @override

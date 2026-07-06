@@ -660,6 +660,84 @@ abstract class AppLocalizations {
   /// **'No services recorded'**
   String get maintenanceEmpty;
 
+  /// No description provided for @maintenanceHistoryTab.
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get maintenanceHistoryTab;
+
+  /// No description provided for @maintenancePdfExportTab.
+  ///
+  /// In en, this message translates to:
+  /// **'PDF Export'**
+  String get maintenancePdfExportTab;
+
+  /// No description provided for @maintenanceServicesInPeriod.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} service(s) in this period'**
+  String maintenanceServicesInPeriod(Object count);
+
+  /// No description provided for @maintenanceMoreServices.
+  ///
+  /// In en, this message translates to:
+  /// **'... and {count} more'**
+  String maintenanceMoreServices(Object count);
+
+  /// No description provided for @maintenanceNoServicesInRange.
+  ///
+  /// In en, this message translates to:
+  /// **'No services in this date range.'**
+  String get maintenanceNoServicesInRange;
+
+  /// No description provided for @maintenanceExportPdf.
+  ///
+  /// In en, this message translates to:
+  /// **'Export PDF'**
+  String get maintenanceExportPdf;
+
+  /// No description provided for @maintenanceSharePdf.
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get maintenanceSharePdf;
+
+  /// No description provided for @maintenanceReportTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Maintenance Report'**
+  String get maintenanceReportTitle;
+
+  /// No description provided for @maintenanceReportGenerated.
+  ///
+  /// In en, this message translates to:
+  /// **'Generated {date} {time}'**
+  String maintenanceReportGenerated(Object date, Object time);
+
+  /// No description provided for @maintenanceReportEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No maintenance logs in this period.'**
+  String get maintenanceReportEmpty;
+
+  /// No description provided for @maintenanceReportDateHeader.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get maintenanceReportDateHeader;
+
+  /// No description provided for @maintenanceReportDescHeader.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get maintenanceReportDescHeader;
+
+  /// No description provided for @maintenanceReportOdometerHeader.
+  ///
+  /// In en, this message translates to:
+  /// **'Odometer'**
+  String get maintenanceReportOdometerHeader;
+
   /// No description provided for @fuelFormTitle.
   ///
   /// In en, this message translates to:
