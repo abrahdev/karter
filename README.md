@@ -36,9 +36,9 @@
 ## Screenshots
 
 <p align="center">
-  <img src="assets/screenshots/screenshot-01.png" width="200" alt="Home">
-  <img src="assets/screenshots/screenshot-02.png" width="200" alt="Fuel log">
-  <img src="assets/screenshots/screenshot-03.png" width="200" alt="Maintenance">
+  <img src="assets/screenshots/screenshot-01.jpeg" width="200" alt="Home">
+  <img src="assets/screenshots/screenshot-02.jpeg" width="200" alt="Fuel log">
+  <img src="assets/screenshots/screenshot-03.jpeg" width="200" alt="Maintenance">
 </p>
 
 ---
