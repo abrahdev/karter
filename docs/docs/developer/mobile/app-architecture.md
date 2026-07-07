@@ -3,60 +3,113 @@ sidebar_position: 1
 title: App Architecture
 ---
 
+Karter follows a **clean-ish layered architecture** with three main layers: `domain/`, `data/`, and `presentation/`. State management is handled by **Riverpod**, and local persistence by **Drift** (SQLite).
+
+---
+
+## Overview
+
+```mermaid
+flowchart TD
+    UI["presentation/pages & widgets"] --> Providers["presentation/providers (Riverpod)"]
+    Providers --> Repos["data/repositories (impl)"]
+    Repos --> DB["core/database (Drift/SQLite)"]
+    Repos --> Services["data/services"]
+
+    subgraph domain [domain/]
+        Entities["entities/"]
+        Enums["enums/"]
+        ValueObjects["value_objects/"]
+        RepoInterfaces["repositories/ (abstract)"]
+        Errors["errors/"]
+    end
+
+    Repos -.-> RepoInterfaces
+    Entities --> ValueObjects
+    Entities --> Enums
+```
+
+---
+
+## Core Entities
+
+### Vehicle
+
+The root aggregate of the domain.
+
 ```mermaid
 classDiagram
-    class DistanceUnit {
-        <<enumeration>>
-        kilometers
-        miles
+    class Vehicle {
+        +String id
+        +String brand
+        +String model
+        +int year
+        +String? alias
+        +VehicleType type
+        +String? plate
+        +String? vin
+        +Odometer currentOdometer
+        +VolumeUnit fuelVolumeUnit
+        +String? currency
+        +DateTime createdAt
+        +bool isSynced
+        +String get displayName
+        +Vehicle(...)
+        +copyWith(...) Vehicle
+        +toJson() Map~String, dynamic~
+        +fromJson(Map) Vehicle
     }
+
+    class VehicleType {
+        <<enumeration>>
+        combustion
+        electric
+        motorcycle
+    }
+
     class VolumeUnit {
         <<enumeration>>
         liters
         gallons
     }
-    class CoreError {
-        <<enumeration>>
-        emptyLicensePlate
-        invalidLicensePlateFormat
-        negativeOdometer
-        negativeMoneyAmount
-        invalidVehicleYear
-    }
-    class DomainException {
-        +CoreError error
-        +DomainException(error)
-        +toString() String
-    }
 
-class Plate {
-        -String value
-        +Plate(String value)
-        -isValid(String value) boolean
-        +getValue() String
-        +getCountryCode() String
-    }
-
-class Vin {
-        -String code
-        +getManufacturer() String
-        +getVehicleDescription() String
-        +getCheckDigit() char
-        +getModelYear() int
-        +getAssemblyPlant() char
-        +getSerialNumber() String
-        -isValid(String code) boolean
-    }
     class Odometer {
         +double distance
         +DistanceUnit unit
         +Odometer(distance, unit)
-        +add(value: double) Odometer
+        +add(value) Odometer
     }
-    class Money {
-        +double amount
-        +String currency
-        +Money(amount, currency)
+
+    Vehicle --> VehicleType
+    Vehicle --> Odometer : currentOdometer
+    Vehicle --> VolumeUnit : fuelVolumeUnit
+    Vehicle --> DistanceUnit : (via Odometer)
+```
+
+**Notes:**
+- `plate` and `vin` are stored as plain `String?`, backed by value objects in `domain/value_objects/` for validation.
+- `currency` is a 3-letter ISO code string (USD, ARS, EUR, etc.) used for fuel price and service cost display.
+- `fuelVolumeUnit` determines whether fuel-ups display in liters or gallons.
+
+---
+
+### FuelLog
+
+Records a refueling event to track expenses and calculate consumption.
+
+```mermaid
+classDiagram
+    class FuelLog {
+        +String id
+        +String vehicleId
+        +DateTime date
+        +Volume fueledVolume
+        +Odometer odometerAtFueling
+        +double? pricePerUnit
+        +bool isFullTank
+        +bool isSynced
+        +FuelLog(...)
+        +get calculatedConsumption() double
     }
 
     class Volume {
@@ -64,338 +117,23 @@ class Vin {
         +VolumeUnit unit
         +Volume(amount, unit)
     }
-    
-    class SparePart {
-        -String sku
-        -String name
-        -Brand brand
-        -PartCategory category
-        -Map~String, String~ attributes
-        +getAttribute(String key) String
-        +isCompatibleWith(Vehicle vehicle) boolean
-    }
 
-    class PartCategory {
-        <<enumeration>>
-        FLUIDS
-        BRAKES
-        FILTERS
-        ELECTRONICS
-    }
-
-    class ReplacedPart {
-        +String sparePartId
-        +int quantity
-        +Money unitPrice
-        +Money getTotal() Money
-    }
-
-    class FitmentRule {
-        -String make
-        -String model
-        -int startYear
-        -int endYear
-        -String requiredEngineCode
-        +matches(Vehicle vehicle) boolean
-    }
-
-    class Consumption {
-        +double value
-        +DistanceUnit distanceUnit
-        +VolumeUnit volumeUnit
-    }
-
-    class Brand {
-        +String value
-    }
-
-    class Model {
-        +String value
-    }
-
-    class VehicleType {
-        <<enumeration>>
-        combustion
-        electric
-        motorcycle
-    }
-
-    class MaintenanceInterval {
-        +String id
-        +String vehicleId
-        +String label
-        +int kmInterval
-        +int? monthsInterval
-        +String? description
-        +double lastResetKm
-        +DateTime? lastResetDate
-        +bool isEnabled
-        +bool isCustom
-    }
-
-    class Vehicle {
-        +String id
-        +String brand
-        +String model
-        +int year
-        +String? alias
-        +VehicleType type
-        +Plate plate
-        +Vin vin
-        +Odometer currentOdometer
-        +DateTime createdAt
-        +bool isSynced
-        +String get displayName
-        +Vehicle(...)
-        +copyWith(...) Vehicle
-    }
-    
-    class FuelLog {
-        +String id
-        +String vehicleId
-        +DateTime date
-        +bool isSynced
-        +FuelLog(...)
-        +get calculatedConsumption() consumption
-    }
-
-    class MaintenanceLog {
-        +String id
-        +String vehicleId
-        +DateTime date
-        +String description
-        +bool isSynced
-        +MaintenanceLog(...)
-    }
-
-    Odometer --> DistanceUnit
-    Volume --> VolumeUnit
-    DomainException --> CoreError
-
-    SparePart --> PartCategory
-    SparePart "1" *-- "*" FitmentRule : compatible with
-
-    
-    Vehicle "1" *-- "1" Plate : contains
-    Vehicle "1" *-- "1" Vin : contains
-    Vehicle *-- Odometer : currentOdometer
-    
-    FuelLog *-- Volume : fueledVolume
-    FuelLog *-- Odometer : odometerAtFueling
-    
-    MaintenanceLog "1" *-- "*" ReplacedPart : includes parts
-    ReplacedPart "*" --> "1" SparePart : references by sparePartId+-
-
-    Vehicle "1" <-- "*" FuelLog : references by vehicleId
-    Vehicle "1" <-- "*" MaintenanceLog : references by vehicleId
-    Vehicle "1" <-- "*" MaintenanceInterval : references by vehicleId
-    Vehicle --> VehicleType
-```
-
- ## Objects
-
-### Imutable Value Objects
-#### VIN (Vehicle Identification Number)
- ```mermaid
- classDiagram
- class Vin {
-        -String code
-        +getManufacturer() String
-        +getVehicleDescription() String
-        +getCheckDigit() char
-        +getModelYear() int
-        +getAssemblyPlant() char
-        +getSerialNumber() String
-        -isValid(String code) boolean
-    }
- ```
-
-| Position | Section | Technical Name | Method Name | Description | Example |
-|----------|---------|-----------------|-------------|-------------|---------|
-| 1 - 3 | WMI | World Manufacturer Identifier | getWmi() | Country of origin and manufacturer code. | 1HG (Honda USA) |
-| 4 - 8 | VDS | Vehicle Descriptor Section | getAttributes() | Body type, engine, model, and restraint system. | EJ8449 |
-| 9 | VDS | Check Digit | getCheckDigit() | Mathematical verifier to detect typos or fakes. | 5 |
-| 10 | VIS | Model Year | getModelYear() | The specific year of manufacture (30-year cycle). | L (2020) |
-| 11 | VIS | Plant Code | getPlantCode() | The specific factory where it was assembled. | S (Suzuka) |
-| 12 - 17 | VIS | Sequence Number | getSerialNumber() | The unique production ID (the last 6 digits). | 012345 |
-
-#### Plate
-```mermaid
-classDiagram
-class Plate {
-        -String value
-        +Plate(String value)
-        -isValid(String value) boolean
-        +getValue() String
-        +getCountryCode() String
-    }
-```  
-
-### Mutable Objects
-
-#### Odometer
-```mermaid
-classDiagram
-class Odometer {
+    class Odometer {
         +double distance
         +DistanceUnit unit
-        +Odometer(distance, unit)
-        +add(value: double) Odometer
     }
-class DistanceUnit {
-        <<enumeration>>
-        kilometers
-        miles
-    }
+
+    FuelLog --> Volume : fueledVolume
+    FuelLog --> Odometer : odometerAtFueling
 ```
 
-#### Tire Code
-```mermaid
-classDiagram
-class TireCode {
-        -String code
-        +getWidth() int
-        +getAspectRatio() int
-        +getDiameter() int
-        +getLoadIndex() int
-        +getSpeedRating() char
-        -isValid(String code) boolean
-    }
-```
-
-#### Paint Code
-```mermaid
-classDiagram
-class PaintCode {
-        -String code
-        +getColor() String
-        +getManufacturer() String
-        +isValid(String code) boolean
-    }
-```
-### Maintenance parts
-```mermaid
-classDiagram
-    class SparePart {
-        -String sku
-        -String name
-        -Brand brand
-        -PartCategory category
-        -Map~String, String~ attributes
-        +getAttribute(String key) String
-        +isCompatibleWith(Vehicle vehicle) boolean
-    }
-
-    class PartCategory {
-        <<enumeration>>
-        FLUIDS
-        BRAKES
-        FILTERS
-        ELECTRONICS
-    }
-
-    class FitmentRule {
-        -String make
-        -String model
-        -int startYear
-        -int endYear
-        -String requiredEngineCode
-        +matches(Vehicle vehicle) boolean
-    }
-
-    SparePart --> PartCategory
-    SparePart "1" *-- "*" FitmentRule : compatible with
-```
-<details>
-<summary>Examples</summary>
->Example 1: Engine Oil
->* SKU: "CAS-5W30-5L"
->* Name: "Castrol Edge 5W-30"
->* Category: FLUIDS
->* Attributes Map: * "Viscosity" -> "5W-30"
->* "Volume" -> "5L"
->* "Composition" -> "Synthetic"
-
->Example 2: Battery
->* SKU: "BOSCH-S4-005"
->* Name: "Bosch S4 Car Battery"
->* Category: ELECTRONICS
->* Attributes Map: * "Voltage" -> "12V"
->* "Capacity" -> "60Ah"
->* "CCA" -> "540A"
-</details>
-
-Here is the rest of the documentation to complete your App Architecture. I've added the missing **Core Entities (Aggregates)**, **Transactional Logs**, **Shared Value Objects**, and **Error Handling** based on your master diagram.
+- `calculatedConsumption` returns L/100km or MPG depending on units.
+- Volume unit is **inherited from vehicle settings**, not stored per entry.
+- `pricePerUnit` is displayed with the vehicle's currency symbol.
 
 ---
 
-### Core Entities (Aggregates)
-
-#### Vehicle
-
-The root aggregate of the domain. It acts as the central hub tying the immutable identities (VIN, Plate) with the mutable state (Odometer) and logs.
-
-```mermaid
-classDiagram
-    class Vehicle {
-        +String id
-        +String brand
-        +String model
-        +int year
-        +String? alias
-        +VehicleType type
-        +DateTime createdAt
-        +bool isSynced
-        +String get displayName
-        +Vehicle(...)
-        +copyWith(...) Vehicle
-    }
-
-    class VehicleType {
-        <<enumeration>>
-        combustion
-        electric
-        motorcycle
-    }
-
-    class MaintenanceInterval {
-        +String id
-        +String vehicleId
-        +String label
-        +int kmInterval
-        +int? monthsInterval
-        +String? description
-        +double lastResetKm
-        +DateTime? lastResetDate
-        +bool isEnabled
-        +bool isCustom
-        +MaintenanceInterval(...)
-    }
-
-```
-
-### Transactional Logs
-
-These entities represent events that happen to a vehicle over time. They are strictly bound to a specific `Vehicle` via the `vehicleId`.
-
-#### Fuel Log
-
-Records a refueling event to track expenses and calculate fuel consumption (e.g., L/100km or MPG).
-
-```mermaid
-classDiagram
-    class FuelLog {
-        +String id
-        +String vehicleId
-        +DateTime date
-        +bool isSynced
-        +FuelLog(...)
-        +get calculatedConsumption() double
-    }
-
-```
-
-#### Maintenance Log
+### MaintenanceLog
 
 Records services or repairs performed on the vehicle.
 
@@ -406,16 +144,183 @@ classDiagram
         +String vehicleId
         +DateTime date
         +String description
+        +double? odometerAtService
         +bool isSynced
+        +String? resetIntervalId
+        +double? restoreResetKm
+        +DateTime? restoreResetDate
+        +List~ReplacedPart~ replacedParts
+        +List~String~ photoPaths
+        +double? costAmount
+        +String? costCurrency
         +MaintenanceLog(...)
+        +toJson() Map~String, dynamic~
+        +fromJson(Map) MaintenanceLog
+    }
+
+    class ReplacedPart {
+        +String sparePartId
+        +int quantity
+        +Money unitPrice
+        +getTotal() Money
+    }
+
+    class Money {
+        +double amount
+        +String currency
+        +Money(amount, currency)
+    }
+
+    MaintenanceLog "*" --> "*" ReplacedPart : includes
+    ReplacedPart --> Money : unitPrice
+```
+
+- `photoPaths` are stored as file paths to images in `{appDocDir}/maintenance_photos/{logId}/`.
+- `costAmount`/`costCurrency` store historical cost values independent of vehicle's current currency setting.
+- `replacedParts` links to the `SparePart` catalog via `sparePartId`.
+
+---
+
+### VehicleDocument
+
+Attaches files (receipts, photos, PDFs) to a vehicle.
+
+```mermaid
+classDiagram
+    class VehicleDocument {
+        +String id
+        +String vehicleId
+        +DocumentType type
+        +String name
+        +String fileName
+        +String filePath
+        +String? mimeType
+        +double? fileSize
+        +String? notes
+        +DateTime? expiryDate
+        +DateTime createdAt
+    }
+
+    class DocumentType {
+        <<enumeration>>
+        fine
+        parkingFee
+        insurance
+        vehicleCheck
+        tax
+        complexInsurance
+        vehicleRegister
+        other
+    }
+
+    VehicleDocument --> DocumentType
+```
+
+- Files are stored at `{appDocDir}/documents/{vehicleId}/{uuid}.{ext}`.
+- Document types are displayed with localized labels and icons.
+
+---
+
+### MaintenanceInterval
+
+Tracks periodic maintenance tasks with km/time thresholds.
+
+```mermaid
+classDiagram
+    class MaintenanceInterval {
+        +String id
+        +String vehicleId
+        +String label
+        +int kmInterval
+        +int? monthsInterval
+        +String? description
+        +double lastResetKm
+        +DateTime? lastResetDate
+        +bool isEnabled
+        +bool isCustom
+        +String? i18nKey
+        +String? descI18nKey
     }
 ```
 
-### Shared Value Objects
+- `i18nKey`/`descI18nKey` map to ARB translation keys for built-in intervals (oil change, filters, etc.).
+- `isCustom` distinguishes user-created intervals from seeded defaults.
+- `lastResetKm`/`lastResetDate` track the last service reset for "next in X km" calculations.
 
-Generic, immutable value objects used across different entities to enforce formatting and prevent primitive obsession (e.g., passing a negative amount or mixing up liters and gallons).
+---
 
-#### Money & Volume
+### Spare Parts Catalog
+
+```mermaid
+classDiagram
+    class SparePart {
+        +String sku
+        +String name
+        +String brand
+        +PartCategory category
+        +Map~String, String~ attributes
+        +isCompatibleWith(Vehicle) bool
+    }
+
+    class PartCategory {
+        <<enumeration>>
+        fluids
+        brakes
+        filters
+        electronics
+    }
+
+    class FitmentRule {
+        +String make
+        +String model
+        +int startYear
+        +int endYear
+        +String? requiredEngineCode
+        +matches(Vehicle) bool
+    }
+
+    SparePart --> PartCategory
+    SparePart "1" *-- "*" FitmentRule : compatible with
+```
+
+**Examples:**
+
+| SKU | Name | Category | Attributes |
+|-----|------|----------|------------|
+| `CAS-5W30-5L` | Castrol Edge 5W-30 | fluids | Viscosity: 5W-30, Volume: 5L, Composition: Synthetic |
+| `BOSCH-S4-005` | Bosch S4 Car Battery | electronics | Voltage: 12V, Capacity: 60Ah, CCA: 540A |
+
+---
+
+## Enums
+
+| Enum | File | Values |
+|------|------|--------|
+| `VehicleType` | `domain/enums/vehicle_type.dart` | `combustion`, `electric`, `motorcycle` |
+| `DistanceUnit` | `domain/enums/distance_unit.dart` | `kilometers`, `miles` |
+| `VolumeUnit` | `domain/enums/volume_unit.dart` | `liters`, `gallons` |
+| `DocumentType` | `domain/enums/document_type.dart` | `fine`, `parkingFee`, `insurance`, `vehicleCheck`, `tax`, `complexInsurance`, `vehicleRegister`, `other` |
+| `CoreError` | `domain/enums/core_error.dart` | `emptyLicensePlate`, `invalidLicensePlateFormat`, `negativeOdometer`, `negativeMoneyAmount`, `invalidVehicleYear`, `invalidVinFormat` |
+
+---
+
+## Value Objects
+
+Immutable objects that enforce formatting and prevent primitive obsession.
+
+### Odometer
+
+```mermaid
+classDiagram
+    class Odometer {
+        +double distance
+        +DistanceUnit unit
+        +Odometer(distance, unit)
+        +add(value) Odometer
+    }
+```
+
+### Money
 
 ```mermaid
 classDiagram
@@ -424,24 +329,27 @@ classDiagram
         +String currency
         +Money(amount, currency)
     }
-    
+```
+
+### Volume
+
+```mermaid
+classDiagram
     class Volume {
         +double amount
         +VolumeUnit unit
         +Volume(amount, unit)
     }
-    
-    class VolumeUnit {
-        <<enumeration>>
-        liters
-        gallons
-    }
-
 ```
 
-### Exceptions & Error Handling
+### Plate & VIN
 
-Centralized domain errors ensure that business rules are strictly validated before any object is created or saved to the database.
+- **Plate** — Validates license plate format per country.
+- **VIN** — Validates 17-character VIN structure, extracts WMI/VDS/check digit/model year/plant/serial.
+
+---
+
+## Error Handling
 
 ```mermaid
 classDiagram
@@ -452,12 +360,158 @@ classDiagram
         negativeOdometer
         negativeMoneyAmount
         invalidVehicleYear
+        invalidVinFormat
     }
-    
+
     class DomainException {
         +CoreError error
         +DomainException(error)
         +toString() String
     }
 
+    DomainException --> CoreError
 ```
+
+All business rule violations throw `DomainException` with a `CoreError` enum value. Presentation layer catches these to show localized error messages.
+
+---
+
+## Data Services
+
+### Template Resolution (`data/services/template_resolver.dart`)
+
+Loads vehicle maintenance templates from bundled JSON assets. Templates define default maintenance intervals for specific make/model/year combinations.
+
+```mermaid
+classDiagram
+    class TemplateResolver {
+        +Future~TemplateIndex~ loadIndex()
+        +Future~TemplateMeta~ resolveTemplate(String templateId)
+        +Future~TemplateMeta?~ findBestMatch(String make, String model, int year)
+    }
+
+    class TemplateIndex {
+        +List~TemplateItem~ items
+    }
+
+    class TemplateItem {
+        +String id
+        +String templateId
+        +String make
+        +String model
+        +int year
+    }
+
+    class TemplateMeta {
+        +String id
+        +String make
+        +String model
+        +int year
+        +List~IntervalDef~ intervals
+    }
+
+    TemplateResolver --> TemplateIndex
+    TemplateResolver --> TemplateMeta
+```
+
+- Templates are JSON files in the bundled `templates/` directory.
+- `findBestMatch()` searches by make + model + year and returns the best matching template.
+- Used in the vehicle creation form ("Buscar plantilla" button).
+
+### PDF Export (`data/services/pdf_export_service.dart`)
+
+Generates maintenance report PDFs using the `pdf` and `printing` packages.
+
+```mermaid
+classDiagram
+    class PdfExportService {
+        +Future~Uint8List~ generateReport(
+            String vehicleName,
+            DateTime startDate,
+            DateTime endDate,
+            List~MaintenanceLog~ logs
+        )
+    }
+```
+
+- Output: in-memory PDF bytes, shared via `Share.shareXFiles`.
+- Uses Roboto font from `PdfGoogleFonts` (bundled with `printing` package) for Unicode support.
+- Linux desktop fallback: `xdg-open` since `share_plus` is unimplemented.
+
+### Data Export/Import (`data/services/export_service.dart`)
+
+Exports all vehicle data (vehicles, fuel logs, maintenance logs) as a JSON file for backup or transfer.
+
+---
+
+## Persistence
+
+### Drift Database (`core/database/app_database.dart`)
+
+| Table | Schema Version Added | Notes |
+|-------|---------------------|-------|
+| `Vehicles` | v1 | Has `fuelVolumeUnit` (v9), `currency` (v10) |
+| `FuelLogs` | v1 | |
+| `MaintenanceLogs` | v1 | Has `photoPaths`, `costAmount`, `costCurrency` (v10) |
+| `MaintenanceIntervals` | v1 | |
+| `VehicleDocuments` | v7 | |
+| `ReplacedParts` | v1 | |
+
+**Current schema version:** **10**
+
+Migrations are handled incrementally in `MigrationStrategy` inside `app_database.dart`. Each schema change adds a `migrate.fromCallback` step.
+
+---
+
+## Providers (Riverpod)
+
+All providers are defined in `presentation/providers/vehicle_providers.dart` and `locale_provider.dart`.
+
+### Repository Providers (singletons)
+
+| Provider | Type | Returns |
+|----------|------|---------|
+| `appDatabaseProvider` | `Provider<AppDatabase>` | Database instance |
+| `vehicleRepositoryProvider` | `Provider<VehicleRepository>` | `VehicleRepositoryImpl` |
+| `fuelLogRepositoryProvider` | `Provider<FuelLogRepository>` | `FuelLogRepositoryImpl` |
+| `maintenanceLogRepositoryProvider` | `Provider<MaintenanceLogRepository>` | `MaintenanceLogRepositoryImpl` |
+| `maintenanceIntervalRepositoryProvider` | `Provider<MaintenanceIntervalRepository>` | `MaintenanceIntervalRepositoryImpl` |
+| `vehicleDocumentRepositoryProvider` | `Provider<VehicleDocumentRepository>` | `VehicleDocumentRepositoryImpl` |
+| `exportServiceProvider` | `Provider<ExportService>` | `ExportService` |
+| `templateResolverProvider` | `Provider<TemplateResolver>` | `TemplateResolver` |
+| `pdfExportServiceProvider` | `Provider<PdfExportService>` | `PdfExportService` |
+
+### Data Providers (async, family by vehicleId)
+
+| Provider | Returns |
+|----------|---------|
+| `vehicleListProvider` | `List<Vehicle>` |
+| `vehicleProvider(vehicleId)` | `Vehicle?` |
+| `fuelLogsProvider(vehicleId)` | `List<FuelLog>` |
+| `maintenanceLogsProvider(vehicleId)` | `List<MaintenanceLog>` |
+| `maintenanceIntervalsProvider(vehicleId)` | `List<MaintenanceInterval>` |
+| `vehicleDocumentsProvider(vehicleId)` | `List<VehicleDocument>` |
+
+### Locale Provider
+
+| Provider | Purpose |
+|----------|---------|
+| `localeProvider` | Read/write current locale (en/es), persisted in `SharedPreferences` |
+
+---
+
+## Data Flow Example
+
+```
+User taps "Add fuel log"
+  → vehicle_detail_page calls showAddFuelLogModal(context, vehicleId)
+  → Modal reads vehicle from ref (for odometer, volume unit, currency)
+  → User fills form, taps "Save"
+  → Modal calls fuelLogRepositoryProvider.save(FuelLog(...))
+  → Repository impl converts to Drift companion, inserts row
+  → Modal pops with result=true
+  → Vehicle detail page invalidates fuelLogsProvider to refresh UI
+```
+
+- There is no use-case/orchestrator layer — providers call repositories directly.
+- Modals return `bool` to signal success; the caller invalidates the relevant provider.
