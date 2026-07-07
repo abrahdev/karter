@@ -816,4 +816,12 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get notificationMaintenanceSnooze => 'Posponer mantenimiento 1 semana';
+
+  @override
+  String get notificationSnoozeToggle => 'Posponer recordatorios';
+
+  @override
+  String notificationSnoozeDays(Object days) {
+    return '$days días';
+  }
 }

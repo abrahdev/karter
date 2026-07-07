@@ -19,6 +19,7 @@ import 'package:mobile/presentation/pages/fuel_log_form_page.dart';
 import 'package:mobile/presentation/pages/fuel_log_list_page.dart';
 import 'package:mobile/presentation/pages/home_page.dart';
 import 'package:mobile/domain/entities/maintenance_log.dart';
+import 'package:mobile/domain/enums/vehicle_type.dart';
 import 'package:mobile/presentation/pages/maintenance_log_form_page.dart';
 import 'package:mobile/presentation/pages/maintenance_log_list_page.dart';
 import 'package:mobile/presentation/pages/maintenance_settings_page.dart';
@@ -26,6 +27,7 @@ import 'package:mobile/presentation/pages/more_page.dart';
 import 'package:mobile/presentation/pages/notification_settings_page.dart';
 import 'package:mobile/presentation/pages/vehicle_detail_page.dart';
 import 'package:mobile/presentation/pages/vehicle_form_page.dart';
+import 'package:mobile/presentation/widgets/notification_settings_modal.dart';
 
 final _router = GoRouter(
   initialLocation: '/',
@@ -311,66 +313,43 @@ class _NotificationListPage extends ConsumerWidget {
             itemCount: vehicles.length,
             itemBuilder: (_, i) {
               final v = vehicles[i];
-              final label = v.alias ?? '${v.brand} ${v.model}';
               final freq = v.odometerReminderFreqDays;
               final maintOn = v.maintenanceReminderEnabled;
               return Card(
                 margin: const EdgeInsets.only(bottom: 12),
-                child: InkWell(
-                  borderRadius: BorderRadius.circular(12),
-                  onTap: () {
-                    showModalBottomSheet(
-                      context: context,
-                      isScrollControlled: true,
-                      builder: (_) => DraggableScrollableSheet(
-                        initialChildSize: 0.65,
-                        minChildSize: 0.4,
-                        maxChildSize: 0.9,
-                        expand: false,
-                        builder: (_, scrollController) =>
-                            NotificationSettingsContent(
-                          vehicleId: v.id,
-                          scrollController: scrollController,
-                        ),
-                      ),
-                    );
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.notifications_outlined,
-                          color: theme.colorScheme.primary,
-                        ),
-                        const SizedBox(width: 16),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(label,
-                                  style: theme.textTheme.titleMedium),
-                              const SizedBox(height: 4),
-                              Text(
-                                l.notificationVehicleSubtitle(
-                                  freq != null
-                                      ? l.notificationFreqValue(freq)
-                                      : l.notificationFreqOff,
-                                  maintOn
-                                      ? l.notificationMaintOn
-                                      : l.notificationMaintOff,
-                                ),
-                                style: theme.textTheme.bodySmall?.copyWith(
-                                  color: theme.colorScheme.onSurfaceVariant,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const Icon(Icons.chevron_right),
-                      ],
+                child: ListTile(
+                  leading: CircleAvatar(
+                    backgroundColor: theme.colorScheme.primaryContainer,
+                    child: Icon(
+                      switch (v.type) {
+                        VehicleType.combustion => Icons.local_gas_station,
+                        VehicleType.electric => Icons.electric_car,
+                        VehicleType.motorcycle => Icons.motorcycle,
+                      },
+                      color: theme.colorScheme.onPrimaryContainer,
                     ),
                   ),
+                  title: Text(v.displayName),
+                  subtitle: Text(
+                    l.notificationVehicleSubtitle(
+                      freq != null
+                          ? l.notificationFreqValue(freq)
+                          : l.notificationFreqOff,
+                      maintOn
+                          ? l.notificationMaintOn
+                          : l.notificationMaintOff,
+                    ),
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: theme.colorScheme.onSurfaceVariant,
+                    ),
+                  ),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: () {
+                    showNotificationSettingsModal(
+                      context,
+                      vehicleId: v.id,
+                    );
+                  },
                 ),
               );
             },

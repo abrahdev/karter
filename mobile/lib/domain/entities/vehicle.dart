@@ -5,7 +5,13 @@ import '../value_objects/odometer.dart';
 import '../value_objects/plate.dart';
 import '../value_objects/vin.dart';
 
+class _Sentinel {
+  const _Sentinel();
+}
+
 class Vehicle {
+  static const _sentinel = _Sentinel();
+
   final String id;
   final String brand;
   final String model;
@@ -75,42 +81,47 @@ class Vehicle {
     String? brand,
     String? model,
     int? year,
-    String? alias,
+    Object? alias = _sentinel,
     DateTime? createdAt,
     bool? isSynced,
-    Plate? plate,
-    Vin? vin,
+    Object? plate = _sentinel,
+    Object? vin = _sentinel,
     Odometer? currentOdometer,
     VehicleType? type,
     VolumeUnit? fuelVolumeUnit,
     String? currency,
-    int? odometerReminderFreqDays,
-    DateTime? odometerReminderLastNotified,
+    Object? odometerReminderFreqDays = _sentinel,
+    Object? odometerReminderLastNotified = _sentinel,
     bool? maintenanceReminderEnabled,
-    DateTime? maintenanceReminderSnoozedUntil,
+    Object? maintenanceReminderSnoozedUntil = _sentinel,
   }) {
     return Vehicle(
       id: id ?? this.id,
       brand: brand ?? this.brand,
       model: model ?? this.model,
       year: year ?? this.year,
-      alias: alias ?? this.alias,
+      alias: identical(alias, _sentinel) ? this.alias : alias as String?,
       createdAt: createdAt ?? this.createdAt,
       isSynced: isSynced ?? this.isSynced,
-      plate: plate ?? this.plate,
-      vin: vin ?? this.vin,
+      plate: identical(plate, _sentinel) ? this.plate : plate as Plate?,
+      vin: identical(vin, _sentinel) ? this.vin : vin as Vin?,
       currentOdometer: currentOdometer ?? this.currentOdometer,
       type: type ?? this.type,
       fuelVolumeUnit: fuelVolumeUnit ?? this.fuelVolumeUnit,
       currency: currency ?? this.currency,
-      odometerReminderFreqDays:
-          odometerReminderFreqDays ?? this.odometerReminderFreqDays,
+      odometerReminderFreqDays: identical(odometerReminderFreqDays, _sentinel)
+          ? this.odometerReminderFreqDays
+          : odometerReminderFreqDays as int?,
       odometerReminderLastNotified:
-          odometerReminderLastNotified ?? this.odometerReminderLastNotified,
+          identical(odometerReminderLastNotified, _sentinel)
+              ? this.odometerReminderLastNotified
+              : odometerReminderLastNotified as DateTime?,
       maintenanceReminderEnabled:
           maintenanceReminderEnabled ?? this.maintenanceReminderEnabled,
       maintenanceReminderSnoozedUntil:
-          maintenanceReminderSnoozedUntil ?? this.maintenanceReminderSnoozedUntil,
+          identical(maintenanceReminderSnoozedUntil, _sentinel)
+              ? this.maintenanceReminderSnoozedUntil
+              : maintenanceReminderSnoozedUntil as DateTime?,
     );
   }
 

@@ -264,5 +264,7 @@
   "notificationFreqMonthly": "Every 30 days",
   "notificationFreqCustom": "Custom",
   "notificationFreqDays": "{days} days",
-  "notificationMaintenanceSnooze": "Snooze maintenance for 1 week"
+  "notificationMaintenanceSnooze": "Snooze maintenance for 1 week",
+  "notificationSnoozeToggle": "Snooze reminders",
+  "notificationSnoozeDays": "{days} days"
 }

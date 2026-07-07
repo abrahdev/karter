@@ -264,5 +264,7 @@
   "notificationFreqMonthly": "Cada 30 días",
   "notificationFreqCustom": "Personalizado",
   "notificationFreqDays": "{days} días",
-  "notificationMaintenanceSnooze": "Posponer mantenimiento 1 semana"
+  "notificationMaintenanceSnooze": "Posponer mantenimiento 1 semana",
+  "notificationSnoozeToggle": "Posponer recordatorios",
+  "notificationSnoozeDays": "{days} días"
 }

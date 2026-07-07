@@ -4,45 +4,35 @@ import 'package:mobile/domain/entities/vehicle.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
 
-class NotificationSettingsPage extends ConsumerWidget {
-  final String vehicleId;
-
-  const NotificationSettingsPage({super.key, required this.vehicleId});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final l = AppLocalizations.of(context)!;
-    return Scaffold(
-      appBar: AppBar(title: Text(l.notificationSettingsTitle)),
-      body: NotificationSettingsContent(
-        vehicleId: vehicleId,
-        scrollController: null,
-      ),
-    );
-  }
+Future<void> showNotificationSettingsModal(
+  BuildContext context, {
+  required String vehicleId,
+}) async {
+  await showModalBottomSheet(
+    context: context,
+    isScrollControlled: true,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+    ),
+    builder: (_) => _NotificationSettingsModal(vehicleId: vehicleId),
+  );
 }
 
-class NotificationSettingsContent extends ConsumerStatefulWidget {
+class _NotificationSettingsModal extends ConsumerStatefulWidget {
   final String vehicleId;
-  final ScrollController? scrollController;
 
-  const NotificationSettingsContent({
-    super.key,
-    required this.vehicleId,
-    this.scrollController,
-  });
+  const _NotificationSettingsModal({required this.vehicleId});
 
   @override
-  ConsumerState<NotificationSettingsContent> createState() =>
-      _NotificationSettingsContentState();
+  ConsumerState<_NotificationSettingsModal> createState() =>
+      _NotificationSettingsModalState();
 }
 
-class _NotificationSettingsContentState
-    extends ConsumerState<NotificationSettingsContent> {
+class _NotificationSettingsModalState
+    extends ConsumerState<_NotificationSettingsModal> {
   late double _sliderValue;
   late double _snoozeDays;
   late Set<int> _selectedFreq;
-  bool _initialized = false;
 
   Vehicle? get _vehicle =>
       ref.watch(vehicleProvider(widget.vehicleId)).valueOrNull;
@@ -85,7 +75,6 @@ class _NotificationSettingsContentState
               .clamp(1, 14)
               .toDouble();
         }
-        _initialized = true;
       });
     }
   }
@@ -109,24 +98,47 @@ class _NotificationSettingsContentState
     final theme = Theme.of(context);
     final l = AppLocalizations.of(context)!;
 
-    if (vehicle == null || !_initialized) {
-      return const Center(child: CircularProgressIndicator());
-    }
-
-    return ListView(
-      controller: widget.scrollController,
-      padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
-      children: [
-        Text(l.notificationOdometerSection,
-            style: theme.textTheme.titleSmall),
-        const SizedBox(height: 12),
-        _buildFreqSelector(theme, l),
-        const SizedBox(height: 24),
-        Text(l.notificationMaintenanceSection,
-            style: theme.textTheme.titleSmall),
-        const SizedBox(height: 12),
-        _buildMaintenanceToggle(vehicle, theme, l),
-      ],
+    return Padding(
+      padding: EdgeInsets.only(
+        bottom: MediaQuery.of(context).viewInsets.bottom,
+      ),
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: Container(
+                width: 40,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: theme.colorScheme.outlineVariant,
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+            ),
+            const SizedBox(height: 16),
+            Text(l.notificationSettingsTitle,
+                style: theme.textTheme.titleLarge),
+            const SizedBox(height: 20),
+            if (vehicle == null)
+              const Center(child: CircularProgressIndicator())
+            else ...[
+              Text(l.notificationOdometerSection,
+                  style: theme.textTheme.titleSmall),
+              const SizedBox(height: 12),
+              _buildFreqSelector(theme, l),
+              const SizedBox(height: 24),
+              Text(l.notificationMaintenanceSection,
+                  style: theme.textTheme.titleSmall),
+              const SizedBox(height: 12),
+              _buildMaintenanceToggle(vehicle, theme, l),
+            ],
+            const SizedBox(height: 8),
+          ],
+        ),
+      ),
     );
   }
 

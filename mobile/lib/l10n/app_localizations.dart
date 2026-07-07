@@ -1541,6 +1541,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Snooze maintenance for 1 week'**
   String get notificationMaintenanceSnooze;
+
+  /// No description provided for @notificationSnoozeToggle.
+  ///
+  /// In en, this message translates to:
+  /// **'Snooze reminders'**
+  String get notificationSnoozeToggle;
+
+  /// No description provided for @notificationSnoozeDays.
+  ///
+  /// In en, this message translates to:
+  /// **'{days} days'**
+  String notificationSnoozeDays(Object days);
 }
 
 class _AppLocalizationsDelegate
