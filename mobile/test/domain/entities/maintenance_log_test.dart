@@ -15,17 +15,5 @@ void main() {
       expect(log.id, '1');
       expect(log.description, 'Oil change');
     });
-
-    test('default replacedParts is empty', () {
-      final log = MaintenanceLog(
-        id: '1',
-        vehicleId: 'v1',
-        date: DateTime.now(),
-        description: 'Checkup',
-        isSynced: false,
-      );
-
-      expect(log.replacedParts, isEmpty);
-    });
   });
 }

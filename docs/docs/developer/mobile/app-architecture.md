@@ -149,7 +149,6 @@ classDiagram
         +String? resetIntervalId
         +double? restoreResetKm
         +DateTime? restoreResetDate
-        +List~ReplacedPart~ replacedParts
         +List~String~ photoPaths
         +double? costAmount
         +String? costCurrency
@@ -157,27 +156,10 @@ classDiagram
         +toJson() Map~String, dynamic~
         +fromJson(Map) MaintenanceLog
     }
-
-    class ReplacedPart {
-        +String sparePartId
-        +int quantity
-        +Money unitPrice
-        +getTotal() Money
-    }
-
-    class Money {
-        +double amount
-        +String currency
-        +Money(amount, currency)
-    }
-
-    MaintenanceLog "*" --> "*" ReplacedPart : includes
-    ReplacedPart --> Money : unitPrice
 ```
 
 - `photoPaths` are stored as file paths to images in `{appDocDir}/maintenance_photos/{logId}/`.
 - `costAmount`/`costCurrency` store historical cost values independent of vehicle's current currency setting.
-- `replacedParts` links to the `SparePart` catalog via `sparePartId`.
 
 ---
 
@@ -249,49 +231,6 @@ classDiagram
 
 ---
 
-### Spare Parts Catalog
-
-```mermaid
-classDiagram
-    class SparePart {
-        +String sku
-        +String name
-        +String brand
-        +PartCategory category
-        +Map~String, String~ attributes
-        +isCompatibleWith(Vehicle) bool
-    }
-
-    class PartCategory {
-        <<enumeration>>
-        fluids
-        brakes
-        filters
-        electronics
-    }
-
-    class FitmentRule {
-        +String make
-        +String model
-        +int startYear
-        +int endYear
-        +String? requiredEngineCode
-        +matches(Vehicle) bool
-    }
-
-    SparePart --> PartCategory
-    SparePart "1" *-- "*" FitmentRule : compatible with
-```
-
-**Examples:**
-
-| SKU | Name | Category | Attributes |
-|-----|------|----------|------------|
-| `CAS-5W30-5L` | Castrol Edge 5W-30 | fluids | Viscosity: 5W-30, Volume: 5L, Composition: Synthetic |
-| `BOSCH-S4-005` | Bosch S4 Car Battery | electronics | Voltage: 12V, Capacity: 60Ah, CCA: 540A |
-
----
-
 ## Enums
 
 | Enum | File | Values |
@@ -320,17 +259,6 @@ classDiagram
     }
 ```
 
-### Money
-
-```mermaid
-classDiagram
-    class Money {
-        +double amount
-        +String currency
-        +Money(amount, currency)
-    }
-```
-
 ### Volume
 
 ```mermaid
@@ -342,10 +270,47 @@ classDiagram
     }
 ```
 
-### Plate & VIN
+### Plate
 
-- **Plate** — Validates license plate format per country.
-- **VIN** — Validates 17-character VIN structure, extracts WMI/VDS/check digit/model year/plant/serial.
+```mermaid
+classDiagram
+    class Plate {
+        -String value
+        +Plate(String value)
+        -isValid(String value) bool
+        +getValue() String
+        +getCountryCode() String
+    }
+```
+
+Validates license plate format by country code. Currently supports Argentina (ABC·123, AB·123·CD) and generic alphanumeric formats.
+
+### VIN
+
+```mermaid
+classDiagram
+    class Vin {
+        -String code
+        +getManufacturer() String
+        +getVehicleDescription() String
+        +getCheckDigit() String
+        +getModelYear() int
+        +getAssemblyPlant() String
+        +getSerialNumber() String
+        -isValid(String code) bool
+    }
+```
+
+Validates 17-character VIN structure and extracts:
+
+| Position | Section | Description |
+|----------|---------|-------------|
+| 1 - 3 | WMI | World Manufacturer Identifier |
+| 4 - 8 | VDS | Vehicle Descriptor Section |
+| 9 | VDS | Check Digit |
+| 10 | VIS | Model Year |
+| 11 | VIS | Plant Code |
+| 12 - 17 | VIS | Serial Number |
 
 ---
 
@@ -455,7 +420,6 @@ Exports all vehicle data (vehicles, fuel logs, maintenance logs) as a JSON file 
 | `MaintenanceLogs` | v1 | Has `photoPaths`, `costAmount`, `costCurrency` (v10) |
 | `MaintenanceIntervals` | v1 | |
 | `VehicleDocuments` | v7 | |
-| `ReplacedParts` | v1 | |
 
 **Current schema version:** **10**
 

@@ -2244,447 +2244,6 @@ class MaintenanceLogsCompanion extends UpdateCompanion<MaintenanceLogEntry> {
   }
 }
 
-class $ReplacedPartsTable extends ReplacedParts
-    with TableInfo<$ReplacedPartsTable, ReplacedPartEntry> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $ReplacedPartsTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<String> id = GeneratedColumn<String>(
-    'id',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _maintenanceLogIdMeta = const VerificationMeta(
-    'maintenanceLogId',
-  );
-  @override
-  late final GeneratedColumn<String> maintenanceLogId = GeneratedColumn<String>(
-    'maintenance_log_id',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES maintenance_logs (id)',
-    ),
-  );
-  static const VerificationMeta _sparePartIdMeta = const VerificationMeta(
-    'sparePartId',
-  );
-  @override
-  late final GeneratedColumn<String> sparePartId = GeneratedColumn<String>(
-    'spare_part_id',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _quantityMeta = const VerificationMeta(
-    'quantity',
-  );
-  @override
-  late final GeneratedColumn<int> quantity = GeneratedColumn<int>(
-    'quantity',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _unitPriceAmountMeta = const VerificationMeta(
-    'unitPriceAmount',
-  );
-  @override
-  late final GeneratedColumn<double> unitPriceAmount = GeneratedColumn<double>(
-    'unit_price_amount',
-    aliasedName,
-    false,
-    type: DriftSqlType.double,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _unitPriceCurrencyMeta = const VerificationMeta(
-    'unitPriceCurrency',
-  );
-  @override
-  late final GeneratedColumn<String> unitPriceCurrency =
-      GeneratedColumn<String>(
-        'unit_price_currency',
-        aliasedName,
-        false,
-        type: DriftSqlType.string,
-        requiredDuringInsert: true,
-      );
-  @override
-  List<GeneratedColumn> get $columns => [
-    id,
-    maintenanceLogId,
-    sparePartId,
-    quantity,
-    unitPriceAmount,
-    unitPriceCurrency,
-  ];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'replaced_parts';
-  @override
-  VerificationContext validateIntegrity(
-    Insertable<ReplacedPartEntry> instance, {
-    bool isInserting = false,
-  }) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    } else if (isInserting) {
-      context.missing(_idMeta);
-    }
-    if (data.containsKey('maintenance_log_id')) {
-      context.handle(
-        _maintenanceLogIdMeta,
-        maintenanceLogId.isAcceptableOrUnknown(
-          data['maintenance_log_id']!,
-          _maintenanceLogIdMeta,
-        ),
-      );
-    } else if (isInserting) {
-      context.missing(_maintenanceLogIdMeta);
-    }
-    if (data.containsKey('spare_part_id')) {
-      context.handle(
-        _sparePartIdMeta,
-        sparePartId.isAcceptableOrUnknown(
-          data['spare_part_id']!,
-          _sparePartIdMeta,
-        ),
-      );
-    } else if (isInserting) {
-      context.missing(_sparePartIdMeta);
-    }
-    if (data.containsKey('quantity')) {
-      context.handle(
-        _quantityMeta,
-        quantity.isAcceptableOrUnknown(data['quantity']!, _quantityMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_quantityMeta);
-    }
-    if (data.containsKey('unit_price_amount')) {
-      context.handle(
-        _unitPriceAmountMeta,
-        unitPriceAmount.isAcceptableOrUnknown(
-          data['unit_price_amount']!,
-          _unitPriceAmountMeta,
-        ),
-      );
-    } else if (isInserting) {
-      context.missing(_unitPriceAmountMeta);
-    }
-    if (data.containsKey('unit_price_currency')) {
-      context.handle(
-        _unitPriceCurrencyMeta,
-        unitPriceCurrency.isAcceptableOrUnknown(
-          data['unit_price_currency']!,
-          _unitPriceCurrencyMeta,
-        ),
-      );
-    } else if (isInserting) {
-      context.missing(_unitPriceCurrencyMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  ReplacedPartEntry map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return ReplacedPartEntry(
-      id: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}id'],
-      )!,
-      maintenanceLogId: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}maintenance_log_id'],
-      )!,
-      sparePartId: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}spare_part_id'],
-      )!,
-      quantity: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}quantity'],
-      )!,
-      unitPriceAmount: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
-        data['${effectivePrefix}unit_price_amount'],
-      )!,
-      unitPriceCurrency: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}unit_price_currency'],
-      )!,
-    );
-  }
-
-  @override
-  $ReplacedPartsTable createAlias(String alias) {
-    return $ReplacedPartsTable(attachedDatabase, alias);
-  }
-}
-
-class ReplacedPartEntry extends DataClass
-    implements Insertable<ReplacedPartEntry> {
-  final String id;
-  final String maintenanceLogId;
-  final String sparePartId;
-  final int quantity;
-  final double unitPriceAmount;
-  final String unitPriceCurrency;
-  const ReplacedPartEntry({
-    required this.id,
-    required this.maintenanceLogId,
-    required this.sparePartId,
-    required this.quantity,
-    required this.unitPriceAmount,
-    required this.unitPriceCurrency,
-  });
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<String>(id);
-    map['maintenance_log_id'] = Variable<String>(maintenanceLogId);
-    map['spare_part_id'] = Variable<String>(sparePartId);
-    map['quantity'] = Variable<int>(quantity);
-    map['unit_price_amount'] = Variable<double>(unitPriceAmount);
-    map['unit_price_currency'] = Variable<String>(unitPriceCurrency);
-    return map;
-  }
-
-  ReplacedPartsCompanion toCompanion(bool nullToAbsent) {
-    return ReplacedPartsCompanion(
-      id: Value(id),
-      maintenanceLogId: Value(maintenanceLogId),
-      sparePartId: Value(sparePartId),
-      quantity: Value(quantity),
-      unitPriceAmount: Value(unitPriceAmount),
-      unitPriceCurrency: Value(unitPriceCurrency),
-    );
-  }
-
-  factory ReplacedPartEntry.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return ReplacedPartEntry(
-      id: serializer.fromJson<String>(json['id']),
-      maintenanceLogId: serializer.fromJson<String>(json['maintenanceLogId']),
-      sparePartId: serializer.fromJson<String>(json['sparePartId']),
-      quantity: serializer.fromJson<int>(json['quantity']),
-      unitPriceAmount: serializer.fromJson<double>(json['unitPriceAmount']),
-      unitPriceCurrency: serializer.fromJson<String>(json['unitPriceCurrency']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<String>(id),
-      'maintenanceLogId': serializer.toJson<String>(maintenanceLogId),
-      'sparePartId': serializer.toJson<String>(sparePartId),
-      'quantity': serializer.toJson<int>(quantity),
-      'unitPriceAmount': serializer.toJson<double>(unitPriceAmount),
-      'unitPriceCurrency': serializer.toJson<String>(unitPriceCurrency),
-    };
-  }
-
-  ReplacedPartEntry copyWith({
-    String? id,
-    String? maintenanceLogId,
-    String? sparePartId,
-    int? quantity,
-    double? unitPriceAmount,
-    String? unitPriceCurrency,
-  }) => ReplacedPartEntry(
-    id: id ?? this.id,
-    maintenanceLogId: maintenanceLogId ?? this.maintenanceLogId,
-    sparePartId: sparePartId ?? this.sparePartId,
-    quantity: quantity ?? this.quantity,
-    unitPriceAmount: unitPriceAmount ?? this.unitPriceAmount,
-    unitPriceCurrency: unitPriceCurrency ?? this.unitPriceCurrency,
-  );
-  ReplacedPartEntry copyWithCompanion(ReplacedPartsCompanion data) {
-    return ReplacedPartEntry(
-      id: data.id.present ? data.id.value : this.id,
-      maintenanceLogId: data.maintenanceLogId.present
-          ? data.maintenanceLogId.value
-          : this.maintenanceLogId,
-      sparePartId: data.sparePartId.present
-          ? data.sparePartId.value
-          : this.sparePartId,
-      quantity: data.quantity.present ? data.quantity.value : this.quantity,
-      unitPriceAmount: data.unitPriceAmount.present
-          ? data.unitPriceAmount.value
-          : this.unitPriceAmount,
-      unitPriceCurrency: data.unitPriceCurrency.present
-          ? data.unitPriceCurrency.value
-          : this.unitPriceCurrency,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('ReplacedPartEntry(')
-          ..write('id: $id, ')
-          ..write('maintenanceLogId: $maintenanceLogId, ')
-          ..write('sparePartId: $sparePartId, ')
-          ..write('quantity: $quantity, ')
-          ..write('unitPriceAmount: $unitPriceAmount, ')
-          ..write('unitPriceCurrency: $unitPriceCurrency')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(
-    id,
-    maintenanceLogId,
-    sparePartId,
-    quantity,
-    unitPriceAmount,
-    unitPriceCurrency,
-  );
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is ReplacedPartEntry &&
-          other.id == this.id &&
-          other.maintenanceLogId == this.maintenanceLogId &&
-          other.sparePartId == this.sparePartId &&
-          other.quantity == this.quantity &&
-          other.unitPriceAmount == this.unitPriceAmount &&
-          other.unitPriceCurrency == this.unitPriceCurrency);
-}
-
-class ReplacedPartsCompanion extends UpdateCompanion<ReplacedPartEntry> {
-  final Value<String> id;
-  final Value<String> maintenanceLogId;
-  final Value<String> sparePartId;
-  final Value<int> quantity;
-  final Value<double> unitPriceAmount;
-  final Value<String> unitPriceCurrency;
-  final Value<int> rowid;
-  const ReplacedPartsCompanion({
-    this.id = const Value.absent(),
-    this.maintenanceLogId = const Value.absent(),
-    this.sparePartId = const Value.absent(),
-    this.quantity = const Value.absent(),
-    this.unitPriceAmount = const Value.absent(),
-    this.unitPriceCurrency = const Value.absent(),
-    this.rowid = const Value.absent(),
-  });
-  ReplacedPartsCompanion.insert({
-    required String id,
-    required String maintenanceLogId,
-    required String sparePartId,
-    required int quantity,
-    required double unitPriceAmount,
-    required String unitPriceCurrency,
-    this.rowid = const Value.absent(),
-  }) : id = Value(id),
-       maintenanceLogId = Value(maintenanceLogId),
-       sparePartId = Value(sparePartId),
-       quantity = Value(quantity),
-       unitPriceAmount = Value(unitPriceAmount),
-       unitPriceCurrency = Value(unitPriceCurrency);
-  static Insertable<ReplacedPartEntry> custom({
-    Expression<String>? id,
-    Expression<String>? maintenanceLogId,
-    Expression<String>? sparePartId,
-    Expression<int>? quantity,
-    Expression<double>? unitPriceAmount,
-    Expression<String>? unitPriceCurrency,
-    Expression<int>? rowid,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (maintenanceLogId != null) 'maintenance_log_id': maintenanceLogId,
-      if (sparePartId != null) 'spare_part_id': sparePartId,
-      if (quantity != null) 'quantity': quantity,
-      if (unitPriceAmount != null) 'unit_price_amount': unitPriceAmount,
-      if (unitPriceCurrency != null) 'unit_price_currency': unitPriceCurrency,
-      if (rowid != null) 'rowid': rowid,
-    });
-  }
-
-  ReplacedPartsCompanion copyWith({
-    Value<String>? id,
-    Value<String>? maintenanceLogId,
-    Value<String>? sparePartId,
-    Value<int>? quantity,
-    Value<double>? unitPriceAmount,
-    Value<String>? unitPriceCurrency,
-    Value<int>? rowid,
-  }) {
-    return ReplacedPartsCompanion(
-      id: id ?? this.id,
-      maintenanceLogId: maintenanceLogId ?? this.maintenanceLogId,
-      sparePartId: sparePartId ?? this.sparePartId,
-      quantity: quantity ?? this.quantity,
-      unitPriceAmount: unitPriceAmount ?? this.unitPriceAmount,
-      unitPriceCurrency: unitPriceCurrency ?? this.unitPriceCurrency,
-      rowid: rowid ?? this.rowid,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<String>(id.value);
-    }
-    if (maintenanceLogId.present) {
-      map['maintenance_log_id'] = Variable<String>(maintenanceLogId.value);
-    }
-    if (sparePartId.present) {
-      map['spare_part_id'] = Variable<String>(sparePartId.value);
-    }
-    if (quantity.present) {
-      map['quantity'] = Variable<int>(quantity.value);
-    }
-    if (unitPriceAmount.present) {
-      map['unit_price_amount'] = Variable<double>(unitPriceAmount.value);
-    }
-    if (unitPriceCurrency.present) {
-      map['unit_price_currency'] = Variable<String>(unitPriceCurrency.value);
-    }
-    if (rowid.present) {
-      map['rowid'] = Variable<int>(rowid.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('ReplacedPartsCompanion(')
-          ..write('id: $id, ')
-          ..write('maintenanceLogId: $maintenanceLogId, ')
-          ..write('sparePartId: $sparePartId, ')
-          ..write('quantity: $quantity, ')
-          ..write('unitPriceAmount: $unitPriceAmount, ')
-          ..write('unitPriceCurrency: $unitPriceCurrency, ')
-          ..write('rowid: $rowid')
-          ..write(')'))
-        .toString();
-  }
-}
-
 class $MaintenanceIntervalsTable extends MaintenanceIntervals
     with TableInfo<$MaintenanceIntervalsTable, MaintenanceIntervalEntry> {
   @override
@@ -3999,7 +3558,6 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $MaintenanceLogsTable maintenanceLogs = $MaintenanceLogsTable(
     this,
   );
-  late final $ReplacedPartsTable replacedParts = $ReplacedPartsTable(this);
   late final $MaintenanceIntervalsTable maintenanceIntervals =
       $MaintenanceIntervalsTable(this);
   late final $VehicleDocumentsTable vehicleDocuments = $VehicleDocumentsTable(
@@ -4013,7 +3571,6 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     vehicles,
     fuelLogs,
     maintenanceLogs,
-    replacedParts,
     maintenanceIntervals,
     vehicleDocuments,
   ];
@@ -5315,27 +4872,6 @@ final class $$MaintenanceLogsTableReferences
       manager.$state.copyWith(prefetchedData: [item]),
     );
   }
-
-  static MultiTypedResultKey<$ReplacedPartsTable, List<ReplacedPartEntry>>
-  _replacedPartsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
-    db.replacedParts,
-    aliasName: $_aliasNameGenerator(
-      db.maintenanceLogs.id,
-      db.replacedParts.maintenanceLogId,
-    ),
-  );
-
-  $$ReplacedPartsTableProcessedTableManager get replacedPartsRefs {
-    final manager = $$ReplacedPartsTableTableManager($_db, $_db.replacedParts)
-        .filter(
-          (f) => f.maintenanceLogId.id.sqlEquals($_itemColumn<String>('id')!),
-        );
-
-    final cache = $_typedResult.readTableOrNull(_replacedPartsRefsTable($_db));
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: cache),
-    );
-  }
 }
 
 class $$MaintenanceLogsTableFilterComposer
@@ -5423,31 +4959,6 @@ class $$MaintenanceLogsTableFilterComposer
           ),
     );
     return composer;
-  }
-
-  Expression<bool> replacedPartsRefs(
-    Expression<bool> Function($$ReplacedPartsTableFilterComposer f) f,
-  ) {
-    final $$ReplacedPartsTableFilterComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.id,
-      referencedTable: $db.replacedParts,
-      getReferencedColumn: (t) => t.maintenanceLogId,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$ReplacedPartsTableFilterComposer(
-            $db: $db,
-            $table: $db.replacedParts,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return f(composer);
   }
 }
 
@@ -5619,31 +5130,6 @@ class $$MaintenanceLogsTableAnnotationComposer
     );
     return composer;
   }
-
-  Expression<T> replacedPartsRefs<T extends Object>(
-    Expression<T> Function($$ReplacedPartsTableAnnotationComposer a) f,
-  ) {
-    final $$ReplacedPartsTableAnnotationComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.id,
-      referencedTable: $db.replacedParts,
-      getReferencedColumn: (t) => t.maintenanceLogId,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$ReplacedPartsTableAnnotationComposer(
-            $db: $db,
-            $table: $db.replacedParts,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return f(composer);
-  }
 }
 
 class $$MaintenanceLogsTableTableManager
@@ -5659,7 +5145,7 @@ class $$MaintenanceLogsTableTableManager
           $$MaintenanceLogsTableUpdateCompanionBuilder,
           (MaintenanceLogEntry, $$MaintenanceLogsTableReferences),
           MaintenanceLogEntry,
-          PrefetchHooks Function({bool vehicleId, bool replacedPartsRefs})
+          PrefetchHooks Function({bool vehicleId})
         > {
   $$MaintenanceLogsTableTableManager(
     _$AppDatabase db,
@@ -5742,386 +5228,7 @@ class $$MaintenanceLogsTableTableManager
                 ),
               )
               .toList(),
-          prefetchHooksCallback:
-              ({vehicleId = false, replacedPartsRefs = false}) {
-                return PrefetchHooks(
-                  db: db,
-                  explicitlyWatchedTables: [
-                    if (replacedPartsRefs) db.replacedParts,
-                  ],
-                  addJoins:
-                      <
-                        T extends TableManagerState<
-                          dynamic,
-                          dynamic,
-                          dynamic,
-                          dynamic,
-                          dynamic,
-                          dynamic,
-                          dynamic,
-                          dynamic,
-                          dynamic,
-                          dynamic,
-                          dynamic
-                        >
-                      >(state) {
-                        if (vehicleId) {
-                          state =
-                              state.withJoin(
-                                    currentTable: table,
-                                    currentColumn: table.vehicleId,
-                                    referencedTable:
-                                        $$MaintenanceLogsTableReferences
-                                            ._vehicleIdTable(db),
-                                    referencedColumn:
-                                        $$MaintenanceLogsTableReferences
-                                            ._vehicleIdTable(db)
-                                            .id,
-                                  )
-                                  as T;
-                        }
-
-                        return state;
-                      },
-                  getPrefetchedDataCallback: (items) async {
-                    return [
-                      if (replacedPartsRefs)
-                        await $_getPrefetchedData<
-                          MaintenanceLogEntry,
-                          $MaintenanceLogsTable,
-                          ReplacedPartEntry
-                        >(
-                          currentTable: table,
-                          referencedTable: $$MaintenanceLogsTableReferences
-                              ._replacedPartsRefsTable(db),
-                          managerFromTypedResult: (p0) =>
-                              $$MaintenanceLogsTableReferences(
-                                db,
-                                table,
-                                p0,
-                              ).replacedPartsRefs,
-                          referencedItemsForCurrentItem:
-                              (item, referencedItems) => referencedItems.where(
-                                (e) => e.maintenanceLogId == item.id,
-                              ),
-                          typedResults: items,
-                        ),
-                    ];
-                  },
-                );
-              },
-        ),
-      );
-}
-
-typedef $$MaintenanceLogsTableProcessedTableManager =
-    ProcessedTableManager<
-      _$AppDatabase,
-      $MaintenanceLogsTable,
-      MaintenanceLogEntry,
-      $$MaintenanceLogsTableFilterComposer,
-      $$MaintenanceLogsTableOrderingComposer,
-      $$MaintenanceLogsTableAnnotationComposer,
-      $$MaintenanceLogsTableCreateCompanionBuilder,
-      $$MaintenanceLogsTableUpdateCompanionBuilder,
-      (MaintenanceLogEntry, $$MaintenanceLogsTableReferences),
-      MaintenanceLogEntry,
-      PrefetchHooks Function({bool vehicleId, bool replacedPartsRefs})
-    >;
-typedef $$ReplacedPartsTableCreateCompanionBuilder =
-    ReplacedPartsCompanion Function({
-      required String id,
-      required String maintenanceLogId,
-      required String sparePartId,
-      required int quantity,
-      required double unitPriceAmount,
-      required String unitPriceCurrency,
-      Value<int> rowid,
-    });
-typedef $$ReplacedPartsTableUpdateCompanionBuilder =
-    ReplacedPartsCompanion Function({
-      Value<String> id,
-      Value<String> maintenanceLogId,
-      Value<String> sparePartId,
-      Value<int> quantity,
-      Value<double> unitPriceAmount,
-      Value<String> unitPriceCurrency,
-      Value<int> rowid,
-    });
-
-final class $$ReplacedPartsTableReferences
-    extends
-        BaseReferences<_$AppDatabase, $ReplacedPartsTable, ReplacedPartEntry> {
-  $$ReplacedPartsTableReferences(
-    super.$_db,
-    super.$_table,
-    super.$_typedResult,
-  );
-
-  static $MaintenanceLogsTable _maintenanceLogIdTable(_$AppDatabase db) =>
-      db.maintenanceLogs.createAlias(
-        $_aliasNameGenerator(
-          db.replacedParts.maintenanceLogId,
-          db.maintenanceLogs.id,
-        ),
-      );
-
-  $$MaintenanceLogsTableProcessedTableManager get maintenanceLogId {
-    final $_column = $_itemColumn<String>('maintenance_log_id')!;
-
-    final manager = $$MaintenanceLogsTableTableManager(
-      $_db,
-      $_db.maintenanceLogs,
-    ).filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_maintenanceLogIdTable($_db));
-    if (item == null) return manager;
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: [item]),
-    );
-  }
-}
-
-class $$ReplacedPartsTableFilterComposer
-    extends Composer<_$AppDatabase, $ReplacedPartsTable> {
-  $$ReplacedPartsTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<String> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get sparePartId => $composableBuilder(
-    column: $table.sparePartId,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<int> get quantity => $composableBuilder(
-    column: $table.quantity,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<double> get unitPriceAmount => $composableBuilder(
-    column: $table.unitPriceAmount,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get unitPriceCurrency => $composableBuilder(
-    column: $table.unitPriceCurrency,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  $$MaintenanceLogsTableFilterComposer get maintenanceLogId {
-    final $$MaintenanceLogsTableFilterComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.maintenanceLogId,
-      referencedTable: $db.maintenanceLogs,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$MaintenanceLogsTableFilterComposer(
-            $db: $db,
-            $table: $db.maintenanceLogs,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-}
-
-class $$ReplacedPartsTableOrderingComposer
-    extends Composer<_$AppDatabase, $ReplacedPartsTable> {
-  $$ReplacedPartsTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<String> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get sparePartId => $composableBuilder(
-    column: $table.sparePartId,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<int> get quantity => $composableBuilder(
-    column: $table.quantity,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<double> get unitPriceAmount => $composableBuilder(
-    column: $table.unitPriceAmount,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get unitPriceCurrency => $composableBuilder(
-    column: $table.unitPriceCurrency,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  $$MaintenanceLogsTableOrderingComposer get maintenanceLogId {
-    final $$MaintenanceLogsTableOrderingComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.maintenanceLogId,
-      referencedTable: $db.maintenanceLogs,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$MaintenanceLogsTableOrderingComposer(
-            $db: $db,
-            $table: $db.maintenanceLogs,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-}
-
-class $$ReplacedPartsTableAnnotationComposer
-    extends Composer<_$AppDatabase, $ReplacedPartsTable> {
-  $$ReplacedPartsTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<String> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  GeneratedColumn<String> get sparePartId => $composableBuilder(
-    column: $table.sparePartId,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<int> get quantity =>
-      $composableBuilder(column: $table.quantity, builder: (column) => column);
-
-  GeneratedColumn<double> get unitPriceAmount => $composableBuilder(
-    column: $table.unitPriceAmount,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<String> get unitPriceCurrency => $composableBuilder(
-    column: $table.unitPriceCurrency,
-    builder: (column) => column,
-  );
-
-  $$MaintenanceLogsTableAnnotationComposer get maintenanceLogId {
-    final $$MaintenanceLogsTableAnnotationComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.maintenanceLogId,
-      referencedTable: $db.maintenanceLogs,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$MaintenanceLogsTableAnnotationComposer(
-            $db: $db,
-            $table: $db.maintenanceLogs,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-}
-
-class $$ReplacedPartsTableTableManager
-    extends
-        RootTableManager<
-          _$AppDatabase,
-          $ReplacedPartsTable,
-          ReplacedPartEntry,
-          $$ReplacedPartsTableFilterComposer,
-          $$ReplacedPartsTableOrderingComposer,
-          $$ReplacedPartsTableAnnotationComposer,
-          $$ReplacedPartsTableCreateCompanionBuilder,
-          $$ReplacedPartsTableUpdateCompanionBuilder,
-          (ReplacedPartEntry, $$ReplacedPartsTableReferences),
-          ReplacedPartEntry,
-          PrefetchHooks Function({bool maintenanceLogId})
-        > {
-  $$ReplacedPartsTableTableManager(_$AppDatabase db, $ReplacedPartsTable table)
-    : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$ReplacedPartsTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$ReplacedPartsTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$ReplacedPartsTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback:
-              ({
-                Value<String> id = const Value.absent(),
-                Value<String> maintenanceLogId = const Value.absent(),
-                Value<String> sparePartId = const Value.absent(),
-                Value<int> quantity = const Value.absent(),
-                Value<double> unitPriceAmount = const Value.absent(),
-                Value<String> unitPriceCurrency = const Value.absent(),
-                Value<int> rowid = const Value.absent(),
-              }) => ReplacedPartsCompanion(
-                id: id,
-                maintenanceLogId: maintenanceLogId,
-                sparePartId: sparePartId,
-                quantity: quantity,
-                unitPriceAmount: unitPriceAmount,
-                unitPriceCurrency: unitPriceCurrency,
-                rowid: rowid,
-              ),
-          createCompanionCallback:
-              ({
-                required String id,
-                required String maintenanceLogId,
-                required String sparePartId,
-                required int quantity,
-                required double unitPriceAmount,
-                required String unitPriceCurrency,
-                Value<int> rowid = const Value.absent(),
-              }) => ReplacedPartsCompanion.insert(
-                id: id,
-                maintenanceLogId: maintenanceLogId,
-                sparePartId: sparePartId,
-                quantity: quantity,
-                unitPriceAmount: unitPriceAmount,
-                unitPriceCurrency: unitPriceCurrency,
-                rowid: rowid,
-              ),
-          withReferenceMapper: (p0) => p0
-              .map(
-                (e) => (
-                  e.readTable(table),
-                  $$ReplacedPartsTableReferences(db, table, e),
-                ),
-              )
-              .toList(),
-          prefetchHooksCallback: ({maintenanceLogId = false}) {
+          prefetchHooksCallback: ({vehicleId = false}) {
             return PrefetchHooks(
               db: db,
               explicitlyWatchedTables: [],
@@ -6141,16 +5248,18 @@ class $$ReplacedPartsTableTableManager
                       dynamic
                     >
                   >(state) {
-                    if (maintenanceLogId) {
+                    if (vehicleId) {
                       state =
                           state.withJoin(
                                 currentTable: table,
-                                currentColumn: table.maintenanceLogId,
-                                referencedTable: $$ReplacedPartsTableReferences
-                                    ._maintenanceLogIdTable(db),
-                                referencedColumn: $$ReplacedPartsTableReferences
-                                    ._maintenanceLogIdTable(db)
-                                    .id,
+                                currentColumn: table.vehicleId,
+                                referencedTable:
+                                    $$MaintenanceLogsTableReferences
+                                        ._vehicleIdTable(db),
+                                referencedColumn:
+                                    $$MaintenanceLogsTableReferences
+                                        ._vehicleIdTable(db)
+                                        .id,
                               )
                               as T;
                     }
@@ -6166,19 +5275,19 @@ class $$ReplacedPartsTableTableManager
       );
 }
 
-typedef $$ReplacedPartsTableProcessedTableManager =
+typedef $$MaintenanceLogsTableProcessedTableManager =
     ProcessedTableManager<
       _$AppDatabase,
-      $ReplacedPartsTable,
-      ReplacedPartEntry,
-      $$ReplacedPartsTableFilterComposer,
-      $$ReplacedPartsTableOrderingComposer,
-      $$ReplacedPartsTableAnnotationComposer,
-      $$ReplacedPartsTableCreateCompanionBuilder,
-      $$ReplacedPartsTableUpdateCompanionBuilder,
-      (ReplacedPartEntry, $$ReplacedPartsTableReferences),
-      ReplacedPartEntry,
-      PrefetchHooks Function({bool maintenanceLogId})
+      $MaintenanceLogsTable,
+      MaintenanceLogEntry,
+      $$MaintenanceLogsTableFilterComposer,
+      $$MaintenanceLogsTableOrderingComposer,
+      $$MaintenanceLogsTableAnnotationComposer,
+      $$MaintenanceLogsTableCreateCompanionBuilder,
+      $$MaintenanceLogsTableUpdateCompanionBuilder,
+      (MaintenanceLogEntry, $$MaintenanceLogsTableReferences),
+      MaintenanceLogEntry,
+      PrefetchHooks Function({bool vehicleId})
     >;
 typedef $$MaintenanceIntervalsTableCreateCompanionBuilder =
     MaintenanceIntervalsCompanion Function({
@@ -7081,8 +6190,6 @@ class $AppDatabaseManager {
       $$FuelLogsTableTableManager(_db, _db.fuelLogs);
   $$MaintenanceLogsTableTableManager get maintenanceLogs =>
       $$MaintenanceLogsTableTableManager(_db, _db.maintenanceLogs);
-  $$ReplacedPartsTableTableManager get replacedParts =>
-      $$ReplacedPartsTableTableManager(_db, _db.replacedParts);
   $$MaintenanceIntervalsTableTableManager get maintenanceIntervals =>
       $$MaintenanceIntervalsTableTableManager(_db, _db.maintenanceIntervals);
   $$VehicleDocumentsTableTableManager get vehicleDocuments =>

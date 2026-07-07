@@ -67,20 +67,6 @@ class MaintenanceLogs extends Table {
   Set<Column> get primaryKey => {id};
 }
 
-@DataClassName('ReplacedPartEntry')
-class ReplacedParts extends Table {
-  TextColumn get id => text()();
-  TextColumn get maintenanceLogId =>
-      text().references(MaintenanceLogs, #id)();
-  TextColumn get sparePartId => text()();
-  IntColumn get quantity => integer()();
-  RealColumn get unitPriceAmount => real()();
-  TextColumn get unitPriceCurrency => text()();
-
-  @override
-  Set<Column> get primaryKey => {id};
-}
-
 @DataClassName('MaintenanceIntervalEntry')
 class MaintenanceIntervals extends Table {
   TextColumn get id => text()();
@@ -121,7 +107,6 @@ class VehicleDocuments extends Table {
     Vehicles,
     FuelLogs,
     MaintenanceLogs,
-    ReplacedParts,
     MaintenanceIntervals,
     VehicleDocuments,
   ],

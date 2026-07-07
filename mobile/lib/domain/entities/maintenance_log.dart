@@ -1,5 +1,3 @@
-import 'replaced_part.dart';
-
 class MaintenanceLog {
   final String id;
   final String vehicleId;
@@ -11,7 +9,6 @@ class MaintenanceLog {
   final double? restoreResetKm;
   final DateTime? restoreResetDate;
 
-  final List<ReplacedPart> replacedParts;
   final List<String> photoPaths;
   final double? costAmount;
   final String? costCurrency;
@@ -26,7 +23,6 @@ class MaintenanceLog {
     this.resetIntervalId,
     this.restoreResetKm,
     this.restoreResetDate,
-    this.replacedParts = const [],
     this.photoPaths = const [],
     this.costAmount,
     this.costCurrency,
