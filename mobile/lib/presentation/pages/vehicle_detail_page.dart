@@ -119,28 +119,14 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        children: [
-                          Icon(
-                            switch (vehicle.type) {
-                              VehicleType.combustion =>
-                                Icons.local_gas_station,
-                              VehicleType.electric => Icons.electric_car,
-                              VehicleType.motorcycle => Icons.motorcycle,
-                            },
-                            size: 20,
-                          ),
-                          if (vehicle.alias != null &&
-                              vehicle.alias!.isNotEmpty) ...[
-                            const SizedBox(width: 8),
-                            Text(
-                              '${vehicle.brand} ${vehicle.model} ${vehicle.year}',
-                              style: theme.textTheme.bodySmall,
-                            ),
-                          ],
-                        ],
-                      ),
-                      const SizedBox(height: 8),
+                      if (vehicle.alias != null &&
+                          vehicle.alias!.isNotEmpty) ...[
+                        Text(
+                          '${vehicle.brand} ${vehicle.model} ${vehicle.year}',
+                          style: theme.textTheme.titleMedium,
+                        ),
+                        const SizedBox(height: 8),
+                      ],
                       if (vehicle.plate != null)
                         _infoRow(
                             Icons.badge, l.plate, vehicle.plate!.value),
