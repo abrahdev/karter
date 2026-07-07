@@ -27,10 +27,31 @@ Future<void> showAddFuelLogModal(
   }
 }
 
+Future<void> showEditFuelLogModal(
+  BuildContext context, {
+  required String vehicleId,
+  required FuelLog log,
+  required void Function() onSaved,
+}) async {
+  final result = await karterShowModalBottomSheet<bool>(
+    context: context,
+    isScrollControlled: true,
+    builder: (ctx) => _AddFuelLogModal(
+      vehicleId: vehicleId,
+      editLog: log,
+    ),
+  );
+
+  if (result == true && context.mounted) {
+    onSaved();
+  }
+}
+
 class _AddFuelLogModal extends ConsumerStatefulWidget {
   final String vehicleId;
+  final FuelLog? editLog;
 
-  const _AddFuelLogModal({required this.vehicleId});
+  const _AddFuelLogModal({required this.vehicleId, this.editLog});
 
   @override
   ConsumerState<_AddFuelLogModal> createState() =>
@@ -48,12 +69,37 @@ class _AddFuelLogModalState extends ConsumerState<_AddFuelLogModal> {
   String _vehicleCurrency = 'USD';
   bool _isFullTank = false;
   bool _saving = false;
+  bool _isEditing = false;
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance
-        .addPostFrameCallback((_) => _loadVehicleData());
+    _isEditing = widget.editLog != null;
+
+    if (_isEditing) {
+      final log = widget.editLog!;
+      _date = log.date;
+      _volumeController.text = log.fueledVolume.amount.toString();
+      _odometerController.text =
+          log.odometerAtFueling.distance.toStringAsFixed(0);
+      _priceController.text =
+          log.pricePerUnit?.toString() ?? '';
+      _isFullTank = log.isFullTank;
+      _volumeUnit = log.fueledVolume.unit;
+      WidgetsBinding.instance
+          .addPostFrameCallback((_) => _loadCurrency());
+    } else {
+      WidgetsBinding.instance
+          .addPostFrameCallback((_) => _loadVehicleData());
+    }
+  }
+
+  Future<void> _loadCurrency() async {
+    final vehicle =
+        await ref.read(vehicleProvider(widget.vehicleId).future);
+    if (vehicle != null && mounted) {
+      _vehicleCurrency = vehicle.currency;
+    }
   }
 
   Future<void> _loadVehicleData() async {
@@ -87,10 +133,10 @@ class _AddFuelLogModalState extends ConsumerState<_AddFuelLogModal> {
       if (vehicle == null) return;
 
       final log = FuelLog(
-        id: uuid.v4(),
+        id: _isEditing ? widget.editLog!.id : uuid.v4(),
         vehicleId: widget.vehicleId,
         date: _date,
-        isSynced: false,
+        isSynced: _isEditing ? widget.editLog!.isSynced : false,
         fueledVolume: Volume(
           double.parse(_volumeController.text.trim()),
           _volumeUnit,
@@ -107,6 +153,53 @@ class _AddFuelLogModalState extends ConsumerState<_AddFuelLogModal> {
 
       final repo = ref.read(fuelLogRepositoryProvider);
       await repo.save(log);
+      ref.invalidate(fuelLogsProvider(widget.vehicleId));
+
+      if (mounted) Navigator.pop(context, true);
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(
+              AppLocalizations.of(context)!.homeError(e.toString())),
+        ));
+      }
+    } finally {
+      if (mounted) setState(() => _saving = false);
+    }
+  }
+
+  Future<void> _delete() async {
+    final l = AppLocalizations.of(context)!;
+    final confirmed = await karterShowDialog<bool>(
+      context: context,
+      builder: (ctx) {
+        return AlertDialog(
+          title: const Text('Delete fuel-up'),
+          content: const Text('Are you sure you want to delete this fuel-up?'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx, false),
+              child: Text(l.cancel),
+            ),
+            FilledButton(
+              onPressed: () => Navigator.pop(ctx, true),
+              style: FilledButton.styleFrom(
+                backgroundColor: Theme.of(ctx).colorScheme.error,
+                foregroundColor: Theme.of(ctx).colorScheme.onError,
+              ),
+              child: Text(l.delete),
+            ),
+          ],
+        );
+      },
+    );
+
+    if (confirmed != true || !mounted) return;
+    setState(() => _saving = true);
+
+    try {
+      final repo = ref.read(fuelLogRepositoryProvider);
+      await repo.delete(widget.editLog!.id);
       ref.invalidate(fuelLogsProvider(widget.vehicleId));
 
       if (mounted) Navigator.pop(context, true);
@@ -150,8 +243,10 @@ class _AddFuelLogModalState extends ConsumerState<_AddFuelLogModal> {
                 ),
               ),
               const SizedBox(height: 16),
-              Text(l.fuelFormTitle,
-                  style: theme.textTheme.titleLarge),
+              Text(
+                _isEditing ? 'Edit fuel-up' : l.fuelFormTitle,
+                style: theme.textTheme.titleLarge,
+              ),
               const SizedBox(height: 20),
               ListTile(
                 contentPadding: EdgeInsets.zero,
@@ -231,9 +326,24 @@ class _AddFuelLogModalState extends ConsumerState<_AddFuelLogModal> {
                               strokeWidth: 2),
                         )
                       : const Icon(Icons.save),
-                  label: Text(l.saveFuelUp),
+                  label: Text(_isEditing ? l.saveChangesShort : l.saveFuelUp),
                 ),
               ),
+              if (_isEditing) ...[
+                const SizedBox(height: 8),
+                SizedBox(
+                  width: double.infinity,
+                  child: OutlinedButton.icon(
+                    onPressed: _saving ? null : _delete,
+                    icon: const Icon(Icons.delete_outline),
+                    label: Text(l.delete),
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: theme.colorScheme.error,
+                      side: BorderSide(color: theme.colorScheme.error),
+                    ),
+                  ),
+                ),
+              ],
               const SizedBox(height: 8),
             ],
           ),

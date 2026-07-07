@@ -25,6 +25,28 @@ class FuelLog {
     this.isFullTank = false,
   });
 
+  FuelLog copyWith({
+    String? id,
+    String? vehicleId,
+    DateTime? date,
+    bool? isSynced,
+    Volume? fueledVolume,
+    Odometer? odometerAtFueling,
+    double? pricePerUnit,
+    bool? isFullTank,
+  }) {
+    return FuelLog(
+      id: id ?? this.id,
+      vehicleId: vehicleId ?? this.vehicleId,
+      date: date ?? this.date,
+      isSynced: isSynced ?? this.isSynced,
+      fueledVolume: fueledVolume ?? this.fueledVolume,
+      odometerAtFueling: odometerAtFueling ?? this.odometerAtFueling,
+      pricePerUnit: pricePerUnit ?? this.pricePerUnit,
+      isFullTank: isFullTank ?? this.isFullTank,
+    );
+  }
+
   double get calculatedConsumption {
     if (odometerAtFueling.distance == 0) return 0;
     final distanceInKm = odometerAtFueling.unit == DistanceUnit.kilometers

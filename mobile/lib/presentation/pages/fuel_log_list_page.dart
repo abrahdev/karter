@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile/domain/enums/distance_unit.dart';
 import 'package:mobile/domain/enums/volume_unit.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
+import 'package:mobile/presentation/widgets/add_fuel_log_modal.dart';
 
 class FuelLogListPage extends ConsumerWidget {
   final String vehicleId;
@@ -61,6 +61,14 @@ class FuelLogListPage extends ConsumerWidget {
                           style: theme.textTheme.bodySmall,
                         )
                       : null,
+                  onTap: () => showEditFuelLogModal(
+                    context,
+                    vehicleId: vehicleId,
+                    log: log,
+                    onSaved: () {
+                      ref.invalidate(fuelLogsProvider(vehicleId));
+                    },
+                  ),
                 ),
               );
             },
@@ -70,7 +78,13 @@ class FuelLogListPage extends ConsumerWidget {
         error: (e, _) => Center(child: Text(l.homeError(e.toString()))),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => context.push('/vehicle/$vehicleId/fuel/new'),
+        onPressed: () => showAddFuelLogModal(
+          context,
+          vehicleId: vehicleId,
+          onSaved: () {
+            ref.invalidate(fuelLogsProvider(vehicleId));
+          },
+        ),
         child: const Icon(Icons.add),
       ),
     );
