@@ -119,40 +119,26 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Hero(
-                        tag: 'vehicle-avatar-${vehicle.id}',
-                        child: Row(
-                          children: [
-                            Icon(
-                              switch (vehicle.type) {
-                                VehicleType.combustion =>
-                                  Icons.local_gas_station,
-                                VehicleType.electric => Icons.electric_car,
-                                VehicleType.motorcycle => Icons.motorcycle,
-                              },
-                              size: 20,
-                            ),
+                      Row(
+                        children: [
+                          Icon(
+                            switch (vehicle.type) {
+                              VehicleType.combustion =>
+                                Icons.local_gas_station,
+                              VehicleType.electric => Icons.electric_car,
+                              VehicleType.motorcycle => Icons.motorcycle,
+                            },
+                            size: 20,
+                          ),
+                          if (vehicle.alias != null &&
+                              vehicle.alias!.isNotEmpty) ...[
                             const SizedBox(width: 8),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment:
-                                    CrossAxisAlignment.start,
-                                children: [
-                                  Text(vehicle.displayName,
-                                      style: theme
-                                          .textTheme.headlineSmall),
-                                  if (vehicle.alias != null &&
-                                      vehicle.alias!.isNotEmpty)
-                                    Text(
-                                      '${vehicle.brand} ${vehicle.model} ${vehicle.year}',
-                                      style:
-                                          theme.textTheme.bodySmall,
-                                    ),
-                                ],
-                              ),
+                            Text(
+                              '${vehicle.brand} ${vehicle.model} ${vehicle.year}',
+                              style: theme.textTheme.bodySmall,
                             ),
                           ],
-                        ),
+                        ],
                       ),
                       const SizedBox(height: 8),
                       if (vehicle.plate != null)
