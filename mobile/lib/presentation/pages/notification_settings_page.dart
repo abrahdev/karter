@@ -101,6 +101,7 @@ class _NotificationSettingsContentState
     final repo = ref.read(vehicleRepositoryProvider);
     await repo.save(updated);
     ref.invalidate(vehicleProvider(widget.vehicleId));
+    ref.invalidate(vehicleListProvider);
   }
 
   @override
@@ -240,6 +241,7 @@ class _NotificationSettingsContentState
             final repo = ref.read(vehicleRepositoryProvider);
             await repo.save(updated);
             ref.invalidate(vehicleProvider(widget.vehicleId));
+            ref.invalidate(vehicleListProvider);
           },
         ),
         if (vehicle.maintenanceReminderEnabled) ...[
@@ -262,6 +264,7 @@ class _NotificationSettingsContentState
               final repo = ref.read(vehicleRepositoryProvider);
               await repo.save(updated);
               ref.invalidate(vehicleProvider(widget.vehicleId));
+              ref.invalidate(vehicleListProvider);
             },
           ),
           if (isSnoozed) ...[
@@ -295,6 +298,7 @@ class _NotificationSettingsContentState
                     final repo = ref.read(vehicleRepositoryProvider);
                     await repo.save(updated);
                     ref.invalidate(vehicleProvider(widget.vehicleId));
+                    ref.invalidate(vehicleListProvider);
                   },
                 ),
               ),

@@ -58,6 +58,7 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
             currentOdometer: vehicle.currentOdometer.add(
               newDistance - vehicle.currentOdometer.distance,
             ),
+            odometerReminderLastNotified: DateTime.now(),
           );
           await repo.save(updated);
           if (ctx.mounted) Navigator.of(ctx).pop();
@@ -480,6 +481,7 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
               currentOdometer: vehicle.currentOdometer.add(
                 newDistance - vehicle.currentOdometer.distance,
               ),
+              odometerReminderLastNotified: DateTime.now(),
             );
             await repo.save(updated);
             ref.invalidate(vehicleProvider(vehicleId));
