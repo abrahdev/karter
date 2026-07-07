@@ -26,6 +26,12 @@ class Vehicles extends Table {
       text().withDefault(const Constant('liters'))();
   TextColumn get currency =>
       text().withDefault(const Constant('USD'))();
+  IntColumn get odometerReminderFreqDays => integer().nullable()();
+  DateTimeColumn get odometerReminderLastNotified => dateTime().nullable()();
+  BoolColumn get maintenanceReminderEnabled =>
+      boolean().withDefault(const Constant(true))();
+  DateTimeColumn get maintenanceReminderSnoozedUntil =>
+      dateTime().nullable()();
 
   @override
   Set<Column> get primaryKey => {id};
@@ -115,7 +121,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
   @override
-  int get schemaVersion => 10;
+  int get schemaVersion => 11;
 
   @override
   MigrationStrategy get migration {
@@ -221,6 +227,24 @@ class AppDatabase extends _$AppDatabase {
           await m.database.customStatement(
               'ALTER TABLE vehicles_new RENAME TO vehicles');
           await m.database.customStatement('PRAGMA foreign_keys = ON');
+        }
+        if (from < 11) {
+          try {
+            await m.addColumn(
+                vehicles, vehicles.odometerReminderFreqDays);
+          } catch (_) {}
+          try {
+            await m.addColumn(
+                vehicles, vehicles.odometerReminderLastNotified);
+          } catch (_) {}
+          try {
+            await m.addColumn(
+                vehicles, vehicles.maintenanceReminderEnabled);
+          } catch (_) {}
+          try {
+            await m.addColumn(
+                vehicles, vehicles.maintenanceReminderSnoozedUntil);
+          } catch (_) {}
         }
       },
     );

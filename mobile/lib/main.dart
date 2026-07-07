@@ -1,11 +1,17 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile/core/theme/app_theme.dart';
+import 'package:mobile/data/services/background_service.dart';
+import 'package:mobile/data/services/notification_service.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/locale_provider.dart';
+import 'package:mobile/presentation/providers/vehicle_providers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:system_theme/system_theme.dart';
+import 'package:workmanager/workmanager.dart';
 import 'package:mobile/presentation/pages/dashboard_page.dart';
 import 'package:mobile/presentation/pages/data_manager_page.dart';
 import 'package:mobile/presentation/pages/document_list_page.dart';
@@ -17,6 +23,7 @@ import 'package:mobile/presentation/pages/maintenance_log_form_page.dart';
 import 'package:mobile/presentation/pages/maintenance_log_list_page.dart';
 import 'package:mobile/presentation/pages/maintenance_settings_page.dart';
 import 'package:mobile/presentation/pages/more_page.dart';
+import 'package:mobile/presentation/pages/notification_settings_page.dart';
 import 'package:mobile/presentation/pages/vehicle_detail_page.dart';
 import 'package:mobile/presentation/pages/vehicle_form_page.dart';
 
@@ -122,6 +129,16 @@ final _router = GoRouter(
     GoRoute(
       path: '/data',
       builder: (_, _) => const DataManagerPage(),
+    ),
+    GoRoute(
+      path: '/notifications',
+      builder: (_, _) => const _NotificationListPage(),
+    ),
+    GoRoute(
+      path: '/notifications/:vehicleId',
+      builder: (_, state) => NotificationSettingsPage(
+        vehicleId: state.pathParameters['vehicleId']!,
+      ),
     ),
   ],
 );
@@ -273,16 +290,87 @@ class KarterApp extends ConsumerWidget {
   }
 }
 
+class _NotificationListPage extends ConsumerWidget {
+  const _NotificationListPage();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final vehiclesAsync = ref.watch(vehicleListProvider);
+    final l = AppLocalizations.of(context)!;
+
+    return Scaffold(
+      appBar: AppBar(title: Text(l.notificationSettingsTitle)),
+      body: vehiclesAsync.when(
+        data: (vehicles) {
+          if (vehicles.isEmpty) {
+            return Center(child: Text(l.notificationNoVehicles));
+          }
+          return ListView.separated(
+            padding: const EdgeInsets.all(16),
+            itemCount: vehicles.length,
+            separatorBuilder: (_, _) => const Divider(),
+            itemBuilder: (_, i) {
+              final v = vehicles[i];
+              final label = v.alias ?? '${v.brand} ${v.model}';
+              final freq = v.odometerReminderFreqDays;
+              final maintOn = v.maintenanceReminderEnabled;
+              return ListTile(
+                title: Text(label),
+                subtitle: Text(
+                  l.notificationVehicleSubtitle(
+                    freq != null ? l.notificationFreqValue(freq) : l.notificationFreqOff,
+                    maintOn ? l.notificationMaintOn : l.notificationMaintOff,
+                  ),
+                ),
+                trailing: TextButton(
+                  onPressed: () => context.push('/notifications/${v.id}'),
+                  child: Text(l.notificationConfigure),
+                ),
+              );
+            },
+          );
+        },
+        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (e, _) => Center(child: Text(l.homeError(e))),
+      ),
+    );
+  }
+}
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemTheme.fallbackColor = AppTheme.fallbackSeed;
   await SystemTheme.accentColor.load();
   final prefs = await SharedPreferences.getInstance();
   final savedLocale = prefs.getString('locale') ?? 'es';
+
+  if (Platform.isAndroid || Platform.isIOS) {
+    await Workmanager().initialize(
+      callbackDispatcher,
+      isInDebugMode: false,
+    );
+    await Workmanager().registerPeriodicTask(
+      'karter-reminder-check',
+      'odometerMaintenanceCheck',
+      frequency: const Duration(minutes: 15),
+      constraints: Constraints(
+        networkType: NetworkType.notRequired,
+        requiresBatteryNotLow: false,
+      ),
+    );
+  }
+
+  final notificationService = NotificationService();
+  await notificationService.init();
+
   runApp(
     ProviderScope(
       overrides: [
         localeProvider.overrideWith(() => createLocaleNotifier(savedLocale)),
+        notificationServiceProvider.overrideWith((ref) {
+          notificationService.init();
+          return notificationService;
+        }),
       ],
       child: KarterApp(initialAccent: SystemTheme.accentColor.accent),
     ),

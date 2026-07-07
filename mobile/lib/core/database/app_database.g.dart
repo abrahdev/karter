@@ -163,6 +163,54 @@ class $VehiclesTable extends Vehicles
     requiredDuringInsert: false,
     defaultValue: const Constant('USD'),
   );
+  static const VerificationMeta _odometerReminderFreqDaysMeta =
+      const VerificationMeta('odometerReminderFreqDays');
+  @override
+  late final GeneratedColumn<int> odometerReminderFreqDays =
+      GeneratedColumn<int>(
+        'odometer_reminder_freq_days',
+        aliasedName,
+        true,
+        type: DriftSqlType.int,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _odometerReminderLastNotifiedMeta =
+      const VerificationMeta('odometerReminderLastNotified');
+  @override
+  late final GeneratedColumn<DateTime> odometerReminderLastNotified =
+      GeneratedColumn<DateTime>(
+        'odometer_reminder_last_notified',
+        aliasedName,
+        true,
+        type: DriftSqlType.dateTime,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _maintenanceReminderEnabledMeta =
+      const VerificationMeta('maintenanceReminderEnabled');
+  @override
+  late final GeneratedColumn<bool> maintenanceReminderEnabled =
+      GeneratedColumn<bool>(
+        'maintenance_reminder_enabled',
+        aliasedName,
+        false,
+        type: DriftSqlType.bool,
+        requiredDuringInsert: false,
+        defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("maintenance_reminder_enabled" IN (0, 1))',
+        ),
+        defaultValue: const Constant(true),
+      );
+  static const VerificationMeta _maintenanceReminderSnoozedUntilMeta =
+      const VerificationMeta('maintenanceReminderSnoozedUntil');
+  @override
+  late final GeneratedColumn<DateTime> maintenanceReminderSnoozedUntil =
+      GeneratedColumn<DateTime>(
+        'maintenance_reminder_snoozed_until',
+        aliasedName,
+        true,
+        type: DriftSqlType.dateTime,
+        requiredDuringInsert: false,
+      );
   @override
   List<GeneratedColumn> get $columns => [
     id,
@@ -180,6 +228,10 @@ class $VehiclesTable extends Vehicles
     type,
     fuelVolumeUnit,
     currency,
+    odometerReminderFreqDays,
+    odometerReminderLastNotified,
+    maintenanceReminderEnabled,
+    maintenanceReminderSnoozedUntil,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -305,6 +357,42 @@ class $VehiclesTable extends Vehicles
         currency.isAcceptableOrUnknown(data['currency']!, _currencyMeta),
       );
     }
+    if (data.containsKey('odometer_reminder_freq_days')) {
+      context.handle(
+        _odometerReminderFreqDaysMeta,
+        odometerReminderFreqDays.isAcceptableOrUnknown(
+          data['odometer_reminder_freq_days']!,
+          _odometerReminderFreqDaysMeta,
+        ),
+      );
+    }
+    if (data.containsKey('odometer_reminder_last_notified')) {
+      context.handle(
+        _odometerReminderLastNotifiedMeta,
+        odometerReminderLastNotified.isAcceptableOrUnknown(
+          data['odometer_reminder_last_notified']!,
+          _odometerReminderLastNotifiedMeta,
+        ),
+      );
+    }
+    if (data.containsKey('maintenance_reminder_enabled')) {
+      context.handle(
+        _maintenanceReminderEnabledMeta,
+        maintenanceReminderEnabled.isAcceptableOrUnknown(
+          data['maintenance_reminder_enabled']!,
+          _maintenanceReminderEnabledMeta,
+        ),
+      );
+    }
+    if (data.containsKey('maintenance_reminder_snoozed_until')) {
+      context.handle(
+        _maintenanceReminderSnoozedUntilMeta,
+        maintenanceReminderSnoozedUntil.isAcceptableOrUnknown(
+          data['maintenance_reminder_snoozed_until']!,
+          _maintenanceReminderSnoozedUntilMeta,
+        ),
+      );
+    }
     return context;
   }
 
@@ -374,6 +462,22 @@ class $VehiclesTable extends Vehicles
         DriftSqlType.string,
         data['${effectivePrefix}currency'],
       )!,
+      odometerReminderFreqDays: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}odometer_reminder_freq_days'],
+      ),
+      odometerReminderLastNotified: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}odometer_reminder_last_notified'],
+      ),
+      maintenanceReminderEnabled: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}maintenance_reminder_enabled'],
+      )!,
+      maintenanceReminderSnoozedUntil: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}maintenance_reminder_snoozed_until'],
+      ),
     );
   }
 
@@ -399,6 +503,10 @@ class VehicleEntry extends DataClass implements Insertable<VehicleEntry> {
   final String type;
   final String fuelVolumeUnit;
   final String currency;
+  final int? odometerReminderFreqDays;
+  final DateTime? odometerReminderLastNotified;
+  final bool maintenanceReminderEnabled;
+  final DateTime? maintenanceReminderSnoozedUntil;
   const VehicleEntry({
     required this.id,
     required this.name,
@@ -415,6 +523,10 @@ class VehicleEntry extends DataClass implements Insertable<VehicleEntry> {
     required this.type,
     required this.fuelVolumeUnit,
     required this.currency,
+    this.odometerReminderFreqDays,
+    this.odometerReminderLastNotified,
+    required this.maintenanceReminderEnabled,
+    this.maintenanceReminderSnoozedUntil,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -440,6 +552,24 @@ class VehicleEntry extends DataClass implements Insertable<VehicleEntry> {
     map['type'] = Variable<String>(type);
     map['fuel_volume_unit'] = Variable<String>(fuelVolumeUnit);
     map['currency'] = Variable<String>(currency);
+    if (!nullToAbsent || odometerReminderFreqDays != null) {
+      map['odometer_reminder_freq_days'] = Variable<int>(
+        odometerReminderFreqDays,
+      );
+    }
+    if (!nullToAbsent || odometerReminderLastNotified != null) {
+      map['odometer_reminder_last_notified'] = Variable<DateTime>(
+        odometerReminderLastNotified,
+      );
+    }
+    map['maintenance_reminder_enabled'] = Variable<bool>(
+      maintenanceReminderEnabled,
+    );
+    if (!nullToAbsent || maintenanceReminderSnoozedUntil != null) {
+      map['maintenance_reminder_snoozed_until'] = Variable<DateTime>(
+        maintenanceReminderSnoozedUntil,
+      );
+    }
     return map;
   }
 
@@ -464,6 +594,18 @@ class VehicleEntry extends DataClass implements Insertable<VehicleEntry> {
       type: Value(type),
       fuelVolumeUnit: Value(fuelVolumeUnit),
       currency: Value(currency),
+      odometerReminderFreqDays: odometerReminderFreqDays == null && nullToAbsent
+          ? const Value.absent()
+          : Value(odometerReminderFreqDays),
+      odometerReminderLastNotified:
+          odometerReminderLastNotified == null && nullToAbsent
+          ? const Value.absent()
+          : Value(odometerReminderLastNotified),
+      maintenanceReminderEnabled: Value(maintenanceReminderEnabled),
+      maintenanceReminderSnoozedUntil:
+          maintenanceReminderSnoozedUntil == null && nullToAbsent
+          ? const Value.absent()
+          : Value(maintenanceReminderSnoozedUntil),
     );
   }
 
@@ -488,6 +630,18 @@ class VehicleEntry extends DataClass implements Insertable<VehicleEntry> {
       type: serializer.fromJson<String>(json['type']),
       fuelVolumeUnit: serializer.fromJson<String>(json['fuelVolumeUnit']),
       currency: serializer.fromJson<String>(json['currency']),
+      odometerReminderFreqDays: serializer.fromJson<int?>(
+        json['odometerReminderFreqDays'],
+      ),
+      odometerReminderLastNotified: serializer.fromJson<DateTime?>(
+        json['odometerReminderLastNotified'],
+      ),
+      maintenanceReminderEnabled: serializer.fromJson<bool>(
+        json['maintenanceReminderEnabled'],
+      ),
+      maintenanceReminderSnoozedUntil: serializer.fromJson<DateTime?>(
+        json['maintenanceReminderSnoozedUntil'],
+      ),
     );
   }
   @override
@@ -509,6 +663,18 @@ class VehicleEntry extends DataClass implements Insertable<VehicleEntry> {
       'type': serializer.toJson<String>(type),
       'fuelVolumeUnit': serializer.toJson<String>(fuelVolumeUnit),
       'currency': serializer.toJson<String>(currency),
+      'odometerReminderFreqDays': serializer.toJson<int?>(
+        odometerReminderFreqDays,
+      ),
+      'odometerReminderLastNotified': serializer.toJson<DateTime?>(
+        odometerReminderLastNotified,
+      ),
+      'maintenanceReminderEnabled': serializer.toJson<bool>(
+        maintenanceReminderEnabled,
+      ),
+      'maintenanceReminderSnoozedUntil': serializer.toJson<DateTime?>(
+        maintenanceReminderSnoozedUntil,
+      ),
     };
   }
 
@@ -528,6 +694,10 @@ class VehicleEntry extends DataClass implements Insertable<VehicleEntry> {
     String? type,
     String? fuelVolumeUnit,
     String? currency,
+    Value<int?> odometerReminderFreqDays = const Value.absent(),
+    Value<DateTime?> odometerReminderLastNotified = const Value.absent(),
+    bool? maintenanceReminderEnabled,
+    Value<DateTime?> maintenanceReminderSnoozedUntil = const Value.absent(),
   }) => VehicleEntry(
     id: id ?? this.id,
     name: name ?? this.name,
@@ -544,6 +714,17 @@ class VehicleEntry extends DataClass implements Insertable<VehicleEntry> {
     type: type ?? this.type,
     fuelVolumeUnit: fuelVolumeUnit ?? this.fuelVolumeUnit,
     currency: currency ?? this.currency,
+    odometerReminderFreqDays: odometerReminderFreqDays.present
+        ? odometerReminderFreqDays.value
+        : this.odometerReminderFreqDays,
+    odometerReminderLastNotified: odometerReminderLastNotified.present
+        ? odometerReminderLastNotified.value
+        : this.odometerReminderLastNotified,
+    maintenanceReminderEnabled:
+        maintenanceReminderEnabled ?? this.maintenanceReminderEnabled,
+    maintenanceReminderSnoozedUntil: maintenanceReminderSnoozedUntil.present
+        ? maintenanceReminderSnoozedUntil.value
+        : this.maintenanceReminderSnoozedUntil,
   );
   VehicleEntry copyWithCompanion(VehiclesCompanion data) {
     return VehicleEntry(
@@ -568,6 +749,19 @@ class VehicleEntry extends DataClass implements Insertable<VehicleEntry> {
           ? data.fuelVolumeUnit.value
           : this.fuelVolumeUnit,
       currency: data.currency.present ? data.currency.value : this.currency,
+      odometerReminderFreqDays: data.odometerReminderFreqDays.present
+          ? data.odometerReminderFreqDays.value
+          : this.odometerReminderFreqDays,
+      odometerReminderLastNotified: data.odometerReminderLastNotified.present
+          ? data.odometerReminderLastNotified.value
+          : this.odometerReminderLastNotified,
+      maintenanceReminderEnabled: data.maintenanceReminderEnabled.present
+          ? data.maintenanceReminderEnabled.value
+          : this.maintenanceReminderEnabled,
+      maintenanceReminderSnoozedUntil:
+          data.maintenanceReminderSnoozedUntil.present
+          ? data.maintenanceReminderSnoozedUntil.value
+          : this.maintenanceReminderSnoozedUntil,
     );
   }
 
@@ -588,7 +782,15 @@ class VehicleEntry extends DataClass implements Insertable<VehicleEntry> {
           ..write('isSynced: $isSynced, ')
           ..write('type: $type, ')
           ..write('fuelVolumeUnit: $fuelVolumeUnit, ')
-          ..write('currency: $currency')
+          ..write('currency: $currency, ')
+          ..write('odometerReminderFreqDays: $odometerReminderFreqDays, ')
+          ..write(
+            'odometerReminderLastNotified: $odometerReminderLastNotified, ',
+          )
+          ..write('maintenanceReminderEnabled: $maintenanceReminderEnabled, ')
+          ..write(
+            'maintenanceReminderSnoozedUntil: $maintenanceReminderSnoozedUntil',
+          )
           ..write(')'))
         .toString();
   }
@@ -610,6 +812,10 @@ class VehicleEntry extends DataClass implements Insertable<VehicleEntry> {
     type,
     fuelVolumeUnit,
     currency,
+    odometerReminderFreqDays,
+    odometerReminderLastNotified,
+    maintenanceReminderEnabled,
+    maintenanceReminderSnoozedUntil,
   );
   @override
   bool operator ==(Object other) =>
@@ -629,7 +835,13 @@ class VehicleEntry extends DataClass implements Insertable<VehicleEntry> {
           other.isSynced == this.isSynced &&
           other.type == this.type &&
           other.fuelVolumeUnit == this.fuelVolumeUnit &&
-          other.currency == this.currency);
+          other.currency == this.currency &&
+          other.odometerReminderFreqDays == this.odometerReminderFreqDays &&
+          other.odometerReminderLastNotified ==
+              this.odometerReminderLastNotified &&
+          other.maintenanceReminderEnabled == this.maintenanceReminderEnabled &&
+          other.maintenanceReminderSnoozedUntil ==
+              this.maintenanceReminderSnoozedUntil);
 }
 
 class VehiclesCompanion extends UpdateCompanion<VehicleEntry> {
@@ -648,6 +860,10 @@ class VehiclesCompanion extends UpdateCompanion<VehicleEntry> {
   final Value<String> type;
   final Value<String> fuelVolumeUnit;
   final Value<String> currency;
+  final Value<int?> odometerReminderFreqDays;
+  final Value<DateTime?> odometerReminderLastNotified;
+  final Value<bool> maintenanceReminderEnabled;
+  final Value<DateTime?> maintenanceReminderSnoozedUntil;
   final Value<int> rowid;
   const VehiclesCompanion({
     this.id = const Value.absent(),
@@ -665,6 +881,10 @@ class VehiclesCompanion extends UpdateCompanion<VehicleEntry> {
     this.type = const Value.absent(),
     this.fuelVolumeUnit = const Value.absent(),
     this.currency = const Value.absent(),
+    this.odometerReminderFreqDays = const Value.absent(),
+    this.odometerReminderLastNotified = const Value.absent(),
+    this.maintenanceReminderEnabled = const Value.absent(),
+    this.maintenanceReminderSnoozedUntil = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   VehiclesCompanion.insert({
@@ -683,6 +903,10 @@ class VehiclesCompanion extends UpdateCompanion<VehicleEntry> {
     this.type = const Value.absent(),
     this.fuelVolumeUnit = const Value.absent(),
     this.currency = const Value.absent(),
+    this.odometerReminderFreqDays = const Value.absent(),
+    this.odometerReminderLastNotified = const Value.absent(),
+    this.maintenanceReminderEnabled = const Value.absent(),
+    this.maintenanceReminderSnoozedUntil = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : id = Value(id),
        brand = Value(brand),
@@ -708,6 +932,10 @@ class VehiclesCompanion extends UpdateCompanion<VehicleEntry> {
     Expression<String>? type,
     Expression<String>? fuelVolumeUnit,
     Expression<String>? currency,
+    Expression<int>? odometerReminderFreqDays,
+    Expression<DateTime>? odometerReminderLastNotified,
+    Expression<bool>? maintenanceReminderEnabled,
+    Expression<DateTime>? maintenanceReminderSnoozedUntil,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -726,6 +954,14 @@ class VehiclesCompanion extends UpdateCompanion<VehicleEntry> {
       if (type != null) 'type': type,
       if (fuelVolumeUnit != null) 'fuel_volume_unit': fuelVolumeUnit,
       if (currency != null) 'currency': currency,
+      if (odometerReminderFreqDays != null)
+        'odometer_reminder_freq_days': odometerReminderFreqDays,
+      if (odometerReminderLastNotified != null)
+        'odometer_reminder_last_notified': odometerReminderLastNotified,
+      if (maintenanceReminderEnabled != null)
+        'maintenance_reminder_enabled': maintenanceReminderEnabled,
+      if (maintenanceReminderSnoozedUntil != null)
+        'maintenance_reminder_snoozed_until': maintenanceReminderSnoozedUntil,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -746,6 +982,10 @@ class VehiclesCompanion extends UpdateCompanion<VehicleEntry> {
     Value<String>? type,
     Value<String>? fuelVolumeUnit,
     Value<String>? currency,
+    Value<int?>? odometerReminderFreqDays,
+    Value<DateTime?>? odometerReminderLastNotified,
+    Value<bool>? maintenanceReminderEnabled,
+    Value<DateTime?>? maintenanceReminderSnoozedUntil,
     Value<int>? rowid,
   }) {
     return VehiclesCompanion(
@@ -764,6 +1004,15 @@ class VehiclesCompanion extends UpdateCompanion<VehicleEntry> {
       type: type ?? this.type,
       fuelVolumeUnit: fuelVolumeUnit ?? this.fuelVolumeUnit,
       currency: currency ?? this.currency,
+      odometerReminderFreqDays:
+          odometerReminderFreqDays ?? this.odometerReminderFreqDays,
+      odometerReminderLastNotified:
+          odometerReminderLastNotified ?? this.odometerReminderLastNotified,
+      maintenanceReminderEnabled:
+          maintenanceReminderEnabled ?? this.maintenanceReminderEnabled,
+      maintenanceReminderSnoozedUntil:
+          maintenanceReminderSnoozedUntil ??
+          this.maintenanceReminderSnoozedUntil,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -816,6 +1065,26 @@ class VehiclesCompanion extends UpdateCompanion<VehicleEntry> {
     if (currency.present) {
       map['currency'] = Variable<String>(currency.value);
     }
+    if (odometerReminderFreqDays.present) {
+      map['odometer_reminder_freq_days'] = Variable<int>(
+        odometerReminderFreqDays.value,
+      );
+    }
+    if (odometerReminderLastNotified.present) {
+      map['odometer_reminder_last_notified'] = Variable<DateTime>(
+        odometerReminderLastNotified.value,
+      );
+    }
+    if (maintenanceReminderEnabled.present) {
+      map['maintenance_reminder_enabled'] = Variable<bool>(
+        maintenanceReminderEnabled.value,
+      );
+    }
+    if (maintenanceReminderSnoozedUntil.present) {
+      map['maintenance_reminder_snoozed_until'] = Variable<DateTime>(
+        maintenanceReminderSnoozedUntil.value,
+      );
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -840,6 +1109,14 @@ class VehiclesCompanion extends UpdateCompanion<VehicleEntry> {
           ..write('type: $type, ')
           ..write('fuelVolumeUnit: $fuelVolumeUnit, ')
           ..write('currency: $currency, ')
+          ..write('odometerReminderFreqDays: $odometerReminderFreqDays, ')
+          ..write(
+            'odometerReminderLastNotified: $odometerReminderLastNotified, ',
+          )
+          ..write('maintenanceReminderEnabled: $maintenanceReminderEnabled, ')
+          ..write(
+            'maintenanceReminderSnoozedUntil: $maintenanceReminderSnoozedUntil, ',
+          )
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -3593,6 +3870,10 @@ typedef $$VehiclesTableCreateCompanionBuilder =
       Value<String> type,
       Value<String> fuelVolumeUnit,
       Value<String> currency,
+      Value<int?> odometerReminderFreqDays,
+      Value<DateTime?> odometerReminderLastNotified,
+      Value<bool> maintenanceReminderEnabled,
+      Value<DateTime?> maintenanceReminderSnoozedUntil,
       Value<int> rowid,
     });
 typedef $$VehiclesTableUpdateCompanionBuilder =
@@ -3612,6 +3893,10 @@ typedef $$VehiclesTableUpdateCompanionBuilder =
       Value<String> type,
       Value<String> fuelVolumeUnit,
       Value<String> currency,
+      Value<int?> odometerReminderFreqDays,
+      Value<DateTime?> odometerReminderLastNotified,
+      Value<bool> maintenanceReminderEnabled,
+      Value<DateTime?> maintenanceReminderSnoozedUntil,
       Value<int> rowid,
     });
 
@@ -3795,6 +4080,28 @@ class $$VehiclesTableFilterComposer
     column: $table.currency,
     builder: (column) => ColumnFilters(column),
   );
+
+  ColumnFilters<int> get odometerReminderFreqDays => $composableBuilder(
+    column: $table.odometerReminderFreqDays,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get odometerReminderLastNotified =>
+      $composableBuilder(
+        column: $table.odometerReminderLastNotified,
+        builder: (column) => ColumnFilters(column),
+      );
+
+  ColumnFilters<bool> get maintenanceReminderEnabled => $composableBuilder(
+    column: $table.maintenanceReminderEnabled,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get maintenanceReminderSnoozedUntil =>
+      $composableBuilder(
+        column: $table.maintenanceReminderSnoozedUntil,
+        builder: (column) => ColumnFilters(column),
+      );
 
   Expression<bool> fuelLogsRefs(
     Expression<bool> Function($$FuelLogsTableFilterComposer f) f,
@@ -3980,6 +4287,28 @@ class $$VehiclesTableOrderingComposer
     column: $table.currency,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<int> get odometerReminderFreqDays => $composableBuilder(
+    column: $table.odometerReminderFreqDays,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get odometerReminderLastNotified =>
+      $composableBuilder(
+        column: $table.odometerReminderLastNotified,
+        builder: (column) => ColumnOrderings(column),
+      );
+
+  ColumnOrderings<bool> get maintenanceReminderEnabled => $composableBuilder(
+    column: $table.maintenanceReminderEnabled,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get maintenanceReminderSnoozedUntil =>
+      $composableBuilder(
+        column: $table.maintenanceReminderSnoozedUntil,
+        builder: (column) => ColumnOrderings(column),
+      );
 }
 
 class $$VehiclesTableAnnotationComposer
@@ -4041,6 +4370,28 @@ class $$VehiclesTableAnnotationComposer
 
   GeneratedColumn<String> get currency =>
       $composableBuilder(column: $table.currency, builder: (column) => column);
+
+  GeneratedColumn<int> get odometerReminderFreqDays => $composableBuilder(
+    column: $table.odometerReminderFreqDays,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get odometerReminderLastNotified =>
+      $composableBuilder(
+        column: $table.odometerReminderLastNotified,
+        builder: (column) => column,
+      );
+
+  GeneratedColumn<bool> get maintenanceReminderEnabled => $composableBuilder(
+    column: $table.maintenanceReminderEnabled,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get maintenanceReminderSnoozedUntil =>
+      $composableBuilder(
+        column: $table.maintenanceReminderSnoozedUntil,
+        builder: (column) => column,
+      );
 
   Expression<T> fuelLogsRefs<T extends Object>(
     Expression<T> Function($$FuelLogsTableAnnotationComposer a) f,
@@ -4192,6 +4543,12 @@ class $$VehiclesTableTableManager
                 Value<String> type = const Value.absent(),
                 Value<String> fuelVolumeUnit = const Value.absent(),
                 Value<String> currency = const Value.absent(),
+                Value<int?> odometerReminderFreqDays = const Value.absent(),
+                Value<DateTime?> odometerReminderLastNotified =
+                    const Value.absent(),
+                Value<bool> maintenanceReminderEnabled = const Value.absent(),
+                Value<DateTime?> maintenanceReminderSnoozedUntil =
+                    const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => VehiclesCompanion(
                 id: id,
@@ -4209,6 +4566,11 @@ class $$VehiclesTableTableManager
                 type: type,
                 fuelVolumeUnit: fuelVolumeUnit,
                 currency: currency,
+                odometerReminderFreqDays: odometerReminderFreqDays,
+                odometerReminderLastNotified: odometerReminderLastNotified,
+                maintenanceReminderEnabled: maintenanceReminderEnabled,
+                maintenanceReminderSnoozedUntil:
+                    maintenanceReminderSnoozedUntil,
                 rowid: rowid,
               ),
           createCompanionCallback:
@@ -4228,6 +4590,12 @@ class $$VehiclesTableTableManager
                 Value<String> type = const Value.absent(),
                 Value<String> fuelVolumeUnit = const Value.absent(),
                 Value<String> currency = const Value.absent(),
+                Value<int?> odometerReminderFreqDays = const Value.absent(),
+                Value<DateTime?> odometerReminderLastNotified =
+                    const Value.absent(),
+                Value<bool> maintenanceReminderEnabled = const Value.absent(),
+                Value<DateTime?> maintenanceReminderSnoozedUntil =
+                    const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => VehiclesCompanion.insert(
                 id: id,
@@ -4245,6 +4613,11 @@ class $$VehiclesTableTableManager
                 type: type,
                 fuelVolumeUnit: fuelVolumeUnit,
                 currency: currency,
+                odometerReminderFreqDays: odometerReminderFreqDays,
+                odometerReminderLastNotified: odometerReminderLastNotified,
+                maintenanceReminderEnabled: maintenanceReminderEnabled,
+                maintenanceReminderSnoozedUntil:
+                    maintenanceReminderSnoozedUntil,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0

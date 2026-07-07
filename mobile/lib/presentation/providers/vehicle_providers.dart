@@ -6,6 +6,7 @@ import 'package:mobile/data/repositories/maintenance_log_repository_impl.dart';
 import 'package:mobile/data/repositories/vehicle_document_repository_impl.dart';
 import 'package:mobile/data/repositories/vehicle_repository_impl.dart';
 import 'package:mobile/data/services/export_service.dart';
+import 'package:mobile/data/services/notification_service.dart';
 import 'package:mobile/data/services/pdf_export_service.dart';
 import 'package:mobile/data/services/template_resolver.dart';
 import 'package:mobile/domain/entities/fuel_log.dart';
@@ -103,3 +104,10 @@ final vehicleDocumentsProvider =
     return repo.getByVehicle(vehicleId);
   },
 );
+
+final notificationServiceProvider = Provider<NotificationService>((ref) {
+  return NotificationService();
+});
+
+final pendingNotificationActionProvider =
+    StateProvider<String?>((ref) => null);

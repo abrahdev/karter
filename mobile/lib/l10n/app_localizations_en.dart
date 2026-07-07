@@ -725,4 +725,75 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get seedDescAdblueRefill =>
       'The SCR system consumes AdBlue. Refill at each service or when warning appears.';
+
+  @override
+  String get moreNotifications => 'Notifications';
+
+  @override
+  String get moreNotificationsSubtitle => 'Odometer and maintenance reminders';
+
+  @override
+  String get notificationSettingsTitle => 'Notification settings';
+
+  @override
+  String get notificationSettingsSubtitle =>
+      'Configure reminders for this vehicle';
+
+  @override
+  String get notificationOdometerSection => 'Odometer reminder';
+
+  @override
+  String get notificationMaintenanceSection => 'Maintenance reminder';
+
+  @override
+  String get notificationFreqLabel => 'Reminder frequency';
+
+  @override
+  String get notificationFreqOff => 'Off';
+
+  @override
+  String notificationFreqValue(Object days) {
+    return 'Every $days days';
+  }
+
+  @override
+  String get notificationMaintenanceToggle => 'Maintenance reminders';
+
+  @override
+  String get notificationMaintenanceToggleSubtitle =>
+      'Receive daily reminders about pending maintenance';
+
+  @override
+  String notificationSnoozedBanner(Object days) {
+    return 'Snoozed for $days more day(s)';
+  }
+
+  @override
+  String get notificationSnoozeCancel => 'Cancel snooze';
+
+  @override
+  String get notificationNoVehicles =>
+      'Add a vehicle to configure notifications';
+
+  @override
+  String notificationVehicleSubtitle(Object freq, Object maint) {
+    return 'Odometer: $freq • Maintenance: $maint';
+  }
+
+  @override
+  String get notificationConfigure => 'Configure';
+
+  @override
+  String get notificationMaintOn => 'On';
+
+  @override
+  String get notificationMaintOff => 'Off';
+
+  @override
+  String get notificationSnoozeAction => 'Snooze for 1 week';
+
+  @override
+  String notificationSnoozeConfirm(Object date) {
+    return 'Snoozed until $date';
+  }
 }

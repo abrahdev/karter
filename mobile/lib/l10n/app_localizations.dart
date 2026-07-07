@@ -1391,6 +1391,126 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The SCR system consumes AdBlue. Refill at each service or when warning appears.'**
   String get seedDescAdblueRefill;
+
+  /// No description provided for @moreNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get moreNotifications;
+
+  /// No description provided for @moreNotificationsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Odometer and maintenance reminders'**
+  String get moreNotificationsSubtitle;
+
+  /// No description provided for @notificationSettingsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Notification settings'**
+  String get notificationSettingsTitle;
+
+  /// No description provided for @notificationSettingsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Configure reminders for this vehicle'**
+  String get notificationSettingsSubtitle;
+
+  /// No description provided for @notificationOdometerSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Odometer reminder'**
+  String get notificationOdometerSection;
+
+  /// No description provided for @notificationMaintenanceSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Maintenance reminder'**
+  String get notificationMaintenanceSection;
+
+  /// No description provided for @notificationFreqLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminder frequency'**
+  String get notificationFreqLabel;
+
+  /// No description provided for @notificationFreqOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get notificationFreqOff;
+
+  /// No description provided for @notificationFreqValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Every {days} days'**
+  String notificationFreqValue(Object days);
+
+  /// No description provided for @notificationMaintenanceToggle.
+  ///
+  /// In en, this message translates to:
+  /// **'Maintenance reminders'**
+  String get notificationMaintenanceToggle;
+
+  /// No description provided for @notificationMaintenanceToggleSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Receive daily reminders about pending maintenance'**
+  String get notificationMaintenanceToggleSubtitle;
+
+  /// No description provided for @notificationSnoozedBanner.
+  ///
+  /// In en, this message translates to:
+  /// **'Snoozed for {days} more day(s)'**
+  String notificationSnoozedBanner(Object days);
+
+  /// No description provided for @notificationSnoozeCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel snooze'**
+  String get notificationSnoozeCancel;
+
+  /// No description provided for @notificationNoVehicles.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a vehicle to configure notifications'**
+  String get notificationNoVehicles;
+
+  /// No description provided for @notificationVehicleSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Odometer: {freq} • Maintenance: {maint}'**
+  String notificationVehicleSubtitle(Object freq, Object maint);
+
+  /// No description provided for @notificationConfigure.
+  ///
+  /// In en, this message translates to:
+  /// **'Configure'**
+  String get notificationConfigure;
+
+  /// No description provided for @notificationMaintOn.
+  ///
+  /// In en, this message translates to:
+  /// **'On'**
+  String get notificationMaintOn;
+
+  /// No description provided for @notificationMaintOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get notificationMaintOff;
+
+  /// No description provided for @notificationSnoozeAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Snooze for 1 week'**
+  String get notificationSnoozeAction;
+
+  /// No description provided for @notificationSnoozeConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Snoozed until {date}'**
+  String notificationSnoozeConfirm(Object date);
 }
 
 class _AppLocalizationsDelegate

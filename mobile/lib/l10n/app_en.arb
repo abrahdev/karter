@@ -237,5 +237,27 @@
   "seedDescInverterCoolant": "The power electronics and electric motor generate heat. Coolant prevents overheating and component failure.",
   "seedDescDriveUnitOil": "The reduction gear in the drive unit has its own oil. Change intervals vary by manufacturer.",
   "seedDescHybridBatteryFilter": "The hybrid battery has a dedicated cooling fan with an intake filter. Clean annually; replace if clogged.",
-  "seedDescAdblueRefill": "The SCR system consumes AdBlue. Refill at each service or when warning appears."
+  "seedDescAdblueRefill": "The SCR system consumes AdBlue. Refill at each service or when warning appears.",
+
+  "moreNotifications": "Notifications",
+  "moreNotificationsSubtitle": "Odometer and maintenance reminders",
+
+  "notificationSettingsTitle": "Notification settings",
+  "notificationSettingsSubtitle": "Configure reminders for this vehicle",
+  "notificationOdometerSection": "Odometer reminder",
+  "notificationMaintenanceSection": "Maintenance reminder",
+  "notificationFreqLabel": "Reminder frequency",
+  "notificationFreqOff": "Off",
+  "notificationFreqValue": "Every {days} days",
+  "notificationMaintenanceToggle": "Maintenance reminders",
+  "notificationMaintenanceToggleSubtitle": "Receive daily reminders about pending maintenance",
+  "notificationSnoozedBanner": "Snoozed for {days} more day(s)",
+  "notificationSnoozeCancel": "Cancel snooze",
+  "notificationNoVehicles": "Add a vehicle to configure notifications",
+  "notificationVehicleSubtitle": "Odometer: {freq} • Maintenance: {maint}",
+  "notificationConfigure": "Configure",
+  "notificationMaintOn": "On",
+  "notificationMaintOff": "Off",
+  "notificationSnoozeAction": "Snooze for 1 week",
+  "notificationSnoozeConfirm": "Snoozed until {date}"
 }

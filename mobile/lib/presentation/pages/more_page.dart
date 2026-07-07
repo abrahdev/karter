@@ -40,6 +40,14 @@ class MorePage extends ConsumerWidget {
         ),
         const SizedBox(height: 8),
         ListTile(
+          leading: const Icon(Icons.notifications_outlined),
+          title: Text(l.moreNotifications),
+          subtitle: Text(l.moreNotificationsSubtitle),
+          trailing: const Icon(Icons.chevron_right),
+          onTap: () => context.push('/notifications'),
+        ),
+        const Divider(),
+        ListTile(
           leading: const Icon(Icons.storage),
           title: Text(l.moreExport),
           subtitle: Text(l.moreExportSubtitle),

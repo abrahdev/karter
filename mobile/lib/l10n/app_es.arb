@@ -237,5 +237,27 @@
   "seedDescInverterCoolant": "Los electrónicos de potencia y el motor eléctrico generan calor. El refrigerante evita el sobrecalentamiento y la falla de componentes.",
   "seedDescDriveUnitOil": "El engranaje reductor de la unidad de transmisión tiene su propio aceite. Los intervalos de cambio varían según el fabricante.",
   "seedDescHybridBatteryFilter": "La batería híbrida tiene un ventilador de refrigeración con filtro de admisión. Limpiar anualmente; reemplazar si está obstruido.",
-  "seedDescAdblueRefill": "El sistema SCR consume AdBlue. Recargar en cada servicio o cuando aparezca el aviso."
+  "seedDescAdblueRefill": "El sistema SCR consume AdBlue. Recargar en cada servicio o cuando aparezca el aviso.",
+
+  "moreNotifications": "Notificaciones",
+  "moreNotificationsSubtitle": "Recordatorios de odómetro y mantenimiento",
+
+  "notificationSettingsTitle": "Configuración de notificaciones",
+  "notificationSettingsSubtitle": "Configurá los recordatorios para este vehículo",
+  "notificationOdometerSection": "Recordatorio de odómetro",
+  "notificationMaintenanceSection": "Recordatorio de mantenimiento",
+  "notificationFreqLabel": "Frecuencia de recordatorio",
+  "notificationFreqOff": "Apagado",
+  "notificationFreqValue": "Cada {days} días",
+  "notificationMaintenanceToggle": "Recordatorios de mantenimiento",
+  "notificationMaintenanceToggleSubtitle": "Recibí recordatorios diarios sobre el mantenimiento pendiente",
+  "notificationSnoozedBanner": "Pospuesto por {days} día(s) más",
+  "notificationSnoozeCancel": "Cancelar posposición",
+  "notificationNoVehicles": "Agregá un vehículo para configurar notificaciones",
+  "notificationVehicleSubtitle": "Odómetro: {freq} • Mantenimiento: {maint}",
+  "notificationConfigure": "Configurar",
+  "notificationMaintOn": "Encendido",
+  "notificationMaintOff": "Apagado",
+  "notificationSnoozeAction": "Posponer 1 semana",
+  "notificationSnoozeConfirm": "Pospuesto hasta el {date}"
 }

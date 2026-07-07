@@ -26,6 +26,45 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
   bool _fabOpen = false;
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final action = ref.read(pendingNotificationActionProvider);
+      if (action != null) {
+        ref.read(pendingNotificationActionProvider.notifier).state = null;
+        final parts = action.split(':');
+        if (parts.length == 2 && parts[1] == widget.vehicleId) {
+          if (parts[0] == 'odometer') {
+            _openOdometerFromNotification();
+          }
+        }
+      }
+    });
+  }
+
+  Future<void> _openOdometerFromNotification() async {
+    final vehicle = await ref.read(vehicleProvider(widget.vehicleId).future);
+    if (!mounted || vehicle == null) return;
+    showDialog(
+      context: context,
+      builder: (ctx) => OdometerDialog(
+        current: vehicle.currentOdometer,
+        onSave: (double newDistance) async {
+          final repo = ref.read(vehicleRepositoryProvider);
+          final updated = vehicle.copyWith(
+            currentOdometer: vehicle.currentOdometer.add(
+              newDistance - vehicle.currentOdometer.distance,
+            ),
+          );
+          await repo.save(updated);
+          if (ctx.mounted) Navigator.of(ctx).pop();
+          ref.invalidate(vehicleProvider(widget.vehicleId));
+        },
+      ),
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
     final vehicleAsync = ref.watch(vehicleProvider(widget.vehicleId));
     final intervalsAsync =

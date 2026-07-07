@@ -87,6 +87,10 @@ class VehicleRepositoryImpl implements VehicleRepository {
       fuelVolumeUnit:
           VolumeUnit.values.firstWhere((u) => u.name == entry.fuelVolumeUnit),
       currency: entry.currency,
+      odometerReminderFreqDays: entry.odometerReminderFreqDays,
+      odometerReminderLastNotified: entry.odometerReminderLastNotified,
+      maintenanceReminderEnabled: entry.maintenanceReminderEnabled,
+      maintenanceReminderSnoozedUntil: entry.maintenanceReminderSnoozedUntil,
     );
   }
 
@@ -107,6 +111,13 @@ class VehicleRepositoryImpl implements VehicleRepository {
       type: drift.Value(vehicle.type.name),
       fuelVolumeUnit: drift.Value(vehicle.fuelVolumeUnit.name),
       currency: drift.Value(vehicle.currency),
+      odometerReminderFreqDays: drift.Value(vehicle.odometerReminderFreqDays),
+      odometerReminderLastNotified:
+          drift.Value(vehicle.odometerReminderLastNotified),
+      maintenanceReminderEnabled:
+          drift.Value(vehicle.maintenanceReminderEnabled),
+      maintenanceReminderSnoozedUntil:
+          drift.Value(vehicle.maintenanceReminderSnoozedUntil),
     );
   }
 }

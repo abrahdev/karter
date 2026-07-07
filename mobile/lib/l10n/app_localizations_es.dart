@@ -727,4 +727,76 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get seedDescAdblueRefill =>
       'El sistema SCR consume AdBlue. Recargar en cada servicio o cuando aparezca el aviso.';
+
+  @override
+  String get moreNotifications => 'Notificaciones';
+
+  @override
+  String get moreNotificationsSubtitle =>
+      'Recordatorios de odómetro y mantenimiento';
+
+  @override
+  String get notificationSettingsTitle => 'Configuración de notificaciones';
+
+  @override
+  String get notificationSettingsSubtitle =>
+      'Configurá los recordatorios para este vehículo';
+
+  @override
+  String get notificationOdometerSection => 'Recordatorio de odómetro';
+
+  @override
+  String get notificationMaintenanceSection => 'Recordatorio de mantenimiento';
+
+  @override
+  String get notificationFreqLabel => 'Frecuencia de recordatorio';
+
+  @override
+  String get notificationFreqOff => 'Apagado';
+
+  @override
+  String notificationFreqValue(Object days) {
+    return 'Cada $days días';
+  }
+
+  @override
+  String get notificationMaintenanceToggle => 'Recordatorios de mantenimiento';
+
+  @override
+  String get notificationMaintenanceToggleSubtitle =>
+      'Recibí recordatorios diarios sobre el mantenimiento pendiente';
+
+  @override
+  String notificationSnoozedBanner(Object days) {
+    return 'Pospuesto por $days día(s) más';
+  }
+
+  @override
+  String get notificationSnoozeCancel => 'Cancelar posposición';
+
+  @override
+  String get notificationNoVehicles =>
+      'Agregá un vehículo para configurar notificaciones';
+
+  @override
+  String notificationVehicleSubtitle(Object freq, Object maint) {
+    return 'Odómetro: $freq • Mantenimiento: $maint';
+  }
+
+  @override
+  String get notificationConfigure => 'Configurar';
+
+  @override
+  String get notificationMaintOn => 'Encendido';
+
+  @override
+  String get notificationMaintOff => 'Apagado';
+
+  @override
+  String get notificationSnoozeAction => 'Posponer 1 semana';
+
+  @override
+  String notificationSnoozeConfirm(Object date) {
+    return 'Pospuesto hasta el $date';
+  }
 }

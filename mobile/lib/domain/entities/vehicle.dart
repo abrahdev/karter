@@ -20,6 +20,10 @@ class Vehicle {
   final Odometer currentOdometer;
   final VolumeUnit fuelVolumeUnit;
   final String currency;
+  final int? odometerReminderFreqDays;
+  final DateTime? odometerReminderLastNotified;
+  final bool maintenanceReminderEnabled;
+  final DateTime? maintenanceReminderSnoozedUntil;
 
   static const List<String> currencies = [
     'USD', 'ARS', 'EUR', 'GBP', 'BRL', 'CLP', 'COP', 'MXN', 'PEN', 'UYU',
@@ -55,6 +59,10 @@ class Vehicle {
     this.type = VehicleType.combustion,
     this.fuelVolumeUnit = VolumeUnit.liters,
     this.currency = 'USD',
+    this.odometerReminderFreqDays,
+    this.odometerReminderLastNotified,
+    this.maintenanceReminderEnabled = true,
+    this.maintenanceReminderSnoozedUntil,
   });
 
   String get displayName {
@@ -76,6 +84,10 @@ class Vehicle {
     VehicleType? type,
     VolumeUnit? fuelVolumeUnit,
     String? currency,
+    int? odometerReminderFreqDays,
+    DateTime? odometerReminderLastNotified,
+    bool? maintenanceReminderEnabled,
+    DateTime? maintenanceReminderSnoozedUntil,
   }) {
     return Vehicle(
       id: id ?? this.id,
@@ -91,6 +103,14 @@ class Vehicle {
       type: type ?? this.type,
       fuelVolumeUnit: fuelVolumeUnit ?? this.fuelVolumeUnit,
       currency: currency ?? this.currency,
+      odometerReminderFreqDays:
+          odometerReminderFreqDays ?? this.odometerReminderFreqDays,
+      odometerReminderLastNotified:
+          odometerReminderLastNotified ?? this.odometerReminderLastNotified,
+      maintenanceReminderEnabled:
+          maintenanceReminderEnabled ?? this.maintenanceReminderEnabled,
+      maintenanceReminderSnoozedUntil:
+          maintenanceReminderSnoozedUntil ?? this.maintenanceReminderSnoozedUntil,
     );
   }
 
@@ -109,6 +129,12 @@ class Vehicle {
         'currentOdometerUnit': currentOdometer.unit.name,
         'fuelVolumeUnit': fuelVolumeUnit.name,
         'currency': currency,
+        'odometerReminderFreqDays': odometerReminderFreqDays,
+        'odometerReminderLastNotified':
+            odometerReminderLastNotified?.toIso8601String(),
+        'maintenanceReminderEnabled': maintenanceReminderEnabled,
+        'maintenanceReminderSnoozedUntil':
+            maintenanceReminderSnoozedUntil?.toIso8601String(),
       };
 
   factory Vehicle.fromJson(Map<String, dynamic> json) => Vehicle(
@@ -130,5 +156,16 @@ class Vehicle {
             ? VolumeUnit.values.byName(json['fuelVolumeUnit'])
             : VolumeUnit.liters,
         currency: json['currency'] ?? 'USD',
+        odometerReminderFreqDays: json['odometerReminderFreqDays'] as int?,
+        odometerReminderLastNotified:
+            json['odometerReminderLastNotified'] != null
+                ? DateTime.parse(json['odometerReminderLastNotified'])
+                : null,
+        maintenanceReminderEnabled:
+            json['maintenanceReminderEnabled'] ?? true,
+        maintenanceReminderSnoozedUntil:
+            json['maintenanceReminderSnoozedUntil'] != null
+                ? DateTime.parse(json['maintenanceReminderSnoozedUntil'])
+                : null,
       );
 }
