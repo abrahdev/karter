@@ -239,7 +239,7 @@ classDiagram
 | `DistanceUnit` | `domain/enums/distance_unit.dart` | `kilometers`, `miles` |
 | `VolumeUnit` | `domain/enums/volume_unit.dart` | `liters`, `gallons` |
 | `DocumentType` | `domain/enums/document_type.dart` | `fine`, `parkingFee`, `insurance`, `vehicleCheck`, `tax`, `complexInsurance`, `vehicleRegister`, `other` |
-| `CoreError` | `domain/enums/core_error.dart` | `emptyLicensePlate`, `invalidLicensePlateFormat`, `negativeOdometer`, `negativeMoneyAmount`, `invalidVehicleYear`, `invalidVinFormat` |
+| `CoreError` | `domain/enums/core_error.dart` | `emptyLicensePlate`, `invalidLicensePlateFormat`, `negativeOdometer`, `invalidVehicleYear`, `invalidVinFormat` |
 
 ---
 
@@ -323,7 +323,6 @@ classDiagram
         emptyLicensePlate
         invalidLicensePlateFormat
         negativeOdometer
-        negativeMoneyAmount
         invalidVehicleYear
         invalidVinFormat
     }

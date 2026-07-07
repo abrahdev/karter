@@ -30,17 +30,14 @@ lib/
 │   │   ├── maintenance_log.dart
 │   │   ├── maintenance_interval.dart
 │   │   ├── vehicle_document.dart
-│   │   ├── spare_part.dart
-│   │   ├── replaced_part.dart
-│   │   └── fitment_rule.dart
+│   │   └── maintenance_interval.dart
 │   ├── enums/                     # Enumerations used across entities
 │   │   ├── vehicle_type.dart
 │   │   ├── distance_unit.dart
 │   │   ├── volume_unit.dart
 │   │   ├── document_type.dart
 │   │   └── core_error.dart
-│   ├── value_objects/             # Immutable value objects (Money, Volume, Odometer, etc.)
-│   │   ├── money.dart
+│   ├── value_objects/             # Immutable value objects (Volume, Odometer, Plate, VIN)
 │   │   ├── volume.dart
 │   │   ├── odometer.dart
 │   │   ├── plate.dart
@@ -50,8 +47,7 @@ lib/
 │   │   ├── fuel_log_repository.dart
 │   │   ├── maintenance_log_repository.dart
 │   │   ├── maintenance_interval_repository.dart
-│   │   ├── vehicle_document_repository.dart
-│   │   └── spare_part_repository.dart
+│   │   └── vehicle_document_repository.dart
 │   └── errors/                    # Domain exception classes
 │       └── domain_exception.dart
 ├── data/                          # Data layer: implementations and external sources
@@ -112,7 +108,7 @@ lib/
 - **Contents:**
   - `entities/` — Business entities (Vehicle, FuelLog, MaintenanceLog, VehicleDocument, etc.)
   - `enums/` — Enum types (VehicleType, VolumeUnit, DistanceUnit, DocumentType, CoreError)
-  - `value_objects/` — Immutable objects enforcing domain rules (Money, Volume, Odometer, Plate, VIN)
+  - `value_objects/` — Immutable objects enforcing domain rules (Volume, Odometer, Plate, VIN)
   - `repositories/` — Abstract repository interfaces that define what data the app needs
   - `errors/` — Domain exception classes for business rule violations
 
