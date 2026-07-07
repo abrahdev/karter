@@ -347,7 +347,15 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage>
               const SizedBox(height: 24),
             ],
           ),
-          floatingActionButton: Column(
+          floatingActionButton: Builder(
+            builder: (context) {
+              if (_fabCtrl == null) {
+                return FloatingActionButton(
+                  onPressed: () {},
+                  child: const Icon(Icons.add),
+                );
+              }
+              return Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               _animatedFabOption(
@@ -433,6 +441,8 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage>
                 ),
               ),
             ],
+          );
+            },
           ),
         );
       },
@@ -476,9 +486,11 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage>
   }
 
   Widget _animatedFabOption(int index, Widget fab) {
+    final ctrl = _fabCtrl;
+    if (ctrl == null) return fab;
     final start = index * 0.15;
     final curve = CurvedAnimation(
-      parent: _fabCtrl!,
+      parent: ctrl,
       curve: Interval(start, start + 0.4, curve: Curves.easeOut),
     );
     return SizeTransition(
