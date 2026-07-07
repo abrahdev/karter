@@ -35,15 +35,37 @@ Future<void> showAddMaintenanceLogModal(
   }
 }
 
+Future<void> showEditMaintenanceLogModal(
+  BuildContext context, {
+  required String vehicleId,
+  required MaintenanceLog log,
+  required void Function() onSaved,
+}) async {
+  final result = await karterShowModalBottomSheet<bool>(
+    context: context,
+    isScrollControlled: true,
+    builder: (ctx) => _AddMaintenanceLogModal(
+      vehicleId: vehicleId,
+      editLog: log,
+    ),
+  );
+
+  if (result == true && context.mounted) {
+    onSaved();
+  }
+}
+
 class _AddMaintenanceLogModal extends ConsumerStatefulWidget {
   final String vehicleId;
   final String? initialDescription;
   final String? initialIntervalId;
+  final MaintenanceLog? editLog;
 
   const _AddMaintenanceLogModal({
     required this.vehicleId,
     this.initialDescription,
     this.initialIntervalId,
+    this.editLog,
   });
 
   @override
@@ -63,15 +85,31 @@ class _AddMaintenanceLogModalState
   final List<String> _selectedPhotos = [];
   String _vehicleCurrency = 'USD';
   bool _saving = false;
+  bool _isEditing = false;
 
   @override
   void initState() {
     super.initState();
-    if (widget.initialDescription != null) {
-      _descriptionController.text = widget.initialDescription!;
+    _isEditing = widget.editLog != null;
+
+    if (_isEditing) {
+      final log = widget.editLog!;
+      _date = log.date;
+      _descriptionController.text = log.description;
+      _odometerController.text =
+          log.odometerAtService > 0 ? log.odometerAtService.toStringAsFixed(0) : '';
+      _selectedPhotos.addAll(log.photoPaths);
+      if (log.costAmount != null) {
+        _costController.text = log.costAmount.toString();
+      }
+      WidgetsBinding.instance.addPostFrameCallback((_) => _loadCurrency());
+    } else {
+      if (widget.initialDescription != null) {
+        _descriptionController.text = widget.initialDescription!;
+      }
+      _selectedIntervalId = widget.initialIntervalId;
+      WidgetsBinding.instance.addPostFrameCallback((_) => _loadOdometer());
     }
-    _selectedIntervalId = widget.initialIntervalId;
-    WidgetsBinding.instance.addPostFrameCallback((_) => _loadOdometer());
   }
 
   @override
@@ -80,6 +118,14 @@ class _AddMaintenanceLogModalState
     _odometerController.dispose();
     _costController.dispose();
     super.dispose();
+  }
+
+  Future<void> _loadCurrency() async {
+    final vehicle =
+        await ref.read(vehicleProvider(widget.vehicleId).future);
+    if (vehicle != null && mounted) {
+      _vehicleCurrency = vehicle.currency;
+    }
   }
 
   Future<void> _loadOdometer() async {
@@ -182,7 +228,7 @@ class _AddMaintenanceLogModalState
     setState(() => _saving = true);
 
     try {
-      final logId = uuid.v4();
+      final logId = _isEditing ? widget.editLog!.id : uuid.v4();
       final odo =
           double.tryParse(_odometerController.text.trim()) ?? 0;
 
@@ -190,7 +236,7 @@ class _AddMaintenanceLogModalState
       double? restoreResetKm;
       DateTime? restoreResetDate;
 
-      if (_selectedIntervalId != null && odo > 0) {
+      if (!_isEditing && _selectedIntervalId != null && odo > 0) {
         final intervalRepo =
             ref.read(maintenanceIntervalRepositoryProvider);
         final interval =
@@ -227,11 +273,11 @@ class _AddMaintenanceLogModalState
         date: _date,
         description: _descriptionController.text.trim(),
         odometerAtService: odo,
-        isSynced: false,
-        resetIntervalId: resetIntervalId,
-        restoreResetKm: restoreResetKm,
-        restoreResetDate: restoreResetDate,
-        photoPaths: savedPaths,
+        isSynced: _isEditing ? widget.editLog!.isSynced : false,
+        resetIntervalId: _isEditing ? widget.editLog!.resetIntervalId : resetIntervalId,
+        restoreResetKm: _isEditing ? widget.editLog!.restoreResetKm : restoreResetKm,
+        restoreResetDate: _isEditing ? widget.editLog!.restoreResetDate : restoreResetDate,
+        photoPaths: savedPaths.isEmpty && _isEditing ? widget.editLog!.photoPaths : savedPaths,
         costAmount: costAmount,
         costCurrency: costAmount != null ? _vehicleCurrency : null,
       );
@@ -239,12 +285,75 @@ class _AddMaintenanceLogModalState
       final repo = ref.read(maintenanceLogRepositoryProvider);
       await repo.save(log);
 
-      if (resetIntervalId != null) {
+      if (!_isEditing && resetIntervalId != null) {
         final intervalRepo =
             ref.read(maintenanceIntervalRepositoryProvider);
         await intervalRepo.resetInterval(resetIntervalId, odo);
       }
 
+      ref.invalidate(maintenanceLogsProvider(widget.vehicleId));
+      ref.invalidate(maintenanceIntervalsProvider(widget.vehicleId));
+
+      if (mounted) Navigator.pop(context, true);
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(
+              AppLocalizations.of(context)!.homeError(e.toString())),
+        ));
+      }
+    } finally {
+      if (mounted) setState(() => _saving = false);
+    }
+  }
+
+  Future<void> _delete() async {
+    final l = AppLocalizations.of(context)!;
+    final confirmed = await karterShowDialog<bool>(
+      context: context,
+      builder: (ctx) {
+        return AlertDialog(
+          title: Text(l.deleteService),
+          content: Text(l.deleteServiceConfirm),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx, false),
+              child: Text(l.cancel),
+            ),
+            FilledButton(
+              onPressed: () => Navigator.pop(ctx, true),
+              style: FilledButton.styleFrom(
+                backgroundColor: Theme.of(ctx).colorScheme.error,
+                foregroundColor: Theme.of(ctx).colorScheme.onError,
+              ),
+              child: Text(l.delete),
+            ),
+          ],
+        );
+      },
+    );
+
+    if (confirmed != true || !mounted) return;
+    setState(() => _saving = true);
+
+    try {
+      final log = widget.editLog!;
+      final repo = ref.read(maintenanceLogRepositoryProvider);
+
+      if (log.resetIntervalId != null && log.restoreResetKm != null) {
+        final intervalRepo =
+            ref.read(maintenanceIntervalRepositoryProvider);
+        final interval =
+            await intervalRepo.getById(log.resetIntervalId!);
+        if (interval != null) {
+          await intervalRepo.save(interval.copyWith(
+            lastResetKm: log.restoreResetKm!,
+            lastResetDate: log.restoreResetDate,
+          ));
+        }
+      }
+
+      await repo.delete(log.id);
       ref.invalidate(maintenanceLogsProvider(widget.vehicleId));
       ref.invalidate(maintenanceIntervalsProvider(widget.vehicleId));
 
@@ -291,8 +400,10 @@ class _AddMaintenanceLogModalState
                 ),
               ),
               const SizedBox(height: 16),
-              Text(l.maintenanceLogTitleNew,
-                  style: theme.textTheme.titleLarge),
+              Text(
+                _isEditing ? l.maintenanceLogTitleEdit : l.maintenanceLogTitleNew,
+                style: theme.textTheme.titleLarge,
+              ),
               const SizedBox(height: 20),
               ListTile(
                 contentPadding: EdgeInsets.zero,
@@ -398,31 +509,33 @@ class _AddMaintenanceLogModalState
                 keyboardType: const TextInputType
                     .numberWithOptions(decimal: true),
               ),
-              const SizedBox(height: 12),
-              intervalsAsync.when(
-                data: (intervals) {
-                  final enabled =
-                      intervals.where((i) => i.isEnabled).toList();
-                  if (enabled.isEmpty) return const SizedBox.shrink();
-                  return DropdownButtonFormField<String>(
-                    initialValue: _selectedIntervalId,
-                    decoration: InputDecoration(
-                      labelText: l.resetInterval,
-                      border: const OutlineInputBorder(),
-                    ),
-                    items: enabled
-                        .map((i) => DropdownMenuItem(
-                              value: i.id,
-                              child: Text(i.label),
-                            ))
-                        .toList(),
-                    onChanged: (v) =>
-                        setState(() => _selectedIntervalId = v),
-                  );
-                },
-                loading: () => const SizedBox.shrink(),
-                error: (_, _) => const SizedBox.shrink(),
-              ),
+              if (!_isEditing) ...[
+                const SizedBox(height: 12),
+                intervalsAsync.when(
+                  data: (intervals) {
+                    final enabled =
+                        intervals.where((i) => i.isEnabled).toList();
+                    if (enabled.isEmpty) return const SizedBox.shrink();
+                    return DropdownButtonFormField<String>(
+                      initialValue: _selectedIntervalId,
+                      decoration: InputDecoration(
+                        labelText: l.resetInterval,
+                        border: const OutlineInputBorder(),
+                      ),
+                      items: enabled
+                          .map((i) => DropdownMenuItem(
+                                value: i.id,
+                                child: Text(i.label),
+                              ))
+                          .toList(),
+                      onChanged: (v) =>
+                          setState(() => _selectedIntervalId = v),
+                    );
+                  },
+                  loading: () => const SizedBox.shrink(),
+                  error: (_, _) => const SizedBox.shrink(),
+                ),
+              ],
               const SizedBox(height: 20),
               SizedBox(
                 width: double.infinity,
@@ -436,9 +549,24 @@ class _AddMaintenanceLogModalState
                               strokeWidth: 2),
                         )
                       : const Icon(Icons.save),
-                  label: Text(l.saveService),
+                  label: Text(_isEditing ? l.saveChangesShort : l.saveService),
                 ),
               ),
+              if (_isEditing) ...[
+                const SizedBox(height: 8),
+                SizedBox(
+                  width: double.infinity,
+                  child: OutlinedButton.icon(
+                    onPressed: _saving ? null : _delete,
+                    icon: const Icon(Icons.delete_outline),
+                    label: Text(l.deleteService),
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: theme.colorScheme.error,
+                      side: BorderSide(color: theme.colorScheme.error),
+                    ),
+                  ),
+                ),
+              ],
               const SizedBox(height: 8),
             ],
           ),

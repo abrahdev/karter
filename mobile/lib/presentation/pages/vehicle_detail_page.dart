@@ -454,17 +454,39 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
     final desc = localizedDesc(
         l, interval.descI18nKey, interval.description ?? '');
     final text = desc.isEmpty ? l.noDescriptionAvailable : desc;
-    karterShowDialog(
+    final theme = Theme.of(context);
+    karterShowModalBottomSheet(
       context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(label),
-        content: Text(text),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx),
-            child: Text(l.close),
-          ),
-        ],
+      builder: (ctx) => Padding(
+        padding: const EdgeInsets.fromLTRB(20, 12, 20, 20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: Container(
+                width: 40,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: theme.colorScheme.outlineVariant,
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+            ),
+            const SizedBox(height: 16),
+            Text(label, style: theme.textTheme.titleLarge),
+            const SizedBox(height: 12),
+            Text(text, style: theme.textTheme.bodyMedium),
+            const SizedBox(height: 20),
+            SizedBox(
+              width: double.infinity,
+              child: FilledButton(
+                onPressed: () => Navigator.pop(ctx),
+                child: Text(l.close),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

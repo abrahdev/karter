@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile/domain/entities/maintenance_log.dart';
 import 'package:mobile/l10n/app_localizations.dart';
@@ -140,9 +139,17 @@ class _MaintenanceLogListPageState
                         '${log.odometerAtService.toStringAsFixed(0)} ${l.km}',
                         style: theme.textTheme.bodySmall)
                     : null,
-                onTap: () => context.push(
-                  '/vehicle/${widget.vehicleId}/maintenance/${log.id}',
-                  extra: log,
+                onTap: () => showEditMaintenanceLogModal(
+                  context,
+                  vehicleId: widget.vehicleId,
+                  log: log,
+                  onSaved: () {
+                    ref.invalidate(
+                        maintenanceLogsProvider(widget.vehicleId));
+                    ref.invalidate(
+                        maintenanceIntervalsProvider(
+                            widget.vehicleId));
+                  },
                 ),
               ),
             )),

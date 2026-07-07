@@ -26,17 +26,21 @@ Future<T?> karterShowDialog<T>({
   required BuildContext context,
   required WidgetBuilder builder,
 }) {
+  final theme = Theme.of(context);
+  final barrierLabel = MaterialLocalizations.of(context).modalBarrierDismissLabel;
+
   return Navigator.of(context, rootNavigator: true).push<T>(
     _KarterDialogRoute<T>(
       pageBuilder: (context, animation, secondaryAnimation) {
         return Dialog(
+          backgroundColor: theme.dialogTheme.backgroundColor ?? theme.colorScheme.surface,
           child: Builder(builder: builder),
         );
       },
       openDuration: const Duration(milliseconds: 500),
       closeDuration: const Duration(milliseconds: 200),
       barrierDismissible: true,
-      barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
+      barrierLabel: barrierLabel,
       barrierColor: Colors.black54,
       transitionBuilder: (context, animation, secondaryAnimation, child) {
         final curved =
@@ -58,28 +62,32 @@ Future<T?> karterShowModalBottomSheet<T>({
   required WidgetBuilder builder,
   bool isScrollControlled = false,
 }) {
+  final theme = Theme.of(context);
+  final mediaQuery = MediaQuery.of(context);
+  final barrierLabel = MaterialLocalizations.of(context).modalBarrierDismissLabel;
+  final maxHeight = mediaQuery.size.height * (isScrollControlled ? 0.9 : 0.5);
+  final bottomInset = mediaQuery.viewInsets.bottom;
+
   return Navigator.of(context, rootNavigator: true).push<T>(
     _KarterDialogRoute<T>(
       pageBuilder: (context, animation, secondaryAnimation) {
         return Align(
           alignment: Alignment.bottomCenter,
           child: Padding(
-            padding: EdgeInsets.only(
-              bottom: MediaQuery.of(context).viewInsets.bottom,
-            ),
-            child: Container(
-              constraints: BoxConstraints(
-                maxHeight: MediaQuery.of(context).size.height *
-                    (isScrollControlled ? 0.9 : 0.5),
-              ),
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.surface,
-                borderRadius:
-                    const BorderRadius.vertical(top: Radius.circular(16)),
-              ),
-              child: SafeArea(
-                top: false,
-                child: builder(context),
+            padding: EdgeInsets.only(bottom: bottomInset),
+            child: Material(
+              color: theme.colorScheme.surface,
+              borderRadius:
+                  const BorderRadius.vertical(top: Radius.circular(16)),
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(maxHeight: maxHeight),
+                  child: SafeArea(
+                    top: false,
+                    child: builder(context),
+                  ),
+                ),
               ),
             ),
           ),
@@ -88,7 +96,7 @@ Future<T?> karterShowModalBottomSheet<T>({
       openDuration: const Duration(milliseconds: 500),
       closeDuration: const Duration(milliseconds: 200),
       barrierDismissible: true,
-      barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
+      barrierLabel: barrierLabel,
       barrierColor: Colors.black54,
       transitionBuilder: (context, animation, secondaryAnimation, child) {
         return SlideTransition(
