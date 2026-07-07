@@ -493,8 +493,9 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
 
   void _updateOdometer(
       BuildContext context, String vehicleId, WidgetRef ref) {
-    karterShowDialog(
+    karterShowModalBottomSheet(
       context: context,
+      isScrollControlled: true,
       builder: (ctx) => OdometerDialog(
         current: ref.read(vehicleProvider(vehicleId)).valueOrNull
                 ?.currentOdometer ??

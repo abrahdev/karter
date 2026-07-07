@@ -92,147 +92,175 @@ class _OdometerDialogState extends State<OdometerDialog> {
     final mediaQuery = MediaQuery.of(context);
     final isNarrow = mediaQuery.size.width < 480;
 
-    return AlertDialog(
-      title: Text(l.odometerUpdateTitle),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            l.odometerLastReading(_unitLabel(), _format(currentKm)),
-            style: theme.textTheme.bodyMedium?.copyWith(
-              color: theme.colorScheme.onSurfaceVariant,
-            ),
-          ),
-          const SizedBox(height: 16),
-          if (isNarrow) ...[
-            TextField(
-              controller: _controller,
-              keyboardType: TextInputType.number,
-              textAlign: TextAlign.center,
-              style: theme.textTheme.headlineMedium,
-              inputFormatters: [
-                FilteringTextInputFormatter.allow(RegExp(r'[\d.]')),
-              ],
-              decoration: InputDecoration(
-                suffixText: _unitLabel(),
-                border: const OutlineInputBorder(),
-                contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 8, vertical: 12),
-              ),
-              onChanged: (v) {
-                setState(() {
-                  _rawValue = _parse(v);
-                  _validate();
-                });
-              },
-            ),
-            const SizedBox(height: 8),
-            Wrap(
-              spacing: 4,
-              runSpacing: 4,
-              alignment: WrapAlignment.center,
-              children: [
-                _quickBtn(
-                    Icons.remove_circle_outline, -10, theme),
-                _quickBtn(null, -1, theme),
-                _quickBtn(null, 1, theme),
-                _quickBtn(Icons.add_circle_outline, 10, theme),
-              ],
-            ),
-          ] else ...[
-            Row(
-              children: [
-                _quickBtn(
-                    Icons.remove_circle_outline, -10, theme),
-                const SizedBox(width: 4),
-                _quickBtn(null, -1, theme),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: TextField(
-                    controller: _controller,
-                    keyboardType: TextInputType.number,
-                    textAlign: TextAlign.center,
-                    style: theme.textTheme.headlineMedium,
-                    inputFormatters: [
-                      FilteringTextInputFormatter.allow(
-                          RegExp(r'[\d.]')),
-                    ],
-                    decoration: InputDecoration(
-                      suffixText: _unitLabel(),
-                      border: const OutlineInputBorder(),
-                      contentPadding:
-                          const EdgeInsets.symmetric(
-                              horizontal: 8, vertical: 12),
-                    ),
-                    onChanged: (v) {
-                      setState(() {
-                        _rawValue = _parse(v);
-                        _validate();
-                      });
-                    },
-                  ),
+    return Padding(
+      padding: EdgeInsets.only(
+        bottom: MediaQuery.of(context).viewInsets.bottom,
+      ),
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.fromLTRB(20, 12, 20, 20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: Container(
+                width: 40,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: theme.colorScheme.outlineVariant,
+                  borderRadius: BorderRadius.circular(2),
                 ),
-                const SizedBox(width: 8),
-                _quickBtn(null, 1, theme),
-                const SizedBox(width: 4),
-                _quickBtn(Icons.add_circle_outline, 10, theme),
-              ],
-            ),
-          ],
-          const SizedBox(height: 8),
-          Wrap(
-            spacing: 6,
-            runSpacing: 6,
-            children: [
-              _chip(100, theme),
-              _chip(500, theme),
-              _chip(1000, theme),
-              _chip(5000, theme),
-            ],
-          ),
-          if (_warning != null) ...[
-            const SizedBox(height: 16),
-            Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: theme.colorScheme.errorContainer,
-                borderRadius: BorderRadius.circular(8),
               ),
-              child: Row(
+            ),
+            const SizedBox(height: 16),
+            Text(l.odometerUpdateTitle,
+                style: theme.textTheme.titleLarge),
+            const SizedBox(height: 8),
+            Text(
+              l.odometerLastReading(_unitLabel(), _format(currentKm)),
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: theme.colorScheme.onSurfaceVariant,
+              ),
+            ),
+            const SizedBox(height: 16),
+            if (isNarrow) ...[
+              TextField(
+                controller: _controller,
+                keyboardType: TextInputType.number,
+                textAlign: TextAlign.center,
+                style: theme.textTheme.headlineMedium,
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp(r'[\d.]')),
+                ],
+                decoration: InputDecoration(
+                  suffixText: _unitLabel(),
+                  border: const OutlineInputBorder(),
+                  contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 8, vertical: 12),
+                ),
+                onChanged: (v) {
+                  setState(() {
+                    _rawValue = _parse(v);
+                    _validate();
+                  });
+                },
+              ),
+              const SizedBox(height: 8),
+              Wrap(
+                spacing: 4,
+                runSpacing: 4,
+                alignment: WrapAlignment.center,
                 children: [
-                  Icon(Icons.warning_amber_rounded,
-                      color: theme.colorScheme.onErrorContainer,
-                      size: 20),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: Text(
-                      _warning!,
-                      style: theme.textTheme.bodySmall?.copyWith(
-                        color: theme.colorScheme.onErrorContainer,
-                      ),
-                    ),
-                  ),
+                  _quickBtn(
+                      Icons.remove_circle_outline, -10, theme),
+                  _quickBtn(null, -1, theme),
+                  _quickBtn(null, 1, theme),
+                  _quickBtn(Icons.add_circle_outline, 10, theme),
                 ],
               ),
+            ] else ...[
+              Row(
+                children: [
+                  _quickBtn(
+                      Icons.remove_circle_outline, -10, theme),
+                  const SizedBox(width: 4),
+                  _quickBtn(null, -1, theme),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: TextField(
+                      controller: _controller,
+                      keyboardType: TextInputType.number,
+                      textAlign: TextAlign.center,
+                      style: theme.textTheme.headlineMedium,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(
+                            RegExp(r'[\d.]')),
+                      ],
+                      decoration: InputDecoration(
+                        suffixText: _unitLabel(),
+                        border: const OutlineInputBorder(),
+                        contentPadding:
+                            const EdgeInsets.symmetric(
+                                horizontal: 8, vertical: 12),
+                      ),
+                      onChanged: (v) {
+                        setState(() {
+                          _rawValue = _parse(v);
+                          _validate();
+                        });
+                      },
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  _quickBtn(null, 1, theme),
+                  const SizedBox(width: 4),
+                  _quickBtn(Icons.add_circle_outline, 10, theme),
+                ],
+              ),
+            ],
+            const SizedBox(height: 8),
+            Wrap(
+              spacing: 6,
+              runSpacing: 6,
+              children: [
+                _chip(100, theme),
+                _chip(500, theme),
+                _chip(1000, theme),
+                _chip(5000, theme),
+              ],
+            ),
+            if (_warning != null) ...[
+              const SizedBox(height: 16),
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: theme.colorScheme.errorContainer,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Row(
+                  children: [
+                    Icon(Icons.warning_amber_rounded,
+                        color: theme.colorScheme.onErrorContainer,
+                        size: 20),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        _warning!,
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: theme.colorScheme.onErrorContainer,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+            const SizedBox(height: 20),
+            Row(
+              children: [
+                Expanded(
+                  child: OutlinedButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: Text(l.odometerCancel),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: FilledButton(
+                    onPressed: _rawValue >= 0 && _rawValue != currentKm
+                        ? () async {
+                            await widget.onSave(_rawValue);
+                            if (context.mounted) Navigator.pop(context);
+                          }
+                        : null,
+                    child: Text(l.odometerSave),
+                  ),
+                ),
+              ],
             ),
           ],
-        ],
+        ),
       ),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.pop(context),
-          child: Text(l.odometerCancel),
-        ),
-        FilledButton(
-          onPressed: _rawValue >= 0 && _rawValue != currentKm
-              ? () async {
-                  await widget.onSave(_rawValue);
-                  if (context.mounted) Navigator.pop(context);
-                }
-              : null,
-          child: Text(l.odometerSave),
-        ),
-      ],
     );
   }
 
