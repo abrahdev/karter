@@ -347,103 +347,100 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage>
               const SizedBox(height: 24),
             ],
           ),
-          floatingActionButton: Builder(
-            builder: (context) {
-              if (_fabCtrl == null) {
-                return FloatingActionButton(
+          floatingActionButton: _fabCtrl == null
+              ? FloatingActionButton(
                   onPressed: () {},
                   child: const Icon(Icons.add),
-                );
-              }
-              return Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              _animatedFabOption(
-                0,
-                FloatingActionButton.small(
-                  heroTag: 'add_doc',
-                  backgroundColor:
-                      theme.colorScheme.secondaryContainer,
-                  onPressed: () {
-                    _fabCtrl?.reverse();
-                    showAddDocumentModal(
-                      context,
-                      vehicleId: widget.vehicleId,
-                      onSaved: () {
-                        ref.invalidate(
-                            vehicleDocumentsProvider(
-                                widget.vehicleId));
+                )
+              : Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    _animatedFabOption(
+                      0,
+                      FloatingActionButton.small(
+                        heroTag: 'add_doc',
+                        backgroundColor:
+                            theme.colorScheme.secondaryContainer,
+                        onPressed: () {
+                          _fabCtrl?.reverse();
+                          showAddDocumentModal(
+                            context,
+                            vehicleId: widget.vehicleId,
+                            onSaved: () {
+                              ref.invalidate(
+                                  vehicleDocumentsProvider(
+                                      widget.vehicleId));
+                            },
+                          );
+                        },
+                        child: const Icon(Icons.description),
+                      ),
+                    ),
+                    _animatedFabOption(
+                      1,
+                      FloatingActionButton.small(
+                        heroTag: 'add_fuel',
+                        backgroundColor:
+                            theme.colorScheme.secondaryContainer,
+                        onPressed: () {
+                          _fabCtrl?.reverse();
+                          showAddFuelLogModal(
+                            context,
+                            vehicleId: widget.vehicleId,
+                            onSaved: () {
+                              ref.invalidate(
+                                  fuelLogsProvider(
+                                      widget.vehicleId));
+                            },
+                          );
+                        },
+                        child: const Icon(Icons.local_gas_station),
+                      ),
+                    ),
+                    _animatedFabOption(
+                      2,
+                      FloatingActionButton.small(
+                        heroTag: 'add_service',
+                        backgroundColor:
+                            theme.colorScheme.secondaryContainer,
+                        onPressed: () {
+                          _fabCtrl?.reverse();
+                          showAddMaintenanceLogModal(
+                            context,
+                            vehicleId: widget.vehicleId,
+                            onSaved: () {
+                              ref.invalidate(
+                                  maintenanceLogsProvider(
+                                      widget.vehicleId));
+                              ref.invalidate(
+                                  maintenanceIntervalsProvider(
+                                      widget.vehicleId));
+                            },
+                          );
+                        },
+                        child: const Icon(Icons.build),
+                      ),
+                    ),
+                    FloatingActionButton(
+                      heroTag: 'main_fab',
+                      onPressed: () {
+                        final ctrl = _fabCtrl;
+                        if (ctrl == null) return;
+                        if (ctrl.isDismissed) {
+                          ctrl.forward();
+                        } else {
+                          ctrl.reverse();
+                        }
                       },
-                    );
-                  },
-                  child: const Icon(Icons.description),
+                      child: AnimatedRotation(
+                        turns: _fabOpen ? 0.375 : 0,
+                        duration: const Duration(milliseconds: 300),
+                        child: const Icon(Icons.add),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-              _animatedFabOption(
-                1,
-                FloatingActionButton.small(
-                  heroTag: 'add_fuel',
-                  backgroundColor:
-                      theme.colorScheme.secondaryContainer,
-                  onPressed: () {
-                    _fabCtrl?.reverse();
-                    showAddFuelLogModal(
-                      context,
-                      vehicleId: widget.vehicleId,
-                      onSaved: () {
-                        ref.invalidate(
-                            fuelLogsProvider(widget.vehicleId));
-                      },
-                    );
-                  },
-                  child: const Icon(Icons.local_gas_station),
-                ),
-              ),
-              _animatedFabOption(
-                2,
-                FloatingActionButton.small(
-                  heroTag: 'add_service',
-                  backgroundColor:
-                      theme.colorScheme.secondaryContainer,
-                  onPressed: () {
-                    _fabCtrl?.reverse();
-                    showAddMaintenanceLogModal(
-                      context,
-                      vehicleId: widget.vehicleId,
-                      onSaved: () {
-                        ref.invalidate(
-                            maintenanceLogsProvider(
-                                widget.vehicleId));
-                        ref.invalidate(
-                            maintenanceIntervalsProvider(
-                                widget.vehicleId));
-                      },
-                    );
-                  },
-                  child: const Icon(Icons.build),
-                ),
-              ),
-              FloatingActionButton(
-                heroTag: 'main_fab',
-                onPressed: () {
-                  final ctrl = _fabCtrl;
-                  if (ctrl == null) return;
-                  if (ctrl.isDismissed) {
-                    ctrl.forward();
-                  } else {
-                    ctrl.reverse();
-                  }
-                },
-                child: AnimatedRotation(
-                  turns: _fabOpen ? 0.375 : 0,
-                  duration: const Duration(milliseconds: 300),
-                  child: const Icon(Icons.add),
-                ),
-              ),
-            ],
-          );
-            },
-          ),
         );
       },
       loading: () => Scaffold(
