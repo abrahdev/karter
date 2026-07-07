@@ -41,7 +41,7 @@ class NotificationSettingsPage extends ConsumerWidget {
   }
 }
 
-class _SettingsView extends StatelessWidget {
+class _SettingsView extends StatefulWidget {
   final Vehicle vehicle;
   final String vehicleId;
   final AppLocalizations l;
@@ -57,11 +57,50 @@ class _SettingsView extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    final vehicleLabel = vehicle.alias ?? '${vehicle.brand} ${vehicle.model}';
+  State<_SettingsView> createState() => _SettingsViewState();
+}
 
+class _SettingsViewState extends State<_SettingsView> {
+  late double _sliderValue;
+
+  bool get _isCustom =>
+      widget.vehicle.odometerReminderFreqDays != null &&
+      widget.vehicle.odometerReminderFreqDays != 7 &&
+      widget.vehicle.odometerReminderFreqDays != 30;
+
+  @override
+  void initState() {
+    super.initState();
+    _sliderValue =
+        (widget.vehicle.odometerReminderFreqDays ?? 14).toDouble().clamp(1, 90);
+  }
+
+  int? _selectedSegment() {
+    final freq = widget.vehicle.odometerReminderFreqDays;
+    if (freq == null) return null;
+    if (freq == 7) return 7;
+    if (freq == 30) return 30;
+    return null;
+  }
+
+  String get _vehicleLabel =>
+      widget.vehicle.alias ?? '${widget.vehicle.brand} ${widget.vehicle.model}';
+
+  Future<void> _saveFreq(int? days) async {
+    final now = DateTime.now();
+    final updated = widget.vehicle.copyWith(
+      odometerReminderFreqDays: days,
+      odometerReminderLastNotified: days != null ? now : null,
+    );
+    final repo = widget.ref.read(vehicleRepositoryProvider);
+    await repo.save(updated);
+    widget.ref.invalidate(vehicleProvider(widget.vehicleId));
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(l.notificationSettingsTitle)),
+      appBar: AppBar(title: Text(widget.l.notificationSettingsTitle)),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
@@ -71,107 +110,182 @@ class _SettingsView extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(vehicleLabel,
-                      style: theme.textTheme.titleMedium),
+                  Text(_vehicleLabel,
+                      style: widget.theme.textTheme.titleMedium),
                   const SizedBox(height: 4),
-                  Text(l.notificationSettingsSubtitle,
-                      style: theme.textTheme.bodySmall?.copyWith(
-                        color: theme.colorScheme.onSurfaceVariant,
+                  Text(widget.l.notificationSettingsSubtitle,
+                      style: widget.theme.textTheme.bodySmall?.copyWith(
+                        color: widget.theme.colorScheme.onSurfaceVariant,
                       )),
                 ],
               ),
             ),
           ),
-          const SizedBox(height: 16),
-          Text(l.notificationOdometerSection,
-              style: theme.textTheme.titleSmall),
-          const SizedBox(height: 8),
-          _buildFreqSelector(context),
           const SizedBox(height: 24),
-          Text(l.notificationMaintenanceSection,
-              style: theme.textTheme.titleSmall),
-          const SizedBox(height: 8),
-          _buildMaintenanceToggle(context),
+          Text(widget.l.notificationOdometerSection,
+              style: widget.theme.textTheme.titleSmall),
+          const SizedBox(height: 12),
+          _buildFreqSelector(),
+          const SizedBox(height: 24),
+          Text(widget.l.notificationMaintenanceSection,
+              style: widget.theme.textTheme.titleSmall),
+          const SizedBox(height: 12),
+          _buildMaintenanceToggle(),
           const SizedBox(height: 16),
-          if (vehicle.maintenanceReminderSnoozedUntil != null &&
-              vehicle.maintenanceReminderSnoozedUntil!.isAfter(DateTime.now()))
-            _buildSnoozeBanner(context),
+          if (widget.vehicle.maintenanceReminderSnoozedUntil != null &&
+              widget.vehicle.maintenanceReminderSnoozedUntil!
+                  .isAfter(DateTime.now()))
+            _buildSnoozeBanner(),
         ],
       ),
     );
   }
 
-  Widget _buildFreqSelector(BuildContext context) {
-    return DropdownButtonFormField<int?>(
-      initialValue: vehicle.odometerReminderFreqDays,
-      decoration: InputDecoration(
-        labelText: l.notificationFreqLabel,
-        border: const OutlineInputBorder(),
-      ),
-      items: const [
-        DropdownMenuItem(value: null, child: Text('Off')),
-        DropdownMenuItem(value: 7, child: Text('Cada 7 días (Semanal)')),
-        DropdownMenuItem(value: 15, child: Text('Cada 15 días (Quincenal)')),
-        DropdownMenuItem(value: 30, child: Text('Cada 30 días (Mensual)')),
+  Widget _buildFreqSelector() {
+    final selected = _selectedSegment();
+    final l = widget.l;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SegmentedButton<int?>(
+          segments: const [
+            ButtonSegment(value: 7, label: Text('7 días')),
+            ButtonSegment(value: 30, label: Text('30 días')),
+            ButtonSegment(value: null, label: Text('Personalizado')),
+          ],
+          selected: {selected},
+          onSelectionChanged: (selectedSet) {
+            final value = selectedSet.first;
+            if (value != null) {
+              _saveFreq(value);
+            } else {
+              setState(() {
+                _sliderValue = (widget.vehicle.odometerReminderFreqDays ?? 14)
+                    .toDouble()
+                    .clamp(1, 90);
+              });
+              _saveFreq(_sliderValue.round());
+            }
+          },
+        ),
+        if (_isCustom || selected == null && _sliderValue > 0) ...[
+          const SizedBox(height: 16),
+          Row(
+            children: [
+              const SizedBox(width: 16),
+              Text('1', style: widget.theme.textTheme.bodySmall),
+              Expanded(
+                child: Slider(
+                  value: _sliderValue,
+                  min: 1,
+                  max: 90,
+                  divisions: 89,
+                  label: '${_sliderValue.round()} días',
+                  onChanged: (v) {
+                    setState(() => _sliderValue = v);
+                  },
+                  onChangeEnd: (v) {
+                    _saveFreq(v.round());
+                  },
+                ),
+              ),
+              Text('90', style: widget.theme.textTheme.bodySmall),
+              const SizedBox(width: 16),
+            ],
+          ),
+          Center(
+            child: Text(
+              l.notificationFreqDays(_sliderValue.round()),
+              style: widget.theme.textTheme.bodyMedium?.copyWith(
+                color: widget.theme.colorScheme.primary,
+              ),
+            ),
+          ),
+        ],
+        if (selected == null && !_isCustom)
+          Padding(
+            padding: const EdgeInsets.only(top: 12),
+            child: Text(
+              l.notificationFreqOff,
+              style: widget.theme.textTheme.bodySmall?.copyWith(
+                color: widget.theme.colorScheme.onSurfaceVariant,
+              ),
+            ),
+          ),
       ],
-      onChanged: (value) async {
-        final now = DateTime.now();
-        final updated = vehicle.copyWith(
-          odometerReminderFreqDays: value,
-          odometerReminderLastNotified:
-              value != null ? now : null,
-        );
-        final repo = ref.read(vehicleRepositoryProvider);
-        await repo.save(updated);
-        ref.invalidate(vehicleProvider(vehicleId));
-      },
     );
   }
 
-  Widget _buildMaintenanceToggle(BuildContext context) {
-    return SwitchListTile(
-      title: Text(l.notificationMaintenanceToggle),
-      subtitle: Text(l.notificationMaintenanceToggleSubtitle),
-      value: vehicle.maintenanceReminderEnabled,
-      onChanged: (enabled) async {
-        final updated = vehicle.copyWith(
-          maintenanceReminderEnabled: enabled,
-          maintenanceReminderSnoozedUntil:
-              enabled ? null : vehicle.maintenanceReminderSnoozedUntil,
-        );
-        final repo = ref.read(vehicleRepositoryProvider);
-        await repo.save(updated);
-        ref.invalidate(vehicleProvider(vehicleId));
-      },
+  Widget _buildMaintenanceToggle() {
+    final l = widget.l;
+    final vehicle = widget.vehicle;
+
+    return Column(
+      children: [
+        SwitchListTile(
+          title: Text(l.notificationMaintenanceToggle),
+          subtitle: Text(l.notificationMaintenanceToggleSubtitle),
+          value: vehicle.maintenanceReminderEnabled,
+          contentPadding: EdgeInsets.zero,
+          onChanged: (enabled) async {
+            final updated = vehicle.copyWith(
+              maintenanceReminderEnabled: enabled,
+              maintenanceReminderSnoozedUntil:
+                  enabled ? null : vehicle.maintenanceReminderSnoozedUntil,
+            );
+            final repo = widget.ref.read(vehicleRepositoryProvider);
+            await repo.save(updated);
+            widget.ref.invalidate(vehicleProvider(widget.vehicleId));
+          },
+        ),
+        if (vehicle.maintenanceReminderEnabled)
+          Padding(
+            padding: const EdgeInsets.only(left: 16),
+            child: TextButton.icon(
+              icon: const Icon(Icons.notifications_off_outlined, size: 18),
+              label: Text(l.notificationSnoozeAction),
+              onPressed: () async {
+                final updated = vehicle.copyWith(
+                  maintenanceReminderSnoozedUntil:
+                      DateTime.now().add(const Duration(days: 7)),
+                );
+                final repo = widget.ref.read(vehicleRepositoryProvider);
+                await repo.save(updated);
+                widget.ref.invalidate(vehicleProvider(widget.vehicleId));
+              },
+            ),
+          ),
+      ],
     );
   }
 
-  Widget _buildSnoozeBanner(BuildContext context) {
-    final remaining = vehicle.maintenanceReminderSnoozedUntil!
+  Widget _buildSnoozeBanner() {
+    final remaining = widget.vehicle.maintenanceReminderSnoozedUntil!
         .difference(DateTime.now())
         .inDays;
     return Card(
-      color: theme.colorScheme.secondaryContainer,
+      color: widget.theme.colorScheme.secondaryContainer,
       child: Padding(
         padding: const EdgeInsets.all(12),
         child: Row(
           children: [
             Expanded(
               child: Text(
-                l.notificationSnoozedBanner(remaining),
-                style: theme.textTheme.bodySmall,
+                widget.l.notificationSnoozedBanner(remaining),
+                style: widget.theme.textTheme.bodySmall,
               ),
             ),
             TextButton(
               onPressed: () async {
-                final updated = vehicle.copyWith(
+                final updated = widget.vehicle.copyWith(
                   maintenanceReminderSnoozedUntil: null,
                 );
-                final repo = ref.read(vehicleRepositoryProvider);
+                final repo = widget.ref.read(vehicleRepositoryProvider);
                 await repo.save(updated);
-                ref.invalidate(vehicleProvider(vehicleId));
+                widget.ref.invalidate(vehicleProvider(widget.vehicleId));
               },
-              child: Text(l.notificationSnoozeCancel),
+              child: Text(widget.l.notificationSnoozeCancel),
             ),
           ],
         ),

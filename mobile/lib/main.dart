@@ -297,6 +297,7 @@ class _NotificationListPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final vehiclesAsync = ref.watch(vehicleListProvider);
     final l = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
 
     return Scaffold(
       appBar: AppBar(title: Text(l.notificationSettingsTitle)),
@@ -305,26 +306,55 @@ class _NotificationListPage extends ConsumerWidget {
           if (vehicles.isEmpty) {
             return Center(child: Text(l.notificationNoVehicles));
           }
-          return ListView.separated(
+          return ListView.builder(
             padding: const EdgeInsets.all(16),
             itemCount: vehicles.length,
-            separatorBuilder: (_, _) => const Divider(),
             itemBuilder: (_, i) {
               final v = vehicles[i];
               final label = v.alias ?? '${v.brand} ${v.model}';
               final freq = v.odometerReminderFreqDays;
               final maintOn = v.maintenanceReminderEnabled;
-              return ListTile(
-                title: Text(label),
-                subtitle: Text(
-                  l.notificationVehicleSubtitle(
-                    freq != null ? l.notificationFreqValue(freq) : l.notificationFreqOff,
-                    maintOn ? l.notificationMaintOn : l.notificationMaintOff,
+              return Card(
+                margin: const EdgeInsets.only(bottom: 12),
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(12),
+                  onTap: () => context.push('/notifications/${v.id}'),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.notifications_outlined,
+                          color: theme.colorScheme.primary,
+                        ),
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(label,
+                                  style: theme.textTheme.titleMedium),
+                              const SizedBox(height: 4),
+                              Text(
+                                l.notificationVehicleSubtitle(
+                                  freq != null
+                                      ? l.notificationFreqValue(freq)
+                                      : l.notificationFreqOff,
+                                  maintOn
+                                      ? l.notificationMaintOn
+                                      : l.notificationMaintOff,
+                                ),
+                                style: theme.textTheme.bodySmall?.copyWith(
+                                  color: theme.colorScheme.onSurfaceVariant,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const Icon(Icons.chevron_right),
+                      ],
+                    ),
                   ),
-                ),
-                trailing: TextButton(
-                  onPressed: () => context.push('/notifications/${v.id}'),
-                  child: Text(l.notificationConfigure),
                 ),
               );
             },

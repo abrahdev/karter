@@ -259,5 +259,10 @@
   "notificationMaintOn": "Encendido",
   "notificationMaintOff": "Apagado",
   "notificationSnoozeAction": "Posponer 1 semana",
-  "notificationSnoozeConfirm": "Pospuesto hasta el {date}"
+  "notificationSnoozeConfirm": "Pospuesto hasta el {date}",
+  "notificationFreqWeekly": "Cada 7 días",
+  "notificationFreqMonthly": "Cada 30 días",
+  "notificationFreqCustom": "Personalizado",
+  "notificationFreqDays": "{days} días",
+  "notificationMaintenanceSnooze": "Posponer mantenimiento 1 semana"
 }

@@ -799,4 +799,21 @@ class AppLocalizationsEs extends AppLocalizations {
   String notificationSnoozeConfirm(Object date) {
     return 'Pospuesto hasta el $date';
   }
+
+  @override
+  String get notificationFreqWeekly => 'Cada 7 días';
+
+  @override
+  String get notificationFreqMonthly => 'Cada 30 días';
+
+  @override
+  String get notificationFreqCustom => 'Personalizado';
+
+  @override
+  String notificationFreqDays(Object days) {
+    return '$days días';
+  }
+
+  @override
+  String get notificationMaintenanceSnooze => 'Posponer mantenimiento 1 semana';
 }

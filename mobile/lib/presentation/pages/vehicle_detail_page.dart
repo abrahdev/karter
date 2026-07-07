@@ -34,9 +34,11 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
         ref.read(pendingNotificationActionProvider.notifier).state = null;
         final parts = action.split(':');
         if (parts.length == 2 && parts[1] == widget.vehicleId) {
-          if (parts[0] == 'odometer') {
-            _openOdometerFromNotification();
-          }
+      if (parts[0] == 'odometer') {
+        _openOdometerFromNotification();
+      } else if (parts[0] == 'maintenance') {
+        _openMaintenanceFromNotification();
+      }
         }
       }
     });
@@ -60,6 +62,16 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
           if (ctx.mounted) Navigator.of(ctx).pop();
           ref.invalidate(vehicleProvider(widget.vehicleId));
         },
+      ),
+    );
+  }
+
+  void _openMaintenanceFromNotification() {
+    final l = AppLocalizations.of(context);
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(l?.notificationMaintenanceToggle ?? ''),
+        duration: const Duration(seconds: 4),
       ),
     );
   }

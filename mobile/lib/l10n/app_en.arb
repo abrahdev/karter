@@ -259,5 +259,10 @@
   "notificationMaintOn": "On",
   "notificationMaintOff": "Off",
   "notificationSnoozeAction": "Snooze for 1 week",
-  "notificationSnoozeConfirm": "Snoozed until {date}"
+  "notificationSnoozeConfirm": "Snoozed until {date}",
+  "notificationFreqWeekly": "Every 7 days",
+  "notificationFreqMonthly": "Every 30 days",
+  "notificationFreqCustom": "Custom",
+  "notificationFreqDays": "{days} days",
+  "notificationMaintenanceSnooze": "Snooze maintenance for 1 week"
 }

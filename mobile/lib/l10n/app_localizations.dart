@@ -1511,6 +1511,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Snoozed until {date}'**
   String notificationSnoozeConfirm(Object date);
+
+  /// No description provided for @notificationFreqWeekly.
+  ///
+  /// In en, this message translates to:
+  /// **'Every 7 days'**
+  String get notificationFreqWeekly;
+
+  /// No description provided for @notificationFreqMonthly.
+  ///
+  /// In en, this message translates to:
+  /// **'Every 30 days'**
+  String get notificationFreqMonthly;
+
+  /// No description provided for @notificationFreqCustom.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom'**
+  String get notificationFreqCustom;
+
+  /// No description provided for @notificationFreqDays.
+  ///
+  /// In en, this message translates to:
+  /// **'{days} days'**
+  String notificationFreqDays(Object days);
+
+  /// No description provided for @notificationMaintenanceSnooze.
+  ///
+  /// In en, this message translates to:
+  /// **'Snooze maintenance for 1 week'**
+  String get notificationMaintenanceSnooze;
 }
 
 class _AppLocalizationsDelegate
