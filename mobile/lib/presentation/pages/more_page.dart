@@ -138,23 +138,24 @@ class MorePage extends ConsumerWidget {
       builder: (ctx) => SimpleDialog(
         title: Text(l.selectLanguage),
         children: [
-          RadioListTile<String>(
-            title: Text(l.english),
-            value: 'en',
+          RadioGroup<String>(
             groupValue: currentCode,
             onChanged: (v) {
               ref.read(localeProvider.notifier).setLocale(v!);
               Navigator.pop(ctx);
             },
-          ),
-          RadioListTile<String>(
-            title: Text(l.spanish),
-            value: 'es',
-            groupValue: currentCode,
-            onChanged: (v) {
-              ref.read(localeProvider.notifier).setLocale(v!);
-              Navigator.pop(ctx);
-            },
+            child: Column(
+              children: [
+                RadioListTile<String>(
+                  title: Text(l.english),
+                  value: 'en',
+                ),
+                RadioListTile<String>(
+                  title: Text(l.spanish),
+                  value: 'es',
+                ),
+              ],
+            ),
           ),
         ],
       ),
