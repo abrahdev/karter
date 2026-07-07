@@ -318,7 +318,23 @@ class _NotificationListPage extends ConsumerWidget {
                 margin: const EdgeInsets.only(bottom: 12),
                 child: InkWell(
                   borderRadius: BorderRadius.circular(12),
-                  onTap: () => context.push('/notifications/${v.id}'),
+                  onTap: () {
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      builder: (_) => DraggableScrollableSheet(
+                        initialChildSize: 0.65,
+                        minChildSize: 0.4,
+                        maxChildSize: 0.9,
+                        expand: false,
+                        builder: (_, scrollController) =>
+                            NotificationSettingsContent(
+                          vehicleId: v.id,
+                          scrollController: scrollController,
+                        ),
+                      ),
+                    );
+                  },
                   child: Padding(
                     padding: const EdgeInsets.all(16),
                     child: Row(
