@@ -17,15 +17,18 @@ class VehicleCard extends StatelessWidget {
     final theme = Theme.of(context);
     return Card(
       child: ListTile(
-        leading: CircleAvatar(
-          backgroundColor: theme.colorScheme.primaryContainer,
-          child: Icon(
-            switch (vehicle.type) {
-              VehicleType.combustion => Icons.local_gas_station,
-              VehicleType.electric => Icons.electric_car,
-              VehicleType.motorcycle => Icons.motorcycle,
-            },
-            color: theme.colorScheme.onPrimaryContainer,
+        leading: Hero(
+          tag: 'vehicle-avatar-${vehicle.id}',
+          child: CircleAvatar(
+            backgroundColor: theme.colorScheme.primaryContainer,
+            child: Icon(
+              switch (vehicle.type) {
+                VehicleType.combustion => Icons.local_gas_station,
+                VehicleType.electric => Icons.electric_car,
+                VehicleType.motorcycle => Icons.motorcycle,
+              },
+              color: theme.colorScheme.onPrimaryContainer,
+            ),
           ),
         ),
         title: Text(vehicle.displayName),

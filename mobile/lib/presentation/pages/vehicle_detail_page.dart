@@ -22,12 +22,19 @@ class VehicleDetailPage extends ConsumerStatefulWidget {
   ConsumerState<VehicleDetailPage> createState() => _VehicleDetailPageState();
 }
 
-class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
-  bool _fabOpen = false;
+class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage>
+    with SingleTickerProviderStateMixin {
+  AnimationController? _fabCtrl;
+
+  bool get _fabOpen => (_fabCtrl?.value ?? 0) > 0.5;
 
   @override
   void initState() {
     super.initState();
+    _fabCtrl = AnimationController(
+      duration: const Duration(milliseconds: 300),
+      vsync: this,
+    );
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final action = ref.read(pendingNotificationActionProvider);
       if (action != null) {
@@ -118,37 +125,40 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        children: [
-                          Icon(
-                            switch (vehicle.type) {
-                              VehicleType.combustion =>
-                                Icons.local_gas_station,
-                              VehicleType.electric => Icons.electric_car,
-                              VehicleType.motorcycle => Icons.motorcycle,
-                            },
-                            size: 20,
-                          ),
-                          const SizedBox(width: 8),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment:
-                                  CrossAxisAlignment.start,
-                              children: [
-                                Text(vehicle.displayName,
-                                    style: theme
-                                        .textTheme.headlineSmall),
-                                if (vehicle.alias != null &&
-                                    vehicle.alias!.isNotEmpty)
-                                  Text(
-                                    '${vehicle.brand} ${vehicle.model} ${vehicle.year}',
-                                    style:
-                                        theme.textTheme.bodySmall,
-                                  ),
-                              ],
+                      Hero(
+                        tag: 'vehicle-avatar-${vehicle.id}',
+                        child: Row(
+                          children: [
+                            Icon(
+                              switch (vehicle.type) {
+                                VehicleType.combustion =>
+                                  Icons.local_gas_station,
+                                VehicleType.electric => Icons.electric_car,
+                                VehicleType.motorcycle => Icons.motorcycle,
+                              },
+                              size: 20,
                             ),
-                          ),
-                        ],
+                            const SizedBox(width: 8),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment:
+                                    CrossAxisAlignment.start,
+                                children: [
+                                  Text(vehicle.displayName,
+                                      style: theme
+                                          .textTheme.headlineSmall),
+                                  if (vehicle.alias != null &&
+                                      vehicle.alias!.isNotEmpty)
+                                    Text(
+                                      '${vehicle.brand} ${vehicle.model} ${vehicle.year}',
+                                      style:
+                                          theme.textTheme.bodySmall,
+                                    ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                       const SizedBox(height: 8),
                       if (vehicle.plate != null)
@@ -340,13 +350,14 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
           floatingActionButton: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              if (_fabOpen) ...[
+              _animatedFabOption(
+                0,
                 FloatingActionButton.small(
                   heroTag: 'add_doc',
                   backgroundColor:
                       theme.colorScheme.secondaryContainer,
                   onPressed: () {
-                    setState(() => _fabOpen = false);
+                    _fabCtrl?.reverse();
                     showAddDocumentModal(
                       context,
                       vehicleId: widget.vehicleId,
@@ -359,13 +370,15 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
                   },
                   child: const Icon(Icons.description),
                 ),
-                const SizedBox(height: 8),
+              ),
+              _animatedFabOption(
+                1,
                 FloatingActionButton.small(
                   heroTag: 'add_fuel',
                   backgroundColor:
                       theme.colorScheme.secondaryContainer,
                   onPressed: () {
-                    setState(() => _fabOpen = false);
+                    _fabCtrl?.reverse();
                     showAddFuelLogModal(
                       context,
                       vehicleId: widget.vehicleId,
@@ -377,13 +390,15 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
                   },
                   child: const Icon(Icons.local_gas_station),
                 ),
-                const SizedBox(height: 8),
+              ),
+              _animatedFabOption(
+                2,
                 FloatingActionButton.small(
                   heroTag: 'add_service',
                   backgroundColor:
                       theme.colorScheme.secondaryContainer,
                   onPressed: () {
-                    setState(() => _fabOpen = false);
+                    _fabCtrl?.reverse();
                     showAddMaintenanceLogModal(
                       context,
                       vehicleId: widget.vehicleId,
@@ -399,13 +414,23 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
                   },
                   child: const Icon(Icons.build),
                 ),
-                const SizedBox(height: 8),
-              ],
+              ),
               FloatingActionButton(
                 heroTag: 'main_fab',
-                onPressed: () =>
-                    setState(() => _fabOpen = !_fabOpen),
-                child: Icon(_fabOpen ? Icons.close : Icons.add),
+                onPressed: () {
+                  final ctrl = _fabCtrl;
+                  if (ctrl == null) return;
+                  if (ctrl.isDismissed) {
+                    ctrl.forward();
+                  } else {
+                    ctrl.reverse();
+                  }
+                },
+                child: AnimatedRotation(
+                  turns: _fabOpen ? 0.375 : 0,
+                  duration: const Duration(milliseconds: 300),
+                  child: const Icon(Icons.add),
+                ),
               ),
             ],
           ),
@@ -440,6 +465,30 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
             child: Text(l.close),
           ),
         ],
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _fabCtrl?.dispose();
+    super.dispose();
+  }
+
+  Widget _animatedFabOption(int index, Widget fab) {
+    final start = index * 0.15;
+    final curve = CurvedAnimation(
+      parent: _fabCtrl!,
+      curve: Interval(start, start + 0.4, curve: Curves.easeOut),
+    );
+    return SizeTransition(
+      sizeFactor: curve,
+      child: FadeTransition(
+        opacity: curve,
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 8),
+          child: fab,
+        ),
       ),
     );
   }
