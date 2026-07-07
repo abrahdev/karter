@@ -86,7 +86,7 @@ class _AnimatedFabState extends State<_AnimatedFab>
     _scale = Tween<double>(begin: 0.5, end: 1).animate(
       CurvedAnimation(
         parent: _controller,
-        curve: Curves.elasticOut,
+        curve: Curves.easeOut,
       ),
     );
     Future.delayed(const Duration(milliseconds: 300), () {

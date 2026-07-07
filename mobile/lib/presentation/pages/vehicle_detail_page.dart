@@ -22,19 +22,12 @@ class VehicleDetailPage extends ConsumerStatefulWidget {
   ConsumerState<VehicleDetailPage> createState() => _VehicleDetailPageState();
 }
 
-class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage>
-    with SingleTickerProviderStateMixin {
-  AnimationController? _fabCtrl;
-
-  bool get _fabOpen => (_fabCtrl?.value ?? 0) > 0.5;
+class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
+  bool _fabOpen = false;
 
   @override
   void initState() {
     super.initState();
-    _fabCtrl = AnimationController(
-      duration: const Duration(milliseconds: 300),
-      vsync: this,
-    );
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final action = ref.read(pendingNotificationActionProvider);
       if (action != null) {
@@ -347,100 +340,99 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage>
               const SizedBox(height: 24),
             ],
           ),
-          floatingActionButton: _fabCtrl == null
-              ? FloatingActionButton(
-                  onPressed: () {},
-                  child: const Icon(Icons.add),
-                )
-              : Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    _animatedFabOption(
-                      0,
-                      FloatingActionButton.small(
-                        heroTag: 'add_doc',
-                        backgroundColor:
-                            theme.colorScheme.secondaryContainer,
-                        onPressed: () {
-                          _fabCtrl?.reverse();
-                          showAddDocumentModal(
-                            context,
-                            vehicleId: widget.vehicleId,
-                            onSaved: () {
-                              ref.invalidate(
-                                  vehicleDocumentsProvider(
-                                      widget.vehicleId));
-                            },
-                          );
-                        },
-                        child: const Icon(Icons.description),
-                      ),
-                    ),
-                    _animatedFabOption(
-                      1,
-                      FloatingActionButton.small(
-                        heroTag: 'add_fuel',
-                        backgroundColor:
-                            theme.colorScheme.secondaryContainer,
-                        onPressed: () {
-                          _fabCtrl?.reverse();
-                          showAddFuelLogModal(
-                            context,
-                            vehicleId: widget.vehicleId,
-                            onSaved: () {
-                              ref.invalidate(
-                                  fuelLogsProvider(
-                                      widget.vehicleId));
-                            },
-                          );
-                        },
-                        child: const Icon(Icons.local_gas_station),
-                      ),
-                    ),
-                    _animatedFabOption(
-                      2,
-                      FloatingActionButton.small(
-                        heroTag: 'add_service',
-                        backgroundColor:
-                            theme.colorScheme.secondaryContainer,
-                        onPressed: () {
-                          _fabCtrl?.reverse();
-                          showAddMaintenanceLogModal(
-                            context,
-                            vehicleId: widget.vehicleId,
-                            onSaved: () {
-                              ref.invalidate(
-                                  maintenanceLogsProvider(
-                                      widget.vehicleId));
-                              ref.invalidate(
-                                  maintenanceIntervalsProvider(
-                                      widget.vehicleId));
-                            },
-                          );
-                        },
-                        child: const Icon(Icons.build),
-                      ),
-                    ),
-                    FloatingActionButton(
-                      heroTag: 'main_fab',
+          floatingActionButton: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              if (_fabOpen) ...[
+                _FabStaggeredEntry(
+                  index: 0,
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: FloatingActionButton.small(
+                      heroTag: 'add_doc',
+                      backgroundColor:
+                          theme.colorScheme.secondaryContainer,
                       onPressed: () {
-                        final ctrl = _fabCtrl;
-                        if (ctrl == null) return;
-                        if (ctrl.isDismissed) {
-                          ctrl.forward();
-                        } else {
-                          ctrl.reverse();
-                        }
+                        setState(() => _fabOpen = false);
+                        showAddDocumentModal(
+                          context,
+                          vehicleId: widget.vehicleId,
+                          onSaved: () {
+                            ref.invalidate(
+                                vehicleDocumentsProvider(
+                                    widget.vehicleId));
+                          },
+                        );
                       },
-                      child: AnimatedRotation(
-                        turns: _fabOpen ? 0.375 : 0,
-                        duration: const Duration(milliseconds: 300),
-                        child: const Icon(Icons.add),
-                      ),
+                      child: const Icon(Icons.description),
                     ),
-                  ],
+                  ),
                 ),
+                _FabStaggeredEntry(
+                  index: 1,
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: FloatingActionButton.small(
+                      heroTag: 'add_fuel',
+                      backgroundColor:
+                          theme.colorScheme.secondaryContainer,
+                      onPressed: () {
+                        setState(() => _fabOpen = false);
+                        showAddFuelLogModal(
+                          context,
+                          vehicleId: widget.vehicleId,
+                          onSaved: () {
+                            ref.invalidate(
+                                fuelLogsProvider(
+                                    widget.vehicleId));
+                          },
+                        );
+                      },
+                      child: const Icon(Icons.local_gas_station),
+                    ),
+                  ),
+                ),
+                _FabStaggeredEntry(
+                  index: 2,
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: FloatingActionButton.small(
+                      heroTag: 'add_service',
+                      backgroundColor:
+                          theme.colorScheme.secondaryContainer,
+                      onPressed: () {
+                        setState(() => _fabOpen = false);
+                        showAddMaintenanceLogModal(
+                          context,
+                          vehicleId: widget.vehicleId,
+                          onSaved: () {
+                            ref.invalidate(
+                                maintenanceLogsProvider(
+                                    widget.vehicleId));
+                            ref.invalidate(
+                                maintenanceIntervalsProvider(
+                                    widget.vehicleId));
+                          },
+                        );
+                      },
+                      child: const Icon(Icons.build),
+                    ),
+                  ),
+                ),
+              ],
+              FloatingActionButton(
+                heroTag: 'main_fab',
+                onPressed: () =>
+                    setState(() => _fabOpen = !_fabOpen),
+                child: AnimatedRotation(
+                  turns: _fabOpen ? 0.125 : 0,
+                  duration: const Duration(milliseconds: 200),
+                  child: const Icon(Icons.add),
+                ),
+              ),
+            ],
+          ),
         );
       },
       loading: () => Scaffold(
@@ -472,32 +464,6 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage>
             child: Text(l.close),
           ),
         ],
-      ),
-    );
-  }
-
-  @override
-  void dispose() {
-    _fabCtrl?.dispose();
-    super.dispose();
-  }
-
-  Widget _animatedFabOption(int index, Widget fab) {
-    final ctrl = _fabCtrl;
-    if (ctrl == null) return fab;
-    final start = index * 0.15;
-    final curve = CurvedAnimation(
-      parent: ctrl,
-      curve: Interval(start, start + 0.4, curve: Curves.easeOut),
-    );
-    return SizeTransition(
-      sizeFactor: curve,
-      child: FadeTransition(
-        opacity: curve,
-        child: Padding(
-          padding: const EdgeInsets.only(bottom: 8),
-          child: fab,
-        ),
       ),
     );
   }
@@ -541,6 +507,64 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage>
           Expanded(child: Text(value)),
         ],
       ),
+    );
+  }
+}
+
+class _FabStaggeredEntry extends StatefulWidget {
+  final int index;
+  final Widget child;
+
+  const _FabStaggeredEntry({
+    required this.index,
+    required this.child,
+  });
+
+  @override
+  State<_FabStaggeredEntry> createState() => _FabStaggeredEntryState();
+}
+
+class _FabStaggeredEntryState extends State<_FabStaggeredEntry>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _ctrl;
+  late Animation<double> _fade;
+  late Animation<double> _scale;
+
+  @override
+  void initState() {
+    super.initState();
+    _ctrl = AnimationController(
+      duration: const Duration(milliseconds: 250),
+      vsync: this,
+    );
+    _fade = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(parent: _ctrl, curve: Curves.easeOut),
+    );
+    _scale = Tween<double>(begin: 0.5, end: 1).animate(
+      CurvedAnimation(parent: _ctrl, curve: Curves.easeOut),
+    );
+    Future.delayed(Duration(milliseconds: 50 * widget.index), () {
+      if (mounted) _ctrl.forward();
+    });
+  }
+
+  @override
+  void dispose() {
+    _ctrl.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _ctrl,
+      builder: (context, child) {
+        return FadeTransition(
+          opacity: _fade,
+          child: ScaleTransition(scale: _scale, child: child),
+        );
+      },
+      child: widget.child,
     );
   }
 }
