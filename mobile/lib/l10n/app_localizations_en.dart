@@ -396,6 +396,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get documentSaved => 'Document saved';
 
   @override
+  String get takePhoto => 'Take photo';
+
+  @override
+  String get chooseFromGallery => 'Choose from gallery';
+
+  @override
+  String get browseFiles => 'Browse files';
+
+  @override
   String get docTypeFine => 'Fine';
 
   @override

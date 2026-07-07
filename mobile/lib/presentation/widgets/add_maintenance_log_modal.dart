@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile/core/database/app_database.dart';
 import 'package:mobile/domain/entities/maintenance_log.dart';
@@ -103,7 +104,61 @@ class _AddMaintenanceLogModalState
     if (picked != null) setState(() => _date = picked);
   }
 
-  Future<void> _pickPhotos() async {
+  final _picker = ImagePicker();
+
+  void _showPhotoSourcePicker() {
+    final l = AppLocalizations.of(context)!;
+    showModalBottomSheet(
+      context: context,
+      builder: (ctx) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: const Icon(Icons.camera_alt),
+              title: Text(l.takePhoto),
+              onTap: () {
+                Navigator.pop(ctx);
+                _pickFromCamera();
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.photo_library),
+              title: Text(l.chooseFromGallery),
+              onTap: () {
+                Navigator.pop(ctx);
+                _pickFromGallery();
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.attach_file),
+              title: Text(l.browseFiles),
+              onTap: () {
+                Navigator.pop(ctx);
+                _pickFiles();
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Future<void> _pickFromCamera() async {
+    final file = await _picker.pickImage(source: ImageSource.camera);
+    if (file != null && mounted) {
+      setState(() => _selectedPhotos.add(file.path));
+    }
+  }
+
+  Future<void> _pickFromGallery() async {
+    final file = await _picker.pickImage(source: ImageSource.gallery);
+    if (file != null && mounted) {
+      setState(() => _selectedPhotos.add(file.path));
+    }
+  }
+
+  Future<void> _pickFiles() async {
     final result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
       allowedExtensions: ['jpg', 'jpeg', 'png', 'heic', 'webp'],
@@ -273,7 +328,7 @@ class _AddMaintenanceLogModalState
               Row(
                 children: [
                   OutlinedButton.icon(
-                    onPressed: _pickPhotos,
+                    onPressed: _showPhotoSourcePicker,
                     icon: const Icon(Icons.photo_library),
                     label: Text(l.addPhoto),
                   ),

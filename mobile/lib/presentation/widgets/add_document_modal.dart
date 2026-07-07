@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mobile/domain/entities/vehicle_document.dart';
 import 'package:mobile/domain/enums/document_type.dart';
 import 'package:mobile/l10n/app_localizations.dart';
@@ -39,12 +40,15 @@ class _AddDocumentModal extends ConsumerStatefulWidget {
   const _AddDocumentModal({required this.vehicleId});
 
   @override
-  ConsumerState<_AddDocumentModal> createState() => _AddDocumentModalState();
+  ConsumerState<_AddDocumentModal> createState() =>
+      _AddDocumentModalState();
 }
 
 class _AddDocumentModalState extends ConsumerState<_AddDocumentModal> {
+  final _picker = ImagePicker();
   DocumentType _selectedType = DocumentType.fine;
-  PlatformFile? _selectedFile;
+  String? _selectedFilePath;
+  String? _selectedFileName;
   final _notesController = TextEditingController();
   DateTime? _expiryDate;
   bool _saving = false;
@@ -55,15 +59,83 @@ class _AddDocumentModalState extends ConsumerState<_AddDocumentModal> {
     super.dispose();
   }
 
+  void _showSourcePicker() {
+    final l = AppLocalizations.of(context)!;
+    showModalBottomSheet(
+      context: context,
+      builder: (ctx) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: const Icon(Icons.camera_alt),
+              title: Text(l.takePhoto),
+              onTap: () {
+                Navigator.pop(ctx);
+                _pickFromCamera();
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.photo_library),
+              title: Text(l.chooseFromGallery),
+              onTap: () {
+                Navigator.pop(ctx);
+                _pickFromGallery();
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.attach_file),
+              title: Text(l.browseFiles),
+              onTap: () {
+                Navigator.pop(ctx);
+                _pickFile();
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Future<void> _pickFromCamera() async {
+    final file = await _picker.pickImage(source: ImageSource.camera);
+    if (file != null && mounted) {
+      setState(() {
+        _selectedFilePath = file.path;
+        _selectedFileName = file.name;
+      });
+    }
+  }
+
+  Future<void> _pickFromGallery() async {
+    final file = await _picker.pickImage(source: ImageSource.gallery);
+    if (file != null && mounted) {
+      setState(() {
+        _selectedFilePath = file.path;
+        _selectedFileName = file.name;
+      });
+    }
+  }
+
   Future<void> _pickFile() async {
     final result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
       allowedExtensions: [
-        'pdf', 'jpg', 'jpeg', 'png', 'doc', 'docx', 'xls', 'xlsx',
+        'pdf',
+        'jpg',
+        'jpeg',
+        'png',
+        'doc',
+        'docx',
+        'xls',
+        'xlsx',
       ],
     );
-    if (result != null && result.files.isNotEmpty) {
-      setState(() => _selectedFile = result.files.first);
+    if (result != null && result.files.isNotEmpty && mounted) {
+      setState(() {
+        _selectedFilePath = result.files.first.path;
+        _selectedFileName = result.files.first.name;
+      });
     }
   }
 
@@ -81,7 +153,7 @@ class _AddDocumentModalState extends ConsumerState<_AddDocumentModal> {
 
   Future<void> _save() async {
     final l = AppLocalizations.of(context)!;
-    if (_selectedFile == null) {
+    if (_selectedFilePath == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(l.pleaseSelectFile)),
       );
@@ -92,29 +164,27 @@ class _AddDocumentModalState extends ConsumerState<_AddDocumentModal> {
 
     try {
       final uuid = const Uuid().v4();
-      final ext = _selectedFile!.extension ?? 'bin';
+      final ext = _selectedFileName!.split('.').last;
       final dir = await getApplicationDocumentsDirectory();
       final docDir =
           Directory('${dir.path}/documents/${widget.vehicleId}');
       await docDir.create(recursive: true);
 
       final destPath = '${docDir.path}/$uuid.$ext';
-      if (_selectedFile!.path != null) {
-        await File(_selectedFile!.path!).copy(destPath);
-      }
+      await File(_selectedFilePath!).copy(destPath);
 
       final repo = ref.read(vehicleDocumentRepositoryProvider);
+      final file = File(_selectedFilePath!);
+      final size = await file.length();
       await repo.save(VehicleDocument(
         id: uuid,
         vehicleId: widget.vehicleId,
         type: _selectedType,
-        name: _selectedFile!.name,
-        fileName: _selectedFile!.name,
+        name: _selectedFileName!,
+        fileName: _selectedFileName!,
         filePath: destPath,
-        mimeType: _selectedFile!.extension != null
-            ? 'application/${_selectedFile!.extension}'
-            : null,
-        fileSize: _selectedFile!.size.toDouble(),
+        mimeType: ext,
+        fileSize: size.toDouble(),
         notes: _notesController.text.isNotEmpty
             ? _notesController.text
             : null,
@@ -180,20 +250,46 @@ class _AddDocumentModalState extends ConsumerState<_AddDocumentModal> {
               },
             ),
             const SizedBox(height: 12),
-            OutlinedButton.icon(
-              onPressed: _pickFile,
-              icon: const Icon(Icons.attach_file),
-              label: Text(_selectedFile != null
-                  ? _selectedFile!.name
-                  : l.selectFile),
+            Row(
+              children: [
+                Expanded(
+                  child: OutlinedButton.icon(
+                    onPressed: _showSourcePicker,
+                    icon: const Icon(Icons.attach_file),
+                    label: Text(
+                      _selectedFileName != null
+                          ? _selectedFileName!
+                          : l.selectFile,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ),
+                if (_selectedFilePath != null) ...[
+                  const SizedBox(width: 8),
+                  IconButton(
+                    onPressed: () => setState(() {
+                      _selectedFilePath = null;
+                      _selectedFileName = null;
+                    }),
+                    icon: const Icon(Icons.close),
+                  ),
+                ],
+              ],
             ),
-            if (_selectedFile != null)
+            if (_selectedFilePath != null)
               Padding(
                 padding: const EdgeInsets.only(top: 4),
-                child: Text(
-                  '${(_selectedFile!.size / 1024).toStringAsFixed(1)} KB',
-                  style: theme.textTheme.bodySmall
-                      ?.copyWith(color: theme.colorScheme.outline),
+                child: FutureBuilder<int>(
+                  future: File(_selectedFilePath!).length(),
+                  builder: (ctx, snap) {
+                    final size = snap.data ?? 0;
+                    return Text(
+                      '${(size / 1024).toStringAsFixed(1)} KB',
+                      style: theme.textTheme.bodySmall
+                          ?.copyWith(
+                              color: theme.colorScheme.outline),
+                    );
+                  },
                 ),
               ),
             const SizedBox(height: 12),

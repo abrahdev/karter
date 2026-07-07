@@ -128,6 +128,9 @@
   "expiryDateOptional": "Fecha de vencimiento (opcional)",
   "pleaseSelectFile": "Por favor seleccioná un archivo",
   "documentSaved": "Documento guardado",
+  "takePhoto": "Tomar foto",
+  "chooseFromGallery": "Elegir de la galería",
+  "browseFiles": "Examinar archivos",
 
   "docTypeFine": "Multa",
   "docTypeParkingFee": "Estacionamiento",
