@@ -26,14 +26,13 @@ Future<T?> karterShowDialog<T>({
   required BuildContext context,
   required WidgetBuilder builder,
 }) {
-  final theme = Theme.of(context);
   final barrierLabel = MaterialLocalizations.of(context).modalBarrierDismissLabel;
 
   return Navigator.of(context, rootNavigator: true).push<T>(
     _KarterDialogRoute<T>(
       pageBuilder: (context, animation, secondaryAnimation) {
-        return Dialog(
-          backgroundColor: theme.dialogTheme.backgroundColor ?? theme.colorScheme.surface,
+        return Material(
+          type: MaterialType.transparency,
           child: Builder(builder: builder),
         );
       },
