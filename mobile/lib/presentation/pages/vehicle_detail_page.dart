@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mobile/core/modal_helpers.dart';
 import 'package:mobile/domain/entities/maintenance_interval.dart';
 import 'package:mobile/domain/enums/distance_unit.dart';
 import 'package:mobile/domain/enums/vehicle_type.dart';
@@ -47,7 +48,7 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
   Future<void> _openOdometerFromNotification() async {
     final vehicle = await ref.read(vehicleProvider(widget.vehicleId).future);
     if (!mounted || vehicle == null) return;
-    showDialog(
+    karterShowDialog(
       context: context,
       builder: (ctx) => OdometerDialog(
         current: vehicle.currentOdometer,
@@ -453,7 +454,7 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
     final desc = localizedDesc(
         l, interval.descI18nKey, interval.description ?? '');
     final text = desc.isEmpty ? l.noDescriptionAvailable : desc;
-    showDialog(
+    karterShowDialog(
       context: context,
       builder: (ctx) => AlertDialog(
         title: Text(label),
@@ -470,7 +471,7 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
 
   void _updateOdometer(
       BuildContext context, String vehicleId, WidgetRef ref) {
-    showDialog(
+    karterShowDialog(
       context: context,
       builder: (ctx) => OdometerDialog(
         current: ref.read(vehicleProvider(vehicleId)).valueOrNull

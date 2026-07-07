@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile/core/database/app_database.dart';
+import 'package:mobile/core/modal_helpers.dart';
 import 'package:mobile/domain/entities/maintenance_interval.dart';
 import 'package:mobile/domain/entities/vehicle.dart';
 import 'package:mobile/domain/enums/distance_unit.dart';
@@ -91,7 +92,7 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
   Future<void> _delete() async {
     if (!_isEditing || widget.vehicleId == null) return;
 
-    final confirmed = await showDialog<bool>(
+    final confirmed = await karterShowDialog<bool>(
       context: context,
       builder: (ctx) {
         final l = AppLocalizations.of(ctx)!;
@@ -218,7 +219,7 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
 
   Future<String?> _showTemplatePreview(
       String name, List<MaintenanceInterval> intervals) async {
-    final result = await showDialog<String>(
+    final result = await karterShowDialog<String>(
       context: context,
       builder: (ctx) {
         final theme = Theme.of(ctx);
@@ -287,7 +288,7 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
   }
 
   Future<void> _showNoTemplateFound(String searchParams) async {
-    await showDialog(
+    await karterShowDialog(
       context: context,
       builder: (ctx) {
         final theme = Theme.of(ctx);

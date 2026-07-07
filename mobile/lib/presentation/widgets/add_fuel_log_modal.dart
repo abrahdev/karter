@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile/core/database/app_database.dart';
+import 'package:mobile/core/modal_helpers.dart';
 import 'package:mobile/domain/entities/fuel_log.dart';
 import 'package:mobile/domain/entities/vehicle.dart';
 import 'package:mobile/domain/enums/volume_unit.dart';
@@ -15,12 +16,9 @@ Future<void> showAddFuelLogModal(
   required String vehicleId,
   required void Function() onSaved,
 }) async {
-  final result = await showModalBottomSheet<bool>(
+  final result = await karterShowModalBottomSheet<bool>(
     context: context,
     isScrollControlled: true,
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-    ),
     builder: (ctx) => _AddFuelLogModal(vehicleId: vehicleId),
   );
 

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile/core/database/app_database.dart';
+import 'package:mobile/core/modal_helpers.dart';
 import 'package:mobile/domain/entities/maintenance_log.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
@@ -151,7 +152,7 @@ class _MaintenanceLogFormPageState
   }
 
   Future<void> _delete() async {
-    final confirmed = await showDialog<bool>(
+    final confirmed = await karterShowDialog<bool>(
       context: context,
       builder: (ctx) {
         final l = AppLocalizations.of(ctx)!;

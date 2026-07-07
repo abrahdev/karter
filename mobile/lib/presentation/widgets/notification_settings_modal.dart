@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mobile/core/modal_helpers.dart';
 import 'package:mobile/domain/entities/vehicle.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
@@ -8,12 +9,9 @@ Future<void> showNotificationSettingsModal(
   BuildContext context, {
   required String vehicleId,
 }) async {
-  await showModalBottomSheet(
+  await karterShowModalBottomSheet(
     context: context,
     isScrollControlled: true,
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-    ),
     builder: (_) => _NotificationSettingsModal(vehicleId: vehicleId),
   );
 }

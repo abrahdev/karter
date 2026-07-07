@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mobile/core/modal_helpers.dart';
 import 'package:mobile/domain/entities/vehicle_document.dart';
 import 'package:mobile/domain/enums/document_type.dart';
 import 'package:mobile/l10n/app_localizations.dart';
@@ -16,12 +17,9 @@ Future<void> showAddDocumentModal(
   required String vehicleId,
   required void Function() onSaved,
 }) async {
-  final result = await showModalBottomSheet<bool>(
+  final result = await karterShowModalBottomSheet<bool>(
     context: context,
     isScrollControlled: true,
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-    ),
     builder: (ctx) => _AddDocumentModal(vehicleId: vehicleId),
   );
 
@@ -61,7 +59,7 @@ class _AddDocumentModalState extends ConsumerState<_AddDocumentModal> {
 
   void _showSourcePicker() {
     final l = AppLocalizations.of(context)!;
-    showModalBottomSheet(
+    karterShowModalBottomSheet(
       context: context,
       builder: (ctx) => SafeArea(
         child: Column(

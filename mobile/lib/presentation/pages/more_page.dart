@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mobile/core/modal_helpers.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/locale_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -114,7 +115,7 @@ class MorePage extends ConsumerWidget {
   void _showLanguagePicker(BuildContext context, WidgetRef ref) {
     final l = AppLocalizations.of(context)!;
     final currentCode = ref.read(localeProvider).languageCode;
-    showDialog(
+    karterShowDialog(
       context: context,
       builder: (ctx) => SimpleDialog(
         title: Text(l.selectLanguage),

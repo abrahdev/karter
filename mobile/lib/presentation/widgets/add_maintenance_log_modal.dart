@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile/core/database/app_database.dart';
+import 'package:mobile/core/modal_helpers.dart';
 import 'package:mobile/domain/entities/maintenance_log.dart';
 import 'package:mobile/domain/entities/vehicle.dart';
 import 'package:mobile/l10n/app_localizations.dart';
@@ -19,12 +20,9 @@ Future<void> showAddMaintenanceLogModal(
   String? initialIntervalId,
   required void Function() onSaved,
 }) async {
-  final result = await showModalBottomSheet<bool>(
+  final result = await karterShowModalBottomSheet<bool>(
     context: context,
     isScrollControlled: true,
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-    ),
     builder: (ctx) => _AddMaintenanceLogModal(
       vehicleId: vehicleId,
       initialDescription: initialDescription,
@@ -108,7 +106,7 @@ class _AddMaintenanceLogModalState
 
   void _showPhotoSourcePicker() {
     final l = AppLocalizations.of(context)!;
-    showModalBottomSheet(
+    karterShowModalBottomSheet(
       context: context,
       builder: (ctx) => SafeArea(
         child: Column(

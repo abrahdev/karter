@@ -3,6 +3,7 @@ import 'dart:io' show File, Platform;
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mobile/core/modal_helpers.dart';
 import 'package:mobile/data/services/export_service.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
@@ -191,7 +192,7 @@ class _DataManagerPageState extends ConsumerState<DataManagerPage> {
     }
 
     if (!mounted) return;
-    final confirmed = await showDialog<bool>(
+    final confirmed = await karterShowDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
         title: Text(l.importData),

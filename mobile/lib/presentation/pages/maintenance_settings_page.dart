@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/core/database/app_database.dart';
+import 'package:mobile/core/modal_helpers.dart';
 import 'package:mobile/domain/entities/maintenance_interval.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
@@ -75,7 +76,7 @@ class MaintenanceSettingsPage extends ConsumerWidget {
         TextEditingController(text: interval.description ?? '');
     var hasMonths = interval.monthsInterval != null;
 
-    showDialog(
+    karterShowDialog(
       context: context,
       builder: (ctx) => StatefulBuilder(
         builder: (ctx, setDialogState) => AlertDialog(
@@ -158,7 +159,7 @@ class MaintenanceSettingsPage extends ConsumerWidget {
     final descCtrl = TextEditingController();
     var hasMonths = false;
 
-    showDialog(
+    karterShowDialog(
       context: context,
       builder: (ctx) => StatefulBuilder(
         builder: (ctx, setDialogState) => AlertDialog(
@@ -313,7 +314,7 @@ class _IntervalTile extends StatelessWidget {
         localizedLabel(l, interval.i18nKey, interval.label);
     final text = localizedDesc(
             l, interval.descI18nKey, interval.description ?? '');
-    showDialog(
+    karterShowDialog(
       context: context,
       builder: (ctx) => AlertDialog(
         title: Text(label),
