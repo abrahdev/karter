@@ -37,18 +37,26 @@ Future<T?> karterShowDialog<T>({
           child: Builder(builder: builder),
         );
       },
-      openDuration: const Duration(milliseconds: 500),
-      closeDuration: const Duration(milliseconds: 200),
+      openDuration: Durations.medium4,
+      closeDuration: Durations.short4,
       barrierDismissible: true,
       barrierLabel: barrierLabel,
       barrierColor: Colors.black54,
       transitionBuilder: (context, animation, secondaryAnimation, child) {
-        final curved =
-            CurvedAnimation(parent: animation, curve: Curves.easeOut);
+        final fadeAnim = CurvedAnimation(
+          parent: animation,
+          curve: Easing.emphasizedDecelerate,
+          reverseCurve: Easing.emphasizedAccelerate,
+        );
+        final scaleAnim = CurvedAnimation(
+          parent: animation,
+          curve: Easing.emphasizedDecelerate,
+          reverseCurve: Easing.emphasizedAccelerate,
+        );
         return FadeTransition(
-          opacity: curved,
+          opacity: fadeAnim,
           child: ScaleTransition(
-            scale: curved,
+            scale: scaleAnim,
             child: child,
           ),
         );
@@ -93,8 +101,8 @@ Future<T?> karterShowModalBottomSheet<T>({
           ),
         );
       },
-      openDuration: const Duration(milliseconds: 500),
-      closeDuration: const Duration(milliseconds: 200),
+      openDuration: Durations.medium4,
+      closeDuration: Durations.short4,
       barrierDismissible: true,
       barrierLabel: barrierLabel,
       barrierColor: Colors.black54,
@@ -105,7 +113,8 @@ Future<T?> karterShowModalBottomSheet<T>({
             end: Offset.zero,
           ).animate(CurvedAnimation(
             parent: animation,
-            curve: Curves.easeOut,
+            curve: Easing.emphasizedDecelerate,
+            reverseCurve: Easing.emphasizedAccelerate,
           )),
           child: child,
         );

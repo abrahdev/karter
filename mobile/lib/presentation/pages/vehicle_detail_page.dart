@@ -557,14 +557,14 @@ class _FabStaggeredEntryState extends State<_FabStaggeredEntry>
   void initState() {
     super.initState();
     _ctrl = AnimationController(
-      duration: const Duration(milliseconds: 250),
+      duration: Durations.medium4,
       vsync: this,
     );
     _fade = Tween<double>(begin: 0, end: 1).animate(
-      CurvedAnimation(parent: _ctrl, curve: Curves.easeOut),
+      CurvedAnimation(parent: _ctrl, curve: Easing.emphasizedDecelerate),
     );
     _scale = Tween<double>(begin: 0.5, end: 1).animate(
-      CurvedAnimation(parent: _ctrl, curve: Curves.easeOut),
+      CurvedAnimation(parent: _ctrl, curve: Easing.emphasizedDecelerate),
     );
     Future.delayed(Duration(milliseconds: 50 * widget.index), () {
       if (mounted) _ctrl.forward();

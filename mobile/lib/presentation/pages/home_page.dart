@@ -77,16 +77,16 @@ class _AnimatedFabState extends State<_AnimatedFab>
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(milliseconds: 500),
+      duration: Durations.medium4,
       vsync: this,
     );
     _fade = Tween<double>(begin: 0, end: 1).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeOut),
+      CurvedAnimation(parent: _controller, curve: Easing.emphasizedDecelerate),
     );
     _scale = Tween<double>(begin: 0.5, end: 1).animate(
       CurvedAnimation(
         parent: _controller,
-        curve: Curves.easeOut,
+        curve: Easing.emphasizedDecelerate,
       ),
     );
     Future.delayed(const Duration(milliseconds: 300), () {
@@ -138,16 +138,16 @@ class _StaggeredFadeInState extends State<_StaggeredFadeIn>
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(milliseconds: 400),
+      duration: Durations.medium1,
       vsync: this,
     );
     _opacity = Tween<double>(begin: 0, end: 1).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeOut),
+      CurvedAnimation(parent: _controller, curve: Easing.standardDecelerate),
     );
     _slide = Tween<Offset>(
       begin: const Offset(0, 0.1),
       end: Offset.zero,
-    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
+    ).animate(CurvedAnimation(parent: _controller, curve: Easing.standardDecelerate));
     Future.delayed(Duration(milliseconds: 50 * widget.index), () {
       if (mounted) _controller.forward();
     });
