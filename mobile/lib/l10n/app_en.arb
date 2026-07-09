@@ -68,7 +68,7 @@
   "exportedAt": "Exported at {path}",
   "exportError": "Export error: {error}",
   "importData": "Import data",
-  "importPreview": "Found:\n• {vehicles} vehicle(s)\n• {fuelLogs} fuel log(s)\n• {maintenanceLogs} maintenance log(s)\n\nImport? Existing data with the same ID will be overwritten.",
+  "importPreview": "Found:\n• {vehicles} vehicle(s)\n• {fuelLogs} fuel log(s)\n• {maintenanceLogs} maintenance log(s)\n• {documents} document(s)\n\nImport? Existing data with the same ID will be overwritten.",
   "importSuccess": "Data imported successfully",
   "importError": "Import error: {error}",
   "invalidJson": "Invalid JSON file",

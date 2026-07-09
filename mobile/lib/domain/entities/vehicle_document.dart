@@ -12,6 +12,7 @@ class VehicleDocument {
   final String? notes;
   final DateTime? expiryDate;
   final DateTime createdAt;
+  final String? fileDataBase64;
 
   const VehicleDocument({
     required this.id,
@@ -25,6 +26,7 @@ class VehicleDocument {
     this.notes,
     this.expiryDate,
     required this.createdAt,
+    this.fileDataBase64,
   });
 
   VehicleDocument copyWith({
@@ -39,6 +41,7 @@ class VehicleDocument {
     String? notes,
     DateTime? expiryDate,
     DateTime? createdAt,
+    String? fileDataBase64,
   }) {
     return VehicleDocument(
       id: id ?? this.id,
@@ -52,6 +55,40 @@ class VehicleDocument {
       notes: notes ?? this.notes,
       expiryDate: expiryDate ?? this.expiryDate,
       createdAt: createdAt ?? this.createdAt,
+      fileDataBase64: fileDataBase64 ?? this.fileDataBase64,
     );
   }
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'vehicleId': vehicleId,
+        'type': type.name,
+        'name': name,
+        'fileName': fileName,
+        'filePath': filePath,
+        'mimeType': mimeType,
+        'fileSize': fileSize,
+        'notes': notes,
+        'expiryDate': expiryDate?.toIso8601String(),
+        'createdAt': createdAt.toIso8601String(),
+        if (fileDataBase64 != null) 'fileData': fileDataBase64,
+      };
+
+  factory VehicleDocument.fromJson(Map<String, dynamic> json) =>
+      VehicleDocument(
+        id: json['id'],
+        vehicleId: json['vehicleId'],
+        type: DocumentType.values.byName(json['type']),
+        name: json['name'],
+        fileName: json['fileName'],
+        filePath: json['filePath'],
+        mimeType: json['mimeType'],
+        fileSize: (json['fileSize'] as num?)?.toDouble(),
+        notes: json['notes'],
+        expiryDate: json['expiryDate'] != null
+            ? DateTime.parse(json['expiryDate'])
+            : null,
+        createdAt: DateTime.parse(json['createdAt']),
+        fileDataBase64: json['fileData'],
+      );
 }

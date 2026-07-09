@@ -81,6 +81,7 @@ final exportServiceProvider = Provider<ExportService>((ref) {
     ref.watch(fuelLogRepositoryProvider),
     ref.watch(maintenanceLogRepositoryProvider),
     ref.watch(maintenanceIntervalRepositoryProvider),
+    ref.watch(vehicleDocumentRepositoryProvider),
   );
 });
 

@@ -200,11 +200,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String importPreview(
+    Object documents,
     Object fuelLogs,
     Object maintenanceLogs,
     Object vehicles,
   ) {
-    return 'Found:\n• $vehicles vehicle(s)\n• $fuelLogs fuel log(s)\n• $maintenanceLogs maintenance log(s)\n\nImport? Existing data with the same ID will be overwritten.';
+    return 'Found:\n• $vehicles vehicle(s)\n• $fuelLogs fuel log(s)\n• $maintenanceLogs maintenance log(s)\n• $documents document(s)\n\nImport? Existing data with the same ID will be overwritten.';
   }
 
   @override

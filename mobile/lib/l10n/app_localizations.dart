@@ -461,8 +461,9 @@ abstract class AppLocalizations {
   /// No description provided for @importPreview.
   ///
   /// In en, this message translates to:
-  /// **'Found:\n• {vehicles} vehicle(s)\n• {fuelLogs} fuel log(s)\n• {maintenanceLogs} maintenance log(s)\n\nImport? Existing data with the same ID will be overwritten.'**
+  /// **'Found:\n• {vehicles} vehicle(s)\n• {fuelLogs} fuel log(s)\n• {maintenanceLogs} maintenance log(s)\n• {documents} document(s)\n\nImport? Existing data with the same ID will be overwritten.'**
   String importPreview(
+    Object documents,
     Object fuelLogs,
     Object maintenanceLogs,
     Object vehicles,

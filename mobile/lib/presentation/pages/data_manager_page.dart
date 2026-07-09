@@ -197,9 +197,10 @@ class _DataManagerPageState extends ConsumerState<DataManagerPage> {
       builder: (ctx) => AlertDialog(
         title: Text(l.importData),
         content: Text(l.importPreview(
+          preview.vehicles.length.toString(),
           preview.fuelLogs.length.toString(),
           preview.maintenanceLogs.length.toString(),
-          preview.vehicles.length.toString(),
+          preview.vehicleDocuments.length.toString(),
         )),
         actions: [
           TextButton(

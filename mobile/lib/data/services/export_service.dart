@@ -1,13 +1,17 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:mobile/domain/entities/fuel_log.dart';
 import 'package:mobile/domain/entities/maintenance_interval.dart';
 import 'package:mobile/domain/entities/maintenance_log.dart';
 import 'package:mobile/domain/entities/vehicle.dart';
+import 'package:mobile/domain/entities/vehicle_document.dart';
 import 'package:mobile/domain/repositories/fuel_log_repository.dart';
 import 'package:mobile/domain/repositories/maintenance_interval_repository.dart';
 import 'package:mobile/domain/repositories/maintenance_log_repository.dart';
+import 'package:mobile/domain/repositories/vehicle_document_repository.dart';
 import 'package:mobile/domain/repositories/vehicle_repository.dart';
+import 'package:path_provider/path_provider.dart';
 
 class ExportData {
   final int version;
@@ -16,6 +20,7 @@ class ExportData {
   final List<FuelLog> fuelLogs;
   final List<MaintenanceLog> maintenanceLogs;
   final List<MaintenanceInterval> maintenanceIntervals;
+  final List<VehicleDocument> vehicleDocuments;
 
   ExportData({
     required this.version,
@@ -24,6 +29,7 @@ class ExportData {
     required this.fuelLogs,
     required this.maintenanceLogs,
     required this.maintenanceIntervals,
+    required this.vehicleDocuments,
   });
 
   Map<String, dynamic> toJson() => {
@@ -34,6 +40,8 @@ class ExportData {
         'maintenanceLogs': maintenanceLogs.map((l) => l.toJson()).toList(),
         'maintenanceIntervals':
             maintenanceIntervals.map((i) => i.toJson()).toList(),
+        'vehicleDocuments':
+            vehicleDocuments.map((d) => d.toJson()).toList(),
       };
 
   factory ExportData.fromJson(Map<String, dynamic> json) => ExportData(
@@ -51,6 +59,10 @@ class ExportData {
         maintenanceIntervals: (json['maintenanceIntervals'] as List)
             .map((i) => MaintenanceInterval.fromJson(i))
             .toList(),
+        vehicleDocuments: (json['vehicleDocuments'] as List?)
+                ?.map((d) => VehicleDocument.fromJson(d))
+                .toList() ??
+            [],
       );
 }
 
@@ -59,26 +71,45 @@ class ExportService {
   final FuelLogRepository _fuelLogRepo;
   final MaintenanceLogRepository _maintenanceLogRepo;
   final MaintenanceIntervalRepository _intervalRepo;
+  final VehicleDocumentRepository _documentRepo;
 
   ExportService(
     this._vehicleRepo,
     this._fuelLogRepo,
     this._maintenanceLogRepo,
     this._intervalRepo,
+    this._documentRepo,
   );
 
   Future<String> exportVehicles(Set<String> vehicleIds) async {
     final allVehicles = await _vehicleRepo.getVehicles();
-    final selected = allVehicles.where((v) => vehicleIds.contains(v.id)).toList();
+    final selected =
+        allVehicles.where((v) => vehicleIds.contains(v.id)).toList();
 
     final fuelLogs = <FuelLog>[];
     final maintenanceLogs = <MaintenanceLog>[];
     final intervals = <MaintenanceInterval>[];
+    final documents = <VehicleDocument>[];
 
     for (final v in selected) {
       fuelLogs.addAll(await _fuelLogRepo.getByVehicle(v.id));
       maintenanceLogs.addAll(await _maintenanceLogRepo.getByVehicle(v.id));
       intervals.addAll(await _intervalRepo.getByVehicle(v.id));
+      final docs = await _documentRepo.getByVehicle(v.id);
+      for (final doc in docs) {
+        try {
+          final file = File(doc.filePath);
+          if (await file.exists()) {
+            final bytes = await file.readAsBytes();
+            documents.add(doc.copyWith(
+                fileDataBase64: base64Encode(bytes)));
+          } else {
+            documents.add(doc);
+          }
+        } catch (_) {
+          documents.add(doc);
+        }
+      }
     }
 
     final data = ExportData(
@@ -88,6 +119,7 @@ class ExportService {
       fuelLogs: fuelLogs,
       maintenanceLogs: maintenanceLogs,
       maintenanceIntervals: intervals,
+      vehicleDocuments: documents,
     );
 
     return const JsonEncoder.withIndent('  ').convert(data.toJson());
@@ -111,6 +143,25 @@ class ExportService {
 
     for (final interval in data.maintenanceIntervals) {
       await _intervalRepo.save(interval);
+    }
+
+    for (final doc in data.vehicleDocuments) {
+      var saved = doc;
+      if (doc.fileDataBase64 != null) {
+        try {
+          final bytes = base64Decode(doc.fileDataBase64!);
+          final dir = await getApplicationDocumentsDirectory();
+          final newPath =
+              '${dir.path}/documents/${doc.id}_${doc.fileName}';
+          await File(newPath).parent.create(recursive: true);
+          await File(newPath).writeAsBytes(bytes);
+          saved = doc.copyWith(
+            filePath: newPath,
+            fileDataBase64: null,
+          );
+        } catch (_) {}
+      }
+      await _documentRepo.save(saved);
     }
   }
 
