@@ -45,6 +45,14 @@ class VehicleDocumentRepositoryImpl implements VehicleDocumentRepository {
   }
 
   @override
+  Future<VehicleDocument?> getById(String id) async {
+    final entry = await (_db.select(_db.vehicleDocuments)
+          ..where((t) => t.id.equals(id)))
+        .getSingleOrNull();
+    return entry != null ? _toEntity(entry) : null;
+  }
+
+  @override
   Future<List<VehicleDocument>> getByVehicle(String vehicleId) async {
     final entries = await (_db.select(_db.vehicleDocuments)
         ..where((t) => t.vehicleId.equals(vehicleId))

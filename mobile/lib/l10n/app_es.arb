@@ -99,6 +99,7 @@
   "resetInterval": "Resetear intervalo (opcional)",
   "saveChangesShort": "Guardar cambios",
   "saveService": "Guardar servicio",
+  "saveFile": "Guardar archivo",
   "addPhoto": "Agregar foto",
   "photos": "fotos",
   "deleteService": "Eliminar servicio",

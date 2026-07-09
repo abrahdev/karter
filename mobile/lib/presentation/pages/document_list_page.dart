@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
 import 'package:mobile/presentation/widgets/add_document_modal.dart';
@@ -38,11 +39,31 @@ class DocumentListPage extends ConsumerWidget {
             itemCount: docs.length,
             itemBuilder: (_, i) {
               final doc = docs[i];
+              final theme = Theme.of(context);
               return Card(
                 child: ListTile(
-                  leading: Icon(_iconForType(doc.type.name)),
+                  leading: CircleAvatar(
+                    backgroundColor:
+                        theme.colorScheme.secondaryContainer,
+                    child: Icon(_iconForType(doc.type.name),
+                        color: theme
+                            .colorScheme.onSecondaryContainer),
+                  ),
                   title: Text(doc.name),
                   subtitle: Text(doc.fileName),
+                  trailing: doc.expiryDate != null
+                      ? Text(
+                          DateFormat('dd/MM/yy')
+                              .format(doc.expiryDate!),
+                          style: theme.textTheme.bodySmall)
+                      : null,
+                  onTap: () => showEditDocumentModal(
+                    context,
+                    vehicleId: vehicleId,
+                    document: doc,
+                    onSaved: () => ref
+                        .invalidate(vehicleDocumentsProvider(vehicleId)),
+                  ),
                 ),
               );
             },

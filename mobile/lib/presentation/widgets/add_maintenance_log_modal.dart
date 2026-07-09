@@ -20,7 +20,7 @@ Future<void> showAddMaintenanceLogModal(
   String? initialIntervalId,
   required void Function() onSaved,
 }) async {
-  final result = await karterShowModalBottomSheet<bool>(
+  final result = await karterShowModalBottomSheet<String>(
     context: context,
     isScrollControlled: true,
     builder: (ctx) => _AddMaintenanceLogModal(
@@ -30,7 +30,7 @@ Future<void> showAddMaintenanceLogModal(
     ),
   );
 
-  if (result == true && context.mounted) {
+  if (result == 'saved' && context.mounted) {
     onSaved();
   }
 }
@@ -41,16 +41,51 @@ Future<void> showEditMaintenanceLogModal(
   required MaintenanceLog log,
   required void Function() onSaved,
 }) async {
-  final result = await karterShowModalBottomSheet<bool>(
-    context: context,
-    isScrollControlled: true,
-    builder: (ctx) => _AddMaintenanceLogModal(
-      vehicleId: vehicleId,
-      editLog: log,
-    ),
-  );
+  var currentLog = log;
+  var changed = false;
 
-  if (result == true && context.mounted) {
+  while (true) {
+    final action = await karterShowModalBottomSheet<String>(
+      context: context,
+      isScrollControlled: true,
+      builder: (ctx) => _MaintenanceLogPreview(
+        vehicleId: vehicleId,
+        log: currentLog,
+      ),
+    );
+
+    if (!context.mounted) return;
+
+    if (action != 'edit') break;
+
+    final result = await karterShowModalBottomSheet<String>(
+      context: context,
+      isScrollControlled: true,
+      builder: (ctx) => _AddMaintenanceLogModal(
+        vehicleId: vehicleId,
+        editLog: currentLog,
+      ),
+    );
+
+    if (!context.mounted) return;
+
+    if (result == 'saved') {
+      changed = true;
+      final repo = ProviderScope.containerOf(context)
+          .read(maintenanceLogRepositoryProvider);
+      final updated = await repo.getById(currentLog.id);
+      if (updated != null) {
+        currentLog = updated;
+      }
+    } else if (result == 'deleted') {
+      changed = true;
+      break;
+    } else {
+      break;
+    }
+  }
+
+  if (changed && context.mounted) {
     onSaved();
   }
 }
@@ -294,7 +329,7 @@ class _AddMaintenanceLogModalState
       ref.invalidate(maintenanceLogsProvider(widget.vehicleId));
       ref.invalidate(maintenanceIntervalsProvider(widget.vehicleId));
 
-      if (mounted) Navigator.pop(context, true);
+      if (mounted) Navigator.pop(context, 'saved');
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -357,7 +392,7 @@ class _AddMaintenanceLogModalState
       ref.invalidate(maintenanceLogsProvider(widget.vehicleId));
       ref.invalidate(maintenanceIntervalsProvider(widget.vehicleId));
 
-      if (mounted) Navigator.pop(context, true);
+      if (mounted) Navigator.pop(context, 'deleted');
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -571,6 +606,125 @@ class _AddMaintenanceLogModalState
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _MaintenanceLogPreview extends ConsumerWidget {
+  final String vehicleId;
+  final MaintenanceLog log;
+
+  const _MaintenanceLogPreview({
+    required this.vehicleId,
+    required this.log,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
+    final hasPhotos = log.photoPaths.isNotEmpty;
+    final width = MediaQuery.of(context).size.width - 40;
+
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Center(
+            child: Container(
+              width: 40,
+              height: 4,
+              decoration: BoxDecoration(
+                color: theme.colorScheme.outlineVariant,
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+          ),
+          const SizedBox(height: 16),
+          if (hasPhotos)
+            SizedBox(
+              height: 250,
+              child: CarouselView(
+                itemExtent: width,
+                padding: EdgeInsets.zero,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                children: log.photoPaths.map((path) => ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: Image.file(
+                    File(path),
+                    fit: BoxFit.cover,
+                    width: width,
+                  ),
+                )).toList(),
+              ),
+            )
+          else
+            Container(
+              height: 200,
+              decoration: BoxDecoration(
+                color: theme.colorScheme.surfaceContainerHighest,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Center(
+                child: Icon(Icons.image_not_supported,
+                    size: 48, color: theme.colorScheme.outline),
+              ),
+            ),
+          const SizedBox(height: 16),
+          ListTile(
+            contentPadding: EdgeInsets.zero,
+            leading: const Icon(Icons.calendar_today),
+            title: Text(
+                l.date(DateFormat('dd/MM/yyyy').format(log.date))),
+          ),
+          ListTile(
+            contentPadding: EdgeInsets.zero,
+            leading: const Icon(Icons.description),
+            title: Text(log.description),
+          ),
+          if (log.odometerAtService > 0)
+            ListTile(
+              contentPadding: EdgeInsets.zero,
+              leading: const Icon(Icons.speed),
+              title: Text(
+                  '${log.odometerAtService.toStringAsFixed(0)} ${l.km}'),
+            ),
+          if (log.costAmount != null && log.costAmount! > 0)
+            ListTile(
+              contentPadding: EdgeInsets.zero,
+              leading: const Icon(Icons.attach_money),
+              title: Text(
+                '${Vehicle.currencySymbol(log.costCurrency ?? 'USD')} ${log.costAmount!.toStringAsFixed(2)}',
+              ),
+            ),
+          if (hasPhotos)
+            Padding(
+              padding: const EdgeInsets.only(top: 4),
+              child: Row(
+                children: [
+                  const Icon(Icons.photo_library, size: 16),
+                  const SizedBox(width: 4),
+                  Text('${log.photoPaths.length} ${l.photos}',
+                      style: theme.textTheme.bodySmall),
+                ],
+              ),
+            ),
+          const SizedBox(height: 20),
+          SizedBox(
+            width: double.infinity,
+            child: FilledButton.icon(
+              onPressed: () => Navigator.pop(context, 'edit'),
+              icon: const Icon(Icons.edit),
+              label: Text(l.edit),
+            ),
+          ),
+          const SizedBox(height: 8),
+        ],
       ),
     );
   }

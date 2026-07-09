@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mobile/core/database/app_database.dart';
-import 'package:mobile/core/modal_helpers.dart';
 import 'package:mobile/domain/entities/maintenance_interval.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
 import 'package:mobile/presentation/utils/maintenance_localizer.dart';
+import 'package:mobile/presentation/widgets/add_maintenance_interval_modal.dart';
 
 class MaintenanceSettingsPage extends ConsumerWidget {
   final String vehicleId;
@@ -40,16 +39,13 @@ class MaintenanceSettingsPage extends ConsumerWidget {
                     ref.invalidate(
                         maintenanceIntervalsProvider(vehicleId));
                   },
-                  onEdit: () => _editInterval(context, interval, ref),
-                  onDelete: interval.isCustom
-                      ? () {
-                          final repo = ref
-                              .read(maintenanceIntervalRepositoryProvider);
-                          repo.delete(interval.id);
-                          ref.invalidate(
-                              maintenanceIntervalsProvider(vehicleId));
-                        }
-                      : null,
+                  onTap: () => showEditIntervalModal(
+                    context,
+                    vehicleId: vehicleId,
+                    interval: interval,
+                    onSaved: () => ref.invalidate(
+                        maintenanceIntervalsProvider(vehicleId)),
+                  ),
                 )),
           ],
         ),
@@ -57,260 +53,14 @@ class MaintenanceSettingsPage extends ConsumerWidget {
         error: (e, _) => Center(child: Text('Error: $e')),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => _addCustomInterval(context, ref),
+        onPressed: () => showAddCustomIntervalModal(
+          context,
+          vehicleId: vehicleId,
+          onSaved: () =>
+              ref.invalidate(maintenanceIntervalsProvider(vehicleId)),
+        ),
         tooltip: l.add,
         child: const Icon(Icons.add),
-      ),
-    );
-  }
-
-  void _editInterval(BuildContext context, MaintenanceInterval interval,
-      WidgetRef ref) {
-    final l = AppLocalizations.of(context)!;
-    final theme = Theme.of(context);
-    final kmCtrl =
-        TextEditingController(text: interval.kmInterval.toString());
-    final monthsCtrl = interval.monthsInterval != null
-        ? TextEditingController(text: interval.monthsInterval.toString())
-        : TextEditingController();
-    final descCtrl =
-        TextEditingController(text: interval.description ?? '');
-    var hasMonths = interval.monthsInterval != null;
-
-    karterShowModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      builder: (ctx) => StatefulBuilder(
-        builder: (ctx, setState) => Padding(
-          padding: EdgeInsets.only(
-            bottom: MediaQuery.of(ctx).viewInsets.bottom,
-          ),
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.fromLTRB(20, 12, 20, 20),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Center(
-                  child: Container(
-                    width: 40,
-                    height: 4,
-                    decoration: BoxDecoration(
-                      color: theme.colorScheme.outlineVariant,
-                      borderRadius: BorderRadius.circular(2),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  localizedLabel(l, interval.i18nKey, interval.label),
-                  style: theme.textTheme.titleLarge,
-                ),
-                const SizedBox(height: 20),
-                TextField(
-                  controller: kmCtrl,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    labelText: l.unitKm,
-                    border: const OutlineInputBorder(),
-                  ),
-                ),
-                const SizedBox(height: 12),
-                SwitchListTile(
-                  title: Text(l.timeMonths),
-                  value: hasMonths,
-                  contentPadding: EdgeInsets.zero,
-                  onChanged: (v) => setState(() => hasMonths = v),
-                ),
-                if (hasMonths) ...[
-                  const SizedBox(height: 8),
-                  TextField(
-                    controller: monthsCtrl,
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      labelText: l.months,
-                      border: const OutlineInputBorder(),
-                    ),
-                  ),
-                ],
-                const SizedBox(height: 12),
-                TextField(
-                  controller: descCtrl,
-                  maxLines: 3,
-                  minLines: 2,
-                  decoration: InputDecoration(
-                    labelText: l.description,
-                    border: const OutlineInputBorder(),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                Row(
-                  children: [
-                    Expanded(
-                      child: OutlinedButton(
-                        onPressed: () => Navigator.pop(ctx),
-                        child: Text(l.cancel),
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: FilledButton(
-                        onPressed: () {
-                          final km = int.tryParse(kmCtrl.text.trim());
-                          final months = hasMonths && monthsCtrl.text.trim().isNotEmpty
-                              ? int.tryParse(monthsCtrl.text.trim())
-                              : null;
-                          if (km != null && km > 0) {
-                            final repo = ref.read(maintenanceIntervalRepositoryProvider);
-                            repo.save(interval.copyWith(
-                              kmInterval: km,
-                              monthsInterval: months,
-                              description: descCtrl.text.trim().isEmpty
-                                  ? null
-                                  : descCtrl.text.trim(),
-                            ));
-                            ref.invalidate(maintenanceIntervalsProvider(vehicleId));
-                          }
-                          Navigator.pop(ctx);
-                        },
-                        child: Text(l.saveChanges),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  void _addCustomInterval(BuildContext context, WidgetRef ref) {
-    final l = AppLocalizations.of(context)!;
-    final theme = Theme.of(context);
-    final nameCtrl = TextEditingController();
-    final kmCtrl = TextEditingController();
-    final monthsCtrl = TextEditingController();
-    final descCtrl = TextEditingController();
-    var hasMonths = false;
-
-    karterShowModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      builder: (ctx) => StatefulBuilder(
-        builder: (ctx, setState) => Padding(
-          padding: EdgeInsets.only(
-            bottom: MediaQuery.of(ctx).viewInsets.bottom,
-          ),
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.fromLTRB(20, 12, 20, 20),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Center(
-                  child: Container(
-                    width: 40,
-                    height: 4,
-                    decoration: BoxDecoration(
-                      color: theme.colorScheme.outlineVariant,
-                      borderRadius: BorderRadius.circular(2),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 16),
-                Text(l.newInterval, style: theme.textTheme.titleLarge),
-                const SizedBox(height: 20),
-                TextField(
-                  controller: nameCtrl,
-                  decoration: InputDecoration(
-                    labelText: l.name,
-                    border: const OutlineInputBorder(),
-                  ),
-                ),
-                const SizedBox(height: 12),
-                TextField(
-                  controller: kmCtrl,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    labelText: l.unitKm,
-                    border: const OutlineInputBorder(),
-                  ),
-                ),
-                const SizedBox(height: 12),
-                SwitchListTile(
-                  title: Text(l.timeMonths),
-                  value: hasMonths,
-                  contentPadding: EdgeInsets.zero,
-                  onChanged: (v) => setState(() => hasMonths = v),
-                ),
-                if (hasMonths) ...[
-                  const SizedBox(height: 8),
-                  TextField(
-                    controller: monthsCtrl,
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      labelText: l.months,
-                      border: const OutlineInputBorder(),
-                    ),
-                  ),
-                ],
-                const SizedBox(height: 12),
-                TextField(
-                  controller: descCtrl,
-                  maxLines: 3,
-                  minLines: 2,
-                  decoration: InputDecoration(
-                    labelText: l.description,
-                    border: const OutlineInputBorder(),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                Row(
-                  children: [
-                    Expanded(
-                      child: OutlinedButton(
-                        onPressed: () => Navigator.pop(ctx),
-                        child: Text(l.cancel),
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: FilledButton(
-                        onPressed: () {
-                          final name = nameCtrl.text.trim();
-                          final km = int.tryParse(kmCtrl.text.trim());
-                          final months = hasMonths && monthsCtrl.text.trim().isNotEmpty
-                              ? int.tryParse(monthsCtrl.text.trim())
-                              : null;
-                          if (name.isNotEmpty && km != null && km > 0) {
-                            final interval = MaintenanceInterval(
-                              id: uuid.v4(),
-                              vehicleId: vehicleId,
-                              label: name,
-                              kmInterval: km,
-                              monthsInterval: months,
-                              description: descCtrl.text.trim().isEmpty
-                                  ? null
-                                  : descCtrl.text.trim(),
-                              isCustom: true,
-                            );
-                            final repo = ref.read(maintenanceIntervalRepositoryProvider);
-                            repo.save(interval);
-                            ref.invalidate(maintenanceIntervalsProvider(vehicleId));
-                          }
-                          Navigator.pop(ctx);
-                        },
-                        child: Text(l.add),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
       ),
     );
   }
@@ -319,14 +69,12 @@ class MaintenanceSettingsPage extends ConsumerWidget {
 class _IntervalTile extends StatelessWidget {
   final MaintenanceInterval interval;
   final ValueChanged<bool> onToggle;
-  final VoidCallback onEdit;
-  final VoidCallback? onDelete;
+  final VoidCallback onTap;
 
   const _IntervalTile({
     required this.interval,
     required this.onToggle,
-    required this.onEdit,
-    this.onDelete,
+    required this.onTap,
   });
 
   @override
@@ -349,74 +97,10 @@ class _IntervalTile extends StatelessWidget {
           ),
         ),
         subtitle: Text(subtitle),
-        onTap: () {
-          final desc = localizedDesc(
-              l, interval.descI18nKey, interval.description ?? '');
-          if (desc.isNotEmpty) {
-            _showDescription(context, l);
-          }
-        },
-        trailing: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            IconButton(
-              icon: const Icon(Icons.edit),
-              onPressed: onEdit,
-              tooltip: l.edit,
-            ),
-            if (onDelete != null)
-              IconButton(
-                icon: const Icon(Icons.delete_outline),
-                onPressed: onDelete,
-                tooltip: l.delete,
-              ),
-            Switch(
-              value: interval.isEnabled,
-              onChanged: onToggle,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  void _showDescription(BuildContext context, AppLocalizations l) {
-    final label =
-        localizedLabel(l, interval.i18nKey, interval.label);
-    final text = localizedDesc(
-            l, interval.descI18nKey, interval.description ?? '');
-    final theme = Theme.of(context);
-    karterShowModalBottomSheet(
-      context: context,
-      builder: (ctx) => Padding(
-        padding: const EdgeInsets.fromLTRB(20, 12, 20, 20),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: Container(
-                width: 40,
-                height: 4,
-                decoration: BoxDecoration(
-                  color: theme.colorScheme.outlineVariant,
-                  borderRadius: BorderRadius.circular(2),
-                ),
-              ),
-            ),
-            const SizedBox(height: 16),
-            Text(label, style: theme.textTheme.titleLarge),
-            const SizedBox(height: 12),
-            Text(text, style: theme.textTheme.bodyMedium),
-            const SizedBox(height: 20),
-            SizedBox(
-              width: double.infinity,
-              child: FilledButton(
-                onPressed: () => Navigator.pop(ctx),
-                child: Text(l.close),
-              ),
-            ),
-          ],
+        onTap: onTap,
+        trailing: Switch(
+          value: interval.isEnabled,
+          onChanged: onToggle,
         ),
       ),
     );

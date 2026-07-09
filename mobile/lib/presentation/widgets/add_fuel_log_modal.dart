@@ -16,13 +16,13 @@ Future<void> showAddFuelLogModal(
   required String vehicleId,
   required void Function() onSaved,
 }) async {
-  final result = await karterShowModalBottomSheet<bool>(
+  final result = await karterShowModalBottomSheet<String>(
     context: context,
     isScrollControlled: true,
     builder: (ctx) => _AddFuelLogModal(vehicleId: vehicleId),
   );
 
-  if (result == true && context.mounted) {
+  if (result == 'saved' && context.mounted) {
     onSaved();
   }
 }
@@ -33,16 +33,51 @@ Future<void> showEditFuelLogModal(
   required FuelLog log,
   required void Function() onSaved,
 }) async {
-  final result = await karterShowModalBottomSheet<bool>(
-    context: context,
-    isScrollControlled: true,
-    builder: (ctx) => _AddFuelLogModal(
-      vehicleId: vehicleId,
-      editLog: log,
-    ),
-  );
+  var currentLog = log;
+  var changed = false;
 
-  if (result == true && context.mounted) {
+  while (true) {
+    final action = await karterShowModalBottomSheet<String>(
+      context: context,
+      isScrollControlled: true,
+      builder: (ctx) => _FuelLogPreview(
+        vehicleId: vehicleId,
+        log: currentLog,
+      ),
+    );
+
+    if (!context.mounted) return;
+
+    if (action != 'edit') break;
+
+    final result = await karterShowModalBottomSheet<String>(
+      context: context,
+      isScrollControlled: true,
+      builder: (ctx) => _AddFuelLogModal(
+        vehicleId: vehicleId,
+        editLog: currentLog,
+      ),
+    );
+
+    if (!context.mounted) return;
+
+    if (result == 'saved') {
+      changed = true;
+      final repo = ProviderScope.containerOf(context)
+          .read(fuelLogRepositoryProvider);
+      final updated = await repo.getById(currentLog.id);
+      if (updated != null) {
+        currentLog = updated;
+      }
+    } else if (result == 'deleted') {
+      changed = true;
+      break;
+    } else {
+      break;
+    }
+  }
+
+  if (changed && context.mounted) {
     onSaved();
   }
 }
@@ -155,7 +190,7 @@ class _AddFuelLogModalState extends ConsumerState<_AddFuelLogModal> {
       await repo.save(log);
       ref.invalidate(fuelLogsProvider(widget.vehicleId));
 
-      if (mounted) Navigator.pop(context, true);
+      if (mounted) Navigator.pop(context, 'saved');
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -202,7 +237,7 @@ class _AddFuelLogModalState extends ConsumerState<_AddFuelLogModal> {
       await repo.delete(widget.editLog!.id);
       ref.invalidate(fuelLogsProvider(widget.vehicleId));
 
-      if (mounted) Navigator.pop(context, true);
+      if (mounted) Navigator.pop(context, 'deleted');
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -348,6 +383,102 @@ class _AddFuelLogModalState extends ConsumerState<_AddFuelLogModal> {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _FuelLogPreview extends ConsumerWidget {
+  final String vehicleId;
+  final FuelLog log;
+
+  const _FuelLogPreview({
+    required this.vehicleId,
+    required this.log,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
+    final volUnit = log.fueledVolume.unit == VolumeUnit.liters
+        ? l.unitL
+        : l.unitGal;
+    final consumption = log.calculatedConsumption;
+
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Center(
+            child: Container(
+              width: 40,
+              height: 4,
+              decoration: BoxDecoration(
+                color: theme.colorScheme.outlineVariant,
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+          ),
+          const SizedBox(height: 16),
+          ListTile(
+            contentPadding: EdgeInsets.zero,
+            leading: const Icon(Icons.calendar_today),
+            title: Text(
+                l.date(DateFormat('dd/MM/yyyy').format(log.date))),
+          ),
+          ListTile(
+            contentPadding: EdgeInsets.zero,
+            leading: const Icon(Icons.local_gas_station),
+            title: Text(
+                '${log.fueledVolume.amount.toStringAsFixed(1)} $volUnit'),
+          ),
+          ListTile(
+            contentPadding: EdgeInsets.zero,
+            leading: const Icon(Icons.speed),
+            title: Text(
+                '${log.odometerAtFueling.distance.toStringAsFixed(0)} ${l.km}'),
+          ),
+          if (log.pricePerUnit != null)
+            ListTile(
+              contentPadding: EdgeInsets.zero,
+              leading: const Icon(Icons.attach_money),
+              title: Text(
+                  '\$${log.pricePerUnit!.toStringAsFixed(2)}/$volUnit'),
+            ),
+          SwitchListTile(
+            contentPadding: EdgeInsets.zero,
+            title: Text(l.fullTank),
+            value: log.isFullTank,
+            onChanged: null,
+          ),
+          if (consumption > 0)
+            Padding(
+              padding: const EdgeInsets.only(top: 4),
+              child: Row(
+                children: [
+                  const Icon(Icons.trending_down, size: 16),
+                  const SizedBox(width: 4),
+                  Text(
+                    '${consumption.toStringAsFixed(1)} L/100km',
+                    style: theme.textTheme.bodySmall,
+                  ),
+                ],
+              ),
+            ),
+          const SizedBox(height: 20),
+          SizedBox(
+            width: double.infinity,
+            child: FilledButton.icon(
+              onPressed: () => Navigator.pop(context, 'edit'),
+              icon: const Icon(Icons.edit),
+              label: Text(l.edit),
+            ),
+          ),
+          const SizedBox(height: 8),
+        ],
       ),
     );
   }

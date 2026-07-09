@@ -13,6 +13,14 @@ class FuelLogRepositoryImpl implements FuelLogRepository {
   FuelLogRepositoryImpl(this._db);
 
   @override
+  Future<FuelLog?> getById(String id) async {
+    final entry = await (_db.select(_db.fuelLogs)
+          ..where((t) => t.id.equals(id)))
+        .getSingleOrNull();
+    return entry != null ? _toEntity(entry) : null;
+  }
+
+  @override
   Future<List<FuelLog>> getByVehicle(String vehicleId) async {
     final entries = await (_db.select(_db.fuelLogs)
           ..where((t) => t.vehicleId.equals(vehicleId))

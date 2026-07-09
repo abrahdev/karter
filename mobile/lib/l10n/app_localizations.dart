@@ -637,6 +637,12 @@ abstract class AppLocalizations {
   /// **'Save service'**
   String get saveService;
 
+  /// No description provided for @saveFile.
+  ///
+  /// In en, this message translates to:
+  /// **'Save file'**
+  String get saveFile;
+
   /// No description provided for @addPhoto.
   ///
   /// In en, this message translates to:

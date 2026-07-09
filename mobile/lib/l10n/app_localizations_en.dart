@@ -309,6 +309,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get saveService => 'Save service';
 
   @override
+  String get saveFile => 'Save file';
+
+  @override
   String get addPhoto => 'Add photo';
 
   @override
