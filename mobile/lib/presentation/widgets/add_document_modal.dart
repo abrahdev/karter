@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/services.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobile/core/modal_helpers.dart';
@@ -281,6 +282,7 @@ class _AddDocumentModalState extends ConsumerState<_AddDocumentModal> {
         createdAt: widget.editDocument?.createdAt ?? DateTime.now(),
       ));
 
+      HapticFeedback.mediumImpact();
       if (mounted) Navigator.pop(context, 'saved');
     } catch (e) {
       if (mounted) {
@@ -330,6 +332,7 @@ class _AddDocumentModalState extends ConsumerState<_AddDocumentModal> {
       final repo = ref.read(vehicleDocumentRepositoryProvider);
       await repo.delete(widget.editDocument!.id);
       ref.invalidate(vehicleDocumentsProvider(widget.vehicleId));
+      HapticFeedback.mediumImpact();
       if (mounted) Navigator.pop(context, 'deleted');
     } catch (e) {
       if (mounted) {

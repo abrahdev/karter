@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/services.dart';
 import 'package:mobile/core/modal_helpers.dart';
 import 'package:mobile/domain/entities/maintenance_interval.dart';
 import 'package:mobile/l10n/app_localizations.dart';
@@ -226,6 +227,7 @@ class _AddIntervalModalState
       }
 
       ref.invalidate(maintenanceIntervalsProvider(widget.vehicleId));
+      HapticFeedback.mediumImpact();
       if (mounted) Navigator.pop(context, 'saved');
     } catch (e) {
       if (mounted) {
@@ -270,6 +272,7 @@ class _AddIntervalModalState
       final repo = ref.read(maintenanceIntervalRepositoryProvider);
       await repo.delete(widget.editInterval!.id);
       ref.invalidate(maintenanceIntervalsProvider(widget.vehicleId));
+      HapticFeedback.mediumImpact();
       if (mounted) Navigator.pop(context, 'deleted');
     } catch (e) {
       if (mounted) {

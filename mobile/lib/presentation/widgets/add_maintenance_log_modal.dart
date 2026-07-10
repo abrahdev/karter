@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile/core/database/app_database.dart';
@@ -329,6 +330,7 @@ class _AddMaintenanceLogModalState
       ref.invalidate(maintenanceLogsProvider(widget.vehicleId));
       ref.invalidate(maintenanceIntervalsProvider(widget.vehicleId));
 
+      HapticFeedback.mediumImpact();
       if (mounted) Navigator.pop(context, 'saved');
     } catch (e) {
       if (mounted) {
@@ -392,6 +394,7 @@ class _AddMaintenanceLogModalState
       ref.invalidate(maintenanceLogsProvider(widget.vehicleId));
       ref.invalidate(maintenanceIntervalsProvider(widget.vehicleId));
 
+      HapticFeedback.mediumImpact();
       if (mounted) Navigator.pop(context, 'deleted');
     } catch (e) {
       if (mounted) {
@@ -661,18 +664,6 @@ class _MaintenanceLogPreview extends ConsumerWidget {
                     width: width,
                   ),
                 )).toList(),
-              ),
-            )
-          else
-            Container(
-              height: 200,
-              decoration: BoxDecoration(
-                color: theme.colorScheme.surfaceContainerHighest,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Center(
-                child: Icon(Icons.image_not_supported,
-                    size: 48, color: theme.colorScheme.outline),
               ),
             ),
           const SizedBox(height: 16),

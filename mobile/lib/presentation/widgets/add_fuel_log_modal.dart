@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile/core/database/app_database.dart';
 import 'package:mobile/core/modal_helpers.dart';
@@ -190,6 +191,7 @@ class _AddFuelLogModalState extends ConsumerState<_AddFuelLogModal> {
       await repo.save(log);
       ref.invalidate(fuelLogsProvider(widget.vehicleId));
 
+      HapticFeedback.mediumImpact();
       if (mounted) Navigator.pop(context, 'saved');
     } catch (e) {
       if (mounted) {
@@ -237,6 +239,7 @@ class _AddFuelLogModalState extends ConsumerState<_AddFuelLogModal> {
       await repo.delete(widget.editLog!.id);
       ref.invalidate(fuelLogsProvider(widget.vehicleId));
 
+      HapticFeedback.mediumImpact();
       if (mounted) Navigator.pop(context, 'deleted');
     } catch (e) {
       if (mounted) {
