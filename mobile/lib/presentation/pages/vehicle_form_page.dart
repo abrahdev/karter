@@ -213,9 +213,8 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error: $e')),
-        );
+        final searchParams = '$brand $model $year';
+        await _showTemplateError(searchParams);
       }
     } finally {
       if (mounted) setState(() => _isLoading = false);
@@ -304,6 +303,75 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
     return result;
   }
 
+  Future<void> _showTemplateError(String searchParams) async {
+    await karterShowDialog(
+      context: context,
+      builder: (ctx) {
+        final theme = Theme.of(ctx);
+        return AlertDialog(
+          title: const Text('Template under construction'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Icon(Icons.construction,
+                      color: theme.colorScheme.primary, size: 48),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: Text(
+                      'This template is not ready yet.\nWe\'re working on it!',
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+              Text(
+                'Contributions are welcome — add or fix templates for your vehicle:',
+                style: theme.textTheme.bodyMedium,
+              ),
+              const SizedBox(height: 8),
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: theme.colorScheme.surfaceContainerHighest,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text(
+                  'https://github.com/abrahdev/karter',
+                  style: theme.textTheme.bodyMedium
+                      ?.copyWith(fontFamily: 'monospace'),
+                ),
+              ),
+              const SizedBox(height: 12),
+              Text(
+                'Requested: $searchParams',
+                style: theme.textTheme.bodySmall
+                    ?.copyWith(color: theme.colorScheme.outline),
+              ),
+            ],
+          ),
+          actions: [
+            OutlinedButton.icon(
+              onPressed: () => launchUrl(
+                Uri.parse('https://github.com/abrahdev/karter'),
+                mode: LaunchMode.externalApplication,
+              ),
+              icon: const Icon(Icons.open_in_new, size: 18),
+              label: const Text('Contribute on GitHub'),
+            ),
+            FilledButton(
+              onPressed: () => Navigator.pop(ctx),
+              child: const Text('Got it'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   Future<void> _showNoTemplateFound(String searchParams) async {
     await karterShowDialog(
       context: context,
@@ -346,9 +414,15 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
               ),
               const SizedBox(height: 12),
               Text(
-                'El vehículo se creará con los intervalos por defecto.',
+                'The vehicle will use default intervals.',
                 style: theme.textTheme.bodySmall
                     ?.copyWith(color: theme.colorScheme.outline),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                'Missing a template? Contribute at github.com/abrahdev/karter',
+                style: theme.textTheme.bodySmall
+                    ?.copyWith(color: theme.colorScheme.primary),
               ),
             ],
           ),
@@ -359,11 +433,19 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
                 mode: LaunchMode.externalApplication,
               ),
               icon: const Icon(Icons.open_in_new, size: 18),
-              label: const Text('Ver todas las plantillas'),
+              label: const Text('View all templates'),
+            ),
+            OutlinedButton.icon(
+              onPressed: () => launchUrl(
+                Uri.parse('https://github.com/abrahdev/karter'),
+                mode: LaunchMode.externalApplication,
+              ),
+              icon: const Icon(Icons.open_in_new, size: 18),
+              label: const Text('Contribute'),
             ),
             FilledButton(
               onPressed: () => Navigator.pop(ctx),
-              child: const Text('Entendido'),
+              child: const Text('Got it'),
             ),
           ],
         );
