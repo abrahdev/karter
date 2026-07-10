@@ -334,83 +334,84 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              if (_fabOpen) ...[
-                _FabStaggeredEntry(
-                  index: 2,
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 8),
-                    child: FloatingActionButton.small(
-                      heroTag: 'add_service',
-                      backgroundColor:
-                          theme.colorScheme.secondaryContainer,
-                      onPressed: () {
-                        setState(() => _fabOpen = false);
-                        showAddMaintenanceLogModal(
-                          context,
-                          vehicleId: widget.vehicleId,
-                          onSaved: () {
-                            ref.invalidate(
-                                maintenanceLogsProvider(
-                                    widget.vehicleId));
-                            ref.invalidate(
-                                maintenanceIntervalsProvider(
-                                    widget.vehicleId));
-                          },
-                        );
-                      },
-                      child: const Icon(Icons.build),
-                    ),
+              _FabStaggeredEntry(
+                index: 2,
+                visible: _fabOpen,
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: FloatingActionButton.small(
+                    heroTag: 'add_service',
+                    backgroundColor:
+                        theme.colorScheme.secondaryContainer,
+                    onPressed: () {
+                      setState(() => _fabOpen = false);
+                      showAddMaintenanceLogModal(
+                        context,
+                        vehicleId: widget.vehicleId,
+                        onSaved: () {
+                          ref.invalidate(
+                              maintenanceLogsProvider(
+                                  widget.vehicleId));
+                          ref.invalidate(
+                              maintenanceIntervalsProvider(
+                                  widget.vehicleId));
+                        },
+                      );
+                    },
+                    child: const Icon(Icons.build),
                   ),
                 ),
-                _FabStaggeredEntry(
-                  index: 1,
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 8),
-                    child: FloatingActionButton.small(
-                      heroTag: 'add_fuel',
-                      backgroundColor:
-                          theme.colorScheme.secondaryContainer,
-                      onPressed: () {
-                        setState(() => _fabOpen = false);
-                        showAddFuelLogModal(
-                          context,
-                          vehicleId: widget.vehicleId,
-                          onSaved: () {
-                            ref.invalidate(
-                                fuelLogsProvider(
-                                    widget.vehicleId));
-                          },
-                        );
-                      },
-                      child: const Icon(Icons.local_gas_station),
-                    ),
+              ),
+              _FabStaggeredEntry(
+                index: 1,
+                visible: _fabOpen,
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: FloatingActionButton.small(
+                    heroTag: 'add_fuel',
+                    backgroundColor:
+                        theme.colorScheme.secondaryContainer,
+                    onPressed: () {
+                      setState(() => _fabOpen = false);
+                      showAddFuelLogModal(
+                        context,
+                        vehicleId: widget.vehicleId,
+                        onSaved: () {
+                          ref.invalidate(
+                              fuelLogsProvider(
+                                  widget.vehicleId));
+                        },
+                      );
+                    },
+                    child: const Icon(Icons.local_gas_station),
                   ),
                 ),
-                _FabStaggeredEntry(
-                  index: 0,
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 8),
-                    child: FloatingActionButton.small(
-                      heroTag: 'add_doc',
-                      backgroundColor:
-                          theme.colorScheme.secondaryContainer,
-                      onPressed: () {
-                        setState(() => _fabOpen = false);
-                        showAddDocumentModal(
-                          context,
-                          vehicleId: widget.vehicleId,
-                          onSaved: () {
-                            ref.invalidate(
-                                vehicleDocumentsProvider(
-                                    widget.vehicleId));
-                          },
-                        );
-                      },
-                      child: const Icon(Icons.description),
-                    ),
+              ),
+              _FabStaggeredEntry(
+                index: 0,
+                visible: _fabOpen,
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: FloatingActionButton.small(
+                    heroTag: 'add_doc',
+                    backgroundColor:
+                        theme.colorScheme.secondaryContainer,
+                    onPressed: () {
+                      setState(() => _fabOpen = false);
+                      showAddDocumentModal(
+                        context,
+                        vehicleId: widget.vehicleId,
+                        onSaved: () {
+                          ref.invalidate(
+                              vehicleDocumentsProvider(
+                                  widget.vehicleId));
+                        },
+                      );
+                    },
+                    child: const Icon(Icons.description),
                   ),
                 ),
-              ],
+              ),
               FloatingActionButton(
                 heroTag: 'main_fab',
                 onPressed: () =>
@@ -527,10 +528,12 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
 
 class _FabStaggeredEntry extends StatefulWidget {
   final int index;
+  final bool visible;
   final Widget child;
 
   const _FabStaggeredEntry({
     required this.index,
+    required this.visible,
     required this.child,
   });
 
@@ -552,14 +555,34 @@ class _FabStaggeredEntryState extends State<_FabStaggeredEntry>
       vsync: this,
     );
     _fade = Tween<double>(begin: 0, end: 1).animate(
-      CurvedAnimation(parent: _ctrl, curve: Easing.emphasizedDecelerate),
+      CurvedAnimation(
+          parent: _ctrl, curve: Easing.emphasizedDecelerate),
     );
     _scale = Tween<double>(begin: 0.5, end: 1).animate(
-      CurvedAnimation(parent: _ctrl, curve: Easing.emphasizedDecelerate),
+      CurvedAnimation(
+          parent: _ctrl, curve: Easing.emphasizedDecelerate),
     );
-    Future.delayed(Duration(milliseconds: 50 * widget.index), () {
-      if (mounted) _ctrl.forward();
-    });
+    if (widget.visible) _ctrl.value = 1;
+  }
+
+  @override
+  void didUpdateWidget(_FabStaggeredEntry oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.visible != oldWidget.visible) {
+      if (widget.visible) {
+        _ctrl.duration = Durations.medium4;
+        Future.delayed(Duration(milliseconds: 50 * widget.index),
+            () {
+          if (mounted) _ctrl.forward();
+        });
+      } else {
+        _ctrl.duration = Durations.medium4 ~/ 2;
+        Future.delayed(
+            Duration(milliseconds: 50 * (2 - widget.index)), () {
+          if (mounted) _ctrl.reverse();
+        });
+      }
+    }
   }
 
   @override
@@ -570,15 +593,18 @@ class _FabStaggeredEntryState extends State<_FabStaggeredEntry>
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _ctrl,
-      builder: (context, child) {
-        return FadeTransition(
-          opacity: _fade,
-          child: ScaleTransition(scale: _scale, child: child),
-        );
-      },
-      child: widget.child,
+    return IgnorePointer(
+      ignoring: !widget.visible,
+      child: AnimatedBuilder(
+        animation: _ctrl,
+        builder: (context, child) {
+          return FadeTransition(
+            opacity: _fade,
+            child: ScaleTransition(scale: _scale, child: child),
+          );
+        },
+        child: widget.child,
+      ),
     );
   }
 }
