@@ -628,7 +628,6 @@ class _MaintenanceLogPreview extends ConsumerWidget {
     final l = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     final hasPhotos = log.photoPaths.isNotEmpty;
-    final width = MediaQuery.of(context).size.width - 40;
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(20),
@@ -651,17 +650,23 @@ class _MaintenanceLogPreview extends ConsumerWidget {
             SizedBox(
               height: 250,
               child: CarouselView(
-                itemExtent: width,
+                shrinkExtent: 80,
+                itemExtent: 200,
                 padding: EdgeInsets.zero,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
-                children: log.photoPaths.map((path) => ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                  child: Image.file(
-                    File(path),
-                    fit: BoxFit.cover,
-                    width: width,
+                children: log.photoPaths.map((path) => Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 6),
+                  child: GestureDetector(
+                    onTap: () => _showPhotoFullScreen(context, path),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: Image.file(
+                        File(path),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ),
                 )).toList(),
               ),
@@ -719,4 +724,30 @@ class _MaintenanceLogPreview extends ConsumerWidget {
       ),
     );
   }
+}
+
+void _showPhotoFullScreen(BuildContext context, String path) {
+  karterShowDialog(
+    context: context,
+    builder: (ctx) => Dialog(
+      backgroundColor: Colors.black,
+      insetPadding: EdgeInsets.zero,
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          InteractiveViewer(
+            child: Image.file(File(path), fit: BoxFit.contain),
+          ),
+          Positioned(
+            top: 8,
+            right: 8,
+            child: IconButton(
+              icon: const Icon(Icons.close, color: Colors.white),
+              onPressed: () => Navigator.pop(ctx),
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
 }
