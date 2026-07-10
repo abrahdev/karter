@@ -620,10 +620,7 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
                   decoration: InputDecoration(labelText: l.brand),
                   onChanged: (value) {
                     _brand = value;
-                    if (!_hasUnsavedChanges) {
-                      _hasUnsavedChanges = true;
-                      setState(() {});
-                    }
+                    _hasUnsavedChanges = true;
                   },
                   validator: (v) =>
                       v == null || v.trim().isEmpty ? l.required : null,
@@ -661,10 +658,7 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
                   decoration: InputDecoration(labelText: l.model),
                   onChanged: (value) {
                     _model = value;
-                    if (!_hasUnsavedChanges) {
-                      _hasUnsavedChanges = true;
-                      setState(() {});
-                    }
+                    _hasUnsavedChanges = true;
                   },
                   validator: (v) =>
                       v == null || v.trim().isEmpty ? l.required : null,
