@@ -16,7 +16,7 @@
       "power_hp": 115
     },
     "market": ["EU"],
-    "author": "karter",
+    "author": "abrahdev",
     "version": "1.0.0",
     "sources": ["VW official maintenance schedule", "forums.vwvortex.com"]
   },

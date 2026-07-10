@@ -17,7 +17,7 @@
       "power_hp": 140
     },
     "market": ["EU", "US", "JP"],
-    "author": "karter",
+    "author": "abrahdev",
     "version": "1.0.0",
     "sources": ["Toyota official maintenance schedule", "toyotanation.com"]
   },
