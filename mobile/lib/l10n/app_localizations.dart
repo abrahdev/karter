@@ -643,6 +643,12 @@ abstract class AppLocalizations {
   /// **'Save file'**
   String get saveFile;
 
+  /// No description provided for @lastService.
+  ///
+  /// In en, this message translates to:
+  /// **'Last'**
+  String get lastService;
+
   /// No description provided for @addPhoto.
   ///
   /// In en, this message translates to:

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:mobile/core/modal_helpers.dart';
 import 'package:mobile/domain/entities/maintenance_interval.dart';
 import 'package:mobile/domain/enums/distance_unit.dart';
@@ -264,7 +265,23 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
                                   : null,
                             ),
                           ),
-                          subtitle: Text(data.subtitle),
+                          subtitle: Column(
+                            crossAxisAlignment:
+                                CrossAxisAlignment.start,
+                            children: [
+                              Text(data.subtitle),
+                              if (data.lastResetInfo != null)
+                                Text(
+                                  data.lastResetInfo!,
+                                  style: theme.textTheme.bodySmall
+                                      ?.copyWith(
+                                    color: theme
+                                        .colorScheme
+                                        .onSurfaceVariant,
+                                  ),
+                                ),
+                            ],
+                          ),
                           onTap: () => _showDescription(
                               context, l, interval),
                           trailing: Row(
@@ -573,6 +590,7 @@ class _IntervalData {
   final bool isDue;
   final bool isApproaching;
   final String subtitle;
+  final String? lastResetInfo;
   final double sortKey;
 
   _IntervalData._({
@@ -582,6 +600,7 @@ class _IntervalData {
     required this.isDue,
     required this.isApproaching,
     required this.subtitle,
+    required this.lastResetInfo,
     required this.sortKey,
   });
 
@@ -634,6 +653,18 @@ class _IntervalData {
       subtitle = l.nextIn(parts.join(' / '));
     }
 
+    String? lastResetInfo;
+    if (interval.lastResetDate != null) {
+      final dateStr =
+          DateFormat.yMd().format(interval.lastResetDate!);
+      if (interval.lastResetKm > 0) {
+        lastResetInfo =
+            '${l.lastService}: $dateStr · ${interval.lastResetKm.toStringAsFixed(0)} ${l.km}';
+      } else {
+        lastResetInfo = '${l.lastService}: $dateStr';
+      }
+    }
+
     final kmProgress = interval.kmInterval < 999999 && kmSinceReset > 0
         ? kmSinceReset / interval.kmInterval
         : 0.0;
@@ -653,6 +684,7 @@ class _IntervalData {
       isDue: isDue,
       isApproaching: isApproaching,
       subtitle: subtitle,
+      lastResetInfo: lastResetInfo,
       sortKey: sortKey,
     );
   }
