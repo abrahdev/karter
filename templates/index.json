@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-10T13:30:58Z",
+  "generated_at": "2026-07-10T13:47:22Z",
   "schema_version": "1",
   "templates": [
     {
@@ -120,6 +120,21 @@
         "version": "1.0.0"
       },
       "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "benelli-trk-502-x",
+      "path": "benelli/trk-502-x/base.json",
+      "meta": {
+        "make": "Benelli",
+        "model": "TRK 502 X",
+        "generation": "All",
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 17,
       "extends": [
         "_base/combustion.json"
       ]

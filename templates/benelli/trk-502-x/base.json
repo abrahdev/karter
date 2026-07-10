@@ -1,0 +1,148 @@
+{
+  "id": "benelli-trk-502-x",
+  "extends": [
+    "_base/combustion.json"
+  ],
+  "meta": {
+    "make": "Benelli",
+    "model": "TRK 502 X",
+    "generation": "All",
+    "author": "karter",
+    "version": "1.0.0"
+  },
+  "maintenance_items": [
+    {
+      "id": "timing-belt",
+      "remove": true,
+      "description": "Benelli TRK 502 uses a timing chain, not a belt."
+    },
+    {
+      "id": "cabin-filter",
+      "remove": true,
+      "description": "Motorcycles have no cabin filter."
+    },
+    {
+      "id": "oil-change",
+      "interval_km": 6000,
+      "interval_months": null,
+      "description": "First change at 1,000 km (break-in). Then every 6,000 km (7k, 13k, 19k, 25k...). Use 10W-50 semi-synthetic."
+    },
+    {
+      "id": "oil-filter",
+      "interval_km": 6000,
+      "interval_months": null,
+      "description": "Replace with every oil change."
+    },
+    {
+      "id": "air-filter",
+      "interval_km": 6000,
+      "interval_months": null,
+      "description": "Replace every 6,000 km starting at 7,000 km. Replace more frequently in dusty or humid conditions."
+    },
+    {
+      "id": "spark-plugs",
+      "interval_km": 19000,
+      "interval_months": null,
+      "description": "Inspect at 7,000 and 13,000 km. Replace at 19,000 and 25,000 km."
+    },
+    {
+      "id": "brake-fluid",
+      "interval_km": null,
+      "interval_months": 24,
+      "description": "Replace completely every 2 years. Includes clutch hydraulic fluid."
+    },
+    {
+      "id": "coolant",
+      "interval_km": 13000,
+      "interval_months": 24,
+      "description": "Replace every 2 years or 13,000 km, whichever comes first."
+    },
+    {
+      "id": "chain-maintenance",
+      "label": "Chain clean, lube & tension",
+      "i18n_key": "seed_interval_chain",
+      "desc_i18n_key": "seed_desc_chain",
+      "interval_km": 500,
+      "interval_months": null,
+      "description": "Clean, lubricate and adjust chain tension every 500 km, after washing, or after riding in rain."
+    },
+    {
+      "id": "drive-kit",
+      "label": "Drive kit (chain & sprockets)",
+      "i18n_key": "seed_interval_drive_kit",
+      "desc_i18n_key": "seed_desc_drive_kit",
+      "interval_km": 21000,
+      "interval_months": null,
+      "description": "Replace chain, front sprocket and rear crown as a set every 21,000-22,000 km."
+    },
+    {
+      "id": "valve-adjustment",
+      "label": "Valve clearance adjustment",
+      "i18n_key": "seed_interval_valve_adjustment",
+      "desc_i18n_key": "seed_desc_valve_adjustment",
+      "interval_km": 22000,
+      "interval_months": null,
+      "description": "Inspect and adjust valve clearance every 22,000 km."
+    },
+    {
+      "id": "fuel-filter",
+      "label": "Fuel filter",
+      "i18n_key": "seed_interval_fuel_filter",
+      "desc_i18n_key": "seed_desc_fuel_filter",
+      "interval_km": 19000,
+      "interval_months": null,
+      "description": "Inspect at intermediate services, replace at 19,000 km."
+    },
+    {
+      "id": "fuel-hoses",
+      "label": "Fuel hoses",
+      "interval_km": null,
+      "interval_months": 36,
+      "description": "Replace every 3 years to prevent cracking and fuel leaks."
+    },
+    {
+      "id": "brake-hoses",
+      "label": "Brake hoses",
+      "interval_km": null,
+      "interval_months": 48,
+      "description": "Replace hydraulic brake hoses every 4 years."
+    },
+    {
+      "id": "brake-pump-internals",
+      "label": "Brake pump & caliper service",
+      "interval_km": null,
+      "interval_months": 24,
+      "description": "Replace internal parts of brake pumps and calipers every 2 years."
+    },
+    {
+      "id": "fork-oil",
+      "label": "Fork oil",
+      "i18n_key": "seed_interval_fork_oil",
+      "desc_i18n_key": "seed_desc_fork_oil",
+      "interval_km": 13000,
+      "interval_months": null,
+      "description": "Change front fork oil at 13,000 km and again at 19,000 km."
+    },
+    {
+      "id": "steering-bearings",
+      "label": "Steering bearings",
+      "interval_km": 19000,
+      "interval_months": null,
+      "description": "Check play, adjust, and lubricate with lithium grease every 19,000 km."
+    },
+    {
+      "id": "swingarm-bearings",
+      "label": "Swingarm bearings",
+      "interval_km": 25000,
+      "interval_months": null,
+      "description": "Inspect periodically, replace at 25,000 km."
+    },
+    {
+      "id": "wheel-bearings",
+      "label": "Wheel bearings",
+      "interval_km": 40000,
+      "interval_months": null,
+      "description": "Inspect visually and replace every 40,000 km."
+    }
+  ]
+}

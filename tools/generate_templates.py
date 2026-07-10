@@ -398,6 +398,8 @@ models = [
     ("Royal Enfield", "Classic 350", []),
     ("Royal Enfield", "Meteor 350", []),
     ("Royal Enfield", "Himalayan 450", []),
+    # ── Benelli ─────────────────────────────────────────────
+    ("Benelli", "TRK 502 X", []),
 ]
 
 
