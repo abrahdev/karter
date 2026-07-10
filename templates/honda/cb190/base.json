@@ -1,0 +1,16 @@
+{
+  "id": "honda-cb190",
+  "extends": [
+    "_base/combustion.json"
+  ],
+  "meta": {
+    "make": "Honda",
+    "model": "CB190",
+    "generation": "All",
+    "years": null,
+    "engine": null,
+    "author": "abrahdev",
+    "version": "1.0.0"
+  },
+  "maintenance_items": []
+}

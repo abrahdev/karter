@@ -1,0 +1,16 @@
+{
+  "id": "honda-xr190l",
+  "extends": [
+    "_base/combustion.json"
+  ],
+  "meta": {
+    "make": "Honda",
+    "model": "XR190L",
+    "generation": "All",
+    "years": null,
+    "engine": null,
+    "author": "abrahdev",
+    "version": "1.0.0"
+  },
+  "maintenance_items": []
+}

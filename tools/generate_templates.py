@@ -373,6 +373,31 @@ models = [
     ),
     ("Volkswagen", "Polo", []),
     ("Volkswagen", "Tiguan", []),
+    # ── Honda (motorcycles) ────────────────────────────────
+    ("Honda", "CB190", []),
+    ("Honda", "XR190L", []),
+    ("Honda", "NXR160 Bros", []),
+    ("Honda", "CG160 Titan", []),
+    # ── Yamaha ─────────────────────────────────────────────
+    ("Yamaha", "YBR150 Factor", []),
+    ("Yamaha", "XTZ150", []),
+    ("Yamaha", "MT-15", []),
+    # ── Suzuki ─────────────────────────────────────────────
+    ("Suzuki", "GN125", []),
+    ("Suzuki", "GSX-S150", []),
+    ("Suzuki", "V-Strom 250", []),
+    # ── Kawasaki ───────────────────────────────────────────
+    ("Kawasaki", "Ninja 400", []),
+    ("Kawasaki", "Versys 300", []),
+    # ── Bajaj ──────────────────────────────────────────────
+    ("Bajaj", "Rouser NS200", []),
+    ("Bajaj", "Pulsar 160", []),
+    # ── TVS ────────────────────────────────────────────────
+    ("TVS", "Apache RTR 160", []),
+    # ── Royal Enfield ──────────────────────────────────────
+    ("Royal Enfield", "Classic 350", []),
+    ("Royal Enfield", "Meteor 350", []),
+    ("Royal Enfield", "Himalayan 450", []),
 ]
 
 

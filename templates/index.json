@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-10T12:13:15Z",
+  "generated_at": "2026-07-10T13:30:58Z",
   "schema_version": "1",
   "templates": [
     {
@@ -79,6 +79,40 @@
       "meta": {
         "make": "Audi",
         "model": "Q5",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "abrahdev",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "bajaj-pulsar-160",
+      "path": "bajaj/pulsar-160/base.json",
+      "meta": {
+        "make": "Bajaj",
+        "model": "Pulsar 160",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "abrahdev",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "bajaj-rouser-ns200",
+      "path": "bajaj/rouser-ns200/base.json",
+      "meta": {
+        "make": "Bajaj",
+        "model": "Rouser NS200",
         "generation": "All",
         "years": null,
         "engine": null,
@@ -414,6 +448,40 @@
       ]
     },
     {
+      "id": "honda-cb190",
+      "path": "honda/cb190/base.json",
+      "meta": {
+        "make": "Honda",
+        "model": "CB190",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "abrahdev",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "honda-cg160-titan",
+      "path": "honda/cg160-titan/base.json",
+      "meta": {
+        "make": "Honda",
+        "model": "CG160 Titan",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "abrahdev",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
       "id": "honda-civic",
       "path": "honda/civic/base.json",
       "meta": {
@@ -453,6 +521,40 @@
       "meta": {
         "make": "Honda",
         "model": "HR-V",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "abrahdev",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "honda-nxr160-bros",
+      "path": "honda/nxr160-bros/base.json",
+      "meta": {
+        "make": "Honda",
+        "model": "NXR160 Bros",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "abrahdev",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "honda-xr190l",
+      "path": "honda/xr190l/base.json",
+      "meta": {
+        "make": "Honda",
+        "model": "XR190L",
         "generation": "All",
         "years": null,
         "engine": null,
@@ -555,6 +657,40 @@
       "meta": {
         "make": "Jeep",
         "model": "Renegade",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "abrahdev",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "kawasaki-ninja-400",
+      "path": "kawasaki/ninja-400/base.json",
+      "meta": {
+        "make": "Kawasaki",
+        "model": "Ninja 400",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "abrahdev",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "kawasaki-versys-300",
+      "path": "kawasaki/versys-300/base.json",
+      "meta": {
+        "make": "Kawasaki",
+        "model": "Versys 300",
         "generation": "All",
         "years": null,
         "engine": null,
@@ -856,6 +992,57 @@
       ]
     },
     {
+      "id": "royal-enfield-classic-350",
+      "path": "royal-enfield/classic-350/base.json",
+      "meta": {
+        "make": "Royal Enfield",
+        "model": "Classic 350",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "abrahdev",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "royal-enfield-himalayan-450",
+      "path": "royal-enfield/himalayan-450/base.json",
+      "meta": {
+        "make": "Royal Enfield",
+        "model": "Himalayan 450",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "abrahdev",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "royal-enfield-meteor-350",
+      "path": "royal-enfield/meteor-350/base.json",
+      "meta": {
+        "make": "Royal Enfield",
+        "model": "Meteor 350",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "abrahdev",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
       "id": "subaru-forester",
       "path": "subaru/forester/base.json",
       "meta": {
@@ -890,11 +1077,62 @@
       ]
     },
     {
+      "id": "suzuki-gn125",
+      "path": "suzuki/gn125/base.json",
+      "meta": {
+        "make": "Suzuki",
+        "model": "GN125",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "abrahdev",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "suzuki-gsx-s150",
+      "path": "suzuki/gsx-s150/base.json",
+      "meta": {
+        "make": "Suzuki",
+        "model": "GSX-S150",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "abrahdev",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
       "id": "suzuki-swift",
       "path": "suzuki/swift/base.json",
       "meta": {
         "make": "Suzuki",
         "model": "Swift",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "abrahdev",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "suzuki-v-strom-250",
+      "path": "suzuki/v-strom-250/base.json",
+      "meta": {
+        "make": "Suzuki",
+        "model": "V-Strom 250",
         "generation": "All",
         "years": null,
         "engine": null,
@@ -999,6 +1237,23 @@
       "meta": {
         "make": "Toyota",
         "model": "Yaris",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "abrahdev",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "tvs-apache-rtr-160",
+      "path": "tvs/apache-rtr-160/base.json",
+      "meta": {
+        "make": "TVS",
+        "model": "Apache RTR 160",
         "generation": "All",
         "years": null,
         "engine": null,
@@ -1117,6 +1372,57 @@
       "meta": {
         "make": "Volvo",
         "model": "XC60",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "abrahdev",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "yamaha-mt-15",
+      "path": "yamaha/mt-15/base.json",
+      "meta": {
+        "make": "Yamaha",
+        "model": "MT-15",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "abrahdev",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "yamaha-xtz150",
+      "path": "yamaha/xtz150/base.json",
+      "meta": {
+        "make": "Yamaha",
+        "model": "XTZ150",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "abrahdev",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "yamaha-ybr150-factor",
+      "path": "yamaha/ybr150-factor/base.json",
+      "meta": {
+        "make": "Yamaha",
+        "model": "YBR150 Factor",
         "generation": "All",
         "years": null,
         "engine": null,

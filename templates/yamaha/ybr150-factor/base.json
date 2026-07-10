@@ -1,0 +1,16 @@
+{
+  "id": "yamaha-ybr150-factor",
+  "extends": [
+    "_base/combustion.json"
+  ],
+  "meta": {
+    "make": "Yamaha",
+    "model": "YBR150 Factor",
+    "generation": "All",
+    "years": null,
+    "engine": null,
+    "author": "abrahdev",
+    "version": "1.0.0"
+  },
+  "maintenance_items": []
+}
