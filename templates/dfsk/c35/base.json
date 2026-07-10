@@ -1,0 +1,16 @@
+{
+  "id": "dfsk-c35",
+  "extends": [
+    "_base/combustion.json"
+  ],
+  "meta": {
+    "make": "DFSK",
+    "model": "C35",
+    "generation": "All",
+    "years": null,
+    "engine": null,
+    "author": "karter",
+    "version": "1.0.0"
+  },
+  "maintenance_items": []
+}

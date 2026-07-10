@@ -1,11 +1,11 @@
 {
-  "id": "vw-golf",
+  "id": "ford-focus",
   "extends": [
     "_base/combustion.json"
   ],
   "meta": {
-    "make": "Volkswagen",
-    "model": "Golf",
+    "make": "Ford",
+    "model": "Focus",
     "generation": "All",
     "years": null,
     "engine": null,
@@ -15,9 +15,9 @@
   "maintenance_items": [
     {
       "id": "timing-belt",
-      "interval_km": 120000,
+      "interval_km": 160000,
       "interval_months": 60,
-      "description": "VW specifies timing belt at 120k km for most Golf generations. Replace water pump simultaneously."
+      "description": "Ford specifies timing belt replacement. Replace water pump simultaneously."
     }
   ]
 }

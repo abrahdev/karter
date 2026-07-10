@@ -1,0 +1,16 @@
+{
+  "id": "bmw-x3",
+  "extends": [
+    "_base/combustion.json"
+  ],
+  "meta": {
+    "make": "BMW",
+    "model": "X3",
+    "generation": "All",
+    "years": null,
+    "engine": null,
+    "author": "karter",
+    "version": "1.0.0"
+  },
+  "maintenance_items": []
+}

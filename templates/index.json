@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-04T00:00:00Z",
+  "generated_at": "2026-07-10T12:13:15Z",
   "schema_version": "1",
   "templates": [
     {
@@ -8,9 +8,6 @@
       "meta": {
         "make": "_base",
         "model": "Combustion engine (gasoline & diesel)",
-        "generation": "",
-        "years": null,
-        "engine": null,
         "author": "karter",
         "version": "1.0.0"
       },
@@ -25,9 +22,6 @@
       "meta": {
         "make": "_base",
         "model": "Common (all vehicles)",
-        "generation": "",
-        "years": null,
-        "engine": null,
         "author": "karter",
         "version": "1.0.0"
       },
@@ -40,13 +34,10 @@
       "meta": {
         "make": "_base",
         "model": "Diesel engine",
-        "generation": "",
-        "years": null,
-        "engine": null,
         "author": "karter",
         "version": "1.0.0"
       },
-      "item_count": 6,
+      "item_count": 5,
       "extends": [
         "_base/combustion.json"
       ]
@@ -57,15 +48,879 @@
       "meta": {
         "make": "_base",
         "model": "Electric vehicle",
-        "generation": "",
-        "years": null,
-        "engine": null,
         "author": "karter",
         "version": "1.0.0"
       },
       "item_count": 5,
       "extends": [
         "_base/common-all.json"
+      ]
+    },
+    {
+      "id": "audi-a3",
+      "path": "audi/a3/base.json",
+      "meta": {
+        "make": "Audi",
+        "model": "A3",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "audi-q5",
+      "path": "audi/q5/base.json",
+      "meta": {
+        "make": "Audi",
+        "model": "Q5",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "bmw-320",
+      "path": "bmw/320/base.json",
+      "meta": {
+        "make": "BMW",
+        "model": "320",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "bmw-x3",
+      "path": "bmw/x3/base.json",
+      "meta": {
+        "make": "BMW",
+        "model": "X3",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "changan-alsvin",
+      "path": "changan/alsvin/base.json",
+      "meta": {
+        "make": "Changan",
+        "model": "Alsvin",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "changan-cs35",
+      "path": "changan/cs35/base.json",
+      "meta": {
+        "make": "Changan",
+        "model": "CS35",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "chery-arrizo",
+      "path": "chery/arrizo/base.json",
+      "meta": {
+        "make": "Chery",
+        "model": "Arrizo",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "chery-tiggo",
+      "path": "chery/tiggo/base.json",
+      "meta": {
+        "make": "Chery",
+        "model": "Tiggo",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "chevrolet-cruze",
+      "path": "chevrolet/cruze/base.json",
+      "meta": {
+        "make": "Chevrolet",
+        "model": "Cruze",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "chevrolet-onix",
+      "path": "chevrolet/onix/base.json",
+      "meta": {
+        "make": "Chevrolet",
+        "model": "Onix",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "chevrolet-tracker",
+      "path": "chevrolet/tracker/base.json",
+      "meta": {
+        "make": "Chevrolet",
+        "model": "Tracker",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "citroen-c3",
+      "path": "citroen/c3/base.json",
+      "meta": {
+        "make": "Citroën",
+        "model": "C3",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "citroen-c4",
+      "path": "citroen/c4/base.json",
+      "meta": {
+        "make": "Citroën",
+        "model": "C4",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "dfsk-c35",
+      "path": "dfsk/c35/base.json",
+      "meta": {
+        "make": "DFSK",
+        "model": "C35",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "dfsk-glory",
+      "path": "dfsk/glory/base.json",
+      "meta": {
+        "make": "DFSK",
+        "model": "Glory",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "fiat-mobi",
+      "path": "fiat/mobi/base.json",
+      "meta": {
+        "make": "Fiat",
+        "model": "Mobi",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "fiat-strada",
+      "path": "fiat/strada/base.json",
+      "meta": {
+        "make": "Fiat",
+        "model": "Strada",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "fiat-uno",
+      "path": "fiat/uno/base.json",
+      "meta": {
+        "make": "Fiat",
+        "model": "Uno",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "ford-fiesta",
+      "path": "ford/fiesta/base.json",
+      "meta": {
+        "make": "Ford",
+        "model": "Fiesta",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 1,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "ford-focus",
+      "path": "ford/focus/base.json",
+      "meta": {
+        "make": "Ford",
+        "model": "Focus",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 1,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "ford-ranger",
+      "path": "ford/ranger/base.json",
+      "meta": {
+        "make": "Ford",
+        "model": "Ranger",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "honda-civic",
+      "path": "honda/civic/base.json",
+      "meta": {
+        "make": "Honda",
+        "model": "Civic",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 1,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "honda-cr-v",
+      "path": "honda/cr-v/base.json",
+      "meta": {
+        "make": "Honda",
+        "model": "CR-V",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "honda-hr-v",
+      "path": "honda/hr-v/base.json",
+      "meta": {
+        "make": "Honda",
+        "model": "HR-V",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "hyundai-elantra",
+      "path": "hyundai/elantra/base.json",
+      "meta": {
+        "make": "Hyundai",
+        "model": "Elantra",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "hyundai-tucson",
+      "path": "hyundai/tucson/base.json",
+      "meta": {
+        "make": "Hyundai",
+        "model": "Tucson",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "jac-s3",
+      "path": "jac/s3/base.json",
+      "meta": {
+        "make": "JAC",
+        "model": "S3",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "jac-t6",
+      "path": "jac/t6/base.json",
+      "meta": {
+        "make": "JAC",
+        "model": "T6",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "jeep-compass",
+      "path": "jeep/compass/base.json",
+      "meta": {
+        "make": "Jeep",
+        "model": "Compass",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "jeep-renegade",
+      "path": "jeep/renegade/base.json",
+      "meta": {
+        "make": "Jeep",
+        "model": "Renegade",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "kia-rio",
+      "path": "kia/rio/base.json",
+      "meta": {
+        "make": "Kia",
+        "model": "Rio",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "kia-sportage",
+      "path": "kia/sportage/base.json",
+      "meta": {
+        "make": "Kia",
+        "model": "Sportage",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "mazda-cx-5",
+      "path": "mazda/cx-5/base.json",
+      "meta": {
+        "make": "Mazda",
+        "model": "CX-5",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 1,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "mazda-mazda3",
+      "path": "mazda/mazda3/base.json",
+      "meta": {
+        "make": "Mazda",
+        "model": "Mazda3",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 1,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "mercedes-benz-c200",
+      "path": "mercedes-benz/c200/base.json",
+      "meta": {
+        "make": "Mercedes-Benz",
+        "model": "C200",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "mercedes-benz-e200",
+      "path": "mercedes-benz/e200/base.json",
+      "meta": {
+        "make": "Mercedes-Benz",
+        "model": "E200",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "mitsubishi-asx",
+      "path": "mitsubishi/asx/base.json",
+      "meta": {
+        "make": "Mitsubishi",
+        "model": "ASX",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "mitsubishi-l200",
+      "path": "mitsubishi/l200/base.json",
+      "meta": {
+        "make": "Mitsubishi",
+        "model": "L200",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "nissan-kicks",
+      "path": "nissan/kicks/base.json",
+      "meta": {
+        "make": "Nissan",
+        "model": "Kicks",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "nissan-sentra",
+      "path": "nissan/sentra/base.json",
+      "meta": {
+        "make": "Nissan",
+        "model": "Sentra",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "nissan-versa",
+      "path": "nissan/versa/base.json",
+      "meta": {
+        "make": "Nissan",
+        "model": "Versa",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "peugeot-208",
+      "path": "peugeot/208/base.json",
+      "meta": {
+        "make": "Peugeot",
+        "model": "208",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "peugeot-3008",
+      "path": "peugeot/3008/base.json",
+      "meta": {
+        "make": "Peugeot",
+        "model": "3008",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "peugeot-308",
+      "path": "peugeot/308/base.json",
+      "meta": {
+        "make": "Peugeot",
+        "model": "308",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "renault-clio",
+      "path": "renault/clio/base.json",
+      "meta": {
+        "make": "Renault",
+        "model": "Clio",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "renault-duster",
+      "path": "renault/duster/base.json",
+      "meta": {
+        "make": "Renault",
+        "model": "Duster",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "renault-megane",
+      "path": "renault/megane/base.json",
+      "meta": {
+        "make": "Renault",
+        "model": "Megane",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "subaru-forester",
+      "path": "subaru/forester/base.json",
+      "meta": {
+        "make": "Subaru",
+        "model": "Forester",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "subaru-outback",
+      "path": "subaru/outback/base.json",
+      "meta": {
+        "make": "Subaru",
+        "model": "Outback",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "suzuki-swift",
+      "path": "suzuki/swift/base.json",
+      "meta": {
+        "make": "Suzuki",
+        "model": "Swift",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "suzuki-vitara",
+      "path": "suzuki/vitara/base.json",
+      "meta": {
+        "make": "Suzuki",
+        "model": "Vitara",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
       ]
     },
     {
@@ -80,7 +935,7 @@
         "author": "karter",
         "version": "1.0.0"
       },
-      "item_count": 3,
+      "item_count": 2,
       "extends": [
         "_base/combustion.json"
       ]
@@ -97,17 +952,62 @@
           2025
         ],
         "engine": {
+          "code": "2ZR-FXE",
           "fuel": "hybrid",
-          "displacement_cc": 1798
+          "displacement_cc": 1798,
+          "power_hp": 140
         },
+        "market": [
+          "EU",
+          "US",
+          "JP"
+        ],
         "author": "karter",
-        "version": "1.0.0"
+        "version": "1.0.0",
+        "sources": [
+          "Toyota official maintenance schedule",
+          "toyotanation.com"
+        ]
       },
-      "item_count": 6,
+      "item_count": 5,
       "extends": [
         "_base/combustion.json",
         "_base/electric.json",
         "toyota/corolla/base.json"
+      ]
+    },
+    {
+      "id": "toyota-hilux",
+      "path": "toyota/hilux/base.json",
+      "meta": {
+        "make": "Toyota",
+        "model": "Hilux",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "toyota-yaris",
+      "path": "toyota/yaris/base.json",
+      "meta": {
+        "make": "Toyota",
+        "model": "Yaris",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
       ]
     },
     {
@@ -139,16 +1039,93 @@
           2020
         ],
         "engine": {
+          "code": "CXXB",
           "fuel": "diesel",
-          "displacement_cc": 1598
+          "displacement_cc": 1598,
+          "power_hp": 115
         },
+        "market": [
+          "EU"
+        ],
         "author": "karter",
-        "version": "1.0.0"
+        "version": "1.0.0",
+        "sources": [
+          "VW official maintenance schedule",
+          "forums.vwvortex.com"
+        ]
       },
       "item_count": 4,
       "extends": [
         "_base/diesel.json",
         "volkswagen/golf/base.json"
+      ]
+    },
+    {
+      "id": "volkswagen-polo",
+      "path": "volkswagen/polo/base.json",
+      "meta": {
+        "make": "Volkswagen",
+        "model": "Polo",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "volkswagen-tiguan",
+      "path": "volkswagen/tiguan/base.json",
+      "meta": {
+        "make": "Volkswagen",
+        "model": "Tiguan",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "volvo-s60",
+      "path": "volvo/s60/base.json",
+      "meta": {
+        "make": "Volvo",
+        "model": "S60",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
+      ]
+    },
+    {
+      "id": "volvo-xc60",
+      "path": "volvo/xc60/base.json",
+      "meta": {
+        "make": "Volvo",
+        "model": "XC60",
+        "generation": "All",
+        "years": null,
+        "engine": null,
+        "author": "karter",
+        "version": "1.0.0"
+      },
+      "item_count": 0,
+      "extends": [
+        "_base/combustion.json"
       ]
     }
   ]

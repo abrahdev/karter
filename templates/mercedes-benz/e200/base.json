@@ -1,0 +1,16 @@
+{
+  "id": "mercedes-benz-e200",
+  "extends": [
+    "_base/combustion.json"
+  ],
+  "meta": {
+    "make": "Mercedes-Benz",
+    "model": "E200",
+    "generation": "All",
+    "years": null,
+    "engine": null,
+    "author": "karter",
+    "version": "1.0.0"
+  },
+  "maintenance_items": []
+}

@@ -1,0 +1,16 @@
+{
+  "id": "renault-duster",
+  "extends": [
+    "_base/combustion.json"
+  ],
+  "meta": {
+    "make": "Renault",
+    "model": "Duster",
+    "generation": "All",
+    "years": null,
+    "engine": null,
+    "author": "karter",
+    "version": "1.0.0"
+  },
+  "maintenance_items": []
+}

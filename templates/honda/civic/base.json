@@ -1,0 +1,27 @@
+{
+  "id": "honda-civic",
+  "extends": [
+    "_base/combustion.json"
+  ],
+  "meta": {
+    "make": "Honda",
+    "model": "Civic",
+    "generation": "All",
+    "years": null,
+    "engine": null,
+    "author": "karter",
+    "version": "1.0.0"
+  },
+  "maintenance_items": [
+    {
+      "id": "timing-belt",
+      "remove": true,
+      "description": "Honda K-series, L-series, and R-series engines use timing chains, not belts."
+    },
+    {
+      "id": "spark-plugs",
+      "interval_km": 100000,
+      "description": "Iridium spark plugs on most Civic generations last up to 100k km."
+    }
+  ]
+}

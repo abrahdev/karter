@@ -1,0 +1,27 @@
+{
+  "id": "mazda-cx-5",
+  "extends": [
+    "_base/combustion.json"
+  ],
+  "meta": {
+    "make": "Mazda",
+    "model": "CX-5",
+    "generation": "All",
+    "years": null,
+    "engine": null,
+    "author": "karter",
+    "version": "1.0.0"
+  },
+  "maintenance_items": [
+    {
+      "id": "timing-belt",
+      "remove": true,
+      "description": "Mazda Skyactiv-G engines use timing chains."
+    },
+    {
+      "id": "spark-plugs",
+      "interval_km": 120000,
+      "description": "Mazda specifies iridium spark plugs every 120k km for Skyactiv engines."
+    }
+  ]
+}

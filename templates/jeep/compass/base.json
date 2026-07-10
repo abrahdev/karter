@@ -1,0 +1,16 @@
+{
+  "id": "jeep-compass",
+  "extends": [
+    "_base/combustion.json"
+  ],
+  "meta": {
+    "make": "Jeep",
+    "model": "Compass",
+    "generation": "All",
+    "years": null,
+    "engine": null,
+    "author": "karter",
+    "version": "1.0.0"
+  },
+  "maintenance_items": []
+}

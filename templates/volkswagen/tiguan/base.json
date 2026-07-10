@@ -1,0 +1,16 @@
+{
+  "id": "volkswagen-tiguan",
+  "extends": [
+    "_base/combustion.json"
+  ],
+  "meta": {
+    "make": "Volkswagen",
+    "model": "Tiguan",
+    "generation": "All",
+    "years": null,
+    "engine": null,
+    "author": "karter",
+    "version": "1.0.0"
+  },
+  "maintenance_items": []
+}

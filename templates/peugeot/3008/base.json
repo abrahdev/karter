@@ -1,0 +1,16 @@
+{
+  "id": "peugeot-3008",
+  "extends": [
+    "_base/combustion.json"
+  ],
+  "meta": {
+    "make": "Peugeot",
+    "model": "3008",
+    "generation": "All",
+    "years": null,
+    "engine": null,
+    "author": "karter",
+    "version": "1.0.0"
+  },
+  "maintenance_items": []
+}

@@ -1,0 +1,16 @@
+{
+  "id": "audi-q5",
+  "extends": [
+    "_base/combustion.json"
+  ],
+  "meta": {
+    "make": "Audi",
+    "model": "Q5",
+    "generation": "All",
+    "years": null,
+    "engine": null,
+    "author": "karter",
+    "version": "1.0.0"
+  },
+  "maintenance_items": []
+}

@@ -1,0 +1,16 @@
+{
+  "id": "jac-t6",
+  "extends": [
+    "_base/combustion.json"
+  ],
+  "meta": {
+    "make": "JAC",
+    "model": "T6",
+    "generation": "All",
+    "years": null,
+    "engine": null,
+    "author": "karter",
+    "version": "1.0.0"
+  },
+  "maintenance_items": []
+}

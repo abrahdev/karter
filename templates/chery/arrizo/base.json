@@ -1,0 +1,16 @@
+{
+  "id": "chery-arrizo",
+  "extends": [
+    "_base/combustion.json"
+  ],
+  "meta": {
+    "make": "Chery",
+    "model": "Arrizo",
+    "generation": "All",
+    "years": null,
+    "engine": null,
+    "author": "karter",
+    "version": "1.0.0"
+  },
+  "maintenance_items": []
+}

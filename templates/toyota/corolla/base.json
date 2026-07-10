@@ -1,10 +1,14 @@
 {
   "id": "toyota-corolla",
-  "extends": ["_base/combustion.json"],
+  "extends": [
+    "_base/combustion.json"
+  ],
   "meta": {
     "make": "Toyota",
     "model": "Corolla",
     "generation": "All",
+    "years": null,
+    "engine": null,
     "author": "karter",
     "version": "1.0.0"
   },
@@ -13,17 +17,17 @@
       "id": "oil-change",
       "interval_km": 15000,
       "interval_months": 12,
-      "description": "Toyota recommends 0W20 synthetic. The 2ZR-FE engine is known for reliable operation with regular changes."
+      "description": "Toyota recommends 0W20 synthetic with 15k km intervals for most Corolla generations."
+    },
+    {
+      "id": "timing-belt",
+      "remove": true,
+      "description": "Corolla engines (2ZR, 1ZZ, 2ZZ) use timing chains, not belts."
     },
     {
       "id": "spark-plugs",
       "interval_km": 100000,
       "description": "Iridium spark plugs last up to 100k km on most Corolla generations."
-    },
-    {
-      "id": "timing-belt",
-      "remove": true,
-      "description": "Corolla engines use timing chains, not belts. No replacement needed under normal conditions."
     }
   ]
 }

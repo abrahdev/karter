@@ -1,0 +1,16 @@
+{
+  "id": "chery-tiggo",
+  "extends": [
+    "_base/combustion.json"
+  ],
+  "meta": {
+    "make": "Chery",
+    "model": "Tiggo",
+    "generation": "All",
+    "years": null,
+    "engine": null,
+    "author": "karter",
+    "version": "1.0.0"
+  },
+  "maintenance_items": []
+}

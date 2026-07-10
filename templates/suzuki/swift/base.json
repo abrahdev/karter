@@ -1,11 +1,11 @@
 {
-  "id": "vw-golf",
+  "id": "suzuki-swift",
   "extends": [
     "_base/combustion.json"
   ],
   "meta": {
-    "make": "Volkswagen",
-    "model": "Golf",
+    "make": "Suzuki",
+    "model": "Swift",
     "generation": "All",
     "years": null,
     "engine": null,
@@ -15,9 +15,8 @@
   "maintenance_items": [
     {
       "id": "timing-belt",
-      "interval_km": 120000,
-      "interval_months": 60,
-      "description": "VW specifies timing belt at 120k km for most Golf generations. Replace water pump simultaneously."
+      "remove": true,
+      "description": "Suzuki Swift (K-series engine) uses a timing chain."
     }
   ]
 }
