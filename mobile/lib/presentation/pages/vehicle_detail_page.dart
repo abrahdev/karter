@@ -336,26 +336,29 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
             children: [
               if (_fabOpen) ...[
                 _FabStaggeredEntry(
-                  index: 0,
+                  index: 2,
                   child: Padding(
                     padding: const EdgeInsets.only(bottom: 8),
                     child: FloatingActionButton.small(
-                      heroTag: 'add_doc',
+                      heroTag: 'add_service',
                       backgroundColor:
                           theme.colorScheme.secondaryContainer,
                       onPressed: () {
                         setState(() => _fabOpen = false);
-                        showAddDocumentModal(
+                        showAddMaintenanceLogModal(
                           context,
                           vehicleId: widget.vehicleId,
                           onSaved: () {
                             ref.invalidate(
-                                vehicleDocumentsProvider(
+                                maintenanceLogsProvider(
+                                    widget.vehicleId));
+                            ref.invalidate(
+                                maintenanceIntervalsProvider(
                                     widget.vehicleId));
                           },
                         );
                       },
-                      child: const Icon(Icons.description),
+                      child: const Icon(Icons.build),
                     ),
                   ),
                 ),
@@ -384,29 +387,26 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
                   ),
                 ),
                 _FabStaggeredEntry(
-                  index: 2,
+                  index: 0,
                   child: Padding(
                     padding: const EdgeInsets.only(bottom: 8),
                     child: FloatingActionButton.small(
-                      heroTag: 'add_service',
+                      heroTag: 'add_doc',
                       backgroundColor:
                           theme.colorScheme.secondaryContainer,
                       onPressed: () {
                         setState(() => _fabOpen = false);
-                        showAddMaintenanceLogModal(
+                        showAddDocumentModal(
                           context,
                           vehicleId: widget.vehicleId,
                           onSaved: () {
                             ref.invalidate(
-                                maintenanceLogsProvider(
-                                    widget.vehicleId));
-                            ref.invalidate(
-                                maintenanceIntervalsProvider(
+                                vehicleDocumentsProvider(
                                     widget.vehicleId));
                           },
                         );
                       },
-                      child: const Icon(Icons.build),
+                      child: const Icon(Icons.description),
                     ),
                   ),
                 ),
