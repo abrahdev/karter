@@ -576,7 +576,7 @@ class _FabStaggeredEntryState extends State<_FabStaggeredEntry>
           if (mounted) _ctrl.forward();
         });
       } else {
-        _ctrl.duration = Durations.medium4 ~/ 2;
+        _ctrl.duration = Durations.short4;
         Future.delayed(
             Duration(milliseconds: 50 * (2 - widget.index)), () {
           if (mounted) _ctrl.reverse();
