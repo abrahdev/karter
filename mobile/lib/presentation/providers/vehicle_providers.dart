@@ -8,6 +8,7 @@ import 'package:mobile/data/repositories/vehicle_repository_impl.dart';
 import 'package:mobile/data/services/export_service.dart';
 import 'package:mobile/data/services/notification_service.dart';
 import 'package:mobile/data/services/pdf_export_service.dart';
+import 'package:mobile/data/models/template_index.dart';
 import 'package:mobile/data/services/template_resolver.dart';
 import 'package:mobile/domain/entities/fuel_log.dart';
 import 'package:mobile/domain/entities/maintenance_interval.dart';
@@ -87,6 +88,11 @@ final exportServiceProvider = Provider<ExportService>((ref) {
 
 final templateResolverProvider = Provider<TemplateResolver>((ref) {
   return TemplateResolver();
+});
+
+final templateIndexProvider = FutureProvider<TemplateIndex>((ref) async {
+  final resolver = ref.watch(templateResolverProvider);
+  return resolver.loadIndex();
 });
 
 final pdfExportServiceProvider = Provider<PdfExportService>((ref) {

@@ -26,14 +26,14 @@ class VehicleFormPage extends ConsumerStatefulWidget {
 
 class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
   final _formKey = GlobalKey<FormState>();
-  final _brandController = TextEditingController();
-  final _modelController = TextEditingController();
   final _yearController = TextEditingController();
   final _plateController = TextEditingController();
   final _vinController = TextEditingController();
   final _odometerController = TextEditingController();
   final _aliasController = TextEditingController();
 
+  String _brand = '';
+  String _model = '';
   DistanceUnit _odometerUnit = DistanceUnit.kilometers;
   VolumeUnit _fuelVolumeUnit = VolumeUnit.liters;
   String _currency = 'USD';
@@ -54,34 +54,35 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
     if (_isEditing) {
       _loadVehicle();
     }
+    ref.read(templateIndexProvider);
   }
 
   Future<void> _loadVehicle() async {
     final vehicle =
         await ref.read(vehicleProvider(widget.vehicleId!).future);
     if (vehicle != null && mounted) {
-      _brandController.text = vehicle.brand;
-      _modelController.text = vehicle.model;
-      _yearController.text = vehicle.year.toString();
-      _plateController.text = vehicle.plate?.value ?? '';
-      _vinController.text = vehicle.vin?.code ?? '';
-      _odometerController.text =
-          vehicle.currentOdometer.distance.toStringAsFixed(0);
-      _odometerUnit = vehicle.currentOdometer.unit;
-      _fuelVolumeUnit = vehicle.fuelVolumeUnit;
-      _currency = vehicle.currency;
-      _vehicleType = vehicle.type;
-      if (vehicle.alias != null && vehicle.alias!.isNotEmpty) {
-        _showAlias = true;
-        _aliasController.text = vehicle.alias!;
-      }
+      setState(() {
+        _brand = vehicle.brand;
+        _model = vehicle.model;
+        _yearController.text = vehicle.year.toString();
+        _plateController.text = vehicle.plate?.value ?? '';
+        _vinController.text = vehicle.vin?.code ?? '';
+        _odometerController.text =
+            vehicle.currentOdometer.distance.toStringAsFixed(0);
+        _odometerUnit = vehicle.currentOdometer.unit;
+        _fuelVolumeUnit = vehicle.fuelVolumeUnit;
+        _currency = vehicle.currency;
+        _vehicleType = vehicle.type;
+        if (vehicle.alias != null && vehicle.alias!.isNotEmpty) {
+          _showAlias = true;
+          _aliasController.text = vehicle.alias!;
+        }
+      });
     }
   }
 
   @override
   void dispose() {
-    _brandController.dispose();
-    _modelController.dispose();
     _yearController.dispose();
     _plateController.dispose();
     _vinController.dispose();
@@ -144,8 +145,8 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
     setState(() => _validatingForSearch = false);
     if (!valid) return;
 
-    final brand = _brandController.text.trim();
-    final model = _modelController.text.trim();
+    final brand = _brand.trim();
+    final model = _model.trim();
     final yearStr = _yearController.text.trim();
 
     final year = int.tryParse(yearStr);
@@ -379,8 +380,8 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
       final id = _isEditing ? widget.vehicleId! : uuid.v4();
       final vehicle = Vehicle(
         id: id,
-        brand: _brandController.text.trim(),
-        model: _modelController.text.trim(),
+        brand: _brand.trim(),
+        model: _model.trim(),
         year: int.parse(_yearController.text.trim()),
         alias: _showAlias ? _aliasController.text.trim() : null,
         createdAt: DateTime.now(),
@@ -482,8 +483,8 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context)!;
-    final composite = '${_brandController.text.trim()} '
-        '${_modelController.text.trim()} '
+    final composite = '${_brand.trim()} '
+        '${_model.trim()} '
         '${_yearController.text.trim()}'.trim();
 
     return PopScope(
@@ -512,20 +513,84 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
-            TextFormField(
-              controller: _brandController,
-              decoration: InputDecoration(labelText: l.brand),
-              onChanged: (_) => _markDirty(),
-              validator: (v) =>
-                  v == null || v.trim().isEmpty ? l.required : null,
+            Autocomplete<String>(
+              initialValue: TextEditingValue(text: _brand),
+              optionsBuilder: (textEditingValue) {
+                if (textEditingValue.text.isEmpty) return [];
+                final query = textEditingValue.text;
+                final index = ref.read(templateIndexProvider).value;
+                final suggestions = <String>{};
+                if (index != null) {
+                  suggestions.addAll(index.templates
+                      .where((e) => e.meta.make != '_base')
+                      .map((e) => e.meta.make)
+                      .toSet()
+                      .where((m) =>
+                          m.toLowerCase().contains(query.toLowerCase())));
+                }
+                suggestions.add(query);
+                return suggestions.toList()..sort();
+              },
+              fieldViewBuilder: (context, controller, focusNode, onSubmitted) {
+                return TextFormField(
+                  controller: controller,
+                  focusNode: focusNode,
+                  decoration: InputDecoration(labelText: l.brand),
+                  onChanged: (value) {
+                    _brand = value;
+                    if (!_hasUnsavedChanges) {
+                      _hasUnsavedChanges = true;
+                      setState(() {});
+                    }
+                  },
+                  validator: (v) =>
+                      v == null || v.trim().isEmpty ? l.required : null,
+                );
+              },
+              onSelected: (value) {
+                _brand = value;
+              },
             ),
             const SizedBox(height: 12),
-            TextFormField(
-              controller: _modelController,
-              decoration: InputDecoration(labelText: l.model),
-              onChanged: (_) => _markDirty(),
-              validator: (v) =>
-                  v == null || v.trim().isEmpty ? l.required : null,
+            Autocomplete<String>(
+              initialValue: TextEditingValue(text: _model),
+              optionsBuilder: (textEditingValue) {
+                if (textEditingValue.text.isEmpty) return [];
+                final query = textEditingValue.text;
+                final index = ref.read(templateIndexProvider).value;
+                final suggestions = <String>{};
+                if (index != null && _brand.isNotEmpty) {
+                  suggestions.addAll(index.templates
+                      .where((e) =>
+                          e.meta.make.toLowerCase() == _brand.toLowerCase() &&
+                          e.meta.model
+                              .toLowerCase()
+                              .contains(query.toLowerCase()))
+                      .map((e) => e.meta.model)
+                      .toSet());
+                }
+                suggestions.add(query);
+                return suggestions.toList()..sort();
+              },
+              fieldViewBuilder: (context, controller, focusNode, onSubmitted) {
+                return TextFormField(
+                  controller: controller,
+                  focusNode: focusNode,
+                  decoration: InputDecoration(labelText: l.model),
+                  onChanged: (value) {
+                    _model = value;
+                    if (!_hasUnsavedChanges) {
+                      _hasUnsavedChanges = true;
+                      setState(() {});
+                    }
+                  },
+                  validator: (v) =>
+                      v == null || v.trim().isEmpty ? l.required : null,
+                );
+              },
+              onSelected: (value) {
+                _model = value;
+              },
             ),
             const SizedBox(height: 12),
             TextFormField(
