@@ -831,4 +831,14 @@ class AppLocalizationsEs extends AppLocalizations {
   String notificationSnoozeDays(Object days) {
     return '$days días';
   }
+
+  @override
+  String get unsavedChanges => 'Cambios sin guardar';
+
+  @override
+  String get discardChangesConfirm =>
+      'Tienes cambios sin aplicar. ¿Estás seguro de que quieres salir?';
+
+  @override
+  String get discard => 'Descartar';
 }

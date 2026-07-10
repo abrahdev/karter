@@ -81,6 +81,7 @@ class MaintenanceIntervals extends Table {
   IntColumn get kmInterval => integer()();
   IntColumn get monthsInterval => integer().nullable()();
   TextColumn get description => text().nullable()();
+  TextColumn get i18nKey => text().nullable()();
   RealColumn get lastResetKm => real().withDefault(const Constant(0.0))();
   DateTimeColumn get lastResetDate => dateTime().nullable()();
   BoolColumn get isEnabled => boolean().withDefault(const Constant(true))();
@@ -121,7 +122,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
   @override
-  int get schemaVersion => 11;
+  int get schemaVersion => 12;
 
   @override
   MigrationStrategy get migration {
@@ -244,6 +245,12 @@ class AppDatabase extends _$AppDatabase {
           try {
             await m.addColumn(
                 vehicles, vehicles.maintenanceReminderSnoozedUntil);
+          } catch (_) {}
+        }
+        if (from < 12) {
+          try {
+            await m.addColumn(
+                maintenanceIntervals, maintenanceIntervals.i18nKey);
           } catch (_) {}
         }
       },

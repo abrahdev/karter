@@ -268,5 +268,17 @@
   "notificationFreqDays": "{days} días",
   "notificationMaintenanceSnooze": "Posponer mantenimiento 1 semana",
   "notificationSnoozeToggle": "Posponer recordatorios",
-  "notificationSnoozeDays": "{days} días"
+  "notificationSnoozeDays": "{days} días",
+  "unsavedChanges": "Cambios sin guardar",
+  "@unsavedChanges": {
+    "description": "Title for unsaved changes dialog"
+  },
+  "discardChangesConfirm": "Tienes cambios sin aplicar. ¿Estás seguro de que quieres salir?",
+  "@discardChangesConfirm": {
+    "description": "Confirmation message for discarding unsaved changes"
+  },
+  "discard": "Descartar",
+  "@discard": {
+    "description": "Discard / descartar cambios button label"
+  }
 }

@@ -1566,6 +1566,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{days} days'**
   String notificationSnoozeDays(Object days);
+
+  /// Title for unsaved changes dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Unsaved changes'**
+  String get unsavedChanges;
+
+  /// Confirmation message for discarding unsaved changes
+  ///
+  /// In en, this message translates to:
+  /// **'You have unsaved changes. Are you sure you want to leave?'**
+  String get discardChangesConfirm;
+
+  /// Discard / discard changes button label
+  ///
+  /// In en, this message translates to:
+  /// **'Discard'**
+  String get discard;
 }
 
 class _AppLocalizationsDelegate

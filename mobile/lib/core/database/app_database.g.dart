@@ -2592,6 +2592,17 @@ class $MaintenanceIntervalsTable extends MaintenanceIntervals
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
+  static const VerificationMeta _i18nKeyMeta = const VerificationMeta(
+    'i18nKey',
+  );
+  @override
+  late final GeneratedColumn<String> i18nKey = GeneratedColumn<String>(
+    'i18n_key',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
   static const VerificationMeta _lastResetKmMeta = const VerificationMeta(
     'lastResetKm',
   );
@@ -2654,6 +2665,7 @@ class $MaintenanceIntervalsTable extends MaintenanceIntervals
     kmInterval,
     monthsInterval,
     description,
+    i18nKey,
     lastResetKm,
     lastResetDate,
     isEnabled,
@@ -2716,6 +2728,12 @@ class $MaintenanceIntervalsTable extends MaintenanceIntervals
           data['description']!,
           _descriptionMeta,
         ),
+      );
+    }
+    if (data.containsKey('i18n_key')) {
+      context.handle(
+        _i18nKeyMeta,
+        i18nKey.isAcceptableOrUnknown(data['i18n_key']!, _i18nKeyMeta),
       );
     }
     if (data.containsKey('last_reset_km')) {
@@ -2784,6 +2802,10 @@ class $MaintenanceIntervalsTable extends MaintenanceIntervals
         DriftSqlType.string,
         data['${effectivePrefix}description'],
       ),
+      i18nKey: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}i18n_key'],
+      ),
       lastResetKm: attachedDatabase.typeMapping.read(
         DriftSqlType.double,
         data['${effectivePrefix}last_reset_km'],
@@ -2817,6 +2839,7 @@ class MaintenanceIntervalEntry extends DataClass
   final int kmInterval;
   final int? monthsInterval;
   final String? description;
+  final String? i18nKey;
   final double lastResetKm;
   final DateTime? lastResetDate;
   final bool isEnabled;
@@ -2828,6 +2851,7 @@ class MaintenanceIntervalEntry extends DataClass
     required this.kmInterval,
     this.monthsInterval,
     this.description,
+    this.i18nKey,
     required this.lastResetKm,
     this.lastResetDate,
     required this.isEnabled,
@@ -2845,6 +2869,9 @@ class MaintenanceIntervalEntry extends DataClass
     }
     if (!nullToAbsent || description != null) {
       map['description'] = Variable<String>(description);
+    }
+    if (!nullToAbsent || i18nKey != null) {
+      map['i18n_key'] = Variable<String>(i18nKey);
     }
     map['last_reset_km'] = Variable<double>(lastResetKm);
     if (!nullToAbsent || lastResetDate != null) {
@@ -2867,6 +2894,9 @@ class MaintenanceIntervalEntry extends DataClass
       description: description == null && nullToAbsent
           ? const Value.absent()
           : Value(description),
+      i18nKey: i18nKey == null && nullToAbsent
+          ? const Value.absent()
+          : Value(i18nKey),
       lastResetKm: Value(lastResetKm),
       lastResetDate: lastResetDate == null && nullToAbsent
           ? const Value.absent()
@@ -2888,6 +2918,7 @@ class MaintenanceIntervalEntry extends DataClass
       kmInterval: serializer.fromJson<int>(json['kmInterval']),
       monthsInterval: serializer.fromJson<int?>(json['monthsInterval']),
       description: serializer.fromJson<String?>(json['description']),
+      i18nKey: serializer.fromJson<String?>(json['i18nKey']),
       lastResetKm: serializer.fromJson<double>(json['lastResetKm']),
       lastResetDate: serializer.fromJson<DateTime?>(json['lastResetDate']),
       isEnabled: serializer.fromJson<bool>(json['isEnabled']),
@@ -2904,6 +2935,7 @@ class MaintenanceIntervalEntry extends DataClass
       'kmInterval': serializer.toJson<int>(kmInterval),
       'monthsInterval': serializer.toJson<int?>(monthsInterval),
       'description': serializer.toJson<String?>(description),
+      'i18nKey': serializer.toJson<String?>(i18nKey),
       'lastResetKm': serializer.toJson<double>(lastResetKm),
       'lastResetDate': serializer.toJson<DateTime?>(lastResetDate),
       'isEnabled': serializer.toJson<bool>(isEnabled),
@@ -2918,6 +2950,7 @@ class MaintenanceIntervalEntry extends DataClass
     int? kmInterval,
     Value<int?> monthsInterval = const Value.absent(),
     Value<String?> description = const Value.absent(),
+    Value<String?> i18nKey = const Value.absent(),
     double? lastResetKm,
     Value<DateTime?> lastResetDate = const Value.absent(),
     bool? isEnabled,
@@ -2931,6 +2964,7 @@ class MaintenanceIntervalEntry extends DataClass
         ? monthsInterval.value
         : this.monthsInterval,
     description: description.present ? description.value : this.description,
+    i18nKey: i18nKey.present ? i18nKey.value : this.i18nKey,
     lastResetKm: lastResetKm ?? this.lastResetKm,
     lastResetDate: lastResetDate.present
         ? lastResetDate.value
@@ -2954,6 +2988,7 @@ class MaintenanceIntervalEntry extends DataClass
       description: data.description.present
           ? data.description.value
           : this.description,
+      i18nKey: data.i18nKey.present ? data.i18nKey.value : this.i18nKey,
       lastResetKm: data.lastResetKm.present
           ? data.lastResetKm.value
           : this.lastResetKm,
@@ -2974,6 +3009,7 @@ class MaintenanceIntervalEntry extends DataClass
           ..write('kmInterval: $kmInterval, ')
           ..write('monthsInterval: $monthsInterval, ')
           ..write('description: $description, ')
+          ..write('i18nKey: $i18nKey, ')
           ..write('lastResetKm: $lastResetKm, ')
           ..write('lastResetDate: $lastResetDate, ')
           ..write('isEnabled: $isEnabled, ')
@@ -2990,6 +3026,7 @@ class MaintenanceIntervalEntry extends DataClass
     kmInterval,
     monthsInterval,
     description,
+    i18nKey,
     lastResetKm,
     lastResetDate,
     isEnabled,
@@ -3005,6 +3042,7 @@ class MaintenanceIntervalEntry extends DataClass
           other.kmInterval == this.kmInterval &&
           other.monthsInterval == this.monthsInterval &&
           other.description == this.description &&
+          other.i18nKey == this.i18nKey &&
           other.lastResetKm == this.lastResetKm &&
           other.lastResetDate == this.lastResetDate &&
           other.isEnabled == this.isEnabled &&
@@ -3019,6 +3057,7 @@ class MaintenanceIntervalsCompanion
   final Value<int> kmInterval;
   final Value<int?> monthsInterval;
   final Value<String?> description;
+  final Value<String?> i18nKey;
   final Value<double> lastResetKm;
   final Value<DateTime?> lastResetDate;
   final Value<bool> isEnabled;
@@ -3031,6 +3070,7 @@ class MaintenanceIntervalsCompanion
     this.kmInterval = const Value.absent(),
     this.monthsInterval = const Value.absent(),
     this.description = const Value.absent(),
+    this.i18nKey = const Value.absent(),
     this.lastResetKm = const Value.absent(),
     this.lastResetDate = const Value.absent(),
     this.isEnabled = const Value.absent(),
@@ -3044,6 +3084,7 @@ class MaintenanceIntervalsCompanion
     required int kmInterval,
     this.monthsInterval = const Value.absent(),
     this.description = const Value.absent(),
+    this.i18nKey = const Value.absent(),
     this.lastResetKm = const Value.absent(),
     this.lastResetDate = const Value.absent(),
     this.isEnabled = const Value.absent(),
@@ -3060,6 +3101,7 @@ class MaintenanceIntervalsCompanion
     Expression<int>? kmInterval,
     Expression<int>? monthsInterval,
     Expression<String>? description,
+    Expression<String>? i18nKey,
     Expression<double>? lastResetKm,
     Expression<DateTime>? lastResetDate,
     Expression<bool>? isEnabled,
@@ -3073,6 +3115,7 @@ class MaintenanceIntervalsCompanion
       if (kmInterval != null) 'km_interval': kmInterval,
       if (monthsInterval != null) 'months_interval': monthsInterval,
       if (description != null) 'description': description,
+      if (i18nKey != null) 'i18n_key': i18nKey,
       if (lastResetKm != null) 'last_reset_km': lastResetKm,
       if (lastResetDate != null) 'last_reset_date': lastResetDate,
       if (isEnabled != null) 'is_enabled': isEnabled,
@@ -3088,6 +3131,7 @@ class MaintenanceIntervalsCompanion
     Value<int>? kmInterval,
     Value<int?>? monthsInterval,
     Value<String?>? description,
+    Value<String?>? i18nKey,
     Value<double>? lastResetKm,
     Value<DateTime?>? lastResetDate,
     Value<bool>? isEnabled,
@@ -3101,6 +3145,7 @@ class MaintenanceIntervalsCompanion
       kmInterval: kmInterval ?? this.kmInterval,
       monthsInterval: monthsInterval ?? this.monthsInterval,
       description: description ?? this.description,
+      i18nKey: i18nKey ?? this.i18nKey,
       lastResetKm: lastResetKm ?? this.lastResetKm,
       lastResetDate: lastResetDate ?? this.lastResetDate,
       isEnabled: isEnabled ?? this.isEnabled,
@@ -3130,6 +3175,9 @@ class MaintenanceIntervalsCompanion
     if (description.present) {
       map['description'] = Variable<String>(description.value);
     }
+    if (i18nKey.present) {
+      map['i18n_key'] = Variable<String>(i18nKey.value);
+    }
     if (lastResetKm.present) {
       map['last_reset_km'] = Variable<double>(lastResetKm.value);
     }
@@ -3157,6 +3205,7 @@ class MaintenanceIntervalsCompanion
           ..write('kmInterval: $kmInterval, ')
           ..write('monthsInterval: $monthsInterval, ')
           ..write('description: $description, ')
+          ..write('i18nKey: $i18nKey, ')
           ..write('lastResetKm: $lastResetKm, ')
           ..write('lastResetDate: $lastResetDate, ')
           ..write('isEnabled: $isEnabled, ')
@@ -5670,6 +5719,7 @@ typedef $$MaintenanceIntervalsTableCreateCompanionBuilder =
       required int kmInterval,
       Value<int?> monthsInterval,
       Value<String?> description,
+      Value<String?> i18nKey,
       Value<double> lastResetKm,
       Value<DateTime?> lastResetDate,
       Value<bool> isEnabled,
@@ -5684,6 +5734,7 @@ typedef $$MaintenanceIntervalsTableUpdateCompanionBuilder =
       Value<int> kmInterval,
       Value<int?> monthsInterval,
       Value<String?> description,
+      Value<String?> i18nKey,
       Value<double> lastResetKm,
       Value<DateTime?> lastResetDate,
       Value<bool> isEnabled,
@@ -5755,6 +5806,11 @@ class $$MaintenanceIntervalsTableFilterComposer
 
   ColumnFilters<String> get description => $composableBuilder(
     column: $table.description,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get i18nKey => $composableBuilder(
+    column: $table.i18nKey,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -5836,6 +5892,11 @@ class $$MaintenanceIntervalsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get i18nKey => $composableBuilder(
+    column: $table.i18nKey,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<double> get lastResetKm => $composableBuilder(
     column: $table.lastResetKm,
     builder: (column) => ColumnOrderings(column),
@@ -5909,6 +5970,9 @@ class $$MaintenanceIntervalsTableAnnotationComposer
     column: $table.description,
     builder: (column) => column,
   );
+
+  GeneratedColumn<String> get i18nKey =>
+      $composableBuilder(column: $table.i18nKey, builder: (column) => column);
 
   GeneratedColumn<double> get lastResetKm => $composableBuilder(
     column: $table.lastResetKm,
@@ -5992,6 +6056,7 @@ class $$MaintenanceIntervalsTableTableManager
                 Value<int> kmInterval = const Value.absent(),
                 Value<int?> monthsInterval = const Value.absent(),
                 Value<String?> description = const Value.absent(),
+                Value<String?> i18nKey = const Value.absent(),
                 Value<double> lastResetKm = const Value.absent(),
                 Value<DateTime?> lastResetDate = const Value.absent(),
                 Value<bool> isEnabled = const Value.absent(),
@@ -6004,6 +6069,7 @@ class $$MaintenanceIntervalsTableTableManager
                 kmInterval: kmInterval,
                 monthsInterval: monthsInterval,
                 description: description,
+                i18nKey: i18nKey,
                 lastResetKm: lastResetKm,
                 lastResetDate: lastResetDate,
                 isEnabled: isEnabled,
@@ -6018,6 +6084,7 @@ class $$MaintenanceIntervalsTableTableManager
                 required int kmInterval,
                 Value<int?> monthsInterval = const Value.absent(),
                 Value<String?> description = const Value.absent(),
+                Value<String?> i18nKey = const Value.absent(),
                 Value<double> lastResetKm = const Value.absent(),
                 Value<DateTime?> lastResetDate = const Value.absent(),
                 Value<bool> isEnabled = const Value.absent(),
@@ -6030,6 +6097,7 @@ class $$MaintenanceIntervalsTableTableManager
                 kmInterval: kmInterval,
                 monthsInterval: monthsInterval,
                 description: description,
+                i18nKey: i18nKey,
                 lastResetKm: lastResetKm,
                 lastResetDate: lastResetDate,
                 isEnabled: isEnabled,

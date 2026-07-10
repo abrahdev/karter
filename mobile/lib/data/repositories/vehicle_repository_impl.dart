@@ -31,7 +31,7 @@ class VehicleRepositoryImpl implements VehicleRepository {
   }
 
   @override
-  Future<void> save(Vehicle vehicle, {List<MaintenanceInterval>? intervals}) async {
+  Future<void> save(Vehicle vehicle, {List<MaintenanceInterval>? intervals, bool replaceNonCustom = false}) async {
     final existing = await (_db.select(_db.vehicles)
           ..where((t) => t.id.equals(vehicle.id)))
         .getSingleOrNull();
@@ -46,21 +46,71 @@ class VehicleRepositoryImpl implements VehicleRepository {
           intervals ?? defaultIntervalsFor(vehicle.type, vehicle.id);
       for (final interval in seedIntervals) {
         await _db.into(_db.maintenanceIntervals).insert(
-              MaintenanceIntervalsCompanion(
-                id: drift.Value(interval.id),
-                vehicleId: drift.Value(interval.vehicleId),
-                label: drift.Value(interval.label),
-                kmInterval: drift.Value(interval.kmInterval),
-                monthsInterval: drift.Value(interval.monthsInterval),
-                description: drift.Value(interval.description),
-                lastResetKm: drift.Value(interval.lastResetKm),
-                lastResetDate: drift.Value(interval.lastResetDate),
-                isEnabled: drift.Value(interval.isEnabled),
-                isCustom: drift.Value(interval.isCustom),
-              ),
+              _intervalToCompanion(interval),
             );
       }
+    } else if (intervals != null && replaceNonCustom) {
+      final toDelete = await (_db.select(_db.maintenanceIntervals)
+            ..where((t) => t.vehicleId.equals(vehicle.id))
+            ..where((t) => t.isCustom.equals(false)))
+          .get();
+      for (final entry in toDelete) {
+        await (_db.delete(_db.maintenanceIntervals)
+              ..where((t) => t.id.equals(entry.id)))
+            .go();
+      }
+      for (final interval in intervals) {
+        await _db.into(_db.maintenanceIntervals).insert(
+              _intervalToCompanion(interval),
+            );
+      }
+    } else if (intervals != null) {
+      final existingList = await (_db.select(_db.maintenanceIntervals)
+            ..where((t) => t.vehicleId.equals(vehicle.id)))
+          .get();
+      final existingByKey = <String, MaintenanceIntervalEntry>{};
+      for (final entry in existingList) {
+        if (entry.i18nKey != null) {
+          existingByKey[entry.i18nKey!] = entry;
+        }
+      }
+      for (final interval in intervals) {
+        if (interval.i18nKey != null && existingByKey.containsKey(interval.i18nKey)) {
+          final existing = existingByKey[interval.i18nKey!]!;
+          if (!existing.isCustom) {
+            await (_db.update(_db.maintenanceIntervals)
+                  ..where((t) => t.id.equals(existing.id)))
+                .write(_intervalToCompanion(interval).copyWith(
+                  id: drift.Value(existing.id),
+                  vehicleId: drift.Value(existing.vehicleId),
+                  lastResetKm: drift.Value(existing.lastResetKm),
+                  lastResetDate: drift.Value(existing.lastResetDate),
+                  isEnabled: drift.Value(existing.isEnabled),
+                ));
+          }
+        } else {
+          await _db.into(_db.maintenanceIntervals).insert(
+                _intervalToCompanion(interval),
+              );
+        }
+      }
     }
+  }
+
+  MaintenanceIntervalsCompanion _intervalToCompanion(MaintenanceInterval interval) {
+    return MaintenanceIntervalsCompanion(
+      id: drift.Value(interval.id),
+      vehicleId: drift.Value(interval.vehicleId),
+      label: drift.Value(interval.label),
+      kmInterval: drift.Value(interval.kmInterval),
+      monthsInterval: drift.Value(interval.monthsInterval),
+      description: drift.Value(interval.description),
+      i18nKey: drift.Value(interval.i18nKey),
+      lastResetKm: drift.Value(interval.lastResetKm),
+      lastResetDate: drift.Value(interval.lastResetDate),
+      isEnabled: drift.Value(interval.isEnabled),
+      isCustom: drift.Value(interval.isCustom),
+    );
   }
 
   @override

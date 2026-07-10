@@ -41,6 +41,7 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
   bool _isLoading = false;
   bool _isEditing = false;
   bool _showAlias = false;
+  bool _hasUnsavedChanges = false;
 
   List<MaintenanceInterval>? _templateIntervals;
   String? _templateName;
@@ -123,6 +124,7 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
     try {
       final repo = ref.read(vehicleRepositoryProvider);
       await repo.delete(widget.vehicleId!);
+      _hasUnsavedChanges = false;
       ref.invalidate(vehicleListProvider);
       if (mounted) context.go('/');
     } catch (e) {
@@ -187,9 +189,11 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
 
         if (mounted) {
           setState(() {
-            if (choice == 'template') {
+             if (choice == 'template') {
               _templateIntervals = intervals;
               _templateName = name;
+              _vehicleType = _typeFromIntervals(intervals);
+              _markDirty();
             } else {
               _templateIntervals = null;
               _templateName = null;
@@ -259,26 +263,38 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
                           overflow: TextOverflow.ellipsis,
                         )
                       : null,
-                  trailing: Text(
-                    parts.join(' / '),
-                    style: theme.textTheme.bodySmall,
+                  trailing: IntrinsicWidth(
+                    child: Text(
+                      parts.join(' / '),
+                      style: theme.textTheme.bodySmall,
+                      textAlign: TextAlign.end,
+                      softWrap: false,
+                    ),
                   ),
                 );
               },
             ),
           ),
           actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(ctx),
-              child: const Text('Cancelar'),
-            ),
-            OutlinedButton(
-              onPressed: () => Navigator.pop(ctx, 'defaults'),
-              child: const Text('Usar defaults por tipo'),
-            ),
-            FilledButton(
-              onPressed: () => Navigator.pop(ctx, 'template'),
-              child: const Text('Usar plantilla'),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: OutlinedButton(
+                      onPressed: () => Navigator.pop(ctx, 'defaults'),
+                      child: const Text('Sin plantilla'),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: FilledButton(
+                      onPressed: () => Navigator.pop(ctx, 'template'),
+                      child: const Text('Usar plantilla'),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         );
@@ -400,11 +416,12 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
                   isCustom: false,
                 ))
             .toList();
-        await repo.save(vehicle, intervals: intervals);
+        await repo.save(vehicle, intervals: intervals, replaceNonCustom: _isEditing);
       } else {
         await repo.save(vehicle);
       }
 
+      _hasUnsavedChanges = false;
       ref.invalidate(vehicleListProvider);
 
       if (mounted) context.pop();
@@ -419,6 +436,49 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
     }
   }
 
+  VehicleType _typeFromIntervals(List<MaintenanceInterval> intervals) {
+    final keys = intervals.map((i) => i.i18nKey).toSet();
+    if (keys.contains('seed_interval_battery_cooling') ||
+        keys.contains('seed_interval_inverter_coolant')) {
+      return VehicleType.electric;
+    }
+    if (keys.contains('seed_interval_chain') ||
+        keys.contains('seed_interval_valve_adjustment') ||
+        keys.contains('seed_interval_drive_kit')) {
+      return VehicleType.motorcycle;
+    }
+    return VehicleType.combustion;
+  }
+
+  void _markDirty() {
+    if (!_hasUnsavedChanges) setState(() => _hasUnsavedChanges = true);
+  }
+
+  Future<bool> _onBackPressed() async {
+    if (!_isEditing || !_hasUnsavedChanges) return true;
+    final result = await karterShowDialog<bool>(
+      context: context,
+      builder: (ctx) {
+        final l = AppLocalizations.of(ctx)!;
+        return AlertDialog(
+          title: Text(l.unsavedChanges),
+          content: Text(l.discardChangesConfirm),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx, false),
+              child: Text(l.cancel),
+            ),
+            FilledButton(
+              onPressed: () => Navigator.pop(ctx, true),
+              child: Text(l.discard),
+            ),
+          ],
+        );
+      },
+    );
+    return result ?? false;
+  }
+
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context)!;
@@ -426,7 +486,16 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
         '${_modelController.text.trim()} '
         '${_yearController.text.trim()}'.trim();
 
-    return Scaffold(
+    return PopScope(
+      canPop: !(_isEditing && _hasUnsavedChanges),
+      onPopInvokedWithResult: (didPop, _) async {
+        if (didPop) return;
+        final shouldPop = await _onBackPressed();
+        if (shouldPop && context.mounted) {
+          Navigator.of(context).pop();
+        }
+      },
+      child: Scaffold(
       appBar: AppBar(
         title: Text(_isEditing ? l.vehicleFormEdit : l.vehicleFormNew),
       ),
@@ -446,6 +515,7 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
             TextFormField(
               controller: _brandController,
               decoration: InputDecoration(labelText: l.brand),
+              onChanged: (_) => _markDirty(),
               validator: (v) =>
                   v == null || v.trim().isEmpty ? l.required : null,
             ),
@@ -453,6 +523,7 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
             TextFormField(
               controller: _modelController,
               decoration: InputDecoration(labelText: l.model),
+              onChanged: (_) => _markDirty(),
               validator: (v) =>
                   v == null || v.trim().isEmpty ? l.required : null,
             ),
@@ -461,6 +532,7 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
               controller: _yearController,
               decoration: InputDecoration(labelText: l.year),
               keyboardType: TextInputType.number,
+              onChanged: (_) => _markDirty(),
               validator: (v) {
                 if (v == null || v.trim().isEmpty) return l.required;
                 final year = int.tryParse(v);
@@ -471,45 +543,48 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
               },
             ),
             const SizedBox(height: 12),
-            if (!_isEditing) ...[
-              OutlinedButton.icon(
-                onPressed:
-                    _isLoading ? null : _searchTemplate,
-                icon: _templateIntervals != null
-                    ? const Icon(Icons.check_circle, color: Colors.green)
-                    : const Icon(Icons.search),
-                label: Text(
-                  _templateIntervals != null
-                      ? 'Plantilla: $_templateName'
-                      : 'Buscar plantilla',
-                ),
+            OutlinedButton.icon(
+              onPressed:
+                  _isLoading ? null : _searchTemplate,
+              icon: _templateIntervals != null
+                  ? const Icon(Icons.check_circle, color: Colors.green)
+                  : const Icon(Icons.search),
+              label: Text(
+                _templateIntervals != null
+                    ? 'Plantilla: $_templateName'
+                    : 'Buscar plantilla',
               ),
-              const SizedBox(height: 12),
-            ],
+            ),
+            const SizedBox(height: 12),
             Text(l.vehicleType,
                 style: Theme.of(context).textTheme.titleSmall),
             const SizedBox(height: 8),
-            SegmentedButton<VehicleType>(
-              segments: [
-                ButtonSegment(
-                  value: VehicleType.combustion,
-                  label: Text(l.combustion),
-                  icon: Icon(Icons.local_gas_station),
-                ),
-                ButtonSegment(
-                  value: VehicleType.electric,
-                  label: Text(l.electric),
-                  icon: Icon(Icons.electric_car),
-                ),
-                ButtonSegment(
-                  value: VehicleType.motorcycle,
-                  label: Text(l.motorcycle),
-                  icon: Icon(Icons.motorcycle),
-                ),
-              ],
-              selected: {_vehicleType},
-              onSelectionChanged: (v) =>
-                  setState(() => _vehicleType = v.first),
+            AbsorbPointer(
+              absorbing: _templateIntervals != null,
+              child: SegmentedButton<VehicleType>(
+                segments: [
+                  ButtonSegment(
+                    value: VehicleType.combustion,
+                    label: Text(l.combustion),
+                    icon: Icon(Icons.local_gas_station),
+                  ),
+                  ButtonSegment(
+                    value: VehicleType.electric,
+                    label: Text(l.electric),
+                    icon: Icon(Icons.electric_car),
+                  ),
+                  ButtonSegment(
+                    value: VehicleType.motorcycle,
+                    label: Text(l.motorcycle),
+                    icon: Icon(Icons.motorcycle),
+                  ),
+                ],
+                selected: {_vehicleType},
+                onSelectionChanged: (v) => setState(() {
+                  _vehicleType = v.first;
+                  _markDirty();
+                }),
+              ),
             ),
             const SizedBox(height: 12),
             TextFormField(
@@ -518,6 +593,7 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
                 labelText: l.plateOptional,
               ),
               textCapitalization: TextCapitalization.characters,
+              onChanged: (_) => _markDirty(),
             ),
             const SizedBox(height: 12),
             TextFormField(
@@ -527,6 +603,7 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
               ),
               textCapitalization: TextCapitalization.characters,
               maxLength: 17,
+              onChanged: (_) => _markDirty(),
             ),
             const SizedBox(height: 12),
             Row(
@@ -537,6 +614,7 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
                     decoration:
                         InputDecoration(labelText: l.odometer),
                     keyboardType: TextInputType.number,
+                    onChanged: (_) => _markDirty(),
                     validator: (v) {
                       if (_validatingForSearch) return null;
                       if (v == null || v.trim().isEmpty) return l.required;
@@ -553,8 +631,10 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
                     ButtonSegment(value: DistanceUnit.miles, label: Text(l.unitMi)),
                   ],
                   selected: {_odometerUnit},
-                  onSelectionChanged: (v) =>
-                      setState(() => _odometerUnit = v.first),
+                  onSelectionChanged: (v) => setState(() {
+                    _odometerUnit = v.first;
+                    _markDirty();
+                  }),
                 ),
               ],
             ),
@@ -570,8 +650,10 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
                     value: VolumeUnit.gallons, label: Text(l.unitGal)),
               ],
               selected: {_fuelVolumeUnit},
-              onSelectionChanged: (v) =>
-                  setState(() => _fuelVolumeUnit = v.first),
+              onSelectionChanged: (v) => setState(() {
+                _fuelVolumeUnit = v.first;
+                _markDirty();
+              }),
             ),
             const SizedBox(height: 16),
             Text(l.currency,
@@ -590,7 +672,10 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
                       ))
                   .toList(),
               onChanged: (v) {
-                if (v != null) setState(() => _currency = v);
+                if (v != null) setState(() {
+                  _currency = v;
+                  _markDirty();
+                });
               },
             ),
             const SizedBox(height: 16),
@@ -600,7 +685,10 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
                   ? Text(_aliasController.text)
                   : null,
               value: _showAlias,
-              onChanged: (v) => setState(() => _showAlias = v),
+              onChanged: (v) => setState(() {
+                _showAlias = v;
+                _markDirty();
+              }),
             ),
             if (_showAlias) ...[
               const SizedBox(height: 8),
@@ -610,6 +698,7 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
                   labelText: l.aliasOptional,
                   hintText: l.aliasHint,
                 ),
+                onChanged: (_) => _markDirty(),
               ),
             ],
             const SizedBox(height: 24),
@@ -640,6 +729,7 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
           ],
         ),
       ),
+    ),
     );
   }
 }

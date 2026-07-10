@@ -268,5 +268,17 @@
   "notificationFreqDays": "{days} days",
   "notificationMaintenanceSnooze": "Snooze maintenance for 1 week",
   "notificationSnoozeToggle": "Snooze reminders",
-  "notificationSnoozeDays": "{days} days"
+  "notificationSnoozeDays": "{days} days",
+  "unsavedChanges": "Unsaved changes",
+  "@unsavedChanges": {
+    "description": "Title for unsaved changes dialog"
+  },
+  "discardChangesConfirm": "You have unsaved changes. Are you sure you want to leave?",
+  "@discardChangesConfirm": {
+    "description": "Confirmation message for discarding unsaved changes"
+  },
+  "discard": "Discard",
+  "@discard": {
+    "description": "Discard / discard changes button label"
+  }
 }
