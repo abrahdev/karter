@@ -94,6 +94,11 @@ const config: Config = {
           label: "Templates",
           position: "right",
         },
+        {
+          to: "/templates/creator",
+          label: "Creator",
+          position: "right",
+        },
         { type: "docsVersionDropdown", position: "right" },
         {
           href: "https://github.com/abrahdev/karter",
