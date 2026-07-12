@@ -1,7 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
 :root {
-  --ifm-color-primary: #695609; 
+  --ifm-color-primary: #695609;
+  --ifm-card-background-color: #fafafa;
   --ifm-color-primary-dark: #eab308;
   --ifm-color-primary-darker: #92400e;
   --ifm-color-primary-darkest: #78350f;
