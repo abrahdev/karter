@@ -393,6 +393,7 @@ function SelectDropdown({
       <button
         type="button"
         onClick={() => setOpen(!open)}
+        className="template-bg"
         style={{
           ...STYLES.select,
           width: "100%",
@@ -421,6 +422,7 @@ function SelectDropdown({
 
       {open && (
         <div
+          className="template-bg"
           style={{
             position: "absolute",
             top: "100%",
@@ -782,7 +784,7 @@ export default function TemplatesPage() {
               </div>
 
               {hasFilters && (
-                <button style={STYLES.reset} onClick={resetFilters}>
+                <button className="template-bg" style={STYLES.reset} onClick={resetFilters}>
                   Clear filters
                 </button>
               )}
