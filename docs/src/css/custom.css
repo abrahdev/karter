@@ -2,7 +2,6 @@
 
 :root {
   --ifm-color-primary: #695609;
-  --ifm-card-background-color: #fafafa;
   --ifm-color-primary-dark: #eab308;
   --ifm-color-primary-darker: #92400e;
   --ifm-color-primary-darkest: #78350f;
@@ -100,4 +99,12 @@
 
 .footer__logo:hover {
   opacity: 0.8;
+}
+
+.template-bg {
+  background-color: #f5f5f5;
+}
+
+[data-theme='dark'] .template-bg {
+  background-color: #171717;
 }

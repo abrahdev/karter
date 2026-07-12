@@ -9,7 +9,7 @@ const appVersion = fs
   .trim();
 
 const versionsJson = JSON.parse(
-  fs.readFileSync(path.join(__dirname, "versions.json"), "utf-8")
+  fs.readFileSync(path.join(__dirname, "versions.json"), "utf-8"),
 );
 const lastVersion = versionsJson[0];
 
@@ -54,7 +54,7 @@ const config: Config = {
         docs: {
           sidebarPath: "./sidebars.ts",
           editUrl: "https://github.com/abrahdev/karter/edit/main/docs/",
-          routeBasePath: '/',
+          routeBasePath: "/",
           lastVersion,
           versions: {
             current: {
@@ -73,7 +73,7 @@ const config: Config = {
   themeConfig: {
     image: "img/karter-social-card.jpg",
     mermaid: {
-      theme: { light: 'neutral', dark: 'forest' },
+      theme: { light: "neutral", dark: "forest" },
     },
     navbar: {
       title: `Karter v${appVersion}`,
@@ -108,7 +108,7 @@ const config: Config = {
         {
           title: "Overview",
           items: [
-            { label: "Manifest", to: "/" }, 
+            { label: "Manifest", to: "/" },
             { label: "Development", to: "/category/developer" },
             { label: "Contributing", to: "/contributing" },
             { label: "Privacy Policy", to: "/privacy" },
@@ -145,7 +145,7 @@ const config: Config = {
         highlightSearchTermsOnTargetPage: true,
         indexBlog: false,
         explicitSearchResultPath: true,
-        docsRouteBasePath: "/", 
+        docsRouteBasePath: "/",
       },
     ],
   ],

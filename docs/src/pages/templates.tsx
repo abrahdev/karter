@@ -75,7 +75,7 @@ const STYLES: Record<string, React.CSSProperties> = {
     padding: "1rem",
     borderRadius: 8,
     border: "1px solid var(--ifm-color-emphasis-300)",
-    background: "var(--ifm-card-background-color)",
+    background: "var(--ifm-card-background-color, #f5f5f5)",
   },
   filterGroup: {
     display: "flex",
@@ -106,7 +106,7 @@ const STYLES: Record<string, React.CSSProperties> = {
     borderRadius: 10,
     padding: "1.25rem",
     marginBottom: "0.75rem",
-    background: "var(--ifm-card-background-color)",
+    background: "var(--ifm-card-background-color, #f5f5f5)",
     transition: "border-color 0.2s, transform 0.2s",
     cursor: "pointer",
   },
@@ -519,6 +519,7 @@ function Card({
   return (
     <div
       onClick={onClick}
+      className="template-bg"
       style={STYLES.card}
       onMouseEnter={(e) => {
         e.currentTarget.style.borderColor = "var(--ifm-color-primary)";
@@ -727,7 +728,7 @@ export default function TemplatesPage() {
 
         {data && data.templates.length > 0 && (
           <>
-            <div style={STYLES.filters}>
+            <div className="template-bg" style={STYLES.filters}>
               <div style={STYLES.filterGroup}>
                 <span style={STYLES.label}>Make</span>
                 <SelectDropdown
