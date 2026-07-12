@@ -661,7 +661,7 @@ export default function TemplateCreatorPage() {
         )}
 
         <div style={{ ...STYLES.layout, marginTop: "1.5rem" }}>
-          <div>
+          <div style={{ minWidth: 0 }}>
             <div style={STYLES.panel}>
               <h3 style={STYLES.panelTitle}>Vehicle Info</h3>
               <div style={STYLES.row}>
@@ -747,7 +747,7 @@ export default function TemplateCreatorPage() {
             </div>
           </div>
 
-          <div>
+          <div style={{ minWidth: 0 }}>
             <div style={STYLES.panel}>
               <h3 style={STYLES.panelTitle}>Generated Output</h3>
 
