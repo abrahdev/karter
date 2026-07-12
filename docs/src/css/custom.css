@@ -102,9 +102,9 @@
 }
 
 .template-bg {
-  background-color: #f5f5f5;
+  background-color: #f5f5f5 !important;
 }
 
 [data-theme='dark'] .template-bg {
-  background-color: #171717;
+  background-color: #171717 !important;
 }

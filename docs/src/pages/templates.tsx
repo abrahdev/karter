@@ -218,6 +218,7 @@ function Modal({
     >
       <div
         onClick={(e) => e.stopPropagation()}
+        className="template-bg"
         style={{
           maxWidth: 560,
           width: "100%",
