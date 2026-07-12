@@ -1,5 +1,5 @@
 {
-  "id": "benelli-trk-502-x",
+  "id": "benelli-trk-502",
   "extends": [
     "_base/combustion.json"
   ],
