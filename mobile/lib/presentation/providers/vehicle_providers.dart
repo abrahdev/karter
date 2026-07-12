@@ -20,6 +20,7 @@ import 'package:mobile/domain/repositories/maintenance_interval_repository.dart'
 import 'package:mobile/domain/repositories/maintenance_log_repository.dart';
 import 'package:mobile/domain/repositories/vehicle_document_repository.dart';
 import 'package:mobile/domain/repositories/vehicle_repository.dart';
+import 'package:mobile/presentation/providers/template_source_provider.dart';
 
 final appDatabaseProvider = Provider<AppDatabase>((ref) {
   return AppDatabase();
@@ -92,7 +93,10 @@ final templateResolverProvider = Provider<TemplateResolver>((ref) {
 
 final templateIndexProvider = FutureProvider<TemplateIndex>((ref) async {
   final resolver = ref.watch(templateResolverProvider);
-  return resolver.loadIndex();
+  final source = ref.watch(templateSourceProvider);
+  return resolver.loadIndex(
+    baseUrl: source.enabled ? source.repoUrl : null,
+  );
 });
 
 final pdfExportServiceProvider = Provider<PdfExportService>((ref) {

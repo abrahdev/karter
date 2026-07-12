@@ -280,5 +280,15 @@
   "discard": "Discard",
   "@discard": {
     "description": "Discard / discard changes button label"
-  }
+  },
+
+  "moreTemplateSource": "Template source",
+  "moreTemplateSourceSubtitle": "Fetch templates from GitHub or use local assets",
+  "moreTemplateSourceOffline": "Local (offline)",
+  "moreTemplateSourceOnline": "Online (GitHub)",
+  "moreTemplateSourceUrl": "Repo URL",
+  "moreTemplateSourceReset": "Reset to default",
+  "moreTemplateSourceUrlHint": "https://raw.githubusercontent.com/...",
+  "moreTemplateSourceEditUrl": "Edit URL",
+  "moreTemplateSourceUrlSaved": "URL updated"
 }

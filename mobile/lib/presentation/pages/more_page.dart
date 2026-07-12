@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:mobile/core/modal_helpers.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/locale_provider.dart';
+import 'package:mobile/presentation/providers/template_source_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MorePage extends ConsumerWidget {
@@ -72,6 +73,8 @@ class MorePage extends ConsumerWidget {
             onTap: () => _showLanguagePicker(context, ref),
           ),
         ),
+        const Divider(),
+        _TemplateSourceSection(),
         const Divider(),
         Material(
           color: theme.colorScheme.surface,
@@ -160,5 +163,98 @@ class MorePage extends ConsumerWidget {
         ],
       ),
     );
+  }
+}
+
+class _TemplateSourceSection extends ConsumerWidget {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = Theme.of(context);
+    final l = AppLocalizations.of(context)!;
+    final config = ref.watch(templateSourceProvider);
+
+    return Column(
+      children: [
+        Material(
+          color: theme.colorScheme.surface,
+          child: SwitchListTile(
+            secondary: Icon(config.enabled ? Icons.cloud : Icons.storage),
+            title: Text(l.moreTemplateSource),
+            subtitle: Text(l.moreTemplateSourceSubtitle),
+            value: config.enabled,
+            onChanged: (v) => ref.read(templateSourceProvider.notifier).setEnabled(v),
+          ),
+        ),
+        if (config.enabled) ...[
+          const Divider(height: 1, indent: 16, endIndent: 16),
+          Material(
+            color: theme.colorScheme.surface,
+            child: ListTile(
+              leading: const Icon(Icons.link),
+              title: Text(l.moreTemplateSourceUrl),
+              subtitle: Text(
+                config.repoUrl,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: theme.textTheme.bodySmall,
+              ),
+              trailing: const Icon(Icons.edit),
+              onTap: () => _editUrl(context, ref, config.repoUrl),
+            ),
+          ),
+        ],
+      ],
+    );
+  }
+
+  Future<void> _editUrl(BuildContext context, WidgetRef ref, String currentUrl) async {
+    final l = AppLocalizations.of(context)!;
+    final controller = TextEditingController(text: currentUrl);
+
+    final result = await karterShowDialog<String>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(l.moreTemplateSourceEditUrl),
+        content: TextField(
+          controller: controller,
+          decoration: InputDecoration(
+            hintText: l.moreTemplateSourceUrlHint,
+          ),
+          keyboardType: TextInputType.url,
+          autofocus: true,
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              ref.read(templateSourceProvider.notifier).resetToDefault();
+              Navigator.pop(ctx);
+            },
+            child: Text(l.moreTemplateSourceReset),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: Text(l.cancel),
+          ),
+          FilledButton(
+            onPressed: () {
+              final url = controller.text.trim();
+              if (url.isNotEmpty) {
+                Navigator.pop(ctx, url);
+              }
+            },
+            child: Text(l.saveChangesShort),
+          ),
+        ],
+      ),
+    );
+
+    if (result != null && result.isNotEmpty) {
+      await ref.read(templateSourceProvider.notifier).setRepoUrl(result);
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(l.moreTemplateSourceUrlSaved)),
+        );
+      }
+    }
   }
 }

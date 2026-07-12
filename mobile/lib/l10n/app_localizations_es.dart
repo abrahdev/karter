@@ -841,4 +841,33 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get discard => 'Descartar';
+
+  @override
+  String get moreTemplateSource => 'Fuente de plantillas';
+
+  @override
+  String get moreTemplateSourceSubtitle =>
+      'Obtener plantillas desde GitHub o usar locales';
+
+  @override
+  String get moreTemplateSourceOffline => 'Local (sin conexión)';
+
+  @override
+  String get moreTemplateSourceOnline => 'En línea (GitHub)';
+
+  @override
+  String get moreTemplateSourceUrl => 'URL del repositorio';
+
+  @override
+  String get moreTemplateSourceReset => 'Restablecer valor por defecto';
+
+  @override
+  String get moreTemplateSourceUrlHint =>
+      'https://raw.githubusercontent.com/...';
+
+  @override
+  String get moreTemplateSourceEditUrl => 'Editar URL';
+
+  @override
+  String get moreTemplateSourceUrlSaved => 'URL actualizada';
 }

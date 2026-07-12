@@ -280,5 +280,15 @@
   "discard": "Descartar",
   "@discard": {
     "description": "Discard / descartar cambios button label"
-  }
+  },
+
+  "moreTemplateSource": "Fuente de plantillas",
+  "moreTemplateSourceSubtitle": "Obtener plantillas desde GitHub o usar locales",
+  "moreTemplateSourceOffline": "Local (sin conexión)",
+  "moreTemplateSourceOnline": "En línea (GitHub)",
+  "moreTemplateSourceUrl": "URL del repositorio",
+  "moreTemplateSourceReset": "Restablecer valor por defecto",
+  "moreTemplateSourceUrlHint": "https://raw.githubusercontent.com/...",
+  "moreTemplateSourceEditUrl": "Editar URL",
+  "moreTemplateSourceUrlSaved": "URL actualizada"
 }

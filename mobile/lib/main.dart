@@ -8,6 +8,7 @@ import 'package:mobile/data/services/background_service.dart';
 import 'package:mobile/data/services/notification_service.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/locale_provider.dart';
+import 'package:mobile/presentation/providers/template_source_provider.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:system_theme/system_theme.dart';
@@ -392,6 +393,7 @@ Future<void> main() async {
     ProviderScope(
       overrides: [
         localeProvider.overrideWith(() => createLocaleNotifier(savedLocale)),
+        sharedPreferencesProvider.overrideWithValue(prefs),
         notificationServiceProvider.overrideWith((ref) {
           notificationService.init();
           return notificationService;

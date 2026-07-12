@@ -1584,6 +1584,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Discard'**
   String get discard;
+
+  /// No description provided for @moreTemplateSource.
+  ///
+  /// In en, this message translates to:
+  /// **'Template source'**
+  String get moreTemplateSource;
+
+  /// No description provided for @moreTemplateSourceSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Fetch templates from GitHub or use local assets'**
+  String get moreTemplateSourceSubtitle;
+
+  /// No description provided for @moreTemplateSourceOffline.
+  ///
+  /// In en, this message translates to:
+  /// **'Local (offline)'**
+  String get moreTemplateSourceOffline;
+
+  /// No description provided for @moreTemplateSourceOnline.
+  ///
+  /// In en, this message translates to:
+  /// **'Online (GitHub)'**
+  String get moreTemplateSourceOnline;
+
+  /// No description provided for @moreTemplateSourceUrl.
+  ///
+  /// In en, this message translates to:
+  /// **'Repo URL'**
+  String get moreTemplateSourceUrl;
+
+  /// No description provided for @moreTemplateSourceReset.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset to default'**
+  String get moreTemplateSourceReset;
+
+  /// No description provided for @moreTemplateSourceUrlHint.
+  ///
+  /// In en, this message translates to:
+  /// **'https://raw.githubusercontent.com/...'**
+  String get moreTemplateSourceUrlHint;
+
+  /// No description provided for @moreTemplateSourceEditUrl.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit URL'**
+  String get moreTemplateSourceEditUrl;
+
+  /// No description provided for @moreTemplateSourceUrlSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'URL updated'**
+  String get moreTemplateSourceUrlSaved;
 }
 
 class _AppLocalizationsDelegate

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
 import 'package:mobile/data/models/template_index.dart';
 import 'package:mobile/data/models/template_item.dart';
 import 'package:mobile/data/models/template_meta.dart';
@@ -33,38 +34,56 @@ class TemplateResolution {
 }
 
 class TemplateResolver {
+  String? _lastBaseUrl;
   TemplateIndex? _index;
   final Map<String, Map<String, dynamic>> _templateCache = {};
 
-  Future<TemplateIndex> loadIndex() async {
-    if (_index != null) return _index!;
-    final jsonStr =
-        await rootBundle.loadString('templates/index.json');
+  Future<String> _loadString(String assetPath, {String? baseUrl}) async {
+    if (baseUrl != null && baseUrl.isNotEmpty) {
+      try {
+        final uri = Uri.parse('$baseUrl/$assetPath');
+        final resp = await http.get(uri).timeout(const Duration(seconds: 10));
+        if (resp.statusCode == 200) return resp.body;
+      } catch (_) {}
+    }
+    return rootBundle.loadString('templates/$assetPath');
+  }
+
+  Future<TemplateIndex> loadIndex({String? baseUrl}) async {
+    if (_index != null && _lastBaseUrl == baseUrl) return _index!;
+    final jsonStr = await _loadString('index.json', baseUrl: baseUrl);
     _index = TemplateIndex.fromJson(json.decode(jsonStr) as Map<String, dynamic>);
+    _lastBaseUrl = baseUrl;
     return _index!;
   }
 
-  Future<Map<String, dynamic>> _loadRawTemplate(String path) async {
-    if (_templateCache.containsKey(path)) return _templateCache[path]!;
-    final jsonStr = await rootBundle.loadString('templates/$path');
+  Future<Map<String, dynamic>> _loadRawTemplate(
+    String path, {
+    String? baseUrl,
+  }) async {
+    final cacheKey = '$baseUrl|$path';
+    if (_templateCache.containsKey(cacheKey)) return _templateCache[cacheKey]!;
+    final jsonStr = await _loadString(path, baseUrl: baseUrl);
     final data = json.decode(jsonStr) as Map<String, dynamic>;
-    _templateCache[path] = data;
+    _templateCache[cacheKey] = data;
     return data;
   }
 
   Future<Map<String, ResolvedItem>> _resolveWithVisited(
     String path,
-    Set<String> visited,
-  ) async {
+    Set<String> visited, {
+    String? baseUrl,
+  }) async {
     if (visited.contains(path)) return {};
     visited.add(path);
 
-    final data = await _loadRawTemplate(path);
+    final data = await _loadRawTemplate(path, baseUrl: baseUrl);
     final items = <String, ResolvedItem>{};
 
     final extendsList = (data['extends'] as List?)?.cast<String>() ?? [];
     for (final extPath in extendsList) {
-      final ancestorItems = await _resolveWithVisited(extPath, visited);
+      final ancestorItems =
+          await _resolveWithVisited(extPath, visited, baseUrl: baseUrl);
       _applyItems(items, ancestorItems, keepExisting: false);
     }
 
@@ -131,11 +150,14 @@ class TemplateResolver {
     );
   }
 
-  Future<TemplateResolution?> resolve(String path) async {
+  Future<TemplateResolution?> resolve(
+    String path, {
+    String? baseUrl,
+  }) async {
     final visited = <String>{};
-    final items = await _resolveWithVisited(path, visited);
+    final items = await _resolveWithVisited(path, visited, baseUrl: baseUrl);
 
-    final index = await loadIndex();
+    final index = await loadIndex(baseUrl: baseUrl);
     final entry = index.templates.firstWhere(
       (e) => e.path == path,
       orElse: () => throw StateError('Template entry not found in index: $path'),
@@ -151,8 +173,9 @@ class TemplateResolver {
     required String make,
     required String model,
     required int year,
+    String? baseUrl,
   }) async {
-    final index = await loadIndex();
+    final index = await loadIndex(baseUrl: baseUrl);
 
     final candidates = <TemplateIndexEntry>[];
 
@@ -172,7 +195,7 @@ class TemplateResolver {
 
     _sortCandidates(candidates, model, year);
 
-    return resolve(candidates.first.path);
+    return resolve(candidates.first.path, baseUrl: baseUrl);
   }
 
   bool _matchesMakeModel(TemplateMeta meta, String make, String model) {

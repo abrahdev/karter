@@ -13,6 +13,7 @@ import 'package:mobile/domain/value_objects/plate.dart';
 import 'package:mobile/domain/value_objects/vin.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
+import 'package:mobile/presentation/providers/template_source_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class VehicleFormPage extends ConsumerStatefulWidget {
@@ -156,10 +157,12 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
 
     try {
       final resolver = ref.read(templateResolverProvider);
+      final source = ref.read(templateSourceProvider);
       final resolution = await resolver.findBestMatch(
         make: brand,
         model: model,
         year: year,
+        baseUrl: source.enabled ? source.repoUrl : null,
       );
 
       if (!mounted) return;
