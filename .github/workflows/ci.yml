@@ -19,6 +19,18 @@ jobs:
         with:
           flutter-version: '3.44.4'
 
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Check index.json is up-to-date
+        run: |
+          python tools/generate_index.py
+          git diff --exit-code templates/index.json || {
+            echo "::error::templates/index.json is stale. Run 'python tools/generate_index.py' and commit the result."
+            exit 1
+          }
+
       - uses: actions/cache@v4
         with:
           path: ~/.pub-cache

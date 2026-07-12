@@ -158,56 +158,6 @@ function generateBaseJson(form: IFormState): string {
   return JSON.stringify(result, null, 2);
 }
 
-function generateIndexEntry(form: IFormState): string {
-  const id = `${toSlug(form.make || "yourmake")}-${toSlug(form.model || "yourmodel")}`;
-  const path = `${toSlug(form.make || "yourmake")}/${toSlug(form.model || "yourmodel")}/base.json`;
-
-  const meta: Record<string, unknown> = {
-    make: form.make || "YourMake",
-    model: form.model || "YourModel",
-  };
-
-  if (form.generation) meta.generation = form.generation;
-
-  if (form.yearsFrom || form.yearsTo) {
-    const from = form.yearsFrom ? parseInt(form.yearsFrom, 10) : 2000;
-    const to = form.yearsTo ? parseInt(form.yearsTo, 10) : 2030;
-    meta.years = [from, to];
-  } else {
-    meta.years = null;
-  }
-
-  if (form.engineFuel || form.engineCode || form.engineDisplacement || form.enginePower) {
-    const engine: Record<string, unknown> = {};
-    if (form.engineFuel) engine.fuel = form.engineFuel;
-    if (form.engineCode) engine.code = form.engineCode;
-    if (form.engineDisplacement) engine.displacement_cc = parseInt(form.engineDisplacement, 10);
-    if (form.enginePower) engine.power_hp = parseInt(form.enginePower, 10);
-    meta.engine = Object.keys(engine).length > 0 ? engine : null;
-  } else {
-    meta.engine = null;
-  }
-
-  meta.author = form.author || "your-username";
-  meta.version = form.version || "1.0.0";
-
-  const allExtends = [...form.extends];
-  if (form.customExtends.trim()) {
-    allExtends.push(form.customExtends.trim());
-  }
-
-  const items = form.items.filter((i) => i.id && !i.remove);
-
-  const entry: Record<string, unknown> = {
-    id,
-    path,
-    meta,
-    item_count: items.length,
-    extends: allExtends.length > 0 ? allExtends : [],
-  };
-
-  return JSON.stringify(entry, null, 2);
-}
 
 const STYLES: Record<string, React.CSSProperties> = {
   container: {
@@ -557,9 +507,7 @@ export default function TemplateCreatorPage() {
   const [loadingIndex, setLoadingIndex] = useState(true);
   const [selectedTemplateId, setSelectedTemplateId] = useState("");
   const [copiedBase, setCopiedBase] = useState(false);
-  const [copiedIndex, setCopiedIndex] = useState(false);
   const baseJson = useMemo(() => generateBaseJson(form), [form]);
-  const indexEntry = useMemo(() => generateIndexEntry(form), [form]);
 
   useEffect(() => {
     fetch(INDEX_URL, { cache: "no-store" })
@@ -662,29 +610,10 @@ export default function TemplateCreatorPage() {
     });
   }
 
-  function handleCopyIndex() {
-    copyText(indexEntry).then((ok) => {
-      if (ok) {
-        setCopiedIndex(true);
-        setTimeout(() => setCopiedIndex(false), 2000);
-      }
-    });
-  }
-
   const forkUrl = "https://github.com/abrahdev/karter/fork";
   const makeSlug = toSlug(form.make || "yourmake");
   const modelSlug = toSlug(form.model || "yourmodel");
   const folderPath = `templates/${makeSlug}/${modelSlug}`;
-  const indexSnippet = `  {
-    "id": "${makeSlug}-${modelSlug}",
-    "path": "${makeSlug}/${modelSlug}/base.json",
-    "meta": {
-      "make": "${form.make || "YourMake"}",
-      "model": "${form.model || "YourModel"}"${form.generation ? `,\n      "generation": "${form.generation}"` : ""}
-    },
-    "item_count": ${form.items.filter((i) => i.id && !i.remove).length},
-    "extends": [${[...form.extends, ...(form.customExtends.trim() ? [form.customExtends.trim()] : [])].map((e) => `"${e}"`).join(", ")}]
-  },`;
 
   return (
     <Layout title="Template Creator" description="Create vehicle maintenance templates for Karter">
@@ -836,23 +765,6 @@ export default function TemplateCreatorPage() {
               <hr style={STYLES.divider} />
 
               <div style={STYLES.outputSection}>
-                <div style={STYLES.outputHeader}>
-                  <h4 style={STYLES.outputLabel}>index.json entry</h4>
-                  <div style={{ display: "flex", gap: "0.5rem" }}>
-                    <button style={STYLES.btn} onClick={handleCopyIndex}>
-                      {copiedIndex ? "Copied!" : "Copy"}
-                    </button>
-                    <button style={STYLES.btn} onClick={() => downloadJson(indexEntry, "index-entry.json")}>
-                      Download
-                    </button>
-                  </div>
-                </div>
-                <pre style={STYLES.pre}>{indexEntry}</pre>
-              </div>
-
-              <hr style={STYLES.divider} />
-
-              <div style={STYLES.outputSection}>
                 <h4 style={STYLES.outputLabel}>Instructions</h4>
                 <div style={STYLES.instructions}>
                   <ol style={{ paddingLeft: "1.25rem", margin: 0 }}>
@@ -868,24 +780,11 @@ export default function TemplateCreatorPage() {
                       Save <strong>base.json</strong> into <code>{folderPath}/</code>.
                     </li>
                     <li>
-                      Open <code>templates/index.json</code> in the repo root and add this entry inside the{" "}
-                      <code>"templates"</code> array:
-                      <pre
-                        style={{
-                          ...STYLES.pre,
-                          maxHeight: 200,
-                          marginTop: "0.5rem",
-                        }}
-                      >
-                        {indexSnippet}
-                      </pre>
-                    </li>
-                    <li>
                       Commit, push to your fork, and{" "}
                       <Link to="https://github.com/abrahdev/karter/compare">
                         open a pull request
                       </Link>
-                      .
+                      . The <code>templates/index.json</code> will be regenerated automatically by CI.
                     </li>
                   </ol>
                 </div>

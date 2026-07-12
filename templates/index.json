@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-10T13:47:22Z",
+  "generated_at": "2026-07-12T13:49:20Z",
   "schema_version": "1",
   "templates": [
     {
@@ -126,7 +126,7 @@
     },
     {
       "id": "benelli-trk-502-x",
-      "path": "benelli/trk-502-x/base.json",
+      "path": "benelli/trk-502/base.json",
       "meta": {
         "make": "Benelli",
         "model": "TRK 502 X",
