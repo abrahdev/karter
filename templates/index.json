@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-12T13:49:20Z",
+  "generated_at": "2026-07-12T14:20:01Z",
   "schema_version": "1",
   "templates": [
     {
@@ -54,6 +54,60 @@
       "item_count": 5,
       "extends": [
         "_base/common-all.json"
+      ]
+    },
+    {
+      "id": "motorcycle-2t",
+      "path": "_base/motorcycle-2t.json",
+      "meta": {
+        "make": "_base",
+        "model": "Motorcycle 2-Stroke",
+        "author": "abrahdev",
+        "version": "1.0.0"
+      },
+      "item_count": 6,
+      "extends": [
+        "_base/motorcycle-common.json"
+      ]
+    },
+    {
+      "id": "motorcycle-4t",
+      "path": "_base/motorcycle-4t.json",
+      "meta": {
+        "make": "_base",
+        "model": "Motorcycle 4-Stroke",
+        "author": "abrahdev",
+        "version": "1.0.0"
+      },
+      "item_count": 6,
+      "extends": [
+        "_base/motorcycle-common.json"
+      ]
+    },
+    {
+      "id": "motorcycle-common",
+      "path": "_base/motorcycle-common.json",
+      "meta": {
+        "make": "_base",
+        "model": "Motorcycle Common",
+        "author": "abrahdev",
+        "version": "1.0.0"
+      },
+      "item_count": 7,
+      "extends": []
+    },
+    {
+      "id": "motorcycle-ev",
+      "path": "_base/motorcycle-ev.json",
+      "meta": {
+        "make": "_base",
+        "model": "Motorcycle Electric",
+        "author": "abrahdev",
+        "version": "1.0.0"
+      },
+      "item_count": 5,
+      "extends": [
+        "_base/motorcycle-common.json"
       ]
     },
     {
@@ -125,11 +179,11 @@
       ]
     },
     {
-      "id": "benelli-trk-502-x",
+      "id": "benelli-trk-502",
       "path": "benelli/trk-502/base.json",
       "meta": {
         "make": "Benelli",
-        "model": "TRK 502 X",
+        "model": "TRK 502",
         "generation": "All",
         "author": "karter",
         "version": "1.0.0"

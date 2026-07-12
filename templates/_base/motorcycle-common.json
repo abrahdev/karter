@@ -1,0 +1,70 @@
+{
+  "id": "motorcycle-common",
+  "meta": {
+    "make": "_base",
+    "model": "Motorcycle Common",
+    "author": "abrahdev",
+    "version": "1.0.0"
+  },
+  "maintenance_items": [
+    {
+      "id": "chain",
+      "label": "Chain (Clean and lube)",
+      "i18n_key": "seed_interval_chain",
+      "desc_i18n_key": "seed_desc_chain",
+      "interval_km": 1000,
+      "interval_months": null,
+      "description": "The chain is the component that suffers the most wear. Regular lubrication extends its life and prevents dangerous breakage."
+    },
+    {
+      "id": "brake-pads",
+      "label": "Brake pads",
+      "i18n_key": "seed_interval_brake_pads",
+      "desc_i18n_key": "seed_desc_motorcycle_brake_pads",
+      "interval_km": 5000,
+      "interval_months": 6,
+      "description": "Friction compound wears with use. Below 1.5mm thickness, safety is compromised."
+    },
+    {
+      "id": "brake-fluid",
+      "label": "Brake fluid",
+      "i18n_key": "seed_interval_brake_fluid",
+      "desc_i18n_key": "seed_desc_brake_fluid",
+      "interval_km": null,
+      "interval_months": 24,
+      "description": "Brake fluid is hygroscopic: it absorbs moisture, reducing its boiling point and braking effectiveness."
+    },
+    {
+      "id": "tire-pressure",
+      "label": "Tire pressure and condition",
+      "i18n_key": "seed_interval_tire_pressure",
+      "desc_i18n_key": "seed_desc_tires",
+      "interval_km": 1000,
+      "interval_months": null,
+      "description": "Tires degrade both by mileage and age. Incorrect pressure or uneven wear compromises grip and safety."
+    },
+    {
+      "id": "fork-oil",
+      "label": "Fork oil",
+      "i18n_key": "seed_interval_fork_oil",
+      "desc_i18n_key": "seed_desc_fork_oil",
+      "interval_km": 15000,
+      "interval_months": 36,
+      "description": "Over time it breaks down, losing density and worsening front suspension behavior."
+    },
+    {
+      "id": "chassis-bearings",
+      "label": "Chassis & wheel bearings",
+      "interval_km": 10000,
+      "interval_months": 12,
+      "description": "Check for play or roughness in wheel hubs, steering head bearings, and swingarm pivot."
+    },
+    {
+      "id": "cables-controls",
+      "label": "Cables & controls",
+      "interval_km": 5000,
+      "interval_months": 6,
+      "description": "Lubricate clutch and throttle cables. Verify correct free play on levers and pedals."
+    }
+  ]
+}

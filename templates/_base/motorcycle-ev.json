@@ -1,0 +1,47 @@
+{
+  "id": "motorcycle-ev",
+  "extends": ["_base/motorcycle-common.json"],
+  "meta": {
+    "make": "_base",
+    "model": "Motorcycle Electric",
+    "author": "abrahdev",
+    "version": "1.0.0"
+  },
+  "maintenance_items": [
+    {
+      "id": "battery-bms",
+      "label": "Battery health & BMS",
+      "interval_km": null,
+      "interval_months": 12,
+      "description": "Connect diagnosis tool to monitor cell degradation, capacity parameters, and balance individual cell voltages."
+    },
+    {
+      "id": "hv-wiring",
+      "label": "High-voltage wiring",
+      "interval_km": 10000,
+      "interval_months": 12,
+      "description": "Visually inspect insulation status of orange high-voltage cables, connectors, and ensure no moisture ingress."
+    },
+    {
+      "id": "inverter-cooling",
+      "label": "Inverter & motor cooling",
+      "interval_km": 20000,
+      "interval_months": 24,
+      "description": "If liquid-cooled, check specific coolant level and top up. If air-cooled, clean cooling fins from mud and debris."
+    },
+    {
+      "id": "firmware-updates",
+      "label": "Firmware / software updates",
+      "interval_km": null,
+      "interval_months": 12,
+      "description": "Update the Vehicle Control Unit firmware for optimizations in power delivery, regen braking, and efficiency."
+    },
+    {
+      "id": "reduction-gearbox-oil",
+      "label": "Reduction gearbox lubricant",
+      "interval_km": 40000,
+      "interval_months": 48,
+      "description": "Drain and replace the small amount of oil inside the central motor reduction gear mechanism."
+    }
+  ]
+}
