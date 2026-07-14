@@ -64,3 +64,4 @@ flutter:
   assets:
     - assets/branding/
     - templates/
+    - i18n/

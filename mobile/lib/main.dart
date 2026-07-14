@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:mobile/core/theme/app_theme.dart';
 import 'package:mobile/data/services/background_service.dart';
 import 'package:mobile/data/services/notification_service.dart';
+import 'package:mobile/data/services/template_translations.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/locale_provider.dart';
 import 'package:mobile/presentation/providers/template_source_provider.dart';
@@ -388,6 +389,8 @@ Future<void> main() async {
 
   final notificationService = NotificationService();
   await notificationService.init();
+
+  await TemplateTranslations.preload();
 
   runApp(
     ProviderScope(

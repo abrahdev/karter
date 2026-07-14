@@ -10,7 +10,7 @@ The `lib/` directory is organized as follows:
 ```text
 lib/
 ├── main.dart                      # Application entry point
-├── l10n/                          # Localization ARB files and generated code
+├── l10n/                          # UI localization (ARB) — buttons, menus, alerts only
 │   ├── app_en.arb
 │   ├── app_es.arb
 │   ├── app_localizations.dart
@@ -62,10 +62,11 @@ lib/
 │   │   ├── maintenance_interval_repository_impl.dart
 │   │   ├── vehicle_document_repository_impl.dart
 │   │   └── seed_intervals.dart
-│   └── services/                  # Application services (export, PDF, templates)
+│   └── services/                  # Application services (export, PDF, templates, i18n)
 │       ├── export_service.dart
 │       ├── pdf_export_service.dart
-│       └── template_resolver.dart
+│       ├── template_resolver.dart
+│       └── template_translations.dart
 └── presentation/                  # User Interface (UI) layer
     ├── pages/                     # Complete application screens
     │   ├── home_page.dart
@@ -117,7 +118,7 @@ lib/
 - **Purpose:** Fetches, submits, and caches data. Bridges the outside world (local DB, assets) and the Domain layer.
 - **Contents:**
   - `repositories/` — Concrete implementations of domain repository interfaces, backed by Drift database
-  - `services/` — Application services (data export/import, PDF generation, template resolution from assets)
+  - `services/` — Application services (data export/import, PDF generation, template resolution, template translations from i18n JSON)
   - `models/` — Data models for non-persistent structures (template JSON parsing)
 - **Flow:** Repository implementations receive a Drift `AppDatabase` instance and translate between database rows and domain entities.
 
@@ -137,6 +138,14 @@ State management uses `flutter_riverpod`. Providers are organized in:
 
 - `presentation/providers/vehicle_providers.dart` — All repository providers and async data providers
 - `presentation/providers/locale_provider.dart` — Locale/language state
+
+## i18n Architecture
+
+Translations are split into two systems:
+
+- **`lib/l10n/app_*.arb`** — Flutter UI strings (buttons, menus, alerts, forms). Standard ARB-based localization via `flutter gen-l10n`.
+- **`i18n/*.json`** (root-level, symlinked as `mobile/i18n/`) — Template/community translations (maintenance item names, descriptions, brand names). Flat JSON format (`{"key": "value"}`) for easy community contribution.
+- **`data/services/template_translations.dart`** — Loads and caches template JSON translations at startup. Used by `maintenance_localizer.dart` to resolve interval names/descriptions.
 
 Repository providers are created once using `Provider<T>`. Async data providers use `FutureProvider.family` keyed by `vehicleId` to fetch per-vehicle data (fuel logs, maintenance logs, intervals, documents).
 

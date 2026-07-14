@@ -225,7 +225,7 @@ classDiagram
     }
 ```
 
-- `i18nKey`/`descI18nKey` map to ARB translation keys for built-in intervals (oil change, filters, etc.).
+- `i18nKey`/`descI18nKey` map to JSON keys in `i18n/*.json` for built-in intervals (oil change, filters, etc.), resolved via `TemplateTranslations`.
 - `isCustom` distinguishes user-created intervals from seeded defaults.
 - `lastResetKm`/`lastResetDate` track the last service reset for "next in X km" calculations.
 
@@ -381,6 +381,24 @@ classDiagram
 - Templates are JSON files in the bundled `templates/` directory.
 - `findBestMatch()` searches by make + model + year and returns the best matching template.
 - Used in the vehicle creation form ("Buscar plantilla" button).
+
+### Template Translations (`data/services/template_translations.dart`)
+
+Loads community/template translations (maintenance item names, descriptions, brand names) from flat JSON files in `i18n/`. These are separate from the ARB-based UI translations in `lib/l10n/`.
+
+```mermaid
+classDiagram
+    class TemplateTranslations {
+        +Future<void> preload()
+        +String getLabel(String locale, String key, String fallback)$
+        +String getDesc(String locale, String key, String fallback)$
+    }
+```
+
+- Translations are preloaded at app startup in `main()` via `TemplateTranslations.preload()`.
+- `maintenance_localizer.dart` uses this service to resolve interval names/descriptions.
+- JSON format is flat key-value (`{"seed_interval_oil_change": "Oil change"}`) for easy community contribution.
+- Two files: `i18n/en.json` (English) and `i18n/es.json` (Spanish).
 
 ### PDF Export (`data/services/pdf_export_service.dart`)
 

@@ -100,7 +100,7 @@ class _IntervalPreview extends ConsumerWidget {
     final theme = Theme.of(context);
     final l = AppLocalizations.of(context)!;
     final desc = localizedDesc(
-        l, interval.descI18nKey, interval.description ?? '');
+        l.localeName, interval.descI18nKey, interval.description ?? '');
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 12, 20, 20),
@@ -316,7 +316,7 @@ class _AddIntervalModalState
               const SizedBox(height: 16),
               Text(
                 _isEditing
-                    ? localizedLabel(l, widget.editInterval!.i18nKey,
+                    ? localizedLabel(l.localeName, widget.editInterval!.i18nKey,
                         widget.editInterval!.label)
                     : l.newInterval,
                 style: theme.textTheme.titleLarge,

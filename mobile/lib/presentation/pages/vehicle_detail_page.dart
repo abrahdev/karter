@@ -257,7 +257,7 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
                             color: accentColor,
                           ),
                           title: Text(
-                            localizedLabel(l, interval.i18nKey,
+                            localizedLabel(l.localeName, interval.i18nKey,
                                 interval.label),
                             style: TextStyle(
                               fontWeight: data.isDue
@@ -293,11 +293,11 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
                                   context,
                                   vehicleId: widget.vehicleId,
                                   initialDescription:
-                                      localizedLabel(
-                                    l,
-                                    interval.i18nKey,
-                                    interval.label,
-                                  ),
+                                       localizedLabel(
+                                     l.localeName,
+                                     interval.i18nKey,
+                                     interval.label,
+                                   ),
                                   initialIntervalId: interval.id,
                                   onSaved: () {
                                     ref.invalidate(
@@ -440,9 +440,9 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
   void _showDescription(
       BuildContext context, AppLocalizations l, dynamic interval) {
     final label = localizedLabel(
-        l, interval.i18nKey, interval.label ?? '');
+        l.localeName, interval.i18nKey, interval.label ?? '');
     final desc = localizedDesc(
-        l, interval.descI18nKey, interval.description ?? '');
+        l.localeName, interval.descI18nKey, interval.description ?? '');
     final text = desc.isEmpty ? l.noDescriptionAvailable : desc;
     final theme = Theme.of(context);
     karterShowModalBottomSheet(

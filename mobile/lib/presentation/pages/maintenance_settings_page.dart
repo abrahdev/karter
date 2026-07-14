@@ -91,7 +91,7 @@ class _IntervalTile extends StatelessWidget {
     return Card(
       child: ListTile(
         title: Text(
-          localizedLabel(l, interval.i18nKey, interval.label),
+          localizedLabel(l.localeName, interval.i18nKey, interval.label),
           style: TextStyle(
             color: interval.isEnabled ? null : theme.colorScheme.outline,
           ),
