@@ -390,7 +390,10 @@ Future<void> main() async {
   final notificationService = NotificationService();
   await notificationService.init();
 
-  await TemplateTranslations.preload();
+  final templateSource = TemplateSourceConfig.fromPrefs(prefs);
+  await TemplateTranslations.preload(
+    baseUrl: templateSource.enabled ? templateSource.repoUrl : null,
+  );
 
   runApp(
     ProviderScope(

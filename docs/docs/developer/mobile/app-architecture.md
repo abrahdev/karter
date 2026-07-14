@@ -384,21 +384,22 @@ classDiagram
 
 ### Template Translations (`data/services/template_translations.dart`)
 
-Loads community/template translations (maintenance item names, descriptions, brand names) from flat JSON files in `i18n/`. These are separate from the ARB-based UI translations in `lib/l10n/`.
+Loads community/template translations (maintenance item names, descriptions, brand names) from flat JSON files in `templates/i18n/`. These are separate from the ARB-based UI translations in `lib/l10n/`. Supports remote fetch (same GitHub URL as templates) with local asset fallback.
 
 ```mermaid
 classDiagram
     class TemplateTranslations {
-        +Future<void> preload()
+        +Future<void> preload(String? baseUrl)$
         +String getLabel(String locale, String key, String fallback)$
         +String getDesc(String locale, String key, String fallback)$
     }
 ```
 
-- Translations are preloaded at app startup in `main()` via `TemplateTranslations.preload()`.
+- Translations are preloaded at app startup in `main()`, respecting the template source config (online/offline).
+- Remote mode: fetches from `{repoUrl}/i18n/{locale}.json`, falls back to bundled `templates/i18n/` on failure.
 - `maintenance_localizer.dart` uses this service to resolve interval names/descriptions.
 - JSON format is flat key-value (`{"seed_interval_oil_change": "Oil change"}`) for easy community contribution.
-- Two files: `i18n/en.json` (English) and `i18n/es.json` (Spanish).
+- Two files: `templates/i18n/en.json` (English) and `templates/i18n/es.json` (Spanish). Accessible in the app via a symlink at `mobile/i18n/` (listed as a separate asset in `pubspec.yaml` since Flutter doesn't recursively bundle symlinked subdirectories on Linux).
 
 ### PDF Export (`data/services/pdf_export_service.dart`)
 
