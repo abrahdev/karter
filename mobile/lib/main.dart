@@ -374,7 +374,6 @@ Future<void> main() async {
   if (Platform.isAndroid || Platform.isIOS) {
     await Workmanager().initialize(
       callbackDispatcher,
-      isInDebugMode: false,
     );
     await Workmanager().registerPeriodicTask(
       'karter-reminder-check',

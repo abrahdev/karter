@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'dart:io' show File, Platform;
+import 'dart:typed_data';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -134,11 +136,12 @@ class _DataManagerPageState extends ConsumerState<DataManagerPage> {
           'karter-export-${DateTime.now().millisecondsSinceEpoch}.json';
 
       if (Platform.isLinux) {
-        final path = await FilePicker.platform.saveFile(
+        final path = await FilePicker.saveFile(
           dialogTitle: l.saveExport,
           fileName: fileName,
           type: FileType.custom,
           allowedExtensions: ['json'],
+          bytes: Uint8List.fromList(utf8.encode(json)),
         );
         if (path != null) {
           await File(path).writeAsString(json);
@@ -153,9 +156,11 @@ class _DataManagerPageState extends ConsumerState<DataManagerPage> {
         final file = File('${dir.path}/$fileName');
         await file.writeAsString(json);
 
-        await Share.shareXFiles(
-          [XFile(file.path)],
-          text: l.exportShareText(_selectedIds.length.toString()),
+        await SharePlus.instance.share(
+          ShareParams(
+            files: [XFile(file.path)],
+            text: l.exportShareText(_selectedIds.length.toString()),
+          ),
         );
       }
     } catch (e) {
@@ -171,7 +176,7 @@ class _DataManagerPageState extends ConsumerState<DataManagerPage> {
 
   Future<void> _import() async {
     final l = AppLocalizations.of(context)!;
-    final result = await FilePicker.platform.pickFiles(
+    final result = await FilePicker.pickFiles(
       type: FileType.custom,
       allowedExtensions: ['json'],
     );

@@ -45,7 +45,7 @@ class _NotificationSettingsContentState
   bool _initialized = false;
 
   Vehicle? get _vehicle =>
-      ref.watch(vehicleProvider(widget.vehicleId)).valueOrNull;
+      ref.watch(vehicleProvider(widget.vehicleId)).value;
 
   bool get _isCustom => _selectedFreq.contains(-1);
 
@@ -231,7 +231,7 @@ class _NotificationSettingsContentState
           contentPadding: EdgeInsets.zero,
           onChanged: (enabled) async {
             final v =
-                ref.read(vehicleProvider(widget.vehicleId)).valueOrNull;
+                ref.read(vehicleProvider(widget.vehicleId)).value;
             if (v == null) return;
             final updated = v.copyWith(
               maintenanceReminderEnabled: enabled,
@@ -253,7 +253,7 @@ class _NotificationSettingsContentState
             contentPadding: EdgeInsets.zero,
             onChanged: (snooze) async {
               final v =
-                  ref.read(vehicleProvider(widget.vehicleId)).valueOrNull;
+                  ref.read(vehicleProvider(widget.vehicleId)).value;
               if (v == null) return;
               final updated = v.copyWith(
                 maintenanceReminderSnoozedUntil: snooze

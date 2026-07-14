@@ -43,6 +43,7 @@ Future<void> showEditDocumentModal(
   var changed = false;
 
   while (true) {
+    if (!context.mounted) return;
     final action = await karterShowModalBottomSheet<String>(
       context: context,
       isScrollControlled: true,
@@ -193,7 +194,7 @@ class _AddDocumentModalState extends ConsumerState<_AddDocumentModal> {
   }
 
   Future<void> _pickFile() async {
-    final result = await FilePicker.platform.pickFiles(
+    final result = await FilePicker.pickFiles(
       type: FileType.custom,
       allowedExtensions: [
         'pdf',

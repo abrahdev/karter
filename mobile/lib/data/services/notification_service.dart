@@ -16,7 +16,7 @@ class NotificationService {
           defaultActionName: 'Open',
         ),
       );
-      await _plugin.initialize(settings);
+      await _plugin.initialize(settings: settings);
       _initialized = true;
       return;
     }
@@ -33,7 +33,7 @@ class NotificationService {
       iOS: iosSettings,
     );
 
-    await _plugin.initialize(settings);
+    await _plugin.initialize(settings: settings);
     _initialized = true;
   }
 
@@ -58,12 +58,12 @@ class NotificationService {
       android: androidDetails,
       iOS: iosDetails,
     );
-    await _plugin.show(id, title, body, details, payload: payload);
+    await _plugin.show(id: id, title: title, body: body, notificationDetails: details, payload: payload);
   }
 
   Future<void> cancel(int id) async {
     if (!_initialized) return;
-    await _plugin.cancel(id);
+    await _plugin.cancel(id: id);
   }
 
   Future<void> cancelAll() async {

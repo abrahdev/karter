@@ -816,10 +816,12 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
                       ))
                   .toList(),
               onChanged: (v) {
-                if (v != null) setState(() {
-                  _currency = v;
-                  _markDirty();
-                });
+                if (v != null) {
+                  setState(() {
+                    _currency = v;
+                    _markDirty();
+                  });
+                }
               },
             ),
             const SizedBox(height: 16),

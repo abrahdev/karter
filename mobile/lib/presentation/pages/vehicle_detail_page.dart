@@ -32,7 +32,7 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final action = ref.read(pendingNotificationActionProvider);
       if (action != null) {
-        ref.read(pendingNotificationActionProvider.notifier).state = null;
+        ref.read(pendingNotificationActionProvider.notifier).set(null);
         final parts = action.split(':');
         if (parts.length == 2 && parts[1] == widget.vehicleId) {
       if (parts[0] == 'odometer') {
@@ -487,7 +487,7 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
       context: context,
       isScrollControlled: true,
       builder: (ctx) => OdometerDialog(
-        current: ref.read(vehicleProvider(vehicleId)).valueOrNull
+        current: ref.read(vehicleProvider(vehicleId)).value
                 ?.currentOdometer ??
             Odometer(0, DistanceUnit.kilometers),
         onSave: (double newDistance) async {

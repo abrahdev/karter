@@ -101,8 +101,12 @@ class _MaintenanceLogListPageState
     await file.writeAsBytes(pdfBytes);
 
     try {
-      await Share.shareXFiles([XFile(file.path)],
-          text: '${l.maintenanceReportTitle} - $vehicleName');
+      await SharePlus.instance.share(
+        ShareParams(
+          files: [XFile(file.path)],
+          text: '${l.maintenanceReportTitle} - $vehicleName',
+        ),
+      );
     } catch (_) {
       if (Platform.isLinux) {
         await Process.run('xdg-open', [file.path]);

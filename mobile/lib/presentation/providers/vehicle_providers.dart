@@ -120,5 +120,13 @@ final notificationServiceProvider = Provider<NotificationService>((ref) {
   return NotificationService();
 });
 
+class _PendingNotificationActionNotifier extends Notifier<String?> {
+  @override
+  String? build() => null;
+  void set(String? value) => state = value;
+}
+
 final pendingNotificationActionProvider =
-    StateProvider<String?>((ref) => null);
+    NotifierProvider<_PendingNotificationActionNotifier, String?>(
+  _PendingNotificationActionNotifier.new,
+);

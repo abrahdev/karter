@@ -33,7 +33,7 @@ class _NotificationSettingsModalState
   late Set<int> _selectedFreq;
 
   Vehicle? get _vehicle =>
-      ref.watch(vehicleProvider(widget.vehicleId)).valueOrNull;
+      ref.watch(vehicleProvider(widget.vehicleId)).value;
 
   bool get _isCustom => _selectedFreq.contains(-1);
 
@@ -241,7 +241,7 @@ class _NotificationSettingsModalState
           contentPadding: EdgeInsets.zero,
           onChanged: (enabled) async {
             final v =
-                ref.read(vehicleProvider(widget.vehicleId)).valueOrNull;
+                ref.read(vehicleProvider(widget.vehicleId)).value;
             if (v == null) return;
             final updated = v.copyWith(
               maintenanceReminderEnabled: enabled,
@@ -263,7 +263,7 @@ class _NotificationSettingsModalState
             contentPadding: EdgeInsets.zero,
             onChanged: (snooze) async {
               final v =
-                  ref.read(vehicleProvider(widget.vehicleId)).valueOrNull;
+                  ref.read(vehicleProvider(widget.vehicleId)).value;
               if (v == null) return;
               final updated = v.copyWith(
                 maintenanceReminderSnoozedUntil: snooze

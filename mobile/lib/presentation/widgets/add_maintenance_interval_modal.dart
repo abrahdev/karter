@@ -34,6 +34,7 @@ Future<void> showEditIntervalModal(
   var changed = false;
 
   while (true) {
+    if (!context.mounted) return;
     final action = await karterShowModalBottomSheet<String>(
       context: context,
       isScrollControlled: true,
