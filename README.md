@@ -9,6 +9,8 @@
 ![Version](https://img.shields.io/github/v/release/abrahdev/karter?filter=v*&label=version&color=facc15)
 [![Docs](https://img.shields.io/badge/docs-karter-%23695609)](https://karter.abrah.dev/)
 [![F-Droid](https://img.shields.io/badge/F--Droid-coming_soon-%2300b341)](https://f-droid.org)
+[![Translate](https://hosted.weblate.org/widget/karter/svg-badge.svg)](https://hosted.weblate.org/engage/karter/)
+
 
 Karter is a privacy-first, open source vehicle maintenance tracker built with Flutter. Log fuel fill-ups with automatic economy calculations (MPG, L/100km, km/L), track repairs and part replacements, set service intervals by distance or time, and catalog spare parts. All data stays on your device — no accounts, no telemetry, no tracking. Multi-vehicle support, Material Design 3 with dynamic colors, OBD-II integration coming soon.
 
