@@ -147,6 +147,30 @@ Translations are split into two systems:
 - **`templates/i18n/*.json`** — Template/community translations (maintenance item names, descriptions, brand names). Flat JSON format (`{"key": "value"}`) for easy community contribution. Served from the same remote URL as template JSONs. Accessible in the app via a symlink at `mobile/i18n/` (listed as a separate asset in `pubspec.yaml` since Flutter doesn't recursively bundle symlinked subdirectories on Linux).
 - **`data/services/template_translations.dart`** — Loads template JSON translations at startup. Supports remote fetch (same URL as templates) with local asset fallback. Used by `maintenance_localizer.dart` to resolve interval names/descriptions.
 
+## Templates Directory Structure
+
+The `templates/` directory is a self-contained package that can be forked by communities to create their own template repos:
+
+```text
+templates/
+├── data/                     # Vehicle templates (community-contributed)
+│   ├── index.json            # Generated manifest of all templates
+│   ├── _base/                # Base templates (powertrain types)
+│   │   ├── common-all.json
+│   │   ├── combustion.json
+│   │   ├── diesel.json
+│   │   ├── electric.json
+│   │   └── motorcycle-*.json
+│   ├── audi/                 # Per-manufacturer directories
+│   ├── toyota/
+│   └── ... (31 manufacturers)
+├── i18n/                     # Infrastructure: community translations
+│   ├── en.json
+│   └── es.json
+└── schemas/                  # Infrastructure: template validation
+    └── template-v1.json
+```
+
 Repository providers are created once using `Provider<T>`. Async data providers use `FutureProvider.family` keyed by `vehicleId` to fetch per-vehicle data (fuel logs, maintenance logs, intervals, documents).
 
 ## Recommended Data Flow

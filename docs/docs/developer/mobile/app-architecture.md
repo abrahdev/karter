@@ -378,7 +378,7 @@ classDiagram
     TemplateResolver --> TemplateMeta
 ```
 
-- Templates are JSON files in the bundled `templates/` directory.
+- Templates are JSON files in the bundled `templates/data/` directory.
 - `findBestMatch()` searches by make + model + year and returns the best matching template.
 - Used in the vehicle creation form ("Buscar plantilla" button).
 

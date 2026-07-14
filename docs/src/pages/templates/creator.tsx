@@ -6,14 +6,18 @@ const INDEX_URL =
   "https://raw.githubusercontent.com/abrahdev/karter/main/templates/index.json";
 
 const RAW_BASE =
-  "https://raw.githubusercontent.com/abrahdev/karter/main/templates";
+  "https://raw.githubusercontent.com/abrahdev/karter/main/templates/data";
 
 const BASE_OPTIONS = [
   { value: "", label: "None (start from scratch)" },
-  { value: "_base/common-all.json", label: "_base/common-all.json" },
-  { value: "_base/combustion.json", label: "_base/combustion.json (gasoline)" },
-  { value: "_base/diesel.json", label: "_base/diesel.json" },
-  { value: "_base/electric.json", label: "_base/electric.json" },
+  { value: "data/_base/common-all.json", label: "_base/common-all.json" },
+  { value: "data/_base/combustion.json", label: "_base/combustion.json (gasoline)" },
+  { value: "data/_base/diesel.json", label: "_base/diesel.json" },
+  { value: "data/_base/electric.json", label: "_base/electric.json" },
+  { value: "data/_base/motorcycle-common.json", label: "_base/motorcycle-common.json" },
+  { value: "data/_base/motorcycle-2t.json", label: "_base/motorcycle-2t.json (2-stroke)" },
+  { value: "data/_base/motorcycle-4t.json", label: "_base/motorcycle-4t.json (4-stroke)" },
+  { value: "data/_base/motorcycle-ev.json", label: "_base/motorcycle-ev.json (electric)" },
 ];
 
 const FUEL_OPTIONS = [
@@ -617,7 +621,7 @@ export default function TemplateCreatorPage() {
   const forkUrl = "https://github.com/abrahdev/karter/fork";
   const makeSlug = toSlug(form.make || "yourmake");
   const modelSlug = toSlug(form.model || "yourmodel");
-  const folderPath = `templates/${makeSlug}/${modelSlug}`;
+  const folderPath = `templates/data/${makeSlug}/${modelSlug}`;
 
   return (
     <Layout title="Template Creator" description="Create vehicle maintenance templates for Karter">

@@ -182,7 +182,7 @@ function Modal({
     ? `${m.engine.displacement_cc}cc`
     : null;
 
-  const sourceUrl = `https://github.com/abrahdev/karter/blob/main/templates/${t.path}`;
+  const sourceUrl = `https://github.com/abrahdev/karter/blob/main/templates/data/${t.path}`;
 
   const fields: { label: string; value: string | null }[] = [
     { label: "ID", value: t.id },

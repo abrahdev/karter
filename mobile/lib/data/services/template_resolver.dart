@@ -38,20 +38,37 @@ class TemplateResolver {
   TemplateIndex? _index;
   final Map<String, Map<String, dynamic>> _templateCache = {};
 
-  Future<String> _loadString(String assetPath, {String? baseUrl}) async {
+  static const _dataPrefix = 'data/';
+
+  Future<String> _httpGet(String url) async {
+    final uri = Uri.parse(url);
+    final resp = await http.get(uri).timeout(const Duration(seconds: 10));
+    if (resp.statusCode == 200) return resp.body;
+    throw StateError('HTTP ${resp.statusCode} for $url');
+  }
+
+  Future<String> _loadIndex({String? baseUrl}) async {
     if (baseUrl != null && baseUrl.isNotEmpty) {
       try {
-        final uri = Uri.parse('$baseUrl/$assetPath');
-        final resp = await http.get(uri).timeout(const Duration(seconds: 10));
-        if (resp.statusCode == 200) return resp.body;
+        return await _httpGet('$baseUrl/index.json');
       } catch (_) {}
     }
-    return rootBundle.loadString('templates/$assetPath');
+    return rootBundle.loadString('templates/index.json');
+  }
+
+  Future<String> _loadTemplate(String path, {String? baseUrl}) async {
+    final remotePath = '$_dataPrefix$path';
+    if (baseUrl != null && baseUrl.isNotEmpty) {
+      try {
+        return await _httpGet('$baseUrl/$remotePath');
+      } catch (_) {}
+    }
+    return rootBundle.loadString('templates/data/$path');
   }
 
   Future<TemplateIndex> loadIndex({String? baseUrl}) async {
     if (_index != null && _lastBaseUrl == baseUrl) return _index!;
-    final jsonStr = await _loadString('index.json', baseUrl: baseUrl);
+    final jsonStr = await _loadIndex(baseUrl: baseUrl);
     _index = TemplateIndex.fromJson(json.decode(jsonStr) as Map<String, dynamic>);
     _lastBaseUrl = baseUrl;
     return _index!;
@@ -63,7 +80,7 @@ class TemplateResolver {
   }) async {
     final cacheKey = '$baseUrl|$path';
     if (_templateCache.containsKey(cacheKey)) return _templateCache[cacheKey]!;
-    final jsonStr = await _loadString(path, baseUrl: baseUrl);
+    final jsonStr = await _loadTemplate(path, baseUrl: baseUrl);
     final data = json.decode(jsonStr) as Map<String, dynamic>;
     _templateCache[cacheKey] = data;
     return data;
