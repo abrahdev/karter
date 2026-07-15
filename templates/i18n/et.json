@@ -1,1 +1,7 @@
-{}
+{
+    "seed_interval_oil_change": "Õlivahetus",
+    "seed_interval_oil_filter": "Õlifilter",
+    "seed_interval_air_filter": "Õhufilter",
+    "seed_interval_brake_pads": "Piduriklotsid",
+    "seed_interval_tires": "Rehvid"
+}
