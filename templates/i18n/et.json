@@ -3,5 +3,9 @@
     "seed_interval_oil_filter": "Õlifilter",
     "seed_interval_air_filter": "Õhufilter",
     "seed_interval_brake_pads": "Piduriklotsid",
-    "seed_interval_tires": "Rehvid"
+    "seed_interval_tires": "Rehvid",
+    "seed_interval_spark_plugs": "Süüteküünlad",
+    "seed_interval_timing_belt": "Hammasrihm",
+    "seed_interval_brake_fluid": "Pidurivedelik",
+    "seed_interval_coolant": "Jahutusvedelik"
 }
