@@ -235,5 +235,19 @@
   "moreTemplateSourceReset": "Reset to default",
   "moreTemplateSourceUrlHint": "https://raw.githubusercontent.com/...",
   "moreTemplateSourceEditUrl": "Edit URL",
-  "moreTemplateSourceUrlSaved": "URL updated"
+  "moreTemplateSourceUrlSaved": "URL updated",
+
+  "onboardingSkip": "Skip",
+  "onboardingNext": "Next",
+  "onboardingDone": "Get started",
+  "onboardingReplay": "View onboarding",
+  "onboardingReplaySubtitle": "Replay the welcome walkthrough",
+  "onboardingWelcomeTitle": "Welcome to Karter",
+  "onboardingWelcomeDesc": "A privacy-first, open source vehicle maintenance tracker. 100% offline — no accounts, no telemetry, no tracking.",
+  "onboardingVehicleTitle": "Add your vehicle",
+  "onboardingVehicleDesc": "Register your car, motorcycle, or EV. Pick a template and Karter auto-fills the maintenance intervals for your model.",
+  "onboardingTrackTitle": "Track fuel & maintenance",
+  "onboardingTrackDesc": "Log fill-ups with automatic economy calculations (MPG, L/100km, km/L). Track repairs, parts, and costs.",
+  "onboardingRemindersTitle": "Stay on top of service",
+  "onboardingRemindersDesc": "Get notified when it's time for oil changes, brake pads, and every maintenance interval — by distance or time."
 }

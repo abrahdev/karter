@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile/core/modal_helpers.dart';
 import 'package:mobile/l10n/app_localizations.dart';
+import 'package:mobile/presentation/pages/onboarding_page.dart';
 import 'package:mobile/presentation/providers/locale_provider.dart';
 import 'package:mobile/presentation/providers/template_source_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -41,6 +42,24 @@ class MorePage extends ConsumerWidget {
           ),
         ),
         const SizedBox(height: 8),
+        Material(
+          color: theme.colorScheme.surface,
+          child: ListTile(
+            leading: const Icon(Icons.help_outline),
+            title: Text(l.onboardingReplay),
+            subtitle: Text(l.onboardingReplaySubtitle),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  fullscreenDialog: true,
+                  builder: (_) => const OnboardingPage(),
+                ),
+              );
+            },
+          ),
+        ),
+        const Divider(),
         Material(
           color: theme.colorScheme.surface,
           child: ListTile(
