@@ -1035,6 +1035,30 @@ abstract class AppLocalizations {
   /// **'Made with ❤️ by abrahdev'**
   String get moreFooter;
 
+  /// No description provided for @moreRate.
+  ///
+  /// In en, this message translates to:
+  /// **'Rate Karter'**
+  String get moreRate;
+
+  /// No description provided for @moreRateSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave a review on the Play Store'**
+  String get moreRateSubtitle;
+
+  /// No description provided for @ratePromptMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Enjoying Karter? A review helps others discover the app!'**
+  String get ratePromptMessage;
+
+  /// No description provided for @rate.
+  ///
+  /// In en, this message translates to:
+  /// **'Rate'**
+  String get rate;
+
   /// No description provided for @moreUrlError.
   ///
   /// In en, this message translates to:

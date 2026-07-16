@@ -516,6 +516,19 @@ class AppLocalizationsEs extends AppLocalizations {
   String get moreFooter => 'Hecho con ❤️ por abrahdev';
 
   @override
+  String get moreRate => 'Calificar Karter';
+
+  @override
+  String get moreRateSubtitle => 'Dejá una reseña en la Play Store';
+
+  @override
+  String get ratePromptMessage =>
+      '¿Te gusta Karter? ¡Una reseña ayuda a otros a descubrir la app!';
+
+  @override
+  String get rate => 'Calificar';
+
+  @override
   String moreUrlError(Object url) {
     return 'No se pudo abrir $url';
   }

@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile/core/database/app_database.dart';
 import 'package:mobile/core/modal_helpers.dart';
+import 'package:mobile/core/rating_helper.dart';
 import 'package:mobile/domain/entities/maintenance_log.dart';
 import 'package:mobile/domain/entities/vehicle.dart';
 import 'package:mobile/l10n/app_localizations.dart';
@@ -33,6 +34,7 @@ Future<void> showAddMaintenanceLogModal(
 
   if (result == 'saved' && context.mounted) {
     onSaved();
+    showRatePrompt(context);
   }
 }
 

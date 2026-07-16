@@ -172,6 +172,10 @@
   "moreDonate": "Donar",
   "moreDonateSubtitle": "Apoya el desarrollo en GitHub Sponsors",
   "moreFooter": "Hecho con ❤️ por abrahdev",
+  "moreRate": "Calificar Karter",
+  "moreRateSubtitle": "Dejá una reseña en la Play Store",
+  "ratePromptMessage": "¿Te gusta Karter? ¡Una reseña ayuda a otros a descubrir la app!",
+  "rate": "Calificar",
   "moreUrlError": "No se pudo abrir {url}",
 
   "language": "Idioma",
