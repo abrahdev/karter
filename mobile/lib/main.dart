@@ -146,6 +146,10 @@ final _router = GoRouter(
         vehicleId: state.pathParameters['vehicleId']!,
       ),
     ),
+    GoRoute(
+      path: '/onboarding',
+      builder: (_, _) => const OnboardingPage(),
+    ),
   ],
 );
 
@@ -302,15 +306,9 @@ class _KarterAppState extends ConsumerState<KarterApp> {
               _checkedOnboarding = true;
               WidgetsBinding.instance.addPostFrameCallback((_) async {
                 if (!mounted) return;
-                final nav = Navigator.of(builderContext);
                 final seen = await hasSeenOnboarding();
                 if (!seen && mounted) {
-                  nav.push(
-                    MaterialPageRoute(
-                      fullscreenDialog: true,
-                      builder: (_) => const OnboardingPage(),
-                    ),
-                  );
+                  _router.push('/onboarding');
                 }
               });
             }
