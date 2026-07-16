@@ -28,6 +28,8 @@ import 'package:mobile/presentation/pages/maintenance_settings_page.dart';
 import 'package:mobile/presentation/pages/more_page.dart';
 import 'package:mobile/presentation/pages/notification_settings_page.dart';
 import 'package:mobile/presentation/pages/vehicle_detail_page.dart';
+import 'package:mobile/core/onboarding_helper.dart';
+import 'package:mobile/presentation/pages/onboarding_page.dart';
 import 'package:mobile/presentation/pages/vehicle_form_page.dart';
 import 'package:mobile/presentation/widgets/notification_settings_modal.dart';
 
@@ -144,6 +146,10 @@ final _router = GoRouter(
         vehicleId: state.pathParameters['vehicleId']!,
       ),
     ),
+    GoRoute(
+      path: '/onboarding',
+      builder: (_, _) => const OnboardingPage(),
+    ),
   ],
 );
 
@@ -258,18 +264,25 @@ class _ShellState extends State<_Shell> {
   }
 }
 
-class KarterApp extends ConsumerWidget {
+class KarterApp extends ConsumerStatefulWidget {
   final Color initialAccent;
 
   const KarterApp({super.key, required this.initialAccent});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<KarterApp> createState() => _KarterAppState();
+}
+
+class _KarterAppState extends ConsumerState<KarterApp> {
+  bool _checkedOnboarding = false;
+
+  @override
+  Widget build(BuildContext context) {
     final locale = ref.watch(localeProvider);
     return StreamBuilder<SystemAccentColor>(
       stream: SystemTheme.onChange,
       builder: (context, snapshot) {
-        final color = snapshot.data?.accent ?? initialAccent;
+        final color = snapshot.data?.accent ?? widget.initialAccent;
         final lightScheme = ColorScheme.fromSeed(
           seedColor: color,
           brightness: Brightness.light,
@@ -288,6 +301,19 @@ class KarterApp extends ConsumerWidget {
           darkTheme: AppTheme.from(darkScheme, Brightness.dark),
           routerConfig: _router,
           debugShowCheckedModeBanner: false,
+          builder: (builderContext, child) {
+            if (!_checkedOnboarding) {
+              _checkedOnboarding = true;
+              WidgetsBinding.instance.addPostFrameCallback((_) async {
+                if (!mounted) return;
+                final seen = await hasSeenOnboarding();
+                if (!seen && mounted) {
+                  _router.push('/onboarding');
+                }
+              });
+            }
+            return child ?? const SizedBox.shrink();
+          },
         );
       },
     );

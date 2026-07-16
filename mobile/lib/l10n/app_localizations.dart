@@ -7,6 +7,7 @@ import 'package:intl/intl.dart' as intl;
 
 import 'app_localizations_en.dart';
 import 'app_localizations_es.dart';
+import 'app_localizations_et.dart';
 
 // ignore_for_file: type=lint
 
@@ -96,6 +97,7 @@ abstract class AppLocalizations {
   static const List<Locale> supportedLocales = <Locale>[
     Locale('es'),
     Locale('en'),
+    Locale('et'),
   ];
 
   /// No description provided for @appTitle.
@@ -1033,6 +1035,30 @@ abstract class AppLocalizations {
   /// **'Made with ❤️ by abrahdev'**
   String get moreFooter;
 
+  /// No description provided for @moreRate.
+  ///
+  /// In en, this message translates to:
+  /// **'Rate Karter'**
+  String get moreRate;
+
+  /// No description provided for @moreRateSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave a review on the Play Store'**
+  String get moreRateSubtitle;
+
+  /// No description provided for @ratePromptMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Enjoying Karter? A review helps others discover the app!'**
+  String get ratePromptMessage;
+
+  /// No description provided for @rate.
+  ///
+  /// In en, this message translates to:
+  /// **'Rate'**
+  String get rate;
+
   /// No description provided for @moreUrlError.
   ///
   /// In en, this message translates to:
@@ -1332,6 +1358,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'URL updated'**
   String get moreTemplateSourceUrlSaved;
+
+  /// No description provided for @onboardingSkip.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get onboardingSkip;
+
+  /// No description provided for @onboardingNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get onboardingNext;
+
+  /// No description provided for @onboardingDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Get started'**
+  String get onboardingDone;
+
+  /// No description provided for @onboardingReplay.
+  ///
+  /// In en, this message translates to:
+  /// **'View onboarding'**
+  String get onboardingReplay;
+
+  /// No description provided for @onboardingReplaySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Replay the welcome walkthrough'**
+  String get onboardingReplaySubtitle;
+
+  /// No description provided for @onboardingWelcomeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to Karter'**
+  String get onboardingWelcomeTitle;
+
+  /// No description provided for @onboardingWelcomeDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'A privacy-first, open source vehicle maintenance tracker. 100% offline — no accounts, no telemetry, no tracking.'**
+  String get onboardingWelcomeDesc;
+
+  /// No description provided for @onboardingVehicleTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add your vehicle'**
+  String get onboardingVehicleTitle;
+
+  /// No description provided for @onboardingVehicleDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Register your car, motorcycle, or EV. Pick a template and Karter auto-fills the maintenance intervals for your model.'**
+  String get onboardingVehicleDesc;
+
+  /// No description provided for @onboardingTrackTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Track fuel & maintenance'**
+  String get onboardingTrackTitle;
+
+  /// No description provided for @onboardingTrackDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Log fill-ups with automatic economy calculations (MPG, L/100km, km/L). Track repairs, parts, and costs.'**
+  String get onboardingTrackDesc;
+
+  /// No description provided for @onboardingRemindersTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Stay on top of service'**
+  String get onboardingRemindersTitle;
+
+  /// No description provided for @onboardingRemindersDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Get notified when it\'s time for oil changes, brake pads, and every maintenance interval — by distance or time.'**
+  String get onboardingRemindersDesc;
 }
 
 class _AppLocalizationsDelegate
@@ -1345,7 +1449,7 @@ class _AppLocalizationsDelegate
 
   @override
   bool isSupported(Locale locale) =>
-      <String>['en', 'es'].contains(locale.languageCode);
+      <String>['en', 'es', 'et'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
@@ -1358,6 +1462,8 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
       return AppLocalizationsEn();
     case 'es':
       return AppLocalizationsEs();
+    case 'et':
+      return AppLocalizationsEt();
   }
 
   throw FlutterError(

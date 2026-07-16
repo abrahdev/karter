@@ -4,86 +4,86 @@ import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
 
-/// The translations for English (`en`).
-class AppLocalizationsEn extends AppLocalizations {
-  AppLocalizationsEn([String locale = 'en']) : super(locale);
+/// The translations for Estonian (`et`).
+class AppLocalizationsEt extends AppLocalizations {
+  AppLocalizationsEt([String locale = 'et']) : super(locale);
 
   @override
   String get appTitle => 'Karter';
 
   @override
-  String get navDashboard => 'Dashboard';
+  String get navDashboard => 'Juhtpaneel';
 
   @override
-  String get navVehicles => 'Vehicles';
+  String get navVehicles => 'Sõidukid';
 
   @override
-  String get navMore => 'More';
+  String get navMore => 'Veel';
 
   @override
-  String get homeEmptyTitle => 'No vehicles';
+  String get homeEmptyTitle => 'Sõidukeid pole';
 
   @override
-  String get homeEmptySubtitle => 'Add your first vehicle';
+  String get homeEmptySubtitle => 'Lisa oma esimene sõiduk';
 
   @override
   String homeError(Object error) {
-    return 'Error: $error';
+    return 'Viga: $error';
   }
 
   @override
-  String get dashboardTitle => 'Dashboard';
+  String get dashboardTitle => 'Juhtpaneel';
 
   @override
-  String get dashboardComingSoon => 'Coming Soon';
+  String get dashboardComingSoon => 'Varsti';
 
   @override
-  String get vehicleDetailTitle => 'Vehicle';
+  String get vehicleDetailTitle => 'Sõiduk';
 
   @override
-  String get vehicleNotFound => 'Vehicle not found';
+  String get vehicleNotFound => 'Sõidukit ei leidu';
 
   @override
-  String get plate => 'Plate';
+  String get plate => 'Numbrimärk';
 
   @override
-  String get vin => 'VIN';
+  String get vin => 'VIN-kood';
 
   @override
-  String get brandModel => 'Brand / Model';
+  String get brandModel => 'Mark ja mudel';
 
   @override
-  String get year => 'Year';
+  String get year => 'Aasta';
 
   @override
-  String get odometer => 'Odometer';
+  String get odometer => 'Odomeeter';
 
   @override
-  String get update => 'Update';
+  String get update => 'Uuenda';
 
   @override
-  String get actions => 'Actions';
+  String get actions => 'Tegevused';
 
   @override
-  String get fuelLogs => 'Fuel logs';
+  String get fuelLogs => 'Kütuselogid';
 
   @override
-  String get maintenanceHistory => 'Maintenance history';
+  String get maintenanceHistory => 'Hooldusraamat';
 
   @override
-  String get configureIntervals => 'Configure intervals';
+  String get configureIntervals => 'Seadista välpasid';
 
   @override
-  String get nextMaintenance => 'Next Maintenance';
+  String get nextMaintenance => 'Järgmine hooldus';
 
   @override
-  String get allIntervalsDisabled => 'All intervals are disabled.';
+  String get allIntervalsDisabled => 'Kõik välbad on lülitatud välja.';
 
   @override
-  String get register => 'Register';
+  String get register => 'Registreeri';
 
   @override
-  String get registerService => 'Register service';
+  String get registerService => 'Registreeri teenus';
 
   @override
   String get noDescriptionAvailable =>
@@ -515,19 +515,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get moreFooter => 'Made with ❤️ by abrahdev';
 
   @override
-  String get moreRate => 'Rate Karter';
-
-  @override
-  String get moreRateSubtitle => 'Leave a review on the Play Store';
-
-  @override
-  String get ratePromptMessage =>
-      'Enjoying Karter? A review helps others discover the app!';
-
-  @override
-  String get rate => 'Rate';
-
-  @override
   String moreUrlError(Object url) {
     return 'Could not open $url';
   }
@@ -704,45 +691,45 @@ class AppLocalizationsEn extends AppLocalizations {
   String get moreTemplateSourceUrlSaved => 'URL updated';
 
   @override
-  String get onboardingSkip => 'Skip';
+  String get onboardingSkip => 'Jäta vahele';
 
   @override
-  String get onboardingNext => 'Next';
+  String get onboardingNext => 'Edasi';
 
   @override
-  String get onboardingDone => 'Get started';
+  String get onboardingDone => 'Alusta';
 
   @override
-  String get onboardingReplay => 'View onboarding';
+  String get onboardingReplay => 'Näita sissejuhatust';
 
   @override
-  String get onboardingReplaySubtitle => 'Replay the welcome walkthrough';
+  String get onboardingReplaySubtitle => 'Korda tervituskäiku';
 
   @override
-  String get onboardingWelcomeTitle => 'Welcome to Karter';
+  String get onboardingWelcomeTitle => 'Tere tulemast Karterisse';
 
   @override
   String get onboardingWelcomeDesc =>
-      'A privacy-first, open source vehicle maintenance tracker. 100% offline — no accounts, no telemetry, no tracking.';
+      'Privaatsust esikohal avatud lähtekoodiga sõiduki hoolduse jälgija. 100% võrguta — ilma kontodeta ja jälgimiseta.';
 
   @override
-  String get onboardingVehicleTitle => 'Add your vehicle';
+  String get onboardingVehicleTitle => 'Lisa oma sõiduk';
 
   @override
   String get onboardingVehicleDesc =>
-      'Register your car, motorcycle, or EV. Pick a template and Karter auto-fills the maintenance intervals for your model.';
+      'Registreeri oma auto, motorroller või elektriauto. Vali mall ja Karter täidab hooldusvabad automaatselt.';
 
   @override
-  String get onboardingTrackTitle => 'Track fuel & maintenance';
+  String get onboardingTrackTitle => 'Jälgi kütust ja hooldust';
 
   @override
   String get onboardingTrackDesc =>
-      'Log fill-ups with automatic economy calculations (MPG, L/100km, km/L). Track repairs, parts, and costs.';
+      'Logi tankimised automaatse kalkulatsiooniga. Jälgi remondi, varuosade ja kulude ajalugu.';
 
   @override
-  String get onboardingRemindersTitle => 'Stay on top of service';
+  String get onboardingRemindersTitle => 'Olge hooldusega kursis';
 
   @override
   String get onboardingRemindersDesc =>
-      'Get notified when it\'s time for oil changes, brake pads, and every maintenance interval — by distance or time.';
+      'Saa teavitusi õlivahetuse, piduriklotside ja kõigi hooldusvälpade kohta — distantsi või aja järgi.';
 }

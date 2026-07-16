@@ -516,6 +516,19 @@ class AppLocalizationsEs extends AppLocalizations {
   String get moreFooter => 'Hecho con ❤️ por abrahdev';
 
   @override
+  String get moreRate => 'Calificar Karter';
+
+  @override
+  String get moreRateSubtitle => 'Dejá una reseña en la Play Store';
+
+  @override
+  String get ratePromptMessage =>
+      '¿Te gusta Karter? ¡Una reseña ayuda a otros a descubrir la app!';
+
+  @override
+  String get rate => 'Calificar';
+
+  @override
   String moreUrlError(Object url) {
     return 'No se pudo abrir $url';
   }
@@ -691,4 +704,47 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get moreTemplateSourceUrlSaved => 'URL actualizada';
+
+  @override
+  String get onboardingSkip => 'Omitir';
+
+  @override
+  String get onboardingNext => 'Siguiente';
+
+  @override
+  String get onboardingDone => 'Empezar';
+
+  @override
+  String get onboardingReplay => 'Ver introducción';
+
+  @override
+  String get onboardingReplaySubtitle => 'Repetir la guía de bienvenida';
+
+  @override
+  String get onboardingWelcomeTitle => 'Bienvenido a Karter';
+
+  @override
+  String get onboardingWelcomeDesc =>
+      'Un rastreador de mantenimiento vehicular open source y respetuoso con tu privacidad. 100% offline — sin cuentas ni telemetría.';
+
+  @override
+  String get onboardingVehicleTitle => 'Agregá tu vehículo';
+
+  @override
+  String get onboardingVehicleDesc =>
+      'Registrá tu auto, moto o eléctrico. Elegí una plantilla y Karter completa los intervalos de mantenimiento.';
+
+  @override
+  String get onboardingTrackTitle => 'Rastreá combustible y mantenimiento';
+
+  @override
+  String get onboardingTrackDesc =>
+      'Registrá cargas con cálculos automáticos de consumo. Rastreá reparaciones, repuestos y costos.';
+
+  @override
+  String get onboardingRemindersTitle => 'No te olvides del service';
+
+  @override
+  String get onboardingRemindersDesc =>
+      'Recibí recordatorios para cambios de aceite, pastillas de freno y todos los intervalos de mantenimiento.';
 }

@@ -172,6 +172,10 @@
   "moreDonate": "Donar",
   "moreDonateSubtitle": "Apoya el desarrollo en GitHub Sponsors",
   "moreFooter": "Hecho con ❤️ por abrahdev",
+  "moreRate": "Calificar Karter",
+  "moreRateSubtitle": "Dejá una reseña en la Play Store",
+  "ratePromptMessage": "¿Te gusta Karter? ¡Una reseña ayuda a otros a descubrir la app!",
+  "rate": "Calificar",
   "moreUrlError": "No se pudo abrir {url}",
 
   "language": "Idioma",
@@ -235,5 +239,19 @@
   "moreTemplateSourceReset": "Restablecer valor por defecto",
   "moreTemplateSourceUrlHint": "https://raw.githubusercontent.com/...",
   "moreTemplateSourceEditUrl": "Editar URL",
-  "moreTemplateSourceUrlSaved": "URL actualizada"
+  "moreTemplateSourceUrlSaved": "URL actualizada",
+
+  "onboardingSkip": "Omitir",
+  "onboardingNext": "Siguiente",
+  "onboardingDone": "Empezar",
+  "onboardingReplay": "Ver introducción",
+  "onboardingReplaySubtitle": "Repetir la guía de bienvenida",
+  "onboardingWelcomeTitle": "Bienvenido a Karter",
+  "onboardingWelcomeDesc": "Un rastreador de mantenimiento vehicular open source y respetuoso con tu privacidad. 100% offline — sin cuentas ni telemetría.",
+  "onboardingVehicleTitle": "Agregá tu vehículo",
+  "onboardingVehicleDesc": "Registrá tu auto, moto o eléctrico. Elegí una plantilla y Karter completa los intervalos de mantenimiento.",
+  "onboardingTrackTitle": "Rastreá combustible y mantenimiento",
+  "onboardingTrackDesc": "Registrá cargas con cálculos automáticos de consumo. Rastreá reparaciones, repuestos y costos.",
+  "onboardingRemindersTitle": "No te olvides del service",
+  "onboardingRemindersDesc": "Recibí recordatorios para cambios de aceite, pastillas de freno y todos los intervalos de mantenimiento."
 }
