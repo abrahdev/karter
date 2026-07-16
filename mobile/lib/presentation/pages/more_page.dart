@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile/core/modal_helpers.dart';
+import 'package:mobile/core/rating_helper.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/locale_provider.dart';
 import 'package:mobile/presentation/providers/template_source_provider.dart';
@@ -75,6 +76,17 @@ class MorePage extends ConsumerWidget {
         ),
         const Divider(),
         _TemplateSourceSection(),
+        const Divider(),
+        Material(
+          color: theme.colorScheme.surface,
+          child: ListTile(
+            leading: const Icon(Icons.rate_review),
+            title: Text(l.moreRate),
+            subtitle: Text(l.moreRateSubtitle),
+            trailing: const Icon(Icons.open_in_new),
+            onTap: () => openStorePage(),
+          ),
+        ),
         const Divider(),
         Material(
           color: theme.colorScheme.surface,
