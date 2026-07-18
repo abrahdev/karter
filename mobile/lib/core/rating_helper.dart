@@ -5,12 +5,69 @@ import 'package:mobile/l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-const _promptedKey = 'has_prompted_rating';
+const _hasRatedKey = 'has_rated';
+const _lastPromptKey = 'last_prompt_date';
+const _servicesSinceKey = 'services_since_prompt';
+const _enabledKey = 'rating_prompt_enabled';
+const _intervalKey = 'rating_prompt_services_interval';
+const _repeatDaysKey = 'rating_prompt_repeat_days';
+
+const defaultServicesInterval = 10;
+const defaultRepeatDays = 30;
+
+Future<bool> isRatingPromptEnabled() async {
+  final prefs = await SharedPreferences.getInstance();
+  return prefs.getBool(_enabledKey) ?? true;
+}
+
+Future<void> setRatingPromptEnabled(bool enabled) async {
+  final prefs = await SharedPreferences.getInstance();
+  await prefs.setBool(_enabledKey, enabled);
+}
+
+Future<int> getServicesInterval() async {
+  final prefs = await SharedPreferences.getInstance();
+  return prefs.getInt(_intervalKey) ?? defaultServicesInterval;
+}
+
+Future<void> setServicesInterval(int value) async {
+  final prefs = await SharedPreferences.getInstance();
+  await prefs.setInt(_intervalKey, value);
+}
+
+Future<int> getRepeatDays() async {
+  final prefs = await SharedPreferences.getInstance();
+  return prefs.getInt(_repeatDaysKey) ?? defaultRepeatDays;
+}
+
+Future<void> setRepeatDays(int value) async {
+  final prefs = await SharedPreferences.getInstance();
+  await prefs.setInt(_repeatDaysKey, value);
+}
 
 Future<void> showRatePrompt(BuildContext context) async {
   final prefs = await SharedPreferences.getInstance();
-  if (prefs.getBool(_promptedKey) == true) return;
-  await prefs.setBool(_promptedKey, true);
+  if (prefs.getBool(_hasRatedKey) == true) return;
+  if (prefs.getBool(_enabledKey) == false) return;
+
+  final interval = prefs.getInt(_intervalKey) ?? defaultServicesInterval;
+  final count = (prefs.getInt(_servicesSinceKey) ?? 0) + 1;
+  await prefs.setInt(_servicesSinceKey, count);
+
+  if (count < interval) return;
+
+  final lastDateStr = prefs.getString(_lastPromptKey);
+  if (lastDateStr != null) {
+    final lastDate = DateTime.tryParse(lastDateStr);
+    final repeatDays = prefs.getInt(_repeatDaysKey) ?? defaultRepeatDays;
+    if (lastDate != null &&
+        DateTime.now().difference(lastDate).inDays < repeatDays) {
+      return;
+    }
+  }
+
+  await prefs.setInt(_servicesSinceKey, 0);
+  await prefs.setString(_lastPromptKey, DateTime.now().toIso8601String());
 
   final review = InAppReview.instance;
   if (await review.isAvailable()) {
@@ -26,6 +83,7 @@ Future<void> showRatePrompt(BuildContext context) async {
   );
 
   if (result == true) {
+    await prefs.setBool(_hasRatedKey, true);
     await openStorePage();
   }
 }

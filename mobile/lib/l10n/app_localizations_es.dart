@@ -522,6 +522,45 @@ class AppLocalizationsEs extends AppLocalizations {
   String get moreRateSubtitle => 'Dejá una reseña en la Play Store';
 
   @override
+  String get moreFeedback => 'Feedback';
+
+  @override
+  String get moreFeedbackSubtitle =>
+      'Calificá la app y configurá recordatorios';
+
+  @override
+  String get feedbackTitle => 'Feedback';
+
+  @override
+  String get feedbackReminderToggle => 'Recordatorio de valoración';
+
+  @override
+  String get feedbackReminderToggleSubtitle =>
+      'Mostrar un recordatorio para calificar después de guardar servicios';
+
+  @override
+  String get feedbackServicesInterval => 'Servicios antes del aviso';
+
+  @override
+  String feedbackServicesIntervalValue(Object count) {
+    return 'Después de $count servicio(s)';
+  }
+
+  @override
+  String get feedbackServicesSuffix => 'servicios';
+
+  @override
+  String get feedbackRepeatDays => 'Intervalo del recordatorio';
+
+  @override
+  String feedbackRepeatDaysValue(Object days) {
+    return 'Cada $days día(s)';
+  }
+
+  @override
+  String get feedbackRepeatDaysSuffix => 'días';
+
+  @override
   String get ratePromptMessage =>
       '¿Te gusta Karter? ¡Una reseña ayuda a otros a descubrir la app!';
 

@@ -119,6 +119,22 @@
     "intervalSubtitleMonths": "{months} kuud",
     "odometerAtService": "Kilomeetrilugeja hoolduse ajal (valikuline)",
     "resetInterval": "Taastamisintervall (valikuline)",
-    "maintenanceEmpty": "Teenuseid ei ole registreeritud"
-    "docTypeComplexInsurance": "Kompleksne kindlustus"
+    "maintenanceEmpty": "Teenuseid ei ole registreeritud",
+    "docTypeComplexInsurance": "Kompleksne kindlustus",
+    "moreRate": "Hinda Karterit",
+    "moreRateSubtitle": "Jäta ülevaade Play poes",
+    "moreFeedback": "Tagasiside",
+    "moreFeedbackSubtitle": "Hinda rakendust ja seadista meeldetuletusi",
+    "feedbackTitle": "Tagasiside",
+    "feedbackReminderToggle": "Hindamise meeldetuletus",
+    "feedbackReminderToggleSubtitle": "Näita meeldetuletust rakenduse hindamiseks pärast teenuste salvestamist",
+    "feedbackServicesInterval": "Teenused enne küsimist",
+    "feedbackServicesIntervalValue": "Pärast {count} teenust",
+    "feedbackServicesSuffix": "teenused",
+    "feedbackRepeatDays": "Meeldetuletuse intervall",
+    "feedbackRepeatDaysValue": "Iga {days} päev(a)",
+    "feedbackRepeatDaysSuffix": "päeva",
+    "ratePromptMessage": "Karter meeldib? Arvustus aitab teistel rakendust leida!",
+    "rate": "Hinda",
+    "moreUrlError": "URL-i ei saanud avada: {url}"
 }
