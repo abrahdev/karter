@@ -10,6 +10,8 @@ import 'package:mobile/data/services/template_translations.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/locale_provider.dart';
 import 'package:mobile/presentation/providers/template_source_provider.dart';
+import 'package:mobile/presentation/providers/theme_provider.dart';
+import 'package:mobile/presentation/providers/color_provider.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:system_theme/system_theme.dart';
@@ -284,16 +286,20 @@ class _KarterAppState extends ConsumerState<KarterApp> {
   @override
   Widget build(BuildContext context) {
     final locale = ref.watch(localeProvider);
+    final themeMode = ref.watch(themeModeProvider);
+    final seedColorState = ref.watch(seedColorProvider);
+
     return StreamBuilder<SystemAccentColor>(
       stream: SystemTheme.onChange,
       builder: (context, snapshot) {
-        final color = snapshot.data?.accent ?? widget.initialAccent;
+        final systemAccent = snapshot.data?.accent ?? widget.initialAccent;
+        final seedColor = seedColorState.resolve(systemAccent);
         final lightScheme = ColorScheme.fromSeed(
-          seedColor: color,
+          seedColor: seedColor,
           brightness: Brightness.light,
         );
         final darkScheme = ColorScheme.fromSeed(
-          seedColor: color,
+          seedColor: seedColor,
           brightness: Brightness.dark,
         );
 
@@ -302,6 +308,7 @@ class _KarterAppState extends ConsumerState<KarterApp> {
           locale: locale,
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
+          themeMode: themeMode,
           theme: AppTheme.from(lightScheme, Brightness.light),
           darkTheme: AppTheme.from(darkScheme, Brightness.dark),
           routerConfig: _router,
@@ -401,6 +408,8 @@ Future<void> main() async {
   await SystemTheme.accentColor.load();
   final prefs = await SharedPreferences.getInstance();
   final savedLocale = prefs.getString('locale') ?? 'es';
+  final savedThemeMode = ThemeModeNotifier.fromName(prefs.getString('theme_mode'));
+
 
   if (Platform.isAndroid || Platform.isIOS) {
     await Workmanager().initialize(
@@ -429,6 +438,7 @@ Future<void> main() async {
     ProviderScope(
       overrides: [
         localeProvider.overrideWith(() => createLocaleNotifier(savedLocale)),
+        themeModeProvider.overrideWith(() => createThemeModeNotifier(savedThemeMode)),
         sharedPreferencesProvider.overrideWithValue(prefs),
         notificationServiceProvider.overrideWith((ref) {
           notificationService.init();

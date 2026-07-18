@@ -1065,6 +1065,78 @@ abstract class AppLocalizations {
   /// **'Feedback'**
   String get feedbackTitle;
 
+  /// No description provided for @sectionGeneral.
+  ///
+  /// In en, this message translates to:
+  /// **'General'**
+  String get sectionGeneral;
+
+  /// No description provided for @sectionDataSecurity.
+  ///
+  /// In en, this message translates to:
+  /// **'Data & Security'**
+  String get sectionDataSecurity;
+
+  /// No description provided for @sectionFeedbackCommunity.
+  ///
+  /// In en, this message translates to:
+  /// **'Feedback & Community'**
+  String get sectionFeedbackCommunity;
+
+  /// No description provided for @sectionDocsDonate.
+  ///
+  /// In en, this message translates to:
+  /// **'Docs & Donate'**
+  String get sectionDocsDonate;
+
+  /// No description provided for @theme.
+  ///
+  /// In en, this message translates to:
+  /// **'Theme'**
+  String get theme;
+
+  /// No description provided for @themeSystem.
+  ///
+  /// In en, this message translates to:
+  /// **'System'**
+  String get themeSystem;
+
+  /// No description provided for @themeSystemDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Follow device setting'**
+  String get themeSystemDesc;
+
+  /// No description provided for @themeLight.
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get themeLight;
+
+  /// No description provided for @themeDark.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark'**
+  String get themeDark;
+
+  /// No description provided for @colorScheme.
+  ///
+  /// In en, this message translates to:
+  /// **'Color scheme'**
+  String get colorScheme;
+
+  /// No description provided for @colorDynamic.
+  ///
+  /// In en, this message translates to:
+  /// **'Dynamic'**
+  String get colorDynamic;
+
+  /// No description provided for @colorCustom.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom'**
+  String get colorCustom;
+
   /// No description provided for @feedbackReminderToggle.
   ///
   /// In en, this message translates to:

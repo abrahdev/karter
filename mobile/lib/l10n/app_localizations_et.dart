@@ -531,6 +531,42 @@ class AppLocalizationsEt extends AppLocalizations {
   String get feedbackTitle => 'Tagasiside';
 
   @override
+  String get sectionGeneral => 'Üldine';
+
+  @override
+  String get sectionDataSecurity => 'Andmed ja turvalisus';
+
+  @override
+  String get sectionFeedbackCommunity => 'Tagasiside ja kogukond';
+
+  @override
+  String get sectionDocsDonate => 'Dokumentatsioon ja annetus';
+
+  @override
+  String get theme => 'Teema';
+
+  @override
+  String get themeSystem => 'Süsteemi';
+
+  @override
+  String get themeSystemDesc => 'Jälgi seadme sätteid';
+
+  @override
+  String get themeLight => 'Hele';
+
+  @override
+  String get themeDark => 'Tume';
+
+  @override
+  String get colorScheme => 'Värviskeem';
+
+  @override
+  String get colorDynamic => 'Dünaamiline';
+
+  @override
+  String get colorCustom => 'Kohandatud';
+
+  @override
   String get feedbackReminderToggle => 'Hindamise meeldetuletus';
 
   @override

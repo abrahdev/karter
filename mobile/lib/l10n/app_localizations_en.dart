@@ -530,6 +530,42 @@ class AppLocalizationsEn extends AppLocalizations {
   String get feedbackTitle => 'Feedback';
 
   @override
+  String get sectionGeneral => 'General';
+
+  @override
+  String get sectionDataSecurity => 'Data & Security';
+
+  @override
+  String get sectionFeedbackCommunity => 'Feedback & Community';
+
+  @override
+  String get sectionDocsDonate => 'Docs & Donate';
+
+  @override
+  String get theme => 'Theme';
+
+  @override
+  String get themeSystem => 'System';
+
+  @override
+  String get themeSystemDesc => 'Follow device setting';
+
+  @override
+  String get themeLight => 'Light';
+
+  @override
+  String get themeDark => 'Dark';
+
+  @override
+  String get colorScheme => 'Color scheme';
+
+  @override
+  String get colorDynamic => 'Dynamic';
+
+  @override
+  String get colorCustom => 'Custom';
+
+  @override
   String get feedbackReminderToggle => 'Rating reminder';
 
   @override
