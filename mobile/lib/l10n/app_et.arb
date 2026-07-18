@@ -24,7 +24,6 @@
     "register": "Registreeri",
     "registerService": "Registreeri teenus",
     "update": "Uuenda",
-
     "onboardingSkip": "Jäta vahele",
     "onboardingNext": "Edasi",
     "onboardingDone": "Alusta",
@@ -38,7 +37,6 @@
     "onboardingTrackDesc": "Logi tankimised automaatse kalkulatsiooniga. Jälgi remondi, varuosade ja kulude ajalugu.",
     "onboardingRemindersTitle": "Olge hooldusega kursis",
     "onboardingRemindersDesc": "Saa teavitusi õlivahetuse, piduriklotside ja kõigi hooldusvälpade kohta — distantsi või aja järgi.",
-
     "close": "Sulge",
     "overduePerformService": "Üle tähtaja - suundu hooldusesse",
     "vehicleFormNew": "Uus sõiduk",
@@ -104,5 +102,22 @@
     "docTypeInsurance": "Kindlustus",
     "docTypeVehicleCheck": "Ülevaatus",
     "docTypeTax": "Maks",
-    "docTypeComplexInsurance": "Kompleksne kindlustus"
+    "docTypeComplexInsurance": "Kompleksne kindlustus",
+    "noDescriptionAvailable": "Kirjeldust pole saadaval. Mine hooldusseadistustesse, et seda lisada.",
+    "nextIn": "Järgmine osa {parts}",
+    "importPreview": "Leiti:\n• {vehicles} vehicle(s)\n• {fuelLogs} fuel log(s)\n• {maintenanceLogs} maintenance log(s)\n• {documents} document(s)\n\nImportida? Olemasolevad andmed, millel on sama ID, kirjutatakse üle.",
+    "importSuccess": "Andmed on edukalt imporditud",
+    "importError": "Importimisviga: {error}",
+    "invalidJson": "Kehtetu JSON-fail",
+    "exportShareText": "Karter Export — {count} sõidukit",
+    "maintenanceSettingsTitle": "Hooldusintervallid",
+    "maintenanceSettingsInstruction": "Lülitage funktsioonid sisse või välja vastavalt oma sõiduki vajadustele. Kohandatud intervallid on võimalik kustutada.",
+    "km": "km",
+    "timeMonths": "Aeg (kuud)",
+    "months": "kuud",
+    "intervalSubtitleKm": "iga {km}",
+    "intervalSubtitleMonths": "{months} kuud",
+    "odometerAtService": "Kilomeetrilugeja hoolduse ajal (valikuline)",
+    "resetInterval": "Taastamisintervall (valikuline)",
+    "maintenanceEmpty": "Teenuseid ei ole registreeritud"
 }
