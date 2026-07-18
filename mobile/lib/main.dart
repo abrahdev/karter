@@ -12,6 +12,7 @@ import 'package:mobile/presentation/providers/locale_provider.dart';
 import 'package:mobile/presentation/providers/template_source_provider.dart';
 import 'package:mobile/presentation/providers/theme_provider.dart';
 import 'package:mobile/presentation/providers/color_provider.dart';
+import 'package:mobile/presentation/providers/surface_tint_provider.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:system_theme/system_theme.dart';
@@ -34,6 +35,9 @@ import 'package:mobile/core/onboarding_helper.dart';
 import 'package:mobile/presentation/pages/onboarding_page.dart';
 import 'package:mobile/presentation/pages/vehicle_form_page.dart';
 import 'package:mobile/presentation/pages/feedback_page.dart';
+import 'package:mobile/presentation/pages/tips_page.dart';
+import 'package:mobile/presentation/pages/privacy_policy_page.dart';
+import 'package:mobile/presentation/pages/changelog_page.dart';
 import 'package:mobile/presentation/widgets/notification_settings_modal.dart';
 
 final _router = GoRouter(
@@ -156,6 +160,18 @@ final _router = GoRouter(
     GoRoute(
       path: '/feedback',
       builder: (_, _) => const FeedbackPage(),
+    ),
+    GoRoute(
+      path: '/tips',
+      builder: (_, _) => const TipsPage(),
+    ),
+    GoRoute(
+      path: '/privacy',
+      builder: (_, _) => const PrivacyPolicyPage(),
+    ),
+    GoRoute(
+      path: '/changelog',
+      builder: (_, _) => const ChangelogPage(),
     ),
   ],
 );
@@ -288,12 +304,14 @@ class _KarterAppState extends ConsumerState<KarterApp> {
     final locale = ref.watch(localeProvider);
     final themeMode = ref.watch(themeModeProvider);
     final seedColorState = ref.watch(seedColorProvider);
+    final applySurfaceTint = ref.watch(surfaceTintProvider);
 
     return StreamBuilder<SystemAccentColor>(
       stream: SystemTheme.onChange,
       builder: (context, snapshot) {
         final systemAccent = snapshot.data?.accent ?? widget.initialAccent;
-        final seedColor = seedColorState.resolve(systemAccent);
+        final seedColor =
+            seedColorState.useCustom ? seedColorState.color : systemAccent;
         final lightScheme = ColorScheme.fromSeed(
           seedColor: seedColor,
           brightness: Brightness.light,
@@ -309,8 +327,16 @@ class _KarterAppState extends ConsumerState<KarterApp> {
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
           themeMode: themeMode,
-          theme: AppTheme.from(lightScheme, Brightness.light),
-          darkTheme: AppTheme.from(darkScheme, Brightness.dark),
+          theme: AppTheme.from(
+            lightScheme,
+            Brightness.light,
+            applySurfaceTint: applySurfaceTint,
+          ),
+          darkTheme: AppTheme.from(
+            darkScheme,
+            Brightness.dark,
+            applySurfaceTint: applySurfaceTint,
+          ),
           routerConfig: _router,
           debugShowCheckedModeBanner: false,
           builder: (builderContext, child) {
@@ -407,7 +433,7 @@ Future<void> main() async {
   SystemTheme.fallbackColor = AppTheme.fallbackSeed;
   await SystemTheme.accentColor.load();
   final prefs = await SharedPreferences.getInstance();
-  final savedLocale = prefs.getString('locale') ?? 'es';
+  final savedLocale = prefs.getString('locale') ?? 'system';
   final savedThemeMode = ThemeModeNotifier.fromName(prefs.getString('theme_mode'));
 
 

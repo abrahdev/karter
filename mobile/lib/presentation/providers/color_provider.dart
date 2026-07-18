@@ -3,58 +3,47 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/presentation/providers/template_source_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-const _colorPresets = <String, Color>{
-  'dynamic': Colors.transparent,
-  'amber': Colors.amber,
-  'teal': Colors.teal,
-  'blue': Colors.blue,
-  'purple': Colors.purple,
-  'green': Colors.green,
-};
+const Color _defaultColor = Colors.amber;
 
 class SeedColorState {
-  const SeedColorState(this.name, [this.customArgb]);
-  final String name;
-  final int? customArgb;
+  const SeedColorState(this.customArgb, {this.useCustom = false});
 
-  Color resolve(Color systemAccent) {
-    if (name == SeedColorNotifier.customKey && customArgb != null) {
-      return Color(customArgb!);
-    }
-    if (name == 'dynamic') return systemAccent;
-    return _colorPresets[name] ?? Colors.amber;
-  }
+  final int? customArgb;
+  final bool useCustom;
+
+  Color get color => customArgb != null ? Color(customArgb!) : _defaultColor;
 }
 
 final seedColorProvider =
     NotifierProvider<SeedColorNotifier, SeedColorState>(SeedColorNotifier.new);
 
 class SeedColorNotifier extends Notifier<SeedColorState> {
-  static const _key = 'seed_color';
-  static const customKey = 'custom';
+  static const _key = 'seed_color_custom';
+  static const _keyUseCustom = 'seed_color_use_custom';
 
   @override
   SeedColorState build() {
     final prefs = ref.watch(sharedPreferencesProvider);
-    final name = prefs.getString(_key) ?? 'dynamic';
-    final customArgb = prefs.getInt('${_key}_custom');
-    return SeedColorState(name, customArgb);
+    final customArgb = prefs.getInt(_key);
+    final useCustom = prefs.getBool(_keyUseCustom) ?? false;
+    return SeedColorState(customArgb, useCustom: useCustom);
   }
 
-  static List<String> get presetNames => _colorPresets.keys.toList();
-
-  static String labelFor(String name) => name[0].toUpperCase() + name.substring(1);
-
-  Future<void> setColor(String name) async {
+  Future<void> setColor(Color color) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_key, name);
-    state = SeedColorState(name, state.customArgb);
+    await prefs.setInt(_key, color.toARGB32());
+    state = SeedColorState(color.toARGB32(), useCustom: true);
   }
 
-  Future<void> setCustomColor(Color color) async {
+  Future<void> resetColor() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_key, customKey);
-    await prefs.setInt('${_key}_custom', color.toARGB32());
-    state = SeedColorState(customKey, color.toARGB32());
+    await prefs.remove(_key);
+    state = const SeedColorState(null, useCustom: false);
+  }
+
+  Future<void> setUseCustom(bool value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(_keyUseCustom, value);
+    state = SeedColorState(state.customArgb, useCustom: value);
   }
 }
