@@ -31,6 +31,7 @@ import 'package:mobile/presentation/pages/vehicle_detail_page.dart';
 import 'package:mobile/core/onboarding_helper.dart';
 import 'package:mobile/presentation/pages/onboarding_page.dart';
 import 'package:mobile/presentation/pages/vehicle_form_page.dart';
+import 'package:mobile/presentation/pages/feedback_page.dart';
 import 'package:mobile/presentation/widgets/notification_settings_modal.dart';
 
 final _router = GoRouter(
@@ -149,6 +150,10 @@ final _router = GoRouter(
     GoRoute(
       path: '/onboarding',
       builder: (_, _) => const OnboardingPage(),
+    ),
+    GoRoute(
+      path: '/feedback',
+      builder: (_, _) => const FeedbackPage(),
     ),
   ],
 );

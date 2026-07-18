@@ -521,6 +521,44 @@ class AppLocalizationsEn extends AppLocalizations {
   String get moreRateSubtitle => 'Leave a review on the Play Store';
 
   @override
+  String get moreFeedback => 'Feedback';
+
+  @override
+  String get moreFeedbackSubtitle => 'Rate the app and configure reminders';
+
+  @override
+  String get feedbackTitle => 'Feedback';
+
+  @override
+  String get feedbackReminderToggle => 'Rating reminder';
+
+  @override
+  String get feedbackReminderToggleSubtitle =>
+      'Show a reminder to rate the app after saving services';
+
+  @override
+  String get feedbackServicesInterval => 'Services before prompt';
+
+  @override
+  String feedbackServicesIntervalValue(Object count) {
+    return 'After $count service(s)';
+  }
+
+  @override
+  String get feedbackServicesSuffix => 'services';
+
+  @override
+  String get feedbackRepeatDays => 'Reminder interval';
+
+  @override
+  String feedbackRepeatDaysValue(Object days) {
+    return 'Every $days day(s)';
+  }
+
+  @override
+  String get feedbackRepeatDaysSuffix => 'days';
+
+  @override
   String get ratePromptMessage =>
       'Enjoying Karter? A review helps others discover the app!';
 

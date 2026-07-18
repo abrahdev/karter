@@ -1047,6 +1047,72 @@ abstract class AppLocalizations {
   /// **'Leave a review on the Play Store'**
   String get moreRateSubtitle;
 
+  /// No description provided for @moreFeedback.
+  ///
+  /// In en, this message translates to:
+  /// **'Feedback'**
+  String get moreFeedback;
+
+  /// No description provided for @moreFeedbackSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Rate the app and configure reminders'**
+  String get moreFeedbackSubtitle;
+
+  /// No description provided for @feedbackTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Feedback'**
+  String get feedbackTitle;
+
+  /// No description provided for @feedbackReminderToggle.
+  ///
+  /// In en, this message translates to:
+  /// **'Rating reminder'**
+  String get feedbackReminderToggle;
+
+  /// No description provided for @feedbackReminderToggleSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Show a reminder to rate the app after saving services'**
+  String get feedbackReminderToggleSubtitle;
+
+  /// No description provided for @feedbackServicesInterval.
+  ///
+  /// In en, this message translates to:
+  /// **'Services before prompt'**
+  String get feedbackServicesInterval;
+
+  /// No description provided for @feedbackServicesIntervalValue.
+  ///
+  /// In en, this message translates to:
+  /// **'After {count} service(s)'**
+  String feedbackServicesIntervalValue(Object count);
+
+  /// No description provided for @feedbackServicesSuffix.
+  ///
+  /// In en, this message translates to:
+  /// **'services'**
+  String get feedbackServicesSuffix;
+
+  /// No description provided for @feedbackRepeatDays.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminder interval'**
+  String get feedbackRepeatDays;
+
+  /// No description provided for @feedbackRepeatDaysValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Every {days} day(s)'**
+  String feedbackRepeatDaysValue(Object days);
+
+  /// No description provided for @feedbackRepeatDaysSuffix.
+  ///
+  /// In en, this message translates to:
+  /// **'days'**
+  String get feedbackRepeatDaysSuffix;
+
   /// No description provided for @ratePromptMessage.
   ///
   /// In en, this message translates to:
