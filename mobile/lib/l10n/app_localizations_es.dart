@@ -162,6 +162,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get cancel => 'Cancelar';
 
   @override
+  String get resetToDefault => 'Restablecer por defecto';
+
+  @override
   String get delete => 'Eliminar';
 
   @override
@@ -522,7 +525,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get moreRateSubtitle => 'Dejá una reseña en la Play Store';
 
   @override
-  String get moreFeedback => 'Feedback';
+  String get moreFeedback => 'Calificar la aplicación';
 
   @override
   String get moreFeedbackSubtitle =>
@@ -530,6 +533,68 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get feedbackTitle => 'Feedback';
+
+  @override
+  String get sectionPreferences => 'Preferencias';
+
+  @override
+  String get sectionFeedbackCommunity => 'Feedback y Comunidad';
+
+  @override
+  String get sectionTips => 'Programa de propinas';
+
+  @override
+  String get sectionAbout => 'Acerca de Karter';
+
+  @override
+  String get theme => 'Tema';
+
+  @override
+  String get themeAutomatic => 'Automático';
+
+  @override
+  String get themeAutomaticDesc => 'Seguir ajuste del dispositivo';
+
+  @override
+  String get themeSystem => 'Sistema';
+
+  @override
+  String get themeSystemDesc => 'Seguir ajuste del dispositivo';
+
+  @override
+  String get themeLight => 'Claro';
+
+  @override
+  String get themeDark => 'Oscuro';
+
+  @override
+  String get colorScheme => 'Color primario';
+
+  @override
+  String get colorCustom => 'Personalizado';
+
+  @override
+  String get colorOfInterface => 'Color de interfaz';
+
+  @override
+  String get colorOfInterfaceDesc =>
+      'Aplicar color primario a las superficies de fondo';
+
+  @override
+  String get customColor => 'Color personalizado';
+
+  @override
+  String get customColorDesc =>
+      'Usar un color propio en lugar del accent del sistema';
+
+  @override
+  String get selectColor => 'Elegí un color';
+
+  @override
+  String get hapticFeedback => 'Respuesta háptica';
+
+  @override
+  String get hapticFeedbackDesc => 'Vibrar en las interacciones';
 
   @override
   String get feedbackReminderToggle => 'Recordatorio de valoración';
@@ -573,16 +638,106 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get tipProgram => 'Programa de propinas';
+
+  @override
+  String get tipProgramComingSoon =>
+      'Esta funcionalidad está en desarrollo y estará disponible pronto.';
+
+  @override
+  String get tipBadges => 'Insignias';
+
+  @override
+  String get tipBadgesNone => 'Ninguna';
+
+  @override
+  String get tipInfo => 'Información';
+
+  @override
+  String get tipInfoText =>
+      'El programa de propinas es una forma de que los usuarios muestren apoyo y agradecimiento extra por el soporte rápido, las mejoras constantes y las actualizaciones continuas que Karter ha ofrecido.';
+
+  @override
+  String get tipOneTime => 'Propina única';
+
+  @override
+  String get tipRecurring => 'Propina recurrente';
+
+  @override
+  String get tipBronze => 'Bronce';
+
+  @override
+  String get tipSilver => 'Plata';
+
+  @override
+  String get tipGold => 'Oro';
+
+  @override
+  String get tipBronzePrice => 'Propina de bronce';
+
+  @override
+  String get tipSilverPrice => 'Propina de plata';
+
+  @override
+  String get tipGoldPrice => 'Propina de oro';
+
+  @override
+  String get tipBronzeMonthly => 'Bronce / mes';
+
+  @override
+  String get tipSilverMonthly => 'Plata / mes';
+
+  @override
+  String get tipGoldMonthly => 'Oro / mes';
+
+  @override
+  String get officialWebsite => 'Sitio web oficial';
+
+  @override
+  String get communityForums => 'Foros de la comunidad';
+
+  @override
+  String get translations => 'Traducciones';
+
+  @override
+  String get privacyPolicy => 'Política de privacidad';
+
+  @override
+  String get privacyPolicyDesc =>
+      'Leé nuestra política de privacidad en línea.';
+
+  @override
+  String get openPrivacyPolicy => 'Abrir política de privacidad';
+
+  @override
+  String get version => 'Versión';
+
+  @override
+  String get deviceId => 'ID del dispositivo';
+
+  @override
+  String get changelog => 'Registro de cambios';
+
+  @override
+  String get openSourceLicenses => 'Licencias de código abierto';
+
+  @override
   String get language => 'Idioma';
 
   @override
   String get selectLanguage => 'Seleccionar idioma';
 
   @override
+  String get languageSystem => 'Predeterminado del sistema';
+
+  @override
   String get english => 'Inglés';
 
   @override
   String get spanish => 'Español';
+
+  @override
+  String get eesti => 'Eesti';
 
   @override
   String get odometerUpdateTitle => 'Actualizar odómetro';

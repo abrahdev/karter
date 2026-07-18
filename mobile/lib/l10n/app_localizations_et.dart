@@ -162,6 +162,9 @@ class AppLocalizationsEt extends AppLocalizations {
   String get cancel => 'Katkesta';
 
   @override
+  String get resetToDefault => 'Taasta vaikeväärtus';
+
+  @override
   String get delete => 'Kustuta';
 
   @override
@@ -521,7 +524,7 @@ class AppLocalizationsEt extends AppLocalizations {
   String get moreRateSubtitle => 'Jäta ülevaade Play poes';
 
   @override
-  String get moreFeedback => 'Tagasiside';
+  String get moreFeedback => 'Hinda rakendust';
 
   @override
   String get moreFeedbackSubtitle =>
@@ -529,6 +532,66 @@ class AppLocalizationsEt extends AppLocalizations {
 
   @override
   String get feedbackTitle => 'Tagasiside';
+
+  @override
+  String get sectionPreferences => 'Eelistused';
+
+  @override
+  String get sectionFeedbackCommunity => 'Tagasiside ja kogukond';
+
+  @override
+  String get sectionTips => 'Tee programm';
+
+  @override
+  String get sectionAbout => 'Karterist';
+
+  @override
+  String get theme => 'Teema';
+
+  @override
+  String get themeAutomatic => 'Automaatne';
+
+  @override
+  String get themeAutomaticDesc => 'Jälgi seadme sätteid';
+
+  @override
+  String get themeSystem => 'Süsteemi';
+
+  @override
+  String get themeSystemDesc => 'Jälgi seadme sätteid';
+
+  @override
+  String get themeLight => 'Hele';
+
+  @override
+  String get themeDark => 'Tume';
+
+  @override
+  String get colorScheme => 'Põhivärv';
+
+  @override
+  String get colorCustom => 'Kohandatud';
+
+  @override
+  String get colorOfInterface => 'Liidese värv';
+
+  @override
+  String get colorOfInterfaceDesc => 'Rakenda põhivärv taustapindadele';
+
+  @override
+  String get customColor => 'Kohandatud värv';
+
+  @override
+  String get customColorDesc => 'Kasuta isiklikku värvi süsteemi asemel';
+
+  @override
+  String get selectColor => 'Vali värv';
+
+  @override
+  String get hapticFeedback => 'Haptiline tagasiside';
+
+  @override
+  String get hapticFeedbackDesc => 'Vibreeri interaktsioonide ajal';
 
   @override
   String get feedbackReminderToggle => 'Hindamise meeldetuletus';
@@ -572,16 +635,105 @@ class AppLocalizationsEt extends AppLocalizations {
   }
 
   @override
-  String get language => 'Language';
+  String get tipProgram => 'Tee programm';
 
   @override
-  String get selectLanguage => 'Select language';
+  String get tipProgramComingSoon =>
+      'See funktsioon arenduses ja saab peagi kättesaadavaks.';
 
   @override
-  String get english => 'English';
+  String get tipBadges => 'Märgid';
 
   @override
-  String get spanish => 'Spanish';
+  String get tipBadgesNone => 'Puuduvad';
+
+  @override
+  String get tipInfo => 'Teave';
+
+  @override
+  String get tipInfoText =>
+      'Tee programm on viis, kuidas kasutajad saavad näidata toetust ja tänu kiire toe, pidevate täienduste ja järjepidevate värskenduste eest, mida Karter on pakkunud.';
+
+  @override
+  String get tipOneTime => 'Ühekordne tee';
+
+  @override
+  String get tipRecurring => 'Korduv tee';
+
+  @override
+  String get tipBronze => 'Pronks';
+
+  @override
+  String get tipSilver => 'Hõbe';
+
+  @override
+  String get tipGold => 'Kuld';
+
+  @override
+  String get tipBronzePrice => 'Pronksi tee';
+
+  @override
+  String get tipSilverPrice => 'Hõbe tee';
+
+  @override
+  String get tipGoldPrice => 'Kuldt tee';
+
+  @override
+  String get tipBronzeMonthly => 'Pronks / kuu';
+
+  @override
+  String get tipSilverMonthly => 'Hõbe / kuu';
+
+  @override
+  String get tipGoldMonthly => 'Kuld / kuu';
+
+  @override
+  String get officialWebsite => 'Ametlik veebileht';
+
+  @override
+  String get communityForums => 'Kogukonna foorumid';
+
+  @override
+  String get translations => 'Tõlked';
+
+  @override
+  String get privacyPolicy => 'Privaatsuspoliitika';
+
+  @override
+  String get privacyPolicyDesc => 'Loe meie privaatsuspoliitikat veebis.';
+
+  @override
+  String get openPrivacyPolicy => 'Ava privaatsuspoliitika';
+
+  @override
+  String get version => 'Versioon';
+
+  @override
+  String get deviceId => 'Seadme ID';
+
+  @override
+  String get changelog => 'Muudatuste logi';
+
+  @override
+  String get openSourceLicenses => 'Open-source licenses';
+
+  @override
+  String get language => 'Keel';
+
+  @override
+  String get selectLanguage => 'Vali keel';
+
+  @override
+  String get languageSystem => 'Süsteemi vaikesätteid';
+
+  @override
+  String get english => 'Inglise';
+
+  @override
+  String get spanish => 'Hispaania';
+
+  @override
+  String get eesti => 'Eesti';
 
   @override
   String get odometerUpdateTitle => 'Update odometer';

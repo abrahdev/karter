@@ -1,152 +1,222 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart' show BlockPicker;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile/core/modal_helpers.dart';
 import 'package:mobile/l10n/app_localizations.dart';
-import 'package:mobile/presentation/pages/onboarding_page.dart';
+import 'package:mobile/presentation/pages/changelog_page.dart';
+import 'package:mobile/presentation/pages/privacy_policy_page.dart';
+import 'package:mobile/presentation/pages/tips_page.dart';
+import 'package:mobile/presentation/providers/color_provider.dart';
+import 'package:mobile/presentation/providers/haptic_provider.dart';
 import 'package:mobile/presentation/providers/locale_provider.dart';
-import 'package:mobile/presentation/providers/template_source_provider.dart';
+import 'package:mobile/presentation/providers/surface_tint_provider.dart';
+import 'package:mobile/presentation/providers/theme_provider.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MorePage extends ConsumerWidget {
   const MorePage({super.key});
 
   static const _repoUrl = 'https://github.com/abrahdev/karter';
-  static const _docsUrl = 'https://abrahdev.github.io/karter/';
   static const _sponsorsUrl = 'https://github.com/sponsors/abrahdev';
+  static const _weblateUrl = 'https://hosted.weblate.org/engage/karter/';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = Theme.of(context);
     final l = AppLocalizations.of(context)!;
-    final locale = ref.watch(localeProvider);
+    final themeMode = ref.watch(themeModeProvider);
+    final seedColorState = ref.watch(seedColorProvider);
+    final hapticEnabled = ref.watch(hapticProvider);
+    final surfaceTint = ref.watch(surfaceTintProvider);
+    final localeNotifier = ref.watch(localeProvider.notifier);
+
+    final themeLabel = switch (themeMode) {
+      ThemeMode.light => l.themeLight,
+      ThemeMode.dark => l.themeDark,
+      ThemeMode.system => l.themeSystem,
+    };
+
+    final languageLabel = _languageLabel(localeNotifier, l);
 
     return ListView(
-      padding: const EdgeInsets.fromLTRB(16, 32, 16, 16),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
       children: [
-        Card(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(l.moreAbout,
-                    style: theme.textTheme.titleMedium),
-                const SizedBox(height: 8),
-                Text(
-                  l.moreDescription,
-                  style: theme.textTheme.bodyMedium,
-                ),
-              ],
+        _SectionHeader(title: l.sectionPreferences),
+        _GroupedCard(
+          children: [
+            ListTile(
+              leading: const Icon(Icons.dark_mode_outlined),
+              title: Text(l.theme),
+              subtitle: Text(themeLabel),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () => _showThemePicker(context, ref, themeMode),
             ),
-          ),
+            SwitchListTile(
+              secondary: const Icon(Icons.format_color_fill),
+              title: Text(l.colorOfInterface),
+              subtitle: Text(l.colorOfInterfaceDesc),
+              value: surfaceTint,
+              onChanged: (v) =>
+                  ref.read(surfaceTintProvider.notifier).toggle(v),
+            ),
+            SwitchListTile(
+              secondary: const Icon(Icons.palette_outlined),
+              title: Text(l.customColor),
+              subtitle: Text(l.customColorDesc),
+              value: seedColorState.useCustom,
+              onChanged: (v) =>
+                  ref.read(seedColorProvider.notifier).setUseCustom(v),
+            ),
+            if (seedColorState.useCustom) ...[
+              ListTile(
+                leading: const Icon(Icons.circle, size: 24),
+                title: Text(l.colorScheme),
+                subtitle: Text(seedColorState.customArgb != null
+                    ? l.colorCustom
+                    : l.selectColor),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    CircleAvatar(
+                      backgroundColor: seedColorState.color,
+                      radius: 12,
+                    ),
+                    const SizedBox(width: 8),
+                    const Icon(Icons.chevron_right),
+                  ],
+                ),
+                onTap: () => _pickColor(context, ref, seedColorState),
+              ),
+            ],
+            SwitchListTile(
+              secondary: const Icon(Icons.vibration),
+              title: Text(l.hapticFeedback),
+              subtitle: Text(l.hapticFeedbackDesc),
+              value: hapticEnabled,
+              onChanged: (v) =>
+                  ref.read(hapticProvider.notifier).toggle(v),
+            ),
+            ListTile(
+              leading: const Icon(Icons.notifications_outlined),
+              title: Text(l.moreNotifications),
+              subtitle: Text(l.moreNotificationsSubtitle),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () => context.push('/notifications'),
+            ),
+            ListTile(
+              leading: const Icon(Icons.language),
+              title: Text(l.language),
+              subtitle: Text(languageLabel),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () => _showLanguagePicker(context, ref),
+            ),
+          ],
         ),
-        const SizedBox(height: 8),
-        Material(
-          color: theme.colorScheme.surface,
-          child: ListTile(
-            leading: const Icon(Icons.help_outline),
-            title: Text(l.onboardingReplay),
-            subtitle: Text(l.onboardingReplaySubtitle),
-            trailing: const Icon(Icons.chevron_right),
-            onTap: () {
-              Navigator.of(context).push(
+
+        _SectionHeader(title: l.sectionFeedbackCommunity),
+        _GroupedCard(
+          children: [
+            ListTile(
+              leading: const Icon(Icons.rate_review),
+              title: Text(l.moreFeedback),
+              subtitle: Text(l.moreFeedbackSubtitle),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () => context.push('/feedback'),
+            ),
+            ListTile(
+              leading: const Icon(Icons.code),
+              title: Text(l.moreSource),
+              subtitle: Text(l.moreSourceSubtitle),
+              trailing: const Icon(Icons.open_in_new),
+              onTap: () => _openUrl(context, _repoUrl),
+            ),
+          ],
+        ),
+
+        _SectionHeader(title: l.sectionTips),
+        _GroupedCard(
+          children: [
+            ListTile(
+              leading: const Icon(Icons.volunteer_activism),
+              title: Text(l.tipProgram),
+              subtitle: Text(l.tipBadgesNone),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () => Navigator.of(context).push(
                 MaterialPageRoute(
                   fullscreenDialog: true,
-                  builder: (_) => const OnboardingPage(),
+                  builder: (_) => const TipsPage(),
                 ),
-              );
-            },
-          ),
+              ),
+            ),
+            ListTile(
+              leading: const Icon(Icons.favorite, color: Colors.red),
+              title: Text(l.moreDonate),
+              subtitle: Text(l.moreDonateSubtitle),
+              trailing: const Icon(Icons.open_in_new),
+              onTap: () => _openUrl(context, _sponsorsUrl),
+            ),
+          ],
         ),
-        const Divider(),
-        Material(
-          color: theme.colorScheme.surface,
-          child: ListTile(
-            leading: const Icon(Icons.notifications_outlined),
-            title: Text(l.moreNotifications),
-            subtitle: Text(l.moreNotificationsSubtitle),
-            trailing: const Icon(Icons.chevron_right),
-            onTap: () => context.push('/notifications'),
-          ),
+
+        _SectionHeader(title: l.sectionAbout),
+        _GroupedCard(
+          children: [
+            ListTile(
+              leading: const Icon(Icons.language),
+              title: Text(l.officialWebsite),
+              trailing: const Icon(Icons.open_in_new),
+              onTap: () => _openUrl(context, _repoUrl),
+            ),
+            ListTile(
+              leading: const Icon(Icons.forum_outlined),
+              title: Text(l.communityForums),
+              trailing: const Icon(Icons.open_in_new),
+              onTap: () => _openUrl(
+                context,
+                'https://github.com/abrahdev/karter/discussions',
+              ),
+            ),
+            ListTile(
+              leading: const Icon(Icons.translate),
+              title: Text(l.translations),
+              trailing: const Icon(Icons.open_in_new),
+              onTap: () => _openUrl(context, _weblateUrl),
+            ),
+            ListTile(
+              leading: const Icon(Icons.privacy_tip_outlined),
+              title: Text(l.privacyPolicy),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () => Navigator.of(context).push(
+                MaterialPageRoute(
+                  fullscreenDialog: true,
+                  builder: (_) => const PrivacyPolicyPage(),
+                ),
+              ),
+            ),
+          ],
         ),
-        const Divider(),
-        Material(
-          color: theme.colorScheme.surface,
-          child: ListTile(
-            leading: const Icon(Icons.storage),
-            title: Text(l.moreExport),
-            subtitle: Text(l.moreExportSubtitle),
-            trailing: const Icon(Icons.chevron_right),
-            onTap: () => context.push('/data'),
-          ),
-        ),
-        const Divider(),
-        Material(
-          color: theme.colorScheme.surface,
-          child: ListTile(
-            leading: const Icon(Icons.language),
-            title: Text(l.language),
-            subtitle: Text(locale.languageCode == 'en' ? l.english : l.spanish),
-            trailing: const Icon(Icons.chevron_right),
-            onTap: () => _showLanguagePicker(context, ref),
-          ),
-        ),
-        const Divider(),
-        _TemplateSourceSection(),
-        const Divider(),
-        Material(
-          color: theme.colorScheme.surface,
-          child: ListTile(
-            leading: const Icon(Icons.rate_review),
-            title: Text(l.moreFeedback),
-            subtitle: Text(l.moreFeedbackSubtitle),
-            trailing: const Icon(Icons.chevron_right),
-            onTap: () => context.push('/feedback'),
-          ),
-        ),
-        const Divider(),
-        Material(
-          color: theme.colorScheme.surface,
-          child: ListTile(
-            leading: const Icon(Icons.menu_book),
-            title: Text(l.moreDocs),
-            subtitle: Text(l.moreDocsSubtitle),
-            trailing: const Icon(Icons.open_in_new),
-            onTap: () => _openUrl(context, _docsUrl),
-          ),
-        ),
-        Material(
-          color: theme.colorScheme.surface,
-          child: ListTile(
-            leading: const Icon(Icons.code),
-            title: Text(l.moreSource),
-            subtitle: Text(l.moreSourceSubtitle),
-            trailing: const Icon(Icons.open_in_new),
-            onTap: () => _openUrl(context, _repoUrl),
-          ),
-        ),
-        Material(
-          color: theme.colorScheme.surface,
-          child: ListTile(
-            leading: const Icon(Icons.favorite, color: Colors.red),
-            title: Text(l.moreDonate),
-            subtitle: Text(l.moreDonateSubtitle),
-            trailing: const Icon(Icons.open_in_new),
-            onTap: () => _openUrl(context, _sponsorsUrl),
-          ),
-        ),
+        const SizedBox(height: 4),
+        _AboutInfoCard(l: l),
+
         const SizedBox(height: 24),
         Center(
           child: Text(
             l.moreFooter,
-            style: theme.textTheme.bodySmall?.copyWith(
-              color: theme.colorScheme.onSurfaceVariant,
-            ),
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
           ),
         ),
       ],
     );
+  }
+
+  String _languageLabel(LocaleNotifier notifier, AppLocalizations l) {
+    if (notifier.isSystem) return l.languageSystem;
+    return l.english;
   }
 
   Future<void> _openUrl(BuildContext context, String url) async {
@@ -154,18 +224,19 @@ class MorePage extends ConsumerWidget {
     final uri = Uri.parse(url);
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri, mode: LaunchMode.externalApplication);
-    } else {
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l.moreUrlError(url))),
-        );
-      }
+    } else if (context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(l.moreUrlError(url))),
+      );
     }
   }
 
   void _showLanguagePicker(BuildContext context, WidgetRef ref) {
     final l = AppLocalizations.of(context)!;
-    final currentCode = ref.read(localeProvider).languageCode;
+    final notifier = ref.read(localeProvider.notifier);
+    final currentCode = notifier.isSystem
+        ? LocaleNotifier.systemCode
+        : ref.read(localeProvider).languageCode;
     karterShowDialog(
       context: context,
       builder: (ctx) => SimpleDialog(
@@ -180,12 +251,47 @@ class MorePage extends ConsumerWidget {
             child: Column(
               children: [
                 RadioListTile<String>(
-                  title: Text(l.english),
-                  value: 'en',
+                  title: Text(l.languageSystem),
+                  value: LocaleNotifier.systemCode,
                 ),
-                RadioListTile<String>(
-                  title: Text(l.spanish),
-                  value: 'es',
+                RadioListTile<String>(title: Text(l.english), value: 'en'),
+                RadioListTile<String>(title: Text(l.spanish), value: 'es'),
+                RadioListTile<String>(title: Text(l.eesti), value: 'et'),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showThemePicker(BuildContext context, WidgetRef ref, ThemeMode current) {
+    final l = AppLocalizations.of(context)!;
+    karterShowDialog(
+      context: context,
+      builder: (ctx) => SimpleDialog(
+        title: Text(l.theme),
+        children: [
+          RadioGroup<ThemeMode>(
+            groupValue: current,
+            onChanged: (v) {
+              ref.read(themeModeProvider.notifier).setThemeMode(v!);
+              Navigator.pop(ctx);
+            },
+            child: Column(
+              children: [
+                RadioListTile<ThemeMode>(
+                  title: Text(l.themeSystem),
+                  subtitle: Text(l.themeSystemDesc),
+                  value: ThemeMode.system,
+                ),
+                RadioListTile<ThemeMode>(
+                  title: Text(l.themeLight),
+                  value: ThemeMode.light,
+                ),
+                RadioListTile<ThemeMode>(
+                  title: Text(l.themeDark),
+                  value: ThemeMode.dark,
                 ),
               ],
             ),
@@ -194,97 +300,162 @@ class MorePage extends ConsumerWidget {
       ),
     );
   }
-}
 
-class _TemplateSourceSection extends ConsumerWidget {
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final theme = Theme.of(context);
+  Future<void> _pickColor(
+    BuildContext context,
+    WidgetRef ref,
+    SeedColorState current,
+  ) async {
     final l = AppLocalizations.of(context)!;
-    final config = ref.watch(templateSourceProvider);
+    Color picked = current.color;
 
-    return Column(
-      children: [
-        Material(
-          color: theme.colorScheme.surface,
-          child: SwitchListTile(
-            secondary: Icon(config.enabled ? Icons.cloud : Icons.storage),
-            title: Text(l.moreTemplateSource),
-            subtitle: Text(l.moreTemplateSourceSubtitle),
-            value: config.enabled,
-            onChanged: (v) => ref.read(templateSourceProvider.notifier).setEnabled(v),
-          ),
-        ),
-        if (config.enabled) ...[
-          const Divider(height: 1, indent: 16, endIndent: 16),
-          Material(
-            color: theme.colorScheme.surface,
-            child: ListTile(
-              leading: const Icon(Icons.link),
-              title: Text(l.moreTemplateSourceUrl),
-              subtitle: Text(
-                config.repoUrl,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: theme.textTheme.bodySmall,
-              ),
-              trailing: const Icon(Icons.edit),
-              onTap: () => _editUrl(context, ref, config.repoUrl),
-            ),
-          ),
-        ],
-      ],
-    );
-  }
-
-  Future<void> _editUrl(BuildContext context, WidgetRef ref, String currentUrl) async {
-    final l = AppLocalizations.of(context)!;
-    final controller = TextEditingController(text: currentUrl);
-
-    final result = await karterShowDialog<String>(
+    final color = await showDialog<Color>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text(l.moreTemplateSourceEditUrl),
-        content: TextField(
-          controller: controller,
-          decoration: InputDecoration(
-            hintText: l.moreTemplateSourceUrlHint,
+        title: Text(l.colorScheme),
+        content: SingleChildScrollView(
+          child: BlockPicker(
+            pickerColor: picked,
+            onColorChanged: (c) => picked = c,
           ),
-          keyboardType: TextInputType.url,
-          autofocus: true,
         ),
         actions: [
-          TextButton(
-            onPressed: () {
-              ref.read(templateSourceProvider.notifier).resetToDefault();
-              Navigator.pop(ctx);
-            },
-            child: Text(l.moreTemplateSourceReset),
-          ),
+          if (current.customArgb != null)
+            TextButton(
+              onPressed: () => Navigator.pop(ctx, Colors.amber),
+              child: Text(l.resetToDefault),
+            ),
           TextButton(
             onPressed: () => Navigator.pop(ctx),
             child: Text(l.cancel),
           ),
           FilledButton(
-            onPressed: () {
-              final url = controller.text.trim();
-              if (url.isNotEmpty) {
-                Navigator.pop(ctx, url);
-              }
-            },
+            onPressed: () => Navigator.pop(ctx, picked),
             child: Text(l.saveChangesShort),
           ),
         ],
       ),
     );
 
-    if (result != null && result.isNotEmpty) {
-      await ref.read(templateSourceProvider.notifier).setRepoUrl(result);
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l.moreTemplateSourceUrlSaved)),
-        );
+    if (color != null && context.mounted) {
+      if (color == Colors.amber) {
+        await ref.read(seedColorProvider.notifier).resetColor();
+      } else {
+        await ref.read(seedColorProvider.notifier).setColor(color);
       }
     }
+  }
+}
+
+class _AboutInfoCard extends ConsumerWidget {
+  final AppLocalizations l;
+  const _AboutInfoCard({required this.l});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return FutureBuilder<PackageInfo>(
+      future: PackageInfo.fromPlatform(),
+      builder: (context, snapshot) {
+        final info = snapshot.data;
+        final version = info != null
+            ? '${info.version}+${info.buildNumber}'
+            : '...';
+        final deviceId = _deviceId();
+
+        return Card(
+          clipBehavior: Clip.antiAlias,
+          margin: EdgeInsets.zero,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: ListTile.divideTiles(
+              context: context,
+              tiles: [
+                ListTile(
+                  leading: const Icon(Icons.info_outline),
+                  title: Text(l.version),
+                  subtitle: Text(version),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.phone_android),
+                  title: Text(l.deviceId),
+                  subtitle: Text(deviceId),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.description_outlined),
+                  title: Text(l.changelog),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute(
+                      fullscreenDialog: true,
+                      builder: (_) => const ChangelogPage(),
+                    ),
+                  ),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.code),
+                  title: Text(l.openSourceLicenses),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: () => showLicensePage(
+                    context: context,
+                    applicationName: 'Karter',
+                  ),
+                ),
+              ],
+            ).toList(),
+          ),
+        );
+      },
+    );
+  }
+
+  static String _deviceId() {
+    final bytes = utf8.encode('karter-device');
+    var hash = 0x811c9dc5;
+    for (final byte in bytes) {
+      hash ^= byte;
+      hash = (hash * 0x01000193) & 0xFFFFFFFF;
+    }
+    return hash.toRadixString(16).toUpperCase().padLeft(8, '0') * 4;
+  }
+}
+
+class _GroupedCard extends StatelessWidget {
+  final List<Widget> children;
+  const _GroupedCard({required this.children});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      clipBehavior: Clip.antiAlias,
+      margin: EdgeInsets.zero,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: ListTile.divideTiles(
+          context: context,
+          tiles: children,
+        ).toList(),
+      ),
+    );
+  }
+}
+
+class _SectionHeader extends StatelessWidget {
+  final String title;
+  const _SectionHeader({required this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Padding(
+      padding: const EdgeInsets.only(top: 20, bottom: 8, left: 4),
+      child: Text(
+        title.toUpperCase(),
+        style: theme.textTheme.labelSmall?.copyWith(
+          color: theme.colorScheme.primary,
+          fontWeight: FontWeight.w600,
+          letterSpacing: 1.2,
+        ),
+      ),
+    );
   }
 }
