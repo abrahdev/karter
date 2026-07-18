@@ -120,4 +120,5 @@
     "odometerAtService": "Kilomeetrilugeja hoolduse ajal (valikuline)",
     "resetInterval": "Taastamisintervall (valikuline)",
     "maintenanceEmpty": "Teenuseid ei ole registreeritud"
+    "docTypeComplexInsurance": "Kompleksne kindlustus"
 }
