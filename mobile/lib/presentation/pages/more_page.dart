@@ -384,10 +384,11 @@ class _AboutInfoCard extends ConsumerWidget {
                   leading: const Icon(Icons.description_outlined),
                   title: Text(l.changelog),
                   trailing: const Icon(Icons.chevron_right),
-                  onTap: () => karterShowModalBottomSheet(
-                    context: context,
-                    isScrollControlled: true,
-                    builder: (_) => const ChangelogSheet(),
+                  onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute(
+                      fullscreenDialog: true,
+                      builder: (_) => const ChangelogPage(),
+                    ),
                   ),
                 ),
                 ListTile(
