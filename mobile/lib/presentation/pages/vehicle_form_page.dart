@@ -588,7 +588,7 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
       body: Form(
         key: _formKey,
         child: ListView(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
           children: [
             if (composite.isNotEmpty)
               Padding(
@@ -633,7 +633,7 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
                 _brand = value;
               },
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 16),
             Autocomplete<String>(
               initialValue: TextEditingValue(text: _model),
               optionsBuilder: (textEditingValue) {
@@ -671,7 +671,7 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
                 _model = value;
               },
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 16),
             TextFormField(
               controller: _yearController,
               decoration: InputDecoration(labelText: l.year),
@@ -686,7 +686,7 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
                 return null;
               },
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 16),
             OutlinedButton.icon(
               onPressed:
                   _isLoading ? null : _searchTemplate,
@@ -699,10 +699,10 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
                     : 'Buscar plantilla',
               ),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 24),
             Text(l.vehicleType,
                 style: Theme.of(context).textTheme.titleSmall),
-            const SizedBox(height: 8),
+            const SizedBox(height: 12),
             AbsorbPointer(
               absorbing: _templateIntervals != null,
               child: SegmentedButton<VehicleType>(
@@ -730,7 +730,7 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
                 }),
               ),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 16),
             TextFormField(
               controller: _plateController,
               decoration: InputDecoration(
@@ -739,7 +739,7 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
               textCapitalization: TextCapitalization.characters,
               onChanged: (_) => _markDirty(),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 16),
             TextFormField(
               controller: _vinController,
               decoration: InputDecoration(
@@ -749,6 +749,8 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
               maxLength: 17,
               onChanged: (_) => _markDirty(),
             ),
+            const SizedBox(height: 24),
+            Text(l.odometer, style: Theme.of(context).textTheme.titleSmall),
             const SizedBox(height: 12),
             Row(
               children: [
@@ -782,10 +784,10 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 24),
             Text(l.volumeUnit,
                 style: Theme.of(context).textTheme.titleSmall),
-            const SizedBox(height: 8),
+            const SizedBox(height: 12),
             SegmentedButton<VolumeUnit>(
               segments: [
                 ButtonSegment(
@@ -799,11 +801,12 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
                 _markDirty();
               }),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 24),
             Text(l.currency,
                 style: Theme.of(context).textTheme.titleSmall),
-            const SizedBox(height: 8),
+            const SizedBox(height: 12),
             DropdownButtonFormField<String>(
+              isExpanded: true,
               initialValue: _currency,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
@@ -824,7 +827,7 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
                 }
               },
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 24),
             SwitchListTile(
               title: Text(l.aliasOptional),
               subtitle: _showAlias && _aliasController.text.isNotEmpty
@@ -837,7 +840,7 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
               }),
             ),
             if (_showAlias) ...[
-              const SizedBox(height: 8),
+              const SizedBox(height: 12),
               TextFormField(
                 controller: _aliasController,
                 decoration: InputDecoration(
@@ -847,7 +850,7 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
                 onChanged: (_) => _markDirty(),
               ),
             ],
-            const SizedBox(height: 24),
+            const SizedBox(height: 32),
             FilledButton(
               onPressed: _isLoading ? null : _save,
               child: _isLoading
@@ -859,7 +862,7 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
                   : Text(_isEditing ? l.saveChanges : l.addVehicle),
             ),
             if (_isEditing) ...[
-              const SizedBox(height: 12),
+              const SizedBox(height: 16),
               OutlinedButton.icon(
                 onPressed: _isLoading ? null : _delete,
                 icon: const Icon(Icons.delete),

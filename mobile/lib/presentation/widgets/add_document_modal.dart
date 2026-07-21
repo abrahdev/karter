@@ -377,6 +377,7 @@ class _AddDocumentModalState extends ConsumerState<_AddDocumentModal> {
                 style: theme.textTheme.titleLarge),
             const SizedBox(height: 20),
             DropdownButtonFormField<DocumentType>(
+              isExpanded: true,
               initialValue: _selectedType,
               decoration: InputDecoration(
                 labelText: l.documentType,

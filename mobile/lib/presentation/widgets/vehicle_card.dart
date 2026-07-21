@@ -15,31 +15,41 @@ class VehicleCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final cs = theme.colorScheme;
+    final distance = vehicle.currentOdometer.distance;
+    final isKm = vehicle.currentOdometer.unit.name == 'kilometers';
+    final distanceText =
+        '${distance.toStringAsFixed(0)} ${isKm ? 'km' : 'mi'}';
+    final hasAlias =
+        vehicle.alias != null && vehicle.alias!.isNotEmpty;
+
     return Card(
       child: ListTile(
         leading: Hero(
           tag: 'vehicle-avatar-${vehicle.id}',
           child: CircleAvatar(
-            backgroundColor: theme.colorScheme.primaryContainer,
+            backgroundColor: cs.primaryContainer,
             child: Icon(
               switch (vehicle.type) {
                 VehicleType.combustion => Icons.local_gas_station,
                 VehicleType.electric => Icons.electric_car,
                 VehicleType.motorcycle => Icons.motorcycle,
               },
-              color: theme.colorScheme.onPrimaryContainer,
+              color: cs.onPrimaryContainer,
             ),
           ),
         ),
         title: Text(vehicle.displayName),
         subtitle: Text(
-          vehicle.alias != null && vehicle.alias!.isNotEmpty
+          hasAlias
               ? '${vehicle.brand} ${vehicle.model} ${vehicle.year}'
-              : '${vehicle.currentOdometer.distance.toStringAsFixed(0)} ${vehicle.currentOdometer.unit.name == 'kilometers' ? 'km' : 'mi'}',
+              : distanceText,
         ),
         trailing: Text(
-          '${vehicle.currentOdometer.distance.toStringAsFixed(0)} ${vehicle.currentOdometer.unit.name == 'kilometers' ? 'km' : 'mi'}',
-          style: theme.textTheme.bodySmall,
+          distanceText,
+          style: theme.textTheme.bodySmall?.copyWith(
+            color: cs.onSurfaceVariant,
+          ),
         ),
         onTap: onTap,
       ),

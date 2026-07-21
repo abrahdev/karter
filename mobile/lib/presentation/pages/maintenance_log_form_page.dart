@@ -260,6 +260,7 @@ class _MaintenanceLogFormPageState
                   final enabled = intervals.where((i) => i.isEnabled).toList();
                   if (enabled.isEmpty) return const SizedBox.shrink();
                   return DropdownButtonFormField<String>(
+                    isExpanded: true,
                     initialValue: _selectedIntervalId,
                     decoration: InputDecoration(
                       labelText: l.resetInterval,

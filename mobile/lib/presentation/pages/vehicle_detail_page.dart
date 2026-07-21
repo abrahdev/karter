@@ -84,6 +84,7 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
     final intervalsAsync =
         ref.watch(maintenanceIntervalsProvider(widget.vehicleId));
     final theme = Theme.of(context);
+    final cs = theme.colorScheme;
     final l = AppLocalizations.of(context)!;
 
     return vehicleAsync.when(
@@ -112,55 +113,59 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
             ],
           ),
           body: ListView(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             children: [
               Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      if (vehicle.alias != null &&
-                          vehicle.alias!.isNotEmpty) ...[
-                        Text(
-                          '${vehicle.brand} ${vehicle.model} ${vehicle.year}',
-                          style: theme.textTheme.titleMedium,
+                child: Column(
+                  children: [
+                    if (vehicle.alias != null &&
+                        vehicle.alias!.isNotEmpty)
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+                        child: Row(
+                          children: [
+                            Icon(Icons.person_outline, size: 18, color: cs.onSurfaceVariant),
+                            const SizedBox(width: 8),
+                            Expanded(
+                              child: Text(
+                                '${vehicle.brand} ${vehicle.model} ${vehicle.year}',
+                                style: theme.textTheme.bodyMedium?.copyWith(
+                                  color: cs.onSurfaceVariant,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                        const SizedBox(height: 8),
-                      ],
-                      if (vehicle.plate != null)
-                        _infoRow(
-                            Icons.badge, l.plate, vehicle.plate!.value),
-                      if (vehicle.vin != null)
-                        _infoRow(
-                            Icons.qr_code, l.vin, vehicle.vin!.code),
-                      _infoRow(Icons.directions_car,
-                          l.brandModel,
-                          '${vehicle.brand} ${vehicle.model}'),
-                      _infoRow(Icons.calendar_today,
-                          l.year, vehicle.year.toString()),
-                    ],
-                  ),
+                      ),
+                    if (vehicle.plate != null)
+                      _infoRow(Icons.badge, l.plate, vehicle.plate!.value),
+                    if (vehicle.vin != null)
+                      _infoRow(Icons.qr_code, l.vin, vehicle.vin!.code),
+                    _infoRow(Icons.directions_car, l.brandModel,
+                        '${vehicle.brand} ${vehicle.model}'),
+                    _infoRow(Icons.calendar_today, l.year, vehicle.year.toString()),
+                    const Divider(height: 1, indent: 16),
+                    ListTile(
+                      leading: const Icon(Icons.speed),
+                      title: Text(
+                        '${distance.toStringAsFixed(0)} ${isKm ? l.unitKm : l.unitMi}',
+                        style: theme.textTheme.titleMedium,
+                      ),
+                      subtitle: Text(l.odometer),
+                      trailing: FilledButton.tonal(
+                        onPressed: () =>
+                            _updateOdometer(context, vehicle.id, ref),
+                        child: Text(l.update),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              Card(
-                child: ListTile(
-                  leading: const Icon(Icons.speed),
-                  title: Text(
-                    '${distance.toStringAsFixed(0)} ${isKm ? l.unitKm : l.unitMi}',
-                    style: theme.textTheme.titleMedium,
-                  ),
-                  subtitle: Text(l.odometer),
-                  trailing: FilledButton.tonal(
-                    onPressed: () =>
-                        _updateOdometer(context, vehicle.id, ref),
-                    child: Text(l.update),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16),
-              Text(l.actions, style: theme.textTheme.titleMedium),
               const SizedBox(height: 8),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                child: Text(l.actions, style: theme.textTheme.titleSmall),
+              ),
               Card(
                 child: Column(
                   children: [
@@ -171,7 +176,6 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
                       onTap: () =>
                           context.push('/vehicle/${widget.vehicleId}/fuel'),
                     ),
-                    const Divider(height: 1),
                     ListTile(
                       leading: const Icon(Icons.build),
                       title: Text(l.maintenanceHistory),
@@ -179,7 +183,6 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
                       onTap: () => context
                           .push('/vehicle/${widget.vehicleId}/maintenance'),
                     ),
-                    const Divider(height: 1),
                     ListTile(
                       leading: const Icon(Icons.description),
                       title: Text(l.vehicleDocuments),
@@ -187,7 +190,6 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
                       onTap: () => context
                           .push('/vehicle/${widget.vehicleId}/documents'),
                     ),
-                    const Divider(height: 1),
                     ListTile(
                       leading: const Icon(Icons.tune),
                       title: Text(l.configureIntervals),
@@ -198,10 +200,12 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
                   ],
                 ),
               ),
-              const SizedBox(height: 16),
-              Text(l.nextMaintenance,
-                  style: theme.textTheme.titleMedium),
               const SizedBox(height: 8),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                child: Text(l.nextMaintenance,
+                    style: theme.textTheme.titleSmall),
+              ),
               intervalsAsync.when(
                 data: (intervals) {
                   final enabled =
@@ -233,25 +237,18 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
                       return b.sortKey.compareTo(a.sortKey);
                     });
 
-                  return Column(
-                    children: intervalData.map((data) {
-                      final interval = data.interval;
-                      Color? cardColor;
-                      Color? accentColor;
-                      if (data.isDue) {
-                        cardColor =
-                            theme.colorScheme.errorContainer;
-                        accentColor =
-                            theme.colorScheme.onErrorContainer;
-                      } else if (data.isApproaching) {
-                        cardColor =
-                            Colors.amber.withValues(alpha: 0.25);
-                        accentColor = Colors.amber.shade800;
-                      }
+                  return Card(
+                    child: Column(
+                      children: intervalData.map((data) {
+                        final interval = data.interval;
+                        Color? accentColor;
+                        if (data.isDue) {
+                          accentColor = theme.colorScheme.onErrorContainer;
+                        } else if (data.isApproaching) {
+                          accentColor = Colors.amber.shade800;
+                        }
 
-                      return Card(
-                        color: cardColor,
-                        child: ListTile(
+                        return ListTile(
                           leading: Icon(
                             Icons.build_circle_outlined,
                             color: accentColor,
@@ -318,9 +315,9 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
                               ),
                             ],
                           ),
-                        ),
-                      );
-                    }).toList(),
+                        );
+                      }).toList(),
+                    ),
                   );
                 },
                 loading: () => const Center(
@@ -510,18 +507,12 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
   }
 
   Widget _infoRow(IconData icon, String label, String value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
-      child: Row(
-        children: [
-          Icon(icon, size: 18),
-          const SizedBox(width: 8),
-          Text('$label: ',
-              style:
-                  const TextStyle(fontWeight: FontWeight.w500)),
-          Expanded(child: Text(value)),
-        ],
-      ),
+    return ListTile(
+      leading: Icon(icon, size: 20),
+      title: Text(value),
+      subtitle: Text(label),
+      dense: true,
+      visualDensity: VisualDensity.compact,
     );
   }
 }
