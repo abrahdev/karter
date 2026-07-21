@@ -65,6 +65,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get actions => 'Actions';
 
   @override
+  String get information => 'Information';
+
+  @override
   String get fuelLogs => 'Fuel logs';
 
   @override
@@ -257,6 +260,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get edit => 'Edit';
+
+  @override
+  String get addToDashboard => 'Add to dashboard';
+
+  @override
+  String get setupNotifications => 'Setup notifications';
+
+  @override
+  String get addToDashboardComingSoon => 'Coming soon';
 
   @override
   String get deleteInterval => 'Delete';
@@ -534,6 +546,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sectionPreferences => 'Preferences';
+
+  @override
+  String get sectionData => 'Data';
 
   @override
   String get sectionFeedbackCommunity => 'Feedback & Community';

@@ -23,10 +23,10 @@ class AppTheme {
     return ThemeData(
       colorScheme: effectiveScheme,
       useMaterial3: true,
+      fontFamily: 'Roboto',
       appBarTheme: AppBarTheme(
         centerTitle: true,
         scrolledUnderElevation: 1,
-        foregroundColor: effectiveScheme.primary,
       ),
       cardTheme: CardThemeData(
         elevation: 2,

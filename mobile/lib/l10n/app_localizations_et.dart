@@ -65,6 +65,9 @@ class AppLocalizationsEt extends AppLocalizations {
   String get actions => 'Tegevused';
 
   @override
+  String get information => 'Teave';
+
+  @override
   String get fuelLogs => 'Kütuselogid';
 
   @override
@@ -257,6 +260,15 @@ class AppLocalizationsEt extends AppLocalizations {
 
   @override
   String get edit => 'Muuda';
+
+  @override
+  String get addToDashboard => 'Lisa töölauda';
+
+  @override
+  String get setupNotifications => 'Seadista märguandeid';
+
+  @override
+  String get addToDashboardComingSoon => 'Tulemas';
 
   @override
   String get deleteInterval => 'Kustuta';
@@ -491,10 +503,10 @@ class AppLocalizationsEt extends AppLocalizations {
       'Karter is a local-first, open source vehicle maintenance app that respects your privacy.';
 
   @override
-  String get moreExport => 'Export / Import data';
+  String get moreExport => 'Ekspordi / Impordi andmeid';
 
   @override
-  String get moreExportSubtitle => 'Back up or transfer your information';
+  String get moreExportSubtitle => 'Varundage või teisaldage oma teave';
 
   @override
   String get moreDocs => 'Documentation';
@@ -535,6 +547,9 @@ class AppLocalizationsEt extends AppLocalizations {
 
   @override
   String get sectionPreferences => 'Eelistused';
+
+  @override
+  String get sectionData => 'Andmed';
 
   @override
   String get sectionFeedbackCommunity => 'Tagasiside ja kogukond';
