@@ -68,12 +68,15 @@ Future<T?> karterShowModalBottomSheet<T>({
   required BuildContext context,
   required WidgetBuilder builder,
   bool isScrollControlled = false,
+  double maxWidth = 560,
 }) {
   final theme = Theme.of(context);
   final mediaQuery = MediaQuery.of(context);
   final barrierLabel = MaterialLocalizations.of(context).modalBarrierDismissLabel;
   final maxHeight = mediaQuery.size.height * (isScrollControlled ? 0.9 : 0.5);
   final bottomInset = mediaQuery.viewInsets.bottom;
+  final screenW = mediaQuery.size.width;
+  final effectiveWidth = screenW < maxWidth ? screenW : maxWidth;
 
   return Navigator.of(context, rootNavigator: true).push<T>(
     _KarterDialogRoute<T>(
@@ -87,7 +90,7 @@ Future<T?> karterShowModalBottomSheet<T>({
               borderRadius:
                   const BorderRadius.vertical(top: Radius.circular(16)),
               child: SizedBox(
-                width: MediaQuery.of(context).size.width,
+                width: effectiveWidth,
                 child: ConstrainedBox(
                   constraints: BoxConstraints(maxHeight: maxHeight),
                   child: SafeArea(

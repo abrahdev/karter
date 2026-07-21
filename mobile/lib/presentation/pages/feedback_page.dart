@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/core/rating_helper.dart';
+import 'package:mobile/core/theme/app_spacing.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 
 class FeedbackPage extends StatefulWidget {
@@ -48,6 +49,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
     return Scaffold(
       appBar: AppBar(title: Text(l.feedbackTitle)),
       body: ListView(
+        padding: const EdgeInsets.all(AppSpacing.pagePadding),
         children: [
           const SizedBox(height: 8),
           ListTile(

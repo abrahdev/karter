@@ -5,14 +5,18 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart' show BlockPicker;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile/core/modal_helpers.dart';
+import 'package:mobile/core/theme/app_spacing.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/pages/changelog_page.dart';
+import 'package:mobile/presentation/pages/onboarding_page.dart';
 import 'package:mobile/presentation/pages/privacy_policy_page.dart';
 import 'package:mobile/presentation/pages/tips_page.dart';
+import 'package:mobile/presentation/widgets/section_header.dart';
 import 'package:mobile/presentation/providers/color_provider.dart';
 import 'package:mobile/presentation/providers/haptic_provider.dart';
 import 'package:mobile/presentation/providers/locale_provider.dart';
 import 'package:mobile/presentation/providers/surface_tint_provider.dart';
+import 'package:mobile/presentation/providers/template_source_provider.dart';
 import 'package:mobile/presentation/providers/theme_provider.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -21,6 +25,7 @@ class MorePage extends ConsumerWidget {
   const MorePage({super.key});
 
   static const _repoUrl = 'https://github.com/abrahdev/karter';
+  static const _docsUrl = 'https://abrahdev.github.io/karter/';
   static const _sponsorsUrl = 'https://github.com/sponsors/abrahdev';
   static const _weblateUrl = 'https://hosted.weblate.org/engage/karter/';
 
@@ -41,177 +46,418 @@ class MorePage extends ConsumerWidget {
 
     final languageLabel = _languageLabel(localeNotifier, l);
 
-    return ListView(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-      children: [
-        _SectionHeader(title: l.sectionPreferences),
-        _GroupedCard(
+    final narrow = LayoutBuilder(
+      builder: (context, constraints) {
+        final isWide = constraints.maxWidth >= 600;
+
+        if (isWide) {
+          return Padding(
+            padding: const EdgeInsets.all(AppSpacing.pagePadding),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: ListView(
+                    children: [
+                      SectionHeader(title: l.sectionPreferences),
+                      _GroupedCard(
+                        children: [
+                          ListTile(
+                            leading: const Icon(Icons.dark_mode_outlined),
+                            title: Text(l.theme),
+                            subtitle: Text(themeLabel),
+                            trailing: const Icon(Icons.chevron_right),
+                            onTap: () => _showThemePicker(context, ref, themeMode),
+                          ),
+                          SwitchListTile(
+                            secondary: const Icon(Icons.format_color_fill),
+                            title: Text(l.colorOfInterface),
+                            subtitle: Text(l.colorOfInterfaceDesc),
+                            value: surfaceTint,
+                            onChanged: (v) =>
+                                ref.read(surfaceTintProvider.notifier).toggle(v),
+                          ),
+                          SwitchListTile(
+                            secondary: const Icon(Icons.palette_outlined),
+                            title: Text(l.customColor),
+                            subtitle: Text(l.customColorDesc),
+                            value: seedColorState.useCustom,
+                            onChanged: (v) =>
+                                ref.read(seedColorProvider.notifier).setUseCustom(v),
+                          ),
+                          if (seedColorState.useCustom) ...[
+                            ListTile(
+                              leading: const Icon(Icons.circle, size: 24),
+                              title: Text(l.colorScheme),
+                              subtitle: Text(seedColorState.customArgb != null
+                                  ? l.colorCustom
+                                  : l.selectColor),
+                              trailing: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  CircleAvatar(
+                                    backgroundColor: seedColorState.color,
+                                    radius: 12,
+                                  ),
+                                  const SizedBox(width: 8),
+                                  const Icon(Icons.chevron_right),
+                                ],
+                              ),
+                              onTap: () => _pickColor(context, ref, seedColorState),
+                            ),
+                          ],
+                          SwitchListTile(
+                            secondary: const Icon(Icons.vibration),
+                            title: Text(l.hapticFeedback),
+                            subtitle: Text(l.hapticFeedbackDesc),
+                            value: hapticEnabled,
+                            onChanged: (v) =>
+                                ref.read(hapticProvider.notifier).toggle(v),
+                          ),
+                          ListTile(
+                            leading: const Icon(Icons.notifications_outlined),
+                            title: Text(l.moreNotifications),
+                            subtitle: Text(l.moreNotificationsSubtitle),
+                            trailing: const Icon(Icons.chevron_right),
+                            onTap: () => context.push('/notifications'),
+                          ),
+                          ListTile(
+                            leading: const Icon(Icons.language),
+                            title: Text(l.language),
+                            subtitle: Text(languageLabel),
+                            trailing: const Icon(Icons.chevron_right),
+                            onTap: () => _showLanguagePicker(context, ref),
+                          ),
+                        ],
+                      ),
+                      SectionHeader(title: l.sectionData),
+                      _DataSection(),
+                      SectionHeader(title: l.sectionTips),
+                      _GroupedCard(
+                        children: [
+                          ListTile(
+                            leading: const Icon(Icons.volunteer_activism),
+                            title: Text(l.tipProgram),
+                            subtitle: Text(l.tipBadgesNone),
+                            trailing: const Icon(Icons.chevron_right),
+                            onTap: () => Navigator.of(context).push(
+                              MaterialPageRoute(
+                                fullscreenDialog: true,
+                                builder: (_) => const TipsPage(),
+                              ),
+                            ),
+                          ),
+                          ListTile(
+                            leading: const Icon(Icons.favorite, color: Colors.red),
+                            title: Text(l.moreDonate),
+                            subtitle: Text(l.moreDonateSubtitle),
+                            trailing: const Icon(Icons.open_in_new),
+                            onTap: () => _openUrl(context, _sponsorsUrl),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: ListView(
+                    children: [
+                      SectionHeader(title: l.sectionFeedbackCommunity),
+                      _GroupedCard(
+                        children: [
+                          ListTile(
+                            leading: const Icon(Icons.rate_review),
+                            title: Text(l.moreFeedback),
+                            subtitle: Text(l.moreFeedbackSubtitle),
+                            trailing: const Icon(Icons.chevron_right),
+                            onTap: () => context.push('/feedback'),
+                          ),
+                          ListTile(
+                            leading: const Icon(Icons.code),
+                            title: Text(l.moreSource),
+                            subtitle: Text(l.moreSourceSubtitle),
+                            trailing: const Icon(Icons.open_in_new),
+                            onTap: () => _openUrl(context, _repoUrl),
+                          ),
+                          ListTile(
+                            leading: const Icon(Icons.menu_book),
+                            title: Text(l.moreDocs),
+                            subtitle: Text(l.moreDocsSubtitle),
+                            trailing: const Icon(Icons.open_in_new),
+                            onTap: () => _openUrl(context, _docsUrl),
+                          ),
+                          ListTile(
+                            leading: const Icon(Icons.help_outline),
+                            title: Text(l.onboardingReplay),
+                            subtitle: Text(l.onboardingReplaySubtitle),
+                            trailing: const Icon(Icons.chevron_right),
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  fullscreenDialog: true,
+                                  builder: (_) => const OnboardingPage(),
+                                ),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                      SectionHeader(title: l.sectionAbout),
+                      _GroupedCard(
+                        children: [
+                          ListTile(
+                            leading: const Icon(Icons.language),
+                            title: Text(l.officialWebsite),
+                            trailing: const Icon(Icons.open_in_new),
+                            onTap: () => _openUrl(context, _repoUrl),
+                          ),
+                          ListTile(
+                            leading: const Icon(Icons.forum_outlined),
+                            title: Text(l.communityForums),
+                            trailing: const Icon(Icons.open_in_new),
+                            onTap: () => _openUrl(
+                              context,
+                              'https://github.com/abrahdev/karter/discussions',
+                            ),
+                          ),
+                          ListTile(
+                            leading: const Icon(Icons.translate),
+                            title: Text(l.translations),
+                            trailing: const Icon(Icons.open_in_new),
+                            onTap: () => _openUrl(context, _weblateUrl),
+                          ),
+                          ListTile(
+                            leading: const Icon(Icons.privacy_tip_outlined),
+                            title: Text(l.privacyPolicy),
+                            trailing: const Icon(Icons.chevron_right),
+                            onTap: () => Navigator.of(context).push(
+                              MaterialPageRoute(
+                                fullscreenDialog: true,
+                                builder: (_) => const PrivacyPolicyPage(),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 4),
+                      _AboutInfoCard(l: l),
+                      const SizedBox(height: 4),
+                      Center(
+                        child: Text(
+                          l.moreFooter,
+                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                color: Theme.of(context).colorScheme.onSurfaceVariant,
+                              ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        }
+
+        return ListView(
+          padding: const EdgeInsets.all(AppSpacing.pagePadding),
           children: [
-            ListTile(
-              leading: const Icon(Icons.dark_mode_outlined),
-              title: Text(l.theme),
-              subtitle: Text(themeLabel),
-              trailing: const Icon(Icons.chevron_right),
-              onTap: () => _showThemePicker(context, ref, themeMode),
-            ),
-            SwitchListTile(
-              secondary: const Icon(Icons.format_color_fill),
-              title: Text(l.colorOfInterface),
-              subtitle: Text(l.colorOfInterfaceDesc),
-              value: surfaceTint,
-              onChanged: (v) =>
-                  ref.read(surfaceTintProvider.notifier).toggle(v),
-            ),
-            SwitchListTile(
-              secondary: const Icon(Icons.palette_outlined),
-              title: Text(l.customColor),
-              subtitle: Text(l.customColorDesc),
-              value: seedColorState.useCustom,
-              onChanged: (v) =>
-                  ref.read(seedColorProvider.notifier).setUseCustom(v),
-            ),
-            if (seedColorState.useCustom) ...[
-              ListTile(
-                leading: const Icon(Icons.circle, size: 24),
-                title: Text(l.colorScheme),
-                subtitle: Text(seedColorState.customArgb != null
-                    ? l.colorCustom
-                    : l.selectColor),
-                trailing: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    CircleAvatar(
-                      backgroundColor: seedColorState.color,
-                      radius: 12,
+            SectionHeader(title: l.sectionPreferences),
+            _GroupedCard(
+              children: [
+                ListTile(
+                  leading: const Icon(Icons.dark_mode_outlined),
+                  title: Text(l.theme),
+                  subtitle: Text(themeLabel),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: () => _showThemePicker(context, ref, themeMode),
+                ),
+                SwitchListTile(
+                  secondary: const Icon(Icons.format_color_fill),
+                  title: Text(l.colorOfInterface),
+                  subtitle: Text(l.colorOfInterfaceDesc),
+                  value: surfaceTint,
+                  onChanged: (v) =>
+                      ref.read(surfaceTintProvider.notifier).toggle(v),
+                ),
+                SwitchListTile(
+                  secondary: const Icon(Icons.palette_outlined),
+                  title: Text(l.customColor),
+                  subtitle: Text(l.customColorDesc),
+                  value: seedColorState.useCustom,
+                  onChanged: (v) =>
+                      ref.read(seedColorProvider.notifier).setUseCustom(v),
+                ),
+                if (seedColorState.useCustom) ...[
+                  ListTile(
+                    leading: const Icon(Icons.circle, size: 24),
+                    title: Text(l.colorScheme),
+                    subtitle: Text(seedColorState.customArgb != null
+                        ? l.colorCustom
+                        : l.selectColor),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        CircleAvatar(
+                          backgroundColor: seedColorState.color,
+                          radius: 12,
+                        ),
+                        const SizedBox(width: 8),
+                        const Icon(Icons.chevron_right),
+                      ],
                     ),
-                    const SizedBox(width: 8),
-                    const Icon(Icons.chevron_right),
-                  ],
+                    onTap: () => _pickColor(context, ref, seedColorState),
+                  ),
+                ],
+                SwitchListTile(
+                  secondary: const Icon(Icons.vibration),
+                  title: Text(l.hapticFeedback),
+                  subtitle: Text(l.hapticFeedbackDesc),
+                  value: hapticEnabled,
+                  onChanged: (v) =>
+                      ref.read(hapticProvider.notifier).toggle(v),
                 ),
-                onTap: () => _pickColor(context, ref, seedColorState),
+                ListTile(
+                  leading: const Icon(Icons.notifications_outlined),
+                  title: Text(l.moreNotifications),
+                  subtitle: Text(l.moreNotificationsSubtitle),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: () => context.push('/notifications'),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.language),
+                  title: Text(l.language),
+                  subtitle: Text(languageLabel),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: () => _showLanguagePicker(context, ref),
+                ),
+              ],
+            ),
+
+            SectionHeader(title: l.sectionData),
+            _DataSection(),
+
+            SectionHeader(title: l.sectionFeedbackCommunity),
+            _GroupedCard(
+              children: [
+                ListTile(
+                  leading: const Icon(Icons.rate_review),
+                  title: Text(l.moreFeedback),
+                  subtitle: Text(l.moreFeedbackSubtitle),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: () => context.push('/feedback'),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.code),
+                  title: Text(l.moreSource),
+                  subtitle: Text(l.moreSourceSubtitle),
+                  trailing: const Icon(Icons.open_in_new),
+                  onTap: () => _openUrl(context, _repoUrl),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.menu_book),
+                  title: Text(l.moreDocs),
+                  subtitle: Text(l.moreDocsSubtitle),
+                  trailing: const Icon(Icons.open_in_new),
+                  onTap: () => _openUrl(context, _docsUrl),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.help_outline),
+                  title: Text(l.onboardingReplay),
+                  subtitle: Text(l.onboardingReplaySubtitle),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        fullscreenDialog: true,
+                        builder: (_) => const OnboardingPage(),
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
+
+            SectionHeader(title: l.sectionTips),
+            _GroupedCard(
+              children: [
+                ListTile(
+                  leading: const Icon(Icons.volunteer_activism),
+                  title: Text(l.tipProgram),
+                  subtitle: Text(l.tipBadgesNone),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute(
+                      fullscreenDialog: true,
+                      builder: (_) => const TipsPage(),
+                    ),
+                  ),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.favorite, color: Colors.red),
+                  title: Text(l.moreDonate),
+                  subtitle: Text(l.moreDonateSubtitle),
+                  trailing: const Icon(Icons.open_in_new),
+                  onTap: () => _openUrl(context, _sponsorsUrl),
+                ),
+              ],
+            ),
+
+            SectionHeader(title: l.sectionAbout),
+            _GroupedCard(
+              children: [
+                ListTile(
+                  leading: const Icon(Icons.language),
+                  title: Text(l.officialWebsite),
+                  trailing: const Icon(Icons.open_in_new),
+                  onTap: () => _openUrl(context, _repoUrl),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.forum_outlined),
+                  title: Text(l.communityForums),
+                  trailing: const Icon(Icons.open_in_new),
+                  onTap: () => _openUrl(
+                    context,
+                    'https://github.com/abrahdev/karter/discussions',
+                  ),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.translate),
+                  title: Text(l.translations),
+                  trailing: const Icon(Icons.open_in_new),
+                  onTap: () => _openUrl(context, _weblateUrl),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.privacy_tip_outlined),
+                  title: Text(l.privacyPolicy),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute(
+                      fullscreenDialog: true,
+                      builder: (_) => const PrivacyPolicyPage(),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 4),
+            _AboutInfoCard(l: l),
+
+            const SizedBox(height: 24),
+            Center(
+              child: Text(
+                l.moreFooter,
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
+                    ),
               ),
-            ],
-            SwitchListTile(
-              secondary: const Icon(Icons.vibration),
-              title: Text(l.hapticFeedback),
-              subtitle: Text(l.hapticFeedbackDesc),
-              value: hapticEnabled,
-              onChanged: (v) =>
-                  ref.read(hapticProvider.notifier).toggle(v),
-            ),
-            ListTile(
-              leading: const Icon(Icons.notifications_outlined),
-              title: Text(l.moreNotifications),
-              subtitle: Text(l.moreNotificationsSubtitle),
-              trailing: const Icon(Icons.chevron_right),
-              onTap: () => context.push('/notifications'),
-            ),
-            ListTile(
-              leading: const Icon(Icons.language),
-              title: Text(l.language),
-              subtitle: Text(languageLabel),
-              trailing: const Icon(Icons.chevron_right),
-              onTap: () => _showLanguagePicker(context, ref),
             ),
           ],
-        ),
-
-        _SectionHeader(title: l.sectionFeedbackCommunity),
-        _GroupedCard(
-          children: [
-            ListTile(
-              leading: const Icon(Icons.rate_review),
-              title: Text(l.moreFeedback),
-              subtitle: Text(l.moreFeedbackSubtitle),
-              trailing: const Icon(Icons.chevron_right),
-              onTap: () => context.push('/feedback'),
-            ),
-            ListTile(
-              leading: const Icon(Icons.code),
-              title: Text(l.moreSource),
-              subtitle: Text(l.moreSourceSubtitle),
-              trailing: const Icon(Icons.open_in_new),
-              onTap: () => _openUrl(context, _repoUrl),
-            ),
-          ],
-        ),
-
-        _SectionHeader(title: l.sectionTips),
-        _GroupedCard(
-          children: [
-            ListTile(
-              leading: const Icon(Icons.volunteer_activism),
-              title: Text(l.tipProgram),
-              subtitle: Text(l.tipBadgesNone),
-              trailing: const Icon(Icons.chevron_right),
-              onTap: () => Navigator.of(context).push(
-                MaterialPageRoute(
-                  fullscreenDialog: true,
-                  builder: (_) => const TipsPage(),
-                ),
-              ),
-            ),
-            ListTile(
-              leading: const Icon(Icons.favorite, color: Colors.red),
-              title: Text(l.moreDonate),
-              subtitle: Text(l.moreDonateSubtitle),
-              trailing: const Icon(Icons.open_in_new),
-              onTap: () => _openUrl(context, _sponsorsUrl),
-            ),
-          ],
-        ),
-
-        _SectionHeader(title: l.sectionAbout),
-        _GroupedCard(
-          children: [
-            ListTile(
-              leading: const Icon(Icons.language),
-              title: Text(l.officialWebsite),
-              trailing: const Icon(Icons.open_in_new),
-              onTap: () => _openUrl(context, _repoUrl),
-            ),
-            ListTile(
-              leading: const Icon(Icons.forum_outlined),
-              title: Text(l.communityForums),
-              trailing: const Icon(Icons.open_in_new),
-              onTap: () => _openUrl(
-                context,
-                'https://github.com/abrahdev/karter/discussions',
-              ),
-            ),
-            ListTile(
-              leading: const Icon(Icons.translate),
-              title: Text(l.translations),
-              trailing: const Icon(Icons.open_in_new),
-              onTap: () => _openUrl(context, _weblateUrl),
-            ),
-            ListTile(
-              leading: const Icon(Icons.privacy_tip_outlined),
-              title: Text(l.privacyPolicy),
-              trailing: const Icon(Icons.chevron_right),
-              onTap: () => Navigator.of(context).push(
-                MaterialPageRoute(
-                  fullscreenDialog: true,
-                  builder: (_) => const PrivacyPolicyPage(),
-                ),
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 4),
-        _AboutInfoCard(l: l),
-
-        const SizedBox(height: 24),
-        Center(
-          child: Text(
-            l.moreFooter,
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
-                ),
-          ),
-        ),
-      ],
+        );
+      },
     );
+
+    return narrow;
   }
 
   String _languageLabel(LocaleNotifier notifier, AppLocalizations l) {
@@ -364,7 +610,6 @@ class _AboutInfoCard extends ConsumerWidget {
 
         return Card(
           clipBehavior: Clip.antiAlias,
-          margin: EdgeInsets.zero,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: ListTile.divideTiles(
@@ -427,7 +672,6 @@ class _GroupedCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       clipBehavior: Clip.antiAlias,
-      margin: EdgeInsets.zero,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: ListTile.divideTiles(
@@ -439,23 +683,108 @@ class _GroupedCard extends StatelessWidget {
   }
 }
 
-class _SectionHeader extends StatelessWidget {
-  final String title;
-  const _SectionHeader({required this.title});
-
+class _DataSection extends ConsumerWidget {
   @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Padding(
-      padding: const EdgeInsets.only(top: 20, bottom: 8, left: 4),
-      child: Text(
-        title.toUpperCase(),
-        style: theme.textTheme.labelSmall?.copyWith(
-          color: theme.colorScheme.primary,
-          fontWeight: FontWeight.w600,
-          letterSpacing: 1.2,
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l = AppLocalizations.of(context)!;
+    final config = ref.watch(templateSourceProvider);
+
+    final tiles = <Widget>[
+      ListTile(
+        leading: const Icon(Icons.storage),
+        title: Text(l.moreExport),
+        subtitle: Text(l.moreExportSubtitle),
+        trailing: const Icon(Icons.chevron_right),
+        onTap: () => context.push('/data'),
+      ),
+      SwitchListTile(
+        secondary: Icon(config.enabled ? Icons.cloud : Icons.cloud_off),
+        title: Text(l.moreTemplateSource),
+        subtitle: Text(l.moreTemplateSourceSubtitle),
+        value: config.enabled,
+        onChanged: (v) =>
+            ref.read(templateSourceProvider.notifier).setEnabled(v),
+      ),
+    ];
+
+    if (config.enabled) {
+      tiles.add(
+        ListTile(
+          leading: const Icon(Icons.link),
+          title: Text(l.moreTemplateSourceUrl),
+          subtitle: Text(
+            config.repoUrl,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+          trailing: const Icon(Icons.edit),
+          onTap: () => _editUrl(context, ref, config.repoUrl),
         ),
+      );
+    }
+
+    return Card(
+      clipBehavior: Clip.antiAlias,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: ListTile.divideTiles(
+          context: context,
+          tiles: tiles,
+        ).toList(),
       ),
     );
   }
+
+  Future<void> _editUrl(
+      BuildContext context, WidgetRef ref, String currentUrl) async {
+    final l = AppLocalizations.of(context)!;
+    final controller = TextEditingController(text: currentUrl);
+
+    final result = await karterShowDialog<String>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(l.moreTemplateSourceEditUrl),
+        content: TextField(
+          controller: controller,
+          decoration: InputDecoration(
+            hintText: l.moreTemplateSourceUrlHint,
+          ),
+          keyboardType: TextInputType.url,
+          autofocus: true,
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              ref.read(templateSourceProvider.notifier).resetToDefault();
+              Navigator.pop(ctx);
+            },
+            child: Text(l.moreTemplateSourceReset),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: Text(l.cancel),
+          ),
+          FilledButton(
+            onPressed: () {
+              final url = controller.text.trim();
+              if (url.isNotEmpty) Navigator.pop(ctx, url);
+            },
+            child: Text(l.saveChangesShort),
+          ),
+        ],
+      ),
+    );
+
+    if (result != null && result.isNotEmpty) {
+      await ref.read(templateSourceProvider.notifier).setRepoUrl(result);
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(l.moreTemplateSourceUrlSaved)),
+        );
+      }
+    }
+  }
 }
+
+

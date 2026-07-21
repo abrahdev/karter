@@ -6,6 +6,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/core/modal_helpers.dart';
+import 'package:mobile/core/theme/app_spacing.dart';
 import 'package:mobile/data/services/export_service.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
@@ -42,6 +43,7 @@ class _DataManagerPageState extends ConsumerState<DataManagerPage> {
                           style: theme.textTheme.bodyLarge),
                     )
                   : ListView.builder(
+                      padding: const EdgeInsets.all(AppSpacing.pagePadding),
                       itemCount: vehicles.length,
                       itemBuilder: (_, i) {
                         final v = vehicles[i];

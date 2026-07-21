@@ -208,6 +208,12 @@ abstract class AppLocalizations {
   /// **'Actions'**
   String get actions;
 
+  /// No description provided for @information.
+  ///
+  /// In en, this message translates to:
+  /// **'Information'**
+  String get information;
+
   /// No description provided for @fuelLogs.
   ///
   /// In en, this message translates to:
@@ -560,6 +566,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Edit'**
   String get edit;
+
+  /// No description provided for @addToDashboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to dashboard'**
+  String get addToDashboard;
+
+  /// No description provided for @setupNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Setup notifications'**
+  String get setupNotifications;
+
+  /// No description provided for @addToDashboardComingSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Coming soon'**
+  String get addToDashboardComingSoon;
 
   /// No description provided for @deleteInterval.
   ///
@@ -1076,6 +1100,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Preferences'**
   String get sectionPreferences;
+
+  /// No description provided for @sectionData.
+  ///
+  /// In en, this message translates to:
+  /// **'Data'**
+  String get sectionData;
 
   /// No description provided for @sectionFeedbackCommunity.
   ///

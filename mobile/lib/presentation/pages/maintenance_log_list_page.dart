@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:mobile/core/theme/app_spacing.dart';
 import 'package:mobile/domain/entities/maintenance_log.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
@@ -203,7 +204,7 @@ class _MaintenanceLogListPageState
           const SizedBox(height: 8),
           Card(
             child: Padding(
-              padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(AppSpacing.pagePadding),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

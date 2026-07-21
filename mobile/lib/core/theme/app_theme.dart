@@ -23,13 +23,14 @@ class AppTheme {
     return ThemeData(
       colorScheme: effectiveScheme,
       useMaterial3: true,
+      fontFamily: 'Roboto',
       appBarTheme: AppBarTheme(
         centerTitle: true,
         scrolledUnderElevation: 1,
       ),
       cardTheme: CardThemeData(
         elevation: 2,
-        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 8),
       ),
       pageTransitionsTheme: PageTransitionsTheme(
         builders: {

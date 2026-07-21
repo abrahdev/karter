@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile/core/theme/app_spacing.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:mobile/l10n/app_localizations.dart';
 
@@ -37,7 +38,7 @@ class _ChangelogPageState extends State<ChangelogPage> {
       appBar: AppBar(title: Text(l.changelog)),
       body: _content != null
           ? ListView(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(AppSpacing.pagePadding),
               children: [
                 Text(
                   _content!,
