@@ -3,7 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile/core/modal_helpers.dart';
+import 'package:mobile/core/theme/app_spacing.dart';
 import 'package:mobile/domain/entities/maintenance_interval.dart';
+import 'package:mobile/domain/entities/vehicle.dart';
 import 'package:mobile/domain/enums/distance_unit.dart';
 import 'package:mobile/domain/value_objects/odometer.dart';
 import 'package:mobile/l10n/app_localizations.dart';
@@ -13,6 +15,9 @@ import 'package:mobile/presentation/widgets/add_document_modal.dart';
 import 'package:mobile/presentation/widgets/add_fuel_log_modal.dart';
 import 'package:mobile/presentation/widgets/add_maintenance_log_modal.dart';
 import 'package:mobile/presentation/widgets/odometer_dialog.dart';
+import 'package:mobile/presentation/widgets/section_header.dart';
+
+const _wideBreakpoint = 600.0;
 
 class VehicleDetailPage extends ConsumerStatefulWidget {
   final String vehicleId;
@@ -35,11 +40,11 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
         ref.read(pendingNotificationActionProvider.notifier).set(null);
         final parts = action.split(':');
         if (parts.length == 2 && parts[1] == widget.vehicleId) {
-      if (parts[0] == 'odometer') {
-        _openOdometerFromNotification();
-      } else if (parts[0] == 'maintenance') {
-        _openMaintenanceFromNotification();
-      }
+          if (parts[0] == 'odometer') {
+            _openOdometerFromNotification();
+          } else if (parts[0] == 'maintenance') {
+            _openMaintenanceFromNotification();
+          }
         }
       }
     });
@@ -78,361 +83,30 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final vehicleAsync = ref.watch(vehicleProvider(widget.vehicleId));
-    final intervalsAsync =
-        ref.watch(maintenanceIntervalsProvider(widget.vehicleId));
-    final theme = Theme.of(context);
-    final l = AppLocalizations.of(context)!;
-
-    return vehicleAsync.when(
-      data: (vehicle) {
-        if (vehicle == null) {
-          return Scaffold(
-            appBar: AppBar(title: Text(l.vehicleDetailTitle)),
-            body: Center(child: Text(l.vehicleNotFound)),
-          );
-        }
-
-        final distance = vehicle.currentOdometer.distance;
-        final isKm =
-            vehicle.currentOdometer.unit == DistanceUnit.kilometers;
-        final distanceKm = isKm ? distance : distance * 1.60934;
-
-        return Scaffold(
-          appBar: AppBar(
-            title: Text(vehicle.displayName),
-            actions: [
-              IconButton(
-                icon: const Icon(Icons.edit),
-                onPressed: () =>
-                    context.push('/vehicle/${widget.vehicleId}/edit'),
+  void _updateOdometer(
+      BuildContext context, String vehicleId, WidgetRef ref) {
+    karterShowModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (ctx) => OdometerDialog(
+        current: ref.read(vehicleProvider(vehicleId)).value
+                ?.currentOdometer ??
+            Odometer(0, DistanceUnit.kilometers),
+        onSave: (double newDistance) async {
+          final repo = ref.read(vehicleRepositoryProvider);
+          final vehicle = await repo.getById(vehicleId);
+          if (vehicle != null) {
+            final updated = vehicle.copyWith(
+              currentOdometer: vehicle.currentOdometer.add(
+                newDistance - vehicle.currentOdometer.distance,
               ),
-            ],
-          ),
-          body: ListView(
-            padding: const EdgeInsets.all(16),
-            children: [
-              Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      if (vehicle.alias != null &&
-                          vehicle.alias!.isNotEmpty) ...[
-                        Text(
-                          '${vehicle.brand} ${vehicle.model} ${vehicle.year}',
-                          style: theme.textTheme.titleMedium,
-                        ),
-                        const SizedBox(height: 8),
-                      ],
-                      if (vehicle.plate != null)
-                        _infoRow(
-                            Icons.badge, l.plate, vehicle.plate!.value),
-                      if (vehicle.vin != null)
-                        _infoRow(
-                            Icons.qr_code, l.vin, vehicle.vin!.code),
-                      _infoRow(Icons.directions_car,
-                          l.brandModel,
-                          '${vehicle.brand} ${vehicle.model}'),
-                      _infoRow(Icons.calendar_today,
-                          l.year, vehicle.year.toString()),
-                    ],
-                  ),
-                ),
-              ),
-              Card(
-                child: ListTile(
-                  leading: const Icon(Icons.speed),
-                  title: Text(
-                    '${distance.toStringAsFixed(0)} ${isKm ? l.unitKm : l.unitMi}',
-                    style: theme.textTheme.titleMedium,
-                  ),
-                  subtitle: Text(l.odometer),
-                  trailing: FilledButton.tonal(
-                    onPressed: () =>
-                        _updateOdometer(context, vehicle.id, ref),
-                    child: Text(l.update),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16),
-              Text(l.actions, style: theme.textTheme.titleMedium),
-              const SizedBox(height: 8),
-              Card(
-                child: Column(
-                  children: [
-                    ListTile(
-                      leading: const Icon(Icons.local_gas_station),
-                      title: Text(l.fuelLogs),
-                      trailing: const Icon(Icons.chevron_right),
-                      onTap: () =>
-                          context.push('/vehicle/${widget.vehicleId}/fuel'),
-                    ),
-                    const Divider(height: 1),
-                    ListTile(
-                      leading: const Icon(Icons.build),
-                      title: Text(l.maintenanceHistory),
-                      trailing: const Icon(Icons.chevron_right),
-                      onTap: () => context
-                          .push('/vehicle/${widget.vehicleId}/maintenance'),
-                    ),
-                    const Divider(height: 1),
-                    ListTile(
-                      leading: const Icon(Icons.description),
-                      title: Text(l.vehicleDocuments),
-                      trailing: const Icon(Icons.chevron_right),
-                      onTap: () => context
-                          .push('/vehicle/${widget.vehicleId}/documents'),
-                    ),
-                    const Divider(height: 1),
-                    ListTile(
-                      leading: const Icon(Icons.tune),
-                      title: Text(l.configureIntervals),
-                      trailing: const Icon(Icons.chevron_right),
-                      onTap: () => context
-                          .push('/vehicle/${widget.vehicleId}/maintenance/settings'),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 16),
-              Text(l.nextMaintenance,
-                  style: theme.textTheme.titleMedium),
-              const SizedBox(height: 8),
-              intervalsAsync.when(
-                data: (intervals) {
-                  final enabled =
-                      intervals.where((i) => i.isEnabled).toList();
-
-                  if (enabled.isEmpty) {
-                    return Card(
-                      child: Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: Text(
-                          l.allIntervalsDisabled,
-                          style: theme.textTheme.bodyMedium,
-                        ),
-                      ),
-                    );
-                  }
-
-                  final intervalData = enabled
-                      .map((i) => _IntervalData.compute(
-                          i, distanceKm, l))
-                      .toList()
-                    ..sort((a, b) {
-                      if (a.isDue != b.isDue) {
-                        return a.isDue ? -1 : 1;
-                      }
-                      if (a.isApproaching != b.isApproaching) {
-                        return a.isApproaching ? -1 : 1;
-                      }
-                      return b.sortKey.compareTo(a.sortKey);
-                    });
-
-                  return Column(
-                    children: intervalData.map((data) {
-                      final interval = data.interval;
-                      Color? cardColor;
-                      Color? accentColor;
-                      if (data.isDue) {
-                        cardColor =
-                            theme.colorScheme.errorContainer;
-                        accentColor =
-                            theme.colorScheme.onErrorContainer;
-                      } else if (data.isApproaching) {
-                        cardColor =
-                            Colors.amber.withValues(alpha: 0.25);
-                        accentColor = Colors.amber.shade800;
-                      }
-
-                      return Card(
-                        color: cardColor,
-                        child: ListTile(
-                          leading: Icon(
-                            Icons.build_circle_outlined,
-                            color: accentColor,
-                          ),
-                          title: Text(
-                            localizedLabel(l.localeName, interval.i18nKey,
-                                interval.label),
-                            style: TextStyle(
-                              fontWeight: data.isDue
-                                  ? FontWeight.bold
-                                  : null,
-                            ),
-                          ),
-                          subtitle: Column(
-                            crossAxisAlignment:
-                                CrossAxisAlignment.start,
-                            children: [
-                              Text(data.subtitle),
-                              if (data.lastResetInfo != null)
-                                Text(
-                                  data.lastResetInfo!,
-                                  style: theme.textTheme.bodySmall
-                                      ?.copyWith(
-                                    color: theme
-                                        .colorScheme
-                                        .onSurfaceVariant,
-                                  ),
-                                ),
-                            ],
-                          ),
-                          onTap: () => _showDescription(
-                              context, l, interval),
-                          trailing: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              TextButton(
-                                onPressed: () =>
-                                    showAddMaintenanceLogModal(
-                                  context,
-                                  vehicleId: widget.vehicleId,
-                                  initialDescription:
-                                       localizedLabel(
-                                     l.localeName,
-                                     interval.i18nKey,
-                                     interval.label,
-                                   ),
-                                  initialIntervalId: interval.id,
-                                  onSaved: () {
-                                    ref.invalidate(
-                                        maintenanceLogsProvider(
-                                            widget.vehicleId));
-                                    ref.invalidate(
-                                        maintenanceIntervalsProvider(
-                                            widget.vehicleId));
-                                  },
-                                ),
-                                child: Text(
-                                  l.register,
-                                  style: accentColor != null
-                                      ? TextStyle(
-                                          color: accentColor)
-                                      : null,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                    }).toList(),
-                  );
-                },
-                loading: () => const Center(
-                    child: CircularProgressIndicator()),
-                error: (_, _) => const SizedBox.shrink(),
-              ),
-              const SizedBox(height: 24),
-            ],
-          ),
-          floatingActionButton: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              _FabStaggeredEntry(
-                index: 2,
-                visible: _fabOpen,
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 8),
-                  child: FloatingActionButton.small(
-                    heroTag: 'add_service',
-                    backgroundColor:
-                        theme.colorScheme.secondaryContainer,
-                    onPressed: () {
-                      setState(() => _fabOpen = false);
-                      showAddMaintenanceLogModal(
-                        context,
-                        vehicleId: widget.vehicleId,
-                        onSaved: () {
-                          ref.invalidate(
-                              maintenanceLogsProvider(
-                                  widget.vehicleId));
-                          ref.invalidate(
-                              maintenanceIntervalsProvider(
-                                  widget.vehicleId));
-                        },
-                      );
-                    },
-                    child: const Icon(Icons.build),
-                  ),
-                ),
-              ),
-              _FabStaggeredEntry(
-                index: 1,
-                visible: _fabOpen,
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 8),
-                  child: FloatingActionButton.small(
-                    heroTag: 'add_fuel',
-                    backgroundColor:
-                        theme.colorScheme.secondaryContainer,
-                    onPressed: () {
-                      setState(() => _fabOpen = false);
-                      showAddFuelLogModal(
-                        context,
-                        vehicleId: widget.vehicleId,
-                        onSaved: () {
-                          ref.invalidate(
-                              fuelLogsProvider(
-                                  widget.vehicleId));
-                        },
-                      );
-                    },
-                    child: const Icon(Icons.local_gas_station),
-                  ),
-                ),
-              ),
-              _FabStaggeredEntry(
-                index: 0,
-                visible: _fabOpen,
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 8),
-                  child: FloatingActionButton.small(
-                    heroTag: 'add_doc',
-                    backgroundColor:
-                        theme.colorScheme.secondaryContainer,
-                    onPressed: () {
-                      setState(() => _fabOpen = false);
-                      showAddDocumentModal(
-                        context,
-                        vehicleId: widget.vehicleId,
-                        onSaved: () {
-                          ref.invalidate(
-                              vehicleDocumentsProvider(
-                                  widget.vehicleId));
-                        },
-                      );
-                    },
-                    child: const Icon(Icons.description),
-                  ),
-                ),
-              ),
-              FloatingActionButton(
-                heroTag: 'main_fab',
-                onPressed: () =>
-                    setState(() => _fabOpen = !_fabOpen),
-                child: AnimatedRotation(
-                  turns: _fabOpen ? 0.125 : 0,
-                  duration: const Duration(milliseconds: 200),
-                  child: const Icon(Icons.add),
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-      loading: () => Scaffold(
-        appBar: AppBar(),
-        body: const Center(child: CircularProgressIndicator()),
-      ),
-      error: (error, _) => Scaffold(
-        appBar: AppBar(),
-        body: Center(child: Text('Error: $error')),
+              odometerReminderLastNotified: DateTime.now(),
+            );
+            await repo.save(updated);
+            ref.invalidate(vehicleProvider(vehicleId));
+            ref.invalidate(vehicleListProvider);
+          }
+        },
       ),
     );
   }
@@ -481,49 +155,517 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
     );
   }
 
-  void _updateOdometer(
-      BuildContext context, String vehicleId, WidgetRef ref) {
-    karterShowModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      builder: (ctx) => OdometerDialog(
-        current: ref.read(vehicleProvider(vehicleId)).value
-                ?.currentOdometer ??
-            Odometer(0, DistanceUnit.kilometers),
-        onSave: (double newDistance) async {
-          final repo = ref.read(vehicleRepositoryProvider);
-          final vehicle = await repo.getById(vehicleId);
-          if (vehicle != null) {
-            final updated = vehicle.copyWith(
-              currentOdometer: vehicle.currentOdometer.add(
-                newDistance - vehicle.currentOdometer.distance,
+  @override
+  Widget build(BuildContext context) {
+    final vehicleAsync = ref.watch(vehicleProvider(widget.vehicleId));
+    final l = AppLocalizations.of(context)!;
+
+    return vehicleAsync.when(
+      data: (vehicle) {
+        if (vehicle == null) {
+          return Scaffold(
+            appBar: AppBar(title: Text(l.vehicleDetailTitle)),
+            body: Center(child: Text(l.vehicleNotFound)),
+          );
+        }
+
+        final distance = vehicle.currentOdometer.distance;
+        final isKm =
+            vehicle.currentOdometer.unit == DistanceUnit.kilometers;
+        final distanceKm = isKm ? distance : distance * 1.60934;
+
+        return Scaffold(
+          appBar: AppBar(
+            title: Text(vehicle.displayName),
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.edit),
+                onPressed: () =>
+                    context.push('/vehicle/${widget.vehicleId}/edit'),
               ),
-              odometerReminderLastNotified: DateTime.now(),
-            );
-            await repo.save(updated);
-            ref.invalidate(vehicleProvider(vehicleId));
-            ref.invalidate(vehicleListProvider);
-          }
-        },
+            ],
+          ),
+          body: LayoutBuilder(
+            builder: (context, constraints) {
+              final isWide = constraints.maxWidth >= _wideBreakpoint;
+
+              if (isWide) {
+                return Padding(
+                  padding: const EdgeInsets.all(AppSpacing.pagePadding),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: ListView(
+                          children: [
+                            SectionHeader(title: l.information),
+                            _VehicleInfoCard(vehicle: vehicle, l: l),
+                            const SizedBox(height: 8),
+                            SectionHeader(title: l.odometer),
+                            _OdometerCard(
+                              vehicle: vehicle,
+                              isKm: isKm,
+                              l: l,
+                              onUpdate: () => _updateOdometer(
+                                  context, vehicle.id, ref),
+                            ),
+                            const SizedBox(height: 8),
+                            SectionHeader(title: l.actions),
+                            _ActionsCard(
+                              vehicleId: widget.vehicleId,
+                              l: l,
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: ListView(
+                          children: [
+                            SectionHeader(title: l.nextMaintenance),
+                            _MaintenanceCard(
+                              vehicleId: widget.vehicleId,
+                              distanceKm: distanceKm,
+                              l: l,
+                              onShowDescription: _showDescription,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              }
+
+              return ListView(
+                padding: const EdgeInsets.all(AppSpacing.pagePadding),
+                children: [
+                  _VehicleInfoCard(vehicle: vehicle, l: l),
+                  const SizedBox(height: 8),
+                  _OdometerCard(
+                    vehicle: vehicle,
+                    isKm: isKm,
+                    l: l,
+                    onUpdate: () =>
+                        _updateOdometer(context, vehicle.id, ref),
+                  ),
+                  const SizedBox(height: 8),
+                  SectionHeader(title: l.actions),
+                  _ActionsCard(
+                    vehicleId: widget.vehicleId,
+                    l: l,
+                  ),
+                  SectionHeader(title: l.nextMaintenance),
+                  _MaintenanceCard(
+                    vehicleId: widget.vehicleId,
+                    distanceKm: distanceKm,
+                    l: l,
+                    onShowDescription: _showDescription,
+                  ),
+                  const SizedBox(height: 24),
+                ],
+              );
+            },
+          ),
+          floatingActionButton: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              _FabStaggeredEntry(
+                index: 2,
+                visible: _fabOpen,
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: FloatingActionButton.small(
+                    heroTag: 'add_service',
+                    backgroundColor:
+                        Theme.of(context).colorScheme.secondaryContainer,
+                    onPressed: () {
+                      setState(() => _fabOpen = false);
+                      showAddMaintenanceLogModal(
+                        context,
+                        vehicleId: widget.vehicleId,
+                        onSaved: () {
+                          ref.invalidate(
+                              maintenanceLogsProvider(
+                                  widget.vehicleId));
+                          ref.invalidate(
+                              maintenanceIntervalsProvider(
+                                  widget.vehicleId));
+                        },
+                      );
+                    },
+                    child: const Icon(Icons.build),
+                  ),
+                ),
+              ),
+              _FabStaggeredEntry(
+                index: 1,
+                visible: _fabOpen,
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: FloatingActionButton.small(
+                    heroTag: 'add_fuel',
+                    backgroundColor:
+                        Theme.of(context).colorScheme.secondaryContainer,
+                    onPressed: () {
+                      setState(() => _fabOpen = false);
+                      showAddFuelLogModal(
+                        context,
+                        vehicleId: widget.vehicleId,
+                        onSaved: () {
+                          ref.invalidate(
+                              fuelLogsProvider(
+                                  widget.vehicleId));
+                        },
+                      );
+                    },
+                    child: const Icon(Icons.local_gas_station),
+                  ),
+                ),
+              ),
+              _FabStaggeredEntry(
+                index: 0,
+                visible: _fabOpen,
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: FloatingActionButton.small(
+                    heroTag: 'add_doc',
+                    backgroundColor:
+                        Theme.of(context).colorScheme.secondaryContainer,
+                    onPressed: () {
+                      setState(() => _fabOpen = false);
+                      showAddDocumentModal(
+                        context,
+                        vehicleId: widget.vehicleId,
+                        onSaved: () {
+                          ref.invalidate(
+                              vehicleDocumentsProvider(
+                                  widget.vehicleId));
+                        },
+                      );
+                    },
+                    child: const Icon(Icons.description),
+                  ),
+                ),
+              ),
+              FloatingActionButton(
+                heroTag: 'main_fab',
+                onPressed: () =>
+                    setState(() => _fabOpen = !_fabOpen),
+                child: AnimatedRotation(
+                  turns: _fabOpen ? 0.125 : 0,
+                  duration: const Duration(milliseconds: 200),
+                  child: const Icon(Icons.add),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+      loading: () => Scaffold(
+        appBar: AppBar(),
+        body: const Center(child: CircularProgressIndicator()),
+      ),
+      error: (error, _) => Scaffold(
+        appBar: AppBar(),
+        body: Center(child: Text('Error: $error')),
       ),
     );
   }
+}
 
-  Widget _infoRow(IconData icon, String label, String value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
-      child: Row(
+class _VehicleInfoCard extends StatelessWidget {
+  final Vehicle vehicle;
+  final AppLocalizations l;
+
+  const _VehicleInfoCard({required this.vehicle, required this.l});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: 18),
-          const SizedBox(width: 8),
-          Text('$label: ',
-              style:
-                  const TextStyle(fontWeight: FontWeight.w500)),
-          Expanded(child: Text(value)),
+          if (vehicle.alias != null && vehicle.alias!.isNotEmpty)
+            ListTile(
+              leading: const Icon(Icons.person_outline, size: 20),
+              title: Text(vehicle.alias!),
+              subtitle: Text(
+                '${vehicle.brand} ${vehicle.model} ${vehicle.year}',
+              ),
+              dense: true,
+              visualDensity: VisualDensity.compact,
+            ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: Column(
+              children: [
+                if (vehicle.plate != null)
+                  _infoLine(Icons.badge, l.plate, vehicle.plate!.value),
+                if (vehicle.vin != null)
+                  _infoLine(Icons.qr_code, l.vin, vehicle.vin!.code),
+                _infoLine(Icons.directions_car, l.brandModel,
+                    '${vehicle.brand} ${vehicle.model}'),
+                _infoLine(Icons.calendar_today, l.year, vehicle.year.toString()),
+              ],
+            ),
+          ),
         ],
       ),
     );
   }
+}
+
+class _OdometerCard extends StatelessWidget {
+  final Vehicle vehicle;
+  final bool isKm;
+  final AppLocalizations l;
+  final VoidCallback onUpdate;
+
+  const _OdometerCard({
+    required this.vehicle,
+    required this.isKm,
+    required this.l,
+    required this.onUpdate,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final distance = vehicle.currentOdometer.distance;
+    return Card(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ListTile(
+            leading: const Icon(Icons.speed),
+            title: Text(
+              '${distance.toStringAsFixed(0)} ${isKm ? l.unitKm : l.unitMi}',
+              style: theme.textTheme.titleMedium,
+            ),
+            subtitle: Text(l.odometer),
+            trailing: FilledButton.tonal(
+              onPressed: onUpdate,
+              child: Text(l.update),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ActionsCard extends StatelessWidget {
+  final String vehicleId;
+  final AppLocalizations l;
+
+  const _ActionsCard({required this.vehicleId, required this.l});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ListTile(
+            leading: const Icon(Icons.local_gas_station),
+            title: Text(l.fuelLogs),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => context.push('/vehicle/$vehicleId/fuel'),
+          ),
+          ListTile(
+            leading: const Icon(Icons.build),
+            title: Text(l.maintenanceHistory),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => context.push('/vehicle/$vehicleId/maintenance'),
+          ),
+          ListTile(
+            leading: const Icon(Icons.description),
+            title: Text(l.vehicleDocuments),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => context.push('/vehicle/$vehicleId/documents'),
+          ),
+          ListTile(
+            leading: const Icon(Icons.tune),
+            title: Text(l.configureIntervals),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => context
+                .push('/vehicle/$vehicleId/maintenance/settings'),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _MaintenanceCard extends ConsumerWidget {
+  final String vehicleId;
+  final double distanceKm;
+  final AppLocalizations l;
+  final void Function(BuildContext, AppLocalizations, dynamic)
+      onShowDescription;
+
+  const _MaintenanceCard({
+    required this.vehicleId,
+    required this.distanceKm,
+    required this.l,
+    required this.onShowDescription,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final intervalsAsync =
+        ref.watch(maintenanceIntervalsProvider(vehicleId));
+    final theme = Theme.of(context);
+
+    return intervalsAsync.when(
+      data: (intervals) {
+        final enabled =
+            intervals.where((i) => i.isEnabled).toList();
+
+        if (enabled.isEmpty) {
+          return Card(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Text(
+                l.allIntervalsDisabled,
+                style: theme.textTheme.bodyMedium,
+              ),
+            ),
+          );
+        }
+
+        final intervalData = enabled
+            .map((i) => _IntervalData.compute(i, distanceKm, l))
+            .toList()
+          ..sort((a, b) {
+            if (a.isDue != b.isDue) {
+              return a.isDue ? -1 : 1;
+            }
+            if (a.isApproaching != b.isApproaching) {
+              return a.isApproaching ? -1 : 1;
+            }
+            return b.sortKey.compareTo(a.sortKey);
+          });
+
+        return Card(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: intervalData.map((data) {
+              final interval = data.interval;
+              Color? accentColor;
+              if (data.isDue) {
+                accentColor = theme.colorScheme.onErrorContainer;
+              } else if (data.isApproaching) {
+                accentColor = Colors.amber.shade800;
+              }
+
+              return ListTile(
+                leading: Icon(
+                  Icons.build_circle_outlined,
+                  color: accentColor,
+                ),
+                title: Text(
+                  localizedLabel(l.localeName, interval.i18nKey,
+                      interval.label),
+                  style: TextStyle(
+                    fontWeight:
+                        data.isDue ? FontWeight.bold : null,
+                  ),
+                ),
+                subtitle: Column(
+                  crossAxisAlignment:
+                      CrossAxisAlignment.start,
+                  children: [
+                    Text(data.subtitle),
+                    if (data.lastResetInfo != null)
+                      Text(
+                        data.lastResetInfo!,
+                        style: theme.textTheme.bodySmall
+                            ?.copyWith(
+                          color: theme
+                              .colorScheme
+                              .onSurfaceVariant,
+                        ),
+                      ),
+                  ],
+                ),
+                onTap: () => onShowDescription(
+                    context, l, interval),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    TextButton(
+                      onPressed: () =>
+                          showAddMaintenanceLogModal(
+                        context,
+                        vehicleId: vehicleId,
+                        initialDescription: localizedLabel(
+                          l.localeName,
+                          interval.i18nKey,
+                          interval.label,
+                        ),
+                        initialIntervalId: interval.id,
+                        onSaved: () {
+                          ref.invalidate(
+                              maintenanceLogsProvider(
+                                  vehicleId));
+                          ref.invalidate(
+                              maintenanceIntervalsProvider(
+                                  vehicleId));
+                        },
+                      ),
+                      child: Text(
+                        l.register,
+                        style: accentColor != null
+                            ? TextStyle(color: accentColor)
+                            : null,
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }).toList(),
+          ),
+        );
+      },
+      loading: () =>
+          const Center(child: CircularProgressIndicator()),
+      error: (_, _) => const SizedBox.shrink(),
+    );
+  }
+}
+
+Widget _infoLine(IconData icon, String label, String value) {
+  return Builder(
+    builder: (context) {
+      final onSurface =
+          Theme.of(context).colorScheme.onSurfaceVariant;
+      return Padding(
+        padding:
+            const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+        child: Row(
+          children: [
+            Icon(icon, size: 18, color: onSurface),
+            const SizedBox(width: 8),
+            Flexible(
+              child: Text.rich(
+                TextSpan(children: [
+                  TextSpan(
+                      text: '$label: ',
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w600)),
+                  TextSpan(text: value),
+                ]),
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ],
+        ),
+      );
+    },
+  );
 }
 
 class _FabStaggeredEntry extends StatefulWidget {
@@ -571,14 +713,15 @@ class _FabStaggeredEntryState extends State<_FabStaggeredEntry>
     if (widget.visible != oldWidget.visible) {
       if (widget.visible) {
         _ctrl.duration = Durations.medium4;
-        Future.delayed(Duration(milliseconds: 50 * widget.index),
-            () {
+        Future.delayed(
+            Duration(milliseconds: 50 * widget.index), () {
           if (mounted) _ctrl.forward();
         });
       } else {
         _ctrl.duration = Durations.short4;
         Future.delayed(
-            Duration(milliseconds: 50 * (2 - widget.index)), () {
+            Duration(milliseconds: 50 * (2 - widget.index)),
+            () {
           if (mounted) _ctrl.reverse();
         });
       }
@@ -681,8 +824,7 @@ class _IntervalData {
 
     String? lastResetInfo;
     if (interval.lastResetDate != null) {
-      final dateStr =
-          DateFormat.yMd().format(interval.lastResetDate!);
+      final dateStr = DateFormat.yMd().format(interval.lastResetDate!);
       if (interval.lastResetKm > 0) {
         lastResetInfo =
             '${l.lastService}: $dateStr · ${interval.lastResetKm.toStringAsFixed(0)} ${l.km}';

@@ -65,6 +65,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get actions => 'Actions';
 
   @override
+  String get information => 'Information';
+
+  @override
   String get fuelLogs => 'Fuel logs';
 
   @override
@@ -162,6 +165,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get cancel => 'Cancel';
 
   @override
+  String get resetToDefault => 'Reset to default';
+
+  @override
   String get delete => 'Delete';
 
   @override
@@ -254,6 +260,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get edit => 'Edit';
+
+  @override
+  String get addToDashboard => 'Add to dashboard';
+
+  @override
+  String get setupNotifications => 'Setup notifications';
+
+  @override
+  String get addToDashboardComingSoon => 'Coming soon';
 
   @override
   String get deleteInterval => 'Delete';
@@ -521,6 +536,109 @@ class AppLocalizationsEn extends AppLocalizations {
   String get moreRateSubtitle => 'Leave a review on the Play Store';
 
   @override
+  String get moreFeedback => 'Rate the application';
+
+  @override
+  String get moreFeedbackSubtitle => 'Rate the app and configure reminders';
+
+  @override
+  String get feedbackTitle => 'Feedback';
+
+  @override
+  String get sectionPreferences => 'Preferences';
+
+  @override
+  String get sectionData => 'Data';
+
+  @override
+  String get sectionFeedbackCommunity => 'Feedback & Community';
+
+  @override
+  String get sectionTips => 'Tip program';
+
+  @override
+  String get sectionAbout => 'About Karter';
+
+  @override
+  String get theme => 'Theme';
+
+  @override
+  String get themeAutomatic => 'Automatic';
+
+  @override
+  String get themeAutomaticDesc => 'Follow device setting';
+
+  @override
+  String get themeSystem => 'System';
+
+  @override
+  String get themeSystemDesc => 'Follow device setting';
+
+  @override
+  String get themeLight => 'Light';
+
+  @override
+  String get themeDark => 'Dark';
+
+  @override
+  String get colorScheme => 'Primary color';
+
+  @override
+  String get colorCustom => 'Custom';
+
+  @override
+  String get colorOfInterface => 'Interface color';
+
+  @override
+  String get colorOfInterfaceDesc =>
+      'Apply primary color to background surfaces';
+
+  @override
+  String get customColor => 'Custom color';
+
+  @override
+  String get customColorDesc =>
+      'Use a personal color instead of the system accent';
+
+  @override
+  String get selectColor => 'Select a color';
+
+  @override
+  String get hapticFeedback => 'Haptic feedback';
+
+  @override
+  String get hapticFeedbackDesc => 'Vibrate on interactions';
+
+  @override
+  String get feedbackReminderToggle => 'Rating reminder';
+
+  @override
+  String get feedbackReminderToggleSubtitle =>
+      'Show a reminder to rate the app after saving services';
+
+  @override
+  String get feedbackServicesInterval => 'Services before prompt';
+
+  @override
+  String feedbackServicesIntervalValue(Object count) {
+    return 'After $count service(s)';
+  }
+
+  @override
+  String get feedbackServicesSuffix => 'services';
+
+  @override
+  String get feedbackRepeatDays => 'Reminder interval';
+
+  @override
+  String feedbackRepeatDaysValue(Object days) {
+    return 'Every $days day(s)';
+  }
+
+  @override
+  String get feedbackRepeatDaysSuffix => 'days';
+
+  @override
   String get ratePromptMessage =>
       'Enjoying Karter? A review helps others discover the app!';
 
@@ -533,16 +651,105 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get tipProgram => 'Tip program';
+
+  @override
+  String get tipProgramComingSoon =>
+      'This feature is under development and will be available soon.';
+
+  @override
+  String get tipBadges => 'Badges';
+
+  @override
+  String get tipBadgesNone => 'None';
+
+  @override
+  String get tipInfo => 'Information';
+
+  @override
+  String get tipInfoText =>
+      'The tip program is a way for users to show extra support and appreciation for the fast support, constant improvements, and continuous updates that Karter has offered.';
+
+  @override
+  String get tipOneTime => 'One-time tip';
+
+  @override
+  String get tipRecurring => 'Recurring tip';
+
+  @override
+  String get tipBronze => 'Bronze';
+
+  @override
+  String get tipSilver => 'Silver';
+
+  @override
+  String get tipGold => 'Gold';
+
+  @override
+  String get tipBronzePrice => 'Bronze tip';
+
+  @override
+  String get tipSilverPrice => 'Silver tip';
+
+  @override
+  String get tipGoldPrice => 'Gold tip';
+
+  @override
+  String get tipBronzeMonthly => 'Bronze / month';
+
+  @override
+  String get tipSilverMonthly => 'Silver / month';
+
+  @override
+  String get tipGoldMonthly => 'Gold / month';
+
+  @override
+  String get officialWebsite => 'Official website';
+
+  @override
+  String get communityForums => 'Community forums';
+
+  @override
+  String get translations => 'Translations';
+
+  @override
+  String get privacyPolicy => 'Privacy policy';
+
+  @override
+  String get privacyPolicyDesc => 'Read our privacy policy online.';
+
+  @override
+  String get openPrivacyPolicy => 'Open privacy policy';
+
+  @override
+  String get version => 'Version';
+
+  @override
+  String get deviceId => 'Device ID';
+
+  @override
+  String get changelog => 'Changelog';
+
+  @override
+  String get openSourceLicenses => 'Open-source licenses';
+
+  @override
   String get language => 'Language';
 
   @override
   String get selectLanguage => 'Select language';
 
   @override
+  String get languageSystem => 'System default';
+
+  @override
   String get english => 'English';
 
   @override
   String get spanish => 'Spanish';
+
+  @override
+  String get eesti => 'Eesti';
 
   @override
   String get odometerUpdateTitle => 'Update odometer';

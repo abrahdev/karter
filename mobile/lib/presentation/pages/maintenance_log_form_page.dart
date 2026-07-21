@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mobile/core/theme/app_spacing.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile/core/database/app_database.dart';
@@ -229,7 +230,7 @@ class _MaintenanceLogFormPageState
       body: Form(
         key: _formKey,
         child: ListView(
-          padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(AppSpacing.pagePadding),
           children: [
             ListTile(
               leading: const Icon(Icons.calendar_today),
@@ -260,6 +261,7 @@ class _MaintenanceLogFormPageState
                   final enabled = intervals.where((i) => i.isEnabled).toList();
                   if (enabled.isEmpty) return const SizedBox.shrink();
                   return DropdownButtonFormField<String>(
+                    isExpanded: true,
                     initialValue: _selectedIntervalId,
                     decoration: InputDecoration(
                       labelText: l.resetInterval,

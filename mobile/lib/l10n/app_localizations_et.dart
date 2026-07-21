@@ -65,6 +65,9 @@ class AppLocalizationsEt extends AppLocalizations {
   String get actions => 'Tegevused';
 
   @override
+  String get information => 'Teave';
+
+  @override
   String get fuelLogs => 'Kütuselogid';
 
   @override
@@ -87,116 +90,119 @@ class AppLocalizationsEt extends AppLocalizations {
 
   @override
   String get noDescriptionAvailable =>
-      'No description available. Go to Maintenance settings to add one.';
+      'Kirjeldust pole saadaval. Mine hooldusseadistustesse, et seda lisada.';
 
   @override
-  String get close => 'Close';
+  String get close => 'Sulge';
 
   @override
-  String get overduePerformService => 'Overdue — perform service';
+  String get overduePerformService => 'Üle tähtaja - suundu hooldusesse';
 
   @override
   String nextIn(Object parts) {
-    return 'Next in $parts';
+    return 'Järgmine osa $parts';
   }
 
   @override
-  String get vehicleFormNew => 'New vehicle';
+  String get vehicleFormNew => 'Uus sõiduk';
 
   @override
-  String get vehicleFormEdit => 'Edit vehicle';
+  String get vehicleFormEdit => 'Muuda sõidukit';
 
   @override
-  String get brand => 'Brand';
+  String get brand => 'Tootja';
 
   @override
-  String get model => 'Model';
+  String get model => 'Mudel';
 
   @override
-  String get required => 'Required';
+  String get required => 'Nõutav';
 
   @override
-  String get invalidYear => 'Invalid year';
+  String get invalidYear => 'Vigane aasta';
 
   @override
-  String get vehicleType => 'Vehicle type';
+  String get vehicleType => 'Sõiduki tüüp';
 
   @override
-  String get combustion => 'Combustion';
+  String get combustion => 'Sisepõlemismootoriga sõiduk';
 
   @override
-  String get electric => 'Electric';
+  String get electric => 'Elektrimootoriga sõiduk';
 
   @override
-  String get motorcycle => 'Motorcycle';
+  String get motorcycle => 'Mootorratas';
 
   @override
-  String get plateOptional => 'Plate (optional)';
+  String get plateOptional => 'Registreerimisnumber (kui tahad lisada)';
 
   @override
-  String get vinOptional => 'VIN (optional)';
+  String get vinOptional => 'VIN-kood (kui tahad lisada)';
 
   @override
-  String get invalid => 'Invalid';
+  String get invalid => 'Vigane';
 
   @override
-  String get aliasOptional => 'Alias (optional)';
+  String get aliasOptional => 'Alias (kui tahad lisada)';
 
   @override
-  String get aliasHint => 'E.g.: My ride, The beast, etc.';
+  String get aliasHint => 'Nt. Minu vanker, Meeletu loom, jne.';
 
   @override
-  String get saveChanges => 'Save changes';
+  String get saveChanges => 'Salvesta muudatused';
 
   @override
-  String get addVehicle => 'Add vehicle';
+  String get addVehicle => 'Lisa sõiduk';
 
   @override
-  String get deleteVehicle => 'Delete vehicle';
+  String get deleteVehicle => 'Kustuta sõiduk';
 
   @override
   String get deleteVehicleConfirm =>
-      'This action cannot be undone. All fuel logs, maintenance records, and intervals associated will be deleted.';
+      'Seda tegevust ei saa tagasi keerata. Kõik kütuselogid, hoolduste andmed ja seadistatud välbad kustutatakse.';
 
   @override
-  String get cancel => 'Cancel';
+  String get cancel => 'Katkesta';
 
   @override
-  String get delete => 'Delete';
+  String get resetToDefault => 'Taasta vaikeväärtus';
 
   @override
-  String get dataManagerTitle => 'Export / Import data';
+  String get delete => 'Kustuta';
 
   @override
-  String get selectAll => 'Select all';
+  String get dataManagerTitle => 'Eksport ja import';
 
   @override
-  String get exporting => 'Exporting...';
+  String get selectAll => 'Vali kõik';
 
   @override
-  String get export => 'Export';
+  String get exporting => 'Ekspordin...';
 
   @override
-  String get importing => 'Importing...';
+  String get export => 'Eksport';
 
   @override
-  String get import => 'Import';
+  String get importing => 'Impordin...';
 
   @override
-  String get saveExport => 'Save export';
+  String get import => 'Impordi';
+
+  @override
+  String get saveExport => 'Salvesta eksporditud sisu';
 
   @override
   String exportedAt(Object path) {
-    return 'Exported at $path';
+    return 'Eksporditud asukohta $path';
   }
 
   @override
   String exportError(Object error) {
-    return 'Export error: $error';
+    return 'Viga eksportimisel: $error';
   }
 
   @override
-  String get importData => 'Import data';
+  String get importData => 'Impordi andmed';
 
   @override
   String importPreview(
@@ -205,66 +211,75 @@ class AppLocalizationsEt extends AppLocalizations {
     Object maintenanceLogs,
     Object vehicles,
   ) {
-    return 'Found:\n• $vehicles vehicle(s)\n• $fuelLogs fuel log(s)\n• $maintenanceLogs maintenance log(s)\n• $documents document(s)\n\nImport? Existing data with the same ID will be overwritten.';
+    return 'Leiti:\n• $vehicles vehicle(s)\n• $fuelLogs fuel log(s)\n• $maintenanceLogs maintenance log(s)\n• $documents document(s)\n\nImportida? Olemasolevad andmed, millel on sama ID, kirjutatakse üle.';
   }
 
   @override
-  String get importSuccess => 'Data imported successfully';
+  String get importSuccess => 'Andmed on edukalt imporditud';
 
   @override
   String importError(Object error) {
-    return 'Import error: $error';
+    return 'Importimisviga: $error';
   }
 
   @override
-  String get invalidJson => 'Invalid JSON file';
+  String get invalidJson => 'Kehtetu JSON-fail';
 
   @override
   String exportShareText(Object count) {
-    return 'Karter Export — $count vehicle(s)';
+    return 'Karter Export — $count sõidukit';
   }
 
   @override
-  String get maintenanceSettingsTitle => 'Maintenance intervals';
+  String get maintenanceSettingsTitle => 'Hooldusintervallid';
 
   @override
   String get maintenanceSettingsInstruction =>
-      'Enable or disable items according to your vehicle\'s needs. Custom intervals can be deleted.';
+      'Lülitage funktsioonid sisse või välja vastavalt oma sõiduki vajadustele. Kohandatud intervallid on võimalik kustutada.';
 
   @override
   String get km => 'km';
 
   @override
-  String get timeMonths => 'Time (months)';
+  String get timeMonths => 'Aeg (kuud)';
 
   @override
-  String get months => 'months';
+  String get months => 'kuud';
 
   @override
-  String get description => 'Description';
+  String get description => 'Kirjeldus';
 
   @override
-  String get newInterval => 'New interval';
+  String get newInterval => 'Uus välp';
 
   @override
-  String get name => 'Name';
+  String get name => 'Nimi';
 
   @override
-  String get add => 'Add';
+  String get add => 'Lisa';
 
   @override
-  String get edit => 'Edit';
+  String get edit => 'Muuda';
 
   @override
-  String get deleteInterval => 'Delete';
+  String get addToDashboard => 'Lisa töölauda';
+
+  @override
+  String get setupNotifications => 'Seadista märguandeid';
+
+  @override
+  String get addToDashboardComingSoon => 'Tulemas';
+
+  @override
+  String get deleteInterval => 'Kustuta';
 
   @override
   String get noDescriptionAvailableSettings =>
-      'No description available. Press \"Edit\" to add one.';
+      'Kirjeldust ei leidu. Lisamiseks klõpsa „Muuda“.';
 
   @override
   String formattedKmK(Object km) {
-    return '${km}k km';
+    return '$km tuh km';
   }
 
   @override
@@ -274,64 +289,64 @@ class AppLocalizationsEt extends AppLocalizations {
 
   @override
   String intervalSubtitleKm(Object km) {
-    return 'every $km';
+    return 'iga $km';
   }
 
   @override
   String intervalSubtitleMonths(Object months) {
-    return '$months months';
+    return '$months kuud';
   }
 
   @override
-  String get maintenanceLogTitleEdit => 'Edit service';
+  String get maintenanceLogTitleEdit => 'Muuda teenust';
 
   @override
-  String get maintenanceLogTitleNew => 'New service';
+  String get maintenanceLogTitleNew => 'Uus teenus';
 
   @override
   String date(Object date) {
-    return 'Date: $date';
+    return 'Kuupäev: $date';
   }
 
   @override
-  String get descriptionRequired => 'Description';
+  String get descriptionRequired => 'Kirjeldus';
 
   @override
-  String get odometerAtService => 'Odometer at service (optional)';
+  String get odometerAtService => 'Kilomeetrilugeja hoolduse ajal (valikuline)';
 
   @override
-  String get resetInterval => 'Reset interval (optional)';
+  String get resetInterval => 'Taastamisintervall (valikuline)';
 
   @override
-  String get saveChangesShort => 'Save changes';
+  String get saveChangesShort => 'Salvesta muudatused';
 
   @override
-  String get saveService => 'Save service';
+  String get saveService => 'Salvesta teenus';
 
   @override
-  String get saveFile => 'Save file';
+  String get saveFile => 'Salvesta fail';
 
   @override
-  String get lastService => 'Last';
+  String get lastService => 'Viimane';
 
   @override
-  String get addPhoto => 'Add photo';
+  String get addPhoto => 'Lisa foto';
 
   @override
-  String get photos => 'photos';
+  String get photos => 'fotod';
 
   @override
-  String get deleteService => 'Delete service';
+  String get deleteService => 'Kustuta teenus';
 
   @override
   String get deleteServiceConfirm =>
-      'Are you sure you want to delete this service?';
+      'Kas sa oled kindel, et soovid selle teenuse kustutada?';
 
   @override
-  String get maintenanceListTitle => 'Maintenance';
+  String get maintenanceListTitle => 'Hooldus';
 
   @override
-  String get maintenanceEmpty => 'No services recorded';
+  String get maintenanceEmpty => 'Teenuseid ei ole registreeritud';
 
   @override
   String get maintenanceHistoryTab => 'History';
@@ -397,37 +412,37 @@ class AppLocalizationsEt extends AppLocalizations {
   String get expiryDateOptional => 'Expiry date (optional)';
 
   @override
-  String get pleaseSelectFile => 'Please select a file';
+  String get pleaseSelectFile => 'Palun vali fail';
 
   @override
-  String get documentSaved => 'Document saved';
+  String get documentSaved => 'Dokument on salvestatud';
 
   @override
-  String get takePhoto => 'Take photo';
+  String get takePhoto => 'Pildista';
 
   @override
-  String get chooseFromGallery => 'Choose from gallery';
+  String get chooseFromGallery => 'Vali galeriist';
 
   @override
-  String get browseFiles => 'Browse files';
+  String get browseFiles => 'Sirvi faile';
 
   @override
-  String get docTypeFine => 'Fine';
+  String get docTypeFine => 'Trahv';
 
   @override
-  String get docTypeParkingFee => 'Parking fee';
+  String get docTypeParkingFee => 'Parkimistasu';
 
   @override
-  String get docTypeInsurance => 'Insurance';
+  String get docTypeInsurance => 'Kindlustus';
 
   @override
-  String get docTypeVehicleCheck => 'Vehicle check';
+  String get docTypeVehicleCheck => 'Ülevaatus';
 
   @override
-  String get docTypeTax => 'Tax';
+  String get docTypeTax => 'Maks';
 
   @override
-  String get docTypeComplexInsurance => 'Complex insurance';
+  String get docTypeComplexInsurance => 'Kompleksne kindlustus';
 
   @override
   String get docTypeVehicleRegister => 'Vehicle register';
@@ -488,10 +503,10 @@ class AppLocalizationsEt extends AppLocalizations {
       'Karter is a local-first, open source vehicle maintenance app that respects your privacy.';
 
   @override
-  String get moreExport => 'Export / Import data';
+  String get moreExport => 'Ekspordi / Impordi andmeid';
 
   @override
-  String get moreExportSubtitle => 'Back up or transfer your information';
+  String get moreExportSubtitle => 'Varundage või teisaldage oma teave';
 
   @override
   String get moreDocs => 'Documentation';
@@ -515,21 +530,225 @@ class AppLocalizationsEt extends AppLocalizations {
   String get moreFooter => 'Made with ❤️ by abrahdev';
 
   @override
-  String moreUrlError(Object url) {
-    return 'Could not open $url';
+  String get moreRate => 'Hinda Karterit';
+
+  @override
+  String get moreRateSubtitle => 'Jäta ülevaade Play poes';
+
+  @override
+  String get moreFeedback => 'Hinda rakendust';
+
+  @override
+  String get moreFeedbackSubtitle =>
+      'Hinda rakendust ja seadista meeldetuletusi';
+
+  @override
+  String get feedbackTitle => 'Tagasiside';
+
+  @override
+  String get sectionPreferences => 'Eelistused';
+
+  @override
+  String get sectionData => 'Andmed';
+
+  @override
+  String get sectionFeedbackCommunity => 'Tagasiside ja kogukond';
+
+  @override
+  String get sectionTips => 'Tee programm';
+
+  @override
+  String get sectionAbout => 'Karterist';
+
+  @override
+  String get theme => 'Teema';
+
+  @override
+  String get themeAutomatic => 'Automaatne';
+
+  @override
+  String get themeAutomaticDesc => 'Jälgi seadme sätteid';
+
+  @override
+  String get themeSystem => 'Süsteemi';
+
+  @override
+  String get themeSystemDesc => 'Jälgi seadme sätteid';
+
+  @override
+  String get themeLight => 'Hele';
+
+  @override
+  String get themeDark => 'Tume';
+
+  @override
+  String get colorScheme => 'Põhivärv';
+
+  @override
+  String get colorCustom => 'Kohandatud';
+
+  @override
+  String get colorOfInterface => 'Liidese värv';
+
+  @override
+  String get colorOfInterfaceDesc => 'Rakenda põhivärv taustapindadele';
+
+  @override
+  String get customColor => 'Kohandatud värv';
+
+  @override
+  String get customColorDesc => 'Kasuta isiklikku värvi süsteemi asemel';
+
+  @override
+  String get selectColor => 'Vali värv';
+
+  @override
+  String get hapticFeedback => 'Haptiline tagasiside';
+
+  @override
+  String get hapticFeedbackDesc => 'Vibreeri interaktsioonide ajal';
+
+  @override
+  String get feedbackReminderToggle => 'Hindamise meeldetuletus';
+
+  @override
+  String get feedbackReminderToggleSubtitle =>
+      'Näita meeldetuletust rakenduse hindamiseks pärast teenuste salvestamist';
+
+  @override
+  String get feedbackServicesInterval => 'Teenused enne küsimist';
+
+  @override
+  String feedbackServicesIntervalValue(Object count) {
+    return 'Pärast $count teenust';
   }
 
   @override
-  String get language => 'Language';
+  String get feedbackServicesSuffix => 'teenused';
 
   @override
-  String get selectLanguage => 'Select language';
+  String get feedbackRepeatDays => 'Meeldetuletuse intervall';
 
   @override
-  String get english => 'English';
+  String feedbackRepeatDaysValue(Object days) {
+    return 'Iga $days päev(a)';
+  }
 
   @override
-  String get spanish => 'Spanish';
+  String get feedbackRepeatDaysSuffix => 'päeva';
+
+  @override
+  String get ratePromptMessage =>
+      'Karter meeldib? Arvustus aitab teistel rakendust leida!';
+
+  @override
+  String get rate => 'Hinda';
+
+  @override
+  String moreUrlError(Object url) {
+    return 'URL-i ei saanud avada: $url';
+  }
+
+  @override
+  String get tipProgram => 'Tee programm';
+
+  @override
+  String get tipProgramComingSoon =>
+      'See funktsioon arenduses ja saab peagi kättesaadavaks.';
+
+  @override
+  String get tipBadges => 'Märgid';
+
+  @override
+  String get tipBadgesNone => 'Puuduvad';
+
+  @override
+  String get tipInfo => 'Teave';
+
+  @override
+  String get tipInfoText =>
+      'Tee programm on viis, kuidas kasutajad saavad näidata toetust ja tänu kiire toe, pidevate täienduste ja järjepidevate värskenduste eest, mida Karter on pakkunud.';
+
+  @override
+  String get tipOneTime => 'Ühekordne tee';
+
+  @override
+  String get tipRecurring => 'Korduv tee';
+
+  @override
+  String get tipBronze => 'Pronks';
+
+  @override
+  String get tipSilver => 'Hõbe';
+
+  @override
+  String get tipGold => 'Kuld';
+
+  @override
+  String get tipBronzePrice => 'Pronksi tee';
+
+  @override
+  String get tipSilverPrice => 'Hõbe tee';
+
+  @override
+  String get tipGoldPrice => 'Kuldt tee';
+
+  @override
+  String get tipBronzeMonthly => 'Pronks / kuu';
+
+  @override
+  String get tipSilverMonthly => 'Hõbe / kuu';
+
+  @override
+  String get tipGoldMonthly => 'Kuld / kuu';
+
+  @override
+  String get officialWebsite => 'Ametlik veebileht';
+
+  @override
+  String get communityForums => 'Kogukonna foorumid';
+
+  @override
+  String get translations => 'Tõlked';
+
+  @override
+  String get privacyPolicy => 'Privaatsuspoliitika';
+
+  @override
+  String get privacyPolicyDesc => 'Loe meie privaatsuspoliitikat veebis.';
+
+  @override
+  String get openPrivacyPolicy => 'Ava privaatsuspoliitika';
+
+  @override
+  String get version => 'Versioon';
+
+  @override
+  String get deviceId => 'Seadme ID';
+
+  @override
+  String get changelog => 'Muudatuste logi';
+
+  @override
+  String get openSourceLicenses => 'Open-source licenses';
+
+  @override
+  String get language => 'Keel';
+
+  @override
+  String get selectLanguage => 'Vali keel';
+
+  @override
+  String get languageSystem => 'Süsteemi vaikesätteid';
+
+  @override
+  String get english => 'Inglise';
+
+  @override
+  String get spanish => 'Hispaania';
+
+  @override
+  String get eesti => 'Eesti';
 
   @override
   String get odometerUpdateTitle => 'Update odometer';

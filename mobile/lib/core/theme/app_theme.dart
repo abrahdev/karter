@@ -4,24 +4,33 @@ import 'package:flutter/material.dart';
 class AppTheme {
   static const fallbackSeed = Colors.amber;
 
-  static ThemeData from(ColorScheme? colorScheme, Brightness brightness) {
+  static ThemeData from(
+    ColorScheme? colorScheme,
+    Brightness brightness, {
+    bool applySurfaceTint = true,
+  }) {
     final scheme = colorScheme ??
         ColorScheme.fromSeed(
           seedColor: fallbackSeed,
           brightness: brightness,
         );
+
+    final effectiveScheme = applySurfaceTint
+        ? scheme
+        : _neutralSurfaces(scheme, brightness);
     final dur = const Duration(milliseconds: 200);
 
     return ThemeData(
-      colorScheme: scheme,
+      colorScheme: effectiveScheme,
       useMaterial3: true,
+      fontFamily: 'Roboto',
       appBarTheme: AppBarTheme(
         centerTitle: true,
         scrolledUnderElevation: 1,
       ),
       cardTheme: CardThemeData(
         elevation: 2,
-        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 8),
       ),
       pageTransitionsTheme: PageTransitionsTheme(
         builders: {
@@ -114,6 +123,24 @@ class AppTheme {
       switchTheme: SwitchThemeData(
         trackOutlineWidth: WidgetStateProperty.resolveWith((_) => 0),
       ),
+    );
+  }
+
+  static ColorScheme _neutralSurfaces(ColorScheme scheme, Brightness brightness) {
+    final isDark = brightness == Brightness.dark;
+    final surface = isDark ? const Color(0xFF1C1B1F) : const Color(0xFFFFFBFE);
+    final surfaceContainer = isDark ? const Color(0xFF211F26) : const Color(0xFFF3EDF7);
+    final surfaceContainerLow = isDark ? const Color(0xFF1D1B20) : const Color(0xFFF7F2FA);
+    final surfaceContainerHigh = isDark ? const Color(0xFF2B2930) : const Color(0xFFECE6F0);
+    final surfaceContainerHighest = isDark ? const Color(0xFF36343B) : const Color(0xFFE6E0E9);
+
+    return scheme.copyWith(
+      surface: surface,
+      surfaceContainerLowest: isDark ? const Color(0xFF0F0D13) : const Color(0xFFFFFFFF),
+      surfaceContainerLow: surfaceContainerLow,
+      surfaceContainer: surfaceContainer,
+      surfaceContainerHigh: surfaceContainerHigh,
+      surfaceContainerHighest: surfaceContainerHighest,
     );
   }
 }

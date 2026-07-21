@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:mobile/core/theme/app_spacing.dart';
 import 'package:mobile/domain/enums/distance_unit.dart';
 import 'package:mobile/domain/enums/volume_unit.dart';
 import 'package:mobile/l10n/app_localizations.dart';
@@ -37,6 +38,7 @@ class FuelLogListPage extends ConsumerWidget {
             );
           }
           return ListView.builder(
+            padding: const EdgeInsets.all(AppSpacing.pagePadding),
             itemCount: logs.length,
             itemBuilder: (_, i) {
               final log = logs[i];

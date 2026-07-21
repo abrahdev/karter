@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile/core/database/app_database.dart';
 import 'package:mobile/core/modal_helpers.dart';
+import 'package:mobile/core/theme/app_spacing.dart';
 import 'package:mobile/domain/entities/maintenance_interval.dart';
 import 'package:mobile/domain/entities/vehicle.dart';
 import 'package:mobile/domain/enums/distance_unit.dart';
@@ -14,6 +15,7 @@ import 'package:mobile/domain/value_objects/vin.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
 import 'package:mobile/presentation/providers/template_source_provider.dart';
+import 'package:mobile/presentation/widgets/section_header.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class VehicleFormPage extends ConsumerStatefulWidget {
@@ -588,266 +590,310 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
       body: Form(
         key: _formKey,
         child: ListView(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(AppSpacing.pagePadding),
           children: [
             if (composite.isNotEmpty)
               Padding(
-                padding: const EdgeInsets.only(bottom: 16),
+                padding: const EdgeInsets.only(bottom: 8),
                 child: Text(
                   composite,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
-            Autocomplete<String>(
-              initialValue: TextEditingValue(text: _brand),
-              optionsBuilder: (textEditingValue) {
-                if (textEditingValue.text.isEmpty) return [];
-                final query = textEditingValue.text;
-                final index = ref.read(templateIndexProvider).value;
-                final suggestions = <String>{};
-                if (index != null) {
-                  suggestions.addAll(index.templates
-                      .where((e) => e.meta.make != '_base')
-                      .map((e) => e.meta.make)
-                      .toSet()
-                      .where((m) =>
-                          m.toLowerCase().contains(query.toLowerCase())));
-                }
-                suggestions.add(query);
-                return suggestions.toList()..sort();
-              },
-              fieldViewBuilder: (context, controller, focusNode, onSubmitted) {
-                return TextFormField(
-                  controller: controller,
-                  focusNode: focusNode,
-                  decoration: InputDecoration(labelText: l.brand),
-                  onChanged: (value) {
-                    _brand = value;
-                    _hasUnsavedChanges = true;
-                  },
-                  validator: (v) =>
-                      v == null || v.trim().isEmpty ? l.required : null,
-                );
-              },
-              onSelected: (value) {
-                _brand = value;
-              },
-            ),
-            const SizedBox(height: 12),
-            Autocomplete<String>(
-              initialValue: TextEditingValue(text: _model),
-              optionsBuilder: (textEditingValue) {
-                if (textEditingValue.text.isEmpty) return [];
-                final query = textEditingValue.text;
-                final index = ref.read(templateIndexProvider).value;
-                final suggestions = <String>{};
-                if (index != null && _brand.isNotEmpty) {
-                  suggestions.addAll(index.templates
-                      .where((e) =>
-                          e.meta.make.toLowerCase() == _brand.toLowerCase() &&
-                          e.meta.model
-                              .toLowerCase()
-                              .contains(query.toLowerCase()))
-                      .map((e) => e.meta.model)
-                      .toSet());
-                }
-                suggestions.add(query);
-                return suggestions.toList()..sort();
-              },
-              fieldViewBuilder: (context, controller, focusNode, onSubmitted) {
-                return TextFormField(
-                  controller: controller,
-                  focusNode: focusNode,
-                  decoration: InputDecoration(labelText: l.model),
-                  onChanged: (value) {
-                    _model = value;
-                    _hasUnsavedChanges = true;
-                  },
-                  validator: (v) =>
-                      v == null || v.trim().isEmpty ? l.required : null,
-                );
-              },
-              onSelected: (value) {
-                _model = value;
-              },
-            ),
-            const SizedBox(height: 12),
-            TextFormField(
-              controller: _yearController,
-              decoration: InputDecoration(labelText: l.year),
-              keyboardType: TextInputType.number,
-              onChanged: (_) => _markDirty(),
-              validator: (v) {
-                if (v == null || v.trim().isEmpty) return l.required;
-                final year = int.tryParse(v);
-                if (year == null || year < 1886 || year > DateTime.now().year + 1) {
-                  return l.invalidYear;
-                }
-                return null;
-              },
-            ),
-            const SizedBox(height: 12),
-            OutlinedButton.icon(
-              onPressed:
-                  _isLoading ? null : _searchTemplate,
-              icon: _templateIntervals != null
-                  ? const Icon(Icons.check_circle, color: Colors.green)
-                  : const Icon(Icons.search),
-              label: Text(
-                _templateIntervals != null
-                    ? 'Plantilla: $_templateName'
-                    : 'Buscar plantilla',
-              ),
-            ),
-            const SizedBox(height: 12),
-            Text(l.vehicleType,
-                style: Theme.of(context).textTheme.titleSmall),
-            const SizedBox(height: 8),
-            AbsorbPointer(
-              absorbing: _templateIntervals != null,
-              child: SegmentedButton<VehicleType>(
-                segments: [
-                  ButtonSegment(
-                    value: VehicleType.combustion,
-                    label: Text(l.combustion),
-                    icon: Icon(Icons.local_gas_station),
-                  ),
-                  ButtonSegment(
-                    value: VehicleType.electric,
-                    label: Text(l.electric),
-                    icon: Icon(Icons.electric_car),
-                  ),
-                  ButtonSegment(
-                    value: VehicleType.motorcycle,
-                    label: Text(l.motorcycle),
-                    icon: Icon(Icons.motorcycle),
-                  ),
-                ],
-                selected: {_vehicleType},
-                onSelectionChanged: (v) => setState(() {
-                  _vehicleType = v.first;
-                  _markDirty();
-                }),
-              ),
-            ),
-            const SizedBox(height: 12),
-            TextFormField(
-              controller: _plateController,
-              decoration: InputDecoration(
-                labelText: l.plateOptional,
-              ),
-              textCapitalization: TextCapitalization.characters,
-              onChanged: (_) => _markDirty(),
-            ),
-            const SizedBox(height: 12),
-            TextFormField(
-              controller: _vinController,
-              decoration: InputDecoration(
-                labelText: l.vinOptional,
-              ),
-              textCapitalization: TextCapitalization.characters,
-              maxLength: 17,
-              onChanged: (_) => _markDirty(),
-            ),
-            const SizedBox(height: 12),
-            Row(
-              children: [
-                Expanded(
-                  child: TextFormField(
-                    controller: _odometerController,
-                    decoration:
-                        InputDecoration(labelText: l.odometer),
-                    keyboardType: TextInputType.number,
-                    onChanged: (_) => _markDirty(),
-                    validator: (v) {
-                      if (_validatingForSearch) return null;
-                      if (v == null || v.trim().isEmpty) return l.required;
-                      final num = double.tryParse(v);
-                      if (num == null || num < 0) return l.invalid;
-                      return null;
-                    },
-                  ),
-                ),
-                const SizedBox(width: 12),
-                SegmentedButton<DistanceUnit>(
-                  segments: [
-                    ButtonSegment(value: DistanceUnit.kilometers, label: Text(l.unitKm)),
-                    ButtonSegment(value: DistanceUnit.miles, label: Text(l.unitMi)),
+
+            // ── Vehicle Info ──
+            SectionHeader(title: l.vehicleType),
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
+                child: Column(
+                  children: [
+                    Autocomplete<String>(
+                      initialValue: TextEditingValue(text: _brand),
+                      optionsBuilder: (textEditingValue) {
+                        if (textEditingValue.text.isEmpty) return [];
+                        final query = textEditingValue.text;
+                        final index = ref.read(templateIndexProvider).value;
+                        final suggestions = <String>{};
+                        if (index != null) {
+                          suggestions.addAll(index.templates
+                              .where((e) => e.meta.make != '_base')
+                              .map((e) => e.meta.make)
+                              .toSet()
+                              .where((m) =>
+                                  m.toLowerCase().contains(query.toLowerCase())));
+                        }
+                        suggestions.add(query);
+                        return suggestions.toList()..sort();
+                      },
+                      fieldViewBuilder: (context, controller, focusNode, onSubmitted) {
+                        return TextFormField(
+                          controller: controller,
+                          focusNode: focusNode,
+                          decoration: InputDecoration(
+                            labelText: l.brand,
+                          ),
+                          onChanged: (value) {
+                            _brand = value;
+                            _hasUnsavedChanges = true;
+                          },
+                          validator: (v) =>
+                              v == null || v.trim().isEmpty ? l.required : null,
+                        );
+                      },
+                      onSelected: (value) {
+                        _brand = value;
+                      },
+                    ),
+                    const SizedBox(height: 8),
+                    Autocomplete<String>(
+                      initialValue: TextEditingValue(text: _model),
+                      optionsBuilder: (textEditingValue) {
+                        if (textEditingValue.text.isEmpty) return [];
+                        final query = textEditingValue.text;
+                        final index = ref.read(templateIndexProvider).value;
+                        final suggestions = <String>{};
+                        if (index != null && _brand.isNotEmpty) {
+                          suggestions.addAll(index.templates
+                              .where((e) =>
+                                  e.meta.make.toLowerCase() == _brand.toLowerCase() &&
+                                  e.meta.model
+                                      .toLowerCase()
+                                      .contains(query.toLowerCase()))
+                              .map((e) => e.meta.model)
+                              .toSet());
+                        }
+                        suggestions.add(query);
+                        return suggestions.toList()..sort();
+                      },
+                      fieldViewBuilder: (context, controller, focusNode, onSubmitted) {
+                        return TextFormField(
+                          controller: controller,
+                          focusNode: focusNode,
+                          decoration: InputDecoration(
+                            labelText: l.model,
+                          ),
+                          onChanged: (value) {
+                            _model = value;
+                            _hasUnsavedChanges = true;
+                          },
+                          validator: (v) =>
+                              v == null || v.trim().isEmpty ? l.required : null,
+                        );
+                      },
+                      onSelected: (value) {
+                        _model = value;
+                      },
+                    ),
+                    const SizedBox(height: 8),
+                    TextFormField(
+                      controller: _yearController,
+                      decoration: InputDecoration(
+                        labelText: l.year,
+                      ),
+                      keyboardType: TextInputType.number,
+                      onChanged: (_) => _markDirty(),
+                      validator: (v) {
+                        if (v == null || v.trim().isEmpty) return l.required;
+                        final year = int.tryParse(v);
+                        if (year == null || year < 1886 || year > DateTime.now().year + 1) {
+                          return l.invalidYear;
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 8),
+                    OutlinedButton.icon(
+                      onPressed: _isLoading ? null : _searchTemplate,
+                      icon: _templateIntervals != null
+                          ? const Icon(Icons.check_circle, color: Colors.green)
+                          : const Icon(Icons.search),
+                      label: Text(
+                        _templateIntervals != null
+                            ? 'Plantilla: $_templateName'
+                            : 'Buscar plantilla',
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    AbsorbPointer(
+                      absorbing: _templateIntervals != null,
+                      child: SegmentedButton<VehicleType>(
+                          segments: [
+                            ButtonSegment(
+                              value: VehicleType.combustion,
+                              icon: const Icon(Icons.local_gas_station),
+                              label: _vehicleType == VehicleType.combustion
+                                  ? Text(l.combustion)
+                                  : const SizedBox.shrink(),
+                            ),
+                            ButtonSegment(
+                              value: VehicleType.electric,
+                              icon: const Icon(Icons.electric_car),
+                              label: _vehicleType == VehicleType.electric
+                                  ? Text(l.electric)
+                                  : const SizedBox.shrink(),
+                            ),
+                            ButtonSegment(
+                              value: VehicleType.motorcycle,
+                              icon: const Icon(Icons.motorcycle),
+                              label: _vehicleType == VehicleType.motorcycle
+                                  ? Text(l.motorcycle)
+                                  : const SizedBox.shrink(),
+                            ),
+                          ],
+                          selected: {_vehicleType},
+                          onSelectionChanged: (v) => setState(() {
+                            _vehicleType = v.first;
+                            _markDirty();
+                          }),
+                        ),
+                    ),
+                    const SizedBox(height: 12),
                   ],
-                  selected: {_odometerUnit},
-                  onSelectionChanged: (v) => setState(() {
-                    _odometerUnit = v.first;
-                    _markDirty();
-                  }),
                 ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            Text(l.volumeUnit,
-                style: Theme.of(context).textTheme.titleSmall),
-            const SizedBox(height: 8),
-            SegmentedButton<VolumeUnit>(
-              segments: [
-                ButtonSegment(
-                    value: VolumeUnit.liters, label: Text(l.unitL)),
-                ButtonSegment(
-                    value: VolumeUnit.gallons, label: Text(l.unitGal)),
-              ],
-              selected: {_fuelVolumeUnit},
-              onSelectionChanged: (v) => setState(() {
-                _fuelVolumeUnit = v.first;
-                _markDirty();
-              }),
-            ),
-            const SizedBox(height: 16),
-            Text(l.currency,
-                style: Theme.of(context).textTheme.titleSmall),
-            const SizedBox(height: 8),
-            DropdownButtonFormField<String>(
-              initialValue: _currency,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
               ),
-              items: Vehicle.currencies
-                  .map((c) => DropdownMenuItem(
-                        value: c,
-                        child: Text(
-                            '${Vehicle.currencySymbol(c)}  $c'),
-                      ))
-                  .toList(),
-              onChanged: (v) {
-                if (v != null) {
-                  setState(() {
-                    _currency = v;
-                    _markDirty();
-                  });
-                }
-              },
             ),
-            const SizedBox(height: 16),
-            SwitchListTile(
-              title: Text(l.aliasOptional),
-              subtitle: _showAlias && _aliasController.text.isNotEmpty
-                  ? Text(_aliasController.text)
-                  : null,
-              value: _showAlias,
-              onChanged: (v) => setState(() {
-                _showAlias = v;
-                _markDirty();
-              }),
-            ),
-            if (_showAlias) ...[
-              const SizedBox(height: 8),
-              TextFormField(
-                controller: _aliasController,
-                decoration: InputDecoration(
-                  labelText: l.aliasOptional,
-                  hintText: l.aliasHint,
+
+            // ── Details ──
+            SectionHeader(title: l.vehicleFormEdit),
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
+                child: Column(
+                  children: [
+                    TextFormField(
+                      controller: _plateController,
+                      decoration: InputDecoration(
+                        labelText: l.plateOptional,
+                      ),
+                      textCapitalization: TextCapitalization.characters,
+                      onChanged: (_) => _markDirty(),
+                    ),
+                    const SizedBox(height: 8),
+                    TextFormField(
+                      controller: _vinController,
+                      decoration: InputDecoration(
+                        labelText: l.vinOptional,
+                      ),
+                      textCapitalization: TextCapitalization.characters,
+                      maxLength: 17,
+                      onChanged: (_) => _markDirty(),
+                    ),
+                    SwitchListTile(
+                      title: Text(l.aliasOptional),
+                      subtitle: _showAlias && _aliasController.text.isNotEmpty
+                          ? Text(_aliasController.text)
+                          : null,
+                      value: _showAlias,
+                      onChanged: (v) => setState(() {
+                        _showAlias = v;
+                        _markDirty();
+                      }),
+                    ),
+                    if (_showAlias)
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 12),
+                        child: TextFormField(
+                          controller: _aliasController,
+                          decoration: InputDecoration(
+                            labelText: l.aliasOptional,
+                            hintText: l.aliasHint,
+                          ),
+                          onChanged: (_) => _markDirty(),
+                        ),
+                      ),
+                  ],
                 ),
-                onChanged: (_) => _markDirty(),
               ),
-            ],
-            const SizedBox(height: 24),
+            ),
+
+            // ── Units ──
+            SectionHeader(title: l.odometer),
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: TextFormField(
+                            controller: _odometerController,
+                            decoration: InputDecoration(
+                              labelText: l.odometer,
+                            ),
+                            keyboardType: TextInputType.number,
+                            onChanged: (_) => _markDirty(),
+                            validator: (v) {
+                              if (_validatingForSearch) return null;
+                              if (v == null || v.trim().isEmpty) return l.required;
+                              final num = double.tryParse(v);
+                              if (num == null || num < 0) return l.invalid;
+                              return null;
+                            },
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        SegmentedButton<DistanceUnit>(
+                          segments: [
+                            ButtonSegment(value: DistanceUnit.kilometers, label: Text(l.unitKm)),
+                            ButtonSegment(value: DistanceUnit.miles, label: Text(l.unitMi)),
+                          ],
+                          selected: {_odometerUnit},
+                          onSelectionChanged: (v) => setState(() {
+                            _odometerUnit = v.first;
+                            _markDirty();
+                          }),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: SegmentedButton<VolumeUnit>(
+                            segments: [
+                              ButtonSegment(value: VolumeUnit.liters, label: Text(l.unitL)),
+                              ButtonSegment(value: VolumeUnit.gallons, label: Text(l.unitGal)),
+                            ],
+                            selected: {_fuelVolumeUnit},
+                            onSelectionChanged: (v) => setState(() {
+                              _fuelVolumeUnit = v.first;
+                              _markDirty();
+                            }),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+                    DropdownButtonFormField<String>(
+                      isExpanded: true,
+                      initialValue: _currency,
+                      decoration: InputDecoration(
+                        labelText: l.currency,
+                      ),
+                      items: Vehicle.currencies
+                          .map((c) => DropdownMenuItem(
+                                value: c,
+                                child: Text('${Vehicle.currencySymbol(c)}  $c'),
+                              ))
+                          .toList(),
+                      onChanged: (v) {
+                        if (v != null) {
+                          setState(() {
+                            _currency = v;
+                            _markDirty();
+                          });
+                        }
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            // ── Actions ──
+            const SizedBox(height: 8),
             FilledButton(
               onPressed: _isLoading ? null : _save,
               child: _isLoading
@@ -872,6 +918,7 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
                 ),
               ),
             ],
+            const SizedBox(height: 24),
           ],
         ),
       ),

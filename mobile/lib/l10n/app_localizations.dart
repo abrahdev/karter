@@ -208,6 +208,12 @@ abstract class AppLocalizations {
   /// **'Actions'**
   String get actions;
 
+  /// No description provided for @information.
+  ///
+  /// In en, this message translates to:
+  /// **'Information'**
+  String get information;
+
   /// No description provided for @fuelLogs.
   ///
   /// In en, this message translates to:
@@ -394,6 +400,12 @@ abstract class AppLocalizations {
   /// **'Cancel'**
   String get cancel;
 
+  /// No description provided for @resetToDefault.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset to default'**
+  String get resetToDefault;
+
   /// No description provided for @delete.
   ///
   /// In en, this message translates to:
@@ -554,6 +566,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Edit'**
   String get edit;
+
+  /// No description provided for @addToDashboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to dashboard'**
+  String get addToDashboard;
+
+  /// No description provided for @setupNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Setup notifications'**
+  String get setupNotifications;
+
+  /// No description provided for @addToDashboardComingSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Coming soon'**
+  String get addToDashboardComingSoon;
 
   /// No description provided for @deleteInterval.
   ///
@@ -1047,6 +1077,198 @@ abstract class AppLocalizations {
   /// **'Leave a review on the Play Store'**
   String get moreRateSubtitle;
 
+  /// No description provided for @moreFeedback.
+  ///
+  /// In en, this message translates to:
+  /// **'Rate the application'**
+  String get moreFeedback;
+
+  /// No description provided for @moreFeedbackSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Rate the app and configure reminders'**
+  String get moreFeedbackSubtitle;
+
+  /// No description provided for @feedbackTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Feedback'**
+  String get feedbackTitle;
+
+  /// No description provided for @sectionPreferences.
+  ///
+  /// In en, this message translates to:
+  /// **'Preferences'**
+  String get sectionPreferences;
+
+  /// No description provided for @sectionData.
+  ///
+  /// In en, this message translates to:
+  /// **'Data'**
+  String get sectionData;
+
+  /// No description provided for @sectionFeedbackCommunity.
+  ///
+  /// In en, this message translates to:
+  /// **'Feedback & Community'**
+  String get sectionFeedbackCommunity;
+
+  /// No description provided for @sectionTips.
+  ///
+  /// In en, this message translates to:
+  /// **'Tip program'**
+  String get sectionTips;
+
+  /// No description provided for @sectionAbout.
+  ///
+  /// In en, this message translates to:
+  /// **'About Karter'**
+  String get sectionAbout;
+
+  /// No description provided for @theme.
+  ///
+  /// In en, this message translates to:
+  /// **'Theme'**
+  String get theme;
+
+  /// No description provided for @themeAutomatic.
+  ///
+  /// In en, this message translates to:
+  /// **'Automatic'**
+  String get themeAutomatic;
+
+  /// No description provided for @themeAutomaticDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Follow device setting'**
+  String get themeAutomaticDesc;
+
+  /// No description provided for @themeSystem.
+  ///
+  /// In en, this message translates to:
+  /// **'System'**
+  String get themeSystem;
+
+  /// No description provided for @themeSystemDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Follow device setting'**
+  String get themeSystemDesc;
+
+  /// No description provided for @themeLight.
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get themeLight;
+
+  /// No description provided for @themeDark.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark'**
+  String get themeDark;
+
+  /// No description provided for @colorScheme.
+  ///
+  /// In en, this message translates to:
+  /// **'Primary color'**
+  String get colorScheme;
+
+  /// No description provided for @colorCustom.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom'**
+  String get colorCustom;
+
+  /// No description provided for @colorOfInterface.
+  ///
+  /// In en, this message translates to:
+  /// **'Interface color'**
+  String get colorOfInterface;
+
+  /// No description provided for @colorOfInterfaceDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply primary color to background surfaces'**
+  String get colorOfInterfaceDesc;
+
+  /// No description provided for @customColor.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom color'**
+  String get customColor;
+
+  /// No description provided for @customColorDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Use a personal color instead of the system accent'**
+  String get customColorDesc;
+
+  /// No description provided for @selectColor.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a color'**
+  String get selectColor;
+
+  /// No description provided for @hapticFeedback.
+  ///
+  /// In en, this message translates to:
+  /// **'Haptic feedback'**
+  String get hapticFeedback;
+
+  /// No description provided for @hapticFeedbackDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Vibrate on interactions'**
+  String get hapticFeedbackDesc;
+
+  /// No description provided for @feedbackReminderToggle.
+  ///
+  /// In en, this message translates to:
+  /// **'Rating reminder'**
+  String get feedbackReminderToggle;
+
+  /// No description provided for @feedbackReminderToggleSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Show a reminder to rate the app after saving services'**
+  String get feedbackReminderToggleSubtitle;
+
+  /// No description provided for @feedbackServicesInterval.
+  ///
+  /// In en, this message translates to:
+  /// **'Services before prompt'**
+  String get feedbackServicesInterval;
+
+  /// No description provided for @feedbackServicesIntervalValue.
+  ///
+  /// In en, this message translates to:
+  /// **'After {count} service(s)'**
+  String feedbackServicesIntervalValue(Object count);
+
+  /// No description provided for @feedbackServicesSuffix.
+  ///
+  /// In en, this message translates to:
+  /// **'services'**
+  String get feedbackServicesSuffix;
+
+  /// No description provided for @feedbackRepeatDays.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminder interval'**
+  String get feedbackRepeatDays;
+
+  /// No description provided for @feedbackRepeatDaysValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Every {days} day(s)'**
+  String feedbackRepeatDaysValue(Object days);
+
+  /// No description provided for @feedbackRepeatDaysSuffix.
+  ///
+  /// In en, this message translates to:
+  /// **'days'**
+  String get feedbackRepeatDaysSuffix;
+
   /// No description provided for @ratePromptMessage.
   ///
   /// In en, this message translates to:
@@ -1065,6 +1287,168 @@ abstract class AppLocalizations {
   /// **'Could not open {url}'**
   String moreUrlError(Object url);
 
+  /// No description provided for @tipProgram.
+  ///
+  /// In en, this message translates to:
+  /// **'Tip program'**
+  String get tipProgram;
+
+  /// No description provided for @tipProgramComingSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'This feature is under development and will be available soon.'**
+  String get tipProgramComingSoon;
+
+  /// No description provided for @tipBadges.
+  ///
+  /// In en, this message translates to:
+  /// **'Badges'**
+  String get tipBadges;
+
+  /// No description provided for @tipBadgesNone.
+  ///
+  /// In en, this message translates to:
+  /// **'None'**
+  String get tipBadgesNone;
+
+  /// No description provided for @tipInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Information'**
+  String get tipInfo;
+
+  /// No description provided for @tipInfoText.
+  ///
+  /// In en, this message translates to:
+  /// **'The tip program is a way for users to show extra support and appreciation for the fast support, constant improvements, and continuous updates that Karter has offered.'**
+  String get tipInfoText;
+
+  /// No description provided for @tipOneTime.
+  ///
+  /// In en, this message translates to:
+  /// **'One-time tip'**
+  String get tipOneTime;
+
+  /// No description provided for @tipRecurring.
+  ///
+  /// In en, this message translates to:
+  /// **'Recurring tip'**
+  String get tipRecurring;
+
+  /// No description provided for @tipBronze.
+  ///
+  /// In en, this message translates to:
+  /// **'Bronze'**
+  String get tipBronze;
+
+  /// No description provided for @tipSilver.
+  ///
+  /// In en, this message translates to:
+  /// **'Silver'**
+  String get tipSilver;
+
+  /// No description provided for @tipGold.
+  ///
+  /// In en, this message translates to:
+  /// **'Gold'**
+  String get tipGold;
+
+  /// No description provided for @tipBronzePrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Bronze tip'**
+  String get tipBronzePrice;
+
+  /// No description provided for @tipSilverPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Silver tip'**
+  String get tipSilverPrice;
+
+  /// No description provided for @tipGoldPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Gold tip'**
+  String get tipGoldPrice;
+
+  /// No description provided for @tipBronzeMonthly.
+  ///
+  /// In en, this message translates to:
+  /// **'Bronze / month'**
+  String get tipBronzeMonthly;
+
+  /// No description provided for @tipSilverMonthly.
+  ///
+  /// In en, this message translates to:
+  /// **'Silver / month'**
+  String get tipSilverMonthly;
+
+  /// No description provided for @tipGoldMonthly.
+  ///
+  /// In en, this message translates to:
+  /// **'Gold / month'**
+  String get tipGoldMonthly;
+
+  /// No description provided for @officialWebsite.
+  ///
+  /// In en, this message translates to:
+  /// **'Official website'**
+  String get officialWebsite;
+
+  /// No description provided for @communityForums.
+  ///
+  /// In en, this message translates to:
+  /// **'Community forums'**
+  String get communityForums;
+
+  /// No description provided for @translations.
+  ///
+  /// In en, this message translates to:
+  /// **'Translations'**
+  String get translations;
+
+  /// No description provided for @privacyPolicy.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy policy'**
+  String get privacyPolicy;
+
+  /// No description provided for @privacyPolicyDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Read our privacy policy online.'**
+  String get privacyPolicyDesc;
+
+  /// No description provided for @openPrivacyPolicy.
+  ///
+  /// In en, this message translates to:
+  /// **'Open privacy policy'**
+  String get openPrivacyPolicy;
+
+  /// No description provided for @version.
+  ///
+  /// In en, this message translates to:
+  /// **'Version'**
+  String get version;
+
+  /// No description provided for @deviceId.
+  ///
+  /// In en, this message translates to:
+  /// **'Device ID'**
+  String get deviceId;
+
+  /// No description provided for @changelog.
+  ///
+  /// In en, this message translates to:
+  /// **'Changelog'**
+  String get changelog;
+
+  /// No description provided for @openSourceLicenses.
+  ///
+  /// In en, this message translates to:
+  /// **'Open-source licenses'**
+  String get openSourceLicenses;
+
   /// No description provided for @language.
   ///
   /// In en, this message translates to:
@@ -1077,6 +1461,12 @@ abstract class AppLocalizations {
   /// **'Select language'**
   String get selectLanguage;
 
+  /// No description provided for @languageSystem.
+  ///
+  /// In en, this message translates to:
+  /// **'System default'**
+  String get languageSystem;
+
   /// No description provided for @english.
   ///
   /// In en, this message translates to:
@@ -1088,6 +1478,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Spanish'**
   String get spanish;
+
+  /// No description provided for @eesti.
+  ///
+  /// In en, this message translates to:
+  /// **'Eesti'**
+  String get eesti;
 
   /// No description provided for @odometerUpdateTitle.
   ///
