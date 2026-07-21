@@ -29,7 +29,7 @@ class AppTheme {
       ),
       cardTheme: CardThemeData(
         elevation: 2,
-        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 8),
       ),
       pageTransitionsTheme: PageTransitionsTheme(
         builders: {

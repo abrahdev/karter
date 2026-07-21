@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile/core/theme/app_spacing.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 
 class TipsPage extends StatelessWidget {
@@ -17,7 +18,7 @@ class TipsPage extends StatelessWidget {
           Card(
             color: theme.colorScheme.errorContainer,
             child: Padding(
-              padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppSpacing.pagePadding),
               child: Row(
                 children: [
                   Icon(Icons.construction, color: theme.colorScheme.onErrorContainer),
@@ -87,7 +88,6 @@ class _TipCard extends StatelessWidget {
     final theme = Theme.of(context);
 
     return Card(
-      margin: const EdgeInsets.only(bottom: 8),
       child: ListTile(
         leading: CircleAvatar(
           backgroundColor: theme.colorScheme.surfaceContainerHighest,

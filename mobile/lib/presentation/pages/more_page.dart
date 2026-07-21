@@ -5,10 +5,12 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart' show BlockPicker;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile/core/modal_helpers.dart';
+import 'package:mobile/core/theme/app_spacing.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/pages/changelog_page.dart';
 import 'package:mobile/presentation/pages/privacy_policy_page.dart';
 import 'package:mobile/presentation/pages/tips_page.dart';
+import 'package:mobile/presentation/widgets/section_header.dart';
 import 'package:mobile/presentation/providers/color_provider.dart';
 import 'package:mobile/presentation/providers/haptic_provider.dart';
 import 'package:mobile/presentation/providers/locale_provider.dart';
@@ -42,9 +44,9 @@ class MorePage extends ConsumerWidget {
     final languageLabel = _languageLabel(localeNotifier, l);
 
     return ListView(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+      padding: const EdgeInsets.all(AppSpacing.pagePadding),
       children: [
-        _SectionHeader(title: l.sectionPreferences),
+        SectionHeader(title: l.sectionPreferences),
         _GroupedCard(
           children: [
             ListTile(
@@ -116,7 +118,7 @@ class MorePage extends ConsumerWidget {
           ],
         ),
 
-        _SectionHeader(title: l.sectionFeedbackCommunity),
+        SectionHeader(title: l.sectionFeedbackCommunity),
         _GroupedCard(
           children: [
             ListTile(
@@ -136,7 +138,7 @@ class MorePage extends ConsumerWidget {
           ],
         ),
 
-        _SectionHeader(title: l.sectionTips),
+        SectionHeader(title: l.sectionTips),
         _GroupedCard(
           children: [
             ListTile(
@@ -161,7 +163,7 @@ class MorePage extends ConsumerWidget {
           ],
         ),
 
-        _SectionHeader(title: l.sectionAbout),
+        SectionHeader(title: l.sectionAbout),
         _GroupedCard(
           children: [
             ListTile(
@@ -364,7 +366,6 @@ class _AboutInfoCard extends ConsumerWidget {
 
         return Card(
           clipBehavior: Clip.antiAlias,
-          margin: EdgeInsets.zero,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: ListTile.divideTiles(
@@ -427,7 +428,6 @@ class _GroupedCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       clipBehavior: Clip.antiAlias,
-      margin: EdgeInsets.zero,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: ListTile.divideTiles(
@@ -439,23 +439,4 @@ class _GroupedCard extends StatelessWidget {
   }
 }
 
-class _SectionHeader extends StatelessWidget {
-  final String title;
-  const _SectionHeader({required this.title});
 
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Padding(
-      padding: const EdgeInsets.only(top: 20, bottom: 8, left: 4),
-      child: Text(
-        title.toUpperCase(),
-        style: theme.textTheme.labelSmall?.copyWith(
-          color: theme.colorScheme.primary,
-          fontWeight: FontWeight.w600,
-          letterSpacing: 1.2,
-        ),
-      ),
-    );
-  }
-}

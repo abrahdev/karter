@@ -382,7 +382,6 @@ class _NotificationListPage extends ConsumerWidget {
               final freq = v.odometerReminderFreqDays;
               final maintOn = v.maintenanceReminderEnabled;
               return Card(
-                margin: const EdgeInsets.only(bottom: 12),
                 child: ListTile(
                   leading: CircleAvatar(
                     backgroundColor: theme.colorScheme.primaryContainer,

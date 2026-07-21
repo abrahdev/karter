@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile/core/modal_helpers.dart';
+import 'package:mobile/core/theme/app_spacing.dart';
 import 'package:mobile/domain/entities/maintenance_interval.dart';
 import 'package:mobile/domain/enums/distance_unit.dart';
 import 'package:mobile/domain/value_objects/odometer.dart';
@@ -13,6 +14,7 @@ import 'package:mobile/presentation/widgets/add_document_modal.dart';
 import 'package:mobile/presentation/widgets/add_fuel_log_modal.dart';
 import 'package:mobile/presentation/widgets/add_maintenance_log_modal.dart';
 import 'package:mobile/presentation/widgets/odometer_dialog.dart';
+import 'package:mobile/presentation/widgets/section_header.dart';
 
 class VehicleDetailPage extends ConsumerStatefulWidget {
   final String vehicleId;
@@ -84,7 +86,6 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
     final intervalsAsync =
         ref.watch(maintenanceIntervalsProvider(widget.vehicleId));
     final theme = Theme.of(context);
-    final cs = theme.colorScheme;
     final l = AppLocalizations.of(context)!;
 
     return vehicleAsync.when(
@@ -113,37 +114,36 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
             ],
           ),
           body: ListView(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            padding: const EdgeInsets.all(AppSpacing.pagePadding),
             children: [
               Card(
                 child: Column(
                   children: [
                     if (vehicle.alias != null &&
                         vehicle.alias!.isNotEmpty)
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
-                        child: Row(
-                          children: [
-                            Icon(Icons.person_outline, size: 18, color: cs.onSurfaceVariant),
-                            const SizedBox(width: 8),
-                            Expanded(
-                              child: Text(
-                                '${vehicle.brand} ${vehicle.model} ${vehicle.year}',
-                                style: theme.textTheme.bodyMedium?.copyWith(
-                                  color: cs.onSurfaceVariant,
-                                ),
-                              ),
-                            ),
-                          ],
+                      ListTile(
+                        leading: const Icon(Icons.person_outline, size: 20),
+                        title: Text(vehicle.alias!),
+                        subtitle: Text(
+                          '${vehicle.brand} ${vehicle.model} ${vehicle.year}',
                         ),
+                        dense: true,
+                        visualDensity: VisualDensity.compact,
                       ),
-                    if (vehicle.plate != null)
-                      _infoRow(Icons.badge, l.plate, vehicle.plate!.value),
-                    if (vehicle.vin != null)
-                      _infoRow(Icons.qr_code, l.vin, vehicle.vin!.code),
-                    _infoRow(Icons.directions_car, l.brandModel,
-                        '${vehicle.brand} ${vehicle.model}'),
-                    _infoRow(Icons.calendar_today, l.year, vehicle.year.toString()),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      child: Column(
+                        children: [
+                          if (vehicle.plate != null)
+                            _infoLine(Icons.badge, l.plate, vehicle.plate!.value),
+                          if (vehicle.vin != null)
+                            _infoLine(Icons.qr_code, l.vin, vehicle.vin!.code),
+                          _infoLine(Icons.directions_car, l.brandModel,
+                              '${vehicle.brand} ${vehicle.model}'),
+                          _infoLine(Icons.calendar_today, l.year, vehicle.year.toString()),
+                        ],
+                      ),
+                    ),
                     const Divider(height: 1, indent: 16),
                     ListTile(
                       leading: const Icon(Icons.speed),
@@ -161,11 +161,7 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
                   ],
                 ),
               ),
-              const SizedBox(height: 8),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-                child: Text(l.actions, style: theme.textTheme.titleSmall),
-              ),
+              SectionHeader(title: l.actions),
               Card(
                 child: Column(
                   children: [
@@ -200,12 +196,7 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
                   ],
                 ),
               ),
-              const SizedBox(height: 8),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-                child: Text(l.nextMaintenance,
-                    style: theme.textTheme.titleSmall),
-              ),
+              SectionHeader(title: l.nextMaintenance),
               intervalsAsync.when(
                 data: (intervals) {
                   final enabled =
@@ -506,13 +497,29 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
     );
   }
 
-  Widget _infoRow(IconData icon, String label, String value) {
-    return ListTile(
-      leading: Icon(icon, size: 20),
-      title: Text(value),
-      subtitle: Text(label),
-      dense: true,
-      visualDensity: VisualDensity.compact,
+  Widget _infoLine(IconData icon, String label, String value) {
+    return Builder(
+      builder: (context) {
+        final onSurface = Theme.of(context).colorScheme.onSurfaceVariant;
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+          child: Row(
+            children: [
+              Icon(icon, size: 18, color: onSurface),
+              const SizedBox(width: 8),
+              Flexible(
+                child: Text.rich(
+                  TextSpan(children: [
+                    TextSpan(text: '$label: ', style: const TextStyle(fontWeight: FontWeight.w600)),
+                    TextSpan(text: value),
+                  ]),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
