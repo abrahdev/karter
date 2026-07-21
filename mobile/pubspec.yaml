@@ -1,7 +1,7 @@
 name: mobile
 description: "Karter - Open source vehicle maintenance tracker"
 publish_to: 'none'
-version: 2026.07.8+12
+version: 2026.07.9+13
 
 environment:
   sdk: ^3.11.0
@@ -68,3 +68,4 @@ flutter:
     - assets/branding/
     - templates/
     - i18n/
+    - CHANGELOG.md
