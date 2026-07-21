@@ -171,7 +171,7 @@ final _router = GoRouter(
     ),
     GoRoute(
       path: '/changelog',
-      builder: (_, _) => const ChangelogPage(),
+      builder: (_, _) => const ChangelogSheet(),
     ),
   ],
 );

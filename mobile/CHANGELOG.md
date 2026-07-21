@@ -1,11 +1,97 @@
-## 2026.07.6+10
+# Changelog
 
-- Migrate all modals to bottom sheets with M3 motion tokens
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [Unreleased]
+
+## [2026.07.9+13] - 2026-07-18
+
+### Added
+
+- Interface color toggle for M3 surface tinting
+- Custom color toggle with real-time system accent detection
+- Language picker (System / English / Spanish / Eesti)
+- Haptic feedback toggle
+- Feedback & rating page with configurable reminders (#27)
+- Onboarding walkthrough (#15)
+- In-app rating prompt after saving maintenance log (#17)
+- Changelog, privacy policy, and tips pages
+
+### Fixed
+
+- Changelog asset loading (CHANGELOG.md added to Flutter assets)
+- GoRouter usage in MaterialApp.builder (#23)
+
+### Changed
+
+- Reorganized More page with Material 3 grouped cards
+- Updated Estonian translations (#24, #25, #26)
+
+## [2026.07.8+12] - 2026-07-14
+
+### Added
+
+- Template source toggle (online GitHub / local offline)
+- Template detail modal and interactive browser
+- Motorcycle templates (Honda, Yamaha, Suzuki, Kawasaki, Benelli)
+- Autocomplete for brand/model from template index
+
+### Changed
+
+- Upgraded all dependencies to latest versions
+- Reorganized templates directory structure
+- Split template translations from ARB to i18n JSON
+
+## [2026.07.7+11] - 2026-07-10
+
+### Added
+
+- Vehicle documents with FAB speed dial and modal upload
+- PDF export with tab layout and i18n support
+- Service cost and vehicle currency fields
+- Photos on service records (camera/gallery)
+- Template search on vehicle creation with maintenance interval i18n
+
+### Fixed
+
+- Template search validation (brand/model/year only)
+- Autocomplete overlay flicker (remove setState from onChanged)
+- Modal theme adaptation with div layout
+
+## [2026.07.6+10] - 2026-07-07
+
+### Added
+
+- Notification system with odometer and maintenance reminders
+- FAB speed dial animation (staggered entry, rotation)
+- Material Motion animations for modals and bottom sheets
+- VehicleDocument export/import with base64 inline files
+
+### Fixed
+
+- Double Dialog in `karterShowDialog`
+- ListTile ink splash on More page
+- Notification list not refreshing after settings change
 - Reset `odometerReminderLastNotified` on odometer update
-- Fix notification list not refreshing after settings change
-- Fix ListTile ink splash on More page
-- Fix double Dialog in `karterShowDialog`
-- Clean up unused imports, deprecated RadioListTile & DropdownButtonFormField.value
-- Add VehicleDocument export/import with base64 inline files
+- Unused imports, deprecated RadioListTile & DropdownButtonFormField.value
 
-## 2026.07.5+9
+### Changed
+
+- Migrated all modals to bottom sheets with M3 motion tokens
+- Cleaned up unused imports and deprecated widgets
+
+## [2026.07.5+9] - 2026-07-07
+
+### Added
+
+- Initial changelog tracking
+
+[Unreleased]: https://github.com/abrahdev/karter/compare/v2026.07.9...HEAD
+[2026.07.9+13]: https://github.com/abrahdev/karter/compare/v2026.07.8-alpha...v2026.07.9
+[2026.07.8+12]: https://github.com/abrahdev/karter/compare/v2026.07.7-alpha...v2026.07.8-alpha
+[2026.07.7+11]: https://github.com/abrahdev/karter/compare/v2026.07.4+6...v2026.07.7-alpha
+[2026.07.6+10]: https://github.com/abrahdev/karter/compare/v2026.07.4+6...v2026.07.6
+[2026.07.5+9]: https://github.com/abrahdev/karter/releases/tag/v2026.07.4+6
