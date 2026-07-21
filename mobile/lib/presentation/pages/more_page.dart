@@ -629,11 +629,13 @@ class _AboutInfoCard extends ConsumerWidget {
                   leading: const Icon(Icons.description_outlined),
                   title: Text(l.changelog),
                   trailing: const Icon(Icons.chevron_right),
-                  onTap: () => Navigator.of(context).push(
-                    MaterialPageRoute(
-                      fullscreenDialog: true,
-                      builder: (_) => const ChangelogPage(),
+                  onTap: () => showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
                     ),
+                    builder: (_) => const ChangelogSheet(),
                   ),
                 ),
                 ListTile(
