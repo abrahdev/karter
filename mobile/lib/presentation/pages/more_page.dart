@@ -8,6 +8,7 @@ import 'package:mobile/core/modal_helpers.dart';
 import 'package:mobile/core/theme/app_spacing.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/pages/changelog_page.dart';
+import 'package:mobile/presentation/pages/onboarding_page.dart';
 import 'package:mobile/presentation/pages/privacy_policy_page.dart';
 import 'package:mobile/presentation/pages/tips_page.dart';
 import 'package:mobile/presentation/widgets/section_header.dart';
@@ -15,6 +16,7 @@ import 'package:mobile/presentation/providers/color_provider.dart';
 import 'package:mobile/presentation/providers/haptic_provider.dart';
 import 'package:mobile/presentation/providers/locale_provider.dart';
 import 'package:mobile/presentation/providers/surface_tint_provider.dart';
+import 'package:mobile/presentation/providers/template_source_provider.dart';
 import 'package:mobile/presentation/providers/theme_provider.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -23,6 +25,7 @@ class MorePage extends ConsumerWidget {
   const MorePage({super.key});
 
   static const _repoUrl = 'https://github.com/abrahdev/karter';
+  static const _docsUrl = 'https://abrahdev.github.io/karter/';
   static const _sponsorsUrl = 'https://github.com/sponsors/abrahdev';
   static const _weblateUrl = 'https://hosted.weblate.org/engage/karter/';
 
@@ -118,6 +121,9 @@ class MorePage extends ConsumerWidget {
           ],
         ),
 
+        SectionHeader(title: l.sectionData),
+        _DataSection(),
+
         SectionHeader(title: l.sectionFeedbackCommunity),
         _GroupedCard(
           children: [
@@ -134,6 +140,27 @@ class MorePage extends ConsumerWidget {
               subtitle: Text(l.moreSourceSubtitle),
               trailing: const Icon(Icons.open_in_new),
               onTap: () => _openUrl(context, _repoUrl),
+            ),
+            ListTile(
+              leading: const Icon(Icons.menu_book),
+              title: Text(l.moreDocs),
+              subtitle: Text(l.moreDocsSubtitle),
+              trailing: const Icon(Icons.open_in_new),
+              onTap: () => _openUrl(context, _docsUrl),
+            ),
+            ListTile(
+              leading: const Icon(Icons.help_outline),
+              title: Text(l.onboardingReplay),
+              subtitle: Text(l.onboardingReplaySubtitle),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    fullscreenDialog: true,
+                    builder: (_) => const OnboardingPage(),
+                  ),
+                );
+              },
             ),
           ],
         ),
@@ -436,6 +463,110 @@ class _GroupedCard extends StatelessWidget {
         ).toList(),
       ),
     );
+  }
+}
+
+class _DataSection extends ConsumerWidget {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l = AppLocalizations.of(context)!;
+    final config = ref.watch(templateSourceProvider);
+
+    final tiles = <Widget>[
+      ListTile(
+        leading: const Icon(Icons.storage),
+        title: Text(l.moreExport),
+        subtitle: Text(l.moreExportSubtitle),
+        trailing: const Icon(Icons.chevron_right),
+        onTap: () => context.push('/data'),
+      ),
+      SwitchListTile(
+        secondary: Icon(config.enabled ? Icons.cloud : Icons.cloud_off),
+        title: Text(l.moreTemplateSource),
+        subtitle: Text(l.moreTemplateSourceSubtitle),
+        value: config.enabled,
+        onChanged: (v) =>
+            ref.read(templateSourceProvider.notifier).setEnabled(v),
+      ),
+    ];
+
+    if (config.enabled) {
+      tiles.add(
+        ListTile(
+          leading: const Icon(Icons.link),
+          title: Text(l.moreTemplateSourceUrl),
+          subtitle: Text(
+            config.repoUrl,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+          trailing: const Icon(Icons.edit),
+          onTap: () => _editUrl(context, ref, config.repoUrl),
+        ),
+      );
+    }
+
+    return Card(
+      clipBehavior: Clip.antiAlias,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: ListTile.divideTiles(
+          context: context,
+          tiles: tiles,
+        ).toList(),
+      ),
+    );
+  }
+
+  Future<void> _editUrl(
+      BuildContext context, WidgetRef ref, String currentUrl) async {
+    final l = AppLocalizations.of(context)!;
+    final controller = TextEditingController(text: currentUrl);
+
+    final result = await karterShowDialog<String>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(l.moreTemplateSourceEditUrl),
+        content: TextField(
+          controller: controller,
+          decoration: InputDecoration(
+            hintText: l.moreTemplateSourceUrlHint,
+          ),
+          keyboardType: TextInputType.url,
+          autofocus: true,
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              ref.read(templateSourceProvider.notifier).resetToDefault();
+              Navigator.pop(ctx);
+            },
+            child: Text(l.moreTemplateSourceReset),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: Text(l.cancel),
+          ),
+          FilledButton(
+            onPressed: () {
+              final url = controller.text.trim();
+              if (url.isNotEmpty) Navigator.pop(ctx, url);
+            },
+            child: Text(l.saveChangesShort),
+          ),
+        ],
+      ),
+    );
+
+    if (result != null && result.isNotEmpty) {
+      await ref.read(templateSourceProvider.notifier).setRepoUrl(result);
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(l.moreTemplateSourceUrlSaved)),
+        );
+      }
+    }
   }
 }
 
