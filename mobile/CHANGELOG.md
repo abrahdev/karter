@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2026.07.10+14] - 2026-07-21
+
+### Added
+
+- M3 design overhaul: responsive 2-column layouts for Vehicle Detail & More pages
+- Vehicle form redesigned with 4-card M3 layout
+- VehicleCard context menu (long-press / right-click: Edit, Add to dashboard, Setup notifications)
+- Shared SectionHeader widget for consistent section titles
+- Global AppSpacing.pagePadding constant
+- Roboto font family applied globally
+- Changelog now shows as modal bottom sheet with current version only
+
+### Fixed
+
+- Restore Docs & Onboarding Replay in Feedback section
+- Restore Data & Security section in More page
+- Template Source disabled icon (cloud_off)
+
 ## [2026.07.9+13] - 2026-07-18
 
 ### Added
