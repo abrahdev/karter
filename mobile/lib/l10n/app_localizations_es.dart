@@ -612,6 +612,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get hapticFeedbackDesc => 'Vibrar en las interacciones';
 
   @override
+  String get shakeToOdometer => 'Agitar para actualizar odómetro';
+
+  @override
+  String get shakeToOdometerDesc =>
+      'Agitar el dispositivo para abrir la actualización del odómetro en la pantalla del vehículo';
+
+  @override
   String get feedbackReminderToggle => 'Recordatorio de valoración';
 
   @override

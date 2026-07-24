@@ -609,6 +609,13 @@ class AppLocalizationsEt extends AppLocalizations {
   String get hapticFeedbackDesc => 'Vibreeri interaktsioonide ajal';
 
   @override
+  String get shakeToOdometer => 'Raputa odomeetri värskendamiseks';
+
+  @override
+  String get shakeToOdometerDesc =>
+      'Raputa seadet, et avada odomeetri värskendus sõiduki ekraanil';
+
+  @override
   String get feedbackReminderToggle => 'Hindamise meeldetuletus';
 
   @override

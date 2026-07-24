@@ -610,6 +610,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get hapticFeedbackDesc => 'Vibrate on interactions';
 
   @override
+  String get shakeToOdometer => 'Shake to update odometer';
+
+  @override
+  String get shakeToOdometerDesc =>
+      'Shake device to open odometer update on vehicle screen';
+
+  @override
   String get feedbackReminderToggle => 'Rating reminder';
 
   @override
