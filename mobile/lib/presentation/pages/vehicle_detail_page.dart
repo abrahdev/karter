@@ -67,7 +67,7 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
   }
 
   void _startShakeListener() {
-    const threshold = 15.0;
+    const threshold = 30.0;
     _accelSub = accelerometerEventStream(samplingPeriod: const Duration(milliseconds: 200)).listen((event) {
       final magnitude = sqrt(event.x * event.x + event.y * event.y + event.z * event.z);
       if (magnitude > threshold && !_shakeDebouncing) {
