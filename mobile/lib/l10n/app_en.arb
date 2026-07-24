@@ -203,6 +203,8 @@
   "selectColor": "Select a color",
   "hapticFeedback": "Haptic feedback",
   "hapticFeedbackDesc": "Vibrate on interactions",
+  "shakeToOdometer": "Shake to update odometer",
+  "shakeToOdometerDesc": "Shake device to open odometer update on vehicle screen",
   "feedbackReminderToggle": "Rating reminder",
   "feedbackReminderToggleSubtitle": "Show a reminder to rate the app after saving services",
   "feedbackServicesInterval": "Services before prompt",

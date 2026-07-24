@@ -14,6 +14,7 @@ import 'package:mobile/presentation/pages/tips_page.dart';
 import 'package:mobile/presentation/widgets/section_header.dart';
 import 'package:mobile/presentation/providers/color_provider.dart';
 import 'package:mobile/presentation/providers/haptic_provider.dart';
+import 'package:mobile/presentation/providers/shake_to_odometer_provider.dart';
 import 'package:mobile/presentation/providers/locale_provider.dart';
 import 'package:mobile/presentation/providers/surface_tint_provider.dart';
 import 'package:mobile/presentation/providers/template_source_provider.dart';
@@ -35,6 +36,7 @@ class MorePage extends ConsumerWidget {
     final themeMode = ref.watch(themeModeProvider);
     final seedColorState = ref.watch(seedColorProvider);
     final hapticEnabled = ref.watch(hapticProvider);
+    final shakeToOdometerEnabled = ref.watch(shakeToOdometerProvider);
     final surfaceTint = ref.watch(surfaceTintProvider);
     final localeNotifier = ref.watch(localeProvider.notifier);
 
@@ -113,6 +115,14 @@ class MorePage extends ConsumerWidget {
                             value: hapticEnabled,
                             onChanged: (v) =>
                                 ref.read(hapticProvider.notifier).toggle(v),
+                          ),
+                          SwitchListTile(
+                            secondary: const Icon(Icons.screen_rotation),
+                            title: Text(l.shakeToOdometer),
+                            subtitle: Text(l.shakeToOdometerDesc),
+                            value: shakeToOdometerEnabled,
+                            onChanged: (v) =>
+                                ref.read(shakeToOdometerProvider.notifier).toggle(v),
                           ),
                           ListTile(
                             leading: const Icon(Icons.notifications_outlined),
@@ -316,6 +326,14 @@ class MorePage extends ConsumerWidget {
                   value: hapticEnabled,
                   onChanged: (v) =>
                       ref.read(hapticProvider.notifier).toggle(v),
+                ),
+                SwitchListTile(
+                  secondary: const Icon(Icons.screen_rotation),
+                  title: Text(l.shakeToOdometer),
+                  subtitle: Text(l.shakeToOdometerDesc),
+                  value: shakeToOdometerEnabled,
+                  onChanged: (v) =>
+                      ref.read(shakeToOdometerProvider.notifier).toggle(v),
                 ),
                 ListTile(
                   leading: const Icon(Icons.notifications_outlined),

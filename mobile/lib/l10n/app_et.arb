@@ -154,6 +154,8 @@
     "selectColor": "Vali värv",
     "hapticFeedback": "Haptiline tagasiside",
     "hapticFeedbackDesc": "Vibreeri interaktsioonide ajal",
+    "shakeToOdometer": "Raputa odomeetri värskendamiseks",
+    "shakeToOdometerDesc": "Raputa seadet, et avada odomeetri värskendus sõiduki ekraanil",
     "feedbackReminderToggle": "Hindamise meeldetuletus",
     "feedbackReminderToggleSubtitle": "Näita meeldetuletust rakenduse hindamiseks pärast teenuste salvestamist",
     "feedbackServicesInterval": "Teenused enne küsimist",

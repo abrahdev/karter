@@ -1221,6 +1221,18 @@ abstract class AppLocalizations {
   /// **'Vibrate on interactions'**
   String get hapticFeedbackDesc;
 
+  /// No description provided for @shakeToOdometer.
+  ///
+  /// In en, this message translates to:
+  /// **'Shake to update odometer'**
+  String get shakeToOdometer;
+
+  /// No description provided for @shakeToOdometerDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Shake device to open odometer update on vehicle screen'**
+  String get shakeToOdometerDesc;
+
   /// No description provided for @feedbackReminderToggle.
   ///
   /// In en, this message translates to:

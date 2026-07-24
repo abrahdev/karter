@@ -203,6 +203,8 @@
   "selectColor": "Elegí un color",
   "hapticFeedback": "Respuesta háptica",
   "hapticFeedbackDesc": "Vibrar en las interacciones",
+  "shakeToOdometer": "Agitar para actualizar odómetro",
+  "shakeToOdometerDesc": "Agitar el dispositivo para abrir la actualización del odómetro en la pantalla del vehículo",
   "feedbackReminderToggle": "Recordatorio de valoración",
   "feedbackReminderToggleSubtitle": "Mostrar un recordatorio para calificar después de guardar servicios",
   "feedbackServicesInterval": "Servicios antes del aviso",
