@@ -1221,6 +1221,84 @@ abstract class AppLocalizations {
   /// **'Vibrate on interactions'**
   String get hapticFeedbackDesc;
 
+  /// No description provided for @testNotification.
+  ///
+  /// In en, this message translates to:
+  /// **'Test notification'**
+  String get testNotification;
+
+  /// No description provided for @testNotificationDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Send a test notification to verify setup'**
+  String get testNotificationDesc;
+
+  /// No description provided for @testNotificationSent.
+  ///
+  /// In en, this message translates to:
+  /// **'Test notification sent'**
+  String get testNotificationSent;
+
+  /// No description provided for @notificationsPermissionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications disabled'**
+  String get notificationsPermissionTitle;
+
+  /// No description provided for @notificationsPermissionDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable notifications to receive odometer and maintenance reminders'**
+  String get notificationsPermissionDesc;
+
+  /// No description provided for @notificationsPermissionAllow.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow notifications'**
+  String get notificationsPermissionAllow;
+
+  /// No description provided for @notificationsPermissionDeniedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications blocked'**
+  String get notificationsPermissionDeniedTitle;
+
+  /// No description provided for @notificationsPermissionDeniedDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Notification permission was permanently denied. To enable it, go to Settings > Apps > Karter > Notifications and turn them on.'**
+  String get notificationsPermissionDeniedDesc;
+
+  /// No description provided for @notificationsPermissionDeniedStep1.
+  ///
+  /// In en, this message translates to:
+  /// **'1. Open device Settings'**
+  String get notificationsPermissionDeniedStep1;
+
+  /// No description provided for @notificationsPermissionDeniedStep2.
+  ///
+  /// In en, this message translates to:
+  /// **'2. Go to Apps > Karter'**
+  String get notificationsPermissionDeniedStep2;
+
+  /// No description provided for @notificationsPermissionDeniedStep3.
+  ///
+  /// In en, this message translates to:
+  /// **'3. Tap Notifications'**
+  String get notificationsPermissionDeniedStep3;
+
+  /// No description provided for @notificationsPermissionDeniedStep4.
+  ///
+  /// In en, this message translates to:
+  /// **'4. Enable \"Show notifications\"'**
+  String get notificationsPermissionDeniedStep4;
+
+  /// No description provided for @notificationsPermissionOpenSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Settings'**
+  String get notificationsPermissionOpenSettings;
+
   /// No description provided for @shakeToOdometer.
   ///
   /// In en, this message translates to:

@@ -609,6 +609,50 @@ class AppLocalizationsEt extends AppLocalizations {
   String get hapticFeedbackDesc => 'Vibreeri interaktsioonide ajal';
 
   @override
+  String get testNotification => 'Testteavitus';
+
+  @override
+  String get testNotificationDesc =>
+      'Saada testteavitus, et kontrollida seadistust';
+
+  @override
+  String get testNotificationSent => 'Testteavitus saadetud';
+
+  @override
+  String get notificationsPermissionTitle => 'Teavitused keelatud';
+
+  @override
+  String get notificationsPermissionDesc =>
+      'Lülitage teavitused sisse, et saada odomeetri ja hoolduse meeldetuletusi';
+
+  @override
+  String get notificationsPermissionAllow => 'Luba teavitused';
+
+  @override
+  String get notificationsPermissionDeniedTitle => 'Teavitused blokeeritud';
+
+  @override
+  String get notificationsPermissionDeniedDesc =>
+      'Teavitusluba on püsivalt keelatud. Selle lubamiseks minge Seaded > Rakendused > Karter > Teavitused ja lülitage need sisse.';
+
+  @override
+  String get notificationsPermissionDeniedStep1 => '1. Avage seadme Seaded';
+
+  @override
+  String get notificationsPermissionDeniedStep2 =>
+      '2. Minge Rakendused > Karter';
+
+  @override
+  String get notificationsPermissionDeniedStep3 => '3. Puudutage Teavitused';
+
+  @override
+  String get notificationsPermissionDeniedStep4 =>
+      '4. Lülitage sisse \"Näita teavitusi\"';
+
+  @override
+  String get notificationsPermissionOpenSettings => 'Ava seaded';
+
+  @override
   String get shakeToOdometer => 'Raputa odomeetri värskendamiseks';
 
   @override

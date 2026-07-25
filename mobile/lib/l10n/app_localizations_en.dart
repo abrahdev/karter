@@ -610,6 +610,48 @@ class AppLocalizationsEn extends AppLocalizations {
   String get hapticFeedbackDesc => 'Vibrate on interactions';
 
   @override
+  String get testNotification => 'Test notification';
+
+  @override
+  String get testNotificationDesc => 'Send a test notification to verify setup';
+
+  @override
+  String get testNotificationSent => 'Test notification sent';
+
+  @override
+  String get notificationsPermissionTitle => 'Notifications disabled';
+
+  @override
+  String get notificationsPermissionDesc =>
+      'Enable notifications to receive odometer and maintenance reminders';
+
+  @override
+  String get notificationsPermissionAllow => 'Allow notifications';
+
+  @override
+  String get notificationsPermissionDeniedTitle => 'Notifications blocked';
+
+  @override
+  String get notificationsPermissionDeniedDesc =>
+      'Notification permission was permanently denied. To enable it, go to Settings > Apps > Karter > Notifications and turn them on.';
+
+  @override
+  String get notificationsPermissionDeniedStep1 => '1. Open device Settings';
+
+  @override
+  String get notificationsPermissionDeniedStep2 => '2. Go to Apps > Karter';
+
+  @override
+  String get notificationsPermissionDeniedStep3 => '3. Tap Notifications';
+
+  @override
+  String get notificationsPermissionDeniedStep4 =>
+      '4. Enable \"Show notifications\"';
+
+  @override
+  String get notificationsPermissionOpenSettings => 'Open Settings';
+
+  @override
   String get shakeToOdometer => 'Shake to update odometer';
 
   @override

@@ -612,11 +612,56 @@ class AppLocalizationsEs extends AppLocalizations {
   String get hapticFeedbackDesc => 'Vibrar en las interacciones';
 
   @override
-  String get shakeToOdometer => 'Agitar para actualizar odómetro';
+  String get testNotification => 'Notificación de prueba';
+
+  @override
+  String get testNotificationDesc =>
+      'Enviar una notificación para verificar que funciona';
+
+  @override
+  String get testNotificationSent => 'Notificación de prueba enviada';
+
+  @override
+  String get notificationsPermissionTitle => 'Notificaciones desactivadas';
+
+  @override
+  String get notificationsPermissionDesc =>
+      'Activá las notificaciones para recibir recordatorios de odómetro y mantenimiento';
+
+  @override
+  String get notificationsPermissionAllow => 'Permitir notificaciones';
+
+  @override
+  String get notificationsPermissionDeniedTitle => 'Notificaciones bloqueadas';
+
+  @override
+  String get notificationsPermissionDeniedDesc =>
+      'El permiso de notificaciones fue denegado permanentemente. Para activarlo, andá a Ajustes > Aplicaciones > Karter > Notificaciones y encendélas.';
+
+  @override
+  String get notificationsPermissionDeniedStep1 =>
+      '1. Abrí Ajustes del dispositivo';
+
+  @override
+  String get notificationsPermissionDeniedStep2 =>
+      '2. Andá a Aplicaciones > Karter';
+
+  @override
+  String get notificationsPermissionDeniedStep3 => '3. Tocá Notificaciones';
+
+  @override
+  String get notificationsPermissionDeniedStep4 =>
+      '4. Activá \"Mostrar notificaciones\"';
+
+  @override
+  String get notificationsPermissionOpenSettings => 'Abrir ajustes';
+
+  @override
+  String get shakeToOdometer => 'Shake to update odometer';
 
   @override
   String get shakeToOdometerDesc =>
-      'Agitar el dispositivo para abrir la actualización del odómetro en la pantalla del vehículo';
+      'Shake device to open odometer update on vehicle screen';
 
   @override
   String get feedbackReminderToggle => 'Recordatorio de valoración';

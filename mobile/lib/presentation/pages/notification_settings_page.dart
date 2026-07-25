@@ -128,6 +128,24 @@ class _NotificationSettingsContentState
             style: theme.textTheme.titleSmall),
         const SizedBox(height: 12),
         _buildMaintenanceToggle(vehicle, theme, l),
+        const SizedBox(height: 24),
+        FilledButton.tonalIcon(
+          onPressed: () async {
+            final service = ref.read(notificationServiceProvider);
+            await service.showNotification(
+              id: 99999,
+              title: l.testNotification,
+              body: l.testNotificationDesc,
+            );
+            if (context.mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text(l.testNotificationSent)),
+              );
+            }
+          },
+          icon: const Icon(Icons.notifications_active_outlined),
+          label: Text(l.testNotification),
+        ),
       ],
     );
   }
