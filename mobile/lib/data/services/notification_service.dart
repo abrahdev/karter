@@ -24,9 +24,9 @@ class NotificationService {
     const androidSettings =
         AndroidInitializationSettings('@mipmap/ic_launcher');
     const iosSettings = DarwinInitializationSettings(
-      requestAlertPermission: false,
-      requestBadgePermission: false,
-      requestSoundPermission: false,
+      requestAlertPermission: true,
+      requestBadgePermission: true,
+      requestSoundPermission: true,
     );
     const settings = InitializationSettings(
       android: androidSettings,
@@ -35,6 +35,20 @@ class NotificationService {
 
     await _plugin.initialize(settings: settings);
     _initialized = true;
+  }
+
+  Future<bool?> requestNotificationPermission() async {
+    if (Platform.isLinux) return true;
+    final android = _plugin.resolvePlatformSpecificImplementation<
+        AndroidFlutterLocalNotificationsPlugin>();
+    return android?.requestNotificationsPermission();
+  }
+
+  Future<bool> areNotificationsEnabled() async {
+    if (Platform.isLinux) return true;
+    final android = _plugin.resolvePlatformSpecificImplementation<
+        AndroidFlutterLocalNotificationsPlugin>();
+    return await android?.areNotificationsEnabled() ?? false;
   }
 
   Future<void> showNotification({

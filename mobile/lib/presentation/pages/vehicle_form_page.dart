@@ -15,6 +15,7 @@ import 'package:mobile/domain/value_objects/vin.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
 import 'package:mobile/presentation/providers/template_source_provider.dart';
+import 'package:mobile/presentation/widgets/notification_permission_modal.dart';
 import 'package:mobile/presentation/widgets/section_header.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -512,7 +513,16 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
       _hasUnsavedChanges = false;
       ref.invalidate(vehicleListProvider);
 
-      if (mounted) context.pop();
+      if (mounted) {
+        context.pop();
+        if (!_isEditing) {
+          final service = ref.read(notificationServiceProvider);
+          final enabled = await service.areNotificationsEnabled();
+          if (mounted && !enabled) {
+            showNotificationPermissionModal(context);
+          }
+        }
+      }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(

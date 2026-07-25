@@ -39,6 +39,7 @@ import 'package:mobile/presentation/pages/tips_page.dart';
 import 'package:mobile/presentation/pages/privacy_policy_page.dart';
 import 'package:mobile/presentation/pages/changelog_page.dart';
 import 'package:mobile/presentation/widgets/notification_settings_modal.dart';
+import 'package:mobile/presentation/widgets/notification_permission_modal.dart';
 
 final _router = GoRouter(
   initialLocation: '/',
@@ -358,11 +359,30 @@ class _KarterAppState extends ConsumerState<KarterApp> {
   }
 }
 
-class _NotificationListPage extends ConsumerWidget {
+class _NotificationListPage extends ConsumerStatefulWidget {
   const _NotificationListPage();
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<_NotificationListPage> createState() =>
+      _NotificationListPageState();
+}
+
+class _NotificationListPageState extends ConsumerState<_NotificationListPage> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final notifier = ref.read(notificationServiceProvider);
+      notifier.areNotificationsEnabled().then((enabled) {
+        if (!enabled && mounted) {
+          showNotificationPermissionModal(context);
+        }
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final vehiclesAsync = ref.watch(vehicleListProvider);
     final l = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
