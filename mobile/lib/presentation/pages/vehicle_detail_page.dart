@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -9,6 +12,8 @@ import 'package:mobile/domain/entities/vehicle.dart';
 import 'package:mobile/domain/enums/distance_unit.dart';
 import 'package:mobile/domain/value_objects/odometer.dart';
 import 'package:mobile/l10n/app_localizations.dart';
+import 'package:mobile/presentation/providers/haptic_provider.dart';
+import 'package:mobile/presentation/providers/shake_to_odometer_provider.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
 import 'package:mobile/presentation/utils/maintenance_localizer.dart';
 import 'package:mobile/presentation/widgets/add_document_modal.dart';
@@ -16,6 +21,7 @@ import 'package:mobile/presentation/widgets/add_fuel_log_modal.dart';
 import 'package:mobile/presentation/widgets/add_maintenance_log_modal.dart';
 import 'package:mobile/presentation/widgets/odometer_dialog.dart';
 import 'package:mobile/presentation/widgets/section_header.dart';
+import 'package:sensors_plus/sensors_plus.dart';
 
 const _wideBreakpoint = 600.0;
 
@@ -30,10 +36,14 @@ class VehicleDetailPage extends ConsumerStatefulWidget {
 
 class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
   bool _fabOpen = false;
+  StreamSubscription<AccelerometerEvent>? _accelSub;
+  DateTime _lastShake = DateTime.fromMillisecondsSinceEpoch(0);
+  bool _shakeDebouncing = false;
 
   @override
   void initState() {
     super.initState();
+    _startShakeListener();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final action = ref.read(pendingNotificationActionProvider);
       if (action != null) {
@@ -45,6 +55,33 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
           } else if (parts[0] == 'maintenance') {
             _openMaintenanceFromNotification();
           }
+        }
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _accelSub?.cancel();
+    super.dispose();
+  }
+
+  void _startShakeListener() {
+    const threshold = 30.0;
+    _accelSub = accelerometerEventStream(samplingPeriod: const Duration(milliseconds: 200)).listen((event) {
+      final magnitude = sqrt(event.x * event.x + event.y * event.y + event.z * event.z);
+      if (magnitude > threshold && !_shakeDebouncing) {
+        final now = DateTime.now();
+        if (now.difference(_lastShake).inSeconds >= 2) {
+          _lastShake = now;
+          _shakeDebouncing = true;
+          if (mounted && ref.read(shakeToOdometerProvider)) {
+            ref.read(hapticProvider.notifier).vibrate();
+            _updateOdometer(context, widget.vehicleId, ref);
+          }
+          Future.delayed(const Duration(seconds: 2), () {
+            _shakeDebouncing = false;
+          });
         }
       }
     });

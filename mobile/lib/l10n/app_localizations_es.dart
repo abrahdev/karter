@@ -657,6 +657,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get notificationsPermissionOpenSettings => 'Abrir ajustes';
 
   @override
+  String get shakeToOdometer => 'Shake to update odometer';
+
+  @override
+  String get shakeToOdometerDesc =>
+      'Shake device to open odometer update on vehicle screen';
+
+  @override
   String get feedbackReminderToggle => 'Recordatorio de valoración';
 
   @override

@@ -167,6 +167,9 @@
     "notificationsPermissionDeniedStep3": "3. Puudutage Teavitused",
     "notificationsPermissionDeniedStep4": "4. Lülitage sisse \"Näita teavitusi\"",
     "notificationsPermissionOpenSettings": "Ava seaded",
+    "shakeToOdometer": "Raputa odomeetri värskendamiseks",
+    "shakeToOdometerDesc": "Raputa seadet, et avada odomeetri värskendus sõiduki ekraanil",
+
     "feedbackReminderToggle": "Hindamise meeldetuletus",
     "feedbackReminderToggleSubtitle": "Näita meeldetuletust rakenduse hindamiseks pärast teenuste salvestamist",
     "feedbackServicesInterval": "Teenused enne küsimist",
