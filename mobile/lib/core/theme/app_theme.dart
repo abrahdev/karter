@@ -122,6 +122,24 @@ class AppTheme {
       ),
       switchTheme: SwitchThemeData(
         trackOutlineWidth: WidgetStateProperty.resolveWith((_) => 0),
+        thumbColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
+            return effectiveScheme.primary;
+          }
+          return effectiveScheme.outline;
+        }),
+        trackColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
+            return effectiveScheme.primary.withValues(alpha: 0.38);
+          }
+          return effectiveScheme.surfaceContainerHigh;
+        }),
+      ),
+      segmentedButtonTheme: SegmentedButtonThemeData(
+        style: ButtonStyle(
+          animationDuration: dur,
+          visualDensity: VisualDensity.standard,
+        ),
       ),
     );
   }

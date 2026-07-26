@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile/core/rating_helper.dart';
 import 'package:mobile/core/theme/app_spacing.dart';
 import 'package:mobile/l10n/app_localizations.dart';
+import 'package:mobile/presentation/widgets/karter_switch_list_tile.dart';
 
 class FeedbackPage extends StatefulWidget {
   const FeedbackPage({super.key});
@@ -60,8 +61,8 @@ class _FeedbackPageState extends State<FeedbackPage> {
             onTap: () => openStorePage(),
           ),
           const Divider(),
-          SwitchListTile(
-            secondary: Icon(
+          KarterSwitchListTile(
+            leading: Icon(
               _enabled ? Icons.notifications_active : Icons.notifications_off,
             ),
             title: Text(l.feedbackReminderToggle),

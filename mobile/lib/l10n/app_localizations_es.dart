@@ -612,6 +612,25 @@ class AppLocalizationsEs extends AppLocalizations {
   String get hapticFeedbackDesc => 'Vibrar en las interacciones';
 
   @override
+  String get hapticModeOff => 'Desactivado';
+
+  @override
+  String get hapticModeOffDesc => 'Sin vibración en interacciones';
+
+  @override
+  String get hapticModeClear => 'Claro';
+
+  @override
+  String get hapticModeClearDesc => 'Un solo golpe nítido por acción';
+
+  @override
+  String get hapticModeRich => 'Avanzado';
+
+  @override
+  String get hapticModeRichDesc =>
+      'Vibraciones escalonadas con intensidad variable';
+
+  @override
   String get testNotification => 'Notificación de prueba';
 
   @override

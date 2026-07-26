@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter/services.dart';
+import 'package:mobile/presentation/providers/haptic_provider.dart';
+import 'package:mobile/presentation/widgets/karter_switch_list_tile.dart';
 import 'package:mobile/core/modal_helpers.dart';
 import 'package:mobile/domain/entities/maintenance_interval.dart';
 import 'package:mobile/l10n/app_localizations.dart';
@@ -228,7 +229,7 @@ class _AddIntervalModalState
       }
 
       ref.invalidate(maintenanceIntervalsProvider(widget.vehicleId));
-      HapticFeedback.mediumImpact();
+      ref.read(hapticProvider.notifier).success();
       if (mounted) Navigator.pop(context, 'saved');
     } catch (e) {
       if (mounted) {
@@ -273,7 +274,7 @@ class _AddIntervalModalState
       final repo = ref.read(maintenanceIntervalRepositoryProvider);
       await repo.delete(widget.editInterval!.id);
       ref.invalidate(maintenanceIntervalsProvider(widget.vehicleId));
-      HapticFeedback.mediumImpact();
+      ref.read(hapticProvider.notifier).delete();
       if (mounted) Navigator.pop(context, 'deleted');
     } catch (e) {
       if (mounted) {
@@ -350,7 +351,7 @@ class _AddIntervalModalState
                 },
               ),
               const SizedBox(height: 12),
-              SwitchListTile(
+              KarterSwitchListTile(
                 title: Text(l.timeMonths),
                 value: _hasMonths,
                 contentPadding: EdgeInsets.zero,

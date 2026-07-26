@@ -12,6 +12,7 @@ import 'package:mobile/domain/value_objects/odometer.dart';
 import 'package:mobile/domain/value_objects/volume.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
+import 'package:mobile/presentation/widgets/karter_switch_list_tile.dart';
 
 class FuelLogFormPage extends ConsumerStatefulWidget {
   final String vehicleId;
@@ -162,7 +163,7 @@ class _FuelLogFormPageState extends ConsumerState<FuelLogFormPage> {
                   const TextInputType.numberWithOptions(decimal: true),
             ),
             const SizedBox(height: 12),
-            SwitchListTile(
+            KarterSwitchListTile(
               title: Text(l.fullTank),
               value: _isFullTank,
               onChanged: (v) => setState(() => _isFullTank = v),

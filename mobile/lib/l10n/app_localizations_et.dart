@@ -609,6 +609,25 @@ class AppLocalizationsEt extends AppLocalizations {
   String get hapticFeedbackDesc => 'Vibreeri interaktsioonide ajal';
 
   @override
+  String get hapticModeOff => 'Väljas';
+
+  @override
+  String get hapticModeOffDesc => 'Vibreerimine välja lülitatud';
+
+  @override
+  String get hapticModeClear => 'Selge';
+
+  @override
+  String get hapticModeClearDesc => 'Üks terav vibratsioon toimingu kohta';
+
+  @override
+  String get hapticModeRich => 'Rikas';
+
+  @override
+  String get hapticModeRichDesc =>
+      'Kihtideks virnastatud vibratsioonid erineva tugevusega';
+
+  @override
   String get testNotification => 'Testteavitus';
 
   @override
