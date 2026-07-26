@@ -48,7 +48,7 @@ class MorePage extends ConsumerWidget {
       ThemeMode.system => l.themeSystem,
     };
 
-    final languageLabel = _languageLabel(localeNotifier, l);
+    final languageLabel = _languageLabel(localeNotifier, l, ref);
 
     final narrow = LayoutBuilder(
       builder: (context, constraints) {
@@ -534,9 +534,14 @@ class MorePage extends ConsumerWidget {
     return narrow;
   }
 
-  String _languageLabel(LocaleNotifier notifier, AppLocalizations l) {
+  String _languageLabel(LocaleNotifier notifier, AppLocalizations l, WidgetRef ref) {
     if (notifier.isSystem) return l.languageSystem;
-    return l.english;
+    final code = ref.read(localeProvider).languageCode;
+    return switch (code) {
+      'es' => l.spanish,
+      'et' => l.eesti,
+      _    => l.english,
+    };
   }
 
   Future<void> _openUrl(BuildContext context, String url) async {
