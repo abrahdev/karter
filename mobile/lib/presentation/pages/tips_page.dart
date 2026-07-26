@@ -1,107 +1,213 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mobile/core/services/in_app_purchase_service.dart';
 import 'package:mobile/core/theme/app_spacing.dart';
 import 'package:mobile/l10n/app_localizations.dart';
+import 'package:mobile/presentation/providers/haptic_provider.dart';
+import 'package:mobile/presentation/providers/iap_provider.dart';
 
-class TipsPage extends StatelessWidget {
+class TipsPage extends ConsumerWidget {
   const TipsPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
+    final iapState = ref.watch(iapProvider);
 
     return Scaffold(
       appBar: AppBar(title: Text(l.tipProgram)),
-      body: ListView(
-        padding: const EdgeInsets.all(16),
-        children: [
-          Card(
-            color: theme.colorScheme.errorContainer,
-            child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.pagePadding),
-              child: Row(
-                children: [
-                  Icon(Icons.construction, color: theme.colorScheme.onErrorContainer),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Text(
-                      l.tipProgramComingSoon,
-                      style: theme.textTheme.bodyMedium?.copyWith(
-                        color: theme.colorScheme.onErrorContainer,
+      body: iapState.loading
+          ? const Center(child: CircularProgressIndicator())
+          : ListView(
+              padding: const EdgeInsets.all(16),
+              children: [
+                if (iapState.error != null)
+                  Card(
+                    color: theme.colorScheme.errorContainer,
+                    child: Padding(
+                      padding: const EdgeInsets.all(AppSpacing.pagePadding),
+                      child: Row(
+                        children: [
+                          Icon(Icons.error_outline,
+                              color: theme.colorScheme.onErrorContainer),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Text(
+                              iapState.error!,
+                              style: theme.textTheme.bodyMedium?.copyWith(
+                                color: theme.colorScheme.onErrorContainer,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
+
+                if (ref.read(iapProvider.notifier).hasAnyBadge()) ...[
+                  Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(AppSpacing.pagePadding),
+                      child: Row(
+                        children: [
+                          CircleAvatar(
+                            backgroundColor: _badgeColor(
+                                ref.read(iapProvider.notifier).highestBadge(),
+                                theme),
+                            child: Icon(Icons.favorite,
+                                color: Colors.white, size: 20),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Text(
+                              l.supporterBadge,
+                              style: theme.textTheme.bodyMedium,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
                 ],
-              ),
+
+                Text(l.tipInfo, style: theme.textTheme.titleMedium),
+                const SizedBox(height: 4),
+                Text(
+                  l.tipInfoText,
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: theme.colorScheme.onSurfaceVariant,
+                  ),
+                ),
+
+                const SizedBox(height: 24),
+
+                Text(l.tipOneTime, style: theme.textTheme.titleMedium),
+                const SizedBox(height: 12),
+                _TipCard(
+                  tier: l.tipBronze,
+                  price: l.tipBronzePrice,
+                  sku: 'karter_bronze_one',
+                ),
+                _TipCard(
+                  tier: l.tipSilver,
+                  price: l.tipSilverPrice,
+                  sku: 'karter_silver_one',
+                ),
+                _TipCard(
+                  tier: l.tipGold,
+                  price: l.tipGoldPrice,
+                  sku: 'karter_gold_one',
+                ),
+
+                const SizedBox(height: 24),
+
+                Text(l.tipRecurring, style: theme.textTheme.titleMedium),
+                const SizedBox(height: 12),
+                _TipCard(
+                  tier: l.tipBronze,
+                  price: l.tipBronzeMonthly,
+                  sku: kSubscriptionId,
+                ),
+                _TipCard(
+                  tier: l.tipSilver,
+                  price: l.tipSilverMonthly,
+                  sku: kSubscriptionId,
+                ),
+                _TipCard(
+                  tier: l.tipGold,
+                  price: l.tipGoldMonthly,
+                  sku: kSubscriptionId,
+                ),
+
+                const SizedBox(height: 24),
+
+                SizedBox(
+                  width: double.infinity,
+                  child: OutlinedButton.icon(
+                    onPressed: iapState.loading
+                        ? null
+                        : () => ref.read(iapProvider.notifier).restore(),
+                    icon: const Icon(Icons.restore),
+                    label: Text(l.restorePurchases),
+                  ),
+                ),
+                const SizedBox(height: 8),
+              ],
             ),
-          ),
-
-          const SizedBox(height: 16),
-
-          Text(l.tipBadges, style: theme.textTheme.titleMedium),
-          const SizedBox(height: 4),
-          Text(l.tipBadgesNone, style: theme.textTheme.bodyMedium?.copyWith(
-            color: theme.colorScheme.onSurfaceVariant,
-          )),
-
-          const SizedBox(height: 24),
-
-          Text(l.tipInfo, style: theme.textTheme.titleMedium),
-          const SizedBox(height: 4),
-          Text(
-            l.tipInfoText,
-            style: theme.textTheme.bodyMedium?.copyWith(
-              color: theme.colorScheme.onSurfaceVariant,
-            ),
-          ),
-
-          const SizedBox(height: 24),
-
-          Text(l.tipOneTime, style: theme.textTheme.titleMedium),
-          const SizedBox(height: 12),
-          _TipCard(tier: l.tipBronze, price: l.tipBronzePrice, enabled: false),
-          _TipCard(tier: l.tipSilver, price: l.tipSilverPrice, enabled: false),
-          _TipCard(tier: l.tipGold, price: l.tipGoldPrice, enabled: false),
-
-          const SizedBox(height: 24),
-
-          Text(l.tipRecurring, style: theme.textTheme.titleMedium),
-          const SizedBox(height: 12),
-          _TipCard(tier: l.tipBronze, price: l.tipBronzeMonthly, enabled: false),
-          _TipCard(tier: l.tipSilver, price: l.tipSilverMonthly, enabled: false),
-          _TipCard(tier: l.tipGold, price: l.tipGoldMonthly, enabled: false),
-        ],
-      ),
     );
+  }
+
+  Color _badgeColor(String? badge, ThemeData theme) {
+    return switch (badge) {
+      'gold' => const Color(0xFFFFD700),
+      'silver' => const Color(0xFFC0C0C0),
+      'bronze' => const Color(0xFFCD7F32),
+      _ => theme.colorScheme.primary,
+    };
   }
 }
 
-class _TipCard extends StatelessWidget {
+class _TipCard extends ConsumerWidget {
   final String tier;
   final String price;
-  final bool enabled;
+  final String sku;
 
-  const _TipCard({required this.tier, required this.price, this.enabled = true});
+  const _TipCard({
+    required this.tier,
+    required this.price,
+    required this.sku,
+  });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
+    final iapState = ref.watch(iapProvider);
+    final isSubscription = sku == kSubscriptionId;
+    final purchased = isSubscription
+        ? iapState.purchased.contains(kSubscriptionId)
+        : iapState.purchased.contains(sku);
+    final buying = iapState.buying;
+    final product = iapState.products.where((p) => p.id == sku).toList();
+    final l = AppLocalizations.of(context)!;
 
     return Card(
       child: ListTile(
         leading: CircleAvatar(
-          backgroundColor: theme.colorScheme.surfaceContainerHighest,
-          child: Icon(Icons.favorite, color: theme.colorScheme.primary),
+          backgroundColor: purchased
+              ? theme.colorScheme.primaryContainer
+              : theme.colorScheme.surfaceContainerHighest,
+          child: purchased
+              ? Icon(Icons.check, color: theme.colorScheme.primary)
+              : Icon(Icons.favorite, color: theme.colorScheme.primary),
         ),
         title: Text(tier),
-        subtitle: Text(price),
-        trailing: enabled ? FilledButton.tonal(
-          onPressed: () {},
-          child: const Text('Tip'),
-        ) : TextButton(
-          onPressed: null,
-          child: Text(tier),
+        subtitle: Text(
+          purchased
+              ? l.tipPurchased
+              : product.isNotEmpty ? product.first.price : price,
         ),
+        trailing: purchased
+            ? null
+            : FilledButton.tonal(
+                onPressed: buying
+                    ? null
+                    : () async {
+                        ref.read(hapticProvider.notifier).mediumTap();
+                        final notifier = ref.read(iapProvider.notifier);
+                        if (product.isNotEmpty) {
+                          await notifier.buy(product.first);
+                        }
+                      },
+                child: buying
+                    ? const SizedBox(
+                        width: 16,
+                        height: 16,
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      )
+                    : Text(l.tipSupport),
+              ),
       ),
     );
   }

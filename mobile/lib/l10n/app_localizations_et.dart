@@ -89,7 +89,8 @@ class AppLocalizationsEt extends AppLocalizations {
   String get registerService => 'Registreeri teenus';
 
   @override
-  String get noDescriptionAvailable => 'Kirjeldust pole saadaval. Mine hooldusseadistustesse, et seda lisada.';
+  String get noDescriptionAvailable =>
+      'Kirjeldust pole saadaval. Mine hooldusseadistustesse, et seda lisada.';
 
   @override
   String get close => 'Sulge';
@@ -157,7 +158,8 @@ class AppLocalizationsEt extends AppLocalizations {
   String get deleteVehicle => 'Kustuta sõiduk';
 
   @override
-  String get deleteVehicleConfirm => 'Seda tegevust ei saa tagasi keerata. Kõik kütuselogid, hoolduste andmed ja seadistatud välbad kustutatakse.';
+  String get deleteVehicleConfirm =>
+      'Seda tegevust ei saa tagasi keerata. Kõik kütuselogid, hoolduste andmed ja seadistatud välbad kustutatakse.';
 
   @override
   String get cancel => 'Katkesta';
@@ -203,7 +205,12 @@ class AppLocalizationsEt extends AppLocalizations {
   String get importData => 'Impordi andmed';
 
   @override
-  String importPreview(Object documents, Object fuelLogs, Object maintenanceLogs, Object vehicles) {
+  String importPreview(
+    Object documents,
+    Object fuelLogs,
+    Object maintenanceLogs,
+    Object vehicles,
+  ) {
     return 'Leiti:\n• $vehicles vehicle(s)\n• $fuelLogs fuel log(s)\n• $maintenanceLogs maintenance log(s)\n• $documents document(s)\n\nImportida? Olemasolevad andmed, millel on sama ID, kirjutatakse üle.';
   }
 
@@ -227,7 +234,8 @@ class AppLocalizationsEt extends AppLocalizations {
   String get maintenanceSettingsTitle => 'Hooldusintervallid';
 
   @override
-  String get maintenanceSettingsInstruction => 'Lülitage funktsioonid sisse või välja vastavalt oma sõiduki vajadustele. Kohandatud intervallid on võimalik kustutada.';
+  String get maintenanceSettingsInstruction =>
+      'Lülitage funktsioonid sisse või välja vastavalt oma sõiduki vajadustele. Kohandatud intervallid on võimalik kustutada.';
 
   @override
   String get km => 'km';
@@ -266,7 +274,8 @@ class AppLocalizationsEt extends AppLocalizations {
   String get deleteInterval => 'Kustuta';
 
   @override
-  String get noDescriptionAvailableSettings => 'Kirjeldust ei leidu. Lisamiseks klõpsa „Muuda“.';
+  String get noDescriptionAvailableSettings =>
+      'Kirjeldust ei leidu. Lisamiseks klõpsa „Muuda“.';
 
   @override
   String formattedKmK(Object km) {
@@ -336,7 +345,8 @@ class AppLocalizationsEt extends AppLocalizations {
   String get deleteService => 'Kustuta teenus';
 
   @override
-  String get deleteServiceConfirm => 'Kas sa oled kindel, et soovid selle teenuse kustutada?';
+  String get deleteServiceConfirm =>
+      'Kas sa oled kindel, et soovid selle teenuse kustutada?';
 
   @override
   String get maintenanceListTitle => 'Hooldus';
@@ -495,7 +505,8 @@ class AppLocalizationsEt extends AppLocalizations {
   String get moreAbout => 'About Karter';
 
   @override
-  String get moreDescription => 'Karter is a local-first, open source vehicle maintenance app that respects your privacy.';
+  String get moreDescription =>
+      'Karter is a local-first, open source vehicle maintenance app that respects your privacy.';
 
   @override
   String get moreExport => 'Ekspordi / Impordi andmeid';
@@ -534,7 +545,8 @@ class AppLocalizationsEt extends AppLocalizations {
   String get moreFeedback => 'Hinda rakendust';
 
   @override
-  String get moreFeedbackSubtitle => 'Hinda rakendust ja seadista meeldetuletusi';
+  String get moreFeedbackSubtitle =>
+      'Hinda rakendust ja seadista meeldetuletusi';
 
   @override
   String get feedbackTitle => 'Tagasiside';
@@ -618,13 +630,15 @@ class AppLocalizationsEt extends AppLocalizations {
   String get hapticModeRich => 'Rikas';
 
   @override
-  String get hapticModeRichDesc => 'Kihtideks virnastatud vibratsioonid erineva tugevusega';
+  String get hapticModeRichDesc =>
+      'Kihtideks virnastatud vibratsioonid erineva tugevusega';
 
   @override
   String get testNotification => 'Testteavitus';
 
   @override
-  String get testNotificationDesc => 'Saada testteavitus, et kontrollida seadistust';
+  String get testNotificationDesc =>
+      'Saada testteavitus, et kontrollida seadistust';
 
   @override
   String get testNotificationSent => 'Testteavitus saadetud';
@@ -633,7 +647,8 @@ class AppLocalizationsEt extends AppLocalizations {
   String get notificationsPermissionTitle => 'Teavitused keelatud';
 
   @override
-  String get notificationsPermissionDesc => 'Lülitage teavitused sisse, et saada odomeetri ja hoolduse meeldetuletusi';
+  String get notificationsPermissionDesc =>
+      'Lülitage teavitused sisse, et saada odomeetri ja hoolduse meeldetuletusi';
 
   @override
   String get notificationsPermissionAllow => 'Luba teavitused';
@@ -642,19 +657,22 @@ class AppLocalizationsEt extends AppLocalizations {
   String get notificationsPermissionDeniedTitle => 'Teavitused blokeeritud';
 
   @override
-  String get notificationsPermissionDeniedDesc => 'Teavitusluba on püsivalt keelatud. Selle lubamiseks minge Seaded > Rakendused > Karter > Teavitused ja lülitage need sisse.';
+  String get notificationsPermissionDeniedDesc =>
+      'Teavitusluba on püsivalt keelatud. Selle lubamiseks minge Seaded > Rakendused > Karter > Teavitused ja lülitage need sisse.';
 
   @override
   String get notificationsPermissionDeniedStep1 => '1. Avage seadme Seaded';
 
   @override
-  String get notificationsPermissionDeniedStep2 => '2. Minge Rakendused > Karter';
+  String get notificationsPermissionDeniedStep2 =>
+      '2. Minge Rakendused > Karter';
 
   @override
   String get notificationsPermissionDeniedStep3 => '3. Puudutage Teavitused';
 
   @override
-  String get notificationsPermissionDeniedStep4 => '4. Lülitage sisse \"Näita teavitusi\"';
+  String get notificationsPermissionDeniedStep4 =>
+      '4. Lülitage sisse \"Näita teavitusi\"';
 
   @override
   String get notificationsPermissionOpenSettings => 'Ava seaded';
@@ -663,13 +681,15 @@ class AppLocalizationsEt extends AppLocalizations {
   String get shakeToOdometer => 'Raputa odomeetri värskendamiseks';
 
   @override
-  String get shakeToOdometerDesc => 'Raputa seadet, et avada odomeetri värskendus sõiduki ekraanil';
+  String get shakeToOdometerDesc =>
+      'Raputa seadet, et avada odomeetri värskendus sõiduki ekraanil';
 
   @override
   String get feedbackReminderToggle => 'Hindamise meeldetuletus';
 
   @override
-  String get feedbackReminderToggleSubtitle => 'Näita meeldetuletust rakenduse hindamiseks pärast teenuste salvestamist';
+  String get feedbackReminderToggleSubtitle =>
+      'Näita meeldetuletust rakenduse hindamiseks pärast teenuste salvestamist';
 
   @override
   String get feedbackServicesInterval => 'Teenused enne küsimist';
@@ -694,7 +714,8 @@ class AppLocalizationsEt extends AppLocalizations {
   String get feedbackRepeatDaysSuffix => 'päeva';
 
   @override
-  String get ratePromptMessage => 'Karter meeldib? Arvustus aitab teistel rakendust leida!';
+  String get ratePromptMessage =>
+      'Karter meeldib? Arvustus aitab teistel rakendust leida!';
 
   @override
   String get rate => 'Hinda';
@@ -708,7 +729,8 @@ class AppLocalizationsEt extends AppLocalizations {
   String get tipProgram => 'Tee programm';
 
   @override
-  String get tipProgramComingSoon => 'See funktsioon arenduses ja saab peagi kättesaadavaks.';
+  String get tipProgramComingSoon =>
+      'See funktsioon arenduses ja saab peagi kättesaadavaks.';
 
   @override
   String get tipBadges => 'Märgid';
@@ -720,7 +742,8 @@ class AppLocalizationsEt extends AppLocalizations {
   String get tipInfo => 'Teave';
 
   @override
-  String get tipInfoText => 'Tee programm on viis, kuidas kasutajad saavad näidata toetust ja tänu kiire toe, pidevate täienduste ja järjepidevate värskenduste eest, mida Karter on pakkunud.';
+  String get tipInfoText =>
+      'Tee programm on viis, kuidas kasutajad saavad näidata toetust ja tänu kiire toe, pidevate täienduste ja järjepidevate värskenduste eest, mida Karter on pakkunud.';
 
   @override
   String get tipOneTime => 'Ühekordne tee';
@@ -837,7 +860,8 @@ class AppLocalizationsEt extends AppLocalizations {
   String get notificationSettingsTitle => 'Notification settings';
 
   @override
-  String get notificationSettingsSubtitle => 'Configure reminders for this vehicle';
+  String get notificationSettingsSubtitle =>
+      'Configure reminders for this vehicle';
 
   @override
   String get notificationOdometerSection => 'Odometer reminder';
@@ -860,7 +884,8 @@ class AppLocalizationsEt extends AppLocalizations {
   String get notificationMaintenanceToggle => 'Maintenance reminders';
 
   @override
-  String get notificationMaintenanceToggleSubtitle => 'Receive daily reminders about pending maintenance';
+  String get notificationMaintenanceToggleSubtitle =>
+      'Receive daily reminders about pending maintenance';
 
   @override
   String notificationSnoozedBanner(Object days) {
@@ -871,7 +896,8 @@ class AppLocalizationsEt extends AppLocalizations {
   String get notificationSnoozeCancel => 'Cancel snooze';
 
   @override
-  String get notificationNoVehicles => 'Add a vehicle to configure notifications';
+  String get notificationNoVehicles =>
+      'Add a vehicle to configure notifications';
 
   @override
   String notificationVehicleSubtitle(Object freq, Object maint) {
@@ -924,7 +950,8 @@ class AppLocalizationsEt extends AppLocalizations {
   String get unsavedChanges => 'Unsaved changes';
 
   @override
-  String get discardChangesConfirm => 'You have unsaved changes. Are you sure you want to leave?';
+  String get discardChangesConfirm =>
+      'You have unsaved changes. Are you sure you want to leave?';
 
   @override
   String get discard => 'Discard';
@@ -933,7 +960,8 @@ class AppLocalizationsEt extends AppLocalizations {
   String get moreTemplateSource => 'Template source';
 
   @override
-  String get moreTemplateSourceSubtitle => 'Fetch templates from GitHub or use local assets';
+  String get moreTemplateSourceSubtitle =>
+      'Fetch templates from GitHub or use local assets';
 
   @override
   String get moreTemplateSourceOffline => 'Local (offline)';
@@ -948,7 +976,8 @@ class AppLocalizationsEt extends AppLocalizations {
   String get moreTemplateSourceReset => 'Reset to default';
 
   @override
-  String get moreTemplateSourceUrlHint => 'https://raw.githubusercontent.com/...';
+  String get moreTemplateSourceUrlHint =>
+      'https://raw.githubusercontent.com/...';
 
   @override
   String get moreTemplateSourceEditUrl => 'Edit URL';
@@ -975,23 +1004,39 @@ class AppLocalizationsEt extends AppLocalizations {
   String get onboardingWelcomeTitle => 'Tere tulemast Karterisse';
 
   @override
-  String get onboardingWelcomeDesc => 'Privaatsust esikohal avatud lähtekoodiga sõiduki hoolduse jälgija. 100% võrguta — ilma kontodeta ja jälgimiseta.';
+  String get onboardingWelcomeDesc =>
+      'Privaatsust esikohal avatud lähtekoodiga sõiduki hoolduse jälgija. 100% võrguta — ilma kontodeta ja jälgimiseta.';
 
   @override
   String get onboardingVehicleTitle => 'Lisa oma sõiduk';
 
   @override
-  String get onboardingVehicleDesc => 'Registreeri oma auto, motorroller või elektriauto. Vali mall ja Karter täidab hooldusvabad automaatselt.';
+  String get onboardingVehicleDesc =>
+      'Registreeri oma auto, motorroller või elektriauto. Vali mall ja Karter täidab hooldusvabad automaatselt.';
 
   @override
   String get onboardingTrackTitle => 'Jälgi kütust ja hooldust';
 
   @override
-  String get onboardingTrackDesc => 'Logi tankimised automaatse kalkulatsiooniga. Jälgi remondi, varuosade ja kulude ajalugu.';
+  String get onboardingTrackDesc =>
+      'Logi tankimised automaatse kalkulatsiooniga. Jälgi remondi, varuosade ja kulude ajalugu.';
 
   @override
   String get onboardingRemindersTitle => 'Olge hooldusega kursis';
 
   @override
-  String get onboardingRemindersDesc => 'Saa teavitusi õlivahetuse, piduriklotside ja kõigi hooldusvälpade kohta — distantsi või aja järgi.';
+  String get onboardingRemindersDesc =>
+      'Saa teavitusi õlivahetuse, piduriklotside ja kõigi hooldusvälpade kohta — distantsi või aja järgi.';
+
+  @override
+  String get supporterBadge => 'Oled Karteri toetaja!';
+
+  @override
+  String get restorePurchases => 'Taasta ostud';
+
+  @override
+  String get tipPurchased => 'Aitäh!';
+
+  @override
+  String get tipSupport => 'Toeta';
 }
