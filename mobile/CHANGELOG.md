@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2026.07.12+16] - 2026-07-26
+
+### Added
+
+- In-app purchases for tip program (Google Play Billing)
+- 6 purchase tiers: Bronze/Silver/Gold × one-time + monthly subscription
+- Supporter badge for purchasers
+- Restore purchases option
+- Multi-file document attachments
+- Full-screen photo viewer with share
+- Document files open with system viewer on tap
+
+### Fixed
+
+- CarouselView tap now opens full-screen photo viewer
+- Spanish translations: placa → matrícula, voseo → tuteo throughout
+
 ## [2026.07.11+15] - 2026-07-26
 
 ### Added
