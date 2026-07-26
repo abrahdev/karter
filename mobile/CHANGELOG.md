@@ -7,6 +7,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2026.07.11+15] - 2026-07-26
+
+### Added
+
+- Full haptic feedback system with 3 modes (Off/Clear/Rich) (#41)
+- Haptic mode selector with demo vibration on select
+- Escalating haptic methods: lightTap, mediumTap, heavyTap, success, warning, delete
+- Base widgets: KarterSwitchListTile and KarterSegmentedButton with auto-haptic
+- Odometer dialog: hold-to-repeat with acceleration, symmetric layout
+- Shake-to-odometer with disable toggle (#37)
+- Notification permission modal with official flutter_local_notifications API (#40)
+- Slider haptic feedback on onChangeEnd
+
+### Fixed
+
+- Language label in More page always showing "English" regardless of selected locale
+
+### Changed
+
+- Migrated all toggles and segmented buttons to new base widgets
+- Removed permission_handler dependency
+
 ## [2026.07.10+14] - 2026-07-21
 
 ### Added
@@ -107,7 +129,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial changelog tracking
 
-[Unreleased]: https://github.com/abrahdev/karter/compare/v2026.07.9...HEAD
+[Unreleased]: https://github.com/abrahdev/karter/compare/v2026.07.11...HEAD
+[2026.07.11+15]: https://github.com/abrahdev/karter/compare/v2026.07.10...v2026.07.11
 [2026.07.9+13]: https://github.com/abrahdev/karter/compare/v2026.07.8-alpha...v2026.07.9
 [2026.07.8+12]: https://github.com/abrahdev/karter/compare/v2026.07.7-alpha...v2026.07.8-alpha
 [2026.07.7+11]: https://github.com/abrahdev/karter/compare/v2026.07.4+6...v2026.07.7-alpha
