@@ -11,7 +11,10 @@ import 'package:mobile/domain/enums/document_type.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:uuid/uuid.dart';
+import 'package:mobile/presentation/widgets/full_screen_photo_viewer.dart';
 
 Future<void> showAddDocumentModal(
   BuildContext context, {
@@ -103,13 +106,14 @@ class _AddDocumentModal extends ConsumerStatefulWidget {
 class _AddDocumentModalState extends ConsumerState<_AddDocumentModal> {
   final _picker = ImagePicker();
   DocumentType _selectedType = DocumentType.fine;
-  String? _selectedFilePath;
-  String? _selectedFileName;
+  final List<String> _selectedFilePaths = [];
+  final List<String> _selectedFileNames = [];
   final _nameController = TextEditingController();
   final _notesController = TextEditingController();
   DateTime? _expiryDate;
   bool _saving = false;
   String? _editingId;
+  String? _editingFilePath;
 
   @override
   void initState() {
@@ -118,11 +122,17 @@ class _AddDocumentModalState extends ConsumerState<_AddDocumentModal> {
     if (doc != null) {
       _editingId = doc.id;
       _selectedType = doc.type;
-      _selectedFilePath = doc.filePath;
-      _selectedFileName = doc.fileName;
+      _editingFilePath = doc.filePath;
       _nameController.text = doc.name;
       _notesController.text = doc.notes ?? '';
       _expiryDate = doc.expiryDate;
+      if (doc.filePaths.isNotEmpty) {
+        _selectedFilePaths.addAll(doc.filePaths);
+        _selectedFileNames.addAll(doc.filePaths.map((p) => p.split('/').last));
+      } else {
+        _selectedFilePaths.add(doc.filePath);
+        _selectedFileNames.add(doc.fileName);
+      }
     }
   }
 
@@ -175,20 +185,22 @@ class _AddDocumentModalState extends ConsumerState<_AddDocumentModal> {
     final file = await _picker.pickImage(source: ImageSource.camera);
     if (file != null && mounted) {
       setState(() {
-        _selectedFilePath = file.path;
-        _selectedFileName = file.name;
+        _selectedFilePaths.add(file.path);
+        _selectedFileNames.add(file.name);
         if (_nameController.text.isEmpty) _nameController.text = file.name;
       });
     }
   }
 
   Future<void> _pickFromGallery() async {
-    final file = await _picker.pickImage(source: ImageSource.gallery);
-    if (file != null && mounted) {
+    final files = await _picker.pickMultiImage();
+    if (files.isNotEmpty && mounted) {
       setState(() {
-        _selectedFilePath = file.path;
-        _selectedFileName = file.name;
-        if (_nameController.text.isEmpty) _nameController.text = file.name;
+        for (final f in files) {
+          _selectedFilePaths.add(f.path);
+          _selectedFileNames.add(f.name);
+        }
+        if (_nameController.text.isEmpty) _nameController.text = files.first.name;
       });
     }
   }
@@ -209,8 +221,12 @@ class _AddDocumentModalState extends ConsumerState<_AddDocumentModal> {
     );
     if (result != null && result.files.isNotEmpty && mounted) {
       setState(() {
-        _selectedFilePath = result.files.first.path;
-        _selectedFileName = result.files.first.name;
+        for (final f in result.files) {
+          if (f.path != null) {
+            _selectedFilePaths.add(f.path!);
+            _selectedFileNames.add(f.name);
+          }
+        }
         if (_nameController.text.isEmpty) _nameController.text = result.files.first.name;
       });
     }
@@ -230,7 +246,7 @@ class _AddDocumentModalState extends ConsumerState<_AddDocumentModal> {
 
   Future<void> _save() async {
     final l = AppLocalizations.of(context)!;
-    if (_selectedFilePath == null) {
+    if (_selectedFilePaths.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(l.pleaseSelectFile)),
       );
@@ -243,26 +259,31 @@ class _AddDocumentModalState extends ConsumerState<_AddDocumentModal> {
       final repo = ref.read(vehicleDocumentRepositoryProvider);
       final id = _editingId ?? const Uuid().v4();
 
-      String destPath;
+      final List<String> savedPaths = [];
       String? mimeType;
-      double? fileSize;
+      double totalFileSize = 0;
+      String primaryFileName = _selectedFileNames.first;
 
-      if (_editingId != null &&
-          _selectedFilePath == widget.editDocument!.filePath) {
-        destPath = widget.editDocument!.filePath;
+      if (_editingId != null && _selectedFilePaths.length == 1 &&
+          _selectedFilePaths.first == _editingFilePath) {
+        savedPaths.add(widget.editDocument!.filePath);
         mimeType = widget.editDocument!.mimeType;
-        fileSize = widget.editDocument!.fileSize;
+        totalFileSize = widget.editDocument!.fileSize ?? 0;
+        primaryFileName = widget.editDocument!.fileName;
       } else {
-        final ext = _selectedFileName!.split('.').last;
         final dir = await getApplicationDocumentsDirectory();
         final docDir =
             Directory('${dir.path}/documents/${widget.vehicleId}');
         await docDir.create(recursive: true);
-        destPath = '${docDir.path}/$id.$ext';
-        await File(_selectedFilePath!).copy(destPath);
-        final file = File(_selectedFilePath!);
-        fileSize = (await file.length()).toDouble();
-        mimeType = ext;
+        for (final src in _selectedFilePaths) {
+          final ext = src.split('.').last;
+          final dest = '${docDir.path}/${const Uuid().v4()}.$ext';
+          await File(src).copy(dest);
+          savedPaths.add(dest);
+          final f = File(src);
+          totalFileSize += await f.length();
+          mimeType ??= ext;
+        }
       }
 
       await repo.save(VehicleDocument(
@@ -270,17 +291,18 @@ class _AddDocumentModalState extends ConsumerState<_AddDocumentModal> {
         vehicleId: widget.vehicleId,
         type: _selectedType,
         name: _nameController.text.trim().isEmpty
-            ? _selectedFileName!
+            ? primaryFileName
             : _nameController.text.trim(),
-        fileName: _selectedFileName!,
-        filePath: destPath,
+        fileName: primaryFileName,
+        filePath: savedPaths.first,
         mimeType: mimeType,
-        fileSize: fileSize,
+        fileSize: totalFileSize,
         notes: _notesController.text.isNotEmpty
             ? _notesController.text
             : null,
         expiryDate: _expiryDate,
         createdAt: widget.editDocument?.createdAt ?? DateTime.now(),
+        filePaths: savedPaths,
       ));
 
       ref.read(hapticProvider.notifier).success();
@@ -398,7 +420,7 @@ class _AddDocumentModalState extends ConsumerState<_AddDocumentModal> {
               controller: _nameController,
               decoration: InputDecoration(
                 labelText: 'Title',
-                hintText: _selectedFileName,
+                hintText: _selectedFileNames.isNotEmpty ? _selectedFileNames.first : null,
                 border: const OutlineInputBorder(),
               ),
             ),
@@ -427,21 +449,24 @@ class _AddDocumentModalState extends ConsumerState<_AddDocumentModal> {
               onPressed: _showSourcePicker,
               icon: const Icon(Icons.attach_file),
               label: Text(
-                _selectedFileName != null ? 'Change file' : l.selectFile,
+                _selectedFilePaths.isNotEmpty ? 'Add more files' : l.selectFile,
               ),
             ),
-            if (_selectedFilePath != null) ...[
+            if (_selectedFilePaths.isNotEmpty) ...[
               const SizedBox(height: 8),
-              Stack(
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+              SizedBox(
+                height: 80,
+                child: ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: _selectedFilePaths.length,
+                  separatorBuilder: (_, _) => const SizedBox(width: 8),
+                  itemBuilder: (ctx, i) => Stack(
                     children: [
                       ClipRRect(
                         borderRadius: BorderRadius.circular(8),
-                        child: _isImageFile(_selectedFilePath!)
+                        child: _isImageFile(_selectedFilePaths[i])
                             ? Image.file(
-                                File(_selectedFilePath!),
+                                File(_selectedFilePaths[i]),
                                 width: 80,
                                 height: 80,
                                 fit: BoxFit.cover,
@@ -460,57 +485,31 @@ class _AddDocumentModalState extends ConsumerState<_AddDocumentModal> {
                                     size: 40),
                               ),
                       ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment:
-                              CrossAxisAlignment.start,
-                          children: [
-                            Text(_selectedFileName!,
-                                style: theme.textTheme.bodyMedium),
-                            const SizedBox(height: 4),
-                            FutureBuilder<int>(
-                              future: File(_selectedFilePath!)
-                                  .length(),
-                              builder: (ctx, snap) {
-                                final size = snap.data ?? 0;
-                                return Text(
-                                  '${(size / 1024).toStringAsFixed(1)} KB',
-                                  style: theme.textTheme.bodySmall
-                                      ?.copyWith(
-                                          color: theme
-                                              .colorScheme.outline),
-                                );
-                              },
+                      Positioned(
+                        top: 0,
+                        right: 0,
+                        child: GestureDetector(
+                          onTap: () => setState(() {
+                            _selectedFilePaths.removeAt(i);
+                            _selectedFileNames.removeAt(i);
+                          }),
+                          child: Container(
+                            decoration: const BoxDecoration(
+                              color: Colors.black54,
+                              shape: BoxShape.circle,
                             ),
-                          ],
+                            padding: const EdgeInsets.all(2),
+                            child: const Icon(
+                              Icons.close,
+                              size: 16,
+                              color: Colors.white,
+                            ),
+                          ),
                         ),
                       ),
                     ],
                   ),
-                  Positioned(
-                    top: 0,
-                    left: 60,
-                    child: GestureDetector(
-                      onTap: () => setState(() {
-                        _selectedFilePath = null;
-                        _selectedFileName = null;
-                      }),
-                      child: Container(
-                        decoration: const BoxDecoration(
-                          color: Colors.black54,
-                          shape: BoxShape.circle,
-                        ),
-                        padding: const EdgeInsets.all(2),
-                        child: const Icon(
-                          Icons.close,
-                          size: 16,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+                ),
               ),
             ],
             const SizedBox(height: 20),
@@ -601,7 +600,10 @@ class _DocumentPreview extends ConsumerWidget {
     final l = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     final doc = document;
-    final isImage = doc.filePath.isNotEmpty && _isImageFile(doc.filePath);
+    final allPaths = doc.filePaths.isNotEmpty ? doc.filePaths : [doc.filePath];
+    final imagePaths = allPaths.where(_isImageFile).toList();
+    final nonImagePaths = allPaths.where((p) => !_isImageFile(p)).toList();
+    final hasImages = imagePaths.isNotEmpty;
     final width = MediaQuery.of(context).size.width - 40;
 
     return SingleChildScrollView(
@@ -621,16 +623,117 @@ class _DocumentPreview extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: 16),
-          if (isImage)
-            ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: Image.file(
-                File(doc.filePath),
-                height: 250,
-                width: width,
-                fit: BoxFit.cover,
+          if (hasImages && imagePaths.length == 1)
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context, rootNavigator: true).push(
+                  MaterialPageRoute(
+                    fullscreenDialog: true,
+                    builder: (_) => FullScreenPhotoViewer(
+                      paths: imagePaths,
+                      initialIndex: 0,
+                      heroTag: 'document_photo_${doc.id}_0',
+                    ),
+                  ),
+                );
+              },
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: Hero(
+                  tag: 'document_photo_${doc.id}_0',
+                  child: Image.file(
+                    File(imagePaths.first),
+                    height: 250,
+                    width: width,
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
             )
+          else if (hasImages && imagePaths.length > 1)
+            SizedBox(
+              height: 250,
+              child: CarouselView(
+                shrinkExtent: 80,
+                itemExtent: 200,
+                padding: EdgeInsets.zero,
+                onTap: (index) {
+                  Navigator.of(context, rootNavigator: true).push(
+                    MaterialPageRoute(
+                      fullscreenDialog: true,
+                      builder: (_) => FullScreenPhotoViewer(
+                        paths: imagePaths,
+                        initialIndex: index,
+                        heroTag: 'document_photo_${doc.id}_$index',
+                      ),
+                    ),
+                  );
+                },
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                children: imagePaths.asMap().entries.map((entry) => Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 6),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: Hero(
+                      tag: 'document_photo_${doc.id}_${entry.key}',
+                      child: Image.file(
+                        File(entry.value),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                )).toList(),
+              ),
+            )
+          else if (nonImagePaths.isNotEmpty)
+            for (final path in nonImagePaths)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: Material(
+                  color: theme.colorScheme.surfaceContainerHighest,
+                  borderRadius: BorderRadius.circular(12),
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(12),
+                    onTap: () async {
+                      final uri = Uri.file(path);
+                      if (await canLaunchUrl(uri)) {
+                        await launchUrl(uri, mode: LaunchMode.externalApplication);
+                      }
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Row(
+                        children: [
+                          Icon(_iconForPath(path),
+                              size: 40,
+                              color: theme.colorScheme.primary),
+                          const SizedBox(width: 16),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(path.split('/').last,
+                                    style: theme.textTheme.bodyMedium),
+                                const SizedBox(height: 2),
+                                Text(
+                                  path.split('.').last.toUpperCase(),
+                                  style: theme.textTheme.bodySmall?.copyWith(
+                                    color: theme.colorScheme.outline,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Icon(Icons.open_in_new,
+                              size: 20, color: theme.colorScheme.outline),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              )
           else
             Container(
               height: 200,
@@ -643,6 +746,53 @@ class _DocumentPreview extends ConsumerWidget {
                     size: 64, color: theme.colorScheme.outline),
               ),
             ),
+          if (hasImages && imagePaths.length > 1) ...[
+            const SizedBox(height: 8),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(
+                imagePaths.length,
+                (i) => Container(
+                  width: 6,
+                  height: 6,
+                  margin: const EdgeInsets.symmetric(horizontal: 3),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: theme.colorScheme.outline.withValues(alpha: 0.4),
+                  ),
+                ),
+              ),
+            ),
+          ],
+          if (allPaths.length > 1) ...[
+            const SizedBox(height: 8),
+            Padding(
+              padding: const EdgeInsets.only(top: 4),
+              child: Row(
+                children: [
+                  const Icon(Icons.attach_file, size: 16),
+                  const SizedBox(width: 4),
+                  Text(
+                    '${allPaths.length} ${l.files}',
+                    style: theme.textTheme.bodySmall,
+                  ),
+                ],
+              ),
+            ),
+          ],
+          if (allPaths.isNotEmpty) ...[
+            const SizedBox(height: 12),
+            SizedBox(
+              width: double.infinity,
+              child: OutlinedButton.icon(
+                onPressed: () {
+                  SharePlus.instance.share(ShareParams(files: allPaths.map((p) => XFile(p)).toList()));
+                },
+                icon: const Icon(Icons.share),
+                label: Text(l.share),
+              ),
+            ),
+          ],
           const SizedBox(height: 16),
           ListTile(
             contentPadding: EdgeInsets.zero,
@@ -695,5 +845,15 @@ class _DocumentPreview extends ConsumerWidget {
         ],
       ),
     );
+  }
+
+  IconData _iconForPath(String path) {
+    final ext = path.split('.').last.toLowerCase();
+    return switch (ext) {
+      'pdf' => Icons.picture_as_pdf,
+      'doc' || 'docx' => Icons.article,
+      'xls' || 'xlsx' => Icons.table_chart,
+      _ => Icons.insert_drive_file,
+    };
   }
 }

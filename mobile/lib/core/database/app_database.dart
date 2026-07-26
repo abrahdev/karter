@@ -49,6 +49,7 @@ class FuelLogs extends Table {
   BoolColumn get isSynced => boolean()();
   BoolColumn get isFullTank => boolean().withDefault(const Constant(false))();
   RealColumn get pricePerUnit => real().nullable()();
+  TextColumn get photoPaths => text().nullable()();
 
   @override
   Set<Column> get primaryKey => {id};
@@ -104,6 +105,7 @@ class VehicleDocuments extends Table {
   TextColumn get notes => text().nullable()();
   DateTimeColumn get expiryDate => dateTime().nullable()();
   DateTimeColumn get createdAt => dateTime()();
+  TextColumn get filePaths => text().nullable()();
 
   @override
   Set<Column> get primaryKey => {id};
@@ -122,7 +124,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
   @override
-  int get schemaVersion => 12;
+  int get schemaVersion => 14;
 
   @override
   MigrationStrategy get migration {
@@ -251,6 +253,19 @@ class AppDatabase extends _$AppDatabase {
           try {
             await m.addColumn(
                 maintenanceIntervals, maintenanceIntervals.i18nKey);
+          } catch (_) {}
+        }
+        if (from < 13) {
+          try {
+            await m.addColumn(fuelLogs, fuelLogs.photoPaths);
+          } catch (_) {}
+        }
+        if (from < 14) {
+          try {
+            await m.database.customStatement(
+                'ALTER TABLE vehicle_documents ADD COLUMN file_paths TEXT');
+            await m.database.customStatement(
+                "UPDATE vehicle_documents SET file_paths = json_array(file_path) WHERE file_paths IS NULL");
           } catch (_) {}
         }
       },

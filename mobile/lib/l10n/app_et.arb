@@ -94,6 +94,8 @@
     "lastService": "Viimane",
     "addPhoto": "Lisa foto",
     "photos": "fotod",
+    "files": "failid",
+    "share": "Jaga",
     "deleteService": "Kustuta teenus",
     "deleteServiceConfirm": "Kas sa oled kindel, et soovid selle teenuse kustutada?",
     "maintenanceListTitle": "Hooldus",

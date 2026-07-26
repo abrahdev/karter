@@ -1245,6 +1245,17 @@ class $FuelLogsTable extends FuelLogs
     type: DriftSqlType.double,
     requiredDuringInsert: false,
   );
+  static const VerificationMeta _photoPathsMeta = const VerificationMeta(
+    'photoPaths',
+  );
+  @override
+  late final GeneratedColumn<String> photoPaths = GeneratedColumn<String>(
+    'photo_paths',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
   @override
   List<GeneratedColumn> get $columns => [
     id,
@@ -1257,6 +1268,7 @@ class $FuelLogsTable extends FuelLogs
     isSynced,
     isFullTank,
     pricePerUnit,
+    photoPaths,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -1358,6 +1370,12 @@ class $FuelLogsTable extends FuelLogs
         ),
       );
     }
+    if (data.containsKey('photo_paths')) {
+      context.handle(
+        _photoPathsMeta,
+        photoPaths.isAcceptableOrUnknown(data['photo_paths']!, _photoPathsMeta),
+      );
+    }
     return context;
   }
 
@@ -1407,6 +1425,10 @@ class $FuelLogsTable extends FuelLogs
         DriftSqlType.double,
         data['${effectivePrefix}price_per_unit'],
       ),
+      photoPaths: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}photo_paths'],
+      ),
     );
   }
 
@@ -1427,6 +1449,7 @@ class FuelLogEntry extends DataClass implements Insertable<FuelLogEntry> {
   final bool isSynced;
   final bool isFullTank;
   final double? pricePerUnit;
+  final String? photoPaths;
   const FuelLogEntry({
     required this.id,
     required this.vehicleId,
@@ -1438,6 +1461,7 @@ class FuelLogEntry extends DataClass implements Insertable<FuelLogEntry> {
     required this.isSynced,
     required this.isFullTank,
     this.pricePerUnit,
+    this.photoPaths,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -1453,6 +1477,9 @@ class FuelLogEntry extends DataClass implements Insertable<FuelLogEntry> {
     map['is_full_tank'] = Variable<bool>(isFullTank);
     if (!nullToAbsent || pricePerUnit != null) {
       map['price_per_unit'] = Variable<double>(pricePerUnit);
+    }
+    if (!nullToAbsent || photoPaths != null) {
+      map['photo_paths'] = Variable<String>(photoPaths);
     }
     return map;
   }
@@ -1471,6 +1498,9 @@ class FuelLogEntry extends DataClass implements Insertable<FuelLogEntry> {
       pricePerUnit: pricePerUnit == null && nullToAbsent
           ? const Value.absent()
           : Value(pricePerUnit),
+      photoPaths: photoPaths == null && nullToAbsent
+          ? const Value.absent()
+          : Value(photoPaths),
     );
   }
 
@@ -1490,6 +1520,7 @@ class FuelLogEntry extends DataClass implements Insertable<FuelLogEntry> {
       isSynced: serializer.fromJson<bool>(json['isSynced']),
       isFullTank: serializer.fromJson<bool>(json['isFullTank']),
       pricePerUnit: serializer.fromJson<double?>(json['pricePerUnit']),
+      photoPaths: serializer.fromJson<String?>(json['photoPaths']),
     );
   }
   @override
@@ -1506,6 +1537,7 @@ class FuelLogEntry extends DataClass implements Insertable<FuelLogEntry> {
       'isSynced': serializer.toJson<bool>(isSynced),
       'isFullTank': serializer.toJson<bool>(isFullTank),
       'pricePerUnit': serializer.toJson<double?>(pricePerUnit),
+      'photoPaths': serializer.toJson<String?>(photoPaths),
     };
   }
 
@@ -1520,6 +1552,7 @@ class FuelLogEntry extends DataClass implements Insertable<FuelLogEntry> {
     bool? isSynced,
     bool? isFullTank,
     Value<double?> pricePerUnit = const Value.absent(),
+    Value<String?> photoPaths = const Value.absent(),
   }) => FuelLogEntry(
     id: id ?? this.id,
     vehicleId: vehicleId ?? this.vehicleId,
@@ -1531,6 +1564,7 @@ class FuelLogEntry extends DataClass implements Insertable<FuelLogEntry> {
     isSynced: isSynced ?? this.isSynced,
     isFullTank: isFullTank ?? this.isFullTank,
     pricePerUnit: pricePerUnit.present ? pricePerUnit.value : this.pricePerUnit,
+    photoPaths: photoPaths.present ? photoPaths.value : this.photoPaths,
   );
   FuelLogEntry copyWithCompanion(FuelLogsCompanion data) {
     return FuelLogEntry(
@@ -1556,6 +1590,9 @@ class FuelLogEntry extends DataClass implements Insertable<FuelLogEntry> {
       pricePerUnit: data.pricePerUnit.present
           ? data.pricePerUnit.value
           : this.pricePerUnit,
+      photoPaths: data.photoPaths.present
+          ? data.photoPaths.value
+          : this.photoPaths,
     );
   }
 
@@ -1571,7 +1608,8 @@ class FuelLogEntry extends DataClass implements Insertable<FuelLogEntry> {
           ..write('odometerUnit: $odometerUnit, ')
           ..write('isSynced: $isSynced, ')
           ..write('isFullTank: $isFullTank, ')
-          ..write('pricePerUnit: $pricePerUnit')
+          ..write('pricePerUnit: $pricePerUnit, ')
+          ..write('photoPaths: $photoPaths')
           ..write(')'))
         .toString();
   }
@@ -1588,6 +1626,7 @@ class FuelLogEntry extends DataClass implements Insertable<FuelLogEntry> {
     isSynced,
     isFullTank,
     pricePerUnit,
+    photoPaths,
   );
   @override
   bool operator ==(Object other) =>
@@ -1602,7 +1641,8 @@ class FuelLogEntry extends DataClass implements Insertable<FuelLogEntry> {
           other.odometerUnit == this.odometerUnit &&
           other.isSynced == this.isSynced &&
           other.isFullTank == this.isFullTank &&
-          other.pricePerUnit == this.pricePerUnit);
+          other.pricePerUnit == this.pricePerUnit &&
+          other.photoPaths == this.photoPaths);
 }
 
 class FuelLogsCompanion extends UpdateCompanion<FuelLogEntry> {
@@ -1616,6 +1656,7 @@ class FuelLogsCompanion extends UpdateCompanion<FuelLogEntry> {
   final Value<bool> isSynced;
   final Value<bool> isFullTank;
   final Value<double?> pricePerUnit;
+  final Value<String?> photoPaths;
   final Value<int> rowid;
   const FuelLogsCompanion({
     this.id = const Value.absent(),
@@ -1628,6 +1669,7 @@ class FuelLogsCompanion extends UpdateCompanion<FuelLogEntry> {
     this.isSynced = const Value.absent(),
     this.isFullTank = const Value.absent(),
     this.pricePerUnit = const Value.absent(),
+    this.photoPaths = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   FuelLogsCompanion.insert({
@@ -1641,6 +1683,7 @@ class FuelLogsCompanion extends UpdateCompanion<FuelLogEntry> {
     required bool isSynced,
     this.isFullTank = const Value.absent(),
     this.pricePerUnit = const Value.absent(),
+    this.photoPaths = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : id = Value(id),
        vehicleId = Value(vehicleId),
@@ -1661,6 +1704,7 @@ class FuelLogsCompanion extends UpdateCompanion<FuelLogEntry> {
     Expression<bool>? isSynced,
     Expression<bool>? isFullTank,
     Expression<double>? pricePerUnit,
+    Expression<String>? photoPaths,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -1674,6 +1718,7 @@ class FuelLogsCompanion extends UpdateCompanion<FuelLogEntry> {
       if (isSynced != null) 'is_synced': isSynced,
       if (isFullTank != null) 'is_full_tank': isFullTank,
       if (pricePerUnit != null) 'price_per_unit': pricePerUnit,
+      if (photoPaths != null) 'photo_paths': photoPaths,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -1689,6 +1734,7 @@ class FuelLogsCompanion extends UpdateCompanion<FuelLogEntry> {
     Value<bool>? isSynced,
     Value<bool>? isFullTank,
     Value<double?>? pricePerUnit,
+    Value<String?>? photoPaths,
     Value<int>? rowid,
   }) {
     return FuelLogsCompanion(
@@ -1702,6 +1748,7 @@ class FuelLogsCompanion extends UpdateCompanion<FuelLogEntry> {
       isSynced: isSynced ?? this.isSynced,
       isFullTank: isFullTank ?? this.isFullTank,
       pricePerUnit: pricePerUnit ?? this.pricePerUnit,
+      photoPaths: photoPaths ?? this.photoPaths,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -1739,6 +1786,9 @@ class FuelLogsCompanion extends UpdateCompanion<FuelLogEntry> {
     if (pricePerUnit.present) {
       map['price_per_unit'] = Variable<double>(pricePerUnit.value);
     }
+    if (photoPaths.present) {
+      map['photo_paths'] = Variable<String>(photoPaths.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -1758,6 +1808,7 @@ class FuelLogsCompanion extends UpdateCompanion<FuelLogEntry> {
           ..write('isSynced: $isSynced, ')
           ..write('isFullTank: $isFullTank, ')
           ..write('pricePerUnit: $pricePerUnit, ')
+          ..write('photoPaths: $photoPaths, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -3338,6 +3389,17 @@ class $VehicleDocumentsTable extends VehicleDocuments
     type: DriftSqlType.dateTime,
     requiredDuringInsert: true,
   );
+  static const VerificationMeta _filePathsMeta = const VerificationMeta(
+    'filePaths',
+  );
+  @override
+  late final GeneratedColumn<String> filePaths = GeneratedColumn<String>(
+    'file_paths',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
   @override
   List<GeneratedColumn> get $columns => [
     id,
@@ -3351,6 +3413,7 @@ class $VehicleDocumentsTable extends VehicleDocuments
     notes,
     expiryDate,
     createdAt,
+    filePaths,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -3441,6 +3504,12 @@ class $VehicleDocumentsTable extends VehicleDocuments
     } else if (isInserting) {
       context.missing(_createdAtMeta);
     }
+    if (data.containsKey('file_paths')) {
+      context.handle(
+        _filePathsMeta,
+        filePaths.isAcceptableOrUnknown(data['file_paths']!, _filePathsMeta),
+      );
+    }
     return context;
   }
 
@@ -3494,6 +3563,10 @@ class $VehicleDocumentsTable extends VehicleDocuments
         DriftSqlType.dateTime,
         data['${effectivePrefix}created_at'],
       )!,
+      filePaths: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}file_paths'],
+      ),
     );
   }
 
@@ -3516,6 +3589,7 @@ class VehicleDocumentEntry extends DataClass
   final String? notes;
   final DateTime? expiryDate;
   final DateTime createdAt;
+  final String? filePaths;
   const VehicleDocumentEntry({
     required this.id,
     required this.vehicleId,
@@ -3528,6 +3602,7 @@ class VehicleDocumentEntry extends DataClass
     this.notes,
     this.expiryDate,
     required this.createdAt,
+    this.filePaths,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -3551,6 +3626,9 @@ class VehicleDocumentEntry extends DataClass
       map['expiry_date'] = Variable<DateTime>(expiryDate);
     }
     map['created_at'] = Variable<DateTime>(createdAt);
+    if (!nullToAbsent || filePaths != null) {
+      map['file_paths'] = Variable<String>(filePaths);
+    }
     return map;
   }
 
@@ -3575,6 +3653,9 @@ class VehicleDocumentEntry extends DataClass
           ? const Value.absent()
           : Value(expiryDate),
       createdAt: Value(createdAt),
+      filePaths: filePaths == null && nullToAbsent
+          ? const Value.absent()
+          : Value(filePaths),
     );
   }
 
@@ -3595,6 +3676,7 @@ class VehicleDocumentEntry extends DataClass
       notes: serializer.fromJson<String?>(json['notes']),
       expiryDate: serializer.fromJson<DateTime?>(json['expiryDate']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      filePaths: serializer.fromJson<String?>(json['filePaths']),
     );
   }
   @override
@@ -3612,6 +3694,7 @@ class VehicleDocumentEntry extends DataClass
       'notes': serializer.toJson<String?>(notes),
       'expiryDate': serializer.toJson<DateTime?>(expiryDate),
       'createdAt': serializer.toJson<DateTime>(createdAt),
+      'filePaths': serializer.toJson<String?>(filePaths),
     };
   }
 
@@ -3627,6 +3710,7 @@ class VehicleDocumentEntry extends DataClass
     Value<String?> notes = const Value.absent(),
     Value<DateTime?> expiryDate = const Value.absent(),
     DateTime? createdAt,
+    Value<String?> filePaths = const Value.absent(),
   }) => VehicleDocumentEntry(
     id: id ?? this.id,
     vehicleId: vehicleId ?? this.vehicleId,
@@ -3639,6 +3723,7 @@ class VehicleDocumentEntry extends DataClass
     notes: notes.present ? notes.value : this.notes,
     expiryDate: expiryDate.present ? expiryDate.value : this.expiryDate,
     createdAt: createdAt ?? this.createdAt,
+    filePaths: filePaths.present ? filePaths.value : this.filePaths,
   );
   VehicleDocumentEntry copyWithCompanion(VehicleDocumentsCompanion data) {
     return VehicleDocumentEntry(
@@ -3655,6 +3740,7 @@ class VehicleDocumentEntry extends DataClass
           ? data.expiryDate.value
           : this.expiryDate,
       createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      filePaths: data.filePaths.present ? data.filePaths.value : this.filePaths,
     );
   }
 
@@ -3671,7 +3757,8 @@ class VehicleDocumentEntry extends DataClass
           ..write('fileSize: $fileSize, ')
           ..write('notes: $notes, ')
           ..write('expiryDate: $expiryDate, ')
-          ..write('createdAt: $createdAt')
+          ..write('createdAt: $createdAt, ')
+          ..write('filePaths: $filePaths')
           ..write(')'))
         .toString();
   }
@@ -3689,6 +3776,7 @@ class VehicleDocumentEntry extends DataClass
     notes,
     expiryDate,
     createdAt,
+    filePaths,
   );
   @override
   bool operator ==(Object other) =>
@@ -3704,7 +3792,8 @@ class VehicleDocumentEntry extends DataClass
           other.fileSize == this.fileSize &&
           other.notes == this.notes &&
           other.expiryDate == this.expiryDate &&
-          other.createdAt == this.createdAt);
+          other.createdAt == this.createdAt &&
+          other.filePaths == this.filePaths);
 }
 
 class VehicleDocumentsCompanion extends UpdateCompanion<VehicleDocumentEntry> {
@@ -3719,6 +3808,7 @@ class VehicleDocumentsCompanion extends UpdateCompanion<VehicleDocumentEntry> {
   final Value<String?> notes;
   final Value<DateTime?> expiryDate;
   final Value<DateTime> createdAt;
+  final Value<String?> filePaths;
   final Value<int> rowid;
   const VehicleDocumentsCompanion({
     this.id = const Value.absent(),
@@ -3732,6 +3822,7 @@ class VehicleDocumentsCompanion extends UpdateCompanion<VehicleDocumentEntry> {
     this.notes = const Value.absent(),
     this.expiryDate = const Value.absent(),
     this.createdAt = const Value.absent(),
+    this.filePaths = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   VehicleDocumentsCompanion.insert({
@@ -3746,6 +3837,7 @@ class VehicleDocumentsCompanion extends UpdateCompanion<VehicleDocumentEntry> {
     this.notes = const Value.absent(),
     this.expiryDate = const Value.absent(),
     required DateTime createdAt,
+    this.filePaths = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : id = Value(id),
        vehicleId = Value(vehicleId),
@@ -3766,6 +3858,7 @@ class VehicleDocumentsCompanion extends UpdateCompanion<VehicleDocumentEntry> {
     Expression<String>? notes,
     Expression<DateTime>? expiryDate,
     Expression<DateTime>? createdAt,
+    Expression<String>? filePaths,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -3780,6 +3873,7 @@ class VehicleDocumentsCompanion extends UpdateCompanion<VehicleDocumentEntry> {
       if (notes != null) 'notes': notes,
       if (expiryDate != null) 'expiry_date': expiryDate,
       if (createdAt != null) 'created_at': createdAt,
+      if (filePaths != null) 'file_paths': filePaths,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -3796,6 +3890,7 @@ class VehicleDocumentsCompanion extends UpdateCompanion<VehicleDocumentEntry> {
     Value<String?>? notes,
     Value<DateTime?>? expiryDate,
     Value<DateTime>? createdAt,
+    Value<String?>? filePaths,
     Value<int>? rowid,
   }) {
     return VehicleDocumentsCompanion(
@@ -3810,6 +3905,7 @@ class VehicleDocumentsCompanion extends UpdateCompanion<VehicleDocumentEntry> {
       notes: notes ?? this.notes,
       expiryDate: expiryDate ?? this.expiryDate,
       createdAt: createdAt ?? this.createdAt,
+      filePaths: filePaths ?? this.filePaths,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -3850,6 +3946,9 @@ class VehicleDocumentsCompanion extends UpdateCompanion<VehicleDocumentEntry> {
     if (createdAt.present) {
       map['created_at'] = Variable<DateTime>(createdAt.value);
     }
+    if (filePaths.present) {
+      map['file_paths'] = Variable<String>(filePaths.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -3870,6 +3969,7 @@ class VehicleDocumentsCompanion extends UpdateCompanion<VehicleDocumentEntry> {
           ..write('notes: $notes, ')
           ..write('expiryDate: $expiryDate, ')
           ..write('createdAt: $createdAt, ')
+          ..write('filePaths: $filePaths, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -3956,7 +4056,7 @@ final class $$VehiclesTableReferences
   static MultiTypedResultKey<$FuelLogsTable, List<FuelLogEntry>>
   _fuelLogsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
     db.fuelLogs,
-    aliasName: $_aliasNameGenerator(db.vehicles.id, db.fuelLogs.vehicleId),
+    aliasName: 'vehicles__id__fuel_logs__vehicle_id',
   );
 
   $$FuelLogsTableProcessedTableManager get fuelLogsRefs {
@@ -3974,10 +4074,7 @@ final class $$VehiclesTableReferences
   static MultiTypedResultKey<$MaintenanceLogsTable, List<MaintenanceLogEntry>>
   _maintenanceLogsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
     db.maintenanceLogs,
-    aliasName: $_aliasNameGenerator(
-      db.vehicles.id,
-      db.maintenanceLogs.vehicleId,
-    ),
+    aliasName: 'vehicles__id__maintenance_logs__vehicle_id',
   );
 
   $$MaintenanceLogsTableProcessedTableManager get maintenanceLogsRefs {
@@ -4001,10 +4098,7 @@ final class $$VehiclesTableReferences
   _maintenanceIntervalsRefsTable(_$AppDatabase db) =>
       MultiTypedResultKey.fromTable(
         db.maintenanceIntervals,
-        aliasName: $_aliasNameGenerator(
-          db.vehicles.id,
-          db.maintenanceIntervals.vehicleId,
-        ),
+        aliasName: 'vehicles__id__maintenance_intervals__vehicle_id',
       );
 
   $$MaintenanceIntervalsTableProcessedTableManager
@@ -4025,10 +4119,7 @@ final class $$VehiclesTableReferences
   static MultiTypedResultKey<$VehicleDocumentsTable, List<VehicleDocumentEntry>>
   _vehicleDocumentsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
     db.vehicleDocuments,
-    aliasName: $_aliasNameGenerator(
-      db.vehicles.id,
-      db.vehicleDocuments.vehicleId,
-    ),
+    aliasName: 'vehicles__id__vehicle_documents__vehicle_id',
   );
 
   $$VehicleDocumentsTableProcessedTableManager get vehicleDocumentsRefs {
@@ -4818,6 +4909,7 @@ typedef $$FuelLogsTableCreateCompanionBuilder =
       required bool isSynced,
       Value<bool> isFullTank,
       Value<double?> pricePerUnit,
+      Value<String?> photoPaths,
       Value<int> rowid,
     });
 typedef $$FuelLogsTableUpdateCompanionBuilder =
@@ -4832,6 +4924,7 @@ typedef $$FuelLogsTableUpdateCompanionBuilder =
       Value<bool> isSynced,
       Value<bool> isFullTank,
       Value<double?> pricePerUnit,
+      Value<String?> photoPaths,
       Value<int> rowid,
     });
 
@@ -4839,8 +4932,8 @@ final class $$FuelLogsTableReferences
     extends BaseReferences<_$AppDatabase, $FuelLogsTable, FuelLogEntry> {
   $$FuelLogsTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
-  static $VehiclesTable _vehicleIdTable(_$AppDatabase db) => db.vehicles
-      .createAlias($_aliasNameGenerator(db.fuelLogs.vehicleId, db.vehicles.id));
+  static $VehiclesTable _vehicleIdTable(_$AppDatabase db) =>
+      db.vehicles.createAlias('fuel_logs__vehicle_id__vehicles__id');
 
   $$VehiclesTableProcessedTableManager get vehicleId {
     final $_column = $_itemColumn<String>('vehicle_id')!;
@@ -4908,6 +5001,11 @@ class $$FuelLogsTableFilterComposer
 
   ColumnFilters<double> get pricePerUnit => $composableBuilder(
     column: $table.pricePerUnit,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get photoPaths => $composableBuilder(
+    column: $table.photoPaths,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -4989,6 +5087,11 @@ class $$FuelLogsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get photoPaths => $composableBuilder(
+    column: $table.photoPaths,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   $$VehiclesTableOrderingComposer get vehicleId {
     final $$VehiclesTableOrderingComposer composer = $composerBuilder(
       composer: this,
@@ -5061,6 +5164,11 @@ class $$FuelLogsTableAnnotationComposer
     builder: (column) => column,
   );
 
+  GeneratedColumn<String> get photoPaths => $composableBuilder(
+    column: $table.photoPaths,
+    builder: (column) => column,
+  );
+
   $$VehiclesTableAnnotationComposer get vehicleId {
     final $$VehiclesTableAnnotationComposer composer = $composerBuilder(
       composer: this,
@@ -5123,6 +5231,7 @@ class $$FuelLogsTableTableManager
                 Value<bool> isSynced = const Value.absent(),
                 Value<bool> isFullTank = const Value.absent(),
                 Value<double?> pricePerUnit = const Value.absent(),
+                Value<String?> photoPaths = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => FuelLogsCompanion(
                 id: id,
@@ -5135,6 +5244,7 @@ class $$FuelLogsTableTableManager
                 isSynced: isSynced,
                 isFullTank: isFullTank,
                 pricePerUnit: pricePerUnit,
+                photoPaths: photoPaths,
                 rowid: rowid,
               ),
           createCompanionCallback:
@@ -5149,6 +5259,7 @@ class $$FuelLogsTableTableManager
                 required bool isSynced,
                 Value<bool> isFullTank = const Value.absent(),
                 Value<double?> pricePerUnit = const Value.absent(),
+                Value<String?> photoPaths = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => FuelLogsCompanion.insert(
                 id: id,
@@ -5161,6 +5272,7 @@ class $$FuelLogsTableTableManager
                 isSynced: isSynced,
                 isFullTank: isFullTank,
                 pricePerUnit: pricePerUnit,
+                photoPaths: photoPaths,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
@@ -5277,9 +5389,7 @@ final class $$MaintenanceLogsTableReferences
   );
 
   static $VehiclesTable _vehicleIdTable(_$AppDatabase db) =>
-      db.vehicles.createAlias(
-        $_aliasNameGenerator(db.maintenanceLogs.vehicleId, db.vehicles.id),
-      );
+      db.vehicles.createAlias('maintenance_logs__vehicle_id__vehicles__id');
 
   $$VehiclesTableProcessedTableManager get vehicleId {
     final $_column = $_itemColumn<String>('vehicle_id')!;
@@ -5755,10 +5865,8 @@ final class $$MaintenanceIntervalsTableReferences
     super.$_typedResult,
   );
 
-  static $VehiclesTable _vehicleIdTable(_$AppDatabase db) =>
-      db.vehicles.createAlias(
-        $_aliasNameGenerator(db.maintenanceIntervals.vehicleId, db.vehicles.id),
-      );
+  static $VehiclesTable _vehicleIdTable(_$AppDatabase db) => db.vehicles
+      .createAlias('maintenance_intervals__vehicle_id__vehicles__id');
 
   $$VehiclesTableProcessedTableManager get vehicleId {
     final $_column = $_itemColumn<String>('vehicle_id')!;
@@ -6186,6 +6294,7 @@ typedef $$VehicleDocumentsTableCreateCompanionBuilder =
       Value<String?> notes,
       Value<DateTime?> expiryDate,
       required DateTime createdAt,
+      Value<String?> filePaths,
       Value<int> rowid,
     });
 typedef $$VehicleDocumentsTableUpdateCompanionBuilder =
@@ -6201,6 +6310,7 @@ typedef $$VehicleDocumentsTableUpdateCompanionBuilder =
       Value<String?> notes,
       Value<DateTime?> expiryDate,
       Value<DateTime> createdAt,
+      Value<String?> filePaths,
       Value<int> rowid,
     });
 
@@ -6218,9 +6328,7 @@ final class $$VehicleDocumentsTableReferences
   );
 
   static $VehiclesTable _vehicleIdTable(_$AppDatabase db) =>
-      db.vehicles.createAlias(
-        $_aliasNameGenerator(db.vehicleDocuments.vehicleId, db.vehicles.id),
-      );
+      db.vehicles.createAlias('vehicle_documents__vehicle_id__vehicles__id');
 
   $$VehiclesTableProcessedTableManager get vehicleId {
     final $_column = $_itemColumn<String>('vehicle_id')!;
@@ -6293,6 +6401,11 @@ class $$VehicleDocumentsTableFilterComposer
 
   ColumnFilters<DateTime> get createdAt => $composableBuilder(
     column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get filePaths => $composableBuilder(
+    column: $table.filePaths,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -6379,6 +6492,11 @@ class $$VehicleDocumentsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get filePaths => $composableBuilder(
+    column: $table.filePaths,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   $$VehiclesTableOrderingComposer get vehicleId {
     final $$VehiclesTableOrderingComposer composer = $composerBuilder(
       composer: this,
@@ -6443,6 +6561,9 @@ class $$VehicleDocumentsTableAnnotationComposer
 
   GeneratedColumn<DateTime> get createdAt =>
       $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<String> get filePaths =>
+      $composableBuilder(column: $table.filePaths, builder: (column) => column);
 
   $$VehiclesTableAnnotationComposer get vehicleId {
     final $$VehiclesTableAnnotationComposer composer = $composerBuilder(
@@ -6509,6 +6630,7 @@ class $$VehicleDocumentsTableTableManager
                 Value<String?> notes = const Value.absent(),
                 Value<DateTime?> expiryDate = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
+                Value<String?> filePaths = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => VehicleDocumentsCompanion(
                 id: id,
@@ -6522,6 +6644,7 @@ class $$VehicleDocumentsTableTableManager
                 notes: notes,
                 expiryDate: expiryDate,
                 createdAt: createdAt,
+                filePaths: filePaths,
                 rowid: rowid,
               ),
           createCompanionCallback:
@@ -6537,6 +6660,7 @@ class $$VehicleDocumentsTableTableManager
                 Value<String?> notes = const Value.absent(),
                 Value<DateTime?> expiryDate = const Value.absent(),
                 required DateTime createdAt,
+                Value<String?> filePaths = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => VehicleDocumentsCompanion.insert(
                 id: id,
@@ -6550,6 +6674,7 @@ class $$VehicleDocumentsTableTableManager
                 notes: notes,
                 expiryDate: expiryDate,
                 createdAt: createdAt,
+                filePaths: filePaths,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0

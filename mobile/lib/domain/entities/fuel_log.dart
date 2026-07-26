@@ -13,6 +13,7 @@ class FuelLog {
   final Odometer odometerAtFueling;
   final double? pricePerUnit;
   final bool isFullTank;
+  final List<String> photoPaths;
 
   FuelLog({
     required this.id,
@@ -23,6 +24,7 @@ class FuelLog {
     required this.odometerAtFueling,
     this.pricePerUnit,
     this.isFullTank = false,
+    this.photoPaths = const [],
   });
 
   FuelLog copyWith({
@@ -34,6 +36,7 @@ class FuelLog {
     Odometer? odometerAtFueling,
     double? pricePerUnit,
     bool? isFullTank,
+    List<String>? photoPaths,
   }) {
     return FuelLog(
       id: id ?? this.id,
@@ -44,6 +47,7 @@ class FuelLog {
       odometerAtFueling: odometerAtFueling ?? this.odometerAtFueling,
       pricePerUnit: pricePerUnit ?? this.pricePerUnit,
       isFullTank: isFullTank ?? this.isFullTank,
+      photoPaths: photoPaths ?? this.photoPaths,
     );
   }
 
@@ -71,6 +75,7 @@ class FuelLog {
         'odometerAtFuelingUnit': odometerAtFueling.unit.name,
         'pricePerUnit': pricePerUnit,
         'isFullTank': isFullTank,
+        'photoPaths': photoPaths,
       };
 
   factory FuelLog.fromJson(Map<String, dynamic> json) => FuelLog(
@@ -88,5 +93,6 @@ class FuelLog {
         ),
         pricePerUnit: (json['pricePerUnit'] as num?)?.toDouble(),
         isFullTank: json['isFullTank'] ?? false,
+        photoPaths: (json['photoPaths'] as List?)?.cast<String>() ?? [],
       );
 }

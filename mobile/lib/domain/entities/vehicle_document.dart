@@ -13,6 +13,7 @@ class VehicleDocument {
   final DateTime? expiryDate;
   final DateTime createdAt;
   final String? fileDataBase64;
+  final List<String> filePaths;
 
   const VehicleDocument({
     required this.id,
@@ -27,6 +28,7 @@ class VehicleDocument {
     this.expiryDate,
     required this.createdAt,
     this.fileDataBase64,
+    this.filePaths = const [],
   });
 
   VehicleDocument copyWith({
@@ -42,6 +44,7 @@ class VehicleDocument {
     DateTime? expiryDate,
     DateTime? createdAt,
     String? fileDataBase64,
+    List<String>? filePaths,
   }) {
     return VehicleDocument(
       id: id ?? this.id,
@@ -56,6 +59,7 @@ class VehicleDocument {
       expiryDate: expiryDate ?? this.expiryDate,
       createdAt: createdAt ?? this.createdAt,
       fileDataBase64: fileDataBase64 ?? this.fileDataBase64,
+      filePaths: filePaths ?? this.filePaths,
     );
   }
 
