@@ -13,6 +13,7 @@ import 'package:mobile/domain/entities/maintenance_log.dart';
 import 'package:mobile/domain/entities/vehicle.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
+import 'package:mobile/presentation/widgets/full_screen_photo_viewer.dart';
 import 'package:path_provider/path_provider.dart';
 
 Future<void> showAddMaintenanceLogModal(
@@ -235,9 +236,13 @@ class _AddMaintenanceLogModalState
   }
 
   Future<void> _pickFromGallery() async {
-    final file = await _picker.pickImage(source: ImageSource.gallery);
-    if (file != null && mounted) {
-      setState(() => _selectedPhotos.add(file.path));
+    final files = await _picker.pickMultiImage();
+    if (files.isNotEmpty && mounted) {
+      setState(() {
+        for (final f in files) {
+          _selectedPhotos.add(f.path);
+        }
+      });
     }
   }
 
@@ -650,29 +655,67 @@ class _MaintenanceLogPreview extends ConsumerWidget {
           ),
           const SizedBox(height: 16),
           if (hasPhotos)
-            SizedBox(
-              height: 250,
-              child: CarouselView(
-                shrinkExtent: 80,
-                itemExtent: 200,
-                padding: EdgeInsets.zero,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                children: log.photoPaths.map((path) => Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 6),
-                  child: GestureDetector(
-                    onTap: () => _showPhotoFullScreen(context, path),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(12),
-                      child: Image.file(
-                        File(path),
-                        fit: BoxFit.cover,
+            StatefulBuilder(
+              builder: (ctx, setCarouselState) {
+                return Column(
+                  children: [
+                    SizedBox(
+                      height: 250,
+                      child: CarouselView(
+                        shrinkExtent: 80,
+                        itemExtent: 200,
+                        padding: EdgeInsets.zero,
+                        onTap: (index) {
+                          Navigator.of(context, rootNavigator: true).push(
+                            MaterialPageRoute(
+                              fullscreenDialog: true,
+                              builder: (_) => FullScreenPhotoViewer(
+                                paths: log.photoPaths,
+                                initialIndex: index,
+                                heroTag: 'maintenance_photo_${log.id}_$index',
+                              ),
+                            ),
+                          );
+                        },
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        children: log.photoPaths.asMap().entries.map((entry) => Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 6),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: Hero(
+                              tag: 'maintenance_photo_${log.id}_${entry.key}',
+                              child: Image.file(
+                                File(entry.value),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        )).toList(),
                       ),
                     ),
-                  ),
-                )).toList(),
-              ),
+                    if (log.photoPaths.length > 1) ...[
+                      const SizedBox(height: 8),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: List.generate(
+                          log.photoPaths.length,
+                          (i) => Container(
+                            width: 6,
+                            height: 6,
+                            margin: const EdgeInsets.symmetric(horizontal: 3),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: theme.colorScheme.outline.withValues(alpha: 0.4),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ],
+                );
+              },
             ),
           const SizedBox(height: 16),
           ListTile(
@@ -727,30 +770,4 @@ class _MaintenanceLogPreview extends ConsumerWidget {
       ),
     );
   }
-}
-
-void _showPhotoFullScreen(BuildContext context, String path) {
-  karterShowDialog(
-    context: context,
-    builder: (ctx) => Dialog(
-      backgroundColor: Colors.black,
-      insetPadding: EdgeInsets.zero,
-      child: Stack(
-        fit: StackFit.expand,
-        children: [
-          InteractiveViewer(
-            child: Image.file(File(path), fit: BoxFit.contain),
-          ),
-          Positioned(
-            top: 8,
-            right: 8,
-            child: IconButton(
-              icon: const Icon(Icons.close, color: Colors.white),
-              onPressed: () => Navigator.pop(ctx),
-            ),
-          ),
-        ],
-      ),
-    ),
-  );
 }

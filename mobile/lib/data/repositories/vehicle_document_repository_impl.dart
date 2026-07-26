@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:drift/drift.dart';
 import 'package:mobile/core/database/app_database.dart';
 import 'package:mobile/domain/entities/vehicle_document.dart';
@@ -10,6 +12,16 @@ class VehicleDocumentRepositoryImpl implements VehicleDocumentRepository {
   VehicleDocumentRepositoryImpl(this._db);
 
   VehicleDocument _toEntity(VehicleDocumentEntry entry) {
+    List<String> paths = <String>[];
+    try {
+      final rawPaths = entry.filePaths;
+      if (rawPaths != null && rawPaths.isNotEmpty) {
+        final decoded = jsonDecode(rawPaths);
+        if (decoded is List) {
+          paths = decoded.map((e) => e.toString()).toList();
+        }
+      }
+    } catch (_) {}
     return VehicleDocument(
       id: entry.id,
       vehicleId: entry.vehicleId,
@@ -25,10 +37,14 @@ class VehicleDocumentRepositoryImpl implements VehicleDocumentRepository {
       notes: entry.notes,
       expiryDate: entry.expiryDate,
       createdAt: entry.createdAt,
+      filePaths: paths,
     );
   }
 
   VehicleDocumentsCompanion _toEntry(VehicleDocument doc) {
+    final encodedPaths = doc.filePaths.isNotEmpty
+        ? Value(jsonEncode(doc.filePaths))
+        : const Value(null);
     return VehicleDocumentsCompanion.insert(
       id: doc.id,
       vehicleId: doc.vehicleId,
@@ -41,6 +57,7 @@ class VehicleDocumentRepositoryImpl implements VehicleDocumentRepository {
       notes: Value(doc.notes),
       expiryDate: Value(doc.expiryDate),
       createdAt: doc.createdAt,
+      filePaths: encodedPaths,
     );
   }
 

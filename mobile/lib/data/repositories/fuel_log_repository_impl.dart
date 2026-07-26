@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:drift/drift.dart' as drift;
 import 'package:mobile/core/database/app_database.dart';
 import 'package:mobile/domain/entities/fuel_log.dart';
@@ -55,6 +57,7 @@ class FuelLogRepositoryImpl implements FuelLogRepository {
       ),
       pricePerUnit: entry.pricePerUnit,
       isFullTank: entry.isFullTank,
+      photoPaths: _decodePaths(entry.photoPaths),
     );
   }
 
@@ -70,6 +73,21 @@ class FuelLogRepositoryImpl implements FuelLogRepository {
       odometerUnit: drift.Value(log.odometerAtFueling.unit.name),
       isFullTank: drift.Value(log.isFullTank),
       pricePerUnit: drift.Value(log.pricePerUnit),
+      photoPaths: drift.Value(_encodePaths(log.photoPaths)),
     );
+  }
+
+  List<String> _decodePaths(String? raw) {
+    if (raw == null || raw.isEmpty) return [];
+    try {
+      return (jsonDecode(raw) as List).cast<String>();
+    } catch (_) {
+      return [];
+    }
+  }
+
+  String? _encodePaths(List<String> paths) {
+    if (paths.isEmpty) return null;
+    return jsonEncode(paths);
   }
 }

@@ -1,5 +1,9 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mobile/presentation/providers/haptic_provider.dart';
 import 'package:mobile/presentation/widgets/karter_switch_list_tile.dart';
 import 'package:intl/intl.dart';
@@ -12,6 +16,8 @@ import 'package:mobile/domain/value_objects/odometer.dart';
 import 'package:mobile/domain/value_objects/volume.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
+import 'package:mobile/presentation/widgets/full_screen_photo_viewer.dart';
+import 'package:path_provider/path_provider.dart';
 
 Future<void> showAddFuelLogModal(
   BuildContext context, {
@@ -108,6 +114,8 @@ class _AddFuelLogModalState extends ConsumerState<_AddFuelLogModal> {
   bool _isFullTank = false;
   bool _saving = false;
   bool _isEditing = false;
+  final List<String> _selectedPhotos = [];
+  final _picker = ImagePicker();
 
   @override
   void initState() {
@@ -124,6 +132,7 @@ class _AddFuelLogModalState extends ConsumerState<_AddFuelLogModal> {
           log.pricePerUnit?.toString() ?? '';
       _isFullTank = log.isFullTank;
       _volumeUnit = log.fueledVolume.unit;
+      _selectedPhotos.addAll(log.photoPaths);
       WidgetsBinding.instance
           .addPostFrameCallback((_) => _loadCurrency());
     } else {
@@ -161,6 +170,82 @@ class _AddFuelLogModalState extends ConsumerState<_AddFuelLogModal> {
     if (picked != null) setState(() => _date = picked);
   }
 
+  void _showPhotoSourcePicker() {
+    final l = AppLocalizations.of(context)!;
+    karterShowModalBottomSheet(
+      context: context,
+      builder: (ctx) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: const Icon(Icons.camera_alt),
+              title: Text(l.takePhoto),
+              onTap: () {
+                Navigator.pop(ctx);
+                _pickFromCamera();
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.photo_library),
+              title: Text(l.chooseFromGallery),
+              onTap: () {
+                Navigator.pop(ctx);
+                _pickFromGallery();
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.attach_file),
+              title: Text(l.browseFiles),
+              onTap: () {
+                Navigator.pop(ctx);
+                _pickFiles();
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Future<void> _pickFromCamera() async {
+    final file = await _picker.pickImage(source: ImageSource.camera);
+    if (file != null && mounted) {
+      setState(() => _selectedPhotos.add(file.path));
+    }
+  }
+
+  Future<void> _pickFromGallery() async {
+    final files = await _picker.pickMultiImage();
+    if (files.isNotEmpty && mounted) {
+      setState(() {
+        for (final f in files) {
+          _selectedPhotos.add(f.path);
+        }
+      });
+    }
+  }
+
+  Future<void> _pickFiles() async {
+    final result = await FilePicker.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['jpg', 'jpeg', 'png', 'heic', 'webp'],
+    );
+    if (result != null && mounted) {
+      setState(() {
+        for (final f in result.files) {
+          if (f.path != null) {
+            _selectedPhotos.add(f.path!);
+          }
+        }
+      });
+    }
+  }
+
+  void _removePhoto(int index) {
+    setState(() => _selectedPhotos.removeAt(index));
+  }
+
   Future<void> _save() async {
     if (!_formKey.currentState!.validate()) return;
     setState(() => _saving = true);
@@ -170,8 +255,23 @@ class _AddFuelLogModalState extends ConsumerState<_AddFuelLogModal> {
           await ref.read(vehicleProvider(widget.vehicleId).future);
       if (vehicle == null) return;
 
+      final logId = _isEditing ? widget.editLog!.id : uuid.v4();
+
+      final List<String> savedPaths = [];
+      if (_selectedPhotos.isNotEmpty) {
+        final appDir = await getApplicationDocumentsDirectory();
+        final photosDir = Directory('${appDir.path}/fuel_photos/$logId');
+        await photosDir.create(recursive: true);
+        for (final src in _selectedPhotos) {
+          final ext = src.split('.').last;
+          final dest = '${photosDir.path}/${uuid.v4()}.$ext';
+          await File(src).copy(dest);
+          savedPaths.add(dest);
+        }
+      }
+
       final log = FuelLog(
-        id: _isEditing ? widget.editLog!.id : uuid.v4(),
+        id: logId,
         vehicleId: widget.vehicleId,
         date: _date,
         isSynced: _isEditing ? widget.editLog!.isSynced : false,
@@ -187,6 +287,7 @@ class _AddFuelLogModalState extends ConsumerState<_AddFuelLogModal> {
             ? null
             : double.parse(_priceController.text.trim()),
         isFullTank: _isFullTank,
+        photoPaths: savedPaths.isEmpty && _isEditing ? widget.editLog!.photoPaths : savedPaths,
       );
 
       final repo = ref.read(fuelLogRepositoryProvider);
@@ -354,6 +455,66 @@ class _AddFuelLogModalState extends ConsumerState<_AddFuelLogModal> {
                 onChanged: (v) => setState(() => _isFullTank = v),
               ),
               const SizedBox(height: 12),
+              Row(
+                children: [
+                  OutlinedButton.icon(
+                    onPressed: _showPhotoSourcePicker,
+                    icon: const Icon(Icons.photo_library),
+                    label: Text(l.addPhoto),
+                  ),
+                  if (_selectedPhotos.isNotEmpty) ...[
+                    const SizedBox(width: 8),
+                    Text(
+                      '${_selectedPhotos.length} ${l.photos}',
+                      style: theme.textTheme.bodySmall,
+                    ),
+                  ],
+                ],
+              ),
+              if (_selectedPhotos.isNotEmpty) ...[
+                const SizedBox(height: 8),
+                SizedBox(
+                  height: 80,
+                  child: ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: _selectedPhotos.length,
+                    separatorBuilder: (_, _) => const SizedBox(width: 8),
+                    itemBuilder: (ctx, i) => Stack(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child: Image.file(
+                            File(_selectedPhotos[i]),
+                            width: 80,
+                            height: 80,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        Positioned(
+                          top: 0,
+                          right: 0,
+                          child: GestureDetector(
+                            onTap: () => _removePhoto(i),
+                            child: Container(
+                              decoration: const BoxDecoration(
+                                color: Colors.black54,
+                                shape: BoxShape.circle,
+                              ),
+                              padding: const EdgeInsets.all(2),
+                              child: const Icon(
+                                Icons.close,
+                                size: 16,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+              const SizedBox(height: 12),
               SizedBox(
                 width: double.infinity,
                 child: FilledButton.icon(
@@ -410,6 +571,7 @@ class _FuelLogPreview extends ConsumerWidget {
         ? l.unitL
         : l.unitGal;
     final consumption = log.calculatedConsumption;
+    final hasPhotos = log.photoPaths.isNotEmpty;
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(20),
@@ -428,6 +590,63 @@ class _FuelLogPreview extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: 16),
+          if (hasPhotos) ...[
+              SizedBox(
+                height: 250,
+                child: CarouselView(
+                  shrinkExtent: 80,
+                  itemExtent: 200,
+                  padding: EdgeInsets.zero,
+                  onTap: (index) {
+                    Navigator.of(context, rootNavigator: true).push(
+                      MaterialPageRoute(
+                        fullscreenDialog: true,
+                        builder: (_) => FullScreenPhotoViewer(
+                          paths: log.photoPaths,
+                          initialIndex: index,
+                          heroTag: 'fuel_photo_${log.id}_$index',
+                        ),
+                      ),
+                    );
+                  },
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  children: log.photoPaths.asMap().entries.map((entry) => Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 6),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: Hero(
+                        tag: 'fuel_photo_${log.id}_${entry.key}',
+                        child: Image.file(
+                          File(entry.value),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  )).toList(),
+                ),
+              ),
+            if (log.photoPaths.length > 1) ...[
+              const SizedBox(height: 8),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: List.generate(
+                  log.photoPaths.length,
+                  (i) => Container(
+                    width: 6,
+                    height: 6,
+                    margin: const EdgeInsets.symmetric(horizontal: 3),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: theme.colorScheme.outline.withValues(alpha: 0.4),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+            const SizedBox(height: 8),
+          ],
           ListTile(
             contentPadding: EdgeInsets.zero,
             leading: const Icon(Icons.calendar_today),
