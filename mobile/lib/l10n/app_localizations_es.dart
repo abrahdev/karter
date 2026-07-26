@@ -1005,26 +1005,27 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get onboardingWelcomeDesc =>
-      'Un rastreador de mantenimiento vehicular open source y respetuoso con tu privacidad. 100% offline — sin cuentas ni telemetría.';
+      'Una aplicación de código abierto para el seguimiento del mantenimiento de vehículos que da prioridad a la privacidad. 100 % sin conexión: sin cuentas, sin telemetría, sin seguimiento.';
 
   @override
-  String get onboardingVehicleTitle => 'Agregá tu vehículo';
+  String get onboardingVehicleTitle => 'Añade tu vehículo';
 
   @override
   String get onboardingVehicleDesc =>
-      'Registrá tu auto, moto o eléctrico. Elegí una plantilla y Karter completa los intervalos de mantenimiento.';
+      'Registra tu coche, moto o vehículo eléctrico. Elige una plantilla y Karter completará automáticamente los intervalos de mantenimiento correspondientes a tu modelo.';
 
   @override
-  String get onboardingTrackTitle => 'Rastreá combustible y mantenimiento';
+  String get onboardingTrackTitle =>
+      'Llevar un control del combustible y el mantenimiento';
 
   @override
   String get onboardingTrackDesc =>
-      'Registrá cargas con cálculos automáticos de consumo. Rastreá reparaciones, repuestos y costos.';
+      'Registra los repostajes con cálculos automáticos de consumo (MPG, L/100 km, km/L). Lleva un control de las reparaciones, las piezas y los costes.';
 
   @override
-  String get onboardingRemindersTitle => 'No te olvides del service';
+  String get onboardingRemindersTitle => 'Mantente al día con el servicio';
 
   @override
   String get onboardingRemindersDesc =>
-      'Recibí recordatorios para cambios de aceite, pastillas de freno y todos los intervalos de mantenimiento.';
+      'Recibe notificaciones cuando llegue el momento de cambiar el aceite, las pastillas de freno y en cada intervalo de mantenimiento, ya sea por distancia o por tiempo.';
 }
