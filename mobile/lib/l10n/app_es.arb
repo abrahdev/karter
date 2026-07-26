@@ -342,5 +342,9 @@
   "onboardingTrackTitle": "Llevar un control del combustible y el mantenimiento",
   "onboardingTrackDesc": "Registra los repostajes con cálculos automáticos de consumo (MPG, L/100 km, km/L). Lleva un control de las reparaciones, las piezas y los costes.",
   "onboardingRemindersTitle": "Mantente al día con el servicio",
-  "onboardingRemindersDesc": "Recibe notificaciones cuando llegue el momento de cambiar el aceite, las pastillas de freno y en cada intervalo de mantenimiento, ya sea por distancia o por tiempo."
+  "onboardingRemindersDesc": "Recibe notificaciones cuando llegue el momento de cambiar el aceite, las pastillas de freno y en cada intervalo de mantenimiento, ya sea por distancia o por tiempo.",
+  "supporterBadge": "¡Eres un colaborador de Karter!",
+  "restorePurchases": "Restaurar compras",
+  "tipPurchased": "¡Gracias!",
+  "tipSupport": "Apoyar"
 }

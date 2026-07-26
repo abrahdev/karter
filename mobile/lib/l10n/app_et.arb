@@ -224,5 +224,9 @@
     "languageSystem": "Süsteemi vaikesätteid",
     "english": "Inglise",
     "spanish": "Hispaania",
-    "eesti": "Eesti"
+    "eesti": "Eesti",
+    "supporterBadge": "Oled Karteri toetaja!",
+    "restorePurchases": "Taasta ostud",
+    "tipPurchased": "Aitäh!",
+    "tipSupport": "Toeta"
 }

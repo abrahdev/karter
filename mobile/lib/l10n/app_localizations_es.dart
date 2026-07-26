@@ -89,7 +89,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get registerService => 'Registrar servicio';
 
   @override
-  String get noDescriptionAvailable => 'Sin descripción disponible. Ve a Ajustes de mantenimiento para añadir una.';
+  String get noDescriptionAvailable =>
+      'Sin descripción disponible. Ve a Ajustes de mantenimiento para añadir una.';
 
   @override
   String get close => 'Cerrar';
@@ -157,7 +158,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get deleteVehicle => 'Eliminar vehículo';
 
   @override
-  String get deleteVehicleConfirm => 'Esta acción no se puede deshacer. Se eliminarán todos los registros de combustible, mantenimiento e intervalos asociados.';
+  String get deleteVehicleConfirm =>
+      'Esta acción no se puede deshacer. Se eliminarán todos los registros de combustible, mantenimiento e intervalos asociados.';
 
   @override
   String get cancel => 'Cancelar';
@@ -203,7 +205,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get importData => 'Importar datos';
 
   @override
-  String importPreview(Object documents, Object fuelLogs, Object maintenanceLogs, Object vehicles) {
+  String importPreview(
+    Object documents,
+    Object fuelLogs,
+    Object maintenanceLogs,
+    Object vehicles,
+  ) {
     return 'Se encontraron:\n• $vehicles vehículo(s)\n• $fuelLogs carga(s) de combustible\n• $maintenanceLogs registro(s) de mantenimiento\n• $documents documento(s)\n\n¿Importar? Los datos existentes con el mismo ID serán sobrescritos.';
   }
 
@@ -227,7 +234,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get maintenanceSettingsTitle => 'Intervalos de mantenimiento';
 
   @override
-  String get maintenanceSettingsInstruction => 'Activa o desactiva los ítems según las necesidades de tu vehículo. Los intervalos personalizados se pueden eliminar.';
+  String get maintenanceSettingsInstruction =>
+      'Activa o desactiva los ítems según las necesidades de tu vehículo. Los intervalos personalizados se pueden eliminar.';
 
   @override
   String get km => 'km';
@@ -266,7 +274,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get deleteInterval => 'Eliminar';
 
   @override
-  String get noDescriptionAvailableSettings => 'Sin descripción disponible. Pulsa \"Editar\" para añadir una.';
+  String get noDescriptionAvailableSettings =>
+      'Sin descripción disponible. Pulsa \"Editar\" para añadir una.';
 
   @override
   String formattedKmK(Object km) {
@@ -361,7 +370,8 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get maintenanceNoServicesInRange => 'Sin servicios en este rango de fechas.';
+  String get maintenanceNoServicesInRange =>
+      'Sin servicios en este rango de fechas.';
 
   @override
   String get maintenanceExportPdf => 'Exportar PDF';
@@ -378,7 +388,8 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get maintenanceReportEmpty => 'Sin registros de mantenimiento en este período.';
+  String get maintenanceReportEmpty =>
+      'Sin registros de mantenimiento en este período.';
 
   @override
   String get maintenanceReportDateHeader => 'Fecha';
@@ -495,7 +506,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get moreAbout => 'Acerca de Karter';
 
   @override
-  String get moreDescription => 'Karter es una app de mantenimiento de vehículos local-first, open source y respetuosa con tu privacidad.';
+  String get moreDescription =>
+      'Karter es una app de mantenimiento de vehículos local-first, open source y respetuosa con tu privacidad.';
 
   @override
   String get moreExport => 'Exportar / Importar datos';
@@ -534,7 +546,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get moreFeedback => 'Calificar la aplicación';
 
   @override
-  String get moreFeedbackSubtitle => 'Califica la app y configura recordatorios';
+  String get moreFeedbackSubtitle =>
+      'Califica la app y configura recordatorios';
 
   @override
   String get feedbackTitle => 'Feedback';
@@ -585,13 +598,15 @@ class AppLocalizationsEs extends AppLocalizations {
   String get colorOfInterface => 'Color de interfaz';
 
   @override
-  String get colorOfInterfaceDesc => 'Aplicar color primario a las superficies de fondo';
+  String get colorOfInterfaceDesc =>
+      'Aplicar color primario a las superficies de fondo';
 
   @override
   String get customColor => 'Color personalizado';
 
   @override
-  String get customColorDesc => 'Usar un color propio en lugar del accent del sistema';
+  String get customColorDesc =>
+      'Usar un color propio en lugar del accent del sistema';
 
   @override
   String get selectColor => 'Elige un color';
@@ -618,13 +633,15 @@ class AppLocalizationsEs extends AppLocalizations {
   String get hapticModeRich => 'Avanzado';
 
   @override
-  String get hapticModeRichDesc => 'Vibraciones escalonadas con intensidad variable';
+  String get hapticModeRichDesc =>
+      'Vibraciones escalonadas con intensidad variable';
 
   @override
   String get testNotification => 'Notificación de prueba';
 
   @override
-  String get testNotificationDesc => 'Enviar una notificación para verificar que funciona';
+  String get testNotificationDesc =>
+      'Enviar una notificación para verificar que funciona';
 
   @override
   String get testNotificationSent => 'Notificación de prueba enviada';
@@ -633,7 +650,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get notificationsPermissionTitle => 'Notificaciones desactivadas';
 
   @override
-  String get notificationsPermissionDesc => 'Activa las notificaciones para recibir recordatorios de odómetro y mantenimiento';
+  String get notificationsPermissionDesc =>
+      'Activa las notificaciones para recibir recordatorios de odómetro y mantenimiento';
 
   @override
   String get notificationsPermissionAllow => 'Permitir notificaciones';
@@ -642,19 +660,23 @@ class AppLocalizationsEs extends AppLocalizations {
   String get notificationsPermissionDeniedTitle => 'Notificaciones bloqueadas';
 
   @override
-  String get notificationsPermissionDeniedDesc => 'El permiso de notificaciones fue denegado permanentemente. Para activarlo, ve a Ajustes > Aplicaciones > Karter > Notificaciones y actívalas.';
+  String get notificationsPermissionDeniedDesc =>
+      'El permiso de notificaciones fue denegado permanentemente. Para activarlo, ve a Ajustes > Aplicaciones > Karter > Notificaciones y actívalas.';
 
   @override
-  String get notificationsPermissionDeniedStep1 => '1. Abre Ajustes del dispositivo';
+  String get notificationsPermissionDeniedStep1 =>
+      '1. Abre Ajustes del dispositivo';
 
   @override
-  String get notificationsPermissionDeniedStep2 => '2. Ve a Aplicaciones > Karter';
+  String get notificationsPermissionDeniedStep2 =>
+      '2. Ve a Aplicaciones > Karter';
 
   @override
   String get notificationsPermissionDeniedStep3 => '3. Toca Notificaciones';
 
   @override
-  String get notificationsPermissionDeniedStep4 => '4. Activa \"Mostrar notificaciones\"';
+  String get notificationsPermissionDeniedStep4 =>
+      '4. Activa \"Mostrar notificaciones\"';
 
   @override
   String get notificationsPermissionOpenSettings => 'Abrir ajustes';
@@ -663,13 +685,15 @@ class AppLocalizationsEs extends AppLocalizations {
   String get shakeToOdometer => 'Shake to update odometer';
 
   @override
-  String get shakeToOdometerDesc => 'Shake device to open odometer update on vehicle screen';
+  String get shakeToOdometerDesc =>
+      'Shake device to open odometer update on vehicle screen';
 
   @override
   String get feedbackReminderToggle => 'Recordatorio de valoración';
 
   @override
-  String get feedbackReminderToggleSubtitle => 'Mostrar un recordatorio para calificar después de guardar servicios';
+  String get feedbackReminderToggleSubtitle =>
+      'Mostrar un recordatorio para calificar después de guardar servicios';
 
   @override
   String get feedbackServicesInterval => 'Servicios antes del aviso';
@@ -694,7 +718,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get feedbackRepeatDaysSuffix => 'días';
 
   @override
-  String get ratePromptMessage => '¿Te gusta Karter? ¡Una reseña ayuda a otros a descubrir la app!';
+  String get ratePromptMessage =>
+      '¿Te gusta Karter? ¡Una reseña ayuda a otros a descubrir la app!';
 
   @override
   String get rate => 'Calificar';
@@ -708,7 +733,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get tipProgram => 'Programa de propinas';
 
   @override
-  String get tipProgramComingSoon => 'Esta funcionalidad está en desarrollo y estará disponible pronto.';
+  String get tipProgramComingSoon =>
+      'Esta funcionalidad está en desarrollo y estará disponible pronto.';
 
   @override
   String get tipBadges => 'Insignias';
@@ -720,7 +746,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get tipInfo => 'Información';
 
   @override
-  String get tipInfoText => 'El programa de propinas es una forma de que los usuarios muestren apoyo y agradecimiento extra por el soporte rápido, las mejoras constantes y las actualizaciones continuas que Karter ha ofrecido.';
+  String get tipInfoText =>
+      'El programa de propinas es una forma de que los usuarios muestren apoyo y agradecimiento extra por el soporte rápido, las mejoras constantes y las actualizaciones continuas que Karter ha ofrecido.';
 
   @override
   String get tipOneTime => 'Propina única';
@@ -768,7 +795,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get privacyPolicy => 'Política de privacidad';
 
   @override
-  String get privacyPolicyDesc => 'Lee nuestra política de privacidad en línea.';
+  String get privacyPolicyDesc =>
+      'Lee nuestra política de privacidad en línea.';
 
   @override
   String get openPrivacyPolicy => 'Abrir política de privacidad';
@@ -831,13 +859,15 @@ class AppLocalizationsEs extends AppLocalizations {
   String get moreNotifications => 'Notificaciones';
 
   @override
-  String get moreNotificationsSubtitle => 'Recordatorios de odómetro y mantenimiento';
+  String get moreNotificationsSubtitle =>
+      'Recordatorios de odómetro y mantenimiento';
 
   @override
   String get notificationSettingsTitle => 'Configuración de notificaciones';
 
   @override
-  String get notificationSettingsSubtitle => 'Configura los recordatorios para este vehículo';
+  String get notificationSettingsSubtitle =>
+      'Configura los recordatorios para este vehículo';
 
   @override
   String get notificationOdometerSection => 'Recordatorio de odómetro';
@@ -860,7 +890,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get notificationMaintenanceToggle => 'Recordatorios de mantenimiento';
 
   @override
-  String get notificationMaintenanceToggleSubtitle => 'Recibe recordatorios diarios sobre el mantenimiento pendiente';
+  String get notificationMaintenanceToggleSubtitle =>
+      'Recibe recordatorios diarios sobre el mantenimiento pendiente';
 
   @override
   String notificationSnoozedBanner(Object days) {
@@ -871,7 +902,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get notificationSnoozeCancel => 'Cancelar posposición';
 
   @override
-  String get notificationNoVehicles => 'Añade un vehículo para configurar notificaciones';
+  String get notificationNoVehicles =>
+      'Añade un vehículo para configurar notificaciones';
 
   @override
   String notificationVehicleSubtitle(Object freq, Object maint) {
@@ -924,7 +956,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get unsavedChanges => 'Cambios sin guardar';
 
   @override
-  String get discardChangesConfirm => 'Tienes cambios sin aplicar. ¿Estás seguro de que quieres salir?';
+  String get discardChangesConfirm =>
+      'Tienes cambios sin aplicar. ¿Estás seguro de que quieres salir?';
 
   @override
   String get discard => 'Descartar';
@@ -933,7 +966,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get moreTemplateSource => 'Fuente de plantillas';
 
   @override
-  String get moreTemplateSourceSubtitle => 'Obtener plantillas desde GitHub o usar locales';
+  String get moreTemplateSourceSubtitle =>
+      'Obtener plantillas desde GitHub o usar locales';
 
   @override
   String get moreTemplateSourceOffline => 'Local (sin conexión)';
@@ -948,7 +982,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get moreTemplateSourceReset => 'Restablecer valor por defecto';
 
   @override
-  String get moreTemplateSourceUrlHint => 'https://raw.githubusercontent.com/...';
+  String get moreTemplateSourceUrlHint =>
+      'https://raw.githubusercontent.com/...';
 
   @override
   String get moreTemplateSourceEditUrl => 'Editar URL';
@@ -975,23 +1010,40 @@ class AppLocalizationsEs extends AppLocalizations {
   String get onboardingWelcomeTitle => 'Bienvenido a Karter';
 
   @override
-  String get onboardingWelcomeDesc => 'Una aplicación de código abierto para el seguimiento del mantenimiento de vehículos que da prioridad a la privacidad. 100 % sin conexión: sin cuentas, sin telemetría, sin seguimiento.';
+  String get onboardingWelcomeDesc =>
+      'Una aplicación de código abierto para el seguimiento del mantenimiento de vehículos que da prioridad a la privacidad. 100 % sin conexión: sin cuentas, sin telemetría, sin seguimiento.';
 
   @override
   String get onboardingVehicleTitle => 'Añade tu vehículo';
 
   @override
-  String get onboardingVehicleDesc => 'Registra tu coche, moto o vehículo eléctrico. Elige una plantilla y Karter completará automáticamente los intervalos de mantenimiento correspondientes a tu modelo.';
+  String get onboardingVehicleDesc =>
+      'Registra tu coche, moto o vehículo eléctrico. Elige una plantilla y Karter completará automáticamente los intervalos de mantenimiento correspondientes a tu modelo.';
 
   @override
-  String get onboardingTrackTitle => 'Llevar un control del combustible y el mantenimiento';
+  String get onboardingTrackTitle =>
+      'Llevar un control del combustible y el mantenimiento';
 
   @override
-  String get onboardingTrackDesc => 'Registra los repostajes con cálculos automáticos de consumo (MPG, L/100 km, km/L). Lleva un control de las reparaciones, las piezas y los costes.';
+  String get onboardingTrackDesc =>
+      'Registra los repostajes con cálculos automáticos de consumo (MPG, L/100 km, km/L). Lleva un control de las reparaciones, las piezas y los costes.';
 
   @override
   String get onboardingRemindersTitle => 'Mantente al día con el servicio';
 
   @override
-  String get onboardingRemindersDesc => 'Recibe notificaciones cuando llegue el momento de cambiar el aceite, las pastillas de freno y en cada intervalo de mantenimiento, ya sea por distancia o por tiempo.';
+  String get onboardingRemindersDesc =>
+      'Recibe notificaciones cuando llegue el momento de cambiar el aceite, las pastillas de freno y en cada intervalo de mantenimiento, ya sea por distancia o por tiempo.';
+
+  @override
+  String get supporterBadge => '¡Eres un colaborador de Karter!';
+
+  @override
+  String get restorePurchases => 'Restaurar compras';
+
+  @override
+  String get tipPurchased => '¡Gracias!';
+
+  @override
+  String get tipSupport => 'Apoyar';
 }

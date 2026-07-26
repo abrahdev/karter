@@ -344,5 +344,9 @@
   "onboardingTrackTitle": "Track fuel & maintenance",
   "onboardingTrackDesc": "Log fill-ups with automatic economy calculations (MPG, L/100km, km/L). Track repairs, parts, and costs.",
   "onboardingRemindersTitle": "Stay on top of service",
-  "onboardingRemindersDesc": "Get notified when it's time for oil changes, brake pads, and every maintenance interval — by distance or time."
+  "onboardingRemindersDesc": "Get notified when it's time for oil changes, brake pads, and every maintenance interval — by distance or time.",
+  "supporterBadge": "You're a Karter supporter!",
+  "restorePurchases": "Restore purchases",
+  "tipPurchased": "Thank you!",
+  "tipSupport": "Support"
 }
