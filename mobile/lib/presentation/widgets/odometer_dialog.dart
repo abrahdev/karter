@@ -1,8 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/domain/enums/distance_unit.dart';
 import 'package:mobile/domain/value_objects/odometer.dart';
 import 'package:mobile/l10n/app_localizations.dart';
+import 'package:mobile/presentation/providers/haptic_provider.dart';
 
 class OdometerDialog extends StatefulWidget {
   final Odometer current;
@@ -22,6 +26,7 @@ class _OdometerDialogState extends State<OdometerDialog> {
   late TextEditingController _controller;
   double _rawValue = 0;
   String? _warning;
+  Timer? _repeatTimer;
 
   static const _kOutlierThreshold = 5000.0;
 
@@ -34,6 +39,7 @@ class _OdometerDialogState extends State<OdometerDialog> {
 
   @override
   void dispose() {
+    _repeatTimer?.cancel();
     _controller.dispose();
     super.dispose();
   }
@@ -52,8 +58,45 @@ class _OdometerDialogState extends State<OdometerDialog> {
     return double.tryParse(text.replaceAll('.', '')) ?? 0;
   }
 
+  void _hapticForDelta(int delta) {
+    final abs = delta.abs();
+    final haptic = ProviderScope.containerOf(context).read(hapticProvider.notifier);
+    if (abs >= 1000) {
+      haptic.heavyTap();
+    } else if (abs >= 100) {
+      haptic.mediumTap();
+    } else if (abs >= 10) {
+      haptic.mediumTap();
+    } else {
+      haptic.lightTap();
+    }
+  }
+
+  void _startRepeat(double delta) {
+    _add(delta);
+    var delay = 300;
+    _repeatTimer?.cancel();
+    _repeatTick(delta, delay);
+  }
+
+  void _repeatTick(double delta, int delay) {
+    _repeatTimer?.cancel();
+    _repeatTimer = Timer(Duration(milliseconds: delay), () {
+      if (!mounted) return;
+      _add(delta);
+      final nextDelay = (delay * 0.6).toInt().clamp(25, 300);
+      _repeatTick(delta, nextDelay);
+    });
+  }
+
+  void _stopRepeat() {
+    _repeatTimer?.cancel();
+    _repeatTimer = null;
+  }
+
   void _add(double delta) {
     final newValue = (_rawValue + delta).clamp(0, 9999999);
+    _hapticForDelta(delta.toInt());
     setState(() {
       _rawValue = newValue.toDouble();
       _controller.text = _format(_rawValue);
@@ -89,8 +132,7 @@ class _OdometerDialogState extends State<OdometerDialog> {
     final l = AppLocalizations.of(context)!;
     final currentKm = widget.current.distance;
 
-    final mediaQuery = MediaQuery.of(context);
-    final isNarrow = mediaQuery.size.width < 480;
+    final isNarrow = MediaQuery.of(context).size.width < 480;
 
     return Padding(
       padding: EdgeInsets.only(
@@ -146,23 +188,19 @@ class _OdometerDialogState extends State<OdometerDialog> {
                 },
               ),
               const SizedBox(height: 8),
-              Wrap(
-                spacing: 4,
-                runSpacing: 4,
-                alignment: WrapAlignment.center,
+              Row(
                 children: [
-                  _quickBtn(
-                      Icons.remove_circle_outline, -10, theme),
-                  _quickBtn(null, -1, theme),
-                  _quickBtn(null, 1, theme),
-                  _quickBtn(Icons.add_circle_outline, 10, theme),
+                  Expanded(child: _quickBtn(Icons.remove_circle_outline, -10, theme)),
+                  Expanded(child: _quickBtn(null, -1, theme)),
+                  const Spacer(flex: 2),
+                  Expanded(child: _quickBtn(null, 1, theme)),
+                  Expanded(child: _quickBtn(Icons.add_circle_outline, 10, theme)),
                 ],
               ),
             ] else ...[
               Row(
                 children: [
-                  _quickBtn(
-                      Icons.remove_circle_outline, -10, theme),
+                  _quickBtn(Icons.remove_circle_outline, -10, theme),
                   const SizedBox(width: 4),
                   _quickBtn(null, -1, theme),
                   const SizedBox(width: 8),
@@ -173,15 +211,13 @@ class _OdometerDialogState extends State<OdometerDialog> {
                       textAlign: TextAlign.center,
                       style: theme.textTheme.headlineMedium,
                       inputFormatters: [
-                        FilteringTextInputFormatter.allow(
-                            RegExp(r'[\d.]')),
+                        FilteringTextInputFormatter.allow(RegExp(r'[\d.]')),
                       ],
                       decoration: InputDecoration(
                         suffixText: _unitLabel(),
                         border: const OutlineInputBorder(),
                         contentPadding:
-                            const EdgeInsets.symmetric(
-                                horizontal: 8, vertical: 12),
+                            const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
                       ),
                       onChanged: (v) {
                         setState(() {
@@ -199,14 +235,12 @@ class _OdometerDialogState extends State<OdometerDialog> {
               ),
             ],
             const SizedBox(height: 8),
-            Wrap(
-              spacing: 6,
-              runSpacing: 6,
+            Row(
               children: [
-                _chip(100, theme),
-                _chip(500, theme),
-                _chip(1000, theme),
-                _chip(5000, theme),
+                Expanded(child: _chip(100, theme)),
+                Expanded(child: _chip(500, theme)),
+                Expanded(child: _chip(1000, theme)),
+                Expanded(child: _chip(5000, theme)),
               ],
             ),
             if (_warning != null) ...[
@@ -240,7 +274,12 @@ class _OdometerDialogState extends State<OdometerDialog> {
               children: [
                 Expanded(
                   child: OutlinedButton(
-                    onPressed: () => Navigator.pop(context),
+                    onPressed: () {
+                      ProviderScope.containerOf(context)
+                          .read(hapticProvider.notifier)
+                          .lightTap();
+                      Navigator.pop(context);
+                    },
                     child: Text(l.odometerCancel),
                   ),
                 ),
@@ -249,6 +288,9 @@ class _OdometerDialogState extends State<OdometerDialog> {
                   child: FilledButton(
                     onPressed: _rawValue >= 0 && _rawValue != currentKm
                         ? () async {
+                            ProviderScope.containerOf(context)
+                                .read(hapticProvider.notifier)
+                                .success();
                             await widget.onSave(_rawValue);
                             if (context.mounted) Navigator.pop(context);
                           }
@@ -265,13 +307,23 @@ class _OdometerDialogState extends State<OdometerDialog> {
   }
 
   Widget _quickBtn(IconData? icon, int delta, ThemeData theme) {
-    return IconButton(
-      icon: Icon(
-        icon ?? (delta < 0 ? Icons.remove : Icons.add),
+    return Tooltip(
+      message: delta < 0 ? '${delta.abs()}' : '+$delta',
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () => _add(delta.toDouble()),
+        onLongPressStart: (_) => _startRepeat(delta.toDouble()),
+        onLongPressEnd: (_) => _stopRepeat(),
+        onLongPressCancel: () => _stopRepeat(),
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Icon(
+            icon ?? (delta < 0 ? Icons.remove : Icons.add),
+            size: 20,
+            color: theme.colorScheme.primary,
+          ),
+        ),
       ),
-      onPressed: () => _add(delta.toDouble()),
-      tooltip: delta < 0 ? '${delta.abs()}' : '+$delta',
-      iconSize: 20,
     );
   }
 

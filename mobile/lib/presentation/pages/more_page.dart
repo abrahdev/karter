@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart' show BlockPicker;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -12,6 +13,7 @@ import 'package:mobile/presentation/pages/onboarding_page.dart';
 import 'package:mobile/presentation/pages/privacy_policy_page.dart';
 import 'package:mobile/presentation/pages/tips_page.dart';
 import 'package:mobile/presentation/widgets/section_header.dart';
+import 'package:mobile/presentation/widgets/karter_switch_list_tile.dart';
 import 'package:mobile/presentation/providers/color_provider.dart';
 import 'package:mobile/presentation/providers/haptic_provider.dart';
 import 'package:mobile/presentation/providers/shake_to_odometer_provider.dart';
@@ -35,7 +37,7 @@ class MorePage extends ConsumerWidget {
     final l = AppLocalizations.of(context)!;
     final themeMode = ref.watch(themeModeProvider);
     final seedColorState = ref.watch(seedColorProvider);
-    final hapticEnabled = ref.watch(hapticProvider);
+    final hapticMode = ref.watch(hapticProvider);
     final shakeToOdometerEnabled = ref.watch(shakeToOdometerProvider);
     final surfaceTint = ref.watch(surfaceTintProvider);
     final localeNotifier = ref.watch(localeProvider.notifier);
@@ -71,16 +73,16 @@ class MorePage extends ConsumerWidget {
                             trailing: const Icon(Icons.chevron_right),
                             onTap: () => _showThemePicker(context, ref, themeMode),
                           ),
-                          SwitchListTile(
-                            secondary: const Icon(Icons.format_color_fill),
+                          KarterSwitchListTile(
+                            leading: const Icon(Icons.format_color_fill),
                             title: Text(l.colorOfInterface),
                             subtitle: Text(l.colorOfInterfaceDesc),
                             value: surfaceTint,
                             onChanged: (v) =>
                                 ref.read(surfaceTintProvider.notifier).toggle(v),
                           ),
-                          SwitchListTile(
-                            secondary: const Icon(Icons.palette_outlined),
+                          KarterSwitchListTile(
+                            leading: const Icon(Icons.palette_outlined),
                             title: Text(l.customColor),
                             subtitle: Text(l.customColorDesc),
                             value: seedColorState.useCustom,
@@ -108,16 +110,43 @@ class MorePage extends ConsumerWidget {
                               onTap: () => _pickColor(context, ref, seedColorState),
                             ),
                           ],
-                          SwitchListTile(
-                            secondary: const Icon(Icons.vibration),
+                          ExpansionTile(
+                            leading: const Icon(Icons.vibration),
                             title: Text(l.hapticFeedback),
                             subtitle: Text(l.hapticFeedbackDesc),
-                            value: hapticEnabled,
-                            onChanged: (v) =>
-                                ref.read(hapticProvider.notifier).toggle(v),
+                            children: [
+                              RadioGroup<HapticMode>(
+                                groupValue: hapticMode,
+                                onChanged: (v) {
+                                  ref
+                                      .read(hapticProvider.notifier)
+                                      .setMode(v!);
+                                  _demoHaptic(v);
+                                },
+                                child: Column(
+                                  children: [
+                                    RadioListTile<HapticMode>(
+                                      title: Text(l.hapticModeOff),
+                                      subtitle: Text(l.hapticModeOffDesc),
+                                      value: HapticMode.off,
+                                    ),
+                                    RadioListTile<HapticMode>(
+                                      title: Text(l.hapticModeClear),
+                                      subtitle: Text(l.hapticModeClearDesc),
+                                      value: HapticMode.clear,
+                                    ),
+                                    RadioListTile<HapticMode>(
+                                      title: Text(l.hapticModeRich),
+                                      subtitle: Text(l.hapticModeRichDesc),
+                                      value: HapticMode.rich,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
-                          SwitchListTile(
-                            secondary: const Icon(Icons.screen_rotation),
+                          KarterSwitchListTile(
+                            leading: const Icon(Icons.screen_rotation),
                             title: Text(l.shakeToOdometer),
                             subtitle: Text(l.shakeToOdometerDesc),
                             value: shakeToOdometerEnabled,
@@ -282,16 +311,16 @@ class MorePage extends ConsumerWidget {
                   trailing: const Icon(Icons.chevron_right),
                   onTap: () => _showThemePicker(context, ref, themeMode),
                 ),
-                SwitchListTile(
-                  secondary: const Icon(Icons.format_color_fill),
+                KarterSwitchListTile(
+                  leading: const Icon(Icons.format_color_fill),
                   title: Text(l.colorOfInterface),
                   subtitle: Text(l.colorOfInterfaceDesc),
                   value: surfaceTint,
                   onChanged: (v) =>
                       ref.read(surfaceTintProvider.notifier).toggle(v),
                 ),
-                SwitchListTile(
-                  secondary: const Icon(Icons.palette_outlined),
+                KarterSwitchListTile(
+                  leading: const Icon(Icons.palette_outlined),
                   title: Text(l.customColor),
                   subtitle: Text(l.customColorDesc),
                   value: seedColorState.useCustom,
@@ -319,16 +348,43 @@ class MorePage extends ConsumerWidget {
                     onTap: () => _pickColor(context, ref, seedColorState),
                   ),
                 ],
-                SwitchListTile(
-                  secondary: const Icon(Icons.vibration),
+                ExpansionTile(
+                  leading: const Icon(Icons.vibration),
                   title: Text(l.hapticFeedback),
                   subtitle: Text(l.hapticFeedbackDesc),
-                  value: hapticEnabled,
-                  onChanged: (v) =>
-                      ref.read(hapticProvider.notifier).toggle(v),
+                  children: [
+                    RadioGroup<HapticMode>(
+                      groupValue: hapticMode,
+                      onChanged: (v) {
+                        ref
+                            .read(hapticProvider.notifier)
+                            .setMode(v!);
+                        _demoHaptic(v);
+                      },
+                      child: Column(
+                        children: [
+                          RadioListTile<HapticMode>(
+                            title: Text(l.hapticModeOff),
+                            subtitle: Text(l.hapticModeOffDesc),
+                            value: HapticMode.off,
+                          ),
+                          RadioListTile<HapticMode>(
+                            title: Text(l.hapticModeClear),
+                            subtitle: Text(l.hapticModeClearDesc),
+                            value: HapticMode.clear,
+                          ),
+                          RadioListTile<HapticMode>(
+                            title: Text(l.hapticModeRich),
+                            subtitle: Text(l.hapticModeRichDesc),
+                            value: HapticMode.rich,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-                SwitchListTile(
-                  secondary: const Icon(Icons.screen_rotation),
+                KarterSwitchListTile(
+                  leading: const Icon(Icons.screen_rotation),
                   title: Text(l.shakeToOdometer),
                   subtitle: Text(l.shakeToOdometerDesc),
                   value: shakeToOdometerEnabled,
@@ -717,8 +773,8 @@ class _DataSection extends ConsumerWidget {
         trailing: const Icon(Icons.chevron_right),
         onTap: () => context.push('/data'),
       ),
-      SwitchListTile(
-        secondary: Icon(config.enabled ? Icons.cloud : Icons.cloud_off),
+      KarterSwitchListTile(
+        leading: Icon(config.enabled ? Icons.cloud : Icons.cloud_off),
         title: Text(l.moreTemplateSource),
         subtitle: Text(l.moreTemplateSourceSubtitle),
         value: config.enabled,
@@ -804,6 +860,23 @@ class _DataSection extends ConsumerWidget {
         );
       }
     }
+  }
+}
+
+void _demoHaptic(HapticMode mode) {
+  switch (mode) {
+    case HapticMode.off:
+      break;
+    case HapticMode.clear:
+      HapticFeedback.mediumImpact();
+      break;
+    case HapticMode.rich:
+      HapticFeedback.mediumImpact();
+      Future.delayed(
+        const Duration(milliseconds: 60),
+        () => HapticFeedback.lightImpact(),
+      );
+      break;
   }
 }
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter/services.dart';
+import 'package:mobile/presentation/providers/haptic_provider.dart';
+import 'package:mobile/presentation/widgets/karter_switch_list_tile.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile/core/database/app_database.dart';
 import 'package:mobile/core/modal_helpers.dart';
@@ -192,7 +193,7 @@ class _AddFuelLogModalState extends ConsumerState<_AddFuelLogModal> {
       await repo.save(log);
       ref.invalidate(fuelLogsProvider(widget.vehicleId));
 
-      HapticFeedback.mediumImpact();
+      ref.read(hapticProvider.notifier).success();
       if (mounted) Navigator.pop(context, 'saved');
     } catch (e) {
       if (mounted) {
@@ -240,7 +241,7 @@ class _AddFuelLogModalState extends ConsumerState<_AddFuelLogModal> {
       await repo.delete(widget.editLog!.id);
       ref.invalidate(fuelLogsProvider(widget.vehicleId));
 
-      HapticFeedback.mediumImpact();
+      ref.read(hapticProvider.notifier).delete();
       if (mounted) Navigator.pop(context, 'deleted');
     } catch (e) {
       if (mounted) {
@@ -346,7 +347,7 @@ class _AddFuelLogModalState extends ConsumerState<_AddFuelLogModal> {
                     .numberWithOptions(decimal: true),
               ),
               const SizedBox(height: 8),
-              SwitchListTile(
+              KarterSwitchListTile(
                 contentPadding: EdgeInsets.zero,
                 title: Text(l.fullTank),
                 value: _isFullTank,
@@ -452,7 +453,7 @@ class _FuelLogPreview extends ConsumerWidget {
               title: Text(
                   '\$${log.pricePerUnit!.toStringAsFixed(2)}/$volUnit'),
             ),
-          SwitchListTile(
+          KarterSwitchListTile(
             contentPadding: EdgeInsets.zero,
             title: Text(l.fullTank),
             value: log.isFullTank,

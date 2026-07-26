@@ -1221,6 +1221,42 @@ abstract class AppLocalizations {
   /// **'Vibrate on interactions'**
   String get hapticFeedbackDesc;
 
+  /// No description provided for @hapticModeOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get hapticModeOff;
+
+  /// No description provided for @hapticModeOffDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'No vibration on interactions'**
+  String get hapticModeOffDesc;
+
+  /// No description provided for @hapticModeClear.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get hapticModeClear;
+
+  /// No description provided for @hapticModeClearDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Single crisp tap per action'**
+  String get hapticModeClearDesc;
+
+  /// No description provided for @hapticModeRich.
+  ///
+  /// In en, this message translates to:
+  /// **'Rich'**
+  String get hapticModeRich;
+
+  /// No description provided for @hapticModeRichDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Layered vibrations with varying intensity'**
+  String get hapticModeRichDesc;
+
   /// No description provided for @testNotification.
   ///
   /// In en, this message translates to:

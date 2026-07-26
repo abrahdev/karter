@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter/services.dart';
+import 'package:mobile/presentation/providers/haptic_provider.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile/core/database/app_database.dart';
@@ -332,7 +332,7 @@ class _AddMaintenanceLogModalState
       ref.invalidate(maintenanceLogsProvider(widget.vehicleId));
       ref.invalidate(maintenanceIntervalsProvider(widget.vehicleId));
 
-      HapticFeedback.mediumImpact();
+      ref.read(hapticProvider.notifier).success();
       if (mounted) Navigator.pop(context, 'saved');
     } catch (e) {
       if (mounted) {
@@ -396,7 +396,7 @@ class _AddMaintenanceLogModalState
       ref.invalidate(maintenanceLogsProvider(widget.vehicleId));
       ref.invalidate(maintenanceIntervalsProvider(widget.vehicleId));
 
-      HapticFeedback.mediumImpact();
+      ref.read(hapticProvider.notifier).delete();
       if (mounted) Navigator.pop(context, 'deleted');
     } catch (e) {
       if (mounted) {

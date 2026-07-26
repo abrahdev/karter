@@ -17,6 +17,8 @@ import 'package:mobile/presentation/providers/vehicle_providers.dart';
 import 'package:mobile/presentation/providers/template_source_provider.dart';
 import 'package:mobile/presentation/widgets/notification_permission_modal.dart';
 import 'package:mobile/presentation/widgets/section_header.dart';
+import 'package:mobile/presentation/widgets/karter_switch_list_tile.dart';
+import 'package:mobile/presentation/widgets/karter_segmented_button.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class VehicleFormPage extends ConsumerStatefulWidget {
@@ -727,7 +729,7 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
                     const SizedBox(height: 8),
                     AbsorbPointer(
                       absorbing: _templateIntervals != null,
-                      child: SegmentedButton<VehicleType>(
+                      child: KarterSegmentedButton<VehicleType>(
                           segments: [
                             ButtonSegment(
                               value: VehicleType.combustion,
@@ -789,7 +791,7 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
                       maxLength: 17,
                       onChanged: (_) => _markDirty(),
                     ),
-                    SwitchListTile(
+                    KarterSwitchListTile(
                       title: Text(l.aliasOptional),
                       subtitle: _showAlias && _aliasController.text.isNotEmpty
                           ? Text(_aliasController.text)
@@ -844,7 +846,7 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
                           ),
                         ),
                         const SizedBox(width: 12),
-                        SegmentedButton<DistanceUnit>(
+                        KarterSegmentedButton<DistanceUnit>(
                           segments: [
                             ButtonSegment(value: DistanceUnit.kilometers, label: Text(l.unitKm)),
                             ButtonSegment(value: DistanceUnit.miles, label: Text(l.unitMi)),
@@ -861,7 +863,7 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
                     Row(
                       children: [
                         Expanded(
-                          child: SegmentedButton<VolumeUnit>(
+                          child: KarterSegmentedButton<VolumeUnit>(
                             segments: [
                               ButtonSegment(value: VolumeUnit.liters, label: Text(l.unitL)),
                               ButtonSegment(value: VolumeUnit.gallons, label: Text(l.unitGal)),

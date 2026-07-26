@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/core/theme/app_spacing.dart';
 import 'package:mobile/domain/entities/vehicle.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
+import 'package:mobile/presentation/widgets/karter_switch_list_tile.dart';
+import 'package:mobile/presentation/widgets/karter_segmented_button.dart';
 
 class NotificationSettingsPage extends ConsumerWidget {
   final String vehicleId;
@@ -154,8 +157,7 @@ class _NotificationSettingsContentState
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SegmentedButton<int>(
-          emptySelectionAllowed: true,
+        KarterSegmentedButton<int>(
           segments: [
             ButtonSegment(value: 7, label: Text(l.notificationFreqWeekly)),
             ButtonSegment(value: 30, label: Text(l.notificationFreqMonthly)),
@@ -203,6 +205,7 @@ class _NotificationSettingsContentState
                       setState(() => _sliderValue = v);
                     },
                     onChangeEnd: (v) {
+                      HapticFeedback.selectionClick();
                       _saveFreq(v.round());
                     },
                   ),
@@ -243,7 +246,7 @@ class _NotificationSettingsContentState
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SwitchListTile(
+        KarterSwitchListTile(
           title: Text(l.notificationMaintenanceToggle),
           subtitle: Text(l.notificationMaintenanceToggleSubtitle),
           value: vehicle.maintenanceReminderEnabled,
@@ -265,7 +268,7 @@ class _NotificationSettingsContentState
         ),
         if (vehicle.maintenanceReminderEnabled) ...[
           const SizedBox(height: 8),
-          SwitchListTile(
+          KarterSwitchListTile(
             title: Text(l.notificationSnoozeToggle),
             subtitle: Text(l.notificationSnoozeDays(_snoozeDays.round())),
             value: isSnoozed,
@@ -310,6 +313,7 @@ class _NotificationSettingsContentState
                     setState(() => _snoozeDays = v);
                   },
                   onChangeEnd: (v) async {
+                    HapticFeedback.selectionClick();
                     final updated = vehicle.copyWith(
                       maintenanceReminderSnoozedUntil:
                           DateTime.now().add(Duration(days: v.round())),
