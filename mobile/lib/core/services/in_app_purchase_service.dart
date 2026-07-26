@@ -3,13 +3,13 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 
+const String kSubscriptionId = 'karter_supporter';
+
 const Set<String> kProductIds = {
   'karter_bronze_one',
   'karter_silver_one',
   'karter_gold_one',
-  'karter_bronze_monthly',
-  'karter_silver_monthly',
-  'karter_gold_monthly',
+  kSubscriptionId,
 };
 
 class InAppPurchaseService {
@@ -61,7 +61,7 @@ class InAppPurchaseService {
   Future<bool> buy(ProductDetails product) async {
     try {
       final params = PurchaseParam(productDetails: product);
-      if (product.id.contains('_monthly')) {
+      if (product.id == kSubscriptionId) {
         return await _iap.buyNonConsumable(purchaseParam: params);
       } else {
         return await _iap.buyConsumable(purchaseParam: params);

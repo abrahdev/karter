@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mobile/core/services/in_app_purchase_service.dart';
 import 'package:mobile/core/theme/app_spacing.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/haptic_provider.dart';
@@ -107,17 +108,17 @@ class TipsPage extends ConsumerWidget {
                 _TipCard(
                   tier: l.tipBronze,
                   price: l.tipBronzeMonthly,
-                  sku: 'karter_bronze_monthly',
+                  sku: kSubscriptionId,
                 ),
                 _TipCard(
                   tier: l.tipSilver,
                   price: l.tipSilverMonthly,
-                  sku: 'karter_silver_monthly',
+                  sku: kSubscriptionId,
                 ),
                 _TipCard(
                   tier: l.tipGold,
                   price: l.tipGoldMonthly,
-                  sku: 'karter_gold_monthly',
+                  sku: kSubscriptionId,
                 ),
 
                 const SizedBox(height: 24),
@@ -163,9 +164,13 @@ class _TipCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final iapState = ref.watch(iapProvider);
-    final purchased = iapState.purchased.contains(sku);
+    final isSubscription = sku == kSubscriptionId;
+    final purchased = isSubscription
+        ? iapState.purchased.contains(kSubscriptionId)
+        : iapState.purchased.contains(sku);
     final buying = iapState.buying;
     final product = iapState.products.where((p) => p.id == sku).toList();
+    final l = AppLocalizations.of(context)!;
 
     return Card(
       child: ListTile(
@@ -180,7 +185,7 @@ class _TipCard extends ConsumerWidget {
         title: Text(tier),
         subtitle: Text(
           purchased
-              ? l10n(context).tipPurchased
+              ? l.tipPurchased
               : product.isNotEmpty ? product.first.price : price,
         ),
         trailing: purchased
@@ -201,12 +206,9 @@ class _TipCard extends ConsumerWidget {
                         height: 16,
                         child: CircularProgressIndicator(strokeWidth: 2),
                       )
-                    : Text(l10n(context).tipSupport),
+                    : Text(l.tipSupport),
               ),
       ),
     );
   }
-
-  AppLocalizations l10n(BuildContext context) =>
-      AppLocalizations.of(context)!;
 }

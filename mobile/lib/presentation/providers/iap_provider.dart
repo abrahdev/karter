@@ -115,15 +115,13 @@ class IapNotifier extends Notifier<IapState> {
 
   String? highestBadge() {
     if (state.purchased.contains('karter_gold_one') ||
-        state.purchased.contains('karter_gold_monthly')) {
+        state.purchased.contains('karter_supporter')) {
       return 'gold';
     }
-    if (state.purchased.contains('karter_silver_one') ||
-        state.purchased.contains('karter_silver_monthly')) {
+    if (state.purchased.contains('karter_silver_one')) {
       return 'silver';
     }
-    if (state.purchased.contains('karter_bronze_one') ||
-        state.purchased.contains('karter_bronze_monthly')) {
+    if (state.purchased.contains('karter_bronze_one')) {
       return 'bronze';
     }
     return null;
