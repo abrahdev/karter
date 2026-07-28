@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:mobile/core/services/in_app_purchase_service.dart';
 import 'package:mobile/core/theme/app_spacing.dart';
 import 'package:mobile/l10n/app_localizations.dart';
@@ -105,21 +106,7 @@ class TipsPage extends ConsumerWidget {
 
                 Text(l.tipRecurring, style: theme.textTheme.titleMedium),
                 const SizedBox(height: 12),
-                _TipCard(
-                  tier: l.tipBronze,
-                  price: l.tipBronzeMonthly,
-                  sku: kSubscriptionId,
-                ),
-                _TipCard(
-                  tier: l.tipSilver,
-                  price: l.tipSilverMonthly,
-                  sku: kSubscriptionId,
-                ),
-                _TipCard(
-                  tier: l.tipGold,
-                  price: l.tipGoldMonthly,
-                  sku: kSubscriptionId,
-                ),
+                ..._buildSubscriptionTiers(context, ref, iapState, theme),
 
                 const SizedBox(height: 24),
 
@@ -139,6 +126,37 @@ class TipsPage extends ConsumerWidget {
     );
   }
 
+  List<Widget> _buildSubscriptionTiers(
+    BuildContext context,
+    WidgetRef ref,
+    IapState iapState,
+    ThemeData theme,
+  ) {
+    final l = AppLocalizations.of(context)!;
+    final subs = iapState.products
+        .where((p) => p.id == kSubscriptionId)
+        .toList()
+      ..sort((a, b) => a.rawPrice.compareTo(b.rawPrice));
+
+    if (subs.length < 3) {
+      return [
+        _TipCard(tier: l.tipBronze, price: l.tipBronzeMonthly, sku: kSubscriptionId),
+        _TipCard(tier: l.tipSilver, price: l.tipSilverMonthly, sku: kSubscriptionId),
+        _TipCard(tier: l.tipGold, price: l.tipGoldMonthly, sku: kSubscriptionId),
+      ];
+    }
+
+    final tiers = [l.tipBronze, l.tipSilver, l.tipGold];
+    return List.generate(3, (i) {
+      return _TipCard(
+        tier: tiers[i],
+        price: l.tipBronzeMonthly,
+        sku: kSubscriptionId,
+        product: subs[i],
+      );
+    });
+  }
+
   Color _badgeColor(String? badge, ThemeData theme) {
     return switch (badge) {
       'gold' => const Color(0xFFFFD700),
@@ -153,11 +171,13 @@ class _TipCard extends ConsumerWidget {
   final String tier;
   final String price;
   final String sku;
+  final ProductDetails? product;
 
   const _TipCard({
     required this.tier,
     required this.price,
     required this.sku,
+    this.product,
   });
 
   @override
@@ -169,7 +189,11 @@ class _TipCard extends ConsumerWidget {
         ? iapState.purchased.contains(kSubscriptionId)
         : iapState.purchased.contains(sku);
     final buying = iapState.buying;
-    final product = iapState.products.where((p) => p.id == sku).toList();
+    final resolvedProduct = product ??
+        (iapState.products.cast<ProductDetails?>().firstWhere(
+          (p) => p?.id == sku,
+          orElse: () => null,
+        ));
     final l = AppLocalizations.of(context)!;
 
     return Card(
@@ -186,7 +210,7 @@ class _TipCard extends ConsumerWidget {
         subtitle: Text(
           purchased
               ? l.tipPurchased
-              : product.isNotEmpty ? product.first.price : price,
+              : resolvedProduct != null ? resolvedProduct.price : price,
         ),
         trailing: purchased
             ? null
@@ -196,8 +220,8 @@ class _TipCard extends ConsumerWidget {
                     : () async {
                         ref.read(hapticProvider.notifier).mediumTap();
                         final notifier = ref.read(iapProvider.notifier);
-                        if (product.isNotEmpty) {
-                          await notifier.buy(product.first);
+                        if (resolvedProduct != null) {
+                          await notifier.buy(resolvedProduct);
                         }
                       },
                 child: buying
