@@ -44,6 +44,11 @@ dependencies:
   sensors_plus: ^7.1.0
   in_app_purchase: ^3.2.0
   in_app_purchase_android: ^0.5.0
+  google_sign_in: ^6.2.2
+  googleapis: ^13.2.0
+  googleapis_auth: ^1.6.0
+  encrypt: ^5.0.3
+  flutter_secure_storage: ^10.3.1
 
 dev_dependencies:
   flutter_test:

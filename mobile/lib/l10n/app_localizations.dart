@@ -1994,6 +1994,114 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Support'**
   String get tipSupport;
+
+  /// No description provided for @sectionBackup.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup'**
+  String get sectionBackup;
+
+  /// No description provided for @moreBackup.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup'**
+  String get moreBackup;
+
+  /// No description provided for @moreBackupSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Encrypted backup'**
+  String get moreBackupSubtitle;
+
+  /// No description provided for @backupConnect.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect Google Drive'**
+  String get backupConnect;
+
+  /// No description provided for @backupConnected.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected as {email}'**
+  String backupConnected(Object email);
+
+  /// No description provided for @backupNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Back up now'**
+  String get backupNow;
+
+  /// No description provided for @backupInProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Backing up…'**
+  String get backupInProgress;
+
+  /// No description provided for @backupLast.
+  ///
+  /// In en, this message translates to:
+  /// **'Last backup: {date}'**
+  String backupLast(Object date);
+
+  /// No description provided for @backupNever.
+  ///
+  /// In en, this message translates to:
+  /// **'Never backed up'**
+  String get backupNever;
+
+  /// No description provided for @backupRestore.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore from backup'**
+  String get backupRestore;
+
+  /// No description provided for @backupRestoreInProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Restoring…'**
+  String get backupRestoreInProgress;
+
+  /// No description provided for @backupRestoreConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'This will replace all current data with the backup. Continue?'**
+  String get backupRestoreConfirm;
+
+  /// No description provided for @backupError.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup error: {error}'**
+  String backupError(Object error);
+
+  /// No description provided for @backupSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup uploaded successfully'**
+  String get backupSuccess;
+
+  /// No description provided for @backupRestoreSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Data restored. Restart the app to see changes.'**
+  String get backupRestoreSuccess;
+
+  /// No description provided for @backupDisconnect.
+  ///
+  /// In en, this message translates to:
+  /// **'Disconnect'**
+  String get backupDisconnect;
+
+  /// No description provided for @backupNoBackups.
+  ///
+  /// In en, this message translates to:
+  /// **'No backups found'**
+  String get backupNoBackups;
+
+  /// No description provided for @backupRestoreBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore'**
+  String get backupRestoreBtn;
 }
 
 class _AppLocalizationsDelegate
