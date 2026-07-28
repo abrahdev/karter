@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 
 const String kSubscriptionId = 'karter_supporter';
 
@@ -60,7 +61,15 @@ class InAppPurchaseService {
 
   Future<bool> buy(ProductDetails product) async {
     try {
-      final params = PurchaseParam(productDetails: product);
+      PurchaseParam params;
+      if (product.id == kSubscriptionId && product is GooglePlayProductDetails) {
+        params = GooglePlayPurchaseParam(
+          productDetails: product,
+          offerToken: product.offerToken,
+        );
+      } else {
+        params = PurchaseParam(productDetails: product);
+      }
       if (product.id == kSubscriptionId) {
         return await _iap.buyNonConsumable(purchaseParam: params);
       } else {
