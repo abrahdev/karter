@@ -39,6 +39,13 @@ class GoogleDriveAuthService {
     }
   }
 
+  Future<void> signInSilently() async {
+    _account = await _googleSignIn.signInSilently();
+    if (_account != null) {
+      _client = _GoogleAuthHttpClient(_account!);
+    }
+  }
+
   Future<void> signOut() async {
     _client?.close();
     _client = null;

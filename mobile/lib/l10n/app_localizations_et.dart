@@ -1079,7 +1079,7 @@ class AppLocalizationsEt extends AppLocalizations {
 
   @override
   String get backupRestoreConfirm =>
-      'See asendab kõik praegused andmed varukoopiaga. Jätkata?';
+      'See asendab kõik praegused andmed varukoopiaga. Kas oled kindel?';
 
   @override
   String backupError(Object error) {
@@ -1101,4 +1101,20 @@ class AppLocalizationsEt extends AppLocalizations {
 
   @override
   String get backupRestoreBtn => 'Taasta';
+
+  @override
+  String get backupDelete => 'Kustuta';
+
+  @override
+  String backupDeleteConfirm(Object name) {
+    return 'Kustuta varukoopia $name?';
+  }
+
+  @override
+  String get backupDeleteSuccess => 'Varukoopia kustutatud';
+
+  @override
+  String backupCount(Object current, Object max) {
+    return 'Varukoopiad: $current/$max';
+  }
 }

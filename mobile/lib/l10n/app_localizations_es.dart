@@ -1086,7 +1086,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get backupRestoreConfirm =>
-      'Esto reemplazará todos los datos actuales con la copia. ¿Continuar?';
+      'Esto sobrescribirá todos los datos actuales. ¿Estás seguro?';
 
   @override
   String backupError(Object error) {
@@ -1108,4 +1108,20 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get backupRestoreBtn => 'Restaurar';
+
+  @override
+  String get backupDelete => 'Eliminar';
+
+  @override
+  String backupDeleteConfirm(Object name) {
+    return '¿Eliminar copia $name?';
+  }
+
+  @override
+  String get backupDeleteSuccess => 'Copia eliminada';
+
+  @override
+  String backupCount(Object current, Object max) {
+    return 'Copias: $current/$max';
+  }
 }

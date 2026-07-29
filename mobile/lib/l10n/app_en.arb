@@ -360,11 +360,15 @@
   "backupNever": "Never backed up",
   "backupRestore": "Restore from backup",
   "backupRestoreInProgress": "Restoring…",
-  "backupRestoreConfirm": "This will replace all current data with the backup. Continue?",
+  "backupRestoreConfirm": "This will overwrite all current data. Are you sure?",
   "backupError": "Backup error: {error}",
   "backupSuccess": "Backup uploaded successfully",
   "backupRestoreSuccess": "Data restored. Restart the app to see changes.",
   "backupDisconnect": "Disconnect",
   "backupNoBackups": "No backups found",
-  "backupRestoreBtn": "Restore"
+  "backupRestoreBtn": "Restore",
+  "backupDelete": "Delete",
+  "backupDeleteConfirm": "Delete backup {name}?",
+  "backupDeleteSuccess": "Backup deleted",
+  "backupCount": "Backups: {current}/{max}"
 }

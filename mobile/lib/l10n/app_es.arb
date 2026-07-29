@@ -358,11 +358,15 @@
   "backupNever": "Sin copias",
   "backupRestore": "Restaurar desde copia",
   "backupRestoreInProgress": "Restaurando…",
-  "backupRestoreConfirm": "Esto reemplazará todos los datos actuales con la copia. ¿Continuar?",
+  "backupRestoreConfirm": "Esto sobrescribirá todos los datos actuales. ¿Estás seguro?",
   "backupError": "Error de copia: {error}",
   "backupSuccess": "Copia subida exitosamente",
   "backupRestoreSuccess": "Datos restaurados. Reinicia la app para ver los cambios.",
   "backupDisconnect": "Desconectar",
   "backupNoBackups": "No se encontraron copias",
-  "backupRestoreBtn": "Restaurar"
+  "backupRestoreBtn": "Restaurar",
+  "backupDelete": "Eliminar",
+  "backupDeleteConfirm": "¿Eliminar copia {name}?",
+  "backupDeleteSuccess": "Copia eliminada",
+  "backupCount": "Copias: {current}/{max}"
 }

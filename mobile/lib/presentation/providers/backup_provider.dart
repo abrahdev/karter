@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/data/services/backup_service.dart';
 import 'package:mobile/data/services/google_drive_auth_service.dart';
 import 'package:mobile/data/services/google_drive_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class BackupState {
   final bool loading;
@@ -12,6 +13,7 @@ class BackupState {
   final String? error;
   final bool backingUp;
   final bool restoring;
+  final int maxBackups;
 
   const BackupState({
     this.loading = false,
@@ -22,6 +24,7 @@ class BackupState {
     this.error,
     this.backingUp = false,
     this.restoring = false,
+    this.maxBackups = 10,
   });
 
   BackupState copyWith({
@@ -33,6 +36,7 @@ class BackupState {
     String? error,
     bool? backingUp,
     bool? restoring,
+    int? maxBackups,
   }) {
     return BackupState(
       loading: loading ?? this.loading,
@@ -43,6 +47,7 @@ class BackupState {
       error: error,
       backingUp: backingUp ?? this.backingUp,
       restoring: restoring ?? this.restoring,
+      maxBackups: maxBackups ?? this.maxBackups,
     );
   }
 }
@@ -50,10 +55,26 @@ class BackupState {
 class BackupNotifier extends Notifier<BackupState> {
   final GoogleDriveAuthService _auth = GoogleDriveAuthService();
   final BackupService _backup = BackupService();
+  static const _maxBackupsKey = 'karter_max_backups';
 
   @override
   BackupState build() {
+    _init();
     return const BackupState();
+  }
+
+  Future<void> _init() async {
+    final prefs = await SharedPreferences.getInstance();
+    final savedMax = prefs.getInt(_maxBackupsKey) ?? 10;
+
+    await _auth.signInSilently();
+    if (_auth.isSignedIn) {
+      state = BackupState(signedIn: true, email: _auth.email, maxBackups: savedMax);
+      await _loadLastBackup();
+      await listBackups();
+    } else {
+      state = BackupState(maxBackups: savedMax);
+    }
   }
 
   Future<void> signIn() async {
@@ -67,6 +88,7 @@ class BackupNotifier extends Notifier<BackupState> {
       );
       if (_auth.isSignedIn) {
         await _loadLastBackup();
+        await listBackups();
       }
     } catch (e) {
       state = state.copyWith(loading: false, error: e.toString());
@@ -77,21 +99,36 @@ class BackupNotifier extends Notifier<BackupState> {
     state = state.copyWith(loading: true, error: null);
     try {
       await _auth.signOut();
-      state = const BackupState();
+      state = BackupState(maxBackups: state.maxBackups);
     } catch (e) {
       state = state.copyWith(loading: false, error: e.toString());
     }
   }
 
+  Future<void> setMaxBackups(int value) async {
+    final clamped = value.clamp(1, 50);
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt(_maxBackupsKey, clamped);
+    state = state.copyWith(maxBackups: clamped);
+  }
+
   Future<void> backupNow() async {
     state = state.copyWith(backingUp: true, error: null);
     try {
+      final drive = GoogleDriveService(_auth.client!);
+
+      final backups = await drive.listBackups();
+      if (backups.length >= state.maxBackups) {
+        final toDelete = backups.sublist(state.maxBackups - 1);
+        for (final b in toDelete) {
+          await drive.deleteBackup(b.id);
+        }
+      }
+
       final now = DateTime.now();
       final filename = 'karter_${now.year}${_pad(now.month)}${_pad(now.day)}_${_pad(now.hour)}${_pad(now.minute)}${_pad(now.second)}.db.aes';
 
       final encrypted = await _backup.createEncryptedBackup();
-
-      final drive = GoogleDriveService(_auth.client!);
       final fileId = await drive.uploadBackup(filename, encrypted);
 
       await _backup.saveLocalMetadata(BackupMetadata(
@@ -105,6 +142,8 @@ class BackupNotifier extends Notifier<BackupState> {
         backingUp: false,
         lastBackupAt: now.toIso8601String(),
       );
+
+      await listBackups();
     } catch (e) {
       state = state.copyWith(backingUp: false, error: e.toString());
     }
@@ -112,11 +151,24 @@ class BackupNotifier extends Notifier<BackupState> {
 
   Future<void> listBackups() async {
     if (!_auth.isSignedIn) return;
-    state = state.copyWith(loading: true, error: null);
     try {
       final drive = GoogleDriveService(_auth.client!);
       final backups = await drive.listBackups();
-      state = state.copyWith(loading: false, driveBackups: backups);
+      state = state.copyWith(driveBackups: backups);
+    } catch (e) {
+      state = state.copyWith(error: e.toString());
+    }
+  }
+
+  Future<void> deleteBackup(String fileId) async {
+    state = state.copyWith(loading: true, error: null);
+    try {
+      final drive = GoogleDriveService(_auth.client!);
+      await drive.deleteBackup(fileId);
+      state = state.copyWith(
+        loading: false,
+        driveBackups: state.driveBackups.where((b) => b.id != fileId).toList(),
+      );
     } catch (e) {
       state = state.copyWith(loading: false, error: e.toString());
     }
@@ -130,6 +182,7 @@ class BackupNotifier extends Notifier<BackupState> {
       final restoredPath = await _backup.restoreFromEncrypted(encrypted);
       await _backup.replaceDb(restoredPath);
       state = state.copyWith(restoring: false);
+      await listBackups();
     } catch (e) {
       state = state.copyWith(restoring: false, error: e.toString());
     }

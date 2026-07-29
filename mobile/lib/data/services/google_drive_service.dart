@@ -67,6 +67,7 @@ class GoogleDriveService {
       orderBy: 'createdTime desc',
       spaces: 'drive',
       pageSize: 50,
+      $fields: 'nextPageToken,files(id,name,size,createdTime)',
     );
 
     final files = response.files;

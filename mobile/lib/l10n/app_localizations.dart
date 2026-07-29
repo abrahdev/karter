@@ -2064,7 +2064,7 @@ abstract class AppLocalizations {
   /// No description provided for @backupRestoreConfirm.
   ///
   /// In en, this message translates to:
-  /// **'This will replace all current data with the backup. Continue?'**
+  /// **'This will overwrite all current data. Are you sure?'**
   String get backupRestoreConfirm;
 
   /// No description provided for @backupError.
@@ -2102,6 +2102,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Restore'**
   String get backupRestoreBtn;
+
+  /// No description provided for @backupDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get backupDelete;
+
+  /// No description provided for @backupDeleteConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete backup {name}?'**
+  String backupDeleteConfirm(Object name);
+
+  /// No description provided for @backupDeleteSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup deleted'**
+  String get backupDeleteSuccess;
+
+  /// No description provided for @backupCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Backups: {current}/{max}'**
+  String backupCount(Object current, Object max);
 }
 
 class _AppLocalizationsDelegate
