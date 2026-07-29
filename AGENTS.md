@@ -68,6 +68,15 @@ Karter is an open-source vehicle maintenance tracker built with Flutter (mobile 
 - Version format: `YYYY.MM.BUILD+NUMBER` (e.g., `2026.07.10+14`).
 - Update `VERSION`, `pubspec.yaml`, and `CHANGELOG.md` when releasing.
 
+## Google Sign-In / Drive API
+- Package name: `dev.abrah.karter`.
+- Google Sign-In error `10` (`SIGN_IN_FAILED`) = missing/wrong SHA-1 fingerprint in Google Cloud Console.
+- **For Play Store distribution**: get SHA-1 from Play Console → "Protected with Play > Play Store protection > Manage Play app signing".
+- **For local APKs**: `keytool -keystore path-to-keystore -list -v` (debug default: `~/.android/debug.keystore`, password `android`).
+- Must create OAuth 2.0 Client ID (Android) for each keystore (debug + release).
+- Debug SHA-1: `85:FE:98:1A:64:50:77:46:DD:BA:03:2A:65:2F:FA:ED:04:4C:B5:65`
+- Release SHA-1: `07:BA:87:C3:AD:88:F8:25:2F:4C:2F:6C:7D:16:96:EF:81:BE:47:6D`
+
 ## Prohibited
 - Do NOT refactor working code unless asked.
 - Do NOT change theme colors or fonts without asking.

@@ -15,7 +15,7 @@ class HapticNotifier extends Notifier<HapticMode> {
   @override
   HapticMode build() {
     final value = ref.watch(sharedPreferencesProvider).getString(_key);
-    return HapticMode.values.asNameMap()[value] ?? HapticMode.clear;
+    return HapticMode.values.asNameMap()[value] ?? HapticMode.rich;
   }
 
   Future<void> setMode(HapticMode mode) async {

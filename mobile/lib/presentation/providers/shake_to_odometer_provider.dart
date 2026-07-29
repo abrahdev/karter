@@ -9,7 +9,7 @@ class ShakeToOdometerNotifier extends Notifier<bool> {
   static const _key = 'shake_to_odometer_enabled';
 
   @override
-  bool build() => ref.watch(sharedPreferencesProvider).getBool(_key) ?? false;
+  bool build() => ref.watch(sharedPreferencesProvider).getBool(_key) ?? true;
 
   Future<void> toggle(bool value) async {
     final prefs = await SharedPreferences.getInstance();

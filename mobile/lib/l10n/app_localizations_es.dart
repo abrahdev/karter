@@ -1046,4 +1046,82 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get tipSupport => 'Apoyar';
+
+  @override
+  String get sectionBackup => 'Copia de seguridad';
+
+  @override
+  String get moreBackup => 'Copia de seguridad';
+
+  @override
+  String get moreBackupSubtitle => 'Copia cifrada';
+
+  @override
+  String get backupConnect => 'Conectar Google Drive';
+
+  @override
+  String backupConnected(Object email) {
+    return 'Conectado como $email';
+  }
+
+  @override
+  String get backupNow => 'Copiar ahora';
+
+  @override
+  String get backupInProgress => 'Copiando…';
+
+  @override
+  String backupLast(Object date) {
+    return 'Última copia: $date';
+  }
+
+  @override
+  String get backupNever => 'Sin copias';
+
+  @override
+  String get backupRestore => 'Restaurar desde copia';
+
+  @override
+  String get backupRestoreInProgress => 'Restaurando…';
+
+  @override
+  String get backupRestoreConfirm =>
+      'Esto sobrescribirá todos los datos actuales. ¿Estás seguro?';
+
+  @override
+  String backupError(Object error) {
+    return 'Error de copia: $error';
+  }
+
+  @override
+  String get backupSuccess => 'Copia subida exitosamente';
+
+  @override
+  String get backupRestoreSuccess =>
+      'Datos restaurados. Reinicia la app para ver los cambios.';
+
+  @override
+  String get backupDisconnect => 'Desconectar';
+
+  @override
+  String get backupNoBackups => 'No se encontraron copias';
+
+  @override
+  String get backupRestoreBtn => 'Restaurar';
+
+  @override
+  String get backupDelete => 'Eliminar';
+
+  @override
+  String backupDeleteConfirm(Object name) {
+    return '¿Eliminar copia $name?';
+  }
+
+  @override
+  String get backupDeleteSuccess => 'Copia eliminada';
+
+  @override
+  String backupCount(Object current, Object max) {
+    return 'Copias: $current/$max';
+  }
 }

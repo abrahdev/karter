@@ -1037,4 +1037,82 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tipSupport => 'Support';
+
+  @override
+  String get sectionBackup => 'Backup';
+
+  @override
+  String get moreBackup => 'Backup';
+
+  @override
+  String get moreBackupSubtitle => 'Encrypted backup';
+
+  @override
+  String get backupConnect => 'Connect Google Drive';
+
+  @override
+  String backupConnected(Object email) {
+    return 'Connected as $email';
+  }
+
+  @override
+  String get backupNow => 'Back up now';
+
+  @override
+  String get backupInProgress => 'Backing up…';
+
+  @override
+  String backupLast(Object date) {
+    return 'Last backup: $date';
+  }
+
+  @override
+  String get backupNever => 'Never backed up';
+
+  @override
+  String get backupRestore => 'Restore from backup';
+
+  @override
+  String get backupRestoreInProgress => 'Restoring…';
+
+  @override
+  String get backupRestoreConfirm =>
+      'This will overwrite all current data. Are you sure?';
+
+  @override
+  String backupError(Object error) {
+    return 'Backup error: $error';
+  }
+
+  @override
+  String get backupSuccess => 'Backup uploaded successfully';
+
+  @override
+  String get backupRestoreSuccess =>
+      'Data restored. Restart the app to see changes.';
+
+  @override
+  String get backupDisconnect => 'Disconnect';
+
+  @override
+  String get backupNoBackups => 'No backups found';
+
+  @override
+  String get backupRestoreBtn => 'Restore';
+
+  @override
+  String get backupDelete => 'Delete';
+
+  @override
+  String backupDeleteConfirm(Object name) {
+    return 'Delete backup $name?';
+  }
+
+  @override
+  String get backupDeleteSuccess => 'Backup deleted';
+
+  @override
+  String backupCount(Object current, Object max) {
+    return 'Backups: $current/$max';
+  }
 }

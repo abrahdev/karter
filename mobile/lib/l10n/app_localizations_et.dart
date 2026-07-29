@@ -1039,4 +1039,82 @@ class AppLocalizationsEt extends AppLocalizations {
 
   @override
   String get tipSupport => 'Toeta';
+
+  @override
+  String get sectionBackup => 'Varukoopia';
+
+  @override
+  String get moreBackup => 'Varukoopia';
+
+  @override
+  String get moreBackupSubtitle => 'Krüpteeritud varukoopia';
+
+  @override
+  String get backupConnect => 'Ühenda Google Drive';
+
+  @override
+  String backupConnected(Object email) {
+    return 'Ühendatud kui $email';
+  }
+
+  @override
+  String get backupNow => 'Tee varukoopia';
+
+  @override
+  String get backupInProgress => 'Varukoopia tegemine…';
+
+  @override
+  String backupLast(Object date) {
+    return 'Viimane varukoopia: $date';
+  }
+
+  @override
+  String get backupNever => 'Pole varukoopiat tehtud';
+
+  @override
+  String get backupRestore => 'Taasta varukoopiast';
+
+  @override
+  String get backupRestoreInProgress => 'Taastamine…';
+
+  @override
+  String get backupRestoreConfirm =>
+      'See asendab kõik praegused andmed varukoopiaga. Kas oled kindel?';
+
+  @override
+  String backupError(Object error) {
+    return 'Varukoopia viga: $error';
+  }
+
+  @override
+  String get backupSuccess => 'Varukoopia üles laaditud';
+
+  @override
+  String get backupRestoreSuccess =>
+      'Andmed taastatud. Taaskäivita rakendus muudatuste nägemiseks.';
+
+  @override
+  String get backupDisconnect => 'Ühenda lahti';
+
+  @override
+  String get backupNoBackups => 'Varukoopiaid ei leitud';
+
+  @override
+  String get backupRestoreBtn => 'Taasta';
+
+  @override
+  String get backupDelete => 'Kustuta';
+
+  @override
+  String backupDeleteConfirm(Object name) {
+    return 'Kustuta varukoopia $name?';
+  }
+
+  @override
+  String get backupDeleteSuccess => 'Varukoopia kustutatud';
+
+  @override
+  String backupCount(Object current, Object max) {
+    return 'Varukoopiad: $current/$max';
+  }
 }
