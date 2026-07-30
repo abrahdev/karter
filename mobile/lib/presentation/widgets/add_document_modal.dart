@@ -182,7 +182,11 @@ class _AddDocumentModalState extends ConsumerState<_AddDocumentModal> {
   }
 
   Future<void> _pickFromCamera() async {
-    final file = await _picker.pickImage(source: ImageSource.camera);
+    final file = await _picker.pickImage(
+      source: ImageSource.camera,
+      maxWidth: 1920,
+      imageQuality: 85,
+    );
     if (file != null && mounted) {
       setState(() {
         _selectedFilePaths.add(file.path);
