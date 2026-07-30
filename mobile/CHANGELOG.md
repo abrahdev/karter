@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2026.07.14+18] - 2026-07-30
+
+### Added
+
+- R8 minification and ProGuard rules for optimized release builds (#47)
+
+### Changed
+
+- Release builds now use `isMinifyEnabled = true` with Android optimization pass
+
 ## [2026.07.13+17] - 2026-07-26
 
 ### Changed
