@@ -20,19 +20,19 @@ jobs:
   build-android:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.44.4'
 
-      - uses: actions/cache@v4
+      - uses: actions/cache@v6
         with:
           path: ~/.pub-cache
           key: flutter-pub-${{ hashFiles('mobile/pubspec.lock') }}
           restore-keys: flutter-pub-
 
-      - uses: actions/cache@v4
+      - uses: actions/cache@v6
         with:
           path: |
             ~/.gradle/caches
@@ -66,7 +66,7 @@ jobs:
           cp mobile/build/app/outputs/flutter-apk/app-release.apk \
              "karter-${VERSION}.apk"
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: app-release-apk
           path: karter-*.apk
@@ -74,13 +74,13 @@ jobs:
   build-linux:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.44.4'
 
-      - uses: actions/cache@v4
+      - uses: actions/cache@v6
         with:
           path: ~/.pub-cache
           key: flutter-pub-${{ hashFiles('mobile/pubspec.lock') }}
@@ -89,7 +89,7 @@ jobs:
       - name: Install Linux toolchain
         run: |
           sudo apt-get update
-          sudo apt-get install -y cmake ninja-build libgtk-3-dev pkg-config
+          sudo apt-get install -y cmake ninja-build libgtk-3-dev pkg-config libsecret-1-dev
 
       - run: flutter pub get
         working-directory: mobile
@@ -103,7 +103,7 @@ jobs:
           cd mobile/build/linux/x64/release
           tar czf "${GITHUB_WORKSPACE}/karter-${VERSION}-linux-x64.tar.gz" bundle/
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: karter-linux-x64
           path: karter-*-linux-x64.tar.gz
@@ -112,13 +112,13 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build-android, build-linux]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: app-release-apk
 
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: karter-linux-x64
 
