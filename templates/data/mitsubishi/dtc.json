@@ -13,166 +13,199 @@
     {
       "code": "P1100",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mitsubishi_p1100",
       "description": "Induction Control Motor Position Sensor Fault"
     },
     {
       "code": "P1101",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mitsubishi_p1101",
       "description": "Traction Control Vacuum Solenoid Circuit Fault"
     },
     {
       "code": "P1102",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mitsubishi_p1102",
       "description": "Traction Control Ventilation Solenoid Circuit Fault"
     },
     {
       "code": "P1103",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mitsubishi_p1103",
       "description": "Turbocharger Wastegate Actuator"
     },
     {
       "code": "P1104",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mitsubishi_p1104",
       "description": "Turbocharger Wastegate Solenoid"
     },
     {
       "code": "P1105",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mitsubishi_p1105",
       "description": "Fuel Pressure Solenoid"
     },
     {
       "code": "P1294",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mitsubishi_p1294",
       "description": "Target Idle Speed Not Reached"
     },
     {
       "code": "P1295",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mitsubishi_p1295",
       "description": "No 5 Volt Supply To TP Sensor"
     },
     {
       "code": "P1296",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mitsubishi_p1296",
       "description": "No 5 Volt Supply To MAP Sensor"
     },
     {
       "code": "P1297",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mitsubishi_p1297",
       "description": "No Charge In MAP From Start To Run"
     },
     {
       "code": "P1300",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mitsubishi_p1300",
       "description": "Ignition Timing Adjustment Circuit"
     },
     {
       "code": "P1390",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mitsubishi_p1390",
       "description": "Timing Belt Skipped One Tooth Or More"
     },
     {
       "code": "P1391",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mitsubishi_p1391",
       "description": "Intermittent Loss Of CMP Or CKP Sensor Signals"
     },
     {
       "code": "P1400",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mitsubishi_p1400",
       "description": "Manifold Differential Pressure Sensor Circuit"
     },
     {
       "code": "P1443",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mitsubishi_p1443",
       "description": "EVAP Purge Control Solenoid 2 Circuit Fault"
     },
     {
       "code": "P1486",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mitsubishi_p1486",
       "description": "EVAP Leak Monitor Pinched Hose Detected"
     },
     {
       "code": "P1487",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mitsubishi_p1487",
       "description": "High Speed Radiator Fan Control Relay Circuit Fault"
     },
     {
       "code": "P1489",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mitsubishi_p1489",
       "description": "High Speed Condenser Fan Control Relay Fault"
     },
     {
       "code": "P1490",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mitsubishi_p1490",
       "description": "Low Speed Fan Control Relay Fault"
     },
     {
       "code": "P1492",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mitsubishi_p1492",
       "description": "Battery Temperature Sensor High Voltage"
     },
     {
       "code": "P1494",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mitsubishi_p1494",
       "description": "EVAP Ventilation Switch Or Mechanical Fault"
     },
     {
       "code": "P1495",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mitsubishi_p1495",
       "description": "EVAP Ventilation Solenoid Circuit Fault"
     },
     {
       "code": "P1496",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mitsubishi_p1496",
       "description": "5 Volt Supply Output Too Low"
     },
     {
       "code": "P1500",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mitsubishi_p1500",
       "description": "Alternator FR Terminal Circuit"
     },
     {
       "code": "P1600",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mitsubishi_p1600",
       "description": "Serial Communication Link"
     },
     {
       "code": "P1696",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mitsubishi_p1696",
       "description": "PCM Failure EEPROM Write Denied"
     },
     {
       "code": "P1698",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mitsubishi_p1698",
       "description": "No CCD Messages From TCM"
     },
     {
       "code": "P1715",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mitsubishi_p1715",
       "description": "Pulse Generator Assembly"
     },
     {
       "code": "P1750",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mitsubishi_p1750",
       "description": "Solenoid Assembly"
     },
     {
       "code": "P1791",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mitsubishi_p1791",
       "description": "PCM ECT Level Signal To TCM Circuit Fault"
     },
     {
       "code": "P1899",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mitsubishi_p1899",
       "description": "P/N Position Transaxle Range Switch Circuit Fault"
     },
     {
       "code": "P1751",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mitsubishi_p1751",
       "description": "A/T Control Relay"
     },
     {
       "code": "P1795",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mitsubishi_p1795",
       "description": "Throttle Position Input Circuit To TCM"
     }
   ]

@@ -13,161 +13,193 @@
     {
       "code": "P1105",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercedes_benz_p1105",
       "description": "Atmospheric Pressure Sensor In Control Module"
     },
     {
       "code": "P1220",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercedes_benz_p1220",
       "description": "Fuel Quantity Actuator Y231"
     },
     {
       "code": "P1221",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercedes_benz_p1221",
       "description": "CAN Communication ETC Or ETS Interrupted"
     },
     {
       "code": "P1222",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercedes_benz_p1222",
       "description": "IFI Accelerator Pedal Position Sensor R252"
     },
     {
       "code": "P1223",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercedes_benz_p1223",
       "description": "Fuel Rack Position Sensor Y2311"
     },
     {
       "code": "P1335",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercedes_benz_p1335",
       "description": "CKP Sensor IFI"
     },
     {
       "code": "P1350",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercedes_benz_p1350",
       "description": "Injection Sensor Solenoid"
     },
     {
       "code": "P1351",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercedes_benz_p1351",
       "description": "Injection Sensor Circuit"
     },
     {
       "code": "P1352",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercedes_benz_p1352",
       "description": "Needle Lift Sensor"
     },
     {
       "code": "P1401",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercedes_benz_p1401",
       "description": "EGR Lifting Sender B283"
     },
     {
       "code": "P1404",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercedes_benz_p1404",
       "description": "EGR Control"
     },
     {
       "code": "P1465",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercedes_benz_p1465",
       "description": "EPW Power"
     },
     {
       "code": "P1470",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercedes_benz_p1470",
       "description": "Pressure Control Flap Vacuum Transducer Y312"
     },
     {
       "code": "P1475",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercedes_benz_p1475",
       "description": "Resonance Intake Line Switchover Valve Y227"
     },
     {
       "code": "P1476",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercedes_benz_p1476",
       "description": "Resonance Intake Manifold Switchover Valve Y226"
     },
     {
       "code": "P1480",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercedes_benz_p1480",
       "description": "Preglow Control"
     },
     {
       "code": "P1481",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercedes_benz_p1481",
       "description": "Glow Plug Failure"
     },
     {
       "code": "P1482",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercedes_benz_p1482",
       "description": "Preglow Control Module N142"
     },
     {
       "code": "P1520",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercedes_benz_p1520",
       "description": "Cruise Control Switch S40"
     },
     {
       "code": "P1610",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercedes_benz_p1610",
       "description": "Voltage Supply Missing Or Relay Module K40"
     },
     {
       "code": "P1611",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercedes_benz_p1611",
       "description": "IFI Control Module N37"
     },
     {
       "code": "P1612",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercedes_benz_p1612",
       "description": "IFI Control Module N37 Voltage Circuit 15"
     },
     {
       "code": "P1613",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercedes_benz_p1613",
       "description": "IFI Control Module N37"
     },
     {
       "code": "P1614",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercedes_benz_p1614",
       "description": "IFI Control Module N37 Voltage Or Fuel Metering Actuator Y231K1 Or Fuel Rack Position Sensor Y2311"
     },
     {
       "code": "P1615",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercedes_benz_p1615",
       "description": "IFI Control Module N37 Supply Voltage"
     },
     {
       "code": "P1617",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercedes_benz_p1617",
       "description": "Control Module Fault Or Control Module Not Coded"
     },
     {
       "code": "P1622",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercedes_benz_p1622",
       "description": "Electrohydraulic Shut-Off Actuator Y11"
     },
     {
       "code": "P1625",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercedes_benz_p1625",
       "description": "Check Engine MIL"
     },
     {
       "code": "P1630",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercedes_benz_p1630",
       "description": "Drive Authorization Signal"
     },
     {
       "code": "P1705",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercedes_benz_p1705",
       "description": "Starter Lock-Out Backup Lamp Switch S161"
     },
     {
       "code": "P1780",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercedes_benz_p1780",
       "description": "Modulation Pressure Switchover Valve ATCC Y34 Or Upshift Delay Switchover Valve ATCC Y35"
     },
     {
       "code": "P1781",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercedes_benz_p1781",
       "description": "Upshift Delay Switchover Valve ATCC Y35"
     }
   ]

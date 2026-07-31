@@ -13,1166 +13,1399 @@
     {
       "code": "P1000",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1000",
       "description": "OBD II Monitor Testing Not Completed"
     },
     {
       "code": "P1001",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1001",
       "description": "Unable to Achieve Self-Test Function Or SCP Error"
     },
     {
       "code": "P1100",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1100",
       "description": "Mass Air Flow Sensor Circuit Intermittent"
     },
     {
       "code": "P1101",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1101",
       "description": "Mass Air Flow Sensor Circuit Out Of Self-Test Range"
     },
     {
       "code": "P1102",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1102",
       "description": "Mass Air Flow Sensor Signal Inconsistent With Throttle Position Sensor"
     },
     {
       "code": "P1103",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1103",
       "description": "Mass Air Flow Sensor Signal Inconsistent With Engine Speed"
     },
     {
       "code": "P1110",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1110",
       "description": "Intake Air Temperature Sensor Signal Dynamic Chamber Circuit"
     },
     {
       "code": "P1112",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1112",
       "description": "Intake Air Temperature Sensor Circuit Intermittent"
     },
     {
       "code": "P1113",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1113",
       "description": "Intake Air Temperature Sensor Signal Dynamic Chamber Circuit"
     },
     {
       "code": "P1114",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1114",
       "description": "Intake Air Temperature Sensor Circuit Low Input"
     },
     {
       "code": "P1116",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1116",
       "description": "ECT Sensor Circuit Out Of Self Test Range"
     },
     {
       "code": "P1117",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1117",
       "description": "ECT Sensor Signal Intermittent"
     },
     {
       "code": "P1120",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1120",
       "description": "Throttle Position Sensor Out Of Range Low"
     },
     {
       "code": "P1121",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1121",
       "description": "Throttle Position Sensor Signal Not Consistent With Mass Air Flow Signal"
     },
     {
       "code": "P1122",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1122",
       "description": "Throttle Position Stuck Closed"
     },
     {
       "code": "P1123",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1123",
       "description": "Throttle Position Stuck Open"
     },
     {
       "code": "P1124",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1124",
       "description": "Throttle Position Sensor Signal Out Of Self Test Range"
     },
     {
       "code": "P1125",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1125",
       "description": "Throttle Position Sensor Signal Intermittent"
     },
     {
       "code": "P1126",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1126",
       "description": "Throttle Position Narrow Range Sensor Circuit"
     },
     {
       "code": "P1127",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1127",
       "description": "HO2S Bank 1 Sensor 2 Heater Not On During Key On Engine Running Self Test"
     },
     {
       "code": "P1128",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1128",
       "description": "HO2S Bank 1 Sensor 1 Signals Swapped In Key On Engine Running Self Test"
     },
     {
       "code": "P1129",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1129",
       "description": "Downstream H02S Sensors Swapped"
     },
     {
       "code": "P1130",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1130",
       "description": "HO2S Bank 1 Sensor 1 Not Switching Fuel Control Limit Reached"
     },
     {
       "code": "P1131",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1131",
       "description": "HO2S Bank 1 Sensor 1 Signal Below 0.45v AF Ratio Too Lean"
     },
     {
       "code": "P1132",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1132",
       "description": "HO2S Bank 1 Sensor 1 Signal Above 0.45v AF Ratio Too Rich"
     },
     {
       "code": "P1133",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1133",
       "description": "Bank 1 Fuel Control Shifted Lean"
     },
     {
       "code": "P1134",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1134",
       "description": "Bank 1 Fuel Control Shifted Rich"
     },
     {
       "code": "P1135",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1135",
       "description": "HO2S Bank 1 Sensor 1 Heater Circuit Low Input"
     },
     {
       "code": "P1136",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1136",
       "description": "HO2S Bank 1 Sensor 1 Heater Circuit High Input"
     },
     {
       "code": "P1137",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1137",
       "description": "HO2S Bank 1 Sensor 2 Not Switching Fuel Control Limit Reached"
     },
     {
       "code": "P1138",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1138",
       "description": "HO2S Bank 1 Sensor 2 Signal Above 0.45v AF Ratio Too Rich"
     },
     {
       "code": "P1141",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1141",
       "description": "HO2S Bank 1 Sensor 2 Heater Circuit Low Input"
     },
     {
       "code": "P1142",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1142",
       "description": "HO2S Bank 1 Sensor 2 Heater Circuit High Input"
     },
     {
       "code": "P1143",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1143",
       "description": "HO2S Bank 1 Sensor 3 Signal Below 0.45v AF Ratio Too Lean"
     },
     {
       "code": "P1144",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1144",
       "description": "HO2S Bank 1 Sensor 3 Signal Above 0.45v AF Ratio Too Rich"
     },
     {
       "code": "P1150",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1150",
       "description": "HO2S Bank 2 Sensor 1 Not Switching Fuel Control Limit Reached"
     },
     {
       "code": "P1151",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1151",
       "description": "HO2S Bank 2 Sensor 1 Signal Below 0.45v AF Ratio Too Lean"
     },
     {
       "code": "P1152",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1152",
       "description": "HO2S Bank 2 Sensor 1 Signal Above 0.45v AF Ratio Too Rich"
     },
     {
       "code": "P1153",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1153",
       "description": "Bank 2 Fuel Control Shifted Lean FAOSC"
     },
     {
       "code": "P1154",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1154",
       "description": "Bank 2 Fuel Control Shifted Rich FAOSC"
     },
     {
       "code": "P1169",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1169",
       "description": "HO2S Bank 1 Sensor 1 Circuit Fixed Bank 1 Sensor 1"
     },
     {
       "code": "P1170",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1170",
       "description": "HO2S Bank 1 Sensor 1 Circuit Fixed Bank 1 Sensor 1"
     },
     {
       "code": "P1173",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1173",
       "description": "HO2S Bank 2 Sensor 1 Circuit Fixed Bank 2 Sensor 1"
     },
     {
       "code": "P1182",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1182",
       "description": "Fuel Shut Off Solenoid Circuit"
     },
     {
       "code": "P1189",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1189",
       "description": "Pump Speed Signal"
     },
     {
       "code": "P1190",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1190",
       "description": "Calibration Resistor Out Of Range"
     },
     {
       "code": "P1191",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1191",
       "description": "TP Controlled Circuit"
     },
     {
       "code": "P1194",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1194",
       "description": "ECM PCM A D Converter"
     },
     {
       "code": "P1195",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1195",
       "description": "EGR Boost Sensor Circuit"
     },
     {
       "code": "P1196",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1196",
       "description": "Ignition Switch Start Circuit"
     },
     {
       "code": "P1197",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1197",
       "description": "Mileage Switch Circuit"
     },
     {
       "code": "P1213",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1213",
       "description": "Start Injector Circuit"
     },
     {
       "code": "P1221",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1221",
       "description": "Traction Control System"
     },
     {
       "code": "P1222",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1222",
       "description": "Traction Control Output Circuit"
     },
     {
       "code": "P1226",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1226",
       "description": "Control Sleeve Sensor Circuit"
     },
     {
       "code": "P1235",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1235",
       "description": "Fuel Pump Control Circuit"
     },
     {
       "code": "P1236",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1236",
       "description": "Fuel Pump Control Out Range"
     },
     {
       "code": "P1248",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1248",
       "description": "Turbo Boost Pressure Not Detected"
     },
     {
       "code": "P1250",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1250",
       "description": "Pressure Regulator Control Solenoid Circuit"
     },
     {
       "code": "P1251",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1251",
       "description": "Air Mixture Solenoid Circuit"
     },
     {
       "code": "P1252",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1252",
       "description": "Pressure Regulator Control Solenoid 2 Circuit Malfunction"
     },
     {
       "code": "P1260",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1260",
       "description": "Anti-Theft System Signal Detected Engine Disabled"
     },
     {
       "code": "P1270",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1270",
       "description": "Engine RPM or Vehicle Speed Limit Reached"
     },
     {
       "code": "P1279",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1279",
       "description": "Control Sleeve Sensor Circuit Range Performance"
     },
     {
       "code": "P1298",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1298",
       "description": "Injector Driver Module Failure"
     },
     {
       "code": "P1309",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1309",
       "description": "Misfire Detection Monitor"
     },
     {
       "code": "P1312",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1312",
       "description": "Injection Pump Timing Actuator Circuit"
     },
     {
       "code": "P1318",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1318",
       "description": "Injection Timing Piston Position Sensor Circuit"
     },
     {
       "code": "P1319",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1319",
       "description": "Injection Timing Piston Position Sensor Circuit Range Performance"
     },
     {
       "code": "P1345",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1345",
       "description": "No CMP or SGC Signal"
     },
     {
       "code": "P1351",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1351",
       "description": "Ignition Diagnostic Monitor Signal Lost To PCM Or Out Of Range"
     },
     {
       "code": "P1352",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1352",
       "description": "Ignition Coil A Primary Circuit"
     },
     {
       "code": "P1353",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1353",
       "description": "Ignition Coil B Primary Circuit"
     },
     {
       "code": "P1354",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1354",
       "description": "Ignition Coil C Primary Circuit"
     },
     {
       "code": "P1358",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1358",
       "description": "Ignition Diagnostic Monitor Signal Out Of Self Test Range"
     },
     {
       "code": "P1359",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1359",
       "description": "SPOUT Signal Lost To Powertrain Control Module Or Out Of Range"
     },
     {
       "code": "P1360",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1360",
       "description": "Ignition Coil A Secondary Circuit"
     },
     {
       "code": "P1361",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1361",
       "description": "Ignition Coil B Secondary Circuit"
     },
     {
       "code": "P1362",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1362",
       "description": "Ignition Coil C Secondary Circuit"
     },
     {
       "code": "P1364",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1364",
       "description": "Ignition Coil Primary Circuit"
     },
     {
       "code": "P1365",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1365",
       "description": "Ignition Coil Secondary Circuit"
     },
     {
       "code": "P1382",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1382",
       "description": "Camshaft Position Timing Solenoid 1 Circuit"
     },
     {
       "code": "P1387",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1387",
       "description": "Camshaft Position Timing Solenoid 2 Circuit"
     },
     {
       "code": "P1390",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1390",
       "description": "Octane Adjust Shorting Bar Out Or Circuit Open"
     },
     {
       "code": "P1400",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1400",
       "description": "DPFE Sensor Circuit Low Input"
     },
     {
       "code": "P1401",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1401",
       "description": "DPFE Sensor Circuit High Input"
     },
     {
       "code": "P1402",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1402",
       "description": "EGR Valve Position Sensor Circuit"
     },
     {
       "code": "P1405",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1405",
       "description": "DPFE Sensor Upstream Hose Off Or Plugged"
     },
     {
       "code": "P1406",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1406",
       "description": "DPFE Sensor Downstream Hose Off Or Plugged"
     },
     {
       "code": "P1407",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1407",
       "description": "No EGR Flow Detected"
     },
     {
       "code": "P1408",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1408",
       "description": "EGR System Flow Out Of Key On Engine Running Self Test Range"
     },
     {
       "code": "P1409",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1409",
       "description": "EGR Vacuum Regulator Solenoid Circuit"
     },
     {
       "code": "P1410",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1410",
       "description": "EGR Boost Solenoid Valve Stuck"
     },
     {
       "code": "P1412",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1412",
       "description": "Exhaust Gas Recirculation Valve Frozen"
     },
     {
       "code": "P1415",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1415",
       "description": "Air Pump Circuit"
     },
     {
       "code": "P1416",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1416",
       "description": "Port Air Circuit"
     },
     {
       "code": "P1417",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1417",
       "description": "Port Air Relief Circuit"
     },
     {
       "code": "P1418",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1418",
       "description": "Split Air 1 Circuit"
     },
     {
       "code": "P1419",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1419",
       "description": "Split Air 2 Circuit"
     },
     {
       "code": "P1439",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1439",
       "description": "Floor Temp Switch Circuit"
     },
     {
       "code": "P1443",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1443",
       "description": "EVAP System Purge Flow Fault"
     },
     {
       "code": "P1444",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1444",
       "description": "EVAP Purge Flow Sensor Circuit Low Voltage"
     },
     {
       "code": "P1445",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1445",
       "description": "EVAP Purge Flow Sensor Circuit High Voltage"
     },
     {
       "code": "P1446",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1446",
       "description": "Evaporative Vacuum Solenoid Circuit"
     },
     {
       "code": "P1449",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1449",
       "description": "Evaporative Check Solenoid Circuit"
     },
     {
       "code": "P1450",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1450",
       "description": "Unable To Bleed Up Fuel Tank Vacuum"
     },
     {
       "code": "P1451",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1451",
       "description": "Canister Vent Solenoid Circuit"
     },
     {
       "code": "P1455",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1455",
       "description": "Fuel Tank Level Sensor Circuit"
     },
     {
       "code": "P1456",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1456",
       "description": "Fuel Tank Temperature Sensor Circuit"
     },
     {
       "code": "P1457",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1457",
       "description": "Purge Solenoid Control System"
     },
     {
       "code": "P1458",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1458",
       "description": "A/C Compressor Clutch Signal Fault"
     },
     {
       "code": "P1475",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1475",
       "description": "Fan Relay Low Circuit"
     },
     {
       "code": "P1476",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1476",
       "description": "Fan Relay High Circuit"
     },
     {
       "code": "P1508",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1508",
       "description": "Idle Air Control Circuit Open"
     },
     {
       "code": "P1509",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1509",
       "description": "Idle Air Control Circuit Shorted"
     },
     {
       "code": "P1514",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1514",
       "description": "High Load Neutral Drive Fault"
     },
     {
       "code": "P1516",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1516",
       "description": "Gear Change Neutral Drive Fault"
     },
     {
       "code": "P1517",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1517",
       "description": "Cranking Neutral Drive Fault"
     },
     {
       "code": "P1534",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1534",
       "description": "Restraint Deployment Indicator Circuit"
     },
     {
       "code": "P1562",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1562",
       "description": "Powertrain Control Module +B Voltage Low"
     },
     {
       "code": "P1566",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1566",
       "description": "TCM B+ Voltage Low"
     },
     {
       "code": "P1569",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1569",
       "description": "IMRC Circuit Low"
     },
     {
       "code": "P1570",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1570",
       "description": "IMRC Circuit High"
     },
     {
       "code": "P1600",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1600",
       "description": "Loss Of KAM Power Circuit Open"
     },
     {
       "code": "P1601",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1601",
       "description": "Powertrain Control Module Communication Line To TCM Error"
     },
     {
       "code": "P1602",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1602",
       "description": "Powertrain Control Module Communication Line To TCM Error, Immobilizer System Communication Error With Powertrain Control Module"
     },
     {
       "code": "P1603",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1603",
       "description": "Immobilizer System Fault"
     },
     {
       "code": "P1604",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1604",
       "description": "Immobilizer System Fault"
     },
     {
       "code": "P1605",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1605",
       "description": "Powertrain Control Module Keep Alive Memory Test Error"
     },
     {
       "code": "P1608",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1608",
       "description": "Powertrain Control Module ECM CPU DTC Test Fault"
     },
     {
       "code": "P1609",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1609",
       "description": "Powertrain Control Module ECM CPU Knock Sensor Circuit"
     },
     {
       "code": "P1621",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1621",
       "description": "Immobilizer System Fault"
     },
     {
       "code": "P1622",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1622",
       "description": "Immobilizer System Fault"
     },
     {
       "code": "P1623",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1623",
       "description": "Immobilizer System Fault"
     },
     {
       "code": "P1624",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1624",
       "description": "Immobilizer System Fault"
     },
     {
       "code": "P1627",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1627",
       "description": "Powertrain Control Module ECM TCS Line Communication Error"
     },
     {
       "code": "P1628",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1628",
       "description": "Powertrain Control Module ECM TCS Any Line Communication Error"
     },
     {
       "code": "P1630",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1630",
       "description": "Alternator Regulator 1 Control Circuit"
     },
     {
       "code": "P1631",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1631",
       "description": "Generator Output Voltage Signal No Output"
     },
     {
       "code": "P1632",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1632",
       "description": "Battery Voltage Detection Circuit for Alternator Regulator"
     },
     {
       "code": "P1633",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1633",
       "description": "Battery Overcharge Fault"
     },
     {
       "code": "P1634",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1634",
       "description": "Generator Terminal B Circuit Open"
     },
     {
       "code": "P1645",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1645",
       "description": "Fuel Pump Resistor Switch Circuit"
     },
     {
       "code": "P1649",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1649",
       "description": "Fuel Injection Pump Module"
     },
     {
       "code": "P1650",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1650",
       "description": "Power Steering Pressure Switch Out Of Range Fault"
     },
     {
       "code": "P1651",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1651",
       "description": "Power Steering Pressure Switch Circuit"
     },
     {
       "code": "P1652",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1652",
       "description": "Power Steering Pressure Switch Circuit"
     },
     {
       "code": "P1680",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1680",
       "description": "Metering Oil Pump Failure"
     },
     {
       "code": "P1682",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1682",
       "description": "Metering Oil Pump Failure"
     },
     {
       "code": "P1683",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1683",
       "description": "Metering Oil Pump Temperature Sensor Circuit"
     },
     {
       "code": "P1684",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1684",
       "description": "Metering Oil Pump Position Sensor Circuit"
     },
     {
       "code": "P1685",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1685",
       "description": "Metering Oil Pump Stepping Motor Cont Circuit"
     },
     {
       "code": "P1686",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1686",
       "description": "Metering Oil Pump Stepping Motor Cont Circuit"
     },
     {
       "code": "P1687",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1687",
       "description": "Metering Oil Pump Stepping Motor Cont Circuit"
     },
     {
       "code": "P1688",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1688",
       "description": "Metering Oil Pump Stepping Motor Cont Circuit"
     },
     {
       "code": "P1689",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1689",
       "description": "Oil Pressure Control Solenoid Circuit"
     },
     {
       "code": "P1690",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1690",
       "description": "Wastegate Solenoid Circuit"
     },
     {
       "code": "P1691",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1691",
       "description": "Turbo Pressure Control Solenoid Circuit"
     },
     {
       "code": "P1692",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1692",
       "description": "Turbo Control Solenoid Circuit"
     },
     {
       "code": "P1693",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1693",
       "description": "Turbo Charge Control Circuit"
     },
     {
       "code": "P1694",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1694",
       "description": "Turbo Charge Relief Circuit"
     },
     {
       "code": "P1701",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1701",
       "description": "Transmission Range Sensor Reverse Engagement Error"
     },
     {
       "code": "P1702",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1702",
       "description": "Transmission Range Sensor Circuit Intermittent"
     },
     {
       "code": "P1703",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1703",
       "description": "Brake On Off Switch Out Of Self Test Range"
     },
     {
       "code": "P1705",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1705",
       "description": "Transmission Range Sensor Out Of Self Test Range"
     },
     {
       "code": "P1706",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1706",
       "description": "High Vehicle Speed Observed In Park"
     },
     {
       "code": "P1708",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1708",
       "description": "Clutch Switch Circuit"
     },
     {
       "code": "P1709",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1709",
       "description": "Clutch Pedal Position Switch Circuit"
     },
     {
       "code": "P1710",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1710",
       "description": "Transmission Control Module Solenoid Internal Ground Circuit"
     },
     {
       "code": "P1711",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1711",
       "description": "Transmission Fluid Temperature Sensor Circuit Out Of Self Test Range"
     },
     {
       "code": "P1713",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1713",
       "description": "Transmission Fluid Temperature Sensor Circuit"
     },
     {
       "code": "P1714",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1714",
       "description": "Shift Solenoid 1 Mechanical Fault"
     },
     {
       "code": "P1715",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1715",
       "description": "Shift Solenoid 2 Mechanical Fault"
     },
     {
       "code": "P1716",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1716",
       "description": "Shift Solenoid 3 Mechanical Fault"
     },
     {
       "code": "P1717",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1717",
       "description": "Shift Solenoid 4 Mechanical Fault"
     },
     {
       "code": "P1718",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1718",
       "description": "Transmission Fluid Temperature Sensor Circuit"
     },
     {
       "code": "P1719",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1719",
       "description": "Engine Torque Signal"
     },
     {
       "code": "P1720",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1720",
       "description": "Vehicle Speed Sensor 2 Signal Error"
     },
     {
       "code": "P1721",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1721",
       "description": "Gear 1 Incorrect Ratio"
     },
     {
       "code": "P1722",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1722",
       "description": "Gear 2 Incorrect Ratio"
     },
     {
       "code": "P1723",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1723",
       "description": "Gear 3 Incorrect Ratio"
     },
     {
       "code": "P1724",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1724",
       "description": "Gear 4 Incorrect Ratio"
     },
     {
       "code": "P1729",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1729",
       "description": "Transmission 4x4 Low Switch Error"
     },
     {
       "code": "P1735",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1735",
       "description": "First Gear Switch Circuit Failure"
     },
     {
       "code": "P1736",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1736",
       "description": "Second Gear Switch Circuit Failure"
     },
     {
       "code": "P1737",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1737",
       "description": "Lockup Solenoid"
     },
     {
       "code": "P1738",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1738",
       "description": "Shift Time Error"
     },
     {
       "code": "P1739",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1739",
       "description": "Slip Solenoid"
     },
     {
       "code": "P1740",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1740",
       "description": "Torque Converter Clutch Solenoid Mechanical Fault"
     },
     {
       "code": "P1741",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1741",
       "description": "Torque Converter Clutch Control Electrical Fault"
     },
     {
       "code": "P1742",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1742",
       "description": "Torque Converter Clutch Solenoid Shorted"
     },
     {
       "code": "P1743",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1743",
       "description": "Torque Converter Clutch Failed On TCIL Is On"
     },
     {
       "code": "P1744",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1744",
       "description": "Torque Converter Clutch Solenoid Mechanical Fault"
     },
     {
       "code": "P1745",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1745",
       "description": "Line Pressure Solenoid"
     },
     {
       "code": "P1746",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1746",
       "description": "Electronic Pressure Control Solenoid Circuit Open"
     },
     {
       "code": "P1747",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1747",
       "description": "Electronic Pressure Control Solenoid Circuit"
     },
     {
       "code": "P1748",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1748",
       "description": "Pressure Control Solenoid A"
     },
     {
       "code": "P1749",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1749",
       "description": "Electronic Pressure Control Solenoid Circuit Low"
     },
     {
       "code": "P1751",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1751",
       "description": "Transmission Shift Solenoid A Mechanical Fault"
     },
     {
       "code": "P1752",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1752",
       "description": "Transmission Shift Solenoid A Circuit Shorted"
     },
     {
       "code": "P1754",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1754",
       "description": "Transmission Coast Clutch Solenoid Electrical Fault"
     },
     {
       "code": "P1756",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1756",
       "description": "Transmission Shift Solenoid B Mechanical Fault"
     },
     {
       "code": "P1757",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1757",
       "description": "Transmission Shift Solenoid B Circuit Shorted"
     },
     {
       "code": "P1759",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1759",
       "description": "2-4 Brake Failsafe Valve Malfunction"
     },
     {
       "code": "P1761",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1761",
       "description": "Transmission Shift Solenoid 3 Mechanical Fault"
     },
     {
       "code": "P1762",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1762",
       "description": "Transmission SS3 SS4 OD Band Fault"
     },
     {
       "code": "P1763",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1763",
       "description": "Low And Reverse Brake Pressure Switch Circuit"
     },
     {
       "code": "P1764",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1764",
       "description": "Low And Reverse Brake Failsafe Valve Malfunction"
     },
     {
       "code": "P1765",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1765",
       "description": "Transmission 3-2 Timing Solenoid Valve"
     },
     {
       "code": "P1767",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1767",
       "description": "Torque Converter Clutch Solenoid Circuit"
     },
     {
       "code": "P1770",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1770",
       "description": "Clutch Solenoid Circuit"
     },
     {
       "code": "P1771",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1771",
       "description": "Throttle Position Sensor Circuit Open To Transmission Control Module"
     },
     {
       "code": "P1772",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1772",
       "description": "Throttle Position Sensor Circuit Shorted To Transmission Control Module"
     },
     {
       "code": "P1775",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1775",
       "description": "Torque Down Signal 1 Circuit"
     },
     {
       "code": "P1776",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1776",
       "description": "Torque Down Signal 2 Circuit"
     },
     {
       "code": "P1777",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1777",
       "description": "Torque Down Response Signal Circuit"
     },
     {
       "code": "P1780",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1780",
       "description": "Transmission Control Switch Circuit, Overdrive Off Switch Not Cycled During The Self Test"
     },
     {
       "code": "P1781",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1781",
       "description": "Transmission 4x4 Low Switch Out Of Range Fault"
     },
     {
       "code": "P1783",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1783",
       "description": "Transmission Fluid Temperature High Input"
     },
     {
       "code": "P1788",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1788",
       "description": "Pressure Control Solenoid B Circuit Open"
     },
     {
       "code": "P1789",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1789",
       "description": "Pressure Control Solenoid B Circuit Shorted"
     },
     {
       "code": "P1790",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1790",
       "description": "TP Mechanical Circuit"
     },
     {
       "code": "P1791",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1791",
       "description": "TP Electric Circuit"
     },
     {
       "code": "P1792",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1792",
       "description": "Barometer Pressure Circuit"
     },
     {
       "code": "P1793",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1793",
       "description": "Intake Air Volume Circuit"
     },
     {
       "code": "P1794",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1794",
       "description": "Powertrain Control Module Battery Direct Power Circuit"
     },
     {
       "code": "P1795",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1795",
       "description": "Idle Switch Circuit"
     },
     {
       "code": "P1796",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1796",
       "description": "Kick Down Switch Circuit"
     },
     {
       "code": "P1797",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1797",
       "description": "P/N Switch Open Or Short Circuit"
     },
     {
       "code": "P1798",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1798",
       "description": "Coolant Temperature Circuit"
     },
     {
       "code": "P1799",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1799",
       "description": "Hold Switch Circuit"
     },
     {
       "code": "P1900",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1900",
       "description": "Turbine Speed Sensor Circuit Intermittent"
     },
     {
       "code": "P1901",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mazda_p1901",
       "description": "Torque Converter Clutch Circuit Intermittent"
     }
   ]

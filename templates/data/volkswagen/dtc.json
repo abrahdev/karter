@@ -13,2641 +13,3169 @@
     {
       "code": "P1101",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1101",
       "description": "Oxygen Sensor Circuit Bank 1 Sensor 1 Voltage Too Low/Air Leak"
     },
     {
       "code": "P1102",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1102",
       "description": "Oxygen Sensor Heating Circuit Bank 1 Sensor 1 Voltage Too Low/Air Leak"
     },
     {
       "code": "P1103",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1103",
       "description": "Oxygen Sensor Heating Circuit Bank 1 Sensor 1 Short To B+"
     },
     {
       "code": "P1104",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1104",
       "description": "Oxygen Sensor Bank 1 Sensor 2 Voltage Too Low/Air Leak"
     },
     {
       "code": "P1105",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1105",
       "description": "Oxygen Sensor Heating Circuit Bank 1 Sensor 2 Short To B+"
     },
     {
       "code": "P1106",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1106",
       "description": "Oxygen Sensor Circuit Bank 2 Sensor 1 Voltage Too Low/Air Leak"
     },
     {
       "code": "P1107",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1107",
       "description": "Oxygen Sensor Heating Circuit Bank 2 Sensor 1 Short To B+"
     },
     {
       "code": "P1108",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1108",
       "description": "Oxygen Sensor Heating Circuit Bank 2 Sensor 1 Output Too Low"
     },
     {
       "code": "P1109",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1109",
       "description": "Oxygen Sensor Circuit Bank 2 Sensor 2 Voltage Too Low/Air Leak"
     },
     {
       "code": "P1110",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1110",
       "description": "Oxygen Sensor Heating Circuit Bank 2 Sensor 2 Short To B+"
     },
     {
       "code": "P1111",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1111",
       "description": "Oxygen Sensor Control Bank 1 System Too Lean"
     },
     {
       "code": "P1112",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1112",
       "description": "Oxygen Sensor Control Bank 1 System Too Rich"
     },
     {
       "code": "P1113",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1113",
       "description": "Oxygen Sensor Heater Resistance Too High Bank 1 Sensor 1"
     },
     {
       "code": "P1114",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1114",
       "description": "Bank 1 Sensor 2 Resistance Too High"
     },
     {
       "code": "P1115",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1115",
       "description": "Oxygen Sensor Heater Circuit Short To Ground Bank 1 Sensor 1"
     },
     {
       "code": "P1116",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1116",
       "description": "Oxygen Sensor Heater Circuit Open Bank 1 Sensor 1"
     },
     {
       "code": "P1117",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1117",
       "description": "Oxygen Sensor Heater Circuit Short To Ground Bank 1 Sensor 2"
     },
     {
       "code": "P1118",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1118",
       "description": "Oxygen Sensor Heater Circuit Open Bank 1 Sensor 2"
     },
     {
       "code": "P1119",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1119",
       "description": "Oxygen Sensor Heater Circuit Bank 2 Sensor 1 Short To Ground"
     },
     {
       "code": "P1120",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1120",
       "description": "Oxygen Sensor Heater Circuit Bank 2 Sensor 1 Open"
     },
     {
       "code": "P1121",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1121",
       "description": "Oxygen Sensor Heater Circuit Bank 2 Sensor 2 Short To Ground"
     },
     {
       "code": "P1122",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1122",
       "description": "Oxygen Sensor Heater Circuit Bank 2 Sensor 2 Open"
     },
     {
       "code": "P1123",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1123",
       "description": "Long Term Fuel Trim Add Air Bank 1 System Too Rich"
     },
     {
       "code": "P1124",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1124",
       "description": "Long Term Fuel Trim Add Air Bank 1 System Too Lean"
     },
     {
       "code": "P1125",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1125",
       "description": "Long Term Fuel Trim Add Air Bank 2 System Too Rich"
     },
     {
       "code": "P1126",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1126",
       "description": "Long Term Fuel Trim Add Air Bank 2 System Too Lean"
     },
     {
       "code": "P1127",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1127",
       "description": "Long Term Fuel Trim Bank 1 System Too Rich"
     },
     {
       "code": "P1128",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1128",
       "description": "Long Term Fuel Trim Bank 1 System Too Lean"
     },
     {
       "code": "P1129",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1129",
       "description": "Long Term Fuel Trim Bank 2 System Too Rich"
     },
     {
       "code": "P1130",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1130",
       "description": "Long Term Fuel Trim Bank 2 System Too Lean"
     },
     {
       "code": "P1131",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1131",
       "description": "Bank 2 Sensor 1 Resistance Too High"
     },
     {
       "code": "P1132",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1132",
       "description": "Oxygen Sensor Heating Circuit Bank 1 + 2 Sensor 1 Short To B+"
     },
     {
       "code": "P1133",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1133",
       "description": "Oxygen Sensor Heating Circuit Bank 1 + 2 Sensor 1 Electrical Malfunction"
     },
     {
       "code": "P1134",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1134",
       "description": "Oxygen Sensor Heating Circuit Bank 1 + 2 Sensor 2 Short To B+"
     },
     {
       "code": "P1135",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1135",
       "description": "Oxygen Sensor Heating Circuit Bank 1 + 2 Sensor 2 Electrical Malfunction"
     },
     {
       "code": "P1136",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1136",
       "description": "Long Term Fuel Trim Add Fuel Bank 1 System Too Lean"
     },
     {
       "code": "P1137",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1137",
       "description": "Long Term Fuel Trim Add Fuel Bank 1 System Too Rich"
     },
     {
       "code": "P1138",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1138",
       "description": "Long Term Fuel Trim Add Fuel Bank 2 System Too Lean"
     },
     {
       "code": "P1139",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1139",
       "description": "Long Term Fuel Trim Add Fuel Bank 2 System Too Rich"
     },
     {
       "code": "P1140",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1140",
       "description": "Bank 2 Sensor 2 Resistance Too High"
     },
     {
       "code": "P1141",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1141",
       "description": "Load Calculation Cross Check Range Performance"
     },
     {
       "code": "P1142",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1142",
       "description": "Load Calculation Cross Check Lower Limit Exceeded"
     },
     {
       "code": "P1143",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1143",
       "description": "Load Calculation Cross Check Upper Limit Exceeded"
     },
     {
       "code": "P1144",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1144",
       "description": "Mass Or Volume Air Flow Circuit Open/Short To Ground"
     },
     {
       "code": "P1145",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1145",
       "description": "Mass Or Volume Air Flow Circuit Short To B+"
     },
     {
       "code": "P1146",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1146",
       "description": "Mass Or Volume Air Flow Circuit Power Supply Malfunction"
     },
     {
       "code": "P1147",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1147",
       "description": "Oxygen Sensor Control Bank 2 System Too Lean"
     },
     {
       "code": "P1148",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1148",
       "description": "Oxygen Sensor Control Bank 2 System Too Rich"
     },
     {
       "code": "P1149",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1149",
       "description": "Oxygen Sensor Control Bank 1 Out Of Range"
     },
     {
       "code": "P1150",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1150",
       "description": "Oxygen Sensor Control Bank 2 Out Of Range"
     },
     {
       "code": "P1151",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1151",
       "description": "Bank 1 Long Term Fuel Trim Range 1 Lower Lean Limit Exceeded"
     },
     {
       "code": "P1152",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1152",
       "description": "Bank 1 Long Term Fuel Trim Range 2 Lower Lean Limit Exceeded"
     },
     {
       "code": "P1154",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1154",
       "description": "Manifold Switch Over Malfunction"
     },
     {
       "code": "P1155",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1155",
       "description": "Manifold Absolute Pressure Sensor Circuit Short To B+"
     },
     {
       "code": "P1156",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1156",
       "description": "Manifold Absolute Pressure Sensor Circuit Open/Short To Ground"
     },
     {
       "code": "P1157",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1157",
       "description": "Manifold Absolute Pressure Sensor Circuit Power Supply Malfunction"
     },
     {
       "code": "P1158",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1158",
       "description": "Manifold Absolute Pressure Sensor Circuit Range Performance"
     },
     {
       "code": "P1160",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1160",
       "description": "Manifold Temperature Sensor Circuit Short To Ground"
     },
     {
       "code": "P1161",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1161",
       "description": "Manifold Temperature Sensor Circuit Open/Short To B+"
     },
     {
       "code": "P1162",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1162",
       "description": "Fuel Temperature Sensor Circuit Short To Ground"
     },
     {
       "code": "P1163",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1163",
       "description": "Fuel Temperature Sensor Circuit Open/Short To B+"
     },
     {
       "code": "P1164",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1164",
       "description": "Fuel Temperature Sensor Range Performance"
     },
     {
       "code": "P1165",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1165",
       "description": "Bank 1 Long Term Fuel Trim Range 1 Lower Lean Limit Exceeded"
     },
     {
       "code": "P1166",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1166",
       "description": "Bank 1 Long Term Fuel Trim Range 2 Upper Rich Limit Exceeded"
     },
     {
       "code": "P1171",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1171",
       "description": "Throttle Actuation Potentiometer Signal 2 Range Performance"
     },
     {
       "code": "P1172",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1172",
       "description": "Throttle Actuation Potentiometer Signal 2 Signal Too Low"
     },
     {
       "code": "P1173",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1173",
       "description": "Throttle Actuation Potentiometer Signal 2 Signal Too High"
     },
     {
       "code": "P1174",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1174",
       "description": "Fuel Trim Bank 1 Different Injection Times"
     },
     {
       "code": "P1176",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1176",
       "description": "Rear Oxygen Sensor Correction"
     },
     {
       "code": "P1177",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1177",
       "description": "Oxygen Sensor Correction Behind Catalyst Bank 1 Limit Attained"
     },
     {
       "code": "P1178",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1178",
       "description": "Linear Oxygen Sensor Pump Current Open"
     },
     {
       "code": "P1179",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1179",
       "description": "Linear Oxygen Sensor Pump Current Short To Ground"
     },
     {
       "code": "P1180",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1180",
       "description": "Linear Oxygen Sensor Pump Current Short To B+"
     },
     {
       "code": "P1181",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1181",
       "description": "Linear Oxygen Sensor Reference Voltage Open"
     },
     {
       "code": "P1182",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1182",
       "description": "Linear Oxygen Sensor Reference Voltage Short To Ground"
     },
     {
       "code": "P1183",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1183",
       "description": "Linear Oxygen Sensor Reference Voltage Short To B+"
     },
     {
       "code": "P1184",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1184",
       "description": "Linear Oxygen Sensor Common Ground Wire Open"
     },
     {
       "code": "P1185",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1185",
       "description": "Linear Oxygen Sensor Common Ground Wire Short To Ground"
     },
     {
       "code": "P1186",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1186",
       "description": "Linear Oxygen Sensor Common Ground Short To B+"
     },
     {
       "code": "P1187",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1187",
       "description": "Linear Oxygen Sensor Compensation Resistor Open"
     },
     {
       "code": "P1188",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1188",
       "description": "Linear Oxygen Sensor Compensation Resistor Short To Ground"
     },
     {
       "code": "P1189",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1189",
       "description": "Linear Oxygen Sensor Compensation Resistor Short To B+"
     },
     {
       "code": "P1190",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1190",
       "description": "Linear Oxygen Sensor Reference Voltage Incorrect Signal"
     },
     {
       "code": "P1196",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1196",
       "description": "Oxygen Sensor Heater Circuit Bank 1 Sensor 1 Electrical Malfunction"
     },
     {
       "code": "P1197",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1197",
       "description": "Oxygen Sensor Heater Circuit Bank 2 Sensor 1 Electrical Malfunction"
     },
     {
       "code": "P1198",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1198",
       "description": "Oxygen Sensor Heater Circuit Bank 1 Sensor 2 Electrical Malfunction"
     },
     {
       "code": "P1199",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1199",
       "description": "Oxygen Sensor Heater Circuit Bank 2 Sensor 2 Electrical Malfunction"
     },
     {
       "code": "P1201",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1201",
       "description": "Cylinder 1 Fuel Injector Circuit Electrical Malfunction"
     },
     {
       "code": "P1202",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1202",
       "description": "Cylinder 2 Fuel Injector Circuit Electrical Malfunction"
     },
     {
       "code": "P1203",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1203",
       "description": "Cylinder 3 Fuel Injector Circuit Electrical Malfunction"
     },
     {
       "code": "P1204",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1204",
       "description": "Cylinder 4 Fuel Injector Circuit Electrical Malfunction"
     },
     {
       "code": "P1205",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1205",
       "description": "Cylinder 5 Fuel Injector Circuit Electrical Malfunction"
     },
     {
       "code": "P1206",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1206",
       "description": "Cylinder 6 Fuel Injector Circuit Electrical Malfunction"
     },
     {
       "code": "P1207",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1207",
       "description": "Cylinder 7 Fuel Injector Circuit Electrical Malfunction"
     },
     {
       "code": "P1208",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1208",
       "description": "Cylinder 8 Fuel Injector Circuit Electrical Malfunction"
     },
     {
       "code": "P1209",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1209",
       "description": "Intake Valves For Cylinder Shut-Off Short Circuit To Ground"
     },
     {
       "code": "P1210",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1210",
       "description": "Intake Valves For Cylinder Shut-Off Short To B+"
     },
     {
       "code": "P1211",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1211",
       "description": "Intake Valves For Cylinder Shut-Off Open Circuit"
     },
     {
       "code": "P1213",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1213",
       "description": "Cylinder 1 Fuel Injector Circuit Short To B+"
     },
     {
       "code": "P1214",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1214",
       "description": "Cylinder 2 Fuel Injector Circuit Short To B+"
     },
     {
       "code": "P1215",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1215",
       "description": "Cylinder 3 Fuel Injector Circuit Short To B+"
     },
     {
       "code": "P1216",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1216",
       "description": "Cylinder 4 Fuel Injector Circuit Short To B+"
     },
     {
       "code": "P1217",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1217",
       "description": "Cylinder 5 Fuel Injector Circuit Short To B+"
     },
     {
       "code": "P1218",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1218",
       "description": "Cylinder 6 Fuel Injector Circuit Short To B+"
     },
     {
       "code": "P1219",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1219",
       "description": "Cylinder 7 Fuel Injector Circuit Short To B+"
     },
     {
       "code": "P1220",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1220",
       "description": "Cylinder 8 Fuel Injector Circuit Short To B+"
     },
     {
       "code": "P1225",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1225",
       "description": "Cylinder 1 Injector Circuit Short To Ground"
     },
     {
       "code": "P1226",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1226",
       "description": "Cylinder 2 Injector Circuit Short To Ground"
     },
     {
       "code": "P1227",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1227",
       "description": "Cylinder 3 Injector Circuit Short To Ground"
     },
     {
       "code": "P1228",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1228",
       "description": "Cylinder 4 Injector Circuit Short To Ground"
     },
     {
       "code": "P1229",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1229",
       "description": "Cylinder 5 Injector Circuit Short To Ground"
     },
     {
       "code": "P1230",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1230",
       "description": "Cylinder 6 Injector Circuit Short To Ground"
     },
     {
       "code": "P1231",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1231",
       "description": "Cylinder 7 Injector Circuit Short To Ground"
     },
     {
       "code": "P1232",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1232",
       "description": "Cylinder 8 Injector Circuit Short To Ground"
     },
     {
       "code": "P1237",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1237",
       "description": "Cylinder 1 Injector Circuit Open Circuit"
     },
     {
       "code": "P1238",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1238",
       "description": "Cylinder 2 Injector Circuit Open Circuit"
     },
     {
       "code": "P1239",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1239",
       "description": "Cylinder 3 Injector Circuit Open Circuit"
     },
     {
       "code": "P1240",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1240",
       "description": "Cylinder 4 Injector Circuit Open Circuit"
     },
     {
       "code": "P1241",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1241",
       "description": "Cylinder 5 Injector Circuit Open Circuit"
     },
     {
       "code": "P1242",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1242",
       "description": "Cylinder 6 Injector Circuit Open Circuit"
     },
     {
       "code": "P1243",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1243",
       "description": "Cylinder 7 Injector Circuit Open Circuit"
     },
     {
       "code": "P1244",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1244",
       "description": "Cylinder 8 Injector Circuit Open Circuit"
     },
     {
       "code": "P1245",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1245",
       "description": "Needle Lift Sensor Circuit Short To Ground"
     },
     {
       "code": "P1246",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1246",
       "description": "Needle Lift Sensor Circuit Range Performance"
     },
     {
       "code": "P1247",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1247",
       "description": "Needle Lift Sensor Circuit Open/Short To B+"
     },
     {
       "code": "P1248",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1248",
       "description": "Injection Start Control Deviation"
     },
     {
       "code": "P1249",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1249",
       "description": "Fuel Consumption Signal Electrical Fault In Circuit"
     },
     {
       "code": "P1250",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1250",
       "description": "Fuel Level Too Low"
     },
     {
       "code": "P1251",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1251",
       "description": "Start Of Injection Solenoid Circuit Short To B+"
     },
     {
       "code": "P1252",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1252",
       "description": "Start Of Injection Solenoid Circuit Open/Short To Ground"
     },
     {
       "code": "P1253",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1253",
       "description": "Fuel Consumption Signal Short To Ground"
     },
     {
       "code": "P1254",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1254",
       "description": "Fuel Consumption Signal Short To B+"
     },
     {
       "code": "P1255",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1255",
       "description": "Engine Coolant Temperature Circuit Short To Ground"
     },
     {
       "code": "P1256",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1256",
       "description": "Engine Coolant Temperature Circuit Open/Short To B+"
     },
     {
       "code": "P1257",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1257",
       "description": "Engine Coolant System Valve Open"
     },
     {
       "code": "P1258",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1258",
       "description": "Engine Coolant System Valve Short To B+"
     },
     {
       "code": "P1259",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1259",
       "description": "Engine Coolant System Valve Short To Ground"
     },
     {
       "code": "P1280",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1280",
       "description": "Fuel Injection Air Control Valve Circuit Flow Too Low"
     },
     {
       "code": "P1283",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1283",
       "description": "Fuel Injection Air Control Valve Circuit Electrical Malfunction"
     },
     {
       "code": "P1284",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1284",
       "description": "Fuel Injection Air Control Valve Circuit Open"
     },
     {
       "code": "P1285",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1285",
       "description": "Fuel Injection Air Control Valve Circuit Short To Ground"
     },
     {
       "code": "P1286",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1286",
       "description": "Fuel Injection Air Control Valve Circuit Short To B+"
     },
     {
       "code": "P1287",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1287",
       "description": "Turbocharge Bypass Valve Open"
     },
     {
       "code": "P1288",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1288",
       "description": "Turbocharge Bypass Valve Short To B+"
     },
     {
       "code": "P1289",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1289",
       "description": "Turbocharge Bypass Valve Short To Ground"
     },
     {
       "code": "P1300",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1300",
       "description": "Misfire Detected Fuel Level Too Low"
     },
     {
       "code": "P1319",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1319",
       "description": "Knock Sensor 1 Circuit Short To Ground"
     },
     {
       "code": "P1320",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1320",
       "description": "Knock Sensor 2 Circuit Short To Ground"
     },
     {
       "code": "P1321",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1321",
       "description": "Knock Sensor 3 Circuit Low Input"
     },
     {
       "code": "P1322",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1322",
       "description": "Knock Sensor 3 Circuit High Input"
     },
     {
       "code": "P1323",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1323",
       "description": "Knock Sensor 4 Circuit Low Input"
     },
     {
       "code": "P1324",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1324",
       "description": "Knock Sensor 4 Circuit High Input"
     },
     {
       "code": "P1325",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1325",
       "description": "Cylinder 1 Knock Control Limit Attained"
     },
     {
       "code": "P1326",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1326",
       "description": "Cylinder 2 Knock Control Limit Attained"
     },
     {
       "code": "P1327",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1327",
       "description": "Cylinder 3 Knock Control Limit Attained"
     },
     {
       "code": "P1328",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1328",
       "description": "Cylinder 4 Knock Control Limit Attained"
     },
     {
       "code": "P1329",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1329",
       "description": "Cylinder 5 Knock Control Limit Attained"
     },
     {
       "code": "P1330",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1330",
       "description": "Cylinder 6 Knock Control Limit Attained"
     },
     {
       "code": "P1331",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1331",
       "description": "Cylinder 7 Knock Control Limit Attained"
     },
     {
       "code": "P1332",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1332",
       "description": "Cylinder 8 Knock Control Limit Attained"
     },
     {
       "code": "P1335",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1335",
       "description": "Engine Torque Monitoring 2 Control Limit Exceeded"
     },
     {
       "code": "P1336",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1336",
       "description": "Engine Torque Adaptation At Limit"
     },
     {
       "code": "P1337",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1337",
       "description": "CMP Sensor Bank 1 Short To Ground"
     },
     {
       "code": "P1338",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1338",
       "description": "CMP Sensor Bank 1 Open Circuit Or Short To B+"
     },
     {
       "code": "P1339",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1339",
       "description": "Crankshaft Position Engine Speed Sensor Cross Connected"
     },
     {
       "code": "P1340",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1340",
       "description": "CKP CMP Sensor Signals Out Of Sequence"
     },
     {
       "code": "P1341",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1341",
       "description": "Ignition Coil Output Stage 1 Short To Ground"
     },
     {
       "code": "P1342",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1342",
       "description": "Ignition Coil Power Output State 1 Short To B+"
     },
     {
       "code": "P1343",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1343",
       "description": "Ignition Coil Output Stage 2 Short To Ground"
     },
     {
       "code": "P1345",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1345",
       "description": "Ignition Coil Output Stage 3 Short To Ground"
     },
     {
       "code": "P1346",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1346",
       "description": "Ignition Coil Power Output State 3 Short To B+"
     },
     {
       "code": "P1347",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1347",
       "description": "Bank 2 Crankshaft Camshaft Position Sensor Signal Out Of Sequence"
     },
     {
       "code": "P1348",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1348",
       "description": "Ignition Coil Power Output Stage 1 Open"
     },
     {
       "code": "P1349",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1349",
       "description": "Ignition Coil Power Output Stage 2 Open"
     },
     {
       "code": "P1350",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1350",
       "description": "Ignition Coil Power Output Stage 3 Open"
     },
     {
       "code": "P1354",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1354",
       "description": "Modulation Piston Displacement Sensor Circuit Malfunction"
     },
     {
       "code": "P1355",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1355",
       "description": "Cylinder 1 Ignition Circuit Open"
     },
     {
       "code": "P1356",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1356",
       "description": "Cylinder 1 Ignition Circuit Short To B+"
     },
     {
       "code": "P1357",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1357",
       "description": "Cylinder 1 Ignition Circuit Short To Ground"
     },
     {
       "code": "P1358",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1358",
       "description": "Cylinder 2 Ignition Circuit Open"
     },
     {
       "code": "P1359",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1359",
       "description": "Cylinder 2 Ignition Circuit Short To B+"
     },
     {
       "code": "P1360",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1360",
       "description": "Cylinder 2 Ignition Circuit Short To Ground"
     },
     {
       "code": "P1361",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1361",
       "description": "Cylinder 3 Ignition Circuit Open"
     },
     {
       "code": "P1362",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1362",
       "description": "Cylinder 3 Ignition Circuit Short To B+"
     },
     {
       "code": "P1363",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1363",
       "description": "Cylinder 3 Ignition Circuit Short To Ground"
     },
     {
       "code": "P1364",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1364",
       "description": "Cylinder 4 Ignition Circuit Open"
     },
     {
       "code": "P1365",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1365",
       "description": "Cylinder 4 Ignition Circuit Short To B+"
     },
     {
       "code": "P1366",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1366",
       "description": "Cylinder 4 Ignition Circuit Short To Ground"
     },
     {
       "code": "P1367",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1367",
       "description": "Cylinder 5 Ignition Circuit Open"
     },
     {
       "code": "P1368",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1368",
       "description": "Cylinder 5 Ignition Circuit Short To B+"
     },
     {
       "code": "P1369",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1369",
       "description": "Cylinder 5 Ignition Circuit Short To Ground"
     },
     {
       "code": "P1370",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1370",
       "description": "Cylinder 6 Ignition Circuit Open"
     },
     {
       "code": "P1371",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1371",
       "description": "Cylinder 6 Ignition Circuit Short To B+"
     },
     {
       "code": "P1372",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1372",
       "description": "Cylinder 6 Ignition Circuit Short To Ground"
     },
     {
       "code": "P1373",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1373",
       "description": "Cylinder 7 Ignition Circuit Open"
     },
     {
       "code": "P1374",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1374",
       "description": "Cylinder 7 Ignition Circuit Short To B+"
     },
     {
       "code": "P1375",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1375",
       "description": "Cylinder 7 Ignition Circuit Short To Ground"
     },
     {
       "code": "P1376",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1376",
       "description": "Cylinder 8 Ignition Circuit Open"
     },
     {
       "code": "P1377",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1377",
       "description": "Cylinder 8 Ignition Circuit Short To B+"
     },
     {
       "code": "P1378",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1378",
       "description": "Cylinder 8 Ignition Circuit Short To Ground"
     },
     {
       "code": "P1386",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1386",
       "description": "Internal Control Module Knock Control Error"
     },
     {
       "code": "P1387",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1387",
       "description": "Control Unit Internal Altitude Sensor"
     },
     {
       "code": "P1388",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1388",
       "description": "Control Unit Internal Throttle Control"
     },
     {
       "code": "P1391",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1391",
       "description": "CMP Sensor Bank 2 Short To Ground"
     },
     {
       "code": "P1392",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1392",
       "description": "CMP Sensor Bank 2 Open Circuit Short To B+"
     },
     {
       "code": "P1393",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1393",
       "description": "Ignition Coil Power Output Stage 1 Malfunction"
     },
     {
       "code": "P1394",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1394",
       "description": "Ignition Coil Power Output Stage 2 Malfunction"
     },
     {
       "code": "P1395",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1395",
       "description": "Ignition Coil Power Output Stage 3 Malfunction"
     },
     {
       "code": "P1396",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1396",
       "description": "Engine Speed Sensor Missing Tooth"
     },
     {
       "code": "P1397",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1397",
       "description": "Engine Speed Wheel Adaptation At Limit"
     },
     {
       "code": "P1398",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1398",
       "description": "Engine RPM Signal Short To Ground"
     },
     {
       "code": "P1399",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1399",
       "description": "Engine RPM Signal Short To B+"
     },
     {
       "code": "P1400",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1400",
       "description": "EGR Valve Circuit Electrical Malfunction"
     },
     {
       "code": "P1401",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1401",
       "description": "EGR Valve Power Stage Short To Ground"
     },
     {
       "code": "P1402",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1402",
       "description": "EGR Valve Circuit Short To B+"
     },
     {
       "code": "P1403",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1403",
       "description": "EGR Flow Deviation"
     },
     {
       "code": "P1404",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1404",
       "description": "EGR Flow Adaptation Not Carried Out"
     },
     {
       "code": "P1406",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1406",
       "description": "EGR Temperature Sensor Range Performance"
     },
     {
       "code": "P1407",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1407",
       "description": "EGR Temperature Sensor Signal Too Low"
     },
     {
       "code": "P1408",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1408",
       "description": "EGR Temperature Sensor Signal Too High"
     },
     {
       "code": "P1409",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1409",
       "description": "Tank Ventilation Valve Electrical Malfunction"
     },
     {
       "code": "P1410",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1410",
       "description": "Tank Ventilation Valve Circuit Short To B+"
     },
     {
       "code": "P1411",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1411",
       "description": "Secondary Air Injection System Bank 2 Flow Too Lean"
     },
     {
       "code": "P1412",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1412",
       "description": "EGR Differential Pressure Sensor Signal Too Low"
     },
     {
       "code": "P1413",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1413",
       "description": "EGR Differential Pressure Sensor Signal Too High"
     },
     {
       "code": "P1414",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1414",
       "description": "Secondary Air Injection System Bank 2 Leak Detected"
     },
     {
       "code": "P1417",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1417",
       "description": "Fuel Level Sensor Signal Too Low"
     },
     {
       "code": "P1418",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1418",
       "description": "Fuel Level Sensor Signal Too High"
     },
     {
       "code": "P1420",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1420",
       "description": "Secondary Air Injection Control Module Electrical Malfunction"
     },
     {
       "code": "P1421",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1421",
       "description": "Secondary Air Injection Valve Circuit Short To Ground"
     },
     {
       "code": "P1422",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1422",
       "description": "Secondary Air Injection Valve Circuit Short To B+"
     },
     {
       "code": "P1423",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1423",
       "description": "Secondary Air Injection System Bank 1 Flow Too Low"
     },
     {
       "code": "P1424",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1424",
       "description": "Secondary Air Injection System Bank 1 Leak Detected"
     },
     {
       "code": "P1425",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1425",
       "description": "Tank Ventilation Valve Short To Ground"
     },
     {
       "code": "P1426",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1426",
       "description": "Tank Ventilation Valve Open Circuit"
     },
     {
       "code": "P1432",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1432",
       "description": "Secondary Air Injection Valve Open"
     },
     {
       "code": "P1433",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1433",
       "description": "Secondary Air Injection Pump Relay Circuit Open"
     },
     {
       "code": "P1434",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1434",
       "description": "Secondary Air Injection Pump Relay Circuit Short To B+"
     },
     {
       "code": "P1435",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1435",
       "description": "Secondary Air Injection Pump Relay Circuit Short To Ground"
     },
     {
       "code": "P1436",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1436",
       "description": "Secondary Air Injection Pump Relay Circuit Electrical Malfunction"
     },
     {
       "code": "P1439",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1439",
       "description": "EGR Valve Position Sensor Adaptation At Limit"
     },
     {
       "code": "P1440",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1440",
       "description": "EGR Valve Power Stage Open"
     },
     {
       "code": "P1441",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1441",
       "description": "EGR Valve Circuit Open Short To Ground"
     },
     {
       "code": "P1442",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1442",
       "description": "EGR Valve Position Sensor Signal Too High"
     },
     {
       "code": "P1443",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1443",
       "description": "EGR Valve Position Sensor Signal Too Low"
     },
     {
       "code": "P1444",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1444",
       "description": "EGR Valve Position Sensor Range Performance"
     },
     {
       "code": "P1445",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1445",
       "description": "Catalyst Temperature Sensor 2 Circuit Range Performance"
     },
     {
       "code": "P1446",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1446",
       "description": "Catalyst Temperature Circuit Short To Ground"
     },
     {
       "code": "P1447",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1447",
       "description": "Catalyst Temperature Circuit Open Short To B+"
     },
     {
       "code": "P1448",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1448",
       "description": "Catalyst Temperature Sensor 2 Circuit Short To Ground"
     },
     {
       "code": "P1449",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1449",
       "description": "Catalyst Temperature Sensor 2 Circuit Open Short To B+"
     },
     {
       "code": "P1450",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1450",
       "description": "Secondary Air Injection System Circuit Short To B+"
     },
     {
       "code": "P1451",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1451",
       "description": "Secondary Air Injection Circuit Short To Ground"
     },
     {
       "code": "P1452",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1452",
       "description": "Secondary Air Injection System Circuit Open"
     },
     {
       "code": "P1453",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1453",
       "description": "Exhaust Gas Temperature Sensor 1 Open Short To B+"
     },
     {
       "code": "P1454",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1454",
       "description": "Exhaust Gas Temperature Sensor 1 Short To Ground"
     },
     {
       "code": "P1455",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1455",
       "description": "Exhaust Gas Temperature Sensor 1 Range Performance"
     },
     {
       "code": "P1456",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1456",
       "description": "Exhaust Gas Temperature Control Bank 1 Limit Attained"
     },
     {
       "code": "P1457",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1457",
       "description": "Exhaust Gas Temperature Sensor 2 Open Short To B+"
     },
     {
       "code": "P1458",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1458",
       "description": "Exhaust Gas Temperature Sensor 2 Short To Ground"
     },
     {
       "code": "P1459",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1459",
       "description": "Exhaust Gas Temperature Sensor 2 Range Performance"
     },
     {
       "code": "P1460",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1460",
       "description": "Exhaust Gas Temperature Control Bank 2 Limit Attained"
     },
     {
       "code": "P1461",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1461",
       "description": "Exhaust Gas Temperature Control Bank 1 Range Performance"
     },
     {
       "code": "P1462",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1462",
       "description": "Exhaust Gas Temperature Control Bank 2 Range Performance"
     },
     {
       "code": "P1465",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1465",
       "description": "Additive Pump Short To B+"
     },
     {
       "code": "P1466",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1466",
       "description": "Additive Pump Open Short To Ground"
     },
     {
       "code": "P1467",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1467",
       "description": "EVAP Canister Purge Solenoid Valve Short To B+"
     },
     {
       "code": "P1468",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1468",
       "description": "EVAP Canister Purge Solenoid Valve Short To Ground"
     },
     {
       "code": "P1469",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1469",
       "description": "EVAP Canister Purge Solenoid Valve Open"
     },
     {
       "code": "P1470",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1470",
       "description": "EVAP Emission Control System LDP Circuit Electrical Malfunction"
     },
     {
       "code": "P1471",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1471",
       "description": "EVAP Emission Control System LDP Circuit Short To B+"
     },
     {
       "code": "P1472",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1472",
       "description": "EVAP Emission Control System LDP Circuit Short To Ground"
     },
     {
       "code": "P1473",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1473",
       "description": "EVAP Emission Control System LDP Open Circuit"
     },
     {
       "code": "P1475",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1475",
       "description": "EVAP Emission Control System LDP Malfunction Signal Circuit Open"
     },
     {
       "code": "P1476",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1476",
       "description": "EVAP Emission Control System LDP Malfunction Insufficient Vacuum"
     },
     {
       "code": "P1477",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1477",
       "description": "EVAP Emission Control System LDP Malfunction"
     },
     {
       "code": "P1478",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1478",
       "description": "EVAP Emission Control System LDP Clamped Tube Detected"
     },
     {
       "code": "P1500",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1500",
       "description": "Fuel Pump Relay Electrical Circuit Malfunction"
     },
     {
       "code": "P1501",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1501",
       "description": "Fuel Pump Relay Circuit Short To Ground"
     },
     {
       "code": "P1502",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1502",
       "description": "Fuel Pump Relay Circuit Short To B+"
     },
     {
       "code": "P1503",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1503",
       "description": "Load Signal From Generator Range Performance"
     },
     {
       "code": "P1504",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1504",
       "description": "Intake Air System Bypass Leak Detected"
     },
     {
       "code": "P1505",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1505",
       "description": "Closed Throttle Position Does Not Close Open Circuit"
     },
     {
       "code": "P1506",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1506",
       "description": "Closed Throttle Position Switch Does Not Open Short To Ground"
     },
     {
       "code": "P1507",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1507",
       "description": "Idle System Learned Value Lower Limit Attained"
     },
     {
       "code": "P1508",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1508",
       "description": "Idle System Learned Value Upper Limit Attained"
     },
     {
       "code": "P1509",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1509",
       "description": "Idle Air Control Circuit Electrical Malfunction"
     },
     {
       "code": "P1510",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1510",
       "description": "Idle Air Control Circuit Short To B+"
     },
     {
       "code": "P1511",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1511",
       "description": "Intake Manifold Changeover Valve Circuit Electrical Malfunction"
     },
     {
       "code": "P1512",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1512",
       "description": "Intake Manifold Changeover Valve Circuit Short To B+"
     },
     {
       "code": "P1513",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1513",
       "description": "Intake Manifold Changeover Valve 2 Circuit Short To B+"
     },
     {
       "code": "P1514",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1514",
       "description": "Intake Manifold Changeover Valve 2 Circuit Short To Ground"
     },
     {
       "code": "P1515",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1515",
       "description": "Intake Manifold Changeover Valve Circuit Short To Ground"
     },
     {
       "code": "P1516",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1516",
       "description": "Intake Manifold Changeover Valve Circuit Open"
     },
     {
       "code": "P1517",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1517",
       "description": "Main Relay Circuit Electrical Malfunction"
     },
     {
       "code": "P1518",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1518",
       "description": "Main Relay Circuit Short To B+"
     },
     {
       "code": "P1519",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1519",
       "description": "Intake Camshaft Control Bank 1 Malfunction"
     },
     {
       "code": "P1520",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1520",
       "description": "Intake Manifold Changeover Valve 2 Circuit Open"
     },
     {
       "code": "P1521",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1521",
       "description": "Intake Manifold Changeover Valve 2 Circuit Electrical Malfunction"
     },
     {
       "code": "P1522",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1522",
       "description": "Intake Camshaft Control Bank 2 Malfunction"
     },
     {
       "code": "P1523",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1523",
       "description": "Crash Signal From Airbag Control Unit Range Performance"
     },
     {
       "code": "P1525",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1525",
       "description": "Intake Camshaft Control Circuit Bank 1 Electrical Malfunction"
     },
     {
       "code": "P1526",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1526",
       "description": "Intake Camshaft Control Circuit Bank 1 Short To B+"
     },
     {
       "code": "P1527",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1527",
       "description": "Intake Camshaft Control Circuit Bank 1 Short To Ground"
     },
     {
       "code": "P1528",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1528",
       "description": "Intake Camshaft Control Circuit Bank 1 Open"
     },
     {
       "code": "P1529",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1529",
       "description": "Intake Camshaft Control Circuit Short To B+"
     },
     {
       "code": "P1530",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1530",
       "description": "Intake Camshaft Control Circuit Short To Ground"
     },
     {
       "code": "P1531",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1531",
       "description": "Intake Camshaft Control Circuit Open"
     },
     {
       "code": "P1533",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1533",
       "description": "Intake Camshaft Control Circuit Bank 2 Electrical Malfunction"
     },
     {
       "code": "P1534",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1534",
       "description": "Intake Camshaft Control Circuit Bank 2 Short To B+"
     },
     {
       "code": "P1535",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1535",
       "description": "Intake Camshaft Control Circuit Bank 2 Short To Ground"
     },
     {
       "code": "P1536",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1536",
       "description": "Intake Camshaft Control Circuit Bank 2 Open"
     },
     {
       "code": "P1537",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1537",
       "description": "Engine Shutoff Solenoid Malfunction"
     },
     {
       "code": "P1538",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1538",
       "description": "Engine Shutoff Solenoid Open Short To Ground"
     },
     {
       "code": "P1539",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1539",
       "description": "Clutch Pedal Switch Signal Fault"
     },
     {
       "code": "P1540",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1540",
       "description": "Vehicle Speed Sensor High Input"
     },
     {
       "code": "P1541",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1541",
       "description": "Fuel Pump Relay Circuit Open"
     },
     {
       "code": "P1542",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1542",
       "description": "Throttle Actuation Potentiometer Range Performance"
     },
     {
       "code": "P1543",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1543",
       "description": "Throttle Actuation Potentiometer Signal Too Low"
     },
     {
       "code": "P1544",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1544",
       "description": "Throttle Actuation Potentiometer Signal Too High"
     },
     {
       "code": "P1545",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1545",
       "description": "Throttle Position Control Malfunction"
     },
     {
       "code": "P1546",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1546",
       "description": "Boost Pressure Control Valve Short To B+"
     },
     {
       "code": "P1547",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1547",
       "description": "Boost Pressure Control Valve Short To Ground"
     },
     {
       "code": "P1548",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1548",
       "description": "Boost Pressure Control Valve Open"
     },
     {
       "code": "P1549",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1549",
       "description": "Boost Pressure Control Valve Open Short To Ground"
     },
     {
       "code": "P1550",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1550",
       "description": "Charge Pressure Deviation"
     },
     {
       "code": "P1551",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1551",
       "description": "Barometric Pressure Sensor Circuit Short To B+"
     },
     {
       "code": "P1552",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1552",
       "description": "Barometric Pressure Sensor Circuit Open Short To Ground"
     },
     {
       "code": "P1553",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1553",
       "description": "Barometric Manifold Pressure Signal Ratio Out Of Range"
     },
     {
       "code": "P1554",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1554",
       "description": "Idle Speed Control Throttle Position Missing Adaptation Conditions"
     },
     {
       "code": "P1555",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1555",
       "description": "Charge Pressure Upper Limit Exceeded"
     },
     {
       "code": "P1556",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1556",
       "description": "Charge Pressure Negative Deviation"
     },
     {
       "code": "P1557",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1557",
       "description": "Charge Pressure Positive Deviation"
     },
     {
       "code": "P1558",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1558",
       "description": "Throttle Actuator Electrical Malfunction"
     },
     {
       "code": "P1559",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1559",
       "description": "Idle Speed Control Throttle Position Adaptation Malfunction"
     },
     {
       "code": "P1560",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1560",
       "description": "Maximum Engine Speed Exceeded"
     },
     {
       "code": "P1561",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1561",
       "description": "Quantity Adjuster Deviation"
     },
     {
       "code": "P1562",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1562",
       "description": "Quantity Adjuster Upper Limit Attained"
     },
     {
       "code": "P1563",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1563",
       "description": "Quantity Adjuster Lower Limit Attained"
     },
     {
       "code": "P1564",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1564",
       "description": "Idle Speed Control Throttle Position Low Voltage During Adaptation"
     },
     {
       "code": "P1565",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1565",
       "description": "Idle Speed Control Throttle Position Lower Limit Not Obtained"
     },
     {
       "code": "P1566",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1566",
       "description": "Load Signal From A/C Compressor Range Performance"
     },
     {
       "code": "P1567",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1567",
       "description": "Load Signal From A/C Compressor No Signal"
     },
     {
       "code": "P1568",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1568",
       "description": "Idle Speed Control Throttle Position Mechanical Malfunction"
     },
     {
       "code": "P1569",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1569",
       "description": "Switch For CCS Signal Faulty"
     },
     {
       "code": "P1570",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1570",
       "description": "Control Unit Locked"
     },
     {
       "code": "P1571",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1571",
       "description": "Left Engine Mount Solenoid Valve Short To B+"
     },
     {
       "code": "P1572",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1572",
       "description": "Left Engine Mount Solenoid Valve Short To Ground"
     },
     {
       "code": "P1573",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1573",
       "description": "Left Engine Mount Solenoid Valve Open Circuit"
     },
     {
       "code": "P1574",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1574",
       "description": "Left Engine Mount Solenoid Valve Electrical Fault In Circuit"
     },
     {
       "code": "P1575",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1575",
       "description": "Right Engine Mount Solenoid Valve Short To B+"
     },
     {
       "code": "P1576",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1576",
       "description": "Right Engine Mount Solenoid Valve Short To Ground"
     },
     {
       "code": "P1577",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1577",
       "description": "Right Engine Mount Solenoid Valve Open Circuit"
     },
     {
       "code": "P1578",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1578",
       "description": "Right Engine Mount Solenoid Valve Electrical Fault In Circuit"
     },
     {
       "code": "P1579",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1579",
       "description": "Idle Speed Control Throttle Position Adaptation Not Started"
     },
     {
       "code": "P1580",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1580",
       "description": "Throttle Actuator Bank 1 Malfunction"
     },
     {
       "code": "P1581",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1581",
       "description": "Idle Speed Control Throttle Position Adaptation Not Carried Out"
     },
     {
       "code": "P1582",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1582",
       "description": "Idle Adaptation At Limit"
     },
     {
       "code": "P1583",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1583",
       "description": "Transmission Mount Valves Short To B+"
     },
     {
       "code": "P1584",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1584",
       "description": "Transmission Mount Valves Short To Ground"
     },
     {
       "code": "P1585",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1585",
       "description": "Transmission Mount Valves Open Circuit"
     },
     {
       "code": "P1586",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1586",
       "description": "Engine Mount Solenoid Valves Short To B+"
     },
     {
       "code": "P1587",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1587",
       "description": "Engine Mount Solenoid Valves Short To Ground"
     },
     {
       "code": "P1588",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1588",
       "description": "Engine Mount Solenoid Valves Open Circuit"
     },
     {
       "code": "P1600",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1600",
       "description": "Power Supply Terminal No 15 Low Voltage"
     },
     {
       "code": "P1602",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1602",
       "description": "Power Supply Terminal No 30 Low Voltage"
     },
     {
       "code": "P1603",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1603",
       "description": "Internal Control Module Self Check"
     },
     {
       "code": "P1604",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1604",
       "description": "Internal Control Module Driver Error"
     },
     {
       "code": "P1605",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1605",
       "description": "Rough Road Acceleration Sensor Electrical Malfunction"
     },
     {
       "code": "P1606",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1606",
       "description": "Rough Road Spec Engine Torque ABS ECU Electrical Malfunction"
     },
     {
       "code": "P1607",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1607",
       "description": "Vehicle Speed Signal Error Message From Instrument Cluster"
     },
     {
       "code": "P1608",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1608",
       "description": "Steering Angle Signal Error Message From Steering Angle Sensor"
     },
     {
       "code": "P1609",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1609",
       "description": "Crash Shut Down Activated"
     },
     {
       "code": "P1611",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1611",
       "description": "MIL Call-Up Circuit TCM Short To Ground"
     },
     {
       "code": "P1612",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1612",
       "description": "Engine Control Module Incorrect Coding"
     },
     {
       "code": "P1613",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1613",
       "description": "MIL Call-Up Circuit Open Short To B+"
     },
     {
       "code": "P1614",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1614",
       "description": "MIL Call-Up Circuit Transmission Control Module Range Performance"
     },
     {
       "code": "P1615",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1615",
       "description": "Engine Oil Temperature Sensor Circuit Range Performance"
     },
     {
       "code": "P1616",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1616",
       "description": "Glow Plug Heater Indicator Circuit Short To B+"
     },
     {
       "code": "P1617",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1617",
       "description": "Glow Plug Heater Indicator Circuit Open Short To Ground"
     },
     {
       "code": "P1618",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1618",
       "description": "Glow Plug Heater Relay Circuit Short To B+"
     },
     {
       "code": "P1619",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1619",
       "description": "Glow Plug Heater Relay Circuit Open Short To Ground"
     },
     {
       "code": "P1620",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1620",
       "description": "Engine Coolant Temperature Signal Open Short To B+"
     },
     {
       "code": "P1621",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1621",
       "description": "Engine Coolant Temperature Signal Short To Ground"
     },
     {
       "code": "P1622",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1622",
       "description": "Engine Coolant Temperature Signal Range Performance"
     },
     {
       "code": "P1623",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1623",
       "description": "Data Bus Powertrain No Communication"
     },
     {
       "code": "P1624",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1624",
       "description": "MIL Request Signal Active"
     },
     {
       "code": "P1625",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1625",
       "description": "CAN Bus Unplausible Message From Transmission Control"
     },
     {
       "code": "P1626",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1626",
       "description": "Data Bus Drive Missing Command From M/T"
     },
     {
       "code": "P1627",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1627",
       "description": "Data Bus Powertrain Missing Message From Fuel Injection Pump"
     },
     {
       "code": "P1628",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1628",
       "description": "Data Bus Powertrain Missing Message From Distance Control"
     },
     {
       "code": "P1629",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1629",
       "description": "Data Bus Powertrain Missing Message From Distance Control"
     },
     {
       "code": "P1630",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1630",
       "description": "Accelerator Pedal Position Sensor 1 Signal Too Low"
     },
     {
       "code": "P1631",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1631",
       "description": "Accelerator Pedal Position Sensor 1 Signal Too High"
     },
     {
       "code": "P1632",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1632",
       "description": "Accelerator Pedal Position Sensor 1 Power Supply Malfunction"
     },
     {
       "code": "P1633",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1633",
       "description": "Accelerator Pedal Position Sensor 2 Signal Too Low"
     },
     {
       "code": "P1634",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1634",
       "description": "Accelerator Pedal Position Sensor 2 Signal Too High"
     },
     {
       "code": "P1635",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1635",
       "description": "Data Bus Powertrain Missing Message From Air Condition Control"
     },
     {
       "code": "P1636",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1636",
       "description": "Data Bus Powertrain Missing Message From Airbag Control"
     },
     {
       "code": "P1637",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1637",
       "description": "Data Bus Powertrain Missing Message From Central Electronic Control"
     },
     {
       "code": "P1638",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1638",
       "description": "Data Bus Powertrain Missing Message From Clutch Control"
     },
     {
       "code": "P1639",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1639",
       "description": "Accelerator Pedal Position Sensor 1/2 Range Performance"
     },
     {
       "code": "P1640",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1640",
       "description": "Internal Control Module EEPROM Error"
     },
     {
       "code": "P1641",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1641",
       "description": "Check DTC Memory Of Air Condition ECU"
     },
     {
       "code": "P1642",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1642",
       "description": "Check DTC Memory Of Airbag ECU"
     },
     {
       "code": "P1643",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1643",
       "description": "Check DTC Memory Of Central ECU"
     },
     {
       "code": "P1644",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1644",
       "description": "Check DTC Memory Of Clutch ECU"
     },
     {
       "code": "P1645",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1645",
       "description": "Data Bus Powertrain Defect"
     },
     {
       "code": "P1646",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1646",
       "description": "Check DTC Memory Of All Wheel Drive ECU"
     },
     {
       "code": "P1647",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1647",
       "description": "Check Coding Of ECUs In Data Bus Powertrain"
     },
     {
       "code": "P1648",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1648",
       "description": "Data Bus Powertrain Malfunction"
     },
     {
       "code": "P1649",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1649",
       "description": "Data Bus Powertrain Missing Message From Brake Controller"
     },
     {
       "code": "P1650",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1650",
       "description": "Data Bus Powertrain Missing Message From Instrument Panel ECU"
     },
     {
       "code": "P1651",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1651",
       "description": "Data Bus Powertrain Missing Messages"
     },
     {
       "code": "P1652",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1652",
       "description": "Check DTC Memory Of Transmissions ECU"
     },
     {
       "code": "P1653",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1653",
       "description": "Check DTC Memory Of Brake ECU"
     },
     {
       "code": "P1654",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1654",
       "description": "Check DTC Memory Of Control Panel ECU"
     },
     {
       "code": "P1655",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1655",
       "description": "Check DTC Memory Of Distance Control ECU"
     },
     {
       "code": "P1656",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1656",
       "description": "A/C Clutch Relays Circuit Short To Ground"
     },
     {
       "code": "P1657",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1657",
       "description": "A/C Clutch Relays Circuit Short To B+"
     },
     {
       "code": "P1658",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1658",
       "description": "Data Bus Powertrain Range Performance From Distance Control"
     },
     {
       "code": "P1676",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1676",
       "description": "Drive By Wire MIL Circuit Electrical Malfunction"
     },
     {
       "code": "P1677",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1677",
       "description": "Drive By Wire MIL Circuit Short To B+"
     },
     {
       "code": "P1678",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1678",
       "description": "Drive By Wire MIL Circuit Short To Ground"
     },
     {
       "code": "P1679",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1679",
       "description": "Drive By Wire MIL Circuit Open Circuit"
     },
     {
       "code": "P1681",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1681",
       "description": "Control Module Programming Not Finished"
     },
     {
       "code": "P1684",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1684",
       "description": "Control Unit Programming Communication Error"
     },
     {
       "code": "P1686",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1686",
       "description": "Control Unit Error Programming"
     },
     {
       "code": "P1690",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1690",
       "description": "MIL Malfunction"
     },
     {
       "code": "P1691",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1691",
       "description": "MIL Open Circuit"
     },
     {
       "code": "P1692",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1692",
       "description": "MIL Short To Ground"
     },
     {
       "code": "P1693",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1693",
       "description": "MIL Short To B+"
     },
     {
       "code": "P1694",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1694",
       "description": "MIL Open Short To Ground"
     },
     {
       "code": "P1704",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1704",
       "description": "Kick Down Switch Malfunction"
     },
     {
       "code": "P1711",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1711",
       "description": "Wheel Speed Signal 1 Range Performance"
     },
     {
       "code": "P1716",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1716",
       "description": "Wheel Speed Signal 2 Range Performance"
     },
     {
       "code": "P1721",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1721",
       "description": "Wheel Speed Signal 3 Range Performance"
     },
     {
       "code": "P1723",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1723",
       "description": "Starter Interlock Circuit Open"
     },
     {
       "code": "P1724",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1724",
       "description": "Starter Interlock Circuit Short To Ground"
     },
     {
       "code": "P1726",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1726",
       "description": "Wheel Speed Signal 4 Range Performance"
     },
     {
       "code": "P1728",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1728",
       "description": "Different Wheel Speed Signals Range Performance"
     },
     {
       "code": "P1729",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1729",
       "description": "Starter Interlock Circuit Short To B+"
     },
     {
       "code": "P1733",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1733",
       "description": "Tiptronic Switch Down Circuit Short To Ground"
     },
     {
       "code": "P1739",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1739",
       "description": "Tiptronic Switch Up Circuit Short To Ground"
     },
     {
       "code": "P1741",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1741",
       "description": "Clutch Pressure Adaptation At Limit"
     },
     {
       "code": "P1742",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1742",
       "description": "Clutch Torque Adaptation At Limit"
     },
     {
       "code": "P1743",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1743",
       "description": "Clutch Slip Control Signal Too High"
     },
     {
       "code": "P1744",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1744",
       "description": "Tiptronic Switch Recognition Circuit Short To Ground"
     },
     {
       "code": "P1745",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1745",
       "description": "Transmission Control Unit Relay Short To B+"
     },
     {
       "code": "P1746",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1746",
       "description": "Transmission Control Unit Relay Malfunction"
     },
     {
       "code": "P1747",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1747",
       "description": "Transmission Control Unit Relay Open Short To Ground"
     },
     {
       "code": "P1748",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1748",
       "description": "Transmission Control Unit Self-Check"
     },
     {
       "code": "P1749",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1749",
       "description": "Transmission Control Unit Incorrect Coding"
     },
     {
       "code": "P1750",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1750",
       "description": "Power Supply Voltage Low"
     },
     {
       "code": "P1751",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1751",
       "description": "Power Supply Voltage High"
     },
     {
       "code": "P1752",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1752",
       "description": "Power Supply Malfunction"
     },
     {
       "code": "P1760",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1760",
       "description": "Shift Lock Malfunction"
     },
     {
       "code": "P1761",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1761",
       "description": "Shift Lock Short To Ground"
     },
     {
       "code": "P1762",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1762",
       "description": "Shift Lock Short To B+"
     },
     {
       "code": "P1763",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1763",
       "description": "Shift Lock Open"
     },
     {
       "code": "P1765",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1765",
       "description": "Hydraulic Pressure Sensor 2 Adaptation At Limit"
     },
     {
       "code": "P1766",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1766",
       "description": "Throttle Angle Signal Stuck Off"
     },
     {
       "code": "P1767",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1767",
       "description": "Throttle Angle Signal Stuck On"
     },
     {
       "code": "P1768",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1768",
       "description": "Hydraulic Pressure Sensor 2 Too High"
     },
     {
       "code": "P1769",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1769",
       "description": "Hydraulic Pressure Sensor 2 Too Low"
     },
     {
       "code": "P1770",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1770",
       "description": "Load Signal Range Performance"
     },
     {
       "code": "P1771",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1771",
       "description": "Load Signal Stuck Off"
     },
     {
       "code": "P1772",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1772",
       "description": "Load Signal Stuck On"
     },
     {
       "code": "P1773",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1773",
       "description": "Hydraulic Pressure Sensor 1 Too High"
     },
     {
       "code": "P1774",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1774",
       "description": "Hydraulic Pressure Sensor 1 Too Low"
     },
     {
       "code": "P1775",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1775",
       "description": "Hydraulic Pressure Sensor 1 Adaptation At Limit"
     },
     {
       "code": "P1778",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1778",
       "description": "Solenoid EV7 Electrical Malfunction"
     },
     {
       "code": "P1780",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1780",
       "description": "Engine Intervention Readable"
     },
     {
       "code": "P1781",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1781",
       "description": "Engine Torque Reduction Open Short To Ground"
     },
     {
       "code": "P1782",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1782",
       "description": "Engine Torque Reduction Short To B+"
     },
     {
       "code": "P1784",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1784",
       "description": "Shift Up Down Wire Open Short To Ground"
     },
     {
       "code": "P1785",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1785",
       "description": "Shift Up Down Wire Short To B+"
     },
     {
       "code": "P1786",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1786",
       "description": "Reversing Light Circuit Open"
     },
     {
       "code": "P1787",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1787",
       "description": "Reversing Light Circuit Short To Ground"
     },
     {
       "code": "P1788",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1788",
       "description": "Reversing Light Circuit Short To B+"
     },
     {
       "code": "P1789",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1789",
       "description": "Idle Speed Intervention Circuit Error Message From Engine Control"
     },
     {
       "code": "P1790",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1790",
       "description": "Transmission Range Display Circuit Open"
     },
     {
       "code": "P1791",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1791",
       "description": "Transmission Range Display Circuit Short To Ground"
     },
     {
       "code": "P1792",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1792",
       "description": "Transmission Range Display Circuit Short To B+"
     },
     {
       "code": "P1793",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1793",
       "description": "Output Speed Sensor 2 Circuit No Signal"
     },
     {
       "code": "P1795",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1795",
       "description": "Vehicle Speed Signal Circuit Open"
     },
     {
       "code": "P1796",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1796",
       "description": "Vehicle Speed Signal Short To Ground"
     },
     {
       "code": "P1797",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1797",
       "description": "Vehicle Speed Signal Short To B+"
     },
     {
       "code": "P1798",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1798",
       "description": "Output Speed Sensor 2 Circuit Range Performance"
     },
     {
       "code": "P1799",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1799",
       "description": "Output Speed Sensor 2 Circuit RPM Too High"
     },
     {
       "code": "P1813",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1813",
       "description": "Pressure Control Solenoid 1 Electrical"
     },
     {
       "code": "P1814",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1814",
       "description": "Pressure Control Solenoid 1 Open Short To Ground"
     },
     {
       "code": "P1815",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1815",
       "description": "Pressure Control Solenoid 1 Short To B+"
     },
     {
       "code": "P1818",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1818",
       "description": "Pressure Control Solenoid 2 Electrical"
     },
     {
       "code": "P1819",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1819",
       "description": "Pressure Control Solenoid 2 Open Short To Ground"
     },
     {
       "code": "P1820",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1820",
       "description": "Pressure Control Solenoid 2 Short To B+"
     },
     {
       "code": "P1823",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1823",
       "description": "Pressure Control Solenoid 3 Electrical"
     },
     {
       "code": "P1824",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1824",
       "description": "Pressure Control Solenoid 3 Open Short To Ground"
     },
     {
       "code": "P1825",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1825",
       "description": "Pressure Control Solenoid 3 Short To B+"
     },
     {
       "code": "P1828",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1828",
       "description": "Pressure Control Solenoid 4 Electrical"
     },
     {
       "code": "P1829",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1829",
       "description": "Pressure Control Solenoid 4 Open Short To Ground"
     },
     {
       "code": "P1830",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1830",
       "description": "Pressure Control Solenoid 4 Short To B+"
     },
     {
       "code": "P1834",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1834",
       "description": "Pressure Control Solenoid 5 Open Short To Ground"
     },
     {
       "code": "P1835",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1835",
       "description": "Pressure Control Solenoid 5 Short To B+"
     },
     {
       "code": "P1841",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1841",
       "description": "Engine Transmission Control Do Not Match"
     },
     {
       "code": "P1842",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1842",
       "description": "Check DTC Memory Of Instrument Panel ECU"
     },
     {
       "code": "P1843",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1843",
       "description": "Check DTC Memory Of Distance Control ECU"
     },
     {
       "code": "P1844",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1844",
       "description": "Check DTC Memory Of Central Electronic Control ECU"
     },
     {
       "code": "P1847",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1847",
       "description": "Check DTC Memory Of Brake System ECU"
     },
     {
       "code": "P1848",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1848",
       "description": "Check DTC Memory Of Engine ECU"
     },
     {
       "code": "P1849",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1849",
       "description": "Check DTC Memory Of Transmission ECU"
     },
     {
       "code": "P1850",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1850",
       "description": "CAN Bus Missing Message From Engine Control"
     },
     {
       "code": "P1851",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1851",
       "description": "CAN Bus Missing Message From Brake Control"
     },
     {
       "code": "P1852",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1852",
       "description": "CAN Bus Unplausible Message From Engine Control"
     },
     {
       "code": "P1853",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1853",
       "description": "CAN Bus Unplausible Message From Brake Control"
     },
     {
       "code": "P1854",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1854",
       "description": "CAN Bus Hardware Defective"
     },
     {
       "code": "P1855",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1855",
       "description": "CAN Bus Software Version Control"
     },
     {
       "code": "P1856",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1856",
       "description": "Throttle Pedal Position Sensor A Circuit Error Message From Engine Control"
     },
     {
       "code": "P1857",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1857",
       "description": "Load Signal Error Message From Engine Control"
     },
     {
       "code": "P1858",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1858",
       "description": "Engine Speed Input Circuit Error Message From Engine Control"
     },
     {
       "code": "P1859",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1859",
       "description": "Brake Switch Circuit Error Message From Engine Control"
     },
     {
       "code": "P1860",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1860",
       "description": "Kick Down Switch Error Message From Engine Control"
     },
     {
       "code": "P1861",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1861",
       "description": "Throttle Position Sensor Error Message From ECM"
     },
     {
       "code": "P1862",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1862",
       "description": "Data Bus Powertrain Missing Message From Instrument Panel ECU"
     },
     {
       "code": "P1863",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1863",
       "description": "Data Bus Powertrain Missing Message From Steering Angle Sensor"
     },
     {
       "code": "P1864",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1864",
       "description": "Data Bus Powertrain Missing Message From ADR Control Module"
     },
     {
       "code": "P1865",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1865",
       "description": "Data Bus Powertrain Missing Message From Central Electronics"
     },
     {
       "code": "P1866",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_volkswagen_p1866",
       "description": "Data Bus Powertrain Missing Messages"
     }
   ]

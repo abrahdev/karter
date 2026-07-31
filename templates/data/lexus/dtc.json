@@ -13,246 +13,295 @@
     {
       "code": "P1100",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_lexus_p1100",
       "description": "BARO Sensor Circuit Malfunction"
     },
     {
       "code": "P1120",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_lexus_p1120",
       "description": "Accelerator Pedal Position Sensor Circuit Malfunction"
     },
     {
       "code": "P1121",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_lexus_p1121",
       "description": "Accelerator Pedal Position Sensor Range Performance Problem"
     },
     {
       "code": "P1125",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_lexus_p1125",
       "description": "Throttle Control Motor Circuit Malfunction"
     },
     {
       "code": "P1126",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_lexus_p1126",
       "description": "Magnetic Clutch Circuit Malfunction"
     },
     {
       "code": "P1127",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_lexus_p1127",
       "description": "ECTS Actuator Power Source Circuit Malfunction"
     },
     {
       "code": "P1128",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_lexus_p1128",
       "description": "Throttle Control Motor Lock Malfunction"
     },
     {
       "code": "P1129",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_lexus_p1129",
       "description": "Electronic Throttle Control System"
     },
     {
       "code": "P1130",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_lexus_p1130",
       "description": "Air/Fuel Ratio Sensor Circuit Range Performance Malfunction Bank 1 Sensor 1"
     },
     {
       "code": "P1133",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_lexus_p1133",
       "description": "Air/Fuel Ratio Sensor Circuit Response Malfunction Bank 1 Sensor 1"
     },
     {
       "code": "P1135",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_lexus_p1135",
       "description": "Air/Fuel Ratio Sensor Heater Circuit Malfunction Bank 1 Sensor 1"
     },
     {
       "code": "P1150",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_lexus_p1150",
       "description": "Air/Fuel Ratio Sensor Circuit Range Performance Malfunction Bank 2 Sensor 1"
     },
     {
       "code": "P1153",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_lexus_p1153",
       "description": "Air/Fuel Ratio Sensor Circuit Response Malfunction Bank 2 Sensor 1"
     },
     {
       "code": "P1155",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_lexus_p1155",
       "description": "Air/Fuel Ratio Sensor Heater Circuit Malfunction Bank 1 Sensor 1"
     },
     {
       "code": "P1200",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_lexus_p1200",
       "description": "Fuel Pump Relay ECU Circuit Malfunction"
     },
     {
       "code": "P1300",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_lexus_p1300",
       "description": "Igniter Circuit Malfunction Bank 1 Or No 1"
     },
     {
       "code": "P1305",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_lexus_p1305",
       "description": "Igniter Circuit Malfunction Bank 2 Or No 2"
     },
     {
       "code": "P1310",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_lexus_p1310",
       "description": "Igniter Circuit Malfunction No 3"
     },
     {
       "code": "P1315",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_lexus_p1315",
       "description": "Igniter Circuit Malfunction No 4"
     },
     {
       "code": "P1320",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_lexus_p1320",
       "description": "Igniter Circuit Malfunction No 5"
     },
     {
       "code": "P1325",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_lexus_p1325",
       "description": "Igniter Circuit Malfunction No 6"
     },
     {
       "code": "P1330",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_lexus_p1330",
       "description": "Igniter Circuit Malfunction No 7"
     },
     {
       "code": "P1335",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_lexus_p1335",
       "description": "CKP Sensor Circuit Malfunction During Engine Running"
     },
     {
       "code": "P1340",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_lexus_p1340",
       "description": "Igniter Circuit Malfunction No 8"
     },
     {
       "code": "P1345",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_lexus_p1345",
       "description": "VVT Sensor Circuit Malfunction Bank 1"
     },
     {
       "code": "P1346",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_lexus_p1346",
       "description": "VVT Sensor Range Performance Problem Bank 1"
     },
     {
       "code": "P1349",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_lexus_p1349",
       "description": "VVT System Malfunction Bank 1"
     },
     {
       "code": "P1350",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_lexus_p1350",
       "description": "VVT Sensor Circuit Malfunction Bank 2"
     },
     {
       "code": "P1351",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_lexus_p1351",
       "description": "VVT Sensor Range Performance Problem Bank 2"
     },
     {
       "code": "P1354",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_lexus_p1354",
       "description": "VVT System Malfunction Bank 2"
     },
     {
       "code": "P1400",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_lexus_p1400",
       "description": "Sub-TP Sensor Malfunction"
     },
     {
       "code": "P1401",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_lexus_p1401",
       "description": "EGR Valve Position Sensor Circuit Malfunction"
     },
     {
       "code": "P1410",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_lexus_p1410",
       "description": "EGR Valve Position Sensor Circuit Malfunction"
     },
     {
       "code": "P1411",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_lexus_p1411",
       "description": "EGR Valve Position Sensor Circuit Range Performance Malfunction"
     },
     {
       "code": "P1500",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_lexus_p1500",
       "description": "Starter Signal Circuit Malfunction"
     },
     {
       "code": "P1510",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_lexus_p1510",
       "description": "Intake Air Volume Too Low With Supercharger On"
     },
     {
       "code": "P1520",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_lexus_p1520",
       "description": "Stop Lamp Switch Malfunction"
     },
     {
       "code": "P1565",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_lexus_p1565",
       "description": "Cruise Control Main Switch Circuit Malfunction"
     },
     {
       "code": "P1566",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_lexus_p1566",
       "description": "Cruise Control Main Switch Circuit Malfunction"
     },
     {
       "code": "P1600",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_lexus_p1600",
       "description": "ECM BATT Malfunction"
     },
     {
       "code": "P1605",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_lexus_p1605",
       "description": "Knock Control CPU Malfunction"
     },
     {
       "code": "P1633",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_lexus_p1633",
       "description": "ECM Malfunction ETCS Circuit"
     },
     {
       "code": "P1645",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_lexus_p1645",
       "description": "Body ECU Malfunction"
     },
     {
       "code": "P1656",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_lexus_p1656",
       "description": "OCV Circuit Malfunction Bank 1"
     },
     {
       "code": "P1663",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_lexus_p1663",
       "description": "OCV Circuit Malfunction Bank 2"
     },
     {
       "code": "P1700",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_lexus_p1700",
       "description": "Vehicle Speed Meter Circuit Fault"
     },
     {
       "code": "P1705",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_lexus_p1705",
       "description": "Direct Clutch Speed Circuit Fault"
     },
     {
       "code": "P1765",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_lexus_p1765",
       "description": "Linear Shift Solenoid Circuit Fault"
     },
     {
       "code": "P1780",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_lexus_p1780",
       "description": "PNP Switch Malfunction"
     }
   ]

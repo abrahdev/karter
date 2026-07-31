@@ -13,641 +13,769 @@
     {
       "code": "P0010",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0010",
       "description": "Powertrain Control Module (PCM) failure, Variable valve timing actuator failure, Wiring issue"
     },
     {
       "code": "P0011",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0011",
       "description": "Camshaft variable timing solenoid failure, Engine oil level is too low, The engine is not timed correctly, The engine oil does not meet the manufacturer's requirements, Variable valve timing actuator failure, Worn timing chain"
     },
     {
       "code": "P0012",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0012",
       "description": "Camshaft variable timing solenoid failure, Engine oil level is too low, The engine is not timed correctly, The engine oil does not meet the manufacturer's requirements, Variable valve timing actuator failure, Worn timing chain"
     },
     {
       "code": "P0013",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0013",
       "description": "Powertrain Control Module (PCM) failure, Variable valve timing actuator failure, Wiring issue"
     },
     {
       "code": "P0014",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0014",
       "description": "Camshaft variable timing solenoid failure, Engine oil level is too low, The engine is not timed correctly, The engine oil does not meet the manufacturer's requirements, Variable valve timing actuator failure, Worn timing chain"
     },
     {
       "code": "P0101",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0101",
       "description": "Large vacuum leaks, Split Intake Air Boot or PCV Hose, Defective intake manifold gaskets, Mass Airflow Sensor (MAF), Mass Air Flow Sensor circuit and or wiring problems, Defective Barometric Pressure Sensor, Dirty or contaminated Mass Air Flow Sensing wire or filament, PCM software needs to be updated"
     },
     {
       "code": "P0102",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0102",
       "description": "The Mass Airflow Sensor (MAF) Sensor is unplugged or the wiring is damaged, Loose or corroded electrical terminals in the MAF Sensor circuit, Faulty MAF Sensor"
     },
     {
       "code": "P0113",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0113",
       "description": "Defective Intake Air Temperature Sensor, Dirty air filter, Defective Mass Air Flow Sensor, Faulty or corroded Intake Air Temperature Sensor wiring or connections"
     },
     {
       "code": "P0128",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0128",
       "description": "Defective Engine Thermostat, Defective Engine Coolant Temperature Sensor, Defective Intake Air Temperature Sensor, Defective Cooling System, Low Engine Coolant, Dirty Engine Coolant causing incorrect Coolant Temperature Sensor readings, Defective/always running Engine Cooling fan(s)"
     },
     {
       "code": "P0135",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0135",
       "description": "Defective Oxygen Sensor/Air Fuel Ratio Sensor, defective Oxygen Sensor/Air Fuel Ratio Sensor Heater Circuit, Exhaust System Leak, Intake Air System leak, Low Fuel Pressure, Defective Engine Coolant Temperature Sensor, Defective sensor wiring and or circuit problem, PCM software needs to be updated, Defective PCM"
     },
     {
       "code": "P0171",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0171",
       "description": "Control module software needs to be updated, Vacuum leaks (intake manifold gaskets, vacuum hoses, PCV hoses, etc.), Mass air flow sensor, Plugged fuel filter or weak fuel pump, Plugged or dirty fuel injectors"
     },
     {
       "code": "P0174",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0174",
       "description": "PCM software needs to be updated, Vacuum leaks (Intake Manifold Gaskets, vacuum hoses, PCV hoses, etc.), Faulty Mass Airflow (MAF) Sensor, Plugged Fuel Filter or weak Fuel Pump, Plugged or dirty Fuel Injectors"
     },
     {
       "code": "P0200",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0200",
       "description": "Defective Fuel Injector, Faulty or corroded Fuel Injector, wiring, and or connections, Plugged Fuel Injector, Dirt in the Fuel Injector"
     },
     {
       "code": "P0201",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0201",
       "description": "Defective Fuel Injector, Faulty or corroded Fuel Injector, wiring, and or connections, Plugged Fuel Injector, Dirt in the Fuel Injector"
     },
     {
       "code": "P0202",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0202",
       "description": "Malfunction of the Fuel Injector, Malfunction of the PCM Fuel Injector driver circuit, Defective wiring/connections in the Fuel Injector wiring harness, Defective Fuel Injector power circuit(s)"
     },
     {
       "code": "P0203",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0203",
       "description": "Fuel injector failure, Powertrain Control Module (PCM) failure, Wiring issue"
     },
     {
       "code": "P0205",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0205",
       "description": "Fuel injector failure, Powertrain Control Module (PCM) failure, Wiring issue"
     },
     {
       "code": "P0300",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0300",
       "description": "Worn out spark plugs, ignition wires, coil(s), distributor cap and rotor (when applicable), Incorrect ignition timing, Vacuum leak(s), Low or weak fuel pressure, Improperly functioning EGR system, Defective Mass Air Flow Sensor, Defective Crankshaft and or Camshaft Sensor, Defective Throttle Position Sensor, Mechanical engine problems (i.e.—low compression, leaking head gasket(s), or valve problems)"
     },
     {
       "code": "P0301",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0301",
       "description": "Worn out spark plugs, ignition wires, coil(s), distributor cap and rotor (when applicable), Incorrect ignition timing, Vacuum leak(s), Low or weak fuel pressure, Improperly functioning EGR system, Defective Mass Air Flow Sensor, Defective Crankshaft and or Camshaft Sensor, Defective Throttle Position Sensor, Mechanical engine problems (i.e.—low compression, leaking head gasket(s), or valve problems)"
     },
     {
       "code": "P0302",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0302",
       "description": "Worn out spark plugs, ignition wires, coil(s), distributor cap and rotor (when applicable), Incorrect ignition timing, Vacuum leak(s), Low or weak fuel pressure, Improperly functioning EGR system, Defective Mass Air Flow Sensor, Defective Crankshaft and or Camshaft Sensor, Defective Throttle Position Sensor, Mechanical engine problems (i.e.—low compression, leaking head gasket(s), or valve problems)"
     },
     {
       "code": "P0303",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0303",
       "description": "Worn out spark plugs, ignition wires, coil(s), distributor cap and rotor (when applicable), Incorrect ignition timing, Vacuum leak(s), Low or weak fuel pressure, Improperly functioning EGR system, Defective Mass Air Flow Sensor, Defective Crankshaft and or Camshaft Sensor, Defective Throttle Position Sensor, Mechanical engine problems (i.e.—low compression, leaking head gasket(s), or valve problems)"
     },
     {
       "code": "P0304",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0304",
       "description": "Worn out spark plugs, ignition wires, coil(s), distributor cap and rotor (when applicable), Incorrect ignition timing, Vacuum leak(s), Low or weak fuel pressure, Improperly functioning EGR system, Defective Mass Air Flow Sensor, Defective Crankshaft and or Camshaft Sensor, Defective Throttle Position Sensor, Mechanical engine problems (i.e.—low compression, leaking head gasket(s), or valve problems)"
     },
     {
       "code": "P0401",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0401",
       "description": "Restriction in the EGR passages usually caused by carbon buildup, The EGR Valve is defective, Lack of proper vacuum or electrical signal to the EGR valve, Malfunctioning EGR Vacuum supply solenoid, Lack of proper EGR system feedback to the computer from the: Manifold Absolute Pressure Sensor (MAP), Differential EGR Pressure Feedback Sensor (DPFE), EGR Valve Position Sensor (EVP), EGR Temperature Sensor"
     },
     {
       "code": "P0420",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0420",
       "description": "Inefficient Catalytic Converter(s), Defective Front or Rear Oxygen Sensor(s), Misfiring engines"
     },
     {
       "code": "P0430",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0430",
       "description": "Defective Catalytic Converter, Internal engine damage resulting in high oil consumption and or a leaking Head Gasket has damaged the Catalytic Converter"
     },
     {
       "code": "P0440",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0440",
       "description": "Missing fuel cap, Defective or damaged fuel cap, Distorted or damaged Fuel Tank Filler Neck, Torn or punctured Evaporative system hose(s), Defective Fuel Tank Sending Unit gasket or seal, Split or damaged Carbon Canister, Defective Evaporative Vent Valve and or Evaporative Purge Valve, Defective or damaged fuel tank"
     },
     {
       "code": "P0441",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0441",
       "description": "Missing fuel cap, Stuck open or closed purge valve, Defective or damaged fuel cap, Distorted damaged or cracked Fuel Tank Filler Neck, Torn or punctured Evaporative system hose(s), Defective Fuel Tank Sending Unit gasket or seal, Split or damaged Carbon Canister, Defective Evaporative Vent Valve, Defective or damaged fuel tank"
     },
     {
       "code": "P0442",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0442",
       "description": "Defective or damaged fuel cap, Distorted or damaged Fuel Tank Filler Neck, Small tear or puncture in the Evaporative system hose(s) and or Carbon Canister, Defective Fuel Tank Sending Unit gasket or seal, Small split in a seam of the Carbon Canister, Defective Evaporative Vent Valve and or Evaporative Purge Valve, Defective or damaged Fuel Tank, Defective Fuel Tank Pressure Sensor, Defective Leak Detection Pump, Slightly loose and or worn clamps or hardened O-rings anywhere in the EVAP system"
     },
     {
       "code": "P0455",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0455",
       "description": "Missing fuel cap, Defective or damaged fuel cap, Distorted or damaged Fuel Tank Filler Neck, Torn or punctured Evaporative system hose(s), Defective Fuel Tank Sending Unit gasket or seal, Split or damaged Carbon Canister, Defective Evaporative Vent Valve and or Evaporative Purge Valve, Defective or damaged fuel tank, Defective Fuel Tank Pressure Sensor"
     },
     {
       "code": "P0500",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0500",
       "description": "Defective Vehicle Speed Sensor, Defective Speedometer, Vehicle Speed Sensor wiring or connector, Communication (CAN) bus problems, Defective transmission or differential Vehicle Speed Sensor drive gear"
     },
     {
       "code": "P0501",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0501",
       "description": "Defective Vehicle Speed Sensor, Defective Speedometer, Vehicle Speed Sensor wiring or connector, Communication (CAN) bus problems, Defective transmission or differential Vehicle Speed Sensor drive gear"
     },
     {
       "code": "P0505",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0505",
       "description": "Defective Idle Air Control Motor, Intake Manifold Vacuum leaks, Carbon buildup in the Throttle Body air passages"
     },
     {
       "code": "P0506",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0506",
       "description": "Defective or sticking Idle Air Control Motor, Intake Manifold Vacuum leaks, Carbon buildup in the Throttle Body air passages, Defective Power Steering Pressure Switch"
     },
     {
       "code": "P0507",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0507",
       "description": "Defective or sticking Idle Air Control Motor, Intake Manifold Vacuum leaks, Carbon buildup in the Throttle Body air passages, Defective Coolant Temperature Sensor, Defective Charging System/Alternator, Defective Power Steering Pressure Switch"
     },
     {
       "code": "P0600",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0600",
       "description": "Defective PCM (Power Train Control Module), Defective PCM data bus wiring/connections, Defective PCM data bus ground circuit(s), Defective PCM or other control module controlled output devices, Defective CAN bus communication"
     },
     {
       "code": "P0601",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0601",
       "description": "Lack of proper voltage to the PCM, Defective PCM memory module, Defective PCM ground circuit(s), Defective PCM controlled output devices"
     },
     {
       "code": "P0602",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0602",
       "description": "Powertrain Control Module (PCM) failure, Wiring issue"
     },
     {
       "code": "P0603",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0603",
       "description": "Lack of proper voltage to the Keep Alive Memory connection on the PCM, Defective PCM Keep Alive Memory Module (KAM), Defective PCM ground circuit(s), Defective PCM controlled output devices"
     },
     {
       "code": "P0605",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0605",
       "description": "Lack of proper voltage and or ground to the PCM, Defective PCM ROM memory module, Defective PCM ground circuit(s), Defective PCM controlled output devices"
     },
     {
       "code": "P0700",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0700",
       "description": "Defective Shift Solenoids, Defective Engine Coolant Temperature Sensor, Defective Valve Body, Dirty transmission fluid that restricts the hydraulic passages"
     },
     {
       "code": "P0705",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0705",
       "description": "Defective Transmission Range Sensor (PRNDL input), Defective Transmission Range Sensor (PRNDL input) wiring or connector, Defective Valve Body, Defective manual shift valve linkage, Dirty transmission fluid that restricts the hydraulic passages"
     },
     {
       "code": "P0706",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0706",
       "description": "Defective Transmission Range Sensor (PRNDL input), Defective Transmission Range Sensor (PRNDL input) wiring or connector, Defective Valve Body, Defective manual shift valve linkage, Dirty transmission fluid that restricts the hydraulic passages"
     },
     {
       "code": "P0720",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0720",
       "description": "Defective Output Speed Sensor, Defective Shift Solenoids, Defective Engine Coolant Temperature Sensor, Defective Valve Body, Dirty transmission fluid that restricts the hydraulic passages, Defective Output Speed Sensor wiring or connector"
     },
     {
       "code": "P0730",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0730",
       "description": "Defective Shift Solenoids, Defective Engine Coolant Temperature Sensor, Defective Valve Body, Dirty transmission fluid that restricts the hydraulic passages"
     },
     {
       "code": "P0841",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0841",
       "description": "Transmission Control Module (TCM) failure, Transmission fluid level is low, Transmission fluid pressure sensor failure, Wiring issue"
     },
     {
       "code": "P0842",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0842",
       "description": "Transmission Control Module (TCM) failure, Transmission fluid level is low, Transmission fluid pressure sensor failure, Wiring issue"
     },
     {
       "code": "P0845",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0845",
       "description": "Transmission Control Module (TCM) failure, Transmission fluid level is low, Transmission fluid pressure sensor failure, Wiring issue"
     },
     {
       "code": "P0846",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0846",
       "description": "Transmission Control Module (TCM) failure, Transmission fluid level is low, Transmission fluid pressure sensor failure, Wiring issue"
     },
     {
       "code": "P0847",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0847",
       "description": "Transmission Control Module (TCM) failure, Transmission fluid level is low, Transmission fluid pressure sensor failure, Wiring issue"
     },
     {
       "code": "P0901",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0901",
       "description": "Clutch master cylinder failure, Clutch solenoid failure, Transmission Control Module (TCM) failure"
     },
     {
       "code": "P0935",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0935",
       "description": "Hydraulic power unit assembly failure, Transmission Control Module (TCM) failure, Wiring issue"
     },
     {
       "code": "P0942",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0942",
       "description": "Hydraulic power unit assembly failure, Transmission Control Module (TCM) failure, Wiring issue"
     },
     {
       "code": "P0944",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0944",
       "description": "Clogged transmission filter, Transmission fluid level is low, Transmission oil pump failure, Wiring issue"
     },
     {
       "code": "P0961",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0961",
       "description": "Transmission shift solenoid failure"
     },
     {
       "code": "P0A08",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0a08",
       "description": "Inverter/converter assembly failure, Powertrain Control Module (PCM) failure, Wiring issue"
     },
     {
       "code": "P0A0D",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0a0d",
       "description": "High voltage safety device failure, Inverter/converter assembly failure, Power management control module failure, Service disconnect plug is not properly connected, Wiring issue"
     },
     {
       "code": "P0A0F",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0a0f",
       "description": "Hybrid transaxle assembly failure, Internal engine failure, Power management control module failure"
     },
     {
       "code": "P0A7F",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0a7f",
       "description": "Poor connections at the HV battery, A problem with the HV battery, ECU issues"
     },
     {
       "code": "P0A80",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0a80",
       "description": "High voltage battery assembly failure"
     },
     {
       "code": "P0B22",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0b22",
       "description": "Battery contactor assembly failure, Battery Energy Control Module (BECM) failure"
     },
     {
       "code": "P0B24",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0b24",
       "description": "Battery Energy Control Module (BECM) failure, High voltage battery assembly failure, Wiring issue"
     },
     {
       "code": "P0B26",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0b26",
       "description": "Battery Energy Control Module (BECM) failure, High voltage battery assembly failure, Wiring issue"
     },
     {
       "code": "P0B28",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0b28",
       "description": "Battery Energy Control Module (BECM) failure, High voltage battery assembly failure, Wiring issue"
     },
     {
       "code": "P0B30",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0b30",
       "description": "Battery Energy Control Module (BECM) failure, High voltage battery assembly failure, Wiring issue"
     },
     {
       "code": "P0C00",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0c00",
       "description": "Drive motor generator power inverter control module failure"
     },
     {
       "code": "P0C09",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0c09",
       "description": "Drive motor generator assembly failure, Drive motor generator power inverter control module failure"
     },
     {
       "code": "P0C11",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0c11",
       "description": "Coolant system leak, Drive motor generator power inverter control module failure, Engine cooling fan failure, Water pump failure"
     },
     {
       "code": "P0C14",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0c14",
       "description": "Coolant system leak, Drive motor generator power inverter control module failure, Engine cooling fan failure, Water pump failure"
     },
     {
       "code": "P0C15",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p0c15",
       "description": "Coolant system leak, Drive motor generator power inverter control module failure, Engine cooling fan failure, Water pump failure"
     },
     {
       "code": "P2000",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p2000",
       "description": "Diesel Particulate Filter (DPF) failure, Intake air leak, Mass Airflow (MAF) sensor is dirty/loss of calibration"
     },
     {
       "code": "P2004",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p2004",
       "description": "A failed IMRC actuator, A problem with the intake manifold or linkage, Wiring issues"
     },
     {
       "code": "P2006",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p2006",
       "description": "Intake manifold runner control actuator failure, Powertrain Control Module (PCM) failure, Restricted vacuum lines"
     },
     {
       "code": "P2101",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p2101",
       "description": "Accelerator Pedal Position (APP) assembly failure, Powertrain Control Module (PCM) failure, Throttle control motor failure, Wiring issue"
     },
     {
       "code": "P2122",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p2122",
       "description": "Accelerator Pedal Position (APP) assembly failure, Powertrain Control Module (PCM) failure, Throttle control motor failure, Wiring issue"
     },
     {
       "code": "P2135",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p2135",
       "description": "Accelerator Pedal Position (APP) assembly failure, Powertrain Control Module (PCM) failure, Throttle Position Sensor (TPS) failure, Wiring issue"
     },
     {
       "code": "P2138",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p2138",
       "description": "Accelerator Pedal Position (APP) assembly failure, Powertrain Control Module (PCM) failure, Throttle Position Sensor (TPS) failure, Wiring issue"
     },
     {
       "code": "P2181",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p2181",
       "description": "Engine coolant heater failure, Engine coolant level is too low, Thermostat failure"
     },
     {
       "code": "P2210",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p2210",
       "description": "NOx sensor failure, Powertrain Control Module (PCM) failure, Wiring issue"
     },
     {
       "code": "P2213",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p2213",
       "description": "NOx sensor failure, Powertrain Control Module (PCM) failure, Wiring issue"
     },
     {
       "code": "P2237",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p2237",
       "description": "Exhaust leak, Oxygen sensor failure, Powertrain Control Module (PCM) failure, Wiring issue"
     },
     {
       "code": "P2238",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p2238",
       "description": "Exhaust leak, Oxygen sensor failure, Powertrain Control Module (PCM) failure, Wiring issue"
     },
     {
       "code": "P2251",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p2251",
       "description": "Exhaust leak, Oxygen sensor failure, Powertrain Control Module (PCM) failure, Wiring issue"
     },
     {
       "code": "P2302",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p2302",
       "description": "Ignition coil failure, Powertrain Control Module (PCM) failure, Wiring issue"
     },
     {
       "code": "P2303",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p2303",
       "description": "Ignition coil failure, Powertrain Control Module (PCM) failure, Wiring issue"
     },
     {
       "code": "P2305",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p2305",
       "description": "Ignition coil failure, Powertrain Control Module (PCM) failure, Wiring issue"
     },
     {
       "code": "P2308",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p2308",
       "description": "Ignition coil failure, Powertrain Control Module (PCM) failure, Wiring issue"
     },
     {
       "code": "P2310",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p2310",
       "description": "Ignition coil failure, Powertrain Control Module (PCM) failure, Wiring issue"
     },
     {
       "code": "P2401",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p2401",
       "description": "Evap leak detection pump failure, Powertrain Control Module (PCM) failure, Wiring issue"
     },
     {
       "code": "P2402",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p2402",
       "description": "Evap leak detection pump failure, Powertrain Control Module (PCM) failure, Wiring issue"
     },
     {
       "code": "P2422",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p2422",
       "description": "EVAP vent valve failure, Powertrain Control Module (PCM) failure, Wiring issue"
     },
     {
       "code": "P2431",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p2431",
       "description": "Air control solenoid failure, Powertrain Control Module (PCM) failure, Secondary Air System pressure sensor failure, Wiring issue"
     },
     {
       "code": "P2432",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p2432",
       "description": "Air control solenoid failure, Powertrain Control Module (PCM) failure, Secondary Air System pressure sensor failure, Wiring issue"
     },
     {
       "code": "P2500",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p2500",
       "description": "Alternator failure, Battery failure, Powertrain Control Module (PCM) failure, Wiring issue"
     },
     {
       "code": "P2501",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p2501",
       "description": "Alternator failure, Battery failure, Powertrain Control Module (PCM) failure, Wiring issue"
     },
     {
       "code": "P2503",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p2503",
       "description": "Alternator failure, Battery failure, Wiring issue"
     },
     {
       "code": "P2509",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p2509",
       "description": "Powertrain Control Module (PCM) failure, Powertrain Control Module (PCM) power relay failure, Wiring issue"
     },
     {
       "code": "P250C",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p250c",
       "description": "Oil level sensor failure, Powertrain Control Module (PCM) failure, Wiring issue"
     },
     {
       "code": "P2601",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p2601",
       "description": "Coolant Heat Storage (CHS) water pump failure, Coolant Heat Storage (CHS) water pump relay, Powertrain Control Module (PCM) failure, Wiring issue"
     },
     {
       "code": "P2607",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p2607",
       "description": "Intake air heater, Powertrain Control Module (PCM) failure, Wiring issue"
     },
     {
       "code": "P2609",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p2609",
       "description": "Intake air heater, Powertrain Control Module (PCM) failure, Wiring issue"
     },
     {
       "code": "P2610",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p2610",
       "description": "An internal PCM problem, A problem with the PCM power or ground circuit"
     },
     {
       "code": "P2614",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p2614",
       "description": "Broken tone ring, Camshaft Position Sensor (CMP) failure, Powertrain Control Module (PCM) failure, Wiring issue"
     },
     {
       "code": "P2706",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p2706",
       "description": "Transmission Control Module (TCM) failure, Transmission fluid level is low, Transmission shift solenoid failure, Wiring issue"
     },
     {
       "code": "P2711",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p2711",
       "description": "Internal transmission failure, Transmission Control Module (TCM) failure, Transmission fluid level is low, Transmission solenoid failure, Wiring issue"
     },
     {
       "code": "P2714",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p2714",
       "description": "Transmission Control Module (TCM) failure, Transmission fluid level is low, Transmission shift solenoid failure, Wiring issue"
     },
     {
       "code": "P2716",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p2716",
       "description": "Transmission Control Module (TCM) failure, Transmission fluid level is low, Transmission shift solenoid failure, Wiring issue"
     },
     {
       "code": "P2723",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p2723",
       "description": "Transmission Control Module (TCM) failure, Transmission fluid level is low, Transmission shift solenoid failure, Wiring issue"
     },
     {
       "code": "P2803",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p2803",
       "description": "Powertrain Control Module (PCM) failure, Transmission Control Module (TCM) failure, Transmission range sensor failure, Wiring issue"
     },
     {
       "code": "P2806",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p2806",
       "description": "Powertrain Control Module (PCM) failure, Transmission Control Module (TCM) failure, Transmission range sensor failure, Transmission range sensor is out of adjustment, Wiring issue"
     },
     {
       "code": "P2809",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p2809",
       "description": "Transmission Control Module (TCM) failure, Transmission fluid level is low, Transmission pressure control solenoid failure, Wiring issue"
     },
     {
       "code": "P2810",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p2810",
       "description": "Transmission Control Module (TCM) failure, Transmission fluid level is low, Transmission pressure control solenoid failure, Wiring issue"
     },
     {
       "code": "P2815",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p2815",
       "description": "Transmission Control Module (TCM) failure, Transmission fluid level is low, Transmission pressure control solenoid failure, Wiring issue"
     },
     {
       "code": "P2A00",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p2a00",
       "description": "Exhaust leak, Oxygen sensor failure, Powertrain Control Module (PCM) failure, Wiring issue"
     },
     {
       "code": "P2A01",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p2a01",
       "description": "Exhaust leak, Oxygen sensor failure, Powertrain Control Module (PCM) failure, Wiring issue"
     },
     {
       "code": "P2A03",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p2a03",
       "description": "Exhaust leak, Oxygen sensor failure, Powertrain Control Module (PCM) failure, Wiring issue"
     },
     {
       "code": "P2A04",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p2a04",
       "description": "Exhaust leak, Oxygen sensor failure, Powertrain Control Module (PCM) failure, Wiring issue"
     },
     {
       "code": "P2BA8",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p2ba8",
       "description": "Faulty NOx Sensors, NOx Sensors harness is open or shorted, NOx Sensors circuit poor electrical connection, Faulty Diesel Particulate Filter (DPF)"
     },
     {
       "code": "P3000",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p3000",
       "description": "Fuel level is too low, High voltage battery assembly failure, High voltage battery is not sufficiently charged"
     },
     {
       "code": "P3100",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p3100",
       "description": "High voltage powertrain control module failure"
     },
     {
       "code": "P3400",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p3400",
       "description": "Faulty Cylinder Deactivation System"
     },
     {
       "code": "P3401",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_p3401",
       "description": "Engine oil level is too low, Powertrain Control Module (PCM) failure, Variable valve timing solenoid failure, Wiring issue"
     },
     {
       "code": "B0081",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_b0081",
       "description": "Wiring issues, Control module problems, A problem with the airbag"
     },
     {
       "code": "C0040",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_c0040",
       "description": "A faulty wheel speed sensor, A problem with the wheel speed sensor circuit, Reluctor issues, A problem with the ABS module"
     },
     {
       "code": "U0001",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_u0001",
       "description": "A faulty wheel speed sensor, A problem with the wheel speed sensor circuit, Reluctor issues, A problem with the ABS module"
     },
     {
       "code": "U0073",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_u0073",
       "description": "A faulty control module, A problem with the CAN bus"
     },
     {
       "code": "U0100",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_u0100",
       "description": "A faulty PCM, A problem with the control module circuit, A problem with the CAN bus"
     },
     {
       "code": "U0107",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_u0107",
       "description": "A dead battery, A faulty TAC module, A problem with TAC module circuit, A problem with the CAN bus"
     },
     {
       "code": "U0121",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_audi_u0121",
       "description": "A dead battery, A faulty ABS module, A problem with ABS module circuit, A problem with the CAN bus"
     }
   ]

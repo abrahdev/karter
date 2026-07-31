@@ -6,8 +6,7 @@ import os
 from datetime import datetime, timezone
 from pathlib import Path
 
-REPO_ROOT = Path(__file__).resolve().parent.parent
-TEMPLATES_DIR = REPO_ROOT / "templates"
+TEMPLATES_DIR = Path(__file__).resolve().parent.parent
 INDEX_FILE = TEMPLATES_DIR / "index.json"
 SCHEMA_DIR_NAME = "schemas"
 

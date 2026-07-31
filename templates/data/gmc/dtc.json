@@ -13,2011 +13,2413 @@
     {
       "code": "P1031",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1031",
       "description": "HO2S Heater Current Monitor Control Circuit Sensors 1"
     },
     {
       "code": "P1032",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1032",
       "description": "HO2S Heater Warm Up Control Circuit Sensors 1"
     },
     {
       "code": "P1105",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1105",
       "description": "Secondary Vacuum Sensor Circuit"
     },
     {
       "code": "P1106",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1106",
       "description": "MAP Sensor Circuit Intermittent High Voltage"
     },
     {
       "code": "P1107",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1107",
       "description": "MAP Sensor Circuit Intermittent Low Voltage"
     },
     {
       "code": "P1108",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1108",
       "description": "BARO To MAP Sensor Circuit Comparison Too High"
     },
     {
       "code": "P1109",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1109",
       "description": "Secondary Port Throttle System"
     },
     {
       "code": "P1111",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1111",
       "description": "Intake Air Temperature (IAT) Sensor Circuit Intermittent High Voltage"
     },
     {
       "code": "P1112",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1112",
       "description": "Intake Air Temperature (IAT) Sensor Circuit Intermittent Low Voltage"
     },
     {
       "code": "P1113",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1113",
       "description": "Intake Resonance Switchover Valve Circuit"
     },
     {
       "code": "P1114",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1114",
       "description": "Engine Coolant Temperature (ECT) Sensor Circuit Intermittent Low Voltage"
     },
     {
       "code": "P1115",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1115",
       "description": "Engine Coolant Temperature (ECT) Sensor Circuit Intermittent High Voltage"
     },
     {
       "code": "P1116",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1116",
       "description": "ECT Signal Unstable Or Intermittent"
     },
     {
       "code": "P1117",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1117",
       "description": "Engine Coolant Temp Signal Out Of Range Low"
     },
     {
       "code": "P1118",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1118",
       "description": "Engine Coolant Temp Signal Out Of Range High"
     },
     {
       "code": "P1119",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1119",
       "description": "ECT Signal Out Of Range With TFT Sensor"
     },
     {
       "code": "P1120",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1120",
       "description": "Throttle Position (TP) Sensor 1 Circuit"
     },
     {
       "code": "P1121",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1121",
       "description": "TP Sensor Circuit Intermittent High Voltage"
     },
     {
       "code": "P1122",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1122",
       "description": "TP Sensor Circuit Intermittent Low Voltage"
     },
     {
       "code": "P1125",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1125",
       "description": "Accelerator Pedal Position (APP) System"
     },
     {
       "code": "P1130",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1130",
       "description": "HO2S Circuit Low Variance Bank 1 Sensor 1"
     },
     {
       "code": "P1131",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1131",
       "description": "HO2S Circuit Low Variance Bank 1 Sensor 2"
     },
     {
       "code": "P1132",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1132",
       "description": "H02S Circuit Low Variance Bank 2 Sensor 1"
     },
     {
       "code": "P1133",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1133",
       "description": "HO2S Insufficient Switching"
     },
     {
       "code": "P1134",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1134",
       "description": "HO2S Transition Time Ratio"
     },
     {
       "code": "P1135",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1135",
       "description": "HO2S Lean Average Bank 1 Sensor 1"
     },
     {
       "code": "P1136",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1136",
       "description": "HO2S Rich Average Bank 1 Sensor 1"
     },
     {
       "code": "P1137",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1137",
       "description": "HO2S Bank 1 Sensor 2 Lean Or Low Voltage"
     },
     {
       "code": "P1138",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1138",
       "description": "HO2S Bank 1 Sensor 2 Rich Or High Voltage"
     },
     {
       "code": "P1139",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1139",
       "description": "HO2S Insufficient Switching Bank 1 Sensor 2"
     },
     {
       "code": "P1140",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1140",
       "description": "HO2S Transition Time Ratio Bank 1 Sensor 2"
     },
     {
       "code": "P1141",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1141",
       "description": "HO2S Bank 1 Sensor 2 Average Voltage Level"
     },
     {
       "code": "P1143",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1143",
       "description": "HO2S Bank 1 Sensor 3 Lean Or Low Voltage"
     },
     {
       "code": "P1144",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1144",
       "description": "HO2S Bank 1 Sensor 3 Rich Or High Voltage"
     },
     {
       "code": "P1145",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1145",
       "description": "HO2S Cross Counts Bank 1 Sensor 3"
     },
     {
       "code": "P1153",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1153",
       "description": "HO2S Insufficient Switching"
     },
     {
       "code": "P1154",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1154",
       "description": "HO2S Transition Time Ratio"
     },
     {
       "code": "P1155",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1155",
       "description": "HO2S Lean Average Bank 2 Sensor 1"
     },
     {
       "code": "P1156",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1156",
       "description": "HO2S Rich Average Bank 2 Sensor 1"
     },
     {
       "code": "P1157",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1157",
       "description": "HO2S Bank 2 Sensor 2 Lean System Or Low Voltage"
     },
     {
       "code": "P1158",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1158",
       "description": "HO2S Bank 2 Sensor 2 Rich Or High Voltage"
     },
     {
       "code": "P1159",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1159",
       "description": "HO2S Cross Counts Bank 2 Sensor 2"
     },
     {
       "code": "P1161",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1161",
       "description": "HO2S Heater Power Stage Circuit Bank 2 Sensor 2"
     },
     {
       "code": "P1163",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1163",
       "description": "HO2S Bank 2 Sensor 3 Lean System Or Low Voltage"
     },
     {
       "code": "P1164",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1164",
       "description": "HO2S Bank 2 Sensor 3 Rich Or High Voltage"
     },
     {
       "code": "P1165",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1165",
       "description": "HO2S Cross Counts Bank 2 Sensor 2"
     },
     {
       "code": "P1170",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1170",
       "description": "Bank To Bank Fuel Trim Offset"
     },
     {
       "code": "P1171",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1171",
       "description": "Fuel System Lean During Acceleration"
     },
     {
       "code": "P1185",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1185",
       "description": "Engine Oil Temperature Circuit"
     },
     {
       "code": "P1186",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1186",
       "description": "EOT Circuit Performance"
     },
     {
       "code": "P1187",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1187",
       "description": "EOT Sensor Circuit Low Voltage"
     },
     {
       "code": "P1188",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1188",
       "description": "EOT Sensor Circuit High Voltage"
     },
     {
       "code": "P1189",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1189",
       "description": "Engine Oil Pressure Switch Circuit"
     },
     {
       "code": "P1190",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1190",
       "description": "Engine Vacuum Leak"
     },
     {
       "code": "P1191",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1191",
       "description": "Intake Air Duct Air Leak"
     },
     {
       "code": "P1200",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1200",
       "description": "Injector Control Circuit"
     },
     {
       "code": "P1201",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1201",
       "description": "Alternative Fuel Gas Mass Sensor Circuit Range Performance"
     },
     {
       "code": "P1202",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1202",
       "description": "Alternative Fuel Gas Mass Sensor Circuit Low Frequency"
     },
     {
       "code": "P1203",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1203",
       "description": "Alternative Fuel Gas Mass Sensor Circuit High Frequency"
     },
     {
       "code": "P1211",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1211",
       "description": "Mass Air Flow Circuit Intermittent High"
     },
     {
       "code": "P1212",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1212",
       "description": "Mass Air Flow Circuit Intermittent Low"
     },
     {
       "code": "P1214",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1214",
       "description": "Injection Pump Timing Offset"
     },
     {
       "code": "P1215",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1215",
       "description": "Ground Fault Detection Indicated"
     },
     {
       "code": "P1216",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1216",
       "description": "Fuel Solenoid Response Time Too Short"
     },
     {
       "code": "P1217",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1217",
       "description": "Fuel Solenoid Response Time Too Long"
     },
     {
       "code": "P1218",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1218",
       "description": "Injection Pump Calibration Circuit"
     },
     {
       "code": "P1219",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1219",
       "description": "Throttle Position Sensor Reference Voltage"
     },
     {
       "code": "P1220",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1220",
       "description": "Throttle Position (TP) Sensor 2 Circuit"
     },
     {
       "code": "P1221",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1221",
       "description": "Throttle Position (TP) Sensor 1 2 Correlation"
     },
     {
       "code": "P1222",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1222",
       "description": "Injector Control Circuit Intermittent"
     },
     {
       "code": "P1225",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1225",
       "description": "Injector Circuit Cylinder 2 Intermittent"
     },
     {
       "code": "P1228",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1228",
       "description": "Injector Circuit Cylinder 3 Intermittent"
     },
     {
       "code": "P1231",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1231",
       "description": "Injector Circuit Cylinder 4 Intermittent"
     },
     {
       "code": "P1234",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1234",
       "description": "Injector Circuit Cylinder 5 Intermittent"
     },
     {
       "code": "P1237",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1237",
       "description": "Injector Circuit Cylinder 6 Intermittent"
     },
     {
       "code": "P1240",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1240",
       "description": "Injector Circuit Cylinder 7 Intermittent"
     },
     {
       "code": "P1243",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1243",
       "description": "Injector Circuit Cylinder 8 Intermittent"
     },
     {
       "code": "P1245",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1245",
       "description": "Intake Plenum Switchover Valve"
     },
     {
       "code": "P1250",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1250",
       "description": "Early Fuel Evaporation Heater Circuit"
     },
     {
       "code": "P1257",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1257",
       "description": "Supercharger System Overboost"
     },
     {
       "code": "P1258",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1258",
       "description": "Engine Coolant Overtemperature Protection Mode Active"
     },
     {
       "code": "P1260",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1260",
       "description": "Last Test Failed SCC Or Theft Detected Vehicle Immobilized"
     },
     {
       "code": "P1270",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1270",
       "description": "Accelerator Pedal Position Sensor A/D Converter Error"
     },
     {
       "code": "P1271",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1271",
       "description": "APP Sensor 1 2 Performance"
     },
     {
       "code": "P1272",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1272",
       "description": "Accelerator Pedal Position Sensor 2"
     },
     {
       "code": "P1273",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1273",
       "description": "Accelerator Pedal Position Sensor 1"
     },
     {
       "code": "P1274",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1274",
       "description": "Injectors Wired Incorrectly"
     },
     {
       "code": "P1275",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1275",
       "description": "Accelerator Pedal Position (APP) Sensor 1 Circuit"
     },
     {
       "code": "P1276",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1276",
       "description": "Accelerator Pedal Position (APP) Sensor 1 Performance"
     },
     {
       "code": "P1277",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1277",
       "description": "Accelerator Pedal Position Sensor 1 Circuit Low Voltage"
     },
     {
       "code": "P1278",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1278",
       "description": "Accelerator Pedal Position Sensor 1 Circuit High Voltage"
     },
     {
       "code": "P1280",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1280",
       "description": "Accelerator Pedal Position (APP) Sensor 2 Circuit"
     },
     {
       "code": "P1281",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1281",
       "description": "Accelerator Pedal Position (APP) Sensor 2 Performance"
     },
     {
       "code": "P1282",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1282",
       "description": "Accelerator Pedal Position Sensor 2 Circuit Low Voltage"
     },
     {
       "code": "P1283",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1283",
       "description": "Accelerator Pedal Position Sensor 2 Circuit High Voltage"
     },
     {
       "code": "P1285",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1285",
       "description": "Accelerator Pedal Position (APP) Sensor 3 Circuit"
     },
     {
       "code": "P1286",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1286",
       "description": "Accelerator Pedal Position (APP) Sensor 3 Performance"
     },
     {
       "code": "P1287",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1287",
       "description": "Accelerator Pedal Position Sensor 3 Circuit Low Voltage"
     },
     {
       "code": "P1288",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1288",
       "description": "Accelerator Pedal Position Sensor 3 Circuit High Voltage"
     },
     {
       "code": "P1300",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1300",
       "description": "Ignitor Circuit"
     },
     {
       "code": "P1305",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1305",
       "description": "Ignition Coil 2 Primary Feedback Circuit"
     },
     {
       "code": "P1310",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1310",
       "description": "Ignition Coil 3 Primary Feedback Circuit"
     },
     {
       "code": "P1315",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1315",
       "description": "Ignition Coil 4 Primary Feedback Circuit"
     },
     {
       "code": "P1320",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1320",
       "description": "IC Module 4X Ref Circuit Intermittent No Pulses"
     },
     {
       "code": "P1321",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1321",
       "description": "Electronic Ignition System Fault Line"
     },
     {
       "code": "P1322",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1322",
       "description": "EI System Or Ignition Control Missing"
     },
     {
       "code": "P1323",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1323",
       "description": "24X Reference Circuit Low Frequency"
     },
     {
       "code": "P1324",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1324",
       "description": "Crank RPM Too Low"
     },
     {
       "code": "P1335",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1335",
       "description": "CKP Circuit"
     },
     {
       "code": "P1336",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1336",
       "description": "Crankshaft Position (CKP) System Variation Not Learned"
     },
     {
       "code": "P1345",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1345",
       "description": "CKP/CMP Correlation"
     },
     {
       "code": "P1346",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1346",
       "description": "Intake Camshaft Position (CMP) Sensor System Performance"
     },
     {
       "code": "P1350",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1350",
       "description": "Ignition Control System"
     },
     {
       "code": "P1351",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1351",
       "description": "IC Circuit High Voltage"
     },
     {
       "code": "P1352",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1352",
       "description": "IC Output High Pulse Detected When Grounded Cyl 2"
     },
     {
       "code": "P1353",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1353",
       "description": "IC Output High Pulse Detected When Grounded Cyl 3"
     },
     {
       "code": "P1354",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1354",
       "description": "IC Output High Pulse Detected When Grounded Cyl 4"
     },
     {
       "code": "P1355",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1355",
       "description": "IC Output High Pulse Detected When Grounded Cyl 5"
     },
     {
       "code": "P1356",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1356",
       "description": "IC Output High Pulse Detected When Grounded Cyl 6"
     },
     {
       "code": "P1357",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1357",
       "description": "IC Output High Pulse Detected When Grounded Cyl 7"
     },
     {
       "code": "P1358",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1358",
       "description": "IC Output High Pulse Detected When Grounded Cyl 8"
     },
     {
       "code": "P1359",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1359",
       "description": "Ignition Control Circuit Group A"
     },
     {
       "code": "P1360",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1360",
       "description": "Ignition Control Circuit Group B"
     },
     {
       "code": "P1361",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1361",
       "description": "IC Circuit Low Voltage"
     },
     {
       "code": "P1362",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1362",
       "description": "IC Cylinder 2 Not Toggling After Enable"
     },
     {
       "code": "P1363",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1363",
       "description": "IC Cylinder 3 Not Toggling After Enable"
     },
     {
       "code": "P1364",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1364",
       "description": "IC Cylinder 4 Not Toggling After Enable"
     },
     {
       "code": "P1365",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1365",
       "description": "IC Cylinder 5 Not Toggling After Enable"
     },
     {
       "code": "P1366",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1366",
       "description": "IC Cylinder 6 Not Toggling After Enable"
     },
     {
       "code": "P1367",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1367",
       "description": "IC Cylinder 7 Not Toggling After Enable"
     },
     {
       "code": "P1368",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1368",
       "description": "IC Cylinder 8 Not Toggling After Enable"
     },
     {
       "code": "P1370",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1370",
       "description": "IC Module 4X Reference Circuit Too Many Pulses"
     },
     {
       "code": "P1371",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1371",
       "description": "DI Low Resolution Circuit"
     },
     {
       "code": "P1372",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1372",
       "description": "Crankshaft Position Sensor Circuit Performance"
     },
     {
       "code": "P1374",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1374",
       "description": "3X Reference Circuit"
     },
     {
       "code": "P1375",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1375",
       "description": "24X Reference Circuit High Voltage"
     },
     {
       "code": "P1376",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1376",
       "description": "Ignition Ground Circuit"
     },
     {
       "code": "P1377",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1377",
       "description": "IC Module CAM Pulse To 4X Reference Pulse Comparison"
     },
     {
       "code": "P1380",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1380",
       "description": "Misfire Detected Rough Road Data Not Available"
     },
     {
       "code": "P1381",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1381",
       "description": "Misfire Detected No Communication with Brake Control Module"
     },
     {
       "code": "P1390",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1390",
       "description": "Wheel Speed Sensor 1 G-Sensor Circuit"
     },
     {
       "code": "P1391",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1391",
       "description": "Wheel Speed Sensor 1 G-Sensor Circuit Performance"
     },
     {
       "code": "P1392",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1392",
       "description": "Wheel Speed Sensor 1 G-Sensor Circuit Low Voltage"
     },
     {
       "code": "P1393",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1393",
       "description": "Wheel Speed Sensor 1 G-Sensor Circuit High Voltage"
     },
     {
       "code": "P1394",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1394",
       "description": "Wheel Speed Sensor 1 G-Sensor Circuit Intermittent"
     },
     {
       "code": "P1395",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1395",
       "description": "Wheel Speed Sensor 2 G-Sensor Circuit"
     },
     {
       "code": "P1396",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1396",
       "description": "Wheel Speed Sensor 2 G-Sensor Circuit Performance"
     },
     {
       "code": "P1397",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1397",
       "description": "Wheel Speed Sensor 2 G-Sensor Circuit Low Voltage"
     },
     {
       "code": "P1398",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1398",
       "description": "Wheel Speed Sensor 2 G-Sensor Circuit High Voltage"
     },
     {
       "code": "P1399",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1399",
       "description": "Wheel Speed Sensor 2 G-Sensor Circuit Intermittent"
     },
     {
       "code": "P1403",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1403",
       "description": "Exhaust Gas Recirculation System Valve 1"
     },
     {
       "code": "P1404",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1404",
       "description": "Exhaust Gas Recirculation System Valve 2"
     },
     {
       "code": "P1405",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1405",
       "description": "Exhaust Gas Recirculation System Valve 3"
     },
     {
       "code": "P1406",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1406",
       "description": "EGR Valve Pintle Position Circuit"
     },
     {
       "code": "P1407",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1407",
       "description": "EGR Air Intrusion In Exhaust Supply To EGR Valve"
     },
     {
       "code": "P1408",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1408",
       "description": "Intake Manifold Pressure Sensor Circuit"
     },
     {
       "code": "P1409",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1409",
       "description": "EGR Vacuum System Leak"
     },
     {
       "code": "P1410",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1410",
       "description": "Fuel Tank Pressure System"
     },
     {
       "code": "P1415",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1415",
       "description": "Secondary Air Injection (AIR) System"
     },
     {
       "code": "P1416",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1416",
       "description": "AIR System Bank 1"
     },
     {
       "code": "P1418",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1418",
       "description": "Secondary Air Injection System Relay A Control Circuit High"
     },
     {
       "code": "P1420",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1420",
       "description": "Intake Air Low Pressure Switch Circuit Low Voltage"
     },
     {
       "code": "P1421",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1421",
       "description": "Intake Air Low Pressure Switch Circuit High Voltage"
     },
     {
       "code": "P1423",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1423",
       "description": "Intake Air High Pressure Switch Circuit High Voltage"
     },
     {
       "code": "P1431",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1431",
       "description": "Fuel Level Sensor 2 Performance"
     },
     {
       "code": "P1432",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1432",
       "description": "Fuel Level Sensor 2 Circuit Low Voltage"
     },
     {
       "code": "P1433",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1433",
       "description": "Fuel Level Sensor 2 Circuit High Voltage"
     },
     {
       "code": "P1441",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1441",
       "description": "Evaporative Emission (EVAP) System Flow During Non-Purge"
     },
     {
       "code": "P1442",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1442",
       "description": "EVAP Vacuum Switch High Voltage During Ignition On"
     },
     {
       "code": "P1450",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1450",
       "description": "Barometric Pressure Sensor Circuit"
     },
     {
       "code": "P1451",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1451",
       "description": "Barometric Pressure Sensor Performance"
     },
     {
       "code": "P1460",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1460",
       "description": "Cooling Fan Control System"
     },
     {
       "code": "P1480",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1480",
       "description": "Cooling Fan 1 Control Circuit High"
     },
     {
       "code": "P1483",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1483",
       "description": "Engine Coolilng System Performance"
     },
     {
       "code": "P1500",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1500",
       "description": "Starter Signal Circuit"
     },
     {
       "code": "P1501",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1501",
       "description": "Vehicle Speed Sensor Circuit Intermittent"
     },
     {
       "code": "P1502",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1502",
       "description": "Theft Deterrent System No Password Received"
     },
     {
       "code": "P1503",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1503",
       "description": "Theft Deterrent System Password Incorrect"
     },
     {
       "code": "P1504",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1504",
       "description": "Vehicle Speed Output Circuit"
     },
     {
       "code": "P1508",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1508",
       "description": "IAC System Low RPM"
     },
     {
       "code": "P1509",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1509",
       "description": "IAC System High RPM"
     },
     {
       "code": "P1510",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1510",
       "description": "Back UP Power Supply"
     },
     {
       "code": "P1511",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1511",
       "description": "Throttle Control System Backup System Performance"
     },
     {
       "code": "P1514",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1514",
       "description": "Throttle Body Performance"
     },
     {
       "code": "P1515",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1515",
       "description": "Control Module Throttle Actuator Position Performance"
     },
     {
       "code": "P1516",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1516",
       "description": "Throttle Actuator Control (TAC) Module Throttle Actuator Position Performance"
     },
     {
       "code": "P1517",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1517",
       "description": "Throttle Actuator Control (TAC) Module Performance"
     },
     {
       "code": "P1518",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1518",
       "description": "Throttle Actuator Control (TAC) Module Serial Data Circuit"
     },
     {
       "code": "P1519",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1519",
       "description": "Electronic Throttle Module Low Volts Communication Disable"
     },
     {
       "code": "P1520",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1520",
       "description": "Gear Indicator System"
     },
     {
       "code": "P1521",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1521",
       "description": "Transmission Engaged At High Throttle Angle"
     },
     {
       "code": "P1522",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1522",
       "description": "Park Neutral To Drive Reverse At High RPM"
     },
     {
       "code": "P1523",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1523",
       "description": "Electronic Throttle Control Throttle Return"
     },
     {
       "code": "P1524",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1524",
       "description": "TP Sensor Learned CI Throttle Angle Out Of Range"
     },
     {
       "code": "P1525",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1525",
       "description": "Throttle Body Service Required"
     },
     {
       "code": "P1526",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1526",
       "description": "TP Sensor Learn Not Complete"
     },
     {
       "code": "P1527",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1527",
       "description": "Transmission Range Pressure Switch Comparison"
     },
     {
       "code": "P1528",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1528",
       "description": "Governor"
     },
     {
       "code": "P1529",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1529",
       "description": "Heated Windshield Request Problem"
     },
     {
       "code": "P1530",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1530",
       "description": "Ignition Timing Adjustment Switch Circuit"
     },
     {
       "code": "P1531",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1531",
       "description": "A/C Low Side Temerature Sensor Fault"
     },
     {
       "code": "P1532",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1532",
       "description": "A/C Evaporator Temperature Sensor Circuit Low Voltage"
     },
     {
       "code": "P1533",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1533",
       "description": "A/C Evaporator Temperature Sensor Circuit High Voltage"
     },
     {
       "code": "P1534",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1534",
       "description": "A/C High Side Temperature Sensor Low Voltage"
     },
     {
       "code": "P1535",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1535",
       "description": "A/C High Side Temperature Sensor Circuit"
     },
     {
       "code": "P1536",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1536",
       "description": "A/C System ECT Overtemperature"
     },
     {
       "code": "P1537",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1537",
       "description": "A/C Request Circuit Low Voltage"
     },
     {
       "code": "P1538",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1538",
       "description": "A/C Request Circuit High Voltage"
     },
     {
       "code": "P1539",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1539",
       "description": "Air Conditioning (A/C) Clutch Feedback Circuit High Voltage"
     },
     {
       "code": "P1540",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1540",
       "description": "A/C System High Pressure"
     },
     {
       "code": "P1541",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1541",
       "description": "A/C High Side Over Temperature"
     },
     {
       "code": "P1542",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1542",
       "description": "A/C System High Pressure High Temperature"
     },
     {
       "code": "P1543",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1543",
       "description": "A/C System Performance"
     },
     {
       "code": "P1544",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1544",
       "description": "A/C Refrigerant Condition Very Low"
     },
     {
       "code": "P1545",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1545",
       "description": "A/C Clutch Relay Control Circuit"
     },
     {
       "code": "P1546",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1546",
       "description": "Air Conditioning (A/C) Clutch Feedback Circuit Low Voltage"
     },
     {
       "code": "P1547",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1547",
       "description": "A/C System Performance Degraded"
     },
     {
       "code": "P1548",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1548",
       "description": "A/C Recirculation Circuit"
     },
     {
       "code": "P1554",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1554",
       "description": "Cruise Engaged Circuit High Voltage"
     },
     {
       "code": "P1555",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1555",
       "description": "Electronic Variable Orifice Output"
     },
     {
       "code": "P1558",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1558",
       "description": "Cruise Control Servo Indicates Low"
     },
     {
       "code": "P1559",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1559",
       "description": "Cruise Control Power Management Mode"
     },
     {
       "code": "P1560",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1560",
       "description": "Cruise Control System Transaxle Not In Drive"
     },
     {
       "code": "P1561",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1561",
       "description": "Cruise Vent Solenoid"
     },
     {
       "code": "P1562",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1562",
       "description": "Cruise Vacuum Solenoid"
     },
     {
       "code": "P1563",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1563",
       "description": "Cruise Vehicle Speed Set Speed Difference Too High"
     },
     {
       "code": "P1564",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1564",
       "description": "Cruise Control System Vehicle Accel Too High"
     },
     {
       "code": "P1565",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1565",
       "description": "Cruise Servo Position Sensor"
     },
     {
       "code": "P1566",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1566",
       "description": "Cruise Control System Engine RPM Too High"
     },
     {
       "code": "P1567",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1567",
       "description": "Cruise Control System Active Braking Control Active"
     },
     {
       "code": "P1568",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1568",
       "description": "Cruise Servo Stroke Greater Than Commanded In Cruise"
     },
     {
       "code": "P1569",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1569",
       "description": "Cruise Servo Stroke High While Not In Cruise"
     },
     {
       "code": "P1570",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1570",
       "description": "Cruise Control System Traction Control Active"
     },
     {
       "code": "P1571",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1571",
       "description": "TCS PWM Circuit No Frequency"
     },
     {
       "code": "P1572",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1572",
       "description": "ASR Active Circuit Low Too Long"
     },
     {
       "code": "P1573",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1573",
       "description": "PCM EBTCM Serial Data Circuit"
     },
     {
       "code": "P1574",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1574",
       "description": "Stoplamp Switch Circuit"
     },
     {
       "code": "P1575",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1575",
       "description": "Extended Travel Brake Switch Circuit"
     },
     {
       "code": "P1576",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1576",
       "description": "BBV Sensor Circuit High Voltage"
     },
     {
       "code": "P1577",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1577",
       "description": "BBV Sensor Circuit Low Voltage"
     },
     {
       "code": "P1578",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1578",
       "description": "BBV Sensor Circuit Low Vacuum"
     },
     {
       "code": "P1579",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1579",
       "description": "P/N To D/R At High Throttle Angle"
     },
     {
       "code": "P1580",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1580",
       "description": "Cruise Move Circuit Low Voltage"
     },
     {
       "code": "P1581",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1581",
       "description": "Cruise Move Circuit High Voltage"
     },
     {
       "code": "P1582",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1582",
       "description": "Cruise Direction Circuit Low Voltage"
     },
     {
       "code": "P1583",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1583",
       "description": "Cruise Direction Circuit High Volume"
     },
     {
       "code": "P1584",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1584",
       "description": "Cruise Control Disabled"
     },
     {
       "code": "P1585",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1585",
       "description": "Cruise Inhibit Control Circuit"
     },
     {
       "code": "P1586",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1586",
       "description": "Cruise Control Brake Switch 2 Circuit"
     },
     {
       "code": "P1587",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1587",
       "description": "Cruise Control Clutch Control Circuit Low"
     },
     {
       "code": "P1588",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1588",
       "description": "Cruise Control Clutch Control Circuit High"
     },
     {
       "code": "P1599",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1599",
       "description": "Engine Stall Or Near Stall Detected"
     },
     {
       "code": "P1600",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1600",
       "description": "PCM Battery"
     },
     {
       "code": "P1601",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1601",
       "description": "Serial Communication Problem With Device 1"
     },
     {
       "code": "P1602",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1602",
       "description": "Loss Of EBTCM Serial Data"
     },
     {
       "code": "P1603",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1603",
       "description": "Loss Of SDM Serial Data"
     },
     {
       "code": "P1604",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1604",
       "description": "Loss Of IPC Serial Data"
     },
     {
       "code": "P1605",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1605",
       "description": "Loss Of HVAX Serial Data"
     },
     {
       "code": "P1606",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1606",
       "description": "Serial Communication Problem With Device 6"
     },
     {
       "code": "P1607",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1607",
       "description": "Serial Communication Problem With Device 7"
     },
     {
       "code": "P1608",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1608",
       "description": "Serial Communication Problem With Device 8"
     },
     {
       "code": "P1609",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1609",
       "description": "Loss Of TCS Serial Data"
     },
     {
       "code": "P1610",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1610",
       "description": "Loss Of PZM Serial Data"
     },
     {
       "code": "P1611",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1611",
       "description": "Loss Of CVRTD Serial Data"
     },
     {
       "code": "P1612",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1612",
       "description": "Loss Of IPM Serial Data"
     },
     {
       "code": "P1613",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1613",
       "description": "Loss Of DIM Serial Data"
     },
     {
       "code": "P1614",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1614",
       "description": "Loss Of RIM Serial Data"
     },
     {
       "code": "P1615",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1615",
       "description": "Loss Of VTD Serial Data"
     },
     {
       "code": "P1617",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1617",
       "description": "Engine Oil Level Switch Circuit"
     },
     {
       "code": "P1619",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1619",
       "description": "Engine Oil Life Monitor Reset Circuit"
     },
     {
       "code": "P1620",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1620",
       "description": "Low Coolant Circuit"
     },
     {
       "code": "P1621",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1621",
       "description": "PCM Memory Performance"
     },
     {
       "code": "P1622",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1622",
       "description": "Cylinder Select"
     },
     {
       "code": "P1623",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1623",
       "description": "Transmission Temp Pull-Up Resistor"
     },
     {
       "code": "P1624",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1624",
       "description": "Customer Snapshot Data Available"
     },
     {
       "code": "P1625",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1625",
       "description": "PCM System Reset"
     },
     {
       "code": "P1626",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1626",
       "description": "Theft Deterrent Fuel Enable Signal Lost"
     },
     {
       "code": "P1627",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1627",
       "description": "A/D Performance"
     },
     {
       "code": "P1628",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1628",
       "description": "ECT Pull-Up Resistor"
     },
     {
       "code": "P1629",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1629",
       "description": "Theft Deterrent System Cranking Signal"
     },
     {
       "code": "P1630",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1630",
       "description": "Theft Deterrent Learn Mode Active"
     },
     {
       "code": "P1631",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1631",
       "description": "Theft Deterrent Start Enable Signal Not Correct"
     },
     {
       "code": "P1632",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1632",
       "description": "Theft Deterrent System Fuel Disabled"
     },
     {
       "code": "P1633",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1633",
       "description": "Ignition Supply Power Circuit Low Voltage"
     },
     {
       "code": "P1634",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1634",
       "description": "Ignition 1 Power Circuit Low Voltage"
     },
     {
       "code": "P1635",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1635",
       "description": "5 Volt Reference 1 Circuit"
     },
     {
       "code": "P1636",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1636",
       "description": "PCM Stack Overrun"
     },
     {
       "code": "P1637",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1637",
       "description": "Generator L-Terminal Circuit"
     },
     {
       "code": "P1638",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1638",
       "description": "Generator F-Terminal Circuit"
     },
     {
       "code": "P1639",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1639",
       "description": "5 Volt Reference 2 Circuit"
     },
     {
       "code": "P1640",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1640",
       "description": "Driver 1 Input High Voltage"
     },
     {
       "code": "P1641",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1641",
       "description": "FC Relay 1 Control Circuit"
     },
     {
       "code": "P1642",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1642",
       "description": "FC Relay 2 And 3 Control Circuit"
     },
     {
       "code": "P1643",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1643",
       "description": "Engine Speed Output Circuit"
     },
     {
       "code": "P1644",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1644",
       "description": "TP Output Circuit"
     },
     {
       "code": "P1645",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1645",
       "description": "EVAP Solenoid Output Circuit"
     },
     {
       "code": "P1646",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1646",
       "description": "Driver 1 Line 6"
     },
     {
       "code": "P1647",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1647",
       "description": "Driver 1 Line 7"
     },
     {
       "code": "P1650",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1650",
       "description": "Driver 2 Input High Voltage"
     },
     {
       "code": "P1651",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1651",
       "description": "Fan 1 Relay Control Circuit"
     },
     {
       "code": "P1652",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1652",
       "description": "Powertrain Induced Chassis Pitch Output Circuit"
     },
     {
       "code": "P1653",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1653",
       "description": "Oil Level Lamp Control Circuit"
     },
     {
       "code": "P1654",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1654",
       "description": "Service Throttle Soon Lamp Control Circuit"
     },
     {
       "code": "P1655",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1655",
       "description": "EVAP Purge Solenoid Control Circuit"
     },
     {
       "code": "P1656",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1656",
       "description": "Driver 2 Line 6"
     },
     {
       "code": "P1657",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1657",
       "description": "1 4 Upshift Solenoid Control Circuit"
     },
     {
       "code": "P1658",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1658",
       "description": "Starter Enable Relay Control Circuit"
     },
     {
       "code": "P1660",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1660",
       "description": "Cooling Fans Control Circuit"
     },
     {
       "code": "P1661",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1661",
       "description": "MIL Control Circuit"
     },
     {
       "code": "P1662",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1662",
       "description": "Cruise Control Inhibit Control Circuit"
     },
     {
       "code": "P1663",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1663",
       "description": "Oil Life Lamp Control Circuit"
     },
     {
       "code": "P1664",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1664",
       "description": "1 4 Upshift Lamp Control Circuit"
     },
     {
       "code": "P1665",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1665",
       "description": "Driver 3 Line 5"
     },
     {
       "code": "P1666",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1666",
       "description": "Driver 3 Line 6"
     },
     {
       "code": "P1667",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1667",
       "description": "Reverse Inhibit Solenoid Control Circuit"
     },
     {
       "code": "P1669",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1669",
       "description": "ABS Unit Expected"
     },
     {
       "code": "P1670",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1670",
       "description": "Driver 4"
     },
     {
       "code": "P1671",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1671",
       "description": "Driver 4 Line 1"
     },
     {
       "code": "P1672",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1672",
       "description": "Low Engine Oil Level Lamp Control Circuit"
     },
     {
       "code": "P1673",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1673",
       "description": "Engine Hot Lamp Control Circuit"
     },
     {
       "code": "P1674",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1674",
       "description": "Tachometer Control Circuit"
     },
     {
       "code": "P1675",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1675",
       "description": "EVAP Vent Solenoid Control Circuit"
     },
     {
       "code": "P1676",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1676",
       "description": "Driver 4 Line 6"
     },
     {
       "code": "P1677",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1677",
       "description": "Driver 4 Line 7"
     },
     {
       "code": "P1680",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1680",
       "description": "Driver 5"
     },
     {
       "code": "P1681",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1681",
       "description": "Driver 5 Line 1"
     },
     {
       "code": "P1682",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1682",
       "description": "Driver 5 Line 2"
     },
     {
       "code": "P1683",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1683",
       "description": "Driver 5 Line 3"
     },
     {
       "code": "P1684",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1684",
       "description": "Driver 5 Line 4"
     },
     {
       "code": "P1685",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1685",
       "description": "Driver 5 Line 5"
     },
     {
       "code": "P1686",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1686",
       "description": "Driver 5 Line 6"
     },
     {
       "code": "P1687",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1687",
       "description": "Driver 5 Line 7"
     },
     {
       "code": "P1689",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1689",
       "description": "Delivered Torque Circuit Fault"
     },
     {
       "code": "P1690",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1690",
       "description": "ECM Loop Overrun"
     },
     {
       "code": "P1691",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1691",
       "description": "Coolant Gage Circuit Low Voltage"
     },
     {
       "code": "P1692",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1692",
       "description": "Coolant Gage Circuit High Voltage"
     },
     {
       "code": "P1693",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1693",
       "description": "Tachometer Circuit Low Voltage"
     },
     {
       "code": "P1694",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1694",
       "description": "Tachometer Circuit High Voltage"
     },
     {
       "code": "P1695",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1695",
       "description": "Remote Keyless Entry Circuit Low"
     },
     {
       "code": "P1696",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1696",
       "description": "Remote Keyless Entry Voltage High"
     },
     {
       "code": "P1700",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1700",
       "description": "Transmission MIL Request"
     },
     {
       "code": "P1701",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1701",
       "description": "Transmission MIL Request Circuit"
     },
     {
       "code": "P1705",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1705",
       "description": "P/N Signal Output Circuit"
     },
     {
       "code": "P1740",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1740",
       "description": "Transmission Torque Reduction Request Circuit"
     },
     {
       "code": "P1743",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1743",
       "description": "TP Signal From ECM"
     },
     {
       "code": "P1760",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1760",
       "description": "ECM Supply Voltage Interrupted"
     },
     {
       "code": "P1779",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1779",
       "description": "Engine Torque Delivered To TCM Signal"
     },
     {
       "code": "P1780",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1780",
       "description": "Park Neutral Position (PNP) Switch Circuit Engine Torque Signal Circuit"
     },
     {
       "code": "P1790",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1790",
       "description": "Transmission Control Module Checksum"
     },
     {
       "code": "P1791",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1791",
       "description": "Transmission Control Module Loop"
     },
     {
       "code": "P1792",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1792",
       "description": "Transmission Control Module Reprogrammable Memory"
     },
     {
       "code": "P1793",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1793",
       "description": "Transmission Control Module Stack Overrun"
     },
     {
       "code": "P1795",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1795",
       "description": "CAN Bus Throttle Body Position"
     },
     {
       "code": "P1800",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1800",
       "description": "TCM Power Control Relay Circuit Open"
     },
     {
       "code": "P1801",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1801",
       "description": "Performance Selector Switch Failure"
     },
     {
       "code": "P1804",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1804",
       "description": "Ground Control Relay"
     },
     {
       "code": "P1810",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1810",
       "description": "TFP Valve Position Switch Circuit"
     },
     {
       "code": "P1811",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1811",
       "description": "Maximum Adapt And Long Shift"
     },
     {
       "code": "P1812",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1812",
       "description": "Transmission Over Temperature Condition"
     },
     {
       "code": "P1813",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1813",
       "description": "Torque Control"
     },
     {
       "code": "P1814",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1814",
       "description": "Torque Converter Overstressed"
     },
     {
       "code": "P1815",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1815",
       "description": "Transmission Range Switch Start In Wrong Range"
     },
     {
       "code": "P1816",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1816",
       "description": "TFP Valve Position Switch Park Neutral With Drive Ratio"
     },
     {
       "code": "P1817",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1817",
       "description": "TFP Valve Position Switch Reverse With Drive Ratio"
     },
     {
       "code": "P1818",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1818",
       "description": "TFP Valve Position Switch Drive Without Drive Ratio"
     },
     {
       "code": "P1819",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1819",
       "description": "Internal Mode Switch No Start Wrong Range"
     },
     {
       "code": "P1820",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1820",
       "description": "Internal Mode Switch Circuit A Low"
     },
     {
       "code": "P1822",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1822",
       "description": "Internal Mode Switch Circuit B High"
     },
     {
       "code": "P1823",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1823",
       "description": "Internal Mode Switch Circuit P Low"
     },
     {
       "code": "P1825",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1825",
       "description": "Internal Mode Switch Illegal Range"
     },
     {
       "code": "P1826",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1826",
       "description": "Internal Mode Switch Circuit C High"
     },
     {
       "code": "P1831",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1831",
       "description": "PC Solenoid Power Circuit Low Voltage"
     },
     {
       "code": "P1833",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1833",
       "description": "A/T Solenoids Power Circuit Low Voltage"
     },
     {
       "code": "P1835",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1835",
       "description": "Kick-Down Switch"
     },
     {
       "code": "P1836",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1836",
       "description": "Kick-Down Switch Failed Open"
     },
     {
       "code": "P1837",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1837",
       "description": "Kick-Down Switch Failed Short"
     },
     {
       "code": "P1842",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1842",
       "description": "1 2 Shift Solenoid Circuit Low Voltage"
     },
     {
       "code": "P1843",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1843",
       "description": "1 2 Shift Solenoid Circuit High Voltage"
     },
     {
       "code": "P1844",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1844",
       "description": "Torque Reduction Signal Circuit Desired By TCM"
     },
     {
       "code": "P1845",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1845",
       "description": "Transmission Gear Ratio Output Circuit"
     },
     {
       "code": "P1847",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1847",
       "description": "2 3 Shift Solenoid Circuit High Voltage"
     },
     {
       "code": "P1850",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1850",
       "description": "Brake Band Apply Solenoid Circuit"
     },
     {
       "code": "P1851",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1851",
       "description": "Brake Band Apply Solenoid Performance"
     },
     {
       "code": "P1852",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1852",
       "description": "Brake Band Apply Solenoid Low Voltage"
     },
     {
       "code": "P1853",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1853",
       "description": "Brake Band Apply Solenoid High Voltage"
     },
     {
       "code": "P1860",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1860",
       "description": "TCC PWM Solenoid Circuit Electrical"
     },
     {
       "code": "P1864",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1864",
       "description": "Torque Converter Clutch Circuit"
     },
     {
       "code": "P1868",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1868",
       "description": "Transmission Fluid Life"
     },
     {
       "code": "P1870",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1870",
       "description": "Transmission Component Slipping"
     },
     {
       "code": "P1871",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1871",
       "description": "Undefined Gear Ratio"
     },
     {
       "code": "P1873",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1873",
       "description": "TCC Stator Temp Switch Circuit Low"
     },
     {
       "code": "P1874",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1874",
       "description": "TCC Stator Temp Switch Circuit High"
     },
     {
       "code": "P1875",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1875",
       "description": "4WD Low Switch Circuit"
     },
     {
       "code": "P1884",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1884",
       "description": "TCC Enable Shift Light Circuit"
     },
     {
       "code": "P1886",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1886",
       "description": "Shift Timing Solenoid"
     },
     {
       "code": "P1887",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1887",
       "description": "TCC Release Switch Circuit"
     },
     {
       "code": "P1890",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1890",
       "description": "ECM Data Input Circuit"
     },
     {
       "code": "P1891",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1891",
       "description": "Throttle Position Sensor PWM Signal Low"
     },
     {
       "code": "P1892",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1892",
       "description": "Throttle Position Sensor PWM Signal High"
     },
     {
       "code": "P1893",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1893",
       "description": "Engine Torque Signal Low Voltage"
     },
     {
       "code": "P1894",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1894",
       "description": "Engine Torque Signal High Voltage"
     },
     {
       "code": "P1895",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_gmc_p1895",
       "description": "TCM To ECM Torque Reduction Circuit"
     }
   ]

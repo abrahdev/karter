@@ -13,86 +13,103 @@
     {
       "code": "P1250",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_suzuki_p1250",
       "description": "EFE Heater Circuit Fault"
     },
     {
       "code": "P1408",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_suzuki_p1408",
       "description": "Maniforld Differential Pressure Sensor Circuit Fault"
     },
     {
       "code": "P1410",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_suzuki_p1410",
       "description": "Fuel Tank Pressure Control Solenoid Circuit Fault"
     },
     {
       "code": "P1450",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_suzuki_p1450",
       "description": "Barometric Pressure Sensor Too Low Or Too High"
     },
     {
       "code": "P1451",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_suzuki_p1451",
       "description": "Barometric Pressure Sensor Performance"
     },
     {
       "code": "P1460",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_suzuki_p1460",
       "description": "Radiator Fan Control System Fault"
     },
     {
       "code": "P1500",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_suzuki_p1500",
       "description": "Engine Starter Signal Circuit Fault"
     },
     {
       "code": "P1510",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_suzuki_p1510",
       "description": "PCM Backup Power Supply Circuit Fault"
     },
     {
       "code": "P1530",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_suzuki_p1530",
       "description": "Ignition Timing Adjustment Switch Circuit Fault"
     },
     {
       "code": "P1600",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_suzuki_p1600",
       "description": "PCM TCM Serial Communication Circuit Fault"
     },
     {
       "code": "P1700",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_suzuki_p1700",
       "description": "TCM Throttle Position Sensor Circuit Fault"
     },
     {
       "code": "P1705",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_suzuki_p1705",
       "description": "TCM ECT Sensor Circuit Fault"
     },
     {
       "code": "P1710",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_suzuki_p1710",
       "description": "Back-Up Signal For Speed Sensor Circuit Malfunction"
     },
     {
       "code": "P1715",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_suzuki_p1715",
       "description": "PNP Switch Circuit Fault"
     },
     {
       "code": "P1717",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_suzuki_p1717",
       "description": "AT Drive Range Signal Circuit Fault"
     },
     {
       "code": "P1875",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_suzuki_p1875",
       "description": "4WD Low Switch Circuit Malfunction"
     },
     {
       "code": "P1895",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_suzuki_p1895",
       "description": "TCM To ECM Torque Reduction Circuit Malfunction"
     }
   ]

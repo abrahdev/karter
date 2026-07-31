@@ -9,8 +9,7 @@ import json
 import os
 from pathlib import Path
 
-REPO_ROOT = Path(__file__).resolve().parent.parent
-TEMPLATES_DIR = REPO_ROOT / "mobile" / "templates"
+TEMPLATES_DIR = Path(__file__).resolve().parent.parent
 
 
 def write_json(path: Path, data) -> None:

@@ -13,466 +13,559 @@
     {
       "code": "P1086",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1086",
       "description": "Tumble Generator Valve #2 LH Position Sensor Circuit Low Input"
     },
     {
       "code": "P1087",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1087",
       "description": "Tumble Generator Valve #2 LH Position Sensor Circuit High Input"
     },
     {
       "code": "P1088",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1088",
       "description": "Tumble Generator Valve #1 RH Position Sensor Circuit Low Input"
     },
     {
       "code": "P1089",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1089",
       "description": "Tumble Generator Valve #1 RH Position Sensor Circuit High Input"
     },
     {
       "code": "P1090",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1090",
       "description": "Tumble Generator Valve #1 RH Malfunction Stuck Open"
     },
     {
       "code": "P1091",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1091",
       "description": "Tumble Generator Valve #1 RH Malfunction Stuck Close"
     },
     {
       "code": "P1092",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1092",
       "description": "Tumble Generator Valve #2 LH Malfunction Stuck Open"
     },
     {
       "code": "P1093",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1093",
       "description": "Tumble Generator Valve #2 LH Malfunction Stuck Close"
     },
     {
       "code": "P1094",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1094",
       "description": "Tumble Generator Valve Circuit #1 Open Circuit"
     },
     {
       "code": "P1095",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1095",
       "description": "Tumble Generator Valve Circuit #1 Over Current"
     },
     {
       "code": "P1096",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1096",
       "description": "Tumble Generator Valve Circuit #2 Open Circuit"
     },
     {
       "code": "P1097",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1097",
       "description": "Tumble Generator Valve Circuit #2 Over Current"
     },
     {
       "code": "P1100",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1100",
       "description": "Starter Switch Circuit Malfunction"
     },
     {
       "code": "P1101",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1101",
       "description": "Neutral Position Switch Circuit Malfunction M/T"
     },
     {
       "code": "P1102",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1102",
       "description": "Pressure Sources Solenoid Valve Circuit Malfunction"
     },
     {
       "code": "P1103",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1103",
       "description": "Pressure Sources Switching Solenoid Valve Circuit"
     },
     {
       "code": "P1104",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1104",
       "description": "Engine Torque Control Signal Circuit Malfunction"
     },
     {
       "code": "P1106",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1106",
       "description": "Engine Torque Control Signal 2 Circuit Malfunction"
     },
     {
       "code": "P1107",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1107",
       "description": "AIR System Diagnosis Solenoid Circuit Fault"
     },
     {
       "code": "P1110",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1110",
       "description": "Atmospheric Pressure Sensor Low Input"
     },
     {
       "code": "P1111",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1111",
       "description": "Atmospheric Pressure Sensor High Input"
     },
     {
       "code": "P1112",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1112",
       "description": "Atmospheric Pressure Sensor Range Performance Problem"
     },
     {
       "code": "P1115",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1115",
       "description": "Engine Torque Control Cut Signal Circuit High Input"
     },
     {
       "code": "P1116",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1116",
       "description": "Engine Torque Control Cut Signal Circuit Low Input"
     },
     {
       "code": "P1120",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1120",
       "description": "Starter Switch High Input"
     },
     {
       "code": "P1121",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1121",
       "description": "Neutral Position Switch Circuit Low Input AT Vehicles"
     },
     {
       "code": "P1122",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1122",
       "description": "Pressure Sources Switching Valve Circuit High Input"
     },
     {
       "code": "P1124",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1124",
       "description": "TCS Signal Circuit High Input"
     },
     {
       "code": "P1130",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1130",
       "description": "Front Oxygen Sensor Circuit Malfunction Open Circuit"
     },
     {
       "code": "P1131",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1131",
       "description": "Front Oxygen Sensor Circuit Malfunction Short Circuit"
     },
     {
       "code": "P1134",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1134",
       "description": "Front Oxygen AF Sensor Microcomputer Problem"
     },
     {
       "code": "P1137",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1137",
       "description": "Front Oxygen AF Sensor Circuit Range Performance Problem"
     },
     {
       "code": "P1139",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1139",
       "description": "Front Oxygen AF Sensor #1 Heater Circuit Performance Range Problem"
     },
     {
       "code": "P1141",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1141",
       "description": "Mass Air Flow Sensor Circuit High Input"
     },
     {
       "code": "P1142",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1142",
       "description": "Mass Air Flow Sensor Circuit Low Input"
     },
     {
       "code": "P1143",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1143",
       "description": "Pressure Sensor Circuit Low Input"
     },
     {
       "code": "P1144",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1144",
       "description": "Pressure Sensor Circuit High Input"
     },
     {
       "code": "P1146",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1146",
       "description": "Pressure Sensor Circuit Range Performance Problem High Input"
     },
     {
       "code": "P1150",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1150",
       "description": "Front Oxygen Sensor Heater Circuit High Input"
     },
     {
       "code": "P1151",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1151",
       "description": "Rear Oxygen Sensor Heater Circuit High Input"
     },
     {
       "code": "P1230",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1230",
       "description": "Fuel Pump Control Unit Malfunction"
     },
     {
       "code": "P1244",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1244",
       "description": "Wastegate Control Solenoid Valve Malfunction Low Input"
     },
     {
       "code": "P1245",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1245",
       "description": "Wastegate Control Solenoid Valve Malfunction Fail Safe"
     },
     {
       "code": "P1301",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1301",
       "description": "Fire Due To Increased Exhaust Temperature"
     },
     {
       "code": "P1312",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1312",
       "description": "Exhaust Temperature Sensor Malfunction"
     },
     {
       "code": "P1325",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1325",
       "description": "Knock Sensor Circuit Low Input"
     },
     {
       "code": "P1400",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1400",
       "description": "Fuel Tank Pressure Control Solenoid Low Input"
     },
     {
       "code": "P1401",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1401",
       "description": "Fuel Tank Pressure Control System Performance"
     },
     {
       "code": "P1402",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1402",
       "description": "Fuel Level Pressure Sensor Circuit Fault"
     },
     {
       "code": "P1420",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1420",
       "description": "Fuel Tank Pressure Control Solenoid High Input"
     },
     {
       "code": "P1421",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1421",
       "description": "Exhaust Gas Recirculation Circuit High Input"
     },
     {
       "code": "P1422",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1422",
       "description": "EVAP Purge Control Solenoid Valve Circuit High Input"
     },
     {
       "code": "P1423",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1423",
       "description": "EVAP Vent Control High Input"
     },
     {
       "code": "P1440",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1440",
       "description": "Fuel Tank Pressure Control System Low Input"
     },
     {
       "code": "P1441",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1441",
       "description": "Fuel Tank Pressure Control System High Input"
     },
     {
       "code": "P1442",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1442",
       "description": "Fuel Level Sensor Circuit Range Performance"
     },
     {
       "code": "P1443",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1443",
       "description": "EVAP Control System Vent Control Function Problem"
     },
     {
       "code": "P1480",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1480",
       "description": "Cooling Fan Relay 1 Circuit High Input"
     },
     {
       "code": "P1500",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1500",
       "description": "Radiator Fan Relay 1 Circuit Malfunction"
     },
     {
       "code": "P1501",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1501",
       "description": "Idle Control System Malfunction Fail Safe"
     },
     {
       "code": "P1502",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1502",
       "description": "Radiator Fan Function Problem"
     },
     {
       "code": "P1507",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1507",
       "description": "Idle Control System Malfunction Fail Safe"
     },
     {
       "code": "P1510",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1510",
       "description": "Idle Air Control Solenoid Signal 1 Circuit Low Input"
     },
     {
       "code": "P1511",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1511",
       "description": "Idle Air Control Solenoid Signal 1 Circuit High Input"
     },
     {
       "code": "P1512",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1512",
       "description": "Idle Air Control Solenoid Signal 2 Circuit Low Input"
     },
     {
       "code": "P1513",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1513",
       "description": "Idle Air Control Solenoid Signal 2 Circuit High Input"
     },
     {
       "code": "P1514",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1514",
       "description": "Idle Air Control Solenoid Signal 3 Circuit Low Input"
     },
     {
       "code": "P1515",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1515",
       "description": "Idle Air Control Solenoid Signal 3 Circuit High Input"
     },
     {
       "code": "P1516",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1516",
       "description": "Idle Air Control Solenoid Signal 4 Circuit Low Input"
     },
     {
       "code": "P1517",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1517",
       "description": "Idle Air Control Solenoid Signal 4 Circuit High Input"
     },
     {
       "code": "P1518",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1518",
       "description": "Starter Switch Circuit Low Input"
     },
     {
       "code": "P1520",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1520",
       "description": "Radiator Fan Relay 1 Circuit High Input"
     },
     {
       "code": "P1540",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1540",
       "description": "Vehicle Speed Sensor Malfunction"
     },
     {
       "code": "P1544",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1544",
       "description": "High Exhaust Temperature Detected"
     },
     {
       "code": "P1560",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1560",
       "description": "Back-Up Voltage Circuit Malfunction"
     },
     {
       "code": "P1590",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1590",
       "description": "Neutral Position Switch Circuit High Input"
     },
     {
       "code": "P1591",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1591",
       "description": "Neutral Position Switch Circuit Low Input"
     },
     {
       "code": "P1592",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1592",
       "description": "Neutral Position Switch Circuit MT Model"
     },
     {
       "code": "P1594",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1594",
       "description": "Automatic Transmission Diagnosis Input Signal Circuit Malfunction"
     },
     {
       "code": "P1595",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1595",
       "description": "Automatic Transmission Diagnosis Input Signal Circuit Low Input"
     },
     {
       "code": "P1596",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1596",
       "description": "Automatic Transmission Diagnosis Input Signal Circuit High Input"
     },
     {
       "code": "P1698",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1698",
       "description": "Engine Torque Control Cut Signal Circuit Low Input"
     },
     {
       "code": "P1699",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1699",
       "description": "Engine Torque Control Cut Signal Circuit High Input"
     },
     {
       "code": "P1700",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1700",
       "description": "Throttle Position Sensor Circuit Malfunction AT"
     },
     {
       "code": "P1701",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1701",
       "description": "Cruise Control Set Signal Circuit Malfunction AT"
     },
     {
       "code": "P1702",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1702",
       "description": "Auto Trans Diagnosis Input Signal Circuit"
     },
     {
       "code": "P1703",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1703",
       "description": "Low Clutch Timing Control Solenoid Valve Circuit Malfunction"
     },
     {
       "code": "P1704",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1704",
       "description": "2-4 Brake Timing Solenoid Valve Circuit Malfunction"
     },
     {
       "code": "P1705",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1705",
       "description": "2-4 Brake Pressure Solenoid Valve Solenoid D Circuit"
     },
     {
       "code": "P1711",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1711",
       "description": "Engine Torque Control Signal 1 Circuit Malfunction"
     },
     {
       "code": "P1712",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1712",
       "description": "Engine Torque Control Signal 2 Circuit Malfunction"
     },
     {
       "code": "P1722",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1722",
       "description": "Auto Trans Diagnosis Input Signal High Input"
     },
     {
       "code": "P1742",
       "scope": "manufacturer",
+      "desc_i18n_key": "dtc_subaru_p1742",
       "description": "Auto Trans Diagnosis Input Signal Malfunction"
     }
   ]

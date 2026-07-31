@@ -7,7 +7,14 @@ Downloads plain-text source files, parses ``CODE - Description`` lines into
   * generic manufacturer codes (other) into ``_base/dtc.json``
   * per-brand manufacturer codes into ``templates/data/<brand>/dtc.json``
 
-Run from the repo root:  python3 tools/import_dtc.py
+Each entry gets a ``desc_i18n_key`` used for localizable descriptions:
+  * standard/generic codes: ``dtc_<code>`` (e.g. ``dtc_p0171``)
+  * manufacturer codes: ``dtc_<brand>_<code>`` (e.g. ``dtc_mercedes_benz_p1100``)
+
+The keys are merged into ``i18n/{en,es,et}.json`` with the English text.
+The merge is idempotent: existing keys (e.g. Weblate translations) are kept.
+
+Run from the repo root:  python3 templates/tools/import_dtc.py
 """
 
 import json
@@ -16,8 +23,8 @@ import sys
 import urllib.request
 from pathlib import Path
 
-REPO_ROOT = Path(__file__).resolve().parent.parent
-DATA_DIR = REPO_ROOT / "templates" / "data"
+TEMPLATES_DIR = Path(__file__).resolve().parent.parent
+DATA_DIR = TEMPLATES_DIR / "data"
 SOURCE_URL = (
     "https://raw.githubusercontent.com/Wal33D/dtc-database/main/data/source-data"
 )
@@ -133,10 +140,11 @@ def parse_codes(text: str):
         print(f"  dropped {dropped} malformed/duplicate lines")
 
 
-def make_entry(code, description, scope):
+def make_entry(code, description, scope, key):
     return {
         "code": code,
         "scope": scope,
+        "desc_i18n_key": key,
         "description": description,
     }
 
@@ -146,7 +154,27 @@ def write_json(path: Path, data) -> None:
     with open(path, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
         f.write("\n")
-    print(f"  wrote {path.relative_to(REPO_ROOT)}")
+    print(f"  wrote {path.relative_to(TEMPLATES_DIR)}")
+
+
+def update_i18n(translations) -> None:
+    """Merge DTC descriptions into en/es/et.json without overwriting keys.
+
+    ``dtc_*`` keys are owned by the importer: stale ones (absent from the
+    source) are pruned, while other keys (e.g. Weblate translations) are kept.
+    """
+    for lang in ("en", "es", "et"):
+        path = TEMPLATES_DIR / "i18n" / f"{lang}.json"
+        data = json.loads(path.read_text(encoding="utf-8"))
+        added = 0
+        for key in [k for k in data if k.startswith("dtc_") and k not in translations]:
+            del data[key]
+        for key, text in translations.items():
+            if key not in data:
+                data[key] = text
+                added += 1
+        write_json(path, data)
+        print(f"  {lang}: {added} new keys ({len(data)} total)")
 
 
 def validate(schema_path: Path, docs):
@@ -164,6 +192,7 @@ def validate(schema_path: Path, docs):
 
 def main():
     downloaded = {}
+    translations = {}
 
     standard = []
     print("Fetching standard SAE codes...")
@@ -171,7 +200,8 @@ def main():
         print(f"  {name}")
         downloaded[name] = fetch(name)
         for code, desc in parse_codes(downloaded[name]):
-            standard.append(make_entry(code, desc, "standard"))
+            standard.append(make_entry(code, desc, "standard", f"dtc_{code.lower()}"))
+            translations[f"dtc_{code.lower()}"] = desc
 
     print("Fetching generic manufacturer codes...")
     generic = []
@@ -180,7 +210,8 @@ def main():
     for code, desc in parse_codes(downloaded["other_codes.txt"]):
         if code in standard_codes:
             continue
-        generic.append(make_entry(code, desc, "manufacturer"))
+        generic.append(make_entry(code, desc, "manufacturer", f"dtc_{code.lower()}"))
+        translations[f"dtc_{code.lower()}"] = desc
 
     print(f"  standard: {len(standard)} codes")
     print(f"  generic manufacturer: {len(generic)} codes")
@@ -204,11 +235,12 @@ def main():
     print("Fetching per-brand codes...")
     for brand, name in BRAND_FILES.items():
         print(f"  {brand}")
+        prefix = f"dtc_{brand.replace('-', '_')}_"
         downloaded[name] = fetch(name)
-        entries = [
-            make_entry(code, desc, "manufacturer")
-            for code, desc in parse_codes(downloaded[name])
-        ]
+        entries = []
+        for code, desc in parse_codes(downloaded[name]):
+            entries.append(make_entry(code, desc, "manufacturer", f"{prefix}{code.lower()}"))
+            translations[f"{prefix}{code.lower()}"] = desc
         dtc = {
             "id": f"{brand}-dtc",
             "meta": {
@@ -224,7 +256,10 @@ def main():
         write_json(DATA_DIR / brand / "dtc.json", dtc)
         print(f"  {brand}: {len(entries)} codes")
 
-    schema_path = REPO_ROOT / "templates" / "schemas" / "template-v2.json"
+    print(f"\nUpdating i18n files...")
+    update_i18n(translations)
+
+    schema_path = TEMPLATES_DIR / "schemas" / "template-v2.json"
     errors = validate(schema_path, docs)
     if errors:
         print(f"\nValidation failed: {errors} error(s)")
