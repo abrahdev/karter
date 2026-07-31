@@ -1,0 +1,519 @@
+{
+  "id": "dodge-dtc",
+  "meta": {
+    "make": "Dodge",
+    "model": "OBD-II codes",
+    "author": "abrahdev",
+    "version": "1.0.0",
+    "sources": [
+      "https://github.com/Wal33D/dtc-database (MIT)"
+    ]
+  },
+  "obd_dtc_definitions": [
+    {
+      "code": "P0138",
+      "scope": "manufacturer",
+      "description": "HO2S12 High Voltage"
+    },
+    {
+      "code": "P0442",
+      "scope": "manufacturer",
+      "description": "Medium EVAP Leak"
+    },
+    {
+      "code": "P0455",
+      "scope": "manufacturer",
+      "description": "Large EVAP Leak"
+    },
+    {
+      "code": "P0601",
+      "scope": "manufacturer",
+      "description": "Internal PCM Controller Failure"
+    },
+    {
+      "code": "P1105",
+      "scope": "manufacturer",
+      "description": "Open Or Shorted Condition Detected In The Baro Read Solenoid Control Circuit"
+    },
+    {
+      "code": "P1192",
+      "scope": "manufacturer",
+      "description": "Inlet Air Temp Circuit Low"
+    },
+    {
+      "code": "P1193",
+      "scope": "manufacturer",
+      "description": "Inlet Air Temp Circuit High"
+    },
+    {
+      "code": "P1194",
+      "scope": "manufacturer",
+      "description": "Incorrect Or Irrational Performance Has Been Detected For The PWM"
+    },
+    {
+      "code": "P1195",
+      "scope": "manufacturer",
+      "description": "O2 Sensor 1/1 Bank 1 Sensor 1 Slow During Catalyst Monitor"
+    },
+    {
+      "code": "P1196",
+      "scope": "manufacturer",
+      "description": "O2 Sensor 2/1 Bank 2 Sensor 1 Slow During Catalyst Monitor"
+    },
+    {
+      "code": "P1197",
+      "scope": "manufacturer",
+      "description": "O2 Sensor 1/2 Bank 1 Sensor 2 Slow During Catalyst Monitor"
+    },
+    {
+      "code": "P1198",
+      "scope": "manufacturer",
+      "description": "Radiator Temperature Sensor Voltage Too High"
+    },
+    {
+      "code": "P1199",
+      "scope": "manufacturer",
+      "description": "Radiator Temperature Sensor Voltage Too Low"
+    },
+    {
+      "code": "P1243",
+      "scope": "manufacturer",
+      "description": "Open Or Shorted Condition Detected In The Turbocharger Surge Valve Solenoid Control"
+    },
+    {
+      "code": "P1280",
+      "scope": "manufacturer",
+      "description": "Open Or Shorted Condition Detected In The Fuel System Relay Control Circuit"
+    },
+    {
+      "code": "P1281",
+      "scope": "manufacturer",
+      "description": "Engine Operating Temp Below Acceptable Range"
+    },
+    {
+      "code": "P1282",
+      "scope": "manufacturer",
+      "description": "Fuel Pump Relay Control Circuit Open Or Shorted"
+    },
+    {
+      "code": "P1283",
+      "scope": "manufacturer",
+      "description": "Idle Select Signal Invalid"
+    },
+    {
+      "code": "P1284",
+      "scope": "manufacturer",
+      "description": "Fuel Injection Pump Battery Voltage Out Of Range"
+    },
+    {
+      "code": "P1285",
+      "scope": "manufacturer",
+      "description": "Fuel Injection Pump Controller Always On"
+    },
+    {
+      "code": "P1286",
+      "scope": "manufacturer",
+      "description": "Accelerator Pedal Position Sensor Supply Voltage Too High"
+    },
+    {
+      "code": "P1287",
+      "scope": "manufacturer",
+      "description": "Fuel Injection Pump Controller Supply Voltage Low"
+    },
+    {
+      "code": "P1288",
+      "scope": "manufacturer",
+      "description": "Intake Manifold Short Runner Solenoid Circuit Open Or Shorted"
+    },
+    {
+      "code": "P1289",
+      "scope": "manufacturer",
+      "description": "Manifold Tune Valve Solenoid Circuit Open Or Shorted"
+    },
+    {
+      "code": "P1290",
+      "scope": "manufacturer",
+      "description": "CNG Fuel Pressure Too High"
+    },
+    {
+      "code": "P1291",
+      "scope": "manufacturer",
+      "description": "No Temp Rise Seen From Fuel Heaters"
+    },
+    {
+      "code": "P1292",
+      "scope": "manufacturer",
+      "description": "CNG Pressure Sensor Voltage Too High"
+    },
+    {
+      "code": "P1293",
+      "scope": "manufacturer",
+      "description": "CNG Pressure Sensor Voltage Too Low"
+    },
+    {
+      "code": "P1294",
+      "scope": "manufacturer",
+      "description": "Target Idle Not Reached"
+    },
+    {
+      "code": "P1295",
+      "scope": "manufacturer",
+      "description": "Loss Of 5 Volts To TP Sensor"
+    },
+    {
+      "code": "P1296",
+      "scope": "manufacturer",
+      "description": "Loss Of 5 Volts To MAP Sensor"
+    },
+    {
+      "code": "P1297",
+      "scope": "manufacturer",
+      "description": "No Change In MAP From Start To Run"
+    },
+    {
+      "code": "P1298",
+      "scope": "manufacturer",
+      "description": "Lean Operation At Wide Open Throttle"
+    },
+    {
+      "code": "P1299",
+      "scope": "manufacturer",
+      "description": "Vacuum Leak Found (IAC Fully Seated)"
+    },
+    {
+      "code": "P1388",
+      "scope": "manufacturer",
+      "description": "Auto Shutdown (ASD) Relay Control Circuit Open Or Shorted"
+    },
+    {
+      "code": "P1389",
+      "scope": "manufacturer",
+      "description": "No Auto Shutdown (ASD) Relay Output Voltage At PCM"
+    },
+    {
+      "code": "P1390",
+      "scope": "manufacturer",
+      "description": "Timing Belt Skipped One Tooth Or More"
+    },
+    {
+      "code": "P1391",
+      "scope": "manufacturer",
+      "description": "Intermittent Loss of CMP Or CKP"
+    },
+    {
+      "code": "P1398",
+      "scope": "manufacturer",
+      "description": "PCM Is Unable To Learn The Crankshaft Position Sensor's Signal"
+    },
+    {
+      "code": "P1399",
+      "scope": "manufacturer",
+      "description": "Wait To Start Lamp Circuit Open Or Shorted"
+    },
+    {
+      "code": "P1403",
+      "scope": "manufacturer",
+      "description": "Loss Of 5 Volts To EGR Sensor"
+    },
+    {
+      "code": "P1475",
+      "scope": "manufacturer",
+      "description": "Auxiliary 5 Volt Output Too High"
+    },
+    {
+      "code": "P1476",
+      "scope": "manufacturer",
+      "description": "Too Little Secondary Air"
+    },
+    {
+      "code": "P1477",
+      "scope": "manufacturer",
+      "description": "Too Much Secondary Air"
+    },
+    {
+      "code": "P1478",
+      "scope": "manufacturer",
+      "description": "Battery Temp Sensor Voltage Out Of Limit"
+    },
+    {
+      "code": "P1479",
+      "scope": "manufacturer",
+      "description": "Transmission Fan Relay Circuit Open Or Shorted"
+    },
+    {
+      "code": "P1480",
+      "scope": "manufacturer",
+      "description": "PCV Solenoid Valve Open Or Shorted"
+    },
+    {
+      "code": "P1481",
+      "scope": "manufacturer",
+      "description": "EATX RPM Pulse Generator Signal For Misfire Detection"
+    },
+    {
+      "code": "P1482",
+      "scope": "manufacturer",
+      "description": "Catalyst Temperature Sensor Circuit Shorted Low"
+    },
+    {
+      "code": "P1483",
+      "scope": "manufacturer",
+      "description": "Catalyst Temperature Sensor Circuit Shorted High"
+    },
+    {
+      "code": "P1484",
+      "scope": "manufacturer",
+      "description": "Catalytic Converter Overheat Detected"
+    },
+    {
+      "code": "P1485",
+      "scope": "manufacturer",
+      "description": "Air Injection Solenoid Circuit Open Or Shorted"
+    },
+    {
+      "code": "P1486",
+      "scope": "manufacturer",
+      "description": "Evap Leak Monitor Pinched Hose"
+    },
+    {
+      "code": "P1487",
+      "scope": "manufacturer",
+      "description": "Hi Speed Rad Fan CTRL Relay Circuit Open Or Shorted"
+    },
+    {
+      "code": "P1488",
+      "scope": "manufacturer",
+      "description": "Auxiliary 5 Volt Supply Output Too Low"
+    },
+    {
+      "code": "P1489",
+      "scope": "manufacturer",
+      "description": "High Speed Fan CTRL Relay Circuit Open Or Shorted"
+    },
+    {
+      "code": "P1490",
+      "scope": "manufacturer",
+      "description": "Low Speed Fan CTRL Relay Circuit Open Or Shorted"
+    },
+    {
+      "code": "P1491",
+      "scope": "manufacturer",
+      "description": "Radiator Fan Control Relay Circuit Open Or Shorted"
+    },
+    {
+      "code": "P1492",
+      "scope": "manufacturer",
+      "description": "Battery Temperature Sensor Voltage Too High"
+    },
+    {
+      "code": "P1493",
+      "scope": "manufacturer",
+      "description": "Battery Temperature Sensor Voltage Too Low"
+    },
+    {
+      "code": "P1494",
+      "scope": "manufacturer",
+      "description": "Leak Detection Pump Switch Or Mechanical Fault"
+    },
+    {
+      "code": "P1495",
+      "scope": "manufacturer",
+      "description": "Leak Detection Pump Solenoid Circuit Open Or Shorted"
+    },
+    {
+      "code": "P1496",
+      "scope": "manufacturer",
+      "description": "5 Volt Supply Output Too Low"
+    },
+    {
+      "code": "P1498",
+      "scope": "manufacturer",
+      "description": "High Speed Rad Fan Ground CTRL Rly Circuit"
+    },
+    {
+      "code": "P1499",
+      "scope": "manufacturer",
+      "description": "Open Or Shorted Condition Detected In The Hydraulic Cooling Fan Solenoid Control"
+    },
+    {
+      "code": "P1594",
+      "scope": "manufacturer",
+      "description": "Charging System Voltage Too High"
+    },
+    {
+      "code": "P1595",
+      "scope": "manufacturer",
+      "description": "Speed Control Solenoid Circuit Open Or Shorted"
+    },
+    {
+      "code": "P1596",
+      "scope": "manufacturer",
+      "description": "Speed Control Switch Always High"
+    },
+    {
+      "code": "P1597",
+      "scope": "manufacturer",
+      "description": "Speed Control Switch Always Low"
+    },
+    {
+      "code": "P1598",
+      "scope": "manufacturer",
+      "description": "A/C Pressure Sensor Voltage Too High"
+    },
+    {
+      "code": "P1599",
+      "scope": "manufacturer",
+      "description": "A/C Pressure Sensor Voltage Too Low"
+    },
+    {
+      "code": "P1602",
+      "scope": "manufacturer",
+      "description": "PCM Not Programmed"
+    },
+    {
+      "code": "P1680",
+      "scope": "manufacturer",
+      "description": "Clutch Released Switch Circuit Open Or Shorted"
+    },
+    {
+      "code": "P1681",
+      "scope": "manufacturer",
+      "description": "No Instrument Panel Cluster CCD/J1850 Messages Received"
+    },
+    {
+      "code": "P1682",
+      "scope": "manufacturer",
+      "description": "Charging System Voltage Too Low"
+    },
+    {
+      "code": "P1683",
+      "scope": "manufacturer",
+      "description": "Speed Control Power Relay Or Speed Control 12 Volt Driver Circuit Open Or Shorted"
+    },
+    {
+      "code": "P1684",
+      "scope": "manufacturer",
+      "description": "Battery Disconnected Within Last 50 Starts"
+    },
+    {
+      "code": "P1685",
+      "scope": "manufacturer",
+      "description": "Skim Invalid Key"
+    },
+    {
+      "code": "P1686",
+      "scope": "manufacturer",
+      "description": "No SKIM Bus Message Received"
+    },
+    {
+      "code": "P1687",
+      "scope": "manufacturer",
+      "description": "No Cluster Bus Message"
+    },
+    {
+      "code": "P1688",
+      "scope": "manufacturer",
+      "description": "Internal Fuel Injection Pump Controller Failure"
+    },
+    {
+      "code": "P1689",
+      "scope": "manufacturer",
+      "description": "No Communication Between ECM & Injection Pump Module"
+    },
+    {
+      "code": "P1690",
+      "scope": "manufacturer",
+      "description": "Fuel Injection Pump CKP Sensor Does Not Agree With ECM CKP Sensor"
+    },
+    {
+      "code": "P1691",
+      "scope": "manufacturer",
+      "description": "Fuel Injection Pump Controller Calibration Failure"
+    },
+    {
+      "code": "P1693",
+      "scope": "manufacturer",
+      "description": "DTC Detected In ECM Or PCM"
+    },
+    {
+      "code": "P1694",
+      "scope": "manufacturer",
+      "description": "No CCD Messages Received From ECM"
+    },
+    {
+      "code": "P1695",
+      "scope": "manufacturer",
+      "description": "No CCD/J1850 Message From BCM"
+    },
+    {
+      "code": "P1696",
+      "scope": "manufacturer",
+      "description": "PCM Failure EEPROM Write Denied"
+    },
+    {
+      "code": "P1697",
+      "scope": "manufacturer",
+      "description": "PCM Failure SRI Mile Not Stored"
+    },
+    {
+      "code": "P1698",
+      "scope": "manufacturer",
+      "description": "No CCD Messages Received From PCM"
+    },
+    {
+      "code": "P1699",
+      "scope": "manufacturer",
+      "description": "No CCD/J1850 Messages Received From The Climate Control Module (CCM)"
+    },
+    {
+      "code": "P1719",
+      "scope": "manufacturer",
+      "description": "Skip Shift Solenoid Circuit Open Or Shorted"
+    },
+    {
+      "code": "P1740",
+      "scope": "manufacturer",
+      "description": "TCC Or OD Solenoid Performance"
+    },
+    {
+      "code": "P1756",
+      "scope": "manufacturer",
+      "description": "Governor Pressure Not Equal To Target At 15-20 PSI"
+    },
+    {
+      "code": "P1757",
+      "scope": "manufacturer",
+      "description": "Governor Pressure Above 3 PSI When Request Is 0 PSI"
+    },
+    {
+      "code": "P1762",
+      "scope": "manufacturer",
+      "description": "Governor Pressure Sensor Offset Improper Voltage"
+    },
+    {
+      "code": "P1763",
+      "scope": "manufacturer",
+      "description": "Governor Pressure Sensor Voltage Too High"
+    },
+    {
+      "code": "P1764",
+      "scope": "manufacturer",
+      "description": "Governor Pressure Sensor Voltage Too Low"
+    },
+    {
+      "code": "P1765",
+      "scope": "manufacturer",
+      "description": "Trans 12 Volt Supply Relay Control Circuit Open Or Shorted"
+    },
+    {
+      "code": "P1830",
+      "scope": "manufacturer",
+      "description": "Open Or Shorted Condition Detected In The Clutch Pedal Switch Override Relay Control"
+    },
+    {
+      "code": "P1899",
+      "scope": "manufacturer",
+      "description": "Park Neutral Position Switch Stuck In Park Or In Gear"
+    }
+  ]
+}

@@ -1,0 +1,829 @@
+{
+  "id": "jaguar-dtc",
+  "meta": {
+    "make": "Jaguar",
+    "model": "OBD-II codes",
+    "author": "abrahdev",
+    "version": "1.0.0",
+    "sources": [
+      "https://github.com/Wal33D/dtc-database (MIT)"
+    ]
+  },
+  "obd_dtc_definitions": [
+    {
+      "code": "P1000",
+      "scope": "manufacturer",
+      "description": "OBD Systems Readiness Test Not Complete"
+    },
+    {
+      "code": "P1104",
+      "scope": "manufacturer",
+      "description": "Mass Air Flow Sensor Circuit Ground"
+    },
+    {
+      "code": "P1111",
+      "scope": "manufacturer",
+      "description": "System Pass"
+    },
+    {
+      "code": "P1121",
+      "scope": "manufacturer",
+      "description": "Pedal Position Sensor A Circuit Range Performance"
+    },
+    {
+      "code": "P1122",
+      "scope": "manufacturer",
+      "description": "Pedal Position Sensor A Circuit Low Input"
+    },
+    {
+      "code": "P1123",
+      "scope": "manufacturer",
+      "description": "Pedal Position Sensor A Circuit High Input"
+    },
+    {
+      "code": "P1136",
+      "scope": "manufacturer",
+      "description": "Control Box Fan Circuit"
+    },
+    {
+      "code": "P1137",
+      "scope": "manufacturer",
+      "description": "Lack Of HO2S12 Switches Sensor Indicates Lean"
+    },
+    {
+      "code": "P1138",
+      "scope": "manufacturer",
+      "description": "Lack Of HO2S12 Switches Sensor Indicates Rich"
+    },
+    {
+      "code": "P1143",
+      "scope": "manufacturer",
+      "description": "Air Assisted Injector Control Valve Range Performance"
+    },
+    {
+      "code": "P1144",
+      "scope": "manufacturer",
+      "description": "Air Assisted Injector Control Valve Circuit"
+    },
+    {
+      "code": "P1157",
+      "scope": "manufacturer",
+      "description": "Lack Of HO2S22 Switches Sensor Indicates Lean"
+    },
+    {
+      "code": "P1158",
+      "scope": "manufacturer",
+      "description": "Lack Of HO2S22 Switches Sensor Indicates Rich"
+    },
+    {
+      "code": "P1171",
+      "scope": "manufacturer",
+      "description": "System Too Lean Banks 1 And 2 (Lean Fuel Fault)"
+    },
+    {
+      "code": "P1172",
+      "scope": "manufacturer",
+      "description": "System Too Rich Banks 1 And 2 (Rich Fuel Fault)"
+    },
+    {
+      "code": "P1174",
+      "scope": "manufacturer",
+      "description": "System Too Lean Banks 1 And 2 (Suspect HO2S)"
+    },
+    {
+      "code": "P1175",
+      "scope": "manufacturer",
+      "description": "System Too Rich Banks 1 And 2 (Suspect HO2S)"
+    },
+    {
+      "code": "P1176",
+      "scope": "manufacturer",
+      "description": "Long Term Fuel Trim Too Lean Banks 1 And 2 (FMFR)"
+    },
+    {
+      "code": "P1177",
+      "scope": "manufacturer",
+      "description": "Long Term Fuel Trim Too Rich Banks 1 And 2 (FMFR)"
+    },
+    {
+      "code": "P1178",
+      "scope": "manufacturer",
+      "description": "Long Term Fuel Trim Too Lean Banks 1 And 2 (AMFR)"
+    },
+    {
+      "code": "P1179",
+      "scope": "manufacturer",
+      "description": "Long Term Fuel Trim Too Rich Banks 1 And 2 (AMFR)"
+    },
+    {
+      "code": "P1185",
+      "scope": "manufacturer",
+      "description": "O2 Sensor Heater Circuit Open, Hardware Fault"
+    },
+    {
+      "code": "P1186",
+      "scope": "manufacturer",
+      "description": "O2 Sensor Heater Circuit Shorted, Hardware Fault"
+    },
+    {
+      "code": "P1187",
+      "scope": "manufacturer",
+      "description": "O2 Sensor Heater Circuit Open, Inferred Fault"
+    },
+    {
+      "code": "P1188",
+      "scope": "manufacturer",
+      "description": "O2 Sensor Heater Circuit Resistance"
+    },
+    {
+      "code": "P1189",
+      "scope": "manufacturer",
+      "description": "O2 Sensor Heater Circuit Low Resistance Fault 1"
+    },
+    {
+      "code": "P1190",
+      "scope": "manufacturer",
+      "description": "O2 Sensor Heater Circuit Low Resistance Fault 2"
+    },
+    {
+      "code": "P1191",
+      "scope": "manufacturer",
+      "description": "O2 Sensor Heater Circuit Open, HArdware Fault"
+    },
+    {
+      "code": "P1192",
+      "scope": "manufacturer",
+      "description": "O2 Sensor Heater Circuit Shorted"
+    },
+    {
+      "code": "P1193",
+      "scope": "manufacturer",
+      "description": "O2 Sensor Heater Circuit Open, Inferred Fault"
+    },
+    {
+      "code": "P1194",
+      "scope": "manufacturer",
+      "description": "O2 Sensor Heater Circuit Resistance Fault"
+    },
+    {
+      "code": "P1195",
+      "scope": "manufacturer",
+      "description": "O2 Sensor Heater Circuit Low Resistance Fault 1"
+    },
+    {
+      "code": "P1196",
+      "scope": "manufacturer",
+      "description": "O2 Sensor Heater Circuit Low Resistance Fault 2"
+    },
+    {
+      "code": "P1198",
+      "scope": "manufacturer",
+      "description": "Fuel Level Input Circuit High"
+    },
+    {
+      "code": "P1199",
+      "scope": "manufacturer",
+      "description": "Fuel Level Input Circuit Low"
+    },
+    {
+      "code": "P1201",
+      "scope": "manufacturer",
+      "description": "Cylinder 1 Injector Circuit Open/Shorted"
+    },
+    {
+      "code": "P1202",
+      "scope": "manufacturer",
+      "description": "Cylinder 2 Injector Circuit Open/Shorted"
+    },
+    {
+      "code": "P1203",
+      "scope": "manufacturer",
+      "description": "Cylinder 3 Injector Circuit Open/Shorted"
+    },
+    {
+      "code": "P1204",
+      "scope": "manufacturer",
+      "description": "Cylinder 4 Injector Circuit Open/Shorted"
+    },
+    {
+      "code": "P1205",
+      "scope": "manufacturer",
+      "description": "Cylinder 5 Injector Circuit Open/Shorted"
+    },
+    {
+      "code": "P1206",
+      "scope": "manufacturer",
+      "description": "Cylinder 6 Injector Circuit Open/Shorted"
+    },
+    {
+      "code": "P1207",
+      "scope": "manufacturer",
+      "description": "Cylinder 7 Injector Circuit Open/Shorted"
+    },
+    {
+      "code": "P1208",
+      "scope": "manufacturer",
+      "description": "Cylinder 8 Injector Circuit Open/Shorted"
+    },
+    {
+      "code": "P1221",
+      "scope": "manufacturer",
+      "description": "Pedal Demand Sensor B Circuit Range Performance"
+    },
+    {
+      "code": "P1224",
+      "scope": "manufacturer",
+      "description": "Electronic Throttle Control Position Error"
+    },
+    {
+      "code": "P1226",
+      "scope": "manufacturer",
+      "description": "Mechanical Guard Circuit Range Performance"
+    },
+    {
+      "code": "P1227",
+      "scope": "manufacturer",
+      "description": "Mechanical Guard Circuit Low Input"
+    },
+    {
+      "code": "P1228",
+      "scope": "manufacturer",
+      "description": "Mechanical Guard Circuit High Input"
+    },
+    {
+      "code": "P1229",
+      "scope": "manufacturer",
+      "description": "Electronic Throttle Control Circuit"
+    },
+    {
+      "code": "P1230",
+      "scope": "manufacturer",
+      "description": "Fuel Pump Relay"
+    },
+    {
+      "code": "P1235",
+      "scope": "manufacturer",
+      "description": "VSV 1/2/3 Circuit Range Performance"
+    },
+    {
+      "code": "P1236",
+      "scope": "manufacturer",
+      "description": "VSV 1 Circuit"
+    },
+    {
+      "code": "P1237",
+      "scope": "manufacturer",
+      "description": "VSV 2 Circuit"
+    },
+    {
+      "code": "P1238",
+      "scope": "manufacturer",
+      "description": "VSV 3 Circuit"
+    },
+    {
+      "code": "P1240",
+      "scope": "manufacturer",
+      "description": "Sensor Power Supply"
+    },
+    {
+      "code": "P1241",
+      "scope": "manufacturer",
+      "description": "Sensor Power Supply Low Input"
+    },
+    {
+      "code": "P1242",
+      "scope": "manufacturer",
+      "description": "Sensor Power Supply High Input"
+    },
+    {
+      "code": "P1243",
+      "scope": "manufacturer",
+      "description": "Analog Ground"
+    },
+    {
+      "code": "P1245",
+      "scope": "manufacturer",
+      "description": "Crank Signal Low Input"
+    },
+    {
+      "code": "P1246",
+      "scope": "manufacturer",
+      "description": "Crank Signal High Input"
+    },
+    {
+      "code": "P1250",
+      "scope": "manufacturer",
+      "description": "Throttle Valve Spring"
+    },
+    {
+      "code": "P1251",
+      "scope": "manufacturer",
+      "description": "Throttle Position"
+    },
+    {
+      "code": "P1252",
+      "scope": "manufacturer",
+      "description": "VSV Stuck On VA/VV"
+    },
+    {
+      "code": "P1253",
+      "scope": "manufacturer",
+      "description": "VSV Stuck On VR"
+    },
+    {
+      "code": "P1260",
+      "scope": "manufacturer",
+      "description": "Theft Detected Vehicle Immobilized"
+    },
+    {
+      "code": "P1313",
+      "scope": "manufacturer",
+      "description": "Misfire Rate Catalyst Damage Fault Bank 1"
+    },
+    {
+      "code": "P1314",
+      "scope": "manufacturer",
+      "description": "Misfire Rate Catalyst Damage Fault Bank 2"
+    },
+    {
+      "code": "P1315",
+      "scope": "manufacturer",
+      "description": "Persistent Misfire"
+    },
+    {
+      "code": "P1316",
+      "scope": "manufacturer",
+      "description": "Misfire Rate Exceeds Emissions"
+    },
+    {
+      "code": "P1336",
+      "scope": "manufacturer",
+      "description": "Crankshaft Camshaft Sensor Range Performance"
+    },
+    {
+      "code": "P1340",
+      "scope": "manufacturer",
+      "description": "Camshaft Position Sensor B Circuit"
+    },
+    {
+      "code": "P1341",
+      "scope": "manufacturer",
+      "description": "Camshaft Position Sensor B Circuit Range Performance"
+    },
+    {
+      "code": "P1361",
+      "scope": "manufacturer",
+      "description": "Ignition Coil Cylinder 1 No Activation"
+    },
+    {
+      "code": "P1362",
+      "scope": "manufacturer",
+      "description": "Ignition Coil Cylinder 2 No Activation"
+    },
+    {
+      "code": "P1363",
+      "scope": "manufacturer",
+      "description": "Ignition Coil Cylinder 3 No Activation"
+    },
+    {
+      "code": "P1364",
+      "scope": "manufacturer",
+      "description": "Ignition Coil Cylinder 4 No Activation"
+    },
+    {
+      "code": "P1365",
+      "scope": "manufacturer",
+      "description": "Ignition Coil Cylinder 5 No Activation"
+    },
+    {
+      "code": "P1366",
+      "scope": "manufacturer",
+      "description": "Ignition Coil Cylinder 6 No Activation"
+    },
+    {
+      "code": "P1367",
+      "scope": "manufacturer",
+      "description": "Ignition System Failure Group 1"
+    },
+    {
+      "code": "P1368",
+      "scope": "manufacturer",
+      "description": "Ignition System Failure Group 2"
+    },
+    {
+      "code": "P1370",
+      "scope": "manufacturer",
+      "description": "Insufficient RPM Increase During Spark Test"
+    },
+    {
+      "code": "P1371",
+      "scope": "manufacturer",
+      "description": "Ignition Coil Cylinder 1 Early Activation Fault"
+    },
+    {
+      "code": "P1372",
+      "scope": "manufacturer",
+      "description": "Ignition Coil Cylinder 2 Early Activation Fault"
+    },
+    {
+      "code": "P1373",
+      "scope": "manufacturer",
+      "description": "Ignition Coil Cylinder 3 Early Activation Fault"
+    },
+    {
+      "code": "P1374",
+      "scope": "manufacturer",
+      "description": "Ignition Coil Cylinder 4 Early Activation Fault"
+    },
+    {
+      "code": "P1375",
+      "scope": "manufacturer",
+      "description": "Ignition Coil Cylinder 5 Early Activation Fault"
+    },
+    {
+      "code": "P1376",
+      "scope": "manufacturer",
+      "description": "Ignition Coil Cylinder 6 Early Activation Fault"
+    },
+    {
+      "code": "P1384",
+      "scope": "manufacturer",
+      "description": "Variable Valve Timing Solenoid A Circuit"
+    },
+    {
+      "code": "P1392",
+      "scope": "manufacturer",
+      "description": "Variable Valve Timing Solenoid A Circuit Low Input"
+    },
+    {
+      "code": "P1393",
+      "scope": "manufacturer",
+      "description": "Variable Valve Timing Solenoid A Circuit High Input"
+    },
+    {
+      "code": "P1396",
+      "scope": "manufacturer",
+      "description": "Variable Valve Timing Solenoid B Circuit"
+    },
+    {
+      "code": "P1397",
+      "scope": "manufacturer",
+      "description": "Variable Valve Timing Solenoid B Circuit Low Input"
+    },
+    {
+      "code": "P1398",
+      "scope": "manufacturer",
+      "description": "Variable Valve Timing Solenoid B Circuit High Input"
+    },
+    {
+      "code": "P1400",
+      "scope": "manufacturer",
+      "description": "Exhaust Gas Recirculation Valve Postion Control"
+    },
+    {
+      "code": "P1401",
+      "scope": "manufacturer",
+      "description": "Exhaust Gas Recirculation Valve Postion Circuit"
+    },
+    {
+      "code": "P1408",
+      "scope": "manufacturer",
+      "description": "Exhaust Gas Recirculation Thermister"
+    },
+    {
+      "code": "P1409",
+      "scope": "manufacturer",
+      "description": "Exhaust Gas Recirculation Valve Circuit"
+    },
+    {
+      "code": "P1440",
+      "scope": "manufacturer",
+      "description": "Purge Valve Stuck Open"
+    },
+    {
+      "code": "P1441",
+      "scope": "manufacturer",
+      "description": "ELC System 1"
+    },
+    {
+      "code": "P1447",
+      "scope": "manufacturer",
+      "description": "ELC System Closure Valve Flow"
+    },
+    {
+      "code": "P1448",
+      "scope": "manufacturer",
+      "description": "ELC System 2"
+    },
+    {
+      "code": "P1453",
+      "scope": "manufacturer",
+      "description": "Fuel Tank Pressure Relief Valve Malfunction"
+    },
+    {
+      "code": "P1454",
+      "scope": "manufacturer",
+      "description": "Evaporative Emission Control System Vacuum Test"
+    },
+    {
+      "code": "P1475",
+      "scope": "manufacturer",
+      "description": "Fan Relay Low Circuit"
+    },
+    {
+      "code": "P1476",
+      "scope": "manufacturer",
+      "description": "Fan Relay High Circuit"
+    },
+    {
+      "code": "P1508",
+      "scope": "manufacturer",
+      "description": "Idle Air Control Circuit Open"
+    },
+    {
+      "code": "P1509",
+      "scope": "manufacturer",
+      "description": "Idle Air Control Circuit Shorted"
+    },
+    {
+      "code": "P1514",
+      "scope": "manufacturer",
+      "description": "High Load Neutral Drive Fault"
+    },
+    {
+      "code": "P1516",
+      "scope": "manufacturer",
+      "description": "Gear Change Neutral Drive Fault"
+    },
+    {
+      "code": "P1517",
+      "scope": "manufacturer",
+      "description": "Cranking Neutral Drive Fault"
+    },
+    {
+      "code": "P1534",
+      "scope": "manufacturer",
+      "description": "Restraint Deployment Indicator Circuit"
+    },
+    {
+      "code": "P1565",
+      "scope": "manufacturer",
+      "description": "Speed Control Command Switch Out Of Range High"
+    },
+    {
+      "code": "P1566",
+      "scope": "manufacturer",
+      "description": "Speed Control Command Switch Out Range Low"
+    },
+    {
+      "code": "P1567",
+      "scope": "manufacturer",
+      "description": "Speed Control Output Circuit"
+    },
+    {
+      "code": "P1568",
+      "scope": "manufacturer",
+      "description": "Speed Control Unable To Hold Speed"
+    },
+    {
+      "code": "P1571",
+      "scope": "manufacturer",
+      "description": "Brake Switch"
+    },
+    {
+      "code": "P1582",
+      "scope": "manufacturer",
+      "description": "Electronic Throttle Monitor Data Available"
+    },
+    {
+      "code": "P1600",
+      "scope": "manufacturer",
+      "description": "Loss Of Kam Power Circuit Open"
+    },
+    {
+      "code": "P1603",
+      "scope": "manufacturer",
+      "description": "EEPROM Malfunction"
+    },
+    {
+      "code": "P1605",
+      "scope": "manufacturer",
+      "description": "Keep Alive Memory Test Failure"
+    },
+    {
+      "code": "P1606",
+      "scope": "manufacturer",
+      "description": "ECM Control Relay Output Circuit"
+    },
+    {
+      "code": "P1607",
+      "scope": "manufacturer",
+      "description": "MIL Output Circuit"
+    },
+    {
+      "code": "P1608",
+      "scope": "manufacturer",
+      "description": "Watchdog Malfunction"
+    },
+    {
+      "code": "P1609",
+      "scope": "manufacturer",
+      "description": "Internal Control Module CPU To CPU Communication Failure"
+    },
+    {
+      "code": "P1611",
+      "scope": "manufacturer",
+      "description": "Throttle Target Malfunction 1"
+    },
+    {
+      "code": "P1612",
+      "scope": "manufacturer",
+      "description": "Throttle Offset Malfunction"
+    },
+    {
+      "code": "P1637",
+      "scope": "manufacturer",
+      "description": "CAN Link ECM ABS Control Module Circuit Network"
+    },
+    {
+      "code": "P1638",
+      "scope": "manufacturer",
+      "description": "CAN Link ECM INSTM Circuit Network"
+    },
+    {
+      "code": "P1641",
+      "scope": "manufacturer",
+      "description": "Fuel Pump Primary Circuit"
+    },
+    {
+      "code": "P1642",
+      "scope": "manufacturer",
+      "description": "CAN Link Circuit"
+    },
+    {
+      "code": "P1643",
+      "scope": "manufacturer",
+      "description": "CAN Link Engine Control Module Transmission Control Module Circuit Network"
+    },
+    {
+      "code": "P1646",
+      "scope": "manufacturer",
+      "description": "Linear O2 Sensor Control Chip Bank 1"
+    },
+    {
+      "code": "P1647",
+      "scope": "manufacturer",
+      "description": "Linear O2 Sensor Control Chip Bank 2"
+    },
+    {
+      "code": "P1648",
+      "scope": "manufacturer",
+      "description": "Knock Sensor Input Chip"
+    },
+    {
+      "code": "P1696",
+      "scope": "manufacturer",
+      "description": "CAN Link Engine Control Module Cruise Control Module Circuit Network"
+    },
+    {
+      "code": "P1697",
+      "scope": "manufacturer",
+      "description": "Cruise Control Distance Control Input Circuit"
+    },
+    {
+      "code": "P1700",
+      "scope": "manufacturer",
+      "description": "Transmission Indeterminate Failure Failed To Neutral"
+    },
+    {
+      "code": "P1720",
+      "scope": "manufacturer",
+      "description": "Vehicle Speed Meter Circuit"
+    },
+    {
+      "code": "P1722",
+      "scope": "manufacturer",
+      "description": "Stall Speed"
+    },
+    {
+      "code": "P1726",
+      "scope": "manufacturer",
+      "description": "Engine Overspeed"
+    },
+    {
+      "code": "P1730",
+      "scope": "manufacturer",
+      "description": "Gear Control Malfunction 2 3 5"
+    },
+    {
+      "code": "P1731",
+      "scope": "manufacturer",
+      "description": "Inconsistent Gear Ratio"
+    },
+    {
+      "code": "P1734",
+      "scope": "manufacturer",
+      "description": "Gear Control Malfunction"
+    },
+    {
+      "code": "P1745",
+      "scope": "manufacturer",
+      "description": "Pressure Regulator 1"
+    },
+    {
+      "code": "P1746",
+      "scope": "manufacturer",
+      "description": "Pressure Regulator 2"
+    },
+    {
+      "code": "P1747",
+      "scope": "manufacturer",
+      "description": "Pressure Regulator 3"
+    },
+    {
+      "code": "P1748",
+      "scope": "manufacturer",
+      "description": "Pressure Regulator 5"
+    },
+    {
+      "code": "P1758",
+      "scope": "manufacturer",
+      "description": "Pressure Solenoid Control System Incorrect Current"
+    },
+    {
+      "code": "P1775",
+      "scope": "manufacturer",
+      "description": "Transmission System MIL Fault"
+    },
+    {
+      "code": "P1776",
+      "scope": "manufacturer",
+      "description": "Ignition Retard Request Duration"
+    },
+    {
+      "code": "P1777",
+      "scope": "manufacturer",
+      "description": "Ignition Retard Request Circuit"
+    },
+    {
+      "code": "P1778",
+      "scope": "manufacturer",
+      "description": "Transmission Reverse IP Circuit"
+    },
+    {
+      "code": "P1779",
+      "scope": "manufacturer",
+      "description": "Load Control"
+    },
+    {
+      "code": "P1789",
+      "scope": "manufacturer",
+      "description": "Ignition Supply Malfunction"
+    },
+    {
+      "code": "P1790",
+      "scope": "manufacturer",
+      "description": "Ignition Supply Malfunction"
+    },
+    {
+      "code": "P1791",
+      "scope": "manufacturer",
+      "description": "Ignition Supply Malfunction"
+    },
+    {
+      "code": "P1792",
+      "scope": "manufacturer",
+      "description": "Ignition Supply Malfunction"
+    },
+    {
+      "code": "P1793",
+      "scope": "manufacturer",
+      "description": "Ignition Supply Malfunction"
+    },
+    {
+      "code": "P1794",
+      "scope": "manufacturer",
+      "description": "Battery Voltage Circuit"
+    },
+    {
+      "code": "P1795",
+      "scope": "manufacturer",
+      "description": "Inconsistent CAN Level"
+    },
+    {
+      "code": "P1796",
+      "scope": "manufacturer",
+      "description": "CAN Controller Circuit Bus Off"
+    },
+    {
+      "code": "P1797",
+      "scope": "manufacturer",
+      "description": "CAN TCM ECM Circuit Malfunction"
+    },
+    {
+      "code": "P1798",
+      "scope": "manufacturer",
+      "description": "CAN TCM INST Circuit Malfunction"
+    }
+  ]
+}

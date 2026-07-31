@@ -1,0 +1,484 @@
+{
+  "id": "infiniti-dtc",
+  "meta": {
+    "make": "Infiniti",
+    "model": "OBD-II codes",
+    "author": "abrahdev",
+    "version": "1.0.0",
+    "sources": [
+      "https://github.com/Wal33D/dtc-database (MIT)"
+    ]
+  },
+  "obd_dtc_definitions": [
+    {
+      "code": "P1106",
+      "scope": "manufacturer",
+      "description": "BARO Circuit Range Performance Malfunction"
+    },
+    {
+      "code": "P1107",
+      "scope": "manufacturer",
+      "description": "BARO Circuit Low Input"
+    },
+    {
+      "code": "P1108",
+      "scope": "manufacturer",
+      "description": "BARO Circuit High Input"
+    },
+    {
+      "code": "P1121",
+      "scope": "manufacturer",
+      "description": "Throttle Position Lower Than Expected"
+    },
+    {
+      "code": "P1122",
+      "scope": "manufacturer",
+      "description": "Throttle Position Higher Than Expected"
+    },
+    {
+      "code": "P1128",
+      "scope": "manufacturer",
+      "description": "MAP Lower Than Expected"
+    },
+    {
+      "code": "P1129",
+      "scope": "manufacturer",
+      "description": "MAP Higher Than Expected"
+    },
+    {
+      "code": "P1162",
+      "scope": "manufacturer",
+      "description": "HO2S11 Circuit Fault Bank 1 Sensor 1"
+    },
+    {
+      "code": "P1163",
+      "scope": "manufacturer",
+      "description": "HO2S11 Slow Response Bank 1 Sensor 1"
+    },
+    {
+      "code": "P1164",
+      "scope": "manufacturer",
+      "description": "HO2S11 Circuit Fault Bank 1 Sensor 1"
+    },
+    {
+      "code": "P1165",
+      "scope": "manufacturer",
+      "description": "HO2S11 Slow Response Bank 1 Sensor 1"
+    },
+    {
+      "code": "P1166",
+      "scope": "manufacturer",
+      "description": "HO2S11 Heater Circuit Fault Bank 1 Sensor 1"
+    },
+    {
+      "code": "P1167",
+      "scope": "manufacturer",
+      "description": "HO2S11 Heater Circuit VS+ Fault Bank 1 Sensor 1"
+    },
+    {
+      "code": "P1168",
+      "scope": "manufacturer",
+      "description": "HO2S11 Label Circuit Low Voltage Fault Bank 1 Sensor 1"
+    },
+    {
+      "code": "P1169",
+      "scope": "manufacturer",
+      "description": "HO2S11 Label Circuit High Voltage Fault Bank 1 Sensor 1"
+    },
+    {
+      "code": "P1201",
+      "scope": "manufacturer",
+      "description": "Cylinder 1 Misfire"
+    },
+    {
+      "code": "P1202",
+      "scope": "manufacturer",
+      "description": "Cylinder 2 Misfire"
+    },
+    {
+      "code": "P1203",
+      "scope": "manufacturer",
+      "description": "Cylinder 3 Misfire"
+    },
+    {
+      "code": "P1204",
+      "scope": "manufacturer",
+      "description": "Cylinder 4 Misfire"
+    },
+    {
+      "code": "P1205",
+      "scope": "manufacturer",
+      "description": "Cylinder 5 Misfire"
+    },
+    {
+      "code": "P1206",
+      "scope": "manufacturer",
+      "description": "Cylinder 6 Misfire"
+    },
+    {
+      "code": "P1241",
+      "scope": "manufacturer",
+      "description": "Throttle Vent Control Motor Circuit 1 Malfunction"
+    },
+    {
+      "code": "P1242",
+      "scope": "manufacturer",
+      "description": "Throttle Vent Control Motor Circuit 2 Malfunction"
+    },
+    {
+      "code": "P1243",
+      "scope": "manufacturer",
+      "description": "Throttle Position Insufficient"
+    },
+    {
+      "code": "P1244",
+      "scope": "manufacturer",
+      "description": "Closed Throttle Position Insufficient"
+    },
+    {
+      "code": "P1246",
+      "scope": "manufacturer",
+      "description": "Accelerator Position Sensor 1 Circuit Malfunction"
+    },
+    {
+      "code": "P1247",
+      "scope": "manufacturer",
+      "description": "Accelerator Position Sensor 2 Circuit Malfunction"
+    },
+    {
+      "code": "P1248",
+      "scope": "manufacturer",
+      "description": "Accelerator Position Sensors 1 & 2 Improper Correlation"
+    },
+    {
+      "code": "P1253",
+      "scope": "manufacturer",
+      "description": "VTEC System Circuit Fault"
+    },
+    {
+      "code": "P1259",
+      "scope": "manufacturer",
+      "description": "VTEC System Malfunction Rear Bank 1"
+    },
+    {
+      "code": "P1279",
+      "scope": "manufacturer",
+      "description": "VTEC System Malfunction Front Bank 2"
+    },
+    {
+      "code": "P1297",
+      "scope": "manufacturer",
+      "description": "ELD Circuit Low Input"
+    },
+    {
+      "code": "P1298",
+      "scope": "manufacturer",
+      "description": "Electrical Load Detector Circuit High Voltage"
+    },
+    {
+      "code": "P1300",
+      "scope": "manufacturer",
+      "description": "Random Misfire"
+    },
+    {
+      "code": "P1301",
+      "scope": "manufacturer",
+      "description": "Cylinder 1 Misfire"
+    },
+    {
+      "code": "P1302",
+      "scope": "manufacturer",
+      "description": "Cylinder 2 Misfire"
+    },
+    {
+      "code": "P1303",
+      "scope": "manufacturer",
+      "description": "Cylinder 3 Misfire"
+    },
+    {
+      "code": "P1304",
+      "scope": "manufacturer",
+      "description": "Cylinder 4 Misfire"
+    },
+    {
+      "code": "P1305",
+      "scope": "manufacturer",
+      "description": "Cylinder 5 Misfire"
+    },
+    {
+      "code": "P1306",
+      "scope": "manufacturer",
+      "description": "Cylinder 6 Misfire"
+    },
+    {
+      "code": "P1316",
+      "scope": "manufacturer",
+      "description": "Spark Plug Voltage Detection Circuit Malfunction Front Bank"
+    },
+    {
+      "code": "P1317",
+      "scope": "manufacturer",
+      "description": "Spark Plug Voltage Detection Circuit Malfunction Rear Bank"
+    },
+    {
+      "code": "P1318",
+      "scope": "manufacturer",
+      "description": "Spark Plug Voltage Detection Module Reset Circuit Malfunction Front Bank"
+    },
+    {
+      "code": "P1319",
+      "scope": "manufacturer",
+      "description": "Spark Plug Voltage Detection Module Reset Circuit Malfunction Rear Bank"
+    },
+    {
+      "code": "P1324",
+      "scope": "manufacturer",
+      "description": "Knock Sensor Power Source Circuit Low Voltage"
+    },
+    {
+      "code": "P1336",
+      "scope": "manufacturer",
+      "description": "CKP Sensor B Range Performance"
+    },
+    {
+      "code": "P1337",
+      "scope": "manufacturer",
+      "description": "CKP Sensor B Low Input"
+    },
+    {
+      "code": "P1359",
+      "scope": "manufacturer",
+      "description": "CKP TDC Sensor Circuit Connector Disconnection"
+    },
+    {
+      "code": "P1361",
+      "scope": "manufacturer",
+      "description": "TDC Sensor Intermittent Interruption"
+    },
+    {
+      "code": "P1362",
+      "scope": "manufacturer",
+      "description": "TDC1 Sensor No Signal"
+    },
+    {
+      "code": "P1366",
+      "scope": "manufacturer",
+      "description": "TDC2 Sensor Intermittent"
+    },
+    {
+      "code": "P1367",
+      "scope": "manufacturer",
+      "description": "TDC2 Sensor No Signal"
+    },
+    {
+      "code": "P1381",
+      "scope": "manufacturer",
+      "description": "CYP Sensor A Intermittent Interruption"
+    },
+    {
+      "code": "P1382",
+      "scope": "manufacturer",
+      "description": "CYP Sensor A No Signal"
+    },
+    {
+      "code": "P1386",
+      "scope": "manufacturer",
+      "description": "CYP Sensor B Intermittent Interruption"
+    },
+    {
+      "code": "P1387",
+      "scope": "manufacturer",
+      "description": "CYP Sensor B No Signal"
+    },
+    {
+      "code": "P1456",
+      "scope": "manufacturer",
+      "description": "Evaporative Emission Control System Leak Detected Fuel Tank System"
+    },
+    {
+      "code": "P1457",
+      "scope": "manufacturer",
+      "description": "Evaporative Emission Control System Leak Detected Control Canister System"
+    },
+    {
+      "code": "P1459",
+      "scope": "manufacturer",
+      "description": "EVAP Purge Flow Switch Malfunction"
+    },
+    {
+      "code": "P1491",
+      "scope": "manufacturer",
+      "description": "EGR Valve Lift Insufficient Detected"
+    },
+    {
+      "code": "P1498",
+      "scope": "manufacturer",
+      "description": "EGR Valve Lift Sensor High Voltage"
+    },
+    {
+      "code": "P1508",
+      "scope": "manufacturer",
+      "description": "IAC Valve Circuit Failure"
+    },
+    {
+      "code": "P1519",
+      "scope": "manufacturer",
+      "description": "IAC Valve Circuit Failure"
+    },
+    {
+      "code": "P1607",
+      "scope": "manufacturer",
+      "description": "ECM Internal Circuit Failure A"
+    },
+    {
+      "code": "P1608",
+      "scope": "manufacturer",
+      "description": "ECM Internal Circuit Failure B"
+    },
+    {
+      "code": "P1655",
+      "scope": "manufacturer",
+      "description": "TMA or TMB Signal Line Fault"
+    },
+    {
+      "code": "P1656",
+      "scope": "manufacturer",
+      "description": "Automatic Transmission System Malfunction"
+    },
+    {
+      "code": "P1660",
+      "scope": "manufacturer",
+      "description": "A/T FI Data Line Failure"
+    },
+    {
+      "code": "P1671",
+      "scope": "manufacturer",
+      "description": "A/T FI Data Line No Signal"
+    },
+    {
+      "code": "P1672",
+      "scope": "manufacturer",
+      "description": "A/T FI Data Line Failure"
+    },
+    {
+      "code": "P1676",
+      "scope": "manufacturer",
+      "description": "Traction Control System FI Data Line No Signal"
+    },
+    {
+      "code": "P1677",
+      "scope": "manufacturer",
+      "description": "Traction Control System FI Data Line Failure"
+    },
+    {
+      "code": "P1678",
+      "scope": "manufacturer",
+      "description": "FPTDR Signal Line Failure"
+    },
+    {
+      "code": "P1681",
+      "scope": "manufacturer",
+      "description": "A/T FI Signal A Low Input"
+    },
+    {
+      "code": "P1682",
+      "scope": "manufacturer",
+      "description": "A/T FI Signal A High Input"
+    },
+    {
+      "code": "P1686",
+      "scope": "manufacturer",
+      "description": "A/T FI Signal B Low Input"
+    },
+    {
+      "code": "P1687",
+      "scope": "manufacturer",
+      "description": "A/T FI Signal B High Input"
+    },
+    {
+      "code": "P1690",
+      "scope": "manufacturer",
+      "description": "Traction Control System STB Line Failure"
+    },
+    {
+      "code": "P1696",
+      "scope": "manufacturer",
+      "description": "Traction Control Fuel Cut Signal Low Input"
+    },
+    {
+      "code": "P1697",
+      "scope": "manufacturer",
+      "description": "Traction Control Fuel Cut Signal High Input"
+    },
+    {
+      "code": "P1705",
+      "scope": "manufacturer",
+      "description": "TCM A/T Gear Position Switch Circuit Shorted"
+    },
+    {
+      "code": "P1706",
+      "scope": "manufacturer",
+      "description": "TCM A/T Gear Position Switch Circuit Open"
+    },
+    {
+      "code": "P1753",
+      "scope": "manufacturer",
+      "description": "TCM A/T Lockup Solenoid Valve \"A\" Fault"
+    },
+    {
+      "code": "P1758",
+      "scope": "manufacturer",
+      "description": "TCM A/T Lockup Solenoid Valve \"B\" Fault"
+    },
+    {
+      "code": "P1790",
+      "scope": "manufacturer",
+      "description": "TCM A/T TP Sensor Circuit Fault"
+    },
+    {
+      "code": "P1791",
+      "scope": "manufacturer",
+      "description": "TCM A/T Vehicle Speed Sensor Circuit Fault"
+    },
+    {
+      "code": "P1709",
+      "scope": "manufacturer",
+      "description": "Automatic Transmission System Malfunction"
+    },
+    {
+      "code": "P1738",
+      "scope": "manufacturer",
+      "description": "Automatic Transmission System Malfunction"
+    },
+    {
+      "code": "P1739",
+      "scope": "manufacturer",
+      "description": "Automatic Transmission System Malfunction"
+    },
+    {
+      "code": "P1768",
+      "scope": "manufacturer",
+      "description": "Automatic Transmission System Malfunction"
+    },
+    {
+      "code": "P1773",
+      "scope": "manufacturer",
+      "description": "Automatic Transmission System Malfunction"
+    },
+    {
+      "code": "P1788",
+      "scope": "manufacturer",
+      "description": "Automatic Transmission System Malfunction"
+    },
+    {
+      "code": "P1793",
+      "scope": "manufacturer",
+      "description": "Automatic Transmission System Malfunction"
+    },
+    {
+      "code": "P1795",
+      "scope": "manufacturer",
+      "description": "Automatic Transmission System Malfunction"
+    }
+  ]
+}

@@ -1,0 +1,109 @@
+{
+  "id": "geo-dtc",
+  "meta": {
+    "make": "Geo",
+    "model": "OBD-II codes",
+    "author": "abrahdev",
+    "version": "1.0.0",
+    "sources": [
+      "https://github.com/Wal33D/dtc-database (MIT)"
+    ]
+  },
+  "obd_dtc_definitions": [
+    {
+      "code": "P1250",
+      "scope": "manufacturer",
+      "description": "Early Fuel Evaporation Heater Circuit Fault"
+    },
+    {
+      "code": "P1300",
+      "scope": "manufacturer",
+      "description": "Ignition Coil 1 Primary Feedback Circuit"
+    },
+    {
+      "code": "P1305",
+      "scope": "manufacturer",
+      "description": "Ignition Coil 2 Primary Feedback Circuit"
+    },
+    {
+      "code": "P1310",
+      "scope": "manufacturer",
+      "description": "Ignition Coil 3 Primary Feedback Circuit"
+    },
+    {
+      "code": "P1315",
+      "scope": "manufacturer",
+      "description": "Ignition Coil 4 Primary Feedback Circuit"
+    },
+    {
+      "code": "P1335",
+      "scope": "manufacturer",
+      "description": "Crankshaft Position Sensor Circuit"
+    },
+    {
+      "code": "P1346",
+      "scope": "manufacturer",
+      "description": "Intake Camshaft Position System Performance"
+    },
+    {
+      "code": "P1349",
+      "scope": "manufacturer",
+      "description": "Intake Camshaft Position System"
+    },
+    {
+      "code": "P1408",
+      "scope": "manufacturer",
+      "description": "MAP Sensor Circuit"
+    },
+    {
+      "code": "P1410",
+      "scope": "manufacturer",
+      "description": "Fuel Tank Pressure System Fault"
+    },
+    {
+      "code": "P1450",
+      "scope": "manufacturer",
+      "description": "Barometric Pressure Sensor Circuit Fault"
+    },
+    {
+      "code": "P1451",
+      "scope": "manufacturer",
+      "description": "Barometric Pressure Sensor Performance"
+    },
+    {
+      "code": "P1460",
+      "scope": "manufacturer",
+      "description": "Cooling Fan Control System Fault"
+    },
+    {
+      "code": "P1500",
+      "scope": "manufacturer",
+      "description": "Starter Signal Circuit Fault"
+    },
+    {
+      "code": "P1510",
+      "scope": "manufacturer",
+      "description": "Backup Power Supply Fault"
+    },
+    {
+      "code": "P1520",
+      "scope": "manufacturer",
+      "description": "Stop Lamp Switch Circuit"
+    },
+    {
+      "code": "P1530",
+      "scope": "manufacturer",
+      "description": "Ignition Timing Adjustment Switch Circuit"
+    },
+    {
+      "code": "P1600",
+      "scope": "manufacturer",
+      "description": "PCM Battery Circuit Fault"
+    },
+    {
+      "code": "P1656",
+      "scope": "manufacturer",
+      "description": "Intake CMP Actuator Solenoid Control Circuit"
+    }
+  ]
+}

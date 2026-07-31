@@ -1,0 +1,1429 @@
+{
+  "id": "chrysler-dtc",
+  "meta": {
+    "make": "Chrysler",
+    "model": "OBD-II codes",
+    "author": "abrahdev",
+    "version": "1.0.0",
+    "sources": [
+      "https://github.com/Wal33D/dtc-database (MIT)"
+    ]
+  },
+  "obd_dtc_definitions": [
+    {
+      "code": "P0342",
+      "scope": "manufacturer",
+      "description": "Camshaft Position Sensor A Bank 1 Low Input"
+    },
+    {
+      "code": "P1031",
+      "scope": "manufacturer",
+      "description": "HO2S Heater Current Monitor Control Circuit Sensors 1"
+    },
+    {
+      "code": "P1032",
+      "scope": "manufacturer",
+      "description": "HO2S Heater Warm Up Control Circuit Sensors 1"
+    },
+    {
+      "code": "P1105",
+      "scope": "manufacturer",
+      "description": "Secondary Vacuum Sensor Circuit"
+    },
+    {
+      "code": "P1106",
+      "scope": "manufacturer",
+      "description": "MAP Sensor Circuit Intermittent High Voltage"
+    },
+    {
+      "code": "P1107",
+      "scope": "manufacturer",
+      "description": "MAP Sensor Circuit Intermittent Low Voltage"
+    },
+    {
+      "code": "P1108",
+      "scope": "manufacturer",
+      "description": "BARO To MAP Sensor Circuit Comparison Too High"
+    },
+    {
+      "code": "P1109",
+      "scope": "manufacturer",
+      "description": "Secondary Port Throttle System"
+    },
+    {
+      "code": "P1111",
+      "scope": "manufacturer",
+      "description": "Intake Air Temperature (IAT) Sensor Circuit Intermittent High Voltage"
+    },
+    {
+      "code": "P1112",
+      "scope": "manufacturer",
+      "description": "Intake Air Temperature (IAT) Sensor Circuit Intermittent Low Voltage"
+    },
+    {
+      "code": "P1113",
+      "scope": "manufacturer",
+      "description": "Intake Resonance Switchover Valve Circuit"
+    },
+    {
+      "code": "P1114",
+      "scope": "manufacturer",
+      "description": "Engine Coolant Temperature (ECT) Sensor Circuit Intermittent Low Voltage"
+    },
+    {
+      "code": "P1115",
+      "scope": "manufacturer",
+      "description": "Engine Coolant Temperature (ECT) Sensor Circuit Intermittent High Voltage"
+    },
+    {
+      "code": "P1116",
+      "scope": "manufacturer",
+      "description": "ECT Signal Unstable Or Intermittent"
+    },
+    {
+      "code": "P1117",
+      "scope": "manufacturer",
+      "description": "Engine Coolant Temp Signal Out-Of-Range Low"
+    },
+    {
+      "code": "P1118",
+      "scope": "manufacturer",
+      "description": "Engine Coolant Temp Signal Out-Of Range High"
+    },
+    {
+      "code": "P1119",
+      "scope": "manufacturer",
+      "description": "ECT Signal Out Of Rage With TFT Sensor"
+    },
+    {
+      "code": "P1120",
+      "scope": "manufacturer",
+      "description": "Throttle Position (TP) Sensor 1 Circuit"
+    },
+    {
+      "code": "P1121",
+      "scope": "manufacturer",
+      "description": "TP Sensor Circuit Intermittent High Voltage"
+    },
+    {
+      "code": "P1122",
+      "scope": "manufacturer",
+      "description": "TP Sensor Circuit Intermittent Low Voltage"
+    },
+    {
+      "code": "P1125",
+      "scope": "manufacturer",
+      "description": "Accelerator Pedal Position (APP) System"
+    },
+    {
+      "code": "P1130",
+      "scope": "manufacturer",
+      "description": "HO2S Circuit Low Variance Bank 1 Sensor 1"
+    },
+    {
+      "code": "P1131",
+      "scope": "manufacturer",
+      "description": "HO2S Circuit Low Variance Bank 1 Sensor 2"
+    },
+    {
+      "code": "P1132",
+      "scope": "manufacturer",
+      "description": "H02S Circuit Low Variance Bank 2 Sensor 1"
+    },
+    {
+      "code": "P1133",
+      "scope": "manufacturer",
+      "description": "HO2S Insufficient Switching"
+    },
+    {
+      "code": "P1134",
+      "scope": "manufacturer",
+      "description": "HO2S Transition Time Ratio"
+    },
+    {
+      "code": "P1135",
+      "scope": "manufacturer",
+      "description": "HO2S Lean Average Bank 1 Sensor 1"
+    },
+    {
+      "code": "P1136",
+      "scope": "manufacturer",
+      "description": "HO2S Rich Average Bank 1 Sensor 1"
+    },
+    {
+      "code": "P1137",
+      "scope": "manufacturer",
+      "description": "HO2S Bank 1 Sensor 2 Lean Or Low Voltage"
+    },
+    {
+      "code": "P1138",
+      "scope": "manufacturer",
+      "description": "HO2S Bank 1 Sensor 2 Rich Or High Voltage"
+    },
+    {
+      "code": "P1139",
+      "scope": "manufacturer",
+      "description": "HO2S Insufficient Switching Bank 1 Sensor 2"
+    },
+    {
+      "code": "P1140",
+      "scope": "manufacturer",
+      "description": "HO2S Transition Time Ratio Bank 1 Sensor 2"
+    },
+    {
+      "code": "P1141",
+      "scope": "manufacturer",
+      "description": "HO2S Bank 1 Sensor 2 Average Voltage Level"
+    },
+    {
+      "code": "P1143",
+      "scope": "manufacturer",
+      "description": "HO2S Bank 1 Sensor 3 Lean Or Low Voltage"
+    },
+    {
+      "code": "P1144",
+      "scope": "manufacturer",
+      "description": "HO2S Bank 1 Sensor 3 Rich Or High Voltage"
+    },
+    {
+      "code": "P1145",
+      "scope": "manufacturer",
+      "description": "HO2S Cross Counts Bank 1 Sensor 3"
+    },
+    {
+      "code": "P1153",
+      "scope": "manufacturer",
+      "description": "HO2S Insufficient Switching"
+    },
+    {
+      "code": "P1154",
+      "scope": "manufacturer",
+      "description": "HO2S Transition Time Ratio"
+    },
+    {
+      "code": "P1155",
+      "scope": "manufacturer",
+      "description": "HO2S Lean Average Bank 2 Sensor 1"
+    },
+    {
+      "code": "P1156",
+      "scope": "manufacturer",
+      "description": "HO2S Rich Average Bank 2 Sensor 1"
+    },
+    {
+      "code": "P1157",
+      "scope": "manufacturer",
+      "description": "HO2S Bank 2 Sensor 2 Lean System Or Low Voltage"
+    },
+    {
+      "code": "P1158",
+      "scope": "manufacturer",
+      "description": "HO2S Bank 2 Sensor 2 Rich Or High Voltage"
+    },
+    {
+      "code": "P1159",
+      "scope": "manufacturer",
+      "description": "HO2S Cross Counts Bank 2 Sensor 2"
+    },
+    {
+      "code": "P1161",
+      "scope": "manufacturer",
+      "description": "HO2S Heater Power Stage Circuit Bank 2 Sensor 2"
+    },
+    {
+      "code": "P1163",
+      "scope": "manufacturer",
+      "description": "HO2S Bank 2 Sensor 3 Lean System Or Low Voltage"
+    },
+    {
+      "code": "P1164",
+      "scope": "manufacturer",
+      "description": "HO2S Bank 2 Sensor 3 Rich Or High Voltage"
+    },
+    {
+      "code": "P1165",
+      "scope": "manufacturer",
+      "description": "HO2S Cross Counts Bank 2 Sensor 2"
+    },
+    {
+      "code": "P1170",
+      "scope": "manufacturer",
+      "description": "Bank To Bank Fuel Trim Offset"
+    },
+    {
+      "code": "P1171",
+      "scope": "manufacturer",
+      "description": "Fuel System Lean During Acceleration"
+    },
+    {
+      "code": "P1185",
+      "scope": "manufacturer",
+      "description": "Engine Oil Temperature Circuit"
+    },
+    {
+      "code": "P1186",
+      "scope": "manufacturer",
+      "description": "EOT Circuit Performance"
+    },
+    {
+      "code": "P1187",
+      "scope": "manufacturer",
+      "description": "EOT Sensor Circuit Low Voltage"
+    },
+    {
+      "code": "P1188",
+      "scope": "manufacturer",
+      "description": "EOT Sensor Circuit High Voltage"
+    },
+    {
+      "code": "P1189",
+      "scope": "manufacturer",
+      "description": "Engine Oil Pressure Switch Circuit"
+    },
+    {
+      "code": "P1190",
+      "scope": "manufacturer",
+      "description": "Engine Vacuum Leak"
+    },
+    {
+      "code": "P1191",
+      "scope": "manufacturer",
+      "description": "Intake Air Duct Air Leak"
+    },
+    {
+      "code": "P1200",
+      "scope": "manufacturer",
+      "description": "Injector Control Circuit"
+    },
+    {
+      "code": "P1201",
+      "scope": "manufacturer",
+      "description": "(Alternative Fuel) Gas Mass Sensor Circuit Range/Performance"
+    },
+    {
+      "code": "P1202",
+      "scope": "manufacturer",
+      "description": "(Alternative Fuel) Gas Mass Sensor Circuit Low Frequency"
+    },
+    {
+      "code": "P1203",
+      "scope": "manufacturer",
+      "description": "(Alternative Fuel) Gas Mass Sensor Circuit High Frequency"
+    },
+    {
+      "code": "P1211",
+      "scope": "manufacturer",
+      "description": "Mass Air Flow Circuit Intermittent High"
+    },
+    {
+      "code": "P1212",
+      "scope": "manufacturer",
+      "description": "Mass Air Flow Circuit Intermittent Low"
+    },
+    {
+      "code": "P1214",
+      "scope": "manufacturer",
+      "description": "Injection Pump Timing Offset"
+    },
+    {
+      "code": "P1215",
+      "scope": "manufacturer",
+      "description": "Ground Fault Detection Indicated"
+    },
+    {
+      "code": "P1216",
+      "scope": "manufacturer",
+      "description": "Fuel Solenoid Response Time Too Short"
+    },
+    {
+      "code": "P1217",
+      "scope": "manufacturer",
+      "description": "Fuel Solenoid Response Time Too Long"
+    },
+    {
+      "code": "P1218",
+      "scope": "manufacturer",
+      "description": "Injection Pump Calibration Circuit"
+    },
+    {
+      "code": "P1219",
+      "scope": "manufacturer",
+      "description": "Throttle Position Sensor Reference Voltage"
+    },
+    {
+      "code": "P1220",
+      "scope": "manufacturer",
+      "description": "Throttle Position (TP) Sensor 2 Circuit"
+    },
+    {
+      "code": "P1221",
+      "scope": "manufacturer",
+      "description": "Throttle Position (TP) Sensor 1-2 Correlation"
+    },
+    {
+      "code": "P1222",
+      "scope": "manufacturer",
+      "description": "Injector Control Circuit Intermittent"
+    },
+    {
+      "code": "P1225",
+      "scope": "manufacturer",
+      "description": "Injector Circuit Cylinder 2 Intermittent"
+    },
+    {
+      "code": "P1228",
+      "scope": "manufacturer",
+      "description": "Injector Circuit Cylinder 3 Intermittent"
+    },
+    {
+      "code": "P1231",
+      "scope": "manufacturer",
+      "description": "Injector Circuit Cylinder 4 Intermittent"
+    },
+    {
+      "code": "P1234",
+      "scope": "manufacturer",
+      "description": "Injector Circuit Cylinder 5 Intermittent"
+    },
+    {
+      "code": "P1237",
+      "scope": "manufacturer",
+      "description": "Injector Circuit Cylinder 6 Intermittent"
+    },
+    {
+      "code": "P1240",
+      "scope": "manufacturer",
+      "description": "Injector Circuit Cylinder 7 Intermittent"
+    },
+    {
+      "code": "P1243",
+      "scope": "manufacturer",
+      "description": "Injector Circuit Cylinder 8 Intermittent"
+    },
+    {
+      "code": "P1245",
+      "scope": "manufacturer",
+      "description": "Intake Plenum Switchover Valve"
+    },
+    {
+      "code": "P1250",
+      "scope": "manufacturer",
+      "description": "Early Fuel Evaporation Heater Circuit"
+    },
+    {
+      "code": "P1257",
+      "scope": "manufacturer",
+      "description": "Supercharger System Overboost"
+    },
+    {
+      "code": "P1258",
+      "scope": "manufacturer",
+      "description": "Engine Coolant Overtemperature Protection Mode Active"
+    },
+    {
+      "code": "P1260",
+      "scope": "manufacturer",
+      "description": "Last Test Failed SCC Or Theft Detected Vehicle Immobilized"
+    },
+    {
+      "code": "P1270",
+      "scope": "manufacturer",
+      "description": "Accelerator Pedal Position Sensor A/D Converter Error"
+    },
+    {
+      "code": "P1271",
+      "scope": "manufacturer",
+      "description": "APP Sensor 1-2 Performance"
+    },
+    {
+      "code": "P1272",
+      "scope": "manufacturer",
+      "description": "Accelerator Pedal Position Sensor 2"
+    },
+    {
+      "code": "P1273",
+      "scope": "manufacturer",
+      "description": "Accelerator Pedal Position Sensor 1"
+    },
+    {
+      "code": "P1274",
+      "scope": "manufacturer",
+      "description": "Injectors Wired Incorrectly"
+    },
+    {
+      "code": "P1275",
+      "scope": "manufacturer",
+      "description": "Accelerator Pedal Position (APP) Sensor 1 Circuit"
+    },
+    {
+      "code": "P1276",
+      "scope": "manufacturer",
+      "description": "Accelerator Pedal Position (APP) Sensor 1 Performance"
+    },
+    {
+      "code": "P1277",
+      "scope": "manufacturer",
+      "description": "Accelerator Pedal Position Sensor 1 Circuit Low Voltage"
+    },
+    {
+      "code": "P1278",
+      "scope": "manufacturer",
+      "description": "Accelerator Pedal Position Sensor 1 Circuit High Voltage"
+    },
+    {
+      "code": "P1280",
+      "scope": "manufacturer",
+      "description": "Accelerator Pedal Position (APP) Sensor 2 Circuit"
+    },
+    {
+      "code": "P1281",
+      "scope": "manufacturer",
+      "description": "Accelerator Pedal Position (APP) Sensor 2 Performance"
+    },
+    {
+      "code": "P1282",
+      "scope": "manufacturer",
+      "description": "Accelerator Pedal Position Sensor 2 Circuit Low Voltage"
+    },
+    {
+      "code": "P1283",
+      "scope": "manufacturer",
+      "description": "Accelerator Pedal Position Sensor 2 Circuit High Voltage"
+    },
+    {
+      "code": "P1285",
+      "scope": "manufacturer",
+      "description": "Accelerator Pedal Position (APP) Sensor 3 Circuit"
+    },
+    {
+      "code": "P1286",
+      "scope": "manufacturer",
+      "description": "Accelerator Pedal Position (APP) Sensor 3 Performance"
+    },
+    {
+      "code": "P1287",
+      "scope": "manufacturer",
+      "description": "Accelerator Pedal Position Sensor 3 Circuit Low Voltage"
+    },
+    {
+      "code": "P1288",
+      "scope": "manufacturer",
+      "description": "Accelerator Pedal Position Sensor 3 Circuit High Voltage"
+    },
+    {
+      "code": "P1300",
+      "scope": "manufacturer",
+      "description": "Ignitor Circuit"
+    },
+    {
+      "code": "P1305",
+      "scope": "manufacturer",
+      "description": "Ignition Coil 2 Primary Feedback Circuit"
+    },
+    {
+      "code": "P1310",
+      "scope": "manufacturer",
+      "description": "Ignition Coil 3 Primary Feedback Circuit"
+    },
+    {
+      "code": "P1315",
+      "scope": "manufacturer",
+      "description": "Ignition Coil 4 Primary Feedback Circuit"
+    },
+    {
+      "code": "P1320",
+      "scope": "manufacturer",
+      "description": "IC Module 4X Ref Circuit Intermittent No Pulses"
+    },
+    {
+      "code": "P1321",
+      "scope": "manufacturer",
+      "description": "Electronic Ignition System Fault Line"
+    },
+    {
+      "code": "P1322",
+      "scope": "manufacturer",
+      "description": "EI System Or Ignition Control Missing"
+    },
+    {
+      "code": "P1323",
+      "scope": "manufacturer",
+      "description": "24X Reference Circuit Low Frequency"
+    },
+    {
+      "code": "P1324",
+      "scope": "manufacturer",
+      "description": "Crank RPM Too Low"
+    },
+    {
+      "code": "P1335",
+      "scope": "manufacturer",
+      "description": "CKP Circuit"
+    },
+    {
+      "code": "P1336",
+      "scope": "manufacturer",
+      "description": "Crankshaft Position (CKP) System Variation Not Learned"
+    },
+    {
+      "code": "P1345",
+      "scope": "manufacturer",
+      "description": "CKP/CMP Correlation"
+    },
+    {
+      "code": "P1346",
+      "scope": "manufacturer",
+      "description": "Intake Camshaft Position (CMP) Sensor System Performance"
+    },
+    {
+      "code": "P1350",
+      "scope": "manufacturer",
+      "description": "Ignition Control System"
+    },
+    {
+      "code": "P1351",
+      "scope": "manufacturer",
+      "description": "IC Circuit High Voltage"
+    },
+    {
+      "code": "P1352",
+      "scope": "manufacturer",
+      "description": "IC Output High Pulse Detected When Grounded Cyl 2"
+    },
+    {
+      "code": "P1353",
+      "scope": "manufacturer",
+      "description": "IC Output High Pulse Detected When Grounded Cyl 3"
+    },
+    {
+      "code": "P1354",
+      "scope": "manufacturer",
+      "description": "IC Output High Pulse Detected When Grounded Cyl 4"
+    },
+    {
+      "code": "P1355",
+      "scope": "manufacturer",
+      "description": "IC Output High Pulse Detected When Grounded Cyl 5"
+    },
+    {
+      "code": "P1356",
+      "scope": "manufacturer",
+      "description": "IC Output High Pulse Detected When Grounded Cyl 6"
+    },
+    {
+      "code": "P1357",
+      "scope": "manufacturer",
+      "description": "IC Output High Pulse Detected When Grounded Cyl 7"
+    },
+    {
+      "code": "P1358",
+      "scope": "manufacturer",
+      "description": "IC Output High Pulse Detected When Grounded Cyl 8"
+    },
+    {
+      "code": "P1359",
+      "scope": "manufacturer",
+      "description": "Ignition Control Circuit Group A"
+    },
+    {
+      "code": "P1360",
+      "scope": "manufacturer",
+      "description": "Ignition Control Circuit Group B"
+    },
+    {
+      "code": "P1361",
+      "scope": "manufacturer",
+      "description": "IC Circuit Low Voltage"
+    },
+    {
+      "code": "P1362",
+      "scope": "manufacturer",
+      "description": "IC Cylinder 2 Not Toggling After Enable"
+    },
+    {
+      "code": "P1363",
+      "scope": "manufacturer",
+      "description": "IC Cylinder 3 Not Toggling After Enable"
+    },
+    {
+      "code": "P1364",
+      "scope": "manufacturer",
+      "description": "IC Cylinder 4 Not Toggling After Enable"
+    },
+    {
+      "code": "P1365",
+      "scope": "manufacturer",
+      "description": "IC Cylinder 5 Not Toggling After Enable"
+    },
+    {
+      "code": "P1366",
+      "scope": "manufacturer",
+      "description": "IC Cylinder 6 Not Toggling After Enable"
+    },
+    {
+      "code": "P1367",
+      "scope": "manufacturer",
+      "description": "IC Cylinder 7 Not Toggling After Enable"
+    },
+    {
+      "code": "P1368",
+      "scope": "manufacturer",
+      "description": "IC Cylinder 8 Not Toggling After Enable"
+    },
+    {
+      "code": "P1370",
+      "scope": "manufacturer",
+      "description": "IC Module 4X Reference Circuit Too Many Pulses"
+    },
+    {
+      "code": "P1371",
+      "scope": "manufacturer",
+      "description": "DI Low Resolution Circuit"
+    },
+    {
+      "code": "P1372",
+      "scope": "manufacturer",
+      "description": "Crankshaft Position Sensor Circuit Performance"
+    },
+    {
+      "code": "P1374",
+      "scope": "manufacturer",
+      "description": "3X Reference Circuit"
+    },
+    {
+      "code": "P1375",
+      "scope": "manufacturer",
+      "description": "24X Reference Circuit High Voltage"
+    },
+    {
+      "code": "P1376",
+      "scope": "manufacturer",
+      "description": "Ignition Ground Circuit"
+    },
+    {
+      "code": "P1377",
+      "scope": "manufacturer",
+      "description": "IC Module CAM Pulse To 4X Reference Pulse Comparison"
+    },
+    {
+      "code": "P1380",
+      "scope": "manufacturer",
+      "description": "Misfire Detected Rough Road Data Not Available"
+    },
+    {
+      "code": "P1381",
+      "scope": "manufacturer",
+      "description": "Misfire Detected No Communication with Brake Control Module"
+    },
+    {
+      "code": "P1390",
+      "scope": "manufacturer",
+      "description": "Wheel Speed Sensor 1, G-Sensor Circuit"
+    },
+    {
+      "code": "P1391",
+      "scope": "manufacturer",
+      "description": "Wheel Speed Sensor 1, G-Sensor Circuit Performance"
+    },
+    {
+      "code": "P1392",
+      "scope": "manufacturer",
+      "description": "Wheel Speed Sensor 1, G-Sensor Circuit Low Voltage"
+    },
+    {
+      "code": "P1393",
+      "scope": "manufacturer",
+      "description": "Wheel Speed Sensor 1, G-Sensor Circuit High Voltage"
+    },
+    {
+      "code": "P1394",
+      "scope": "manufacturer",
+      "description": "Wheel Speed Sensor 1, G-Sensor Circuit Intermittent"
+    },
+    {
+      "code": "P1395",
+      "scope": "manufacturer",
+      "description": "Wheel Speed Sensor 2, G-Sensor Circuit"
+    },
+    {
+      "code": "P1396",
+      "scope": "manufacturer",
+      "description": "Wheel Speed Sensor 2, G-Sensor Circuit Performance"
+    },
+    {
+      "code": "P1397",
+      "scope": "manufacturer",
+      "description": "Wheel Speed Sensor 2, G-Sensor Circuit Low Voltage"
+    },
+    {
+      "code": "P1398",
+      "scope": "manufacturer",
+      "description": "Wheel Speed Sensor 2, G-Sensor Circuit High Voltage"
+    },
+    {
+      "code": "P1399",
+      "scope": "manufacturer",
+      "description": "Wheel Speed Sensor 2, G-Sensor Circuit Intermittent"
+    },
+    {
+      "code": "P1403",
+      "scope": "manufacturer",
+      "description": "Exhaust Gas Recirculation System Valve 1"
+    },
+    {
+      "code": "P1404",
+      "scope": "manufacturer",
+      "description": "Exhaust Gas Recirculation System Valve 2"
+    },
+    {
+      "code": "P1405",
+      "scope": "manufacturer",
+      "description": "Exhaust Gas Recirculation System Valve 3"
+    },
+    {
+      "code": "P1406",
+      "scope": "manufacturer",
+      "description": "EGR Valve Pintle Position Circuit"
+    },
+    {
+      "code": "P1407",
+      "scope": "manufacturer",
+      "description": "EGR Air Intrusion In Exhaust Supply To EGR Valve"
+    },
+    {
+      "code": "P1408",
+      "scope": "manufacturer",
+      "description": "Intake Manifold Pressure Sensor Circuit"
+    },
+    {
+      "code": "P1409",
+      "scope": "manufacturer",
+      "description": "EGR Vacuum System Leak"
+    },
+    {
+      "code": "P1410",
+      "scope": "manufacturer",
+      "description": "Fuel Tank Pressure System"
+    },
+    {
+      "code": "P1415",
+      "scope": "manufacturer",
+      "description": "Secondary Air Injection (AIR) System"
+    },
+    {
+      "code": "P1416",
+      "scope": "manufacturer",
+      "description": "AIR System Bank 1"
+    },
+    {
+      "code": "P1418",
+      "scope": "manufacturer",
+      "description": "Secondary Air Injection System Relay A Control Circuit High"
+    },
+    {
+      "code": "P1420",
+      "scope": "manufacturer",
+      "description": "Intake Air Low Pressure Switch Circuit Low Voltage"
+    },
+    {
+      "code": "P1421",
+      "scope": "manufacturer",
+      "description": "Intake Air Low Pressure Switch Circuit High Voltage"
+    },
+    {
+      "code": "P1423",
+      "scope": "manufacturer",
+      "description": "Intake Air High Pressure Switch Circuit High Voltage"
+    },
+    {
+      "code": "P1431",
+      "scope": "manufacturer",
+      "description": "Fuel Level Sensor 2 Performance"
+    },
+    {
+      "code": "P1432",
+      "scope": "manufacturer",
+      "description": "Fuel Level Sensor 2 Circuit Low Voltage"
+    },
+    {
+      "code": "P1433",
+      "scope": "manufacturer",
+      "description": "Fuel Level Sensor 2 Circuit High Voltage"
+    },
+    {
+      "code": "P1441",
+      "scope": "manufacturer",
+      "description": "Evaporative Emission (EVAP) System Flow During Non-Purge"
+    },
+    {
+      "code": "P1442",
+      "scope": "manufacturer",
+      "description": "EVAP Vacuum Switch High Voltage During Ignition On"
+    },
+    {
+      "code": "P1450",
+      "scope": "manufacturer",
+      "description": "Barometric Pressure Sensor Circuit"
+    },
+    {
+      "code": "P1451",
+      "scope": "manufacturer",
+      "description": "Barometric Pressure Sensor Performance"
+    },
+    {
+      "code": "P1460",
+      "scope": "manufacturer",
+      "description": "Cooling Fan Control System"
+    },
+    {
+      "code": "P1480",
+      "scope": "manufacturer",
+      "description": "Cooling Fan 1 Control Circuit High"
+    },
+    {
+      "code": "P1483",
+      "scope": "manufacturer",
+      "description": "Engine Coolilng System Performance"
+    },
+    {
+      "code": "P1500",
+      "scope": "manufacturer",
+      "description": "Starter Signal Circuit"
+    },
+    {
+      "code": "P1501",
+      "scope": "manufacturer",
+      "description": "Vehicle Speed Sensor Circuit Intermittent"
+    },
+    {
+      "code": "P1502",
+      "scope": "manufacturer",
+      "description": "Theft Deterrent System No Password Received"
+    },
+    {
+      "code": "P1503",
+      "scope": "manufacturer",
+      "description": "Theft Deterrent System Password Incorrect"
+    },
+    {
+      "code": "P1504",
+      "scope": "manufacturer",
+      "description": "Vehicle Speed Output Circuit"
+    },
+    {
+      "code": "P1508",
+      "scope": "manufacturer",
+      "description": "IAC System Low RPM"
+    },
+    {
+      "code": "P1509",
+      "scope": "manufacturer",
+      "description": "IAC System High RPM"
+    },
+    {
+      "code": "P1510",
+      "scope": "manufacturer",
+      "description": "Back UP Power Supply"
+    },
+    {
+      "code": "P1511",
+      "scope": "manufacturer",
+      "description": "Throttle Control System Backup System Performance"
+    },
+    {
+      "code": "P1514",
+      "scope": "manufacturer",
+      "description": "Throttle Body Performance"
+    },
+    {
+      "code": "P1515",
+      "scope": "manufacturer",
+      "description": "Control Module Throttle Actuator Position Performance"
+    },
+    {
+      "code": "P1516",
+      "scope": "manufacturer",
+      "description": "Throttle Actuator Control (TAC) Module Throttle Actuator Position Performance"
+    },
+    {
+      "code": "P1517",
+      "scope": "manufacturer",
+      "description": "Throttle Actuator Control (TAC) Module Performance"
+    },
+    {
+      "code": "P1518",
+      "scope": "manufacturer",
+      "description": "Throttle Actuator Control (TAC) Module Serial Data Circuit"
+    },
+    {
+      "code": "P1519",
+      "scope": "manufacturer",
+      "description": "Electronic Throttle Module Low Volts Communication Disable"
+    },
+    {
+      "code": "P1520",
+      "scope": "manufacturer",
+      "description": "Gear Indicator System"
+    },
+    {
+      "code": "P1521",
+      "scope": "manufacturer",
+      "description": "Transmission Engaged At High Throttle Angle"
+    },
+    {
+      "code": "P1522",
+      "scope": "manufacturer",
+      "description": "Park Neutral To Drive Reverse At High RPM"
+    },
+    {
+      "code": "P1523",
+      "scope": "manufacturer",
+      "description": "Electronic Throttle Control Throttle Return"
+    },
+    {
+      "code": "P1524",
+      "scope": "manufacturer",
+      "description": "TP Sensor Learned CI Throttle Angle Out Of Range"
+    },
+    {
+      "code": "P1525",
+      "scope": "manufacturer",
+      "description": "Throttle Body Service Required"
+    },
+    {
+      "code": "P1526",
+      "scope": "manufacturer",
+      "description": "TP Sensor Learn Not Complete"
+    },
+    {
+      "code": "P1527",
+      "scope": "manufacturer",
+      "description": "Transmission Range Pressure Switch Comparison"
+    },
+    {
+      "code": "P1528",
+      "scope": "manufacturer",
+      "description": "Governor"
+    },
+    {
+      "code": "P1529",
+      "scope": "manufacturer",
+      "description": "Heated Windshield Request Problem"
+    },
+    {
+      "code": "P1530",
+      "scope": "manufacturer",
+      "description": "Ignition Timing Adjustment Switch Circuit"
+    },
+    {
+      "code": "P1531",
+      "scope": "manufacturer",
+      "description": "A/C Low Side Temperature Sensor Fault"
+    },
+    {
+      "code": "P1532",
+      "scope": "manufacturer",
+      "description": "A/C Evaporator Temperature Sensor Circuit Low Voltage"
+    },
+    {
+      "code": "P1533",
+      "scope": "manufacturer",
+      "description": "A/C Evaporator Temperature Sensor Circuit High Voltage"
+    },
+    {
+      "code": "P1534",
+      "scope": "manufacturer",
+      "description": "A/C High Side Temperature Sensor Low Voltage"
+    },
+    {
+      "code": "P1535",
+      "scope": "manufacturer",
+      "description": "A/C High Side Temperature Sensor Circuit"
+    },
+    {
+      "code": "P1536",
+      "scope": "manufacturer",
+      "description": "A/C System ECT Overtemperature"
+    },
+    {
+      "code": "P1537",
+      "scope": "manufacturer",
+      "description": "A/C Request Circuit Low Voltage"
+    },
+    {
+      "code": "P1538",
+      "scope": "manufacturer",
+      "description": "A/C Request Circuit High Voltage"
+    },
+    {
+      "code": "P1539",
+      "scope": "manufacturer",
+      "description": "Air Conditioning (A/C) Clutch Feedback Circuit High Voltage"
+    },
+    {
+      "code": "P1540",
+      "scope": "manufacturer",
+      "description": "A/C System High Pressure"
+    },
+    {
+      "code": "P1541",
+      "scope": "manufacturer",
+      "description": "A/C High Side Over Temperature"
+    },
+    {
+      "code": "P1542",
+      "scope": "manufacturer",
+      "description": "A/C System High Pressure High Temperature"
+    },
+    {
+      "code": "P1543",
+      "scope": "manufacturer",
+      "description": "A/C System Performance"
+    },
+    {
+      "code": "P1544",
+      "scope": "manufacturer",
+      "description": "A/C Refrigerant Condition Very Low"
+    },
+    {
+      "code": "P1545",
+      "scope": "manufacturer",
+      "description": "A/C Clutch Relay Control Circuit"
+    },
+    {
+      "code": "P1546",
+      "scope": "manufacturer",
+      "description": "Air Conditioning (A/C) Clutch Feedback Circuit Low Voltage"
+    },
+    {
+      "code": "P1547",
+      "scope": "manufacturer",
+      "description": "A/C System Performance Degraded"
+    },
+    {
+      "code": "P1548",
+      "scope": "manufacturer",
+      "description": "A/C Recirculation Circuit"
+    },
+    {
+      "code": "P1554",
+      "scope": "manufacturer",
+      "description": "Cruise Engaged Circuit High Voltage"
+    },
+    {
+      "code": "P1555",
+      "scope": "manufacturer",
+      "description": "Electronic Variable Orifice Output"
+    },
+    {
+      "code": "P1558",
+      "scope": "manufacturer",
+      "description": "Cruise Control Servo Indicates Low"
+    },
+    {
+      "code": "P1559",
+      "scope": "manufacturer",
+      "description": "Cruise Control Power Management Mode"
+    },
+    {
+      "code": "P1560",
+      "scope": "manufacturer",
+      "description": "Cruise Control System Transaxle Not In Drive"
+    },
+    {
+      "code": "P1561",
+      "scope": "manufacturer",
+      "description": "Cruise Vent Solenoid"
+    },
+    {
+      "code": "P1562",
+      "scope": "manufacturer",
+      "description": "Cruise Vacuum Solenoid"
+    },
+    {
+      "code": "P1563",
+      "scope": "manufacturer",
+      "description": "Cruise Vehicle Speed Set Speed Difference Too High"
+    },
+    {
+      "code": "P1564",
+      "scope": "manufacturer",
+      "description": "Cruise Control System Vehicle Accel Too High"
+    },
+    {
+      "code": "P1565",
+      "scope": "manufacturer",
+      "description": "Cruise Servo Position Sensor"
+    },
+    {
+      "code": "P1566",
+      "scope": "manufacturer",
+      "description": "Cruise Control System Engine RPM Too High"
+    },
+    {
+      "code": "P1567",
+      "scope": "manufacturer",
+      "description": "Cruise Control System Active Braking Control Active"
+    },
+    {
+      "code": "P1568",
+      "scope": "manufacturer",
+      "description": "Cruise Servo Stroke Greater Than Commanded In Cruise"
+    },
+    {
+      "code": "P1569",
+      "scope": "manufacturer",
+      "description": "Cruise Servo Stroke High While Not In Cruise"
+    },
+    {
+      "code": "P1570",
+      "scope": "manufacturer",
+      "description": "Cruise Control System Traction Control Active"
+    },
+    {
+      "code": "P1571",
+      "scope": "manufacturer",
+      "description": "TCS PWM Circuit No Frequency"
+    },
+    {
+      "code": "P1572",
+      "scope": "manufacturer",
+      "description": "ASR Active Circuit Low Too Long"
+    },
+    {
+      "code": "P1573",
+      "scope": "manufacturer",
+      "description": "PCM EBTCM Serial Data Circuit"
+    },
+    {
+      "code": "P1574",
+      "scope": "manufacturer",
+      "description": "Stoplamp Switch Circuit"
+    },
+    {
+      "code": "P1575",
+      "scope": "manufacturer",
+      "description": "Extended Travel Brake Switch Circuit"
+    },
+    {
+      "code": "P1576",
+      "scope": "manufacturer",
+      "description": "BBV Sensor Circuit High Voltage"
+    },
+    {
+      "code": "P1577",
+      "scope": "manufacturer",
+      "description": "BBV Sensor Circuit Low Voltage"
+    },
+    {
+      "code": "P1578",
+      "scope": "manufacturer",
+      "description": "BBV Sensor Circuit Low Vacuum"
+    },
+    {
+      "code": "P1579",
+      "scope": "manufacturer",
+      "description": "P/N To D/R At High Throttle Angle"
+    },
+    {
+      "code": "P1580",
+      "scope": "manufacturer",
+      "description": "Cruise Move Circuit Low Voltage"
+    },
+    {
+      "code": "P1581",
+      "scope": "manufacturer",
+      "description": "Cruise Move Circuit High Voltage"
+    },
+    {
+      "code": "P1582",
+      "scope": "manufacturer",
+      "description": "Cruise Direction Circuit Low Voltage"
+    },
+    {
+      "code": "P1583",
+      "scope": "manufacturer",
+      "description": "Cruise Direction Circuit High Volume"
+    },
+    {
+      "code": "P1584",
+      "scope": "manufacturer",
+      "description": "Cruise Control Disabled"
+    },
+    {
+      "code": "P1585",
+      "scope": "manufacturer",
+      "description": "Cruise Inhibit Control Circuit"
+    },
+    {
+      "code": "P1586",
+      "scope": "manufacturer",
+      "description": "Cruise Control Brake Switch 2 Circuit"
+    },
+    {
+      "code": "P1587",
+      "scope": "manufacturer",
+      "description": "Cruise Control Clutch Control Circuit Low"
+    },
+    {
+      "code": "P1588",
+      "scope": "manufacturer",
+      "description": "Cruise Control Clutch Control Circuit High"
+    },
+    {
+      "code": "P1599",
+      "scope": "manufacturer",
+      "description": "Engine Stall Or Near Stall Detected"
+    },
+    {
+      "code": "P1602",
+      "scope": "manufacturer",
+      "description": "PCM Not Programmed"
+    },
+    {
+      "code": "P1680",
+      "scope": "manufacturer",
+      "description": "Clutch Released Switch Circuit Open Or Shorted"
+    },
+    {
+      "code": "P1681",
+      "scope": "manufacturer",
+      "description": "No Instrument Panel Cluster CCD J1850 Messages Received"
+    },
+    {
+      "code": "P1682",
+      "scope": "manufacturer",
+      "description": "Charging System Voltage Too Low"
+    },
+    {
+      "code": "P1683",
+      "scope": "manufacturer",
+      "description": "Speed Control Power Relay Or Speed Control 12 Volt Driver Circuit Open Or Shorted"
+    },
+    {
+      "code": "P1684",
+      "scope": "manufacturer",
+      "description": "Battery Disconnected Within Last 50 Starts"
+    },
+    {
+      "code": "P1685",
+      "scope": "manufacturer",
+      "description": "Skim Invalid Key"
+    },
+    {
+      "code": "P1686",
+      "scope": "manufacturer",
+      "description": "No SKIM Bus Message Received"
+    },
+    {
+      "code": "P1687",
+      "scope": "manufacturer",
+      "description": "No Cluster Bus Message"
+    },
+    {
+      "code": "P1688",
+      "scope": "manufacturer",
+      "description": "Internal Fuel Injection Pump Controller Failure"
+    },
+    {
+      "code": "P1689",
+      "scope": "manufacturer",
+      "description": "No Communication Between ECM & Injection Pump Module"
+    },
+    {
+      "code": "P1690",
+      "scope": "manufacturer",
+      "description": "Fuel Injection Pump CKP Sensor Does Not Agree With ECM CKP Sensor"
+    },
+    {
+      "code": "P1691",
+      "scope": "manufacturer",
+      "description": "Fuel Injection Pump Controller Calibration Failure"
+    },
+    {
+      "code": "P1693",
+      "scope": "manufacturer",
+      "description": "DTC Detected In ECM Or PCM"
+    },
+    {
+      "code": "P1694",
+      "scope": "manufacturer",
+      "description": "No CCD Messages Received From ECM"
+    },
+    {
+      "code": "P1695",
+      "scope": "manufacturer",
+      "description": "No CCD J1850 Message From BCM"
+    },
+    {
+      "code": "P1696",
+      "scope": "manufacturer",
+      "description": "PCM Failure EEPROM Write Denied"
+    },
+    {
+      "code": "P1697",
+      "scope": "manufacturer",
+      "description": "PCM Failure SRI Mile Not Stored"
+    },
+    {
+      "code": "P1698",
+      "scope": "manufacturer",
+      "description": "No CCD Messages Received From PCM"
+    },
+    {
+      "code": "P1699",
+      "scope": "manufacturer",
+      "description": "No CCD J1850 Messages Received From The Climate Control Module (CCM)"
+    },
+    {
+      "code": "P1719",
+      "scope": "manufacturer",
+      "description": "Skip Shift Solenoid Circuit Open Or Shorted"
+    },
+    {
+      "code": "P1740",
+      "scope": "manufacturer",
+      "description": "TCC Or OD Solenoid Performance"
+    },
+    {
+      "code": "P1756",
+      "scope": "manufacturer",
+      "description": "Governor Pressure Not Equal To Target At 15-20 PSI"
+    },
+    {
+      "code": "P1757",
+      "scope": "manufacturer",
+      "description": "Governor Pressure Above 3 PSI When Request Is 0 PSI"
+    },
+    {
+      "code": "P1762",
+      "scope": "manufacturer",
+      "description": "Governor Pressure Sensor Offset Improper Voltage"
+    },
+    {
+      "code": "P1763",
+      "scope": "manufacturer",
+      "description": "Governor Pressure Sensor Voltage Too High"
+    },
+    {
+      "code": "P1764",
+      "scope": "manufacturer",
+      "description": "Governor Pressure Sensor Voltage Too Low"
+    },
+    {
+      "code": "P1765",
+      "scope": "manufacturer",
+      "description": "Trans 12 Volt Supply Relay Control Circuit Open Or Shorted"
+    },
+    {
+      "code": "P1830",
+      "scope": "manufacturer",
+      "description": "Open Or Shorted Condition Detected In The Clutch Pedal Switch Override Relay Control"
+    },
+    {
+      "code": "P1899",
+      "scope": "manufacturer",
+      "description": "Park Neutral Position Switch Stuck In Park Or In Gear"
+    }
+  ]
+}
