@@ -55,6 +55,8 @@
     {
       "id": "timing-chain",
       "label": "Timing chain",
+      "i18n_key": "seed_interval_timing_chain",
+      "desc_i18n_key": "seed_desc_timing_chain",
       "interval_km": 40000,
       "description": "Check automatic tensioner wear indicator and chain slack. Replace if stretched to avoid catastrophic failure."
     }

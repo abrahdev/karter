@@ -3,8 +3,8 @@
 
 Downloads plain-text source files, parses ``CODE - Description`` lines into
 ``obd_dtc_definitions`` entries, and writes:
-  * standard SAE codes (P/B/C/U) into ``_base/common-all.json``
-  * generic manufacturer codes (other) into ``_base/common-all.json``
+  * standard SAE codes (P/B/C/U) into ``_base/dtc.json``
+  * generic manufacturer codes (other) into ``_base/dtc.json``
   * per-brand manufacturer codes into ``templates/data/<brand>/dtc.json``
 
 Run from the repo root:  python3 tools/import_dtc.py
@@ -185,12 +185,21 @@ def main():
     print(f"  standard: {len(standard)} codes")
     print(f"  generic manufacturer: {len(generic)} codes")
 
-    common_path = DATA_DIR / "_base" / "common-all.json"
-    common = json.loads(common_path.read_text(encoding="utf-8"))
-    common["obd_dtc_definitions"] = standard + generic
-    write_json(common_path, common)
+    dtc_path = DATA_DIR / "_base" / "dtc.json"
+    dtc = {
+        "id": "dtc-general",
+        "meta": {
+            "make": "_base",
+            "model": "OBD-II codes (standard & generic)",
+            "author": "abrahdev",
+            "version": "1.0.0",
+            "sources": [f"{SOURCE_REPO} (MIT)"],
+        },
+        "obd_dtc_definitions": standard + generic,
+    }
+    write_json(dtc_path, dtc)
 
-    docs = [common]
+    docs = [dtc]
 
     print("Fetching per-brand codes...")
     for brand, name in BRAND_FILES.items():

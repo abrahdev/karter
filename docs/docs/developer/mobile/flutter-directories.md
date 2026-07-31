@@ -156,9 +156,10 @@ templates/
 ├── data/                     # Vehicle templates (community-contributed)
 │   ├── index.json            # Generated manifest of all templates
 │   ├── _base/                # Base templates (powertrain types)
-│   │   ├── common-all.json
+│   │   ├── cars.json
 │   │   ├── combustion.json
 │   │   ├── diesel.json
+│   │   ├── dtc.json
 │   │   ├── electric.json
 │   │   └── motorcycle-*.json
 │   ├── audi/                 # Per-manufacturer directories

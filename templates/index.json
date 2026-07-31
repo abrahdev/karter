@@ -1,7 +1,21 @@
 {
-  "generated_at": "2026-07-31T16:00:32Z",
+  "generated_at": "2026-07-31T16:09:09Z",
   "schema_version": "1",
   "templates": [
+    {
+      "id": "cars",
+      "path": "data/_base/cars.json",
+      "meta": {
+        "make": "_base",
+        "model": "Cars (common)",
+        "author": "abrahdev",
+        "version": "1.0.0"
+      },
+      "item_count": 5,
+      "extends": [
+        "_base/dtc.json"
+      ]
+    },
     {
       "id": "combustion",
       "path": "data/_base/combustion.json",
@@ -13,20 +27,8 @@
       },
       "item_count": 5,
       "extends": [
-        "_base/common-all.json"
+        "_base/cars.json"
       ]
-    },
-    {
-      "id": "common-all",
-      "path": "data/_base/common-all.json",
-      "meta": {
-        "make": "_base",
-        "model": "Common (all vehicles)",
-        "author": "abrahdev",
-        "version": "1.0.0"
-      },
-      "item_count": 5,
-      "extends": []
     },
     {
       "id": "diesel",
@@ -53,7 +55,7 @@
       },
       "item_count": 5,
       "extends": [
-        "_base/common-all.json"
+        "_base/cars.json"
       ]
     },
     {

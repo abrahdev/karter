@@ -1,7 +1,7 @@
 {
   "id": "combustion",
   "extends": [
-    "_base/common-all.json"
+    "_base/cars.json"
   ],
   "meta": {
     "make": "_base",

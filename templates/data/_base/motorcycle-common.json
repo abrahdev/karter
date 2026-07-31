@@ -52,6 +52,8 @@
     {
       "id": "chassis-bearings",
       "label": "Chassis & wheel bearings",
+      "i18n_key": "seed_interval_chassis_bearings",
+      "desc_i18n_key": "seed_desc_chassis_bearings",
       "interval_km": 10000,
       "interval_months": 12,
       "description": "Check for play or roughness in wheel hubs, steering head bearings, and swingarm pivot."
@@ -59,6 +61,8 @@
     {
       "id": "cables-controls",
       "label": "Cables & controls",
+      "i18n_key": "seed_interval_cables_controls",
+      "desc_i18n_key": "seed_desc_cables_controls",
       "interval_km": 5000,
       "interval_months": 6,
       "description": "Lubricate clutch and throttle cables. Verify correct free play on levers and pedals."

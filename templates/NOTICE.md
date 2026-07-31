@@ -3,7 +3,7 @@
 ## OBD-II Diagnostic Trouble Codes (DTC)
 
 The `obd_dtc_definitions` data in this repository (standard SAE codes in
-`templates/data/_base/common-all.json` and manufacturer-specific codes in the
+`templates/data/_base/dtc.json` and manufacturer-specific codes in the
 per-brand `templates/data/<brand>/dtc.json` files) is a subset derived from:
 
 - **Project:** dtc-database

@@ -87,18 +87,24 @@
     {
       "id": "fuel-hoses",
       "label": "Fuel hoses",
+      "i18n_key": "seed_interval_fuel_hoses",
+      "desc_i18n_key": "seed_desc_fuel_hoses",
       "interval_months": 36,
       "description": "Replace every 3 years to prevent cracking and fuel leaks."
     },
     {
       "id": "brake-hoses",
       "label": "Brake hoses",
+      "i18n_key": "seed_interval_brake_hoses",
+      "desc_i18n_key": "seed_desc_brake_hoses",
       "interval_months": 48,
       "description": "Replace hydraulic brake hoses every 4 years."
     },
     {
       "id": "brake-pump-internals",
       "label": "Brake pump & caliper service",
+      "i18n_key": "seed_interval_brake_pump_internals",
+      "desc_i18n_key": "seed_desc_brake_pump_internals",
       "interval_months": 24,
       "description": "Replace internal parts of brake pumps and calipers every 2 years."
     },
@@ -113,18 +119,24 @@
     {
       "id": "steering-bearings",
       "label": "Steering bearings",
+      "i18n_key": "seed_interval_steering_bearings",
+      "desc_i18n_key": "seed_desc_steering_bearings",
       "interval_km": 19000,
       "description": "Check play, adjust, and lubricate with lithium grease every 19,000 km."
     },
     {
       "id": "swingarm-bearings",
       "label": "Swingarm bearings",
+      "i18n_key": "seed_interval_swingarm_bearings",
+      "desc_i18n_key": "seed_desc_swingarm_bearings",
       "interval_km": 25000,
       "description": "Inspect periodically, replace at 25,000 km."
     },
     {
       "id": "wheel-bearings",
       "label": "Wheel bearings",
+      "i18n_key": "seed_interval_wheel_bearings",
+      "desc_i18n_key": "seed_desc_wheel_bearings",
       "interval_km": 40000,
       "description": "Inspect visually and replace every 40,000 km."
     }
