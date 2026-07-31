@@ -5,7 +5,7 @@ on:
     branches: [main]
     paths:
       - 'templates/**/*.json'
-      - 'tools/generate_index.py'
+      - 'templates/tools/generate_index.py'
 
 permissions:
   contents: write
@@ -21,7 +21,7 @@ jobs:
           python-version: '3.x'
 
       - name: Regenerate index.json
-        run: python tools/generate_index.py
+        run: python templates/tools/generate_index.py
 
       - name: Commit if changed
         run: |

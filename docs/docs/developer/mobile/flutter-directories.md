@@ -168,8 +168,12 @@ templates/
 ├── i18n/                     # Infrastructure: community translations
 │   ├── en.json
 │   └── es.json
-└── schemas/                  # Infrastructure: template validation
-    └── template-v1.json
+├── schemas/                  # Infrastructure: template validation
+│   └── template-v2.json
+└── tools/                    # Infrastructure: generation scripts
+    ├── generate_index.py
+    ├── generate_templates.py
+    └── import_dtc.py
 ```
 
 Repository providers are created once using `Provider<T>`. Async data providers use `FutureProvider.family` keyed by `vehicleId` to fetch per-vehicle data (fuel logs, maintenance logs, intervals, documents).
