@@ -12,7 +12,8 @@
     "years": [2018, 2025],
     "engine": {
       "code": "2ZR-FXE",
-      "fuel": "hybrid",
+      "fuel": "gasoline",
+      "powertrain": "hybrid",
       "displacement_cc": 1798,
       "power_hp": 140
     },

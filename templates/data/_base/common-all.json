@@ -13,7 +13,6 @@
       "i18n_key": "seed_interval_brake_pads",
       "desc_i18n_key": "seed_desc_brake_pads",
       "interval_km": 30000,
-      "interval_months": null,
       "description": "Friction compound wears with use. Below 3mm thickness, braking distance increases dangerously."
     },
     {
@@ -22,7 +21,6 @@
       "i18n_key": "seed_interval_tires",
       "desc_i18n_key": "seed_desc_tires",
       "interval_km": 50000,
-      "interval_months": null,
       "description": "Tires degrade both by mileage and age. Incorrect pressure or uneven wear compromises grip and safety."
     },
     {
@@ -40,7 +38,6 @@
       "i18n_key": "seed_interval_cabin_filter",
       "desc_i18n_key": "seed_desc_cabin_filter",
       "interval_km": 20000,
-      "interval_months": null,
       "description": "The cabin filter purifies the air entering the interior. A saturated filter reduces HVAC efficiency and can generate odors."
     },
     {

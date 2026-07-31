@@ -1,6 +1,8 @@
 {
   "id": "electric",
-  "extends": ["_base/common-all.json"],
+  "extends": [
+    "_base/common-all.json"
+  ],
   "meta": {
     "make": "_base",
     "model": "Electric vehicle",
@@ -19,7 +21,6 @@
       "i18n_key": "seed_interval_battery_cooling",
       "desc_i18n_key": "seed_desc_battery_cooling",
       "interval_km": 60000,
-      "interval_months": null,
       "description": "The battery cooling system is vital for maintaining optimal temperature and prolonging cell life."
     },
     {
@@ -37,7 +38,6 @@
       "i18n_key": "seed_interval_drive_unit_oil",
       "desc_i18n_key": "seed_desc_drive_unit_oil",
       "interval_km": 100000,
-      "interval_months": null,
       "description": "The reduction gear in the drive unit has its own oil. Change intervals vary by manufacturer."
     },
     {

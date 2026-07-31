@@ -1,6 +1,8 @@
 {
   "id": "motorcycle-2t",
-  "extends": ["_base/motorcycle-common.json"],
+  "extends": [
+    "_base/motorcycle-common.json"
+  ],
   "meta": {
     "make": "_base",
     "model": "Motorcycle 2-Stroke",
@@ -19,34 +21,29 @@
       "id": "two-stroke-oil",
       "label": "2T mix / injection oil",
       "interval_km": 500,
-      "interval_months": null,
       "description": "Top up the two-stroke oil tank (if auto-lube) or accurately mix manually into petrol, typically 1.5%–2.5%."
     },
     {
       "id": "spark-plug",
       "label": "Spark plug",
       "interval_km": 6000,
-      "interval_months": null,
       "description": "Prone to carbon fouling and oil bridges. Inspect, clean, or replace much more frequently than 4T."
     },
     {
       "id": "piston-rings",
       "label": "Piston & rings",
       "interval_km": 15000,
-      "interval_months": null,
       "description": "High wear item. Measure cylinder clearance, replace piston rings and piston to prevent severe loss of compression or seizure."
     },
     {
       "id": "exhaust-power-valve",
       "label": "Exhaust power valve",
       "interval_km": 5000,
-      "interval_months": null,
       "description": "Dismantle and clean heavy carbon and soot deposits to ensure smooth operational opening at high revs."
     },
     {
       "id": "silencer-packing",
       "label": "Silencer packing (fiber)",
-      "interval_km": null,
       "interval_months": 12,
       "description": "Replace internal fiberglass packing inside the silencer to maintain correct backpressure and exhaust noise limits."
     }

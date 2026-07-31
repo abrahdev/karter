@@ -1,6 +1,8 @@
 {
   "id": "motorcycle-ev",
-  "extends": ["_base/motorcycle-common.json"],
+  "extends": [
+    "_base/motorcycle-common.json"
+  ],
   "meta": {
     "make": "_base",
     "model": "Motorcycle Electric",
@@ -11,7 +13,6 @@
     {
       "id": "battery-bms",
       "label": "Battery health & BMS",
-      "interval_km": null,
       "interval_months": 12,
       "description": "Connect diagnosis tool to monitor cell degradation, capacity parameters, and balance individual cell voltages."
     },
@@ -32,7 +33,6 @@
     {
       "id": "firmware-updates",
       "label": "Firmware / software updates",
-      "interval_km": null,
       "interval_months": 12,
       "description": "Update the Vehicle Control Unit firmware for optimizations in power delivery, regen braking, and efficiency."
     },

@@ -1,6 +1,8 @@
 {
   "id": "motorcycle-4t",
-  "extends": ["_base/motorcycle-common.json"],
+  "extends": [
+    "_base/motorcycle-common.json"
+  ],
   "meta": {
     "make": "_base",
     "model": "Motorcycle 4-Stroke",
@@ -23,7 +25,6 @@
       "i18n_key": "seed_interval_valve_adjustment",
       "desc_i18n_key": "seed_desc_valve_adjustment",
       "interval_km": 24000,
-      "interval_months": null,
       "description": "Valve adjustment maintains proper compression and prevents premature wear on the cylinder head."
     },
     {
@@ -32,7 +33,6 @@
       "i18n_key": "seed_interval_air_filter",
       "desc_i18n_key": "seed_desc_air_filter",
       "interval_km": 10000,
-      "interval_months": null,
       "description": "A dirty air filter reduces power, increases consumption, and can damage intake sensors."
     },
     {
@@ -41,7 +41,6 @@
       "i18n_key": "seed_interval_spark_plugs",
       "desc_i18n_key": "seed_desc_spark_plugs",
       "interval_km": 24000,
-      "interval_months": null,
       "description": "Worn spark plugs increase consumption, make starting difficult, and can damage the ignition coil."
     },
     {
@@ -57,7 +56,6 @@
       "id": "timing-chain",
       "label": "Timing chain",
       "interval_km": 40000,
-      "interval_months": null,
       "description": "Check automatic tensioner wear indicator and chain slack. Replace if stretched to avoid catastrophic failure."
     }
   ]

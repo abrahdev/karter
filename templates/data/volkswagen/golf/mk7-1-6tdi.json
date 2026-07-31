@@ -12,6 +12,7 @@
     "engine": {
       "code": "CXXB",
       "fuel": "diesel",
+      "powertrain": "combustion",
       "displacement_cc": 1598,
       "power_hp": 115
     },

@@ -13,7 +13,6 @@
       "i18n_key": "seed_interval_chain",
       "desc_i18n_key": "seed_desc_chain",
       "interval_km": 1000,
-      "interval_months": null,
       "description": "The chain is the component that suffers the most wear. Regular lubrication extends its life and prevents dangerous breakage."
     },
     {
@@ -30,7 +29,6 @@
       "label": "Brake fluid",
       "i18n_key": "seed_interval_brake_fluid",
       "desc_i18n_key": "seed_desc_brake_fluid",
-      "interval_km": null,
       "interval_months": 24,
       "description": "Brake fluid is hygroscopic: it absorbs moisture, reducing its boiling point and braking effectiveness."
     },
@@ -40,7 +38,6 @@
       "i18n_key": "seed_interval_tire_pressure",
       "desc_i18n_key": "seed_desc_tires",
       "interval_km": 1000,
-      "interval_months": null,
       "description": "Tires degrade both by mileage and age. Incorrect pressure or uneven wear compromises grip and safety."
     },
     {

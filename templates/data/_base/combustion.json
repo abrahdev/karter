@@ -1,6 +1,8 @@
 {
   "id": "combustion",
-  "extends": ["_base/common-all.json"],
+  "extends": [
+    "_base/common-all.json"
+  ],
   "meta": {
     "make": "_base",
     "model": "Combustion engine (gasoline & diesel)",
@@ -32,7 +34,6 @@
       "i18n_key": "seed_interval_air_filter",
       "desc_i18n_key": "seed_desc_air_filter",
       "interval_km": 20000,
-      "interval_months": null,
       "description": "A dirty air filter reduces power, increases consumption, and can damage intake sensors."
     },
     {
@@ -41,7 +42,6 @@
       "i18n_key": "seed_interval_spark_plugs",
       "desc_i18n_key": "seed_desc_spark_plugs",
       "interval_km": 40000,
-      "interval_months": null,
       "description": "Worn spark plugs increase consumption, make starting difficult, and can damage the ignition coil."
     },
     {
