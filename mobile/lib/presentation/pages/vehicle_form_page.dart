@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:material3_indicators/material3_indicators.dart';
 import 'package:mobile/core/database/app_database.dart';
 import 'package:mobile/core/modal_helpers.dart';
 import 'package:mobile/core/theme/app_spacing.dart';
@@ -906,11 +907,7 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
             FilledButton(
               onPressed: _isLoading ? null : _save,
               child: _isLoading
-                  ? const SizedBox(
-                      height: 20,
-                      width: 20,
-                      child: CircularProgressIndicator(strokeWidth: 2),
-                    )
+                  ? const M3LoadingIndicator(size: 20)
                   : Text(_isEditing ? l.saveChanges : l.addVehicle),
             ),
             if (_isEditing) ...[

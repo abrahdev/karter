@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material3_indicators/material3_indicators.dart';
 import 'package:mobile/core/theme/app_spacing.dart';
 import 'package:mobile/data/services/template_resolver.dart';
 import 'package:mobile/domain/entities/vehicle.dart';
@@ -129,7 +130,9 @@ class _ObdPageState extends ConsumerState<ObdPage> {
       appBar: AppBar(title: Text(l.navObd)),
       body: vehiclesAsync.when(
         data: (vehicles) => _buildBody(l, theme, vehicles),
-        loading: () => const Center(child: CircularProgressIndicator()),
+        loading: () => const Center(
+            child: M3LoadingIndicator(
+                contained: true, size: 36, containerSize: 72)),
         error: (_, _) => Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -201,7 +204,9 @@ class _ObdPageState extends ConsumerState<ObdPage> {
 
   Widget _buildResults(AppLocalizations l, ThemeData theme) {
     if (_loading) {
-      return const Center(child: CircularProgressIndicator());
+      return const Center(
+        child: M3LoadingIndicator(contained: true, size: 36, containerSize: 72),
+      );
     }
 
     if (_error != null) {

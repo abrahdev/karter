@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material3_indicators/material3_indicators.dart';
 import 'package:mobile/presentation/providers/haptic_provider.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:image_picker/image_picker.dart';
@@ -522,12 +523,7 @@ class _AddDocumentModalState extends ConsumerState<_AddDocumentModal> {
               child: FilledButton.icon(
                 onPressed: _saving ? null : _save,
                 icon: _saving
-                    ? const SizedBox(
-                        width: 18,
-                        height: 18,
-                        child: CircularProgressIndicator(
-                            strokeWidth: 2),
-                      )
+                    ? const M3LoadingIndicator(size: 18)
                     : const Icon(Icons.save),
                 label: Text(_editingId != null
                     ? l.saveChangesShort

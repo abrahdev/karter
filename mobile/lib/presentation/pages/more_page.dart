@@ -970,11 +970,7 @@ class _BackupSheetState extends ConsumerState<_BackupSheet> {
                       ? null
                       : () => notifier.signIn(),
                   icon: state.loading
-                      ? const SizedBox(
-                          width: 16,
-                          height: 16,
-                          child: CircularProgressIndicator(strokeWidth: 2),
-                        )
+                      ? const M3LoadingIndicator(size: 16)
                       : const Icon(Icons.cloud),
                   label: Text(l.backupConnect),
                 ),
@@ -1059,11 +1055,7 @@ class _BackupSheetState extends ConsumerState<_BackupSheet> {
                           }
                         },
                   icon: state.backingUp
-                      ? const SizedBox(
-                          width: 16,
-                          height: 16,
-                          child: CircularProgressIndicator(strokeWidth: 2),
-                        )
+                      ? const M3LoadingIndicator(size: 16)
                       : const Icon(Icons.backup),
                   label: Text(state.backingUp ? l.backupInProgress : l.backupNow),
                 ),
@@ -1076,11 +1068,7 @@ class _BackupSheetState extends ConsumerState<_BackupSheet> {
                       ? null
                       : () => _restore(context, notifier),
                   icon: state.restoring
-                      ? const SizedBox(
-                          width: 16,
-                          height: 16,
-                          child: CircularProgressIndicator(strokeWidth: 2),
-                        )
+                      ? const M3LoadingIndicator(size: 16)
                       : const Icon(Icons.restore),
                   label:
                       Text(state.restoring ? l.backupRestoreInProgress : l.backupRestore),

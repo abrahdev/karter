@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material3_indicators/material3_indicators.dart';
 import 'package:mobile/presentation/providers/haptic_provider.dart';
 import 'package:mobile/presentation/widgets/karter_switch_list_tile.dart';
 import 'package:mobile/core/modal_helpers.dart';
@@ -390,12 +391,7 @@ class _AddIntervalModalState
                   const SizedBox(width: 12),
                   Expanded(
                     child: _saving
-                        ? const Center(
-                            child: SizedBox(
-                                width: 20,
-                                height: 20,
-                                child: CircularProgressIndicator()),
-                          )
+                        ? const Center(child: M3LoadingIndicator(size: 20))
                         : FilledButton(
                             onPressed: _save,
                             child: Text(

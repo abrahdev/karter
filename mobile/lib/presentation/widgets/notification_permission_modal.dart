@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material3_indicators/material3_indicators.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -69,7 +70,7 @@ class _NotificationPermissionModalState
         mainAxisSize: MainAxisSize.min,
         children: [
           SizedBox(height: 32),
-          CircularProgressIndicator(),
+          M3LoadingIndicator(),
           SizedBox(height: 32),
         ],
       );

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:material3_indicators/material3_indicators.dart';
 import 'package:mobile/core/theme/app_spacing.dart';
 import 'package:mobile/domain/entities/maintenance_log.dart';
 import 'package:mobile/l10n/app_localizations.dart';
@@ -341,8 +342,9 @@ class _MaintenanceLogListPageState
             _buildPreviewTab(logs),
           ],
         ),
-        loading: () =>
-            const Center(child: CircularProgressIndicator()),
+        loading: () => const Center(
+            child: M3LoadingIndicator(
+                contained: true, size: 36, containerSize: 72)),
         error: (e, _) =>
             Center(child: Text(l.homeError(e.toString()))),
       ),

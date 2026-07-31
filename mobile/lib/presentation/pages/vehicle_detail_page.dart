@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:material3_indicators/material3_indicators.dart';
 import 'package:mobile/core/modal_helpers.dart';
 import 'package:mobile/core/theme/app_spacing.dart';
 import 'package:mobile/domain/entities/maintenance_interval.dart';
@@ -402,7 +403,10 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
       },
       loading: () => Scaffold(
         appBar: AppBar(),
-        body: const Center(child: CircularProgressIndicator()),
+        body: const Center(
+          child: M3LoadingIndicator(
+              contained: true, size: 36, containerSize: 72),
+        ),
       ),
       error: (error, _) => Scaffold(
         appBar: AppBar(),
@@ -673,8 +677,7 @@ class _MaintenanceCard extends ConsumerWidget {
           ),
         );
       },
-      loading: () =>
-          const Center(child: CircularProgressIndicator()),
+      loading: () => const Center(child: M3LoadingIndicator()),
       error: (_, _) => const SizedBox.shrink(),
     );
   }

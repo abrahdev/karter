@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material3_indicators/material3_indicators.dart';
 import 'package:mobile/core/modal_helpers.dart';
 import 'package:mobile/domain/entities/vehicle.dart';
 import 'package:mobile/l10n/app_localizations.dart';
@@ -125,7 +126,10 @@ class _NotificationSettingsModalState
                 style: theme.textTheme.titleLarge),
             const SizedBox(height: 20),
             if (vehicle == null)
-              const Center(child: CircularProgressIndicator())
+              const Center(
+                child: M3LoadingIndicator(
+                    contained: true, size: 36, containerSize: 72),
+              )
             else ...[
               Text(l.notificationOdometerSection,
                   style: theme.textTheme.titleSmall),

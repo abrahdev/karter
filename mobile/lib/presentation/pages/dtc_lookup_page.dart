@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material3_indicators/material3_indicators.dart';
 import 'package:mobile/data/services/template_resolver.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
@@ -100,7 +101,9 @@ class _DtcLookupPageState extends ConsumerState<DtcLookupPage> {
 
   Widget _buildBody(ThemeData theme) {
     if (_loading) {
-      return const Center(child: CircularProgressIndicator());
+      return const Center(
+        child: M3LoadingIndicator(contained: true, size: 36, containerSize: 72),
+      );
     }
 
     if (_error != null) {

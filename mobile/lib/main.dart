@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:material3_indicators/material3_indicators.dart';
 import 'package:mobile/core/theme/app_theme.dart';
 import 'package:mobile/data/services/background_service.dart';
 import 'package:mobile/data/services/catalog_service.dart';
@@ -470,7 +471,9 @@ class _NotificationListPageState extends ConsumerState<_NotificationListPage> {
                   },
           );
         },
-              loading: () => const Center(child: CircularProgressIndicator()),
+              loading: () => const Center(
+                  child: M3LoadingIndicator(
+                      contained: true, size: 36, containerSize: 72)),
               error: (e, _) => Center(child: Text(l.homeError(e))),
             ),
           ),
