@@ -1,7 +1,8 @@
 {
   "id": "subaru-forester",
   "extends": [
-    "_base/combustion.json"
+    "_base/combustion.json",
+    "subaru/dtc.json"
   ],
   "meta": {
     "make": "Subaru",

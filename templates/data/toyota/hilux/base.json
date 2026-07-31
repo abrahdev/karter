@@ -1,7 +1,8 @@
 {
   "id": "toyota-hilux",
   "extends": [
-    "_base/combustion.json"
+    "_base/combustion.json",
+    "toyota/dtc.json"
   ],
   "meta": {
     "make": "Toyota",

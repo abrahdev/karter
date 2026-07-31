@@ -1,7 +1,8 @@
 {
   "id": "kia-sportage",
   "extends": [
-    "_base/combustion.json"
+    "_base/combustion.json",
+    "kia/dtc.json"
   ],
   "meta": {
     "make": "Kia",

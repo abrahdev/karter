@@ -53,6 +53,12 @@ def generate_index():
                 print(f"  WARN: skipping {relpath}: missing id or meta")
                 continue
 
+            # Skip non-vehicle fragments (DTC/parts data) that other
+            # templates extend but are not selectable vehicle templates.
+            if "maintenance_items" not in data:
+                print(f"  INFO: skipping fragment {relpath}")
+                continue
+
             meta = data["meta"]
             extends = data.get("extends", [])
             items = data.get("maintenance_items", [])

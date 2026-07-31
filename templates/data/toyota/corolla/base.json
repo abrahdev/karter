@@ -1,7 +1,8 @@
 {
   "id": "toyota-corolla",
   "extends": [
-    "_base/combustion.json"
+    "_base/combustion.json",
+    "toyota/dtc.json"
   ],
   "meta": {
     "make": "Toyota",

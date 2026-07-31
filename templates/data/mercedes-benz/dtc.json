@@ -1,0 +1,174 @@
+{
+  "id": "mercedes-benz-dtc",
+  "meta": {
+    "make": "Mercedes-Benz",
+    "model": "OBD-II codes",
+    "author": "abrahdev",
+    "version": "1.0.0",
+    "sources": [
+      "https://github.com/Wal33D/dtc-database (MIT)"
+    ]
+  },
+  "obd_dtc_definitions": [
+    {
+      "code": "P1105",
+      "scope": "manufacturer",
+      "description": "Atmospheric Pressure Sensor In Control Module"
+    },
+    {
+      "code": "P1220",
+      "scope": "manufacturer",
+      "description": "Fuel Quantity Actuator Y231"
+    },
+    {
+      "code": "P1221",
+      "scope": "manufacturer",
+      "description": "CAN Communication ETC Or ETS Interrupted"
+    },
+    {
+      "code": "P1222",
+      "scope": "manufacturer",
+      "description": "IFI Accelerator Pedal Position Sensor R252"
+    },
+    {
+      "code": "P1223",
+      "scope": "manufacturer",
+      "description": "Fuel Rack Position Sensor Y2311"
+    },
+    {
+      "code": "P1335",
+      "scope": "manufacturer",
+      "description": "CKP Sensor IFI"
+    },
+    {
+      "code": "P1350",
+      "scope": "manufacturer",
+      "description": "Injection Sensor Solenoid"
+    },
+    {
+      "code": "P1351",
+      "scope": "manufacturer",
+      "description": "Injection Sensor Circuit"
+    },
+    {
+      "code": "P1352",
+      "scope": "manufacturer",
+      "description": "Needle Lift Sensor"
+    },
+    {
+      "code": "P1401",
+      "scope": "manufacturer",
+      "description": "EGR Lifting Sender B283"
+    },
+    {
+      "code": "P1404",
+      "scope": "manufacturer",
+      "description": "EGR Control"
+    },
+    {
+      "code": "P1465",
+      "scope": "manufacturer",
+      "description": "EPW Power"
+    },
+    {
+      "code": "P1470",
+      "scope": "manufacturer",
+      "description": "Pressure Control Flap Vacuum Transducer Y312"
+    },
+    {
+      "code": "P1475",
+      "scope": "manufacturer",
+      "description": "Resonance Intake Line Switchover Valve Y227"
+    },
+    {
+      "code": "P1476",
+      "scope": "manufacturer",
+      "description": "Resonance Intake Manifold Switchover Valve Y226"
+    },
+    {
+      "code": "P1480",
+      "scope": "manufacturer",
+      "description": "Preglow Control"
+    },
+    {
+      "code": "P1481",
+      "scope": "manufacturer",
+      "description": "Glow Plug Failure"
+    },
+    {
+      "code": "P1482",
+      "scope": "manufacturer",
+      "description": "Preglow Control Module N142"
+    },
+    {
+      "code": "P1520",
+      "scope": "manufacturer",
+      "description": "Cruise Control Switch S40"
+    },
+    {
+      "code": "P1610",
+      "scope": "manufacturer",
+      "description": "Voltage Supply Missing Or Relay Module K40"
+    },
+    {
+      "code": "P1611",
+      "scope": "manufacturer",
+      "description": "IFI Control Module N37"
+    },
+    {
+      "code": "P1612",
+      "scope": "manufacturer",
+      "description": "IFI Control Module N37 Voltage Circuit 15"
+    },
+    {
+      "code": "P1613",
+      "scope": "manufacturer",
+      "description": "IFI Control Module N37"
+    },
+    {
+      "code": "P1614",
+      "scope": "manufacturer",
+      "description": "IFI Control Module N37 Voltage Or Fuel Metering Actuator Y231K1 Or Fuel Rack Position Sensor Y2311"
+    },
+    {
+      "code": "P1615",
+      "scope": "manufacturer",
+      "description": "IFI Control Module N37 Supply Voltage"
+    },
+    {
+      "code": "P1617",
+      "scope": "manufacturer",
+      "description": "Control Module Fault Or Control Module Not Coded"
+    },
+    {
+      "code": "P1622",
+      "scope": "manufacturer",
+      "description": "Electrohydraulic Shut-Off Actuator Y11"
+    },
+    {
+      "code": "P1625",
+      "scope": "manufacturer",
+      "description": "Check Engine MIL"
+    },
+    {
+      "code": "P1630",
+      "scope": "manufacturer",
+      "description": "Drive Authorization Signal"
+    },
+    {
+      "code": "P1705",
+      "scope": "manufacturer",
+      "description": "Starter Lock-Out Backup Lamp Switch S161"
+    },
+    {
+      "code": "P1780",
+      "scope": "manufacturer",
+      "description": "Modulation Pressure Switchover Valve ATCC Y34 Or Upshift Delay Switchover Valve ATCC Y35"
+    },
+    {
+      "code": "P1781",
+      "scope": "manufacturer",
+      "description": "Upshift Delay Switchover Valve ATCC Y35"
+    }
+  ]
+}

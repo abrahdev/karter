@@ -1,0 +1,239 @@
+{
+  "id": "toyota-dtc",
+  "meta": {
+    "make": "Toyota",
+    "model": "OBD-II codes",
+    "author": "abrahdev",
+    "version": "1.0.0",
+    "sources": [
+      "https://github.com/Wal33D/dtc-database (MIT)"
+    ]
+  },
+  "obd_dtc_definitions": [
+    {
+      "code": "P1100",
+      "scope": "manufacturer",
+      "description": "BARO Sensor Circuit"
+    },
+    {
+      "code": "P1120",
+      "scope": "manufacturer",
+      "description": "Accelerator Pedal Position Sensor Circuit"
+    },
+    {
+      "code": "P1121",
+      "scope": "manufacturer",
+      "description": "Accelerator Pedal Position Sensor Range Performance Problem"
+    },
+    {
+      "code": "P1125",
+      "scope": "manufacturer",
+      "description": "Throttle Control Motor Circuit"
+    },
+    {
+      "code": "P1126",
+      "scope": "manufacturer",
+      "description": "Magnetic Clutch Circuit"
+    },
+    {
+      "code": "P1127",
+      "scope": "manufacturer",
+      "description": "ETCS Actuator Power Source Circuit"
+    },
+    {
+      "code": "P1128",
+      "scope": "manufacturer",
+      "description": "Throttle Control Motor Lock"
+    },
+    {
+      "code": "P1129",
+      "scope": "manufacturer",
+      "description": "Electric Throttle Control System"
+    },
+    {
+      "code": "P1130",
+      "scope": "manufacturer",
+      "description": "Air/Fuel Sensor Circuit Range Performance Bank 1 Sensor 1"
+    },
+    {
+      "code": "P1133",
+      "scope": "manufacturer",
+      "description": "Air/Fuel Sensor Circuit Response Bank 1 Sensor 1"
+    },
+    {
+      "code": "P1135",
+      "scope": "manufacturer",
+      "description": "Air/Fuel Sensor Heater Circuit Response Bank 1 Sensor 1"
+    },
+    {
+      "code": "P1150",
+      "scope": "manufacturer",
+      "description": "Air/Fuel Sensor Circuit Range Performance Bank 1 Sensor 2"
+    },
+    {
+      "code": "P1153",
+      "scope": "manufacturer",
+      "description": "Air/Fuel Sensor Circuit Response Bank 1 Sensor 2"
+    },
+    {
+      "code": "P1155",
+      "scope": "manufacturer",
+      "description": "Air/Fuel Sensor Heater Circuit Bank 1 Sensor 2"
+    },
+    {
+      "code": "P1200",
+      "scope": "manufacturer",
+      "description": "Fuel Pump Relay Circuit"
+    },
+    {
+      "code": "P1300",
+      "scope": "manufacturer",
+      "description": "Igniter Circuit Malfunction No 1"
+    },
+    {
+      "code": "P1305",
+      "scope": "manufacturer",
+      "description": "Igniter Circuit Malfunction No 2"
+    },
+    {
+      "code": "P1335",
+      "scope": "manufacturer",
+      "description": "No Crankshaft Position Sensor Signal Engine Running"
+    },
+    {
+      "code": "P1349",
+      "scope": "manufacturer",
+      "description": "VVT System"
+    },
+    {
+      "code": "P1400",
+      "scope": "manufacturer",
+      "description": "Sub-Throttle Position Sensor"
+    },
+    {
+      "code": "P1401",
+      "scope": "manufacturer",
+      "description": "Sub-Throttle Position Sensor Range Performance Problem"
+    },
+    {
+      "code": "P1405",
+      "scope": "manufacturer",
+      "description": "Turbo Pressure Sensor Circuit"
+    },
+    {
+      "code": "P1406",
+      "scope": "manufacturer",
+      "description": "Turbo Pressure Sensor Range Performance Problem"
+    },
+    {
+      "code": "P1410",
+      "scope": "manufacturer",
+      "description": "EGR Valve Position Sensor Circuit Malfunction"
+    },
+    {
+      "code": "P1411",
+      "scope": "manufacturer",
+      "description": "EGR Valve Position Sensor Circuit Range Performance"
+    },
+    {
+      "code": "P1500",
+      "scope": "manufacturer",
+      "description": "Starter Signal Circuit"
+    },
+    {
+      "code": "P1510",
+      "scope": "manufacturer",
+      "description": "Boost Pressure Control Circuit"
+    },
+    {
+      "code": "P1511",
+      "scope": "manufacturer",
+      "description": "Boost Pressure Low"
+    },
+    {
+      "code": "P1512",
+      "scope": "manufacturer",
+      "description": "Boost Pressure High"
+    },
+    {
+      "code": "P1520",
+      "scope": "manufacturer",
+      "description": "Stop Lamp Switch Signal Malfunction"
+    },
+    {
+      "code": "P1565",
+      "scope": "manufacturer",
+      "description": "Cruise Control Main Switch Circuit"
+    },
+    {
+      "code": "P1600",
+      "scope": "manufacturer",
+      "description": "ECM BATT Malfunction"
+    },
+    {
+      "code": "P1605",
+      "scope": "manufacturer",
+      "description": "Knock Control CPU"
+    },
+    {
+      "code": "P1630",
+      "scope": "manufacturer",
+      "description": "Traction Control System"
+    },
+    {
+      "code": "P1633",
+      "scope": "manufacturer",
+      "description": "ECM"
+    },
+    {
+      "code": "P1652",
+      "scope": "manufacturer",
+      "description": "Idle Air Control Valve Control Circuit"
+    },
+    {
+      "code": "P1656",
+      "scope": "manufacturer",
+      "description": "OCV Circuit"
+    },
+    {
+      "code": "P1658",
+      "scope": "manufacturer",
+      "description": "Wastegate Valve Control Circuit"
+    },
+    {
+      "code": "P1661",
+      "scope": "manufacturer",
+      "description": "EGR Circuit"
+    },
+    {
+      "code": "P1662",
+      "scope": "manufacturer",
+      "description": "EGR Bypass Valve Control Circuit"
+    },
+    {
+      "code": "P1700",
+      "scope": "manufacturer",
+      "description": "Vehicle Speed Sensor 2 Circuit Fault"
+    },
+    {
+      "code": "P1705",
+      "scope": "manufacturer",
+      "description": "Direct Clutch Speed Circuit Fault"
+    },
+    {
+      "code": "P1765",
+      "scope": "manufacturer",
+      "description": "Linear Shift Solenoid Circuit Fault"
+    },
+    {
+      "code": "P1780",
+      "scope": "manufacturer",
+      "description": "Park Neutral Position Switch Malfunction Only For A/T"
+    },
+    {
+      "code": "P1895",
+      "scope": "manufacturer",
+      "description": "TCM To ECM Torque Reduction Circuit Malfunction"
+    }
+  ]
+}

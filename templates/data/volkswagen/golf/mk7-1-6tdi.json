@@ -2,13 +2,17 @@
   "id": "vw-golf-mk7-1-6tdi",
   "extends": [
     "_base/diesel.json",
-    "volkswagen/golf/base.json"
+    "volkswagen/golf/base.json",
+    "volkswagen/dtc.json"
   ],
   "meta": {
     "make": "Volkswagen",
     "model": "Golf",
     "generation": "MK7",
-    "years": [2013, 2020],
+    "years": [
+      2013,
+      2020
+    ],
     "engine": {
       "code": "CXXB",
       "fuel": "diesel",
@@ -16,10 +20,15 @@
       "displacement_cc": 1598,
       "power_hp": 115
     },
-    "market": ["EU"],
+    "market": [
+      "EU"
+    ],
     "author": "abrahdev",
     "version": "1.0.0",
-    "sources": ["VW official maintenance schedule", "forums.vwvortex.com"]
+    "sources": [
+      "VW official maintenance schedule",
+      "forums.vwvortex.com"
+    ]
   },
   "maintenance_items": [
     {

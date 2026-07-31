@@ -1,7 +1,8 @@
 {
   "id": "mercedes-benz-e200",
   "extends": [
-    "_base/combustion.json"
+    "_base/combustion.json",
+    "mercedes-benz/dtc.json"
   ],
   "meta": {
     "make": "Mercedes-Benz",

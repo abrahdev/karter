@@ -1,7 +1,8 @@
 {
   "id": "honda-cr-v",
   "extends": [
-    "_base/combustion.json"
+    "_base/combustion.json",
+    "honda/dtc.json"
   ],
   "meta": {
     "make": "Honda",

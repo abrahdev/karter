@@ -1,0 +1,394 @@
+{
+  "id": "kia-dtc",
+  "meta": {
+    "make": "Kia",
+    "model": "OBD-II codes",
+    "author": "abrahdev",
+    "version": "1.0.0",
+    "sources": [
+      "https://github.com/Wal33D/dtc-database (MIT)"
+    ]
+  },
+  "obd_dtc_definitions": [
+    {
+      "code": "P1102",
+      "scope": "manufacturer",
+      "description": "HO2S11 Heater Circuit High Voltage"
+    },
+    {
+      "code": "P1105",
+      "scope": "manufacturer",
+      "description": "HO2S12 Heater Circuit High Voltage"
+    },
+    {
+      "code": "P1115",
+      "scope": "manufacturer",
+      "description": "H02S12 Heater Circuit Low Voltage"
+    },
+    {
+      "code": "P1117",
+      "scope": "manufacturer",
+      "description": "HO2S12 Heater Circuit Low Voltage"
+    },
+    {
+      "code": "P1123",
+      "scope": "manufacturer",
+      "description": "Long Term Fuel Trim Adaptive Air System Low"
+    },
+    {
+      "code": "P1124",
+      "scope": "manufacturer",
+      "description": "Long Term Fuel Trim Adaptive Air System High"
+    },
+    {
+      "code": "P1127",
+      "scope": "manufacturer",
+      "description": "Long Term Fuel Trim Multiplicative Air System Low"
+    },
+    {
+      "code": "P1128",
+      "scope": "manufacturer",
+      "description": "Long Term Fuel Trim Multiplicative Air System High"
+    },
+    {
+      "code": "P1140",
+      "scope": "manufacturer",
+      "description": "Load Calculation Cross Check"
+    },
+    {
+      "code": "P1170",
+      "scope": "manufacturer",
+      "description": "HO2S11 Circuit Voltage Stuck At Mid-Range"
+    },
+    {
+      "code": "P1195",
+      "scope": "manufacturer",
+      "description": "EGR Boost Or Pressure Sensor Circuit Fault"
+    },
+    {
+      "code": "P1196",
+      "scope": "manufacturer",
+      "description": "Ignition Switch Start Circuit Fault"
+    },
+    {
+      "code": "P1213",
+      "scope": "manufacturer",
+      "description": "Fuel Injector 1 Circuit High Voltage"
+    },
+    {
+      "code": "P1214",
+      "scope": "manufacturer",
+      "description": "Fuel Injector 2 Circuit High Voltage"
+    },
+    {
+      "code": "P1215",
+      "scope": "manufacturer",
+      "description": "Fuel Injector 3 Circuit High Voltage"
+    },
+    {
+      "code": "P1216",
+      "scope": "manufacturer",
+      "description": "Fuel Injector 4 Circuit High Voltage"
+    },
+    {
+      "code": "P1225",
+      "scope": "manufacturer",
+      "description": "Fuel Injector 1 Circuit Low Voltage"
+    },
+    {
+      "code": "P1226",
+      "scope": "manufacturer",
+      "description": "Fuel Injector 2 Circuit Low Voltage"
+    },
+    {
+      "code": "P1227",
+      "scope": "manufacturer",
+      "description": "Fuel Injector 3 Circuit Low Voltage"
+    },
+    {
+      "code": "P1228",
+      "scope": "manufacturer",
+      "description": "Fuel Injector 4 Circuit Low Voltage"
+    },
+    {
+      "code": "P1250",
+      "scope": "manufacturer",
+      "description": "Pressure Regulator Control Solenoid Valve Open Or Short"
+    },
+    {
+      "code": "P1252",
+      "scope": "manufacturer",
+      "description": "Pressure Regulator Control Solenoid Valve No. 2 Circuit Malfunction"
+    },
+    {
+      "code": "P1307",
+      "scope": "manufacturer",
+      "description": "Chassis Acceleration Sensor Signal Malfunction"
+    },
+    {
+      "code": "P1308",
+      "scope": "manufacturer",
+      "description": "Chassis Acceleration Sensor Signal Low"
+    },
+    {
+      "code": "P1309",
+      "scope": "manufacturer",
+      "description": "Chassis Acceleration Sensor Signal High"
+    },
+    {
+      "code": "P1345",
+      "scope": "manufacturer",
+      "description": "No SGC Signal 1.6L"
+    },
+    {
+      "code": "P1386",
+      "scope": "manufacturer",
+      "description": "Knock Sensor Control Zero Test"
+    },
+    {
+      "code": "P1401",
+      "scope": "manufacturer",
+      "description": "EGR Control Solenoid Circuit Signal Low"
+    },
+    {
+      "code": "P1402",
+      "scope": "manufacturer",
+      "description": "EGR Control Solenoid Circuit Signal High"
+    },
+    {
+      "code": "P1410",
+      "scope": "manufacturer",
+      "description": "EVAP Purge Control Solenoid Circuit High Voltage"
+    },
+    {
+      "code": "P1412",
+      "scope": "manufacturer",
+      "description": "EGR Differential Pressure Sensor Signal Low"
+    },
+    {
+      "code": "P1413",
+      "scope": "manufacturer",
+      "description": "EGR Differential Pressure Sensor Signal High"
+    },
+    {
+      "code": "P1425",
+      "scope": "manufacturer",
+      "description": "EVAP Purge Control Solenoid Circuit Low Voltage"
+    },
+    {
+      "code": "P1449",
+      "scope": "manufacturer",
+      "description": "Canister Drain Cut Valve Open Or Short 1.8L"
+    },
+    {
+      "code": "P1450",
+      "scope": "manufacturer",
+      "description": "Excessive Vacuum Leak"
+    },
+    {
+      "code": "P1455",
+      "scope": "manufacturer",
+      "description": "Fuel Tank Sending Unit Open Or Short 1.8L"
+    },
+    {
+      "code": "P1457",
+      "scope": "manufacturer",
+      "description": "Purge Solenoid Valve Low System Malfunction"
+    },
+    {
+      "code": "P1458",
+      "scope": "manufacturer",
+      "description": "A/C Compressor Clutch Signal Fault"
+    },
+    {
+      "code": "P1485",
+      "scope": "manufacturer",
+      "description": "EGR Vent Control Solenoid Circuit Fault"
+    },
+    {
+      "code": "P1486",
+      "scope": "manufacturer",
+      "description": "EGR Vacuum Control Solenoid Circuit Fault"
+    },
+    {
+      "code": "P1487",
+      "scope": "manufacturer",
+      "description": "EGR Boost Sensor Solenoid Circuit Fault"
+    },
+    {
+      "code": "P1496",
+      "scope": "manufacturer",
+      "description": "EGR Stepper Motor Malfunction Circuit 1 1.8L"
+    },
+    {
+      "code": "P1497",
+      "scope": "manufacturer",
+      "description": "EGR Stepper Motor Malfunction Circuit 2 1.8L"
+    },
+    {
+      "code": "P1498",
+      "scope": "manufacturer",
+      "description": "EGR Stepper Motor Malfunction Circuit 3 1.8L"
+    },
+    {
+      "code": "P1499",
+      "scope": "manufacturer",
+      "description": "EGR Stepper Motor Malfunction Circuit 4 1.8L"
+    },
+    {
+      "code": "P1500",
+      "scope": "manufacturer",
+      "description": "No Vehicle Speed Signal to TCM"
+    },
+    {
+      "code": "P1505",
+      "scope": "manufacturer",
+      "description": "Idle Air Control Valve Opening Coil Voltage Low"
+    },
+    {
+      "code": "P1506",
+      "scope": "manufacturer",
+      "description": "Idle Air Control Valve Opening Coil Voltage High"
+    },
+    {
+      "code": "P1507",
+      "scope": "manufacturer",
+      "description": "Idle Air Control Valve Closing Coil Voltage Low"
+    },
+    {
+      "code": "P1508",
+      "scope": "manufacturer",
+      "description": "Idle Air Control Valve Closing Coil Voltage High"
+    },
+    {
+      "code": "P1510",
+      "scope": "manufacturer",
+      "description": "Idle Air Control Valve Closing Coil High Voltage"
+    },
+    {
+      "code": "P1513",
+      "scope": "manufacturer",
+      "description": "Idle Air Control Valve Closing Coil Low Voltage"
+    },
+    {
+      "code": "P1515",
+      "scope": "manufacturer",
+      "description": "A/T To M/T Codification"
+    },
+    {
+      "code": "P1523",
+      "scope": "manufacturer",
+      "description": "VICS Solenoid Valve"
+    },
+    {
+      "code": "P1552",
+      "scope": "manufacturer",
+      "description": "Idle Air Control Valve Opening Coil Low Voltage"
+    },
+    {
+      "code": "P1553",
+      "scope": "manufacturer",
+      "description": "Idle Air Control Valve Opening Coil High Voltage"
+    },
+    {
+      "code": "P1586",
+      "scope": "manufacturer",
+      "description": "A/T To M/T Codification"
+    },
+    {
+      "code": "P1606",
+      "scope": "manufacturer",
+      "description": "Chassis Accelerator Sensor Signal Circuit Fault"
+    },
+    {
+      "code": "P1608",
+      "scope": "manufacturer",
+      "description": "PCM Malfunction"
+    },
+    {
+      "code": "P1611",
+      "scope": "manufacturer",
+      "description": "MIL Request Circuit Voltage Low"
+    },
+    {
+      "code": "P1614",
+      "scope": "manufacturer",
+      "description": "MIL Request Circuit Voltage High"
+    },
+    {
+      "code": "P1616",
+      "scope": "manufacturer",
+      "description": "Chassis Accelerator Sensor Signal Low Voltage"
+    },
+    {
+      "code": "P1617",
+      "scope": "manufacturer",
+      "description": "Chassis Accelerator Sensor Signal High Voltage"
+    },
+    {
+      "code": "P1624",
+      "scope": "manufacturer",
+      "description": "TCM To PCM MIL Request Signal Circuit Fault"
+    },
+    {
+      "code": "P1631",
+      "scope": "manufacturer",
+      "description": "Alternator T Open Or No Power Output 1.8L"
+    },
+    {
+      "code": "P1632",
+      "scope": "manufacturer",
+      "description": "Battery Voltage Detection Circuit for Alternator Regulator 1.8L"
+    },
+    {
+      "code": "P1633",
+      "scope": "manufacturer",
+      "description": "Battery Overcharge"
+    },
+    {
+      "code": "P1634",
+      "scope": "manufacturer",
+      "description": "Alternator B Open 1.8L"
+    },
+    {
+      "code": "P1655",
+      "scope": "manufacturer",
+      "description": "Unused Power Stage 'B'"
+    },
+    {
+      "code": "P1660",
+      "scope": "manufacturer",
+      "description": "Power Stage Group 'B'"
+    },
+    {
+      "code": "P1665",
+      "scope": "manufacturer",
+      "description": "Power Stage Group 'A'"
+    },
+    {
+      "code": "P1693",
+      "scope": "manufacturer",
+      "description": "MIL Circuit Malfunction"
+    },
+    {
+      "code": "P1743",
+      "scope": "manufacturer",
+      "description": "Torque Converter Clutch Solenoid Valve Open Or Short"
+    },
+    {
+      "code": "P1794",
+      "scope": "manufacturer",
+      "description": "Battery Or Circuit Failure"
+    },
+    {
+      "code": "P1795",
+      "scope": "manufacturer",
+      "description": "4WD Switch Signal Malfunction"
+    },
+    {
+      "code": "P1797",
+      "scope": "manufacturer",
+      "description": "Clutch Pedal Switch MT Or P/N Switch Circuit Fault"
+    }
+  ]
+}

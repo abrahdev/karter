@@ -1,7 +1,8 @@
 {
   "id": "jeep-renegade",
   "extends": [
-    "_base/combustion.json"
+    "_base/combustion.json",
+    "jeep/dtc.json"
   ],
   "meta": {
     "make": "Jeep",

@@ -1,0 +1,179 @@
+{
+  "id": "mitsubishi-dtc",
+  "meta": {
+    "make": "Mitsubishi",
+    "model": "OBD-II codes",
+    "author": "abrahdev",
+    "version": "1.0.0",
+    "sources": [
+      "https://github.com/Wal33D/dtc-database (MIT)"
+    ]
+  },
+  "obd_dtc_definitions": [
+    {
+      "code": "P1100",
+      "scope": "manufacturer",
+      "description": "Induction Control Motor Position Sensor Fault"
+    },
+    {
+      "code": "P1101",
+      "scope": "manufacturer",
+      "description": "Traction Control Vacuum Solenoid Circuit Fault"
+    },
+    {
+      "code": "P1102",
+      "scope": "manufacturer",
+      "description": "Traction Control Ventilation Solenoid Circuit Fault"
+    },
+    {
+      "code": "P1103",
+      "scope": "manufacturer",
+      "description": "Turbocharger Wastegate Actuator"
+    },
+    {
+      "code": "P1104",
+      "scope": "manufacturer",
+      "description": "Turbocharger Wastegate Solenoid"
+    },
+    {
+      "code": "P1105",
+      "scope": "manufacturer",
+      "description": "Fuel Pressure Solenoid"
+    },
+    {
+      "code": "P1294",
+      "scope": "manufacturer",
+      "description": "Target Idle Speed Not Reached"
+    },
+    {
+      "code": "P1295",
+      "scope": "manufacturer",
+      "description": "No 5 Volt Supply To TP Sensor"
+    },
+    {
+      "code": "P1296",
+      "scope": "manufacturer",
+      "description": "No 5 Volt Supply To MAP Sensor"
+    },
+    {
+      "code": "P1297",
+      "scope": "manufacturer",
+      "description": "No Charge In MAP From Start To Run"
+    },
+    {
+      "code": "P1300",
+      "scope": "manufacturer",
+      "description": "Ignition Timing Adjustment Circuit"
+    },
+    {
+      "code": "P1390",
+      "scope": "manufacturer",
+      "description": "Timing Belt Skipped One Tooth Or More"
+    },
+    {
+      "code": "P1391",
+      "scope": "manufacturer",
+      "description": "Intermittent Loss Of CMP Or CKP Sensor Signals"
+    },
+    {
+      "code": "P1400",
+      "scope": "manufacturer",
+      "description": "Manifold Differential Pressure Sensor Circuit"
+    },
+    {
+      "code": "P1443",
+      "scope": "manufacturer",
+      "description": "EVAP Purge Control Solenoid 2 Circuit Fault"
+    },
+    {
+      "code": "P1486",
+      "scope": "manufacturer",
+      "description": "EVAP Leak Monitor Pinched Hose Detected"
+    },
+    {
+      "code": "P1487",
+      "scope": "manufacturer",
+      "description": "High Speed Radiator Fan Control Relay Circuit Fault"
+    },
+    {
+      "code": "P1489",
+      "scope": "manufacturer",
+      "description": "High Speed Condenser Fan Control Relay Fault"
+    },
+    {
+      "code": "P1490",
+      "scope": "manufacturer",
+      "description": "Low Speed Fan Control Relay Fault"
+    },
+    {
+      "code": "P1492",
+      "scope": "manufacturer",
+      "description": "Battery Temperature Sensor High Voltage"
+    },
+    {
+      "code": "P1494",
+      "scope": "manufacturer",
+      "description": "EVAP Ventilation Switch Or Mechanical Fault"
+    },
+    {
+      "code": "P1495",
+      "scope": "manufacturer",
+      "description": "EVAP Ventilation Solenoid Circuit Fault"
+    },
+    {
+      "code": "P1496",
+      "scope": "manufacturer",
+      "description": "5 Volt Supply Output Too Low"
+    },
+    {
+      "code": "P1500",
+      "scope": "manufacturer",
+      "description": "Alternator FR Terminal Circuit"
+    },
+    {
+      "code": "P1600",
+      "scope": "manufacturer",
+      "description": "Serial Communication Link"
+    },
+    {
+      "code": "P1696",
+      "scope": "manufacturer",
+      "description": "PCM Failure EEPROM Write Denied"
+    },
+    {
+      "code": "P1698",
+      "scope": "manufacturer",
+      "description": "No CCD Messages From TCM"
+    },
+    {
+      "code": "P1715",
+      "scope": "manufacturer",
+      "description": "Pulse Generator Assembly"
+    },
+    {
+      "code": "P1750",
+      "scope": "manufacturer",
+      "description": "Solenoid Assembly"
+    },
+    {
+      "code": "P1791",
+      "scope": "manufacturer",
+      "description": "PCM ECT Level Signal To TCM Circuit Fault"
+    },
+    {
+      "code": "P1899",
+      "scope": "manufacturer",
+      "description": "P/N Position Transaxle Range Switch Circuit Fault"
+    },
+    {
+      "code": "P1751",
+      "scope": "manufacturer",
+      "description": "A/T Control Relay"
+    },
+    {
+      "code": "P1795",
+      "scope": "manufacturer",
+      "description": "Throttle Position Input Circuit To TCM"
+    }
+  ]
+}

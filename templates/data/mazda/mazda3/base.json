@@ -1,7 +1,8 @@
 {
   "id": "mazda-mazda3",
   "extends": [
-    "_base/combustion.json"
+    "_base/combustion.json",
+    "mazda/dtc.json"
   ],
   "meta": {
     "make": "Mazda",

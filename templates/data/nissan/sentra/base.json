@@ -1,7 +1,8 @@
 {
   "id": "nissan-sentra",
   "extends": [
-    "_base/combustion.json"
+    "_base/combustion.json",
+    "nissan/dtc.json"
   ],
   "meta": {
     "make": "Nissan",

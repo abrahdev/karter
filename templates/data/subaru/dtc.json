@@ -1,0 +1,479 @@
+{
+  "id": "subaru-dtc",
+  "meta": {
+    "make": "Subaru",
+    "model": "OBD-II codes",
+    "author": "abrahdev",
+    "version": "1.0.0",
+    "sources": [
+      "https://github.com/Wal33D/dtc-database (MIT)"
+    ]
+  },
+  "obd_dtc_definitions": [
+    {
+      "code": "P1086",
+      "scope": "manufacturer",
+      "description": "Tumble Generator Valve #2 LH Position Sensor Circuit Low Input"
+    },
+    {
+      "code": "P1087",
+      "scope": "manufacturer",
+      "description": "Tumble Generator Valve #2 LH Position Sensor Circuit High Input"
+    },
+    {
+      "code": "P1088",
+      "scope": "manufacturer",
+      "description": "Tumble Generator Valve #1 RH Position Sensor Circuit Low Input"
+    },
+    {
+      "code": "P1089",
+      "scope": "manufacturer",
+      "description": "Tumble Generator Valve #1 RH Position Sensor Circuit High Input"
+    },
+    {
+      "code": "P1090",
+      "scope": "manufacturer",
+      "description": "Tumble Generator Valve #1 RH Malfunction Stuck Open"
+    },
+    {
+      "code": "P1091",
+      "scope": "manufacturer",
+      "description": "Tumble Generator Valve #1 RH Malfunction Stuck Close"
+    },
+    {
+      "code": "P1092",
+      "scope": "manufacturer",
+      "description": "Tumble Generator Valve #2 LH Malfunction Stuck Open"
+    },
+    {
+      "code": "P1093",
+      "scope": "manufacturer",
+      "description": "Tumble Generator Valve #2 LH Malfunction Stuck Close"
+    },
+    {
+      "code": "P1094",
+      "scope": "manufacturer",
+      "description": "Tumble Generator Valve Circuit #1 Open Circuit"
+    },
+    {
+      "code": "P1095",
+      "scope": "manufacturer",
+      "description": "Tumble Generator Valve Circuit #1 Over Current"
+    },
+    {
+      "code": "P1096",
+      "scope": "manufacturer",
+      "description": "Tumble Generator Valve Circuit #2 Open Circuit"
+    },
+    {
+      "code": "P1097",
+      "scope": "manufacturer",
+      "description": "Tumble Generator Valve Circuit #2 Over Current"
+    },
+    {
+      "code": "P1100",
+      "scope": "manufacturer",
+      "description": "Starter Switch Circuit Malfunction"
+    },
+    {
+      "code": "P1101",
+      "scope": "manufacturer",
+      "description": "Neutral Position Switch Circuit Malfunction M/T"
+    },
+    {
+      "code": "P1102",
+      "scope": "manufacturer",
+      "description": "Pressure Sources Solenoid Valve Circuit Malfunction"
+    },
+    {
+      "code": "P1103",
+      "scope": "manufacturer",
+      "description": "Pressure Sources Switching Solenoid Valve Circuit"
+    },
+    {
+      "code": "P1104",
+      "scope": "manufacturer",
+      "description": "Engine Torque Control Signal Circuit Malfunction"
+    },
+    {
+      "code": "P1106",
+      "scope": "manufacturer",
+      "description": "Engine Torque Control Signal 2 Circuit Malfunction"
+    },
+    {
+      "code": "P1107",
+      "scope": "manufacturer",
+      "description": "AIR System Diagnosis Solenoid Circuit Fault"
+    },
+    {
+      "code": "P1110",
+      "scope": "manufacturer",
+      "description": "Atmospheric Pressure Sensor Low Input"
+    },
+    {
+      "code": "P1111",
+      "scope": "manufacturer",
+      "description": "Atmospheric Pressure Sensor High Input"
+    },
+    {
+      "code": "P1112",
+      "scope": "manufacturer",
+      "description": "Atmospheric Pressure Sensor Range Performance Problem"
+    },
+    {
+      "code": "P1115",
+      "scope": "manufacturer",
+      "description": "Engine Torque Control Cut Signal Circuit High Input"
+    },
+    {
+      "code": "P1116",
+      "scope": "manufacturer",
+      "description": "Engine Torque Control Cut Signal Circuit Low Input"
+    },
+    {
+      "code": "P1120",
+      "scope": "manufacturer",
+      "description": "Starter Switch High Input"
+    },
+    {
+      "code": "P1121",
+      "scope": "manufacturer",
+      "description": "Neutral Position Switch Circuit Low Input AT Vehicles"
+    },
+    {
+      "code": "P1122",
+      "scope": "manufacturer",
+      "description": "Pressure Sources Switching Valve Circuit High Input"
+    },
+    {
+      "code": "P1124",
+      "scope": "manufacturer",
+      "description": "TCS Signal Circuit High Input"
+    },
+    {
+      "code": "P1130",
+      "scope": "manufacturer",
+      "description": "Front Oxygen Sensor Circuit Malfunction Open Circuit"
+    },
+    {
+      "code": "P1131",
+      "scope": "manufacturer",
+      "description": "Front Oxygen Sensor Circuit Malfunction Short Circuit"
+    },
+    {
+      "code": "P1134",
+      "scope": "manufacturer",
+      "description": "Front Oxygen AF Sensor Microcomputer Problem"
+    },
+    {
+      "code": "P1137",
+      "scope": "manufacturer",
+      "description": "Front Oxygen AF Sensor Circuit Range Performance Problem"
+    },
+    {
+      "code": "P1139",
+      "scope": "manufacturer",
+      "description": "Front Oxygen AF Sensor #1 Heater Circuit Performance Range Problem"
+    },
+    {
+      "code": "P1141",
+      "scope": "manufacturer",
+      "description": "Mass Air Flow Sensor Circuit High Input"
+    },
+    {
+      "code": "P1142",
+      "scope": "manufacturer",
+      "description": "Mass Air Flow Sensor Circuit Low Input"
+    },
+    {
+      "code": "P1143",
+      "scope": "manufacturer",
+      "description": "Pressure Sensor Circuit Low Input"
+    },
+    {
+      "code": "P1144",
+      "scope": "manufacturer",
+      "description": "Pressure Sensor Circuit High Input"
+    },
+    {
+      "code": "P1146",
+      "scope": "manufacturer",
+      "description": "Pressure Sensor Circuit Range Performance Problem High Input"
+    },
+    {
+      "code": "P1150",
+      "scope": "manufacturer",
+      "description": "Front Oxygen Sensor Heater Circuit High Input"
+    },
+    {
+      "code": "P1151",
+      "scope": "manufacturer",
+      "description": "Rear Oxygen Sensor Heater Circuit High Input"
+    },
+    {
+      "code": "P1230",
+      "scope": "manufacturer",
+      "description": "Fuel Pump Control Unit Malfunction"
+    },
+    {
+      "code": "P1244",
+      "scope": "manufacturer",
+      "description": "Wastegate Control Solenoid Valve Malfunction Low Input"
+    },
+    {
+      "code": "P1245",
+      "scope": "manufacturer",
+      "description": "Wastegate Control Solenoid Valve Malfunction Fail Safe"
+    },
+    {
+      "code": "P1301",
+      "scope": "manufacturer",
+      "description": "Fire Due To Increased Exhaust Temperature"
+    },
+    {
+      "code": "P1312",
+      "scope": "manufacturer",
+      "description": "Exhaust Temperature Sensor Malfunction"
+    },
+    {
+      "code": "P1325",
+      "scope": "manufacturer",
+      "description": "Knock Sensor Circuit Low Input"
+    },
+    {
+      "code": "P1400",
+      "scope": "manufacturer",
+      "description": "Fuel Tank Pressure Control Solenoid Low Input"
+    },
+    {
+      "code": "P1401",
+      "scope": "manufacturer",
+      "description": "Fuel Tank Pressure Control System Performance"
+    },
+    {
+      "code": "P1402",
+      "scope": "manufacturer",
+      "description": "Fuel Level Pressure Sensor Circuit Fault"
+    },
+    {
+      "code": "P1420",
+      "scope": "manufacturer",
+      "description": "Fuel Tank Pressure Control Solenoid High Input"
+    },
+    {
+      "code": "P1421",
+      "scope": "manufacturer",
+      "description": "Exhaust Gas Recirculation Circuit High Input"
+    },
+    {
+      "code": "P1422",
+      "scope": "manufacturer",
+      "description": "EVAP Purge Control Solenoid Valve Circuit High Input"
+    },
+    {
+      "code": "P1423",
+      "scope": "manufacturer",
+      "description": "EVAP Vent Control High Input"
+    },
+    {
+      "code": "P1440",
+      "scope": "manufacturer",
+      "description": "Fuel Tank Pressure Control System Low Input"
+    },
+    {
+      "code": "P1441",
+      "scope": "manufacturer",
+      "description": "Fuel Tank Pressure Control System High Input"
+    },
+    {
+      "code": "P1442",
+      "scope": "manufacturer",
+      "description": "Fuel Level Sensor Circuit Range Performance"
+    },
+    {
+      "code": "P1443",
+      "scope": "manufacturer",
+      "description": "EVAP Control System Vent Control Function Problem"
+    },
+    {
+      "code": "P1480",
+      "scope": "manufacturer",
+      "description": "Cooling Fan Relay 1 Circuit High Input"
+    },
+    {
+      "code": "P1500",
+      "scope": "manufacturer",
+      "description": "Radiator Fan Relay 1 Circuit Malfunction"
+    },
+    {
+      "code": "P1501",
+      "scope": "manufacturer",
+      "description": "Idle Control System Malfunction Fail Safe"
+    },
+    {
+      "code": "P1502",
+      "scope": "manufacturer",
+      "description": "Radiator Fan Function Problem"
+    },
+    {
+      "code": "P1507",
+      "scope": "manufacturer",
+      "description": "Idle Control System Malfunction Fail Safe"
+    },
+    {
+      "code": "P1510",
+      "scope": "manufacturer",
+      "description": "Idle Air Control Solenoid Signal 1 Circuit Low Input"
+    },
+    {
+      "code": "P1511",
+      "scope": "manufacturer",
+      "description": "Idle Air Control Solenoid Signal 1 Circuit High Input"
+    },
+    {
+      "code": "P1512",
+      "scope": "manufacturer",
+      "description": "Idle Air Control Solenoid Signal 2 Circuit Low Input"
+    },
+    {
+      "code": "P1513",
+      "scope": "manufacturer",
+      "description": "Idle Air Control Solenoid Signal 2 Circuit High Input"
+    },
+    {
+      "code": "P1514",
+      "scope": "manufacturer",
+      "description": "Idle Air Control Solenoid Signal 3 Circuit Low Input"
+    },
+    {
+      "code": "P1515",
+      "scope": "manufacturer",
+      "description": "Idle Air Control Solenoid Signal 3 Circuit High Input"
+    },
+    {
+      "code": "P1516",
+      "scope": "manufacturer",
+      "description": "Idle Air Control Solenoid Signal 4 Circuit Low Input"
+    },
+    {
+      "code": "P1517",
+      "scope": "manufacturer",
+      "description": "Idle Air Control Solenoid Signal 4 Circuit High Input"
+    },
+    {
+      "code": "P1518",
+      "scope": "manufacturer",
+      "description": "Starter Switch Circuit Low Input"
+    },
+    {
+      "code": "P1520",
+      "scope": "manufacturer",
+      "description": "Radiator Fan Relay 1 Circuit High Input"
+    },
+    {
+      "code": "P1540",
+      "scope": "manufacturer",
+      "description": "Vehicle Speed Sensor Malfunction"
+    },
+    {
+      "code": "P1544",
+      "scope": "manufacturer",
+      "description": "High Exhaust Temperature Detected"
+    },
+    {
+      "code": "P1560",
+      "scope": "manufacturer",
+      "description": "Back-Up Voltage Circuit Malfunction"
+    },
+    {
+      "code": "P1590",
+      "scope": "manufacturer",
+      "description": "Neutral Position Switch Circuit High Input"
+    },
+    {
+      "code": "P1591",
+      "scope": "manufacturer",
+      "description": "Neutral Position Switch Circuit Low Input"
+    },
+    {
+      "code": "P1592",
+      "scope": "manufacturer",
+      "description": "Neutral Position Switch Circuit MT Model"
+    },
+    {
+      "code": "P1594",
+      "scope": "manufacturer",
+      "description": "Automatic Transmission Diagnosis Input Signal Circuit Malfunction"
+    },
+    {
+      "code": "P1595",
+      "scope": "manufacturer",
+      "description": "Automatic Transmission Diagnosis Input Signal Circuit Low Input"
+    },
+    {
+      "code": "P1596",
+      "scope": "manufacturer",
+      "description": "Automatic Transmission Diagnosis Input Signal Circuit High Input"
+    },
+    {
+      "code": "P1698",
+      "scope": "manufacturer",
+      "description": "Engine Torque Control Cut Signal Circuit Low Input"
+    },
+    {
+      "code": "P1699",
+      "scope": "manufacturer",
+      "description": "Engine Torque Control Cut Signal Circuit High Input"
+    },
+    {
+      "code": "P1700",
+      "scope": "manufacturer",
+      "description": "Throttle Position Sensor Circuit Malfunction AT"
+    },
+    {
+      "code": "P1701",
+      "scope": "manufacturer",
+      "description": "Cruise Control Set Signal Circuit Malfunction AT"
+    },
+    {
+      "code": "P1702",
+      "scope": "manufacturer",
+      "description": "Auto Trans Diagnosis Input Signal Circuit"
+    },
+    {
+      "code": "P1703",
+      "scope": "manufacturer",
+      "description": "Low Clutch Timing Control Solenoid Valve Circuit Malfunction"
+    },
+    {
+      "code": "P1704",
+      "scope": "manufacturer",
+      "description": "2-4 Brake Timing Solenoid Valve Circuit Malfunction"
+    },
+    {
+      "code": "P1705",
+      "scope": "manufacturer",
+      "description": "2-4 Brake Pressure Solenoid Valve Solenoid D Circuit"
+    },
+    {
+      "code": "P1711",
+      "scope": "manufacturer",
+      "description": "Engine Torque Control Signal 1 Circuit Malfunction"
+    },
+    {
+      "code": "P1712",
+      "scope": "manufacturer",
+      "description": "Engine Torque Control Signal 2 Circuit Malfunction"
+    },
+    {
+      "code": "P1722",
+      "scope": "manufacturer",
+      "description": "Auto Trans Diagnosis Input Signal High Input"
+    },
+    {
+      "code": "P1742",
+      "scope": "manufacturer",
+      "description": "Auto Trans Diagnosis Input Signal Malfunction"
+    }
+  ]
+}

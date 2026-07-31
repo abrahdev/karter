@@ -1,7 +1,8 @@
 {
   "id": "bmw-320",
   "extends": [
-    "_base/combustion.json"
+    "_base/combustion.json",
+    "bmw/dtc.json"
   ],
   "meta": {
     "make": "BMW",

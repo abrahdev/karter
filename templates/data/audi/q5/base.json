@@ -1,7 +1,8 @@
 {
   "id": "audi-q5",
   "extends": [
-    "_base/combustion.json"
+    "_base/combustion.json",
+    "audi/dtc.json"
   ],
   "meta": {
     "make": "Audi",

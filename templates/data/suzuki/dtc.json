@@ -1,0 +1,99 @@
+{
+  "id": "suzuki-dtc",
+  "meta": {
+    "make": "Suzuki",
+    "model": "OBD-II codes",
+    "author": "abrahdev",
+    "version": "1.0.0",
+    "sources": [
+      "https://github.com/Wal33D/dtc-database (MIT)"
+    ]
+  },
+  "obd_dtc_definitions": [
+    {
+      "code": "P1250",
+      "scope": "manufacturer",
+      "description": "EFE Heater Circuit Fault"
+    },
+    {
+      "code": "P1408",
+      "scope": "manufacturer",
+      "description": "Maniforld Differential Pressure Sensor Circuit Fault"
+    },
+    {
+      "code": "P1410",
+      "scope": "manufacturer",
+      "description": "Fuel Tank Pressure Control Solenoid Circuit Fault"
+    },
+    {
+      "code": "P1450",
+      "scope": "manufacturer",
+      "description": "Barometric Pressure Sensor Too Low Or Too High"
+    },
+    {
+      "code": "P1451",
+      "scope": "manufacturer",
+      "description": "Barometric Pressure Sensor Performance"
+    },
+    {
+      "code": "P1460",
+      "scope": "manufacturer",
+      "description": "Radiator Fan Control System Fault"
+    },
+    {
+      "code": "P1500",
+      "scope": "manufacturer",
+      "description": "Engine Starter Signal Circuit Fault"
+    },
+    {
+      "code": "P1510",
+      "scope": "manufacturer",
+      "description": "PCM Backup Power Supply Circuit Fault"
+    },
+    {
+      "code": "P1530",
+      "scope": "manufacturer",
+      "description": "Ignition Timing Adjustment Switch Circuit Fault"
+    },
+    {
+      "code": "P1600",
+      "scope": "manufacturer",
+      "description": "PCM TCM Serial Communication Circuit Fault"
+    },
+    {
+      "code": "P1700",
+      "scope": "manufacturer",
+      "description": "TCM Throttle Position Sensor Circuit Fault"
+    },
+    {
+      "code": "P1705",
+      "scope": "manufacturer",
+      "description": "TCM ECT Sensor Circuit Fault"
+    },
+    {
+      "code": "P1710",
+      "scope": "manufacturer",
+      "description": "Back-Up Signal For Speed Sensor Circuit Malfunction"
+    },
+    {
+      "code": "P1715",
+      "scope": "manufacturer",
+      "description": "PNP Switch Circuit Fault"
+    },
+    {
+      "code": "P1717",
+      "scope": "manufacturer",
+      "description": "AT Drive Range Signal Circuit Fault"
+    },
+    {
+      "code": "P1875",
+      "scope": "manufacturer",
+      "description": "4WD Low Switch Circuit Malfunction"
+    },
+    {
+      "code": "P1895",
+      "scope": "manufacturer",
+      "description": "TCM To ECM Torque Reduction Circuit Malfunction"
+    }
+  ]
+}

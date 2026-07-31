@@ -1,7 +1,8 @@
 {
   "id": "suzuki-swift",
   "extends": [
-    "_base/combustion.json"
+    "_base/combustion.json",
+    "suzuki/dtc.json"
   ],
   "meta": {
     "make": "Suzuki",

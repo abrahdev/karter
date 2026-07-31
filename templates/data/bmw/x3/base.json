@@ -1,7 +1,8 @@
 {
   "id": "bmw-x3",
   "extends": [
-    "_base/combustion.json"
+    "_base/combustion.json",
+    "bmw/dtc.json"
   ],
   "meta": {
     "make": "BMW",

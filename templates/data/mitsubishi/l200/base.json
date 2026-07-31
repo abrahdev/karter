@@ -1,7 +1,8 @@
 {
   "id": "mitsubishi-l200",
   "extends": [
-    "_base/combustion.json"
+    "_base/combustion.json",
+    "mitsubishi/dtc.json"
   ],
   "meta": {
     "make": "Mitsubishi",

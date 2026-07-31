@@ -1,7 +1,8 @@
 {
   "id": "chevrolet-tracker",
   "extends": [
-    "_base/combustion.json"
+    "_base/combustion.json",
+    "chevrolet/dtc.json"
   ],
   "meta": {
     "make": "Chevrolet",
