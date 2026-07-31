@@ -56,6 +56,7 @@
       "label": "Silencer packing (fiber)",
       "i18n_key": "seed_interval_silencer_packing",
       "desc_i18n_key": "seed_desc_silencer_packing",
+      "interval_km": 5000,
       "interval_months": 12,
       "description": "Replace internal fiberglass packing inside the silencer to maintain correct backpressure and exhaust noise limits."
     }

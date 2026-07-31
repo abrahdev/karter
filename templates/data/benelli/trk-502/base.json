@@ -89,6 +89,7 @@
       "label": "Fuel hoses",
       "i18n_key": "seed_interval_fuel_hoses",
       "desc_i18n_key": "seed_desc_fuel_hoses",
+      "interval_km": 30000,
       "interval_months": 36,
       "description": "Replace every 3 years to prevent cracking and fuel leaks."
     },
@@ -97,6 +98,7 @@
       "label": "Brake hoses",
       "i18n_key": "seed_interval_brake_hoses",
       "desc_i18n_key": "seed_desc_brake_hoses",
+      "interval_km": 40000,
       "interval_months": 48,
       "description": "Replace hydraulic brake hoses every 4 years."
     },
@@ -105,6 +107,7 @@
       "label": "Brake pump & caliper service",
       "i18n_key": "seed_interval_brake_pump_internals",
       "desc_i18n_key": "seed_desc_brake_pump_internals",
+      "interval_km": 24000,
       "interval_months": 24,
       "description": "Replace internal parts of brake pumps and calipers every 2 years."
     },

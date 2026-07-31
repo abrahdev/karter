@@ -29,6 +29,7 @@
       "label": "Brake fluid",
       "i18n_key": "seed_interval_brake_fluid",
       "desc_i18n_key": "seed_desc_brake_fluid",
+      "interval_km": 20000,
       "interval_months": 24,
       "description": "Brake fluid is hygroscopic: it absorbs moisture, reducing its boiling point and braking effectiveness."
     },

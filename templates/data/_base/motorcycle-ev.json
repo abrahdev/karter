@@ -15,6 +15,7 @@
       "label": "Battery health & BMS",
       "i18n_key": "seed_interval_battery_bms",
       "desc_i18n_key": "seed_desc_battery_bms",
+      "interval_km": 12000,
       "interval_months": 12,
       "description": "Connect diagnosis tool to monitor cell degradation, capacity parameters, and balance individual cell voltages."
     },
@@ -41,6 +42,7 @@
       "label": "Firmware / software updates",
       "i18n_key": "seed_interval_firmware_updates",
       "desc_i18n_key": "seed_desc_firmware_updates",
+      "interval_km": 12000,
       "interval_months": 12,
       "description": "Update the Vehicle Control Unit firmware for optimizations in power delivery, regen braking, and efficiency."
     },
