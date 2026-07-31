@@ -18,6 +18,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navVehicles => 'Vehicles';
 
   @override
+  String get navObd => 'OBD II';
+
+  @override
   String get navMore => 'More';
 
   @override
@@ -94,6 +97,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get close => 'Close';
+
+  @override
+  String get retry => 'Retry';
 
   @override
   String get overduePerformService => 'Overdue — perform service';
@@ -1115,4 +1121,40 @@ class AppLocalizationsEn extends AppLocalizations {
   String backupCount(Object current, Object max) {
     return 'Backups: $current/$max';
   }
+
+  @override
+  String get dtcLookupTitle => 'Fault code lookup';
+
+  @override
+  String get dtcSearchHint => 'Enter a code, e.g. P0171';
+
+  @override
+  String get dtcEmptyState => 'Type a code to look up its description';
+
+  @override
+  String get dtcNoMatch => 'No codes match your search';
+
+  @override
+  String get dtcDescription => 'Description';
+
+  @override
+  String get dtcRelatedMaintenance => 'Related maintenance';
+
+  @override
+  String get dtcScopeStandard => 'Standard';
+
+  @override
+  String get dtcScopeManufacturer => 'Manufacturer';
+
+  @override
+  String get dtcGeneralDb => 'General OBD-II codes';
+
+  @override
+  String get dtcVehicle => 'Vehicle';
+
+  @override
+  String get dtcVehicleNotFound => 'Vehicle not found';
+
+  @override
+  String get dtcLoadError => 'Couldn\'t load fault codes';
 }

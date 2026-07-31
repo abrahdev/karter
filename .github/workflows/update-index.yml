@@ -6,6 +6,7 @@ on:
     paths:
       - 'templates/**/*.json'
       - 'templates/tools/generate_index.py'
+      - 'templates/tools/build_catalog.py'
 
 permissions:
   contents: write
@@ -23,10 +24,21 @@ jobs:
       - name: Regenerate index.json
         run: python templates/tools/generate_index.py
 
+      - name: Build catalog db
+        run: python templates/tools/build_catalog.py
+
       - name: Commit if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add templates/index.json
+          git add templates/index.json mobile/assets/catalog/karter-catalog.db
           git diff --staged --quiet && echo "No changes" || \
-            (git commit -m "chore: regenerate templates/index.json" && git push)
+            (git commit -m "chore(templates): regenerate index.json and karter-catalog.db" && git push)
+
+      - name: Publish catalog to rolling release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view catalog >/dev/null 2>&1 || \
+            gh release create catalog --title "Template catalog" --notes "Rolling catalog build refreshed on every templates change."
+          gh release upload catalog mobile/assets/catalog/karter-catalog.db --clobber

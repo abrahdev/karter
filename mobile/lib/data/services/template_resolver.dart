@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import 'package:mobile/data/models/template_dtc.dart';
 import 'package:mobile/data/models/template_index.dart';
 import 'package:mobile/data/models/template_item.dart';
 import 'package:mobile/data/models/template_meta.dart';
@@ -26,11 +27,34 @@ class ResolvedItem {
   });
 }
 
+class ResolvedDtc {
+  final String code;
+  final String scope;
+  final String? descI18nKey;
+  final String? description;
+  final List<String> relatedMaintenance;
+  final List<String> relatedParts;
+
+  ResolvedDtc({
+    required this.code,
+    required this.scope,
+    this.descI18nKey,
+    this.description,
+    this.relatedMaintenance = const [],
+    this.relatedParts = const [],
+  });
+}
+
 class TemplateResolution {
   final TemplateIndexEntry entry;
   final List<ResolvedItem> items;
+  final List<ResolvedDtc> dtcs;
 
-  TemplateResolution({required this.entry, required this.items});
+  TemplateResolution({
+    required this.entry,
+    required this.items,
+    this.dtcs = const [],
+  });
 }
 
 class TemplateResolver {
@@ -86,31 +110,57 @@ class TemplateResolver {
     return data;
   }
 
-  Future<Map<String, ResolvedItem>> _resolveWithVisited(
+  Future<_ResolutionData> _resolveWithVisited(
     String path,
     Set<String> visited, {
     String? baseUrl,
   }) async {
-    if (visited.contains(path)) return {};
+    if (visited.contains(path)) return const _ResolutionData();
     visited.add(path);
 
     final data = await _loadRawTemplate(path, baseUrl: baseUrl);
     final items = <String, ResolvedItem>{};
+    final dtcs = <String, ResolvedDtc>{};
 
     final extendsList = (data['extends'] as List?)?.cast<String>() ?? [];
     for (final extPath in extendsList) {
-      final ancestorItems =
+      final ancestor =
           await _resolveWithVisited(extPath, visited, baseUrl: baseUrl);
-      _applyItems(items, ancestorItems, keepExisting: false);
+      _applyItems(items, ancestor.items, keepExisting: false);
+      _applyDtcs(dtcs, ancestor.dtcs, keepExisting: false);
     }
 
-    final rawItems = (data['maintenance_items'] as List)
-        .map((e) => TemplateItem.fromJson(e as Map<String, dynamic>))
-        .toList();
-
+    final rawItems = (data['maintenance_items'] as List?)
+            ?.map((e) => TemplateItem.fromJson(e as Map<String, dynamic>))
+            .toList() ??
+        const <TemplateItem>[];
     _applyTemplateItems(items, rawItems);
 
-    return items;
+    final rawDtcs = (data['obd_dtc_definitions'] as List?) ?? const [];
+    for (final raw in rawDtcs) {
+      final entry = TemplateDtc.fromJson(raw as Map<String, dynamic>);
+      if (entry.remove) {
+        dtcs.remove(entry.code);
+        continue;
+      }
+      final existing = dtcs[entry.code];
+      dtcs[entry.code] = existing == null
+          ? _resolveDtc(entry)
+          : _mergeDtcs(existing, entry);
+    }
+
+    return _ResolutionData(items: items, dtcs: dtcs);
+  }
+
+  void _applyDtcs(
+    Map<String, ResolvedDtc> target,
+    Map<String, ResolvedDtc> source, {
+    required bool keepExisting,
+  }) {
+    for (final entry in source.entries) {
+      if (keepExisting && target.containsKey(entry.key)) continue;
+      target[entry.key] = entry.value;
+    }
   }
 
   void _applyItems(
@@ -167,12 +217,38 @@ class TemplateResolver {
     );
   }
 
+  ResolvedDtc _resolveDtc(TemplateDtc dtc) {
+    return ResolvedDtc(
+      code: dtc.code,
+      scope: dtc.scope,
+      descI18nKey: dtc.descI18nKey,
+      description: dtc.description,
+      relatedMaintenance: dtc.relatedMaintenance,
+      relatedParts: dtc.relatedParts,
+    );
+  }
+
+  ResolvedDtc _mergeDtcs(ResolvedDtc existing, TemplateDtc override) {
+    return ResolvedDtc(
+      code: existing.code,
+      scope: override.scope == existing.scope ? existing.scope : override.scope,
+      descI18nKey: override.descI18nKey ?? existing.descI18nKey,
+      description: override.description ?? existing.description,
+      relatedMaintenance: override.relatedMaintenance.isNotEmpty
+          ? override.relatedMaintenance
+          : existing.relatedMaintenance,
+      relatedParts: override.relatedParts.isNotEmpty
+          ? override.relatedParts
+          : existing.relatedParts,
+    );
+  }
+
   Future<TemplateResolution?> resolve(
     String path, {
     String? baseUrl,
   }) async {
     final visited = <String>{};
-    final items = await _resolveWithVisited(path, visited, baseUrl: baseUrl);
+    final data = await _resolveWithVisited(path, visited, baseUrl: baseUrl);
 
     final index = await loadIndex(baseUrl: baseUrl);
     final entry = index.templates.firstWhere(
@@ -182,8 +258,18 @@ class TemplateResolver {
 
     return TemplateResolution(
       entry: entry,
-      items: items.values.toList(),
+      items: data.items.values.toList(),
+      dtcs: data.dtcs.values.toList(),
     );
+  }
+
+  Future<List<ResolvedDtc>> resolveDtc(
+    String path, {
+    String? baseUrl,
+  }) async {
+    final visited = <String>{};
+    final data = await _resolveWithVisited(path, visited, baseUrl: baseUrl);
+    return data.dtcs.values.toList();
   }
 
   Future<TemplateResolution?> findBestMatch({
@@ -259,4 +345,11 @@ class TemplateResolver {
   String _defaultLabel(String id) {
     return id.replaceAll('-', ' ');
   }
+}
+
+class _ResolutionData {
+  final Map<String, ResolvedItem> items;
+  final Map<String, ResolvedDtc> dtcs;
+
+  const _ResolutionData({this.items = const {}, this.dtcs = const {}});
 }

@@ -524,6 +524,12 @@ class _ActionsCard extends StatelessWidget {
             onTap: () => context.push('/vehicle/$vehicleId/documents'),
           ),
           ListTile(
+            leading: const Icon(Icons.search),
+            title: Text(l.dtcLookupTitle),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => context.push('/vehicle/$vehicleId/dtc'),
+          ),
+          ListTile(
             leading: const Icon(Icons.tune),
             title: Text(l.configureIntervals),
             trailing: const Icon(Icons.chevron_right),

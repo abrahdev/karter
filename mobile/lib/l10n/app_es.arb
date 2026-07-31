@@ -6,6 +6,7 @@
 
   "navDashboard": "Dashboard",
   "navVehicles": "Vehículos",
+  "navObd": "OBD II",
   "navMore": "Más",
 
   "homeEmptyTitle": "No hay vehículos",
@@ -34,6 +35,7 @@
   "registerService": "Registrar servicio",
   "noDescriptionAvailable": "Sin descripción disponible. Ve a Ajustes de mantenimiento para añadir una.",
   "close": "Cerrar",
+  "retry": "Reintentar",
   "overduePerformService": "Vencido — realiza el servicio",
   "nextIn": "Próximo en {parts}",
 
@@ -368,5 +370,17 @@
   "backupDelete": "Eliminar",
   "backupDeleteConfirm": "¿Eliminar copia {name}?",
   "backupDeleteSuccess": "Copia eliminada",
-  "backupCount": "Copias: {current}/{max}"
+  "backupCount": "Copias: {current}/{max}",
+  "dtcLookupTitle": "Consulta de códigos de fallo",
+  "dtcSearchHint": "Introduce un código, p. ej. P0171",
+  "dtcEmptyState": "Escribe un código para ver su descripción",
+  "dtcNoMatch": "Ningún código coincide con tu búsqueda",
+  "dtcDescription": "Descripción",
+  "dtcRelatedMaintenance": "Mantenimiento relacionado",
+  "dtcScopeStandard": "Estándar",
+  "dtcScopeManufacturer": "Fabricante",
+  "dtcGeneralDb": "Códigos OBD-II generales",
+  "dtcVehicle": "Vehículo",
+  "dtcVehicleNotFound": "Vehículo no encontrado",
+  "dtcLoadError": "No se pudieron cargar los códigos de fallo"
 }

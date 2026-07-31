@@ -18,6 +18,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get navVehicles => 'Vehículos';
 
   @override
+  String get navObd => 'OBD II';
+
+  @override
   String get navMore => 'Más';
 
   @override
@@ -94,6 +97,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get close => 'Cerrar';
+
+  @override
+  String get retry => 'Reintentar';
 
   @override
   String get overduePerformService => 'Vencido — realiza el servicio';
@@ -1124,4 +1130,40 @@ class AppLocalizationsEs extends AppLocalizations {
   String backupCount(Object current, Object max) {
     return 'Copias: $current/$max';
   }
+
+  @override
+  String get dtcLookupTitle => 'Consulta de códigos de fallo';
+
+  @override
+  String get dtcSearchHint => 'Introduce un código, p. ej. P0171';
+
+  @override
+  String get dtcEmptyState => 'Escribe un código para ver su descripción';
+
+  @override
+  String get dtcNoMatch => 'Ningún código coincide con tu búsqueda';
+
+  @override
+  String get dtcDescription => 'Descripción';
+
+  @override
+  String get dtcRelatedMaintenance => 'Mantenimiento relacionado';
+
+  @override
+  String get dtcScopeStandard => 'Estándar';
+
+  @override
+  String get dtcScopeManufacturer => 'Fabricante';
+
+  @override
+  String get dtcGeneralDb => 'Códigos OBD-II generales';
+
+  @override
+  String get dtcVehicle => 'Vehículo';
+
+  @override
+  String get dtcVehicleNotFound => 'Vehículo no encontrado';
+
+  @override
+  String get dtcLoadError => 'No se pudieron cargar los códigos de fallo';
 }

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -5,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile/core/theme/app_theme.dart';
 import 'package:mobile/data/services/background_service.dart';
+import 'package:mobile/data/services/catalog_service.dart';
 import 'package:mobile/data/services/notification_service.dart';
 import 'package:mobile/data/services/template_translations.dart';
 import 'package:mobile/l10n/app_localizations.dart';
@@ -20,6 +22,7 @@ import 'package:workmanager/workmanager.dart';
 import 'package:mobile/presentation/pages/dashboard_page.dart';
 import 'package:mobile/presentation/pages/data_manager_page.dart';
 import 'package:mobile/presentation/pages/document_list_page.dart';
+import 'package:mobile/presentation/pages/dtc_lookup_page.dart';
 import 'package:mobile/presentation/pages/fuel_log_form_page.dart';
 import 'package:mobile/presentation/pages/fuel_log_list_page.dart';
 import 'package:mobile/presentation/pages/home_page.dart';
@@ -30,6 +33,7 @@ import 'package:mobile/presentation/pages/maintenance_log_list_page.dart';
 import 'package:mobile/presentation/pages/maintenance_settings_page.dart';
 import 'package:mobile/presentation/pages/more_page.dart';
 import 'package:mobile/presentation/pages/notification_settings_page.dart';
+import 'package:mobile/presentation/pages/obd_page.dart';
 import 'package:mobile/presentation/pages/vehicle_detail_page.dart';
 import 'package:mobile/core/onboarding_helper.dart';
 import 'package:mobile/presentation/pages/onboarding_page.dart';
@@ -52,6 +56,10 @@ final _router = GoRouter(
           builder: (_, _) => const DashboardPage(),
         ),
         GoRoute(path: '/', builder: (_, _) => const HomePage()),
+        GoRoute(
+          path: '/obd',
+          builder: (_, _) => const ObdPage(),
+        ),
         GoRoute(
           path: '/more',
           builder: (_, _) => const MorePage(),
@@ -91,6 +99,12 @@ final _router = GoRouter(
             GoRoute(
               path: 'documents',
               builder: (_, state) => DocumentListPage(
+                vehicleId: state.pathParameters['id']!,
+              ),
+            ),
+            GoRoute(
+              path: 'dtc',
+              builder: (_, state) => DtcLookupPage(
                 vehicleId: state.pathParameters['id']!,
               ),
             ),
@@ -192,11 +206,12 @@ class _ShellState extends State<_Shell> {
   @override
   Widget build(BuildContext context) {
     final location = GoRouterState.of(context).uri.toString();
-    final currentIndex = location == '/dashboard'
-        ? 0
-        : location == '/more'
-            ? 2
-            : 1;
+    final currentIndex = switch (location) {
+      '/dashboard' => 0,
+      '/obd' => 2,
+      '/more' => 3,
+      _ => 1,
+    };
 
     void onDestinationSelected(int i) {
       switch (i) {
@@ -205,6 +220,8 @@ class _ShellState extends State<_Shell> {
         case 1:
           context.go('/');
         case 2:
+          context.go('/obd');
+        case 3:
           context.go('/more');
       }
     }
@@ -246,6 +263,11 @@ class _ShellState extends State<_Shell> {
                       label: Text(l.navVehicles),
                     ),
                     NavigationRailDestination(
+                      icon: Icon(Icons.speed_outlined),
+                      selectedIcon: Icon(Icons.speed),
+                      label: Text(l.navObd),
+                    ),
+                    NavigationRailDestination(
                       icon: Icon(Icons.more_horiz_outlined),
                       selectedIcon: Icon(Icons.more_horiz),
                       label: Text(l.navMore),
@@ -274,6 +296,11 @@ class _ShellState extends State<_Shell> {
                 icon: Icon(Icons.directions_car_outlined),
                 selectedIcon: Icon(Icons.directions_car),
                 label: l.navVehicles,
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.speed_outlined),
+                selectedIcon: Icon(Icons.speed),
+                label: l.navObd,
               ),
               NavigationDestination(
                 icon: Icon(Icons.more_horiz_outlined),
@@ -505,6 +532,9 @@ Future<void> main() async {
     baseUrl: templateSource.enabled ? templateSource.repoUrl : null,
   );
 
+  final catalogService = CatalogService();
+  await catalogService.catalogFile();
+
   runApp(
     ProviderScope(
       overrides: [
@@ -515,8 +545,13 @@ Future<void> main() async {
           notificationService.init();
           return notificationService;
         }),
+        catalogServiceProvider.overrideWithValue(catalogService),
       ],
       child: KarterApp(initialAccent: SystemTheme.accentColor.accent),
     ),
   );
+
+  if (templateSource.enabled) {
+    unawaited(catalogService.refreshFromRelease().catchError((_) {}));
+  }
 }

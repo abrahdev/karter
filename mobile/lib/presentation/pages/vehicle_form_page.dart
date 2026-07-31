@@ -14,7 +14,6 @@ import 'package:mobile/domain/value_objects/plate.dart';
 import 'package:mobile/domain/value_objects/vin.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
-import 'package:mobile/presentation/providers/template_source_provider.dart';
 import 'package:mobile/presentation/widgets/notification_permission_modal.dart';
 import 'package:mobile/presentation/widgets/section_header.dart';
 import 'package:mobile/presentation/widgets/karter_switch_list_tile.dart';
@@ -161,13 +160,11 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
     setState(() => _isLoading = true);
 
     try {
-      final resolver = ref.read(templateResolverProvider);
-      final source = ref.read(templateSourceProvider);
-      final resolution = await resolver.findBestMatch(
+      final repo = ref.read(catalogRepositoryProvider);
+      final resolution = await repo.findBestMatch(
         make: brand,
         model: model,
         year: year,
-        baseUrl: source.enabled ? source.repoUrl : null,
       );
 
       if (!mounted) return;

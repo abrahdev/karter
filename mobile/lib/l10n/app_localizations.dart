@@ -118,6 +118,12 @@ abstract class AppLocalizations {
   /// **'Vehicles'**
   String get navVehicles;
 
+  /// No description provided for @navObd.
+  ///
+  /// In en, this message translates to:
+  /// **'OBD II'**
+  String get navObd;
+
   /// No description provided for @navMore.
   ///
   /// In en, this message translates to:
@@ -267,6 +273,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Close'**
   String get close;
+
+  /// No description provided for @retry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get retry;
 
   /// No description provided for @overduePerformService.
   ///
@@ -2126,6 +2138,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Backups: {current}/{max}'**
   String backupCount(Object current, Object max);
+
+  /// No description provided for @dtcLookupTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Fault code lookup'**
+  String get dtcLookupTitle;
+
+  /// No description provided for @dtcSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a code, e.g. P0171'**
+  String get dtcSearchHint;
+
+  /// No description provided for @dtcEmptyState.
+  ///
+  /// In en, this message translates to:
+  /// **'Type a code to look up its description'**
+  String get dtcEmptyState;
+
+  /// No description provided for @dtcNoMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'No codes match your search'**
+  String get dtcNoMatch;
+
+  /// No description provided for @dtcDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get dtcDescription;
+
+  /// No description provided for @dtcRelatedMaintenance.
+  ///
+  /// In en, this message translates to:
+  /// **'Related maintenance'**
+  String get dtcRelatedMaintenance;
+
+  /// No description provided for @dtcScopeStandard.
+  ///
+  /// In en, this message translates to:
+  /// **'Standard'**
+  String get dtcScopeStandard;
+
+  /// No description provided for @dtcScopeManufacturer.
+  ///
+  /// In en, this message translates to:
+  /// **'Manufacturer'**
+  String get dtcScopeManufacturer;
+
+  /// No description provided for @dtcGeneralDb.
+  ///
+  /// In en, this message translates to:
+  /// **'General OBD-II codes'**
+  String get dtcGeneralDb;
+
+  /// No description provided for @dtcVehicle.
+  ///
+  /// In en, this message translates to:
+  /// **'Vehicle'**
+  String get dtcVehicle;
+
+  /// No description provided for @dtcVehicleNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Vehicle not found'**
+  String get dtcVehicleNotFound;
+
+  /// No description provided for @dtcLoadError.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load fault codes'**
+  String get dtcLoadError;
 }
 
 class _AppLocalizationsDelegate

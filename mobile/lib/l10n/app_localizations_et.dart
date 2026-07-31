@@ -18,6 +18,9 @@ class AppLocalizationsEt extends AppLocalizations {
   String get navVehicles => 'Sõidukid';
 
   @override
+  String get navObd => 'OBD II';
+
+  @override
   String get navMore => 'Veel';
 
   @override
@@ -94,6 +97,9 @@ class AppLocalizationsEt extends AppLocalizations {
 
   @override
   String get close => 'Sulge';
+
+  @override
+  String get retry => 'Proovi uuesti';
 
   @override
   String get overduePerformService => 'Üle tähtaja - suundu hooldusesse';
@@ -1117,4 +1123,40 @@ class AppLocalizationsEt extends AppLocalizations {
   String backupCount(Object current, Object max) {
     return 'Varukoopiad: $current/$max';
   }
+
+  @override
+  String get dtcLookupTitle => 'Veakoodide otsing';
+
+  @override
+  String get dtcSearchHint => 'Sisesta kood, nt P0171';
+
+  @override
+  String get dtcEmptyState => 'Kirjuta kood, et näha selle kirjeldust';
+
+  @override
+  String get dtcNoMatch => 'Otsingule ei vasta ükski kood';
+
+  @override
+  String get dtcDescription => 'Kirjeldus';
+
+  @override
+  String get dtcRelatedMaintenance => 'Seotud hooldus';
+
+  @override
+  String get dtcScopeStandard => 'Standardne';
+
+  @override
+  String get dtcScopeManufacturer => 'Tootja';
+
+  @override
+  String get dtcGeneralDb => 'Üldised OBD-II koodid';
+
+  @override
+  String get dtcVehicle => 'Sõiduk';
+
+  @override
+  String get dtcVehicleNotFound => 'Sõidukit ei leitud';
+
+  @override
+  String get dtcLoadError => 'Veakoodide laadimine ebaõnnestus';
 }

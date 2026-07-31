@@ -10,6 +10,18 @@ on:
       - "docs/**"
 
 jobs:
+  catalog:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Validate template resolution + catalog build
+        run: python templates/tools/build_catalog.py --check-only
+
   check:
     runs-on: ubuntu-latest
     steps:

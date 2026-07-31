@@ -9,7 +9,8 @@ import 'package:mobile/data/services/export_service.dart';
 import 'package:mobile/data/services/notification_service.dart';
 import 'package:mobile/data/services/pdf_export_service.dart';
 import 'package:mobile/data/models/template_index.dart';
-import 'package:mobile/data/services/template_resolver.dart';
+import 'package:mobile/data/services/catalog_repository.dart';
+import 'package:mobile/data/services/catalog_service.dart';
 import 'package:mobile/domain/entities/fuel_log.dart';
 import 'package:mobile/domain/entities/maintenance_interval.dart';
 import 'package:mobile/domain/entities/maintenance_log.dart';
@@ -20,7 +21,6 @@ import 'package:mobile/domain/repositories/maintenance_interval_repository.dart'
 import 'package:mobile/domain/repositories/maintenance_log_repository.dart';
 import 'package:mobile/domain/repositories/vehicle_document_repository.dart';
 import 'package:mobile/domain/repositories/vehicle_repository.dart';
-import 'package:mobile/presentation/providers/template_source_provider.dart';
 
 final appDatabaseProvider = Provider<AppDatabase>((ref) {
   return AppDatabase();
@@ -87,16 +87,19 @@ final exportServiceProvider = Provider<ExportService>((ref) {
   );
 });
 
-final templateResolverProvider = Provider<TemplateResolver>((ref) {
-  return TemplateResolver();
+final catalogServiceProvider = Provider<CatalogService>((ref) {
+  final service = CatalogService();
+  ref.onDispose(service.dispose);
+  return service;
+});
+
+final catalogRepositoryProvider = Provider<CatalogRepository>((ref) {
+  return CatalogRepository(ref.watch(catalogServiceProvider));
 });
 
 final templateIndexProvider = FutureProvider<TemplateIndex>((ref) async {
-  final resolver = ref.watch(templateResolverProvider);
-  final source = ref.watch(templateSourceProvider);
-  return resolver.loadIndex(
-    baseUrl: source.enabled ? source.repoUrl : null,
-  );
+  final repo = ref.watch(catalogRepositoryProvider);
+  return repo.loadIndex();
 });
 
 final pdfExportServiceProvider = Provider<PdfExportService>((ref) {

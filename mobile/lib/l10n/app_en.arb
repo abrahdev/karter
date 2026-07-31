@@ -6,6 +6,7 @@
 
   "navDashboard": "Dashboard",
   "navVehicles": "Vehicles",
+  "navObd": "OBD II",
   "navMore": "More",
 
   "homeEmptyTitle": "No vehicles",
@@ -34,6 +35,7 @@
   "registerService": "Register service",
   "noDescriptionAvailable": "No description available. Go to Maintenance settings to add one.",
   "close": "Close",
+  "retry": "Retry",
   "overduePerformService": "Overdue — perform service",
   "nextIn": "Next in {parts}",
 
@@ -370,5 +372,17 @@
   "backupDelete": "Delete",
   "backupDeleteConfirm": "Delete backup {name}?",
   "backupDeleteSuccess": "Backup deleted",
-  "backupCount": "Backups: {current}/{max}"
+  "backupCount": "Backups: {current}/{max}",
+  "dtcLookupTitle": "Fault code lookup",
+  "dtcSearchHint": "Enter a code, e.g. P0171",
+  "dtcEmptyState": "Type a code to look up its description",
+  "dtcNoMatch": "No codes match your search",
+  "dtcDescription": "Description",
+  "dtcRelatedMaintenance": "Related maintenance",
+  "dtcScopeStandard": "Standard",
+  "dtcScopeManufacturer": "Manufacturer",
+  "dtcGeneralDb": "General OBD-II codes",
+  "dtcVehicle": "Vehicle",
+  "dtcVehicleNotFound": "Vehicle not found",
+  "dtcLoadError": "Couldn't load fault codes"
 }
