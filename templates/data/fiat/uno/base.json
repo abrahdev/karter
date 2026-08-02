@@ -1,7 +1,7 @@
 {
   "id": "fiat-uno",
   "extends": [
-    "_base/combustion.json"
+    "_base/car-combustion.json"
   ],
   "meta": {
     "make": "Fiat",

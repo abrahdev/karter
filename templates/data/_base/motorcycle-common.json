@@ -6,6 +6,36 @@
     "author": "abrahdev",
     "version": "1.0.0"
   },
+  "parts": [
+    {
+      "id": "chain-lube",
+      "name": "Chain lubricant",
+      "i18n_key": "part_chain_lube",
+      "quantity": 1,
+      "unit": "can"
+    },
+    {
+      "id": "brake-pad-set",
+      "name": "Brake pads (set)",
+      "i18n_key": "part_brake_pads",
+      "quantity": 2,
+      "unit": "set"
+    },
+    {
+      "id": "brake-fluid",
+      "name": "Brake fluid",
+      "i18n_key": "part_brake_fluid",
+      "quantity": 0.5,
+      "unit": "L"
+    },
+    {
+      "id": "fork-oil",
+      "name": "Fork oil",
+      "i18n_key": "part_fork_oil",
+      "quantity": 1,
+      "unit": "L"
+    }
+  ],
   "maintenance_items": [
     {
       "id": "chain",
@@ -13,6 +43,12 @@
       "i18n_key": "seed_interval_chain",
       "desc_i18n_key": "seed_desc_chain",
       "interval_km": 1000,
+      "parts": [
+        {
+          "part_id": "chain-lube",
+          "quantity": 1
+        }
+      ],
       "description": "The chain is the component that suffers the most wear. Regular lubrication extends its life and prevents dangerous breakage."
     },
     {
@@ -22,6 +58,12 @@
       "desc_i18n_key": "seed_desc_motorcycle_brake_pads",
       "interval_km": 5000,
       "interval_months": 6,
+      "parts": [
+        {
+          "part_id": "brake-pad-set",
+          "quantity": 2
+        }
+      ],
       "description": "Friction compound wears with use. Below 1.5mm thickness, safety is compromised."
     },
     {
@@ -31,6 +73,12 @@
       "desc_i18n_key": "seed_desc_brake_fluid",
       "interval_km": 20000,
       "interval_months": 24,
+      "parts": [
+        {
+          "part_id": "brake-fluid",
+          "quantity": 0.5
+        }
+      ],
       "description": "Brake fluid is hygroscopic: it absorbs moisture, reducing its boiling point and braking effectiveness."
     },
     {
@@ -48,6 +96,12 @@
       "desc_i18n_key": "seed_desc_fork_oil",
       "interval_km": 15000,
       "interval_months": 36,
+      "parts": [
+        {
+          "part_id": "fork-oil",
+          "quantity": 1
+        }
+      ],
       "description": "Over time it breaks down, losing density and worsening front suspension behavior."
     },
     {

@@ -1,7 +1,7 @@
 {
   "id": "honda-cg160-titan",
   "extends": [
-    "_base/combustion.json",
+    "_base/car-combustion.json",
     "honda/dtc.json"
   ],
   "meta": {

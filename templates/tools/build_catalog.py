@@ -62,6 +62,7 @@ class ResolvedPart:
     quantity: Optional[float] = None
     unit: Optional[str] = None
     user_reference: Optional[str] = None
+    description: Optional[str] = None
 
 
 @dataclass
@@ -142,6 +143,7 @@ def _resolve_part(raw: dict) -> ResolvedPart:
         quantity=raw.get("quantity"),
         unit=raw.get("unit"),
         user_reference=raw.get("user_reference"),
+        description=raw.get("description"),
     )
 
 
@@ -156,6 +158,9 @@ def _merge_part(existing: ResolvedPart, override: ResolvedPart) -> ResolvedPart:
         else existing.quantity,
         unit=override.unit or existing.unit,
         user_reference=override.user_reference or existing.user_reference,
+        description=override.description
+        if override.description is not None
+        else existing.description,
     )
 
 
@@ -288,8 +293,6 @@ def validate(res: Resolution, path: str, i18n_en: dict, errors: List[str]) -> No
         name = resolved_text(part.name, part.i18n_key)
         if not name or not name.strip():
             errors.append(f"{path}: part {part.id!r} missing name after merge")
-        if not part.oem_number or not part.oem_number.strip():
-            errors.append(f"{path}: part {part.id!r} missing oem_number after merge")
 
     for dtc in res.dtcs.values():
         desc = resolved_text(dtc.description, dtc.desc_i18n_key)
@@ -350,6 +353,7 @@ CREATE TABLE parts (
   oem_number TEXT NOT NULL,
   quantity REAL,
   unit TEXT,
+  description TEXT,
   PRIMARY KEY (vehicle_id, id)
 );
 CREATE INDEX parts_vehicle_idx ON parts(vehicle_id);
@@ -509,8 +513,8 @@ def write_catalog(
             for part in res.parts.values():
                 db.execute(
                     "INSERT INTO parts("
-                    "vehicle_id, id, name, i18n_key, oem_number, quantity, unit) "
-                    "VALUES (?, ?, ?, ?, ?, ?, ?)",
+                    "vehicle_id, id, name, i18n_key, oem_number, quantity, unit, description) "
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
                     (
                         entry["id"],
                         part.id,
@@ -519,6 +523,7 @@ def write_catalog(
                         part.oem_number or "",
                         part.quantity,
                         part.unit,
+                        part.description,
                     ),
                 )
 

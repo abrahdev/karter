@@ -2708,6 +2708,17 @@ class $MaintenanceIntervalsTable extends MaintenanceIntervals
     ),
     defaultValue: const Constant(false),
   );
+  static const VerificationMeta _partsJsonMeta = const VerificationMeta(
+    'partsJson',
+  );
+  @override
+  late final GeneratedColumn<String> partsJson = GeneratedColumn<String>(
+    'parts_json',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
   @override
   List<GeneratedColumn> get $columns => [
     id,
@@ -2721,6 +2732,7 @@ class $MaintenanceIntervalsTable extends MaintenanceIntervals
     lastResetDate,
     isEnabled,
     isCustom,
+    partsJson,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -2817,6 +2829,12 @@ class $MaintenanceIntervalsTable extends MaintenanceIntervals
         isCustom.isAcceptableOrUnknown(data['is_custom']!, _isCustomMeta),
       );
     }
+    if (data.containsKey('parts_json')) {
+      context.handle(
+        _partsJsonMeta,
+        partsJson.isAcceptableOrUnknown(data['parts_json']!, _partsJsonMeta),
+      );
+    }
     return context;
   }
 
@@ -2873,6 +2891,10 @@ class $MaintenanceIntervalsTable extends MaintenanceIntervals
         DriftSqlType.bool,
         data['${effectivePrefix}is_custom'],
       )!,
+      partsJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}parts_json'],
+      ),
     );
   }
 
@@ -2895,6 +2917,7 @@ class MaintenanceIntervalEntry extends DataClass
   final DateTime? lastResetDate;
   final bool isEnabled;
   final bool isCustom;
+  final String? partsJson;
   const MaintenanceIntervalEntry({
     required this.id,
     required this.vehicleId,
@@ -2907,6 +2930,7 @@ class MaintenanceIntervalEntry extends DataClass
     this.lastResetDate,
     required this.isEnabled,
     required this.isCustom,
+    this.partsJson,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -2930,6 +2954,9 @@ class MaintenanceIntervalEntry extends DataClass
     }
     map['is_enabled'] = Variable<bool>(isEnabled);
     map['is_custom'] = Variable<bool>(isCustom);
+    if (!nullToAbsent || partsJson != null) {
+      map['parts_json'] = Variable<String>(partsJson);
+    }
     return map;
   }
 
@@ -2954,6 +2981,9 @@ class MaintenanceIntervalEntry extends DataClass
           : Value(lastResetDate),
       isEnabled: Value(isEnabled),
       isCustom: Value(isCustom),
+      partsJson: partsJson == null && nullToAbsent
+          ? const Value.absent()
+          : Value(partsJson),
     );
   }
 
@@ -2974,6 +3004,7 @@ class MaintenanceIntervalEntry extends DataClass
       lastResetDate: serializer.fromJson<DateTime?>(json['lastResetDate']),
       isEnabled: serializer.fromJson<bool>(json['isEnabled']),
       isCustom: serializer.fromJson<bool>(json['isCustom']),
+      partsJson: serializer.fromJson<String?>(json['partsJson']),
     );
   }
   @override
@@ -2991,6 +3022,7 @@ class MaintenanceIntervalEntry extends DataClass
       'lastResetDate': serializer.toJson<DateTime?>(lastResetDate),
       'isEnabled': serializer.toJson<bool>(isEnabled),
       'isCustom': serializer.toJson<bool>(isCustom),
+      'partsJson': serializer.toJson<String?>(partsJson),
     };
   }
 
@@ -3006,6 +3038,7 @@ class MaintenanceIntervalEntry extends DataClass
     Value<DateTime?> lastResetDate = const Value.absent(),
     bool? isEnabled,
     bool? isCustom,
+    Value<String?> partsJson = const Value.absent(),
   }) => MaintenanceIntervalEntry(
     id: id ?? this.id,
     vehicleId: vehicleId ?? this.vehicleId,
@@ -3022,6 +3055,7 @@ class MaintenanceIntervalEntry extends DataClass
         : this.lastResetDate,
     isEnabled: isEnabled ?? this.isEnabled,
     isCustom: isCustom ?? this.isCustom,
+    partsJson: partsJson.present ? partsJson.value : this.partsJson,
   );
   MaintenanceIntervalEntry copyWithCompanion(
     MaintenanceIntervalsCompanion data,
@@ -3048,6 +3082,7 @@ class MaintenanceIntervalEntry extends DataClass
           : this.lastResetDate,
       isEnabled: data.isEnabled.present ? data.isEnabled.value : this.isEnabled,
       isCustom: data.isCustom.present ? data.isCustom.value : this.isCustom,
+      partsJson: data.partsJson.present ? data.partsJson.value : this.partsJson,
     );
   }
 
@@ -3064,7 +3099,8 @@ class MaintenanceIntervalEntry extends DataClass
           ..write('lastResetKm: $lastResetKm, ')
           ..write('lastResetDate: $lastResetDate, ')
           ..write('isEnabled: $isEnabled, ')
-          ..write('isCustom: $isCustom')
+          ..write('isCustom: $isCustom, ')
+          ..write('partsJson: $partsJson')
           ..write(')'))
         .toString();
   }
@@ -3082,6 +3118,7 @@ class MaintenanceIntervalEntry extends DataClass
     lastResetDate,
     isEnabled,
     isCustom,
+    partsJson,
   );
   @override
   bool operator ==(Object other) =>
@@ -3097,7 +3134,8 @@ class MaintenanceIntervalEntry extends DataClass
           other.lastResetKm == this.lastResetKm &&
           other.lastResetDate == this.lastResetDate &&
           other.isEnabled == this.isEnabled &&
-          other.isCustom == this.isCustom);
+          other.isCustom == this.isCustom &&
+          other.partsJson == this.partsJson);
 }
 
 class MaintenanceIntervalsCompanion
@@ -3113,6 +3151,7 @@ class MaintenanceIntervalsCompanion
   final Value<DateTime?> lastResetDate;
   final Value<bool> isEnabled;
   final Value<bool> isCustom;
+  final Value<String?> partsJson;
   final Value<int> rowid;
   const MaintenanceIntervalsCompanion({
     this.id = const Value.absent(),
@@ -3126,6 +3165,7 @@ class MaintenanceIntervalsCompanion
     this.lastResetDate = const Value.absent(),
     this.isEnabled = const Value.absent(),
     this.isCustom = const Value.absent(),
+    this.partsJson = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   MaintenanceIntervalsCompanion.insert({
@@ -3140,6 +3180,7 @@ class MaintenanceIntervalsCompanion
     this.lastResetDate = const Value.absent(),
     this.isEnabled = const Value.absent(),
     this.isCustom = const Value.absent(),
+    this.partsJson = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : id = Value(id),
        vehicleId = Value(vehicleId),
@@ -3157,6 +3198,7 @@ class MaintenanceIntervalsCompanion
     Expression<DateTime>? lastResetDate,
     Expression<bool>? isEnabled,
     Expression<bool>? isCustom,
+    Expression<String>? partsJson,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -3171,6 +3213,7 @@ class MaintenanceIntervalsCompanion
       if (lastResetDate != null) 'last_reset_date': lastResetDate,
       if (isEnabled != null) 'is_enabled': isEnabled,
       if (isCustom != null) 'is_custom': isCustom,
+      if (partsJson != null) 'parts_json': partsJson,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -3187,6 +3230,7 @@ class MaintenanceIntervalsCompanion
     Value<DateTime?>? lastResetDate,
     Value<bool>? isEnabled,
     Value<bool>? isCustom,
+    Value<String?>? partsJson,
     Value<int>? rowid,
   }) {
     return MaintenanceIntervalsCompanion(
@@ -3201,6 +3245,7 @@ class MaintenanceIntervalsCompanion
       lastResetDate: lastResetDate ?? this.lastResetDate,
       isEnabled: isEnabled ?? this.isEnabled,
       isCustom: isCustom ?? this.isCustom,
+      partsJson: partsJson ?? this.partsJson,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -3241,6 +3286,9 @@ class MaintenanceIntervalsCompanion
     if (isCustom.present) {
       map['is_custom'] = Variable<bool>(isCustom.value);
     }
+    if (partsJson.present) {
+      map['parts_json'] = Variable<String>(partsJson.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -3261,6 +3309,7 @@ class MaintenanceIntervalsCompanion
           ..write('lastResetDate: $lastResetDate, ')
           ..write('isEnabled: $isEnabled, ')
           ..write('isCustom: $isCustom, ')
+          ..write('partsJson: $partsJson, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -5834,6 +5883,7 @@ typedef $$MaintenanceIntervalsTableCreateCompanionBuilder =
       Value<DateTime?> lastResetDate,
       Value<bool> isEnabled,
       Value<bool> isCustom,
+      Value<String?> partsJson,
       Value<int> rowid,
     });
 typedef $$MaintenanceIntervalsTableUpdateCompanionBuilder =
@@ -5849,6 +5899,7 @@ typedef $$MaintenanceIntervalsTableUpdateCompanionBuilder =
       Value<DateTime?> lastResetDate,
       Value<bool> isEnabled,
       Value<bool> isCustom,
+      Value<String?> partsJson,
       Value<int> rowid,
     });
 
@@ -5942,6 +5993,11 @@ class $$MaintenanceIntervalsTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
+  ColumnFilters<String> get partsJson => $composableBuilder(
+    column: $table.partsJson,
+    builder: (column) => ColumnFilters(column),
+  );
+
   $$VehiclesTableFilterComposer get vehicleId {
     final $$VehiclesTableFilterComposer composer = $composerBuilder(
       composer: this,
@@ -6025,6 +6081,11 @@ class $$MaintenanceIntervalsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get partsJson => $composableBuilder(
+    column: $table.partsJson,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   $$VehiclesTableOrderingComposer get vehicleId {
     final $$VehiclesTableOrderingComposer composer = $composerBuilder(
       composer: this,
@@ -6098,6 +6159,9 @@ class $$MaintenanceIntervalsTableAnnotationComposer
   GeneratedColumn<bool> get isCustom =>
       $composableBuilder(column: $table.isCustom, builder: (column) => column);
 
+  GeneratedColumn<String> get partsJson =>
+      $composableBuilder(column: $table.partsJson, builder: (column) => column);
+
   $$VehiclesTableAnnotationComposer get vehicleId {
     final $$VehiclesTableAnnotationComposer composer = $composerBuilder(
       composer: this,
@@ -6169,6 +6233,7 @@ class $$MaintenanceIntervalsTableTableManager
                 Value<DateTime?> lastResetDate = const Value.absent(),
                 Value<bool> isEnabled = const Value.absent(),
                 Value<bool> isCustom = const Value.absent(),
+                Value<String?> partsJson = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => MaintenanceIntervalsCompanion(
                 id: id,
@@ -6182,6 +6247,7 @@ class $$MaintenanceIntervalsTableTableManager
                 lastResetDate: lastResetDate,
                 isEnabled: isEnabled,
                 isCustom: isCustom,
+                partsJson: partsJson,
                 rowid: rowid,
               ),
           createCompanionCallback:
@@ -6197,6 +6263,7 @@ class $$MaintenanceIntervalsTableTableManager
                 Value<DateTime?> lastResetDate = const Value.absent(),
                 Value<bool> isEnabled = const Value.absent(),
                 Value<bool> isCustom = const Value.absent(),
+                Value<String?> partsJson = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => MaintenanceIntervalsCompanion.insert(
                 id: id,
@@ -6210,6 +6277,7 @@ class $$MaintenanceIntervalsTableTableManager
                 lastResetDate: lastResetDate,
                 isEnabled: isEnabled,
                 isCustom: isCustom,
+                partsJson: partsJson,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0

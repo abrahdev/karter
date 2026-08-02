@@ -1,7 +1,7 @@
 {
   "id": "jeep-compass",
   "extends": [
-    "_base/combustion.json",
+    "_base/car-combustion.json",
     "jeep/dtc.json"
   ],
   "meta": {

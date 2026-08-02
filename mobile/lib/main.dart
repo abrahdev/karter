@@ -38,6 +38,7 @@ import 'package:mobile/presentation/pages/obd_page.dart';
 import 'package:mobile/presentation/pages/vehicle_detail_page.dart';
 import 'package:mobile/core/onboarding_helper.dart';
 import 'package:mobile/presentation/pages/onboarding_page.dart';
+import 'package:mobile/presentation/pages/parts_list_page.dart';
 import 'package:mobile/presentation/pages/vehicle_form_page.dart';
 import 'package:mobile/presentation/pages/feedback_page.dart';
 import 'package:mobile/presentation/pages/tips_page.dart';
@@ -100,6 +101,12 @@ final _router = GoRouter(
             GoRoute(
               path: 'documents',
               builder: (_, state) => DocumentListPage(
+                vehicleId: state.pathParameters['id']!,
+              ),
+            ),
+            GoRoute(
+              path: 'parts',
+              builder: (_, state) => PartsListPage(
                 vehicleId: state.pathParameters['id']!,
               ),
             ),

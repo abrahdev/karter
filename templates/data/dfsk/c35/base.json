@@ -1,7 +1,7 @@
 {
   "id": "dfsk-c35",
   "extends": [
-    "_base/combustion.json"
+    "_base/car-combustion.json"
   ],
   "meta": {
     "make": "DFSK",

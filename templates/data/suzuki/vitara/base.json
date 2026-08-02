@@ -1,7 +1,7 @@
 {
   "id": "suzuki-vitara",
   "extends": [
-    "_base/combustion.json",
+    "_base/car-combustion.json",
     "suzuki/dtc.json"
   ],
   "meta": {

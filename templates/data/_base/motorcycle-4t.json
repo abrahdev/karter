@@ -9,6 +9,43 @@
     "author": "abrahdev",
     "version": "1.0.0"
   },
+  "parts": [
+    {
+      "id": "engine-oil",
+      "name": "Engine oil",
+      "i18n_key": "part_engine_oil",
+      "quantity": 3,
+      "unit": "L"
+    },
+    {
+      "id": "oil-filter",
+      "name": "Oil filter",
+      "i18n_key": "part_oil_filter",
+      "quantity": 1,
+      "unit": "unit"
+    },
+    {
+      "id": "air-filter",
+      "name": "Air filter",
+      "i18n_key": "part_air_filter",
+      "quantity": 1,
+      "unit": "unit"
+    },
+    {
+      "id": "spark-plug",
+      "name": "Spark plug",
+      "i18n_key": "part_spark_plug",
+      "quantity": 1,
+      "unit": "unit"
+    },
+    {
+      "id": "coolant",
+      "name": "Coolant",
+      "i18n_key": "part_coolant",
+      "quantity": 1,
+      "unit": "L"
+    }
+  ],
   "maintenance_items": [
     {
       "id": "engine-oil-filter",
@@ -17,6 +54,16 @@
       "desc_i18n_key": "seed_desc_oil_change",
       "interval_km": 10000,
       "interval_months": 12,
+      "parts": [
+        {
+          "part_id": "engine-oil",
+          "quantity": 3
+        },
+        {
+          "part_id": "oil-filter",
+          "quantity": 1
+        }
+      ],
       "description": "Drain old oil, replace oil filter element. Crucial for lubricating engine, transmission, and wet clutch."
     },
     {
@@ -33,6 +80,12 @@
       "i18n_key": "seed_interval_air_filter",
       "desc_i18n_key": "seed_desc_air_filter",
       "interval_km": 10000,
+      "parts": [
+        {
+          "part_id": "air-filter",
+          "quantity": 1
+        }
+      ],
       "description": "A dirty air filter reduces power, increases consumption, and can damage intake sensors."
     },
     {
@@ -41,6 +94,12 @@
       "i18n_key": "seed_interval_spark_plugs",
       "desc_i18n_key": "seed_desc_spark_plugs",
       "interval_km": 24000,
+      "parts": [
+        {
+          "part_id": "spark-plug",
+          "quantity": 1
+        }
+      ],
       "description": "Worn spark plugs increase consumption, make starting difficult, and can damage the ignition coil."
     },
     {
@@ -50,6 +109,12 @@
       "desc_i18n_key": "seed_desc_coolant",
       "interval_km": 20000,
       "interval_months": 24,
+      "parts": [
+        {
+          "part_id": "coolant",
+          "quantity": 1
+        }
+      ],
       "description": "Coolant loses its antifreeze and anticorrosive properties over time, potentially damaging the engine's internal circuit."
     },
     {

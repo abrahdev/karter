@@ -1,7 +1,7 @@
 {
   "id": "ford-focus",
   "extends": [
-    "_base/combustion.json",
+    "_base/car-combustion.json",
     "ford/dtc.json"
   ],
   "meta": {

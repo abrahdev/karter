@@ -6,6 +6,7 @@ class TemplateItem {
   final int? intervalKm;
   final int? intervalMonths;
   final String? description;
+  final Map<String, double> parts;
   final bool remove;
 
   TemplateItem({
@@ -16,6 +17,7 @@ class TemplateItem {
     this.intervalKm,
     this.intervalMonths,
     this.description,
+    this.parts = const {},
     this.remove = false,
   });
 
@@ -29,6 +31,11 @@ class TemplateItem {
             ? json['interval_months'] as int?
             : null,
         description: json['description'] as String?,
+        parts: {
+          for (final raw in (json['parts'] as List?) ?? const [])
+            (raw as Map<String, dynamic>)['part_id'] as String:
+                ((raw['quantity'] as num?) ?? 1).toDouble(),
+        },
         remove: json['remove'] as bool? ?? false,
       );
 }

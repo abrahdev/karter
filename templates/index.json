@@ -4,7 +4,7 @@
   "templates": [
     {
       "id": "cars",
-      "path": "data/_base/cars.json",
+      "path": "data/_base/car-common.json",
       "meta": {
         "make": "_base",
         "model": "Cars (common)",
@@ -18,7 +18,7 @@
     },
     {
       "id": "combustion",
-      "path": "data/_base/combustion.json",
+      "path": "data/_base/car-combustion.json",
       "meta": {
         "make": "_base",
         "model": "Combustion engine (gasoline & diesel)",
@@ -27,12 +27,12 @@
       },
       "item_count": 5,
       "extends": [
-        "_base/cars.json"
+        "_base/car-common.json"
       ]
     },
     {
       "id": "diesel",
-      "path": "data/_base/diesel.json",
+      "path": "data/_base/car-diesel.json",
       "meta": {
         "make": "_base",
         "model": "Diesel engine",
@@ -41,12 +41,12 @@
       },
       "item_count": 5,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
       "id": "electric",
-      "path": "data/_base/electric.json",
+      "path": "data/_base/car-electric.json",
       "meta": {
         "make": "_base",
         "model": "Electric vehicle",
@@ -55,7 +55,7 @@
       },
       "item_count": 5,
       "extends": [
-        "_base/cars.json"
+        "_base/car-common.json"
       ]
     },
     {
@@ -124,7 +124,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json",
+        "_base/car-combustion.json",
         "audi/dtc.json"
       ]
     },
@@ -140,7 +140,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json",
+        "_base/car-combustion.json",
         "audi/dtc.json"
       ]
     },
@@ -156,7 +156,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
@@ -171,7 +171,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
@@ -186,7 +186,7 @@
       },
       "item_count": 17,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
@@ -201,7 +201,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json",
+        "_base/car-combustion.json",
         "bmw/dtc.json"
       ]
     },
@@ -217,7 +217,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json",
+        "_base/car-combustion.json",
         "bmw/dtc.json"
       ]
     },
@@ -233,7 +233,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
@@ -248,7 +248,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
@@ -263,7 +263,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
@@ -278,7 +278,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
@@ -293,7 +293,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json",
+        "_base/car-combustion.json",
         "chevrolet/dtc.json"
       ]
     },
@@ -309,7 +309,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json",
+        "_base/car-combustion.json",
         "chevrolet/dtc.json"
       ]
     },
@@ -325,7 +325,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json",
+        "_base/car-combustion.json",
         "chevrolet/dtc.json"
       ]
     },
@@ -341,7 +341,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
@@ -356,7 +356,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
@@ -371,7 +371,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
@@ -386,7 +386,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
@@ -401,7 +401,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
@@ -416,7 +416,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
@@ -431,7 +431,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
@@ -446,7 +446,7 @@
       },
       "item_count": 1,
       "extends": [
-        "_base/combustion.json",
+        "_base/car-combustion.json",
         "ford/dtc.json"
       ]
     },
@@ -462,7 +462,7 @@
       },
       "item_count": 1,
       "extends": [
-        "_base/combustion.json",
+        "_base/car-combustion.json",
         "ford/dtc.json"
       ]
     },
@@ -478,7 +478,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json",
+        "_base/car-combustion.json",
         "ford/dtc.json"
       ]
     },
@@ -494,7 +494,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json",
+        "_base/car-combustion.json",
         "honda/dtc.json"
       ]
     },
@@ -510,7 +510,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json",
+        "_base/car-combustion.json",
         "honda/dtc.json"
       ]
     },
@@ -526,7 +526,7 @@
       },
       "item_count": 1,
       "extends": [
-        "_base/combustion.json",
+        "_base/car-combustion.json",
         "honda/dtc.json"
       ]
     },
@@ -542,7 +542,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json",
+        "_base/car-combustion.json",
         "honda/dtc.json"
       ]
     },
@@ -558,7 +558,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json",
+        "_base/car-combustion.json",
         "honda/dtc.json"
       ]
     },
@@ -574,7 +574,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json",
+        "_base/car-combustion.json",
         "honda/dtc.json"
       ]
     },
@@ -590,7 +590,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json",
+        "_base/car-combustion.json",
         "honda/dtc.json"
       ]
     },
@@ -606,7 +606,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
@@ -621,7 +621,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
@@ -636,7 +636,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
@@ -651,7 +651,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
@@ -666,7 +666,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json",
+        "_base/car-combustion.json",
         "jeep/dtc.json"
       ]
     },
@@ -682,7 +682,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json",
+        "_base/car-combustion.json",
         "jeep/dtc.json"
       ]
     },
@@ -698,7 +698,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
@@ -713,7 +713,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
@@ -728,7 +728,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json",
+        "_base/car-combustion.json",
         "kia/dtc.json"
       ]
     },
@@ -744,7 +744,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json",
+        "_base/car-combustion.json",
         "kia/dtc.json"
       ]
     },
@@ -760,7 +760,7 @@
       },
       "item_count": 1,
       "extends": [
-        "_base/combustion.json",
+        "_base/car-combustion.json",
         "mazda/dtc.json"
       ]
     },
@@ -776,7 +776,7 @@
       },
       "item_count": 1,
       "extends": [
-        "_base/combustion.json",
+        "_base/car-combustion.json",
         "mazda/dtc.json"
       ]
     },
@@ -792,7 +792,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json",
+        "_base/car-combustion.json",
         "mercedes-benz/dtc.json"
       ]
     },
@@ -808,7 +808,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json",
+        "_base/car-combustion.json",
         "mercedes-benz/dtc.json"
       ]
     },
@@ -824,7 +824,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json",
+        "_base/car-combustion.json",
         "mitsubishi/dtc.json"
       ]
     },
@@ -840,7 +840,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json",
+        "_base/car-combustion.json",
         "mitsubishi/dtc.json"
       ]
     },
@@ -856,7 +856,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json",
+        "_base/car-combustion.json",
         "nissan/dtc.json"
       ]
     },
@@ -872,7 +872,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json",
+        "_base/car-combustion.json",
         "nissan/dtc.json"
       ]
     },
@@ -888,7 +888,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json",
+        "_base/car-combustion.json",
         "nissan/dtc.json"
       ]
     },
@@ -904,7 +904,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
@@ -919,7 +919,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
@@ -934,7 +934,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
@@ -949,7 +949,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
@@ -964,7 +964,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
@@ -979,7 +979,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
@@ -994,7 +994,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
@@ -1009,7 +1009,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
@@ -1024,7 +1024,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
@@ -1039,7 +1039,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json",
+        "_base/car-combustion.json",
         "subaru/dtc.json"
       ]
     },
@@ -1055,7 +1055,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json",
+        "_base/car-combustion.json",
         "subaru/dtc.json"
       ]
     },
@@ -1071,7 +1071,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json",
+        "_base/car-combustion.json",
         "suzuki/dtc.json"
       ]
     },
@@ -1087,7 +1087,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json",
+        "_base/car-combustion.json",
         "suzuki/dtc.json"
       ]
     },
@@ -1103,7 +1103,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json",
+        "_base/car-combustion.json",
         "suzuki/dtc.json"
       ]
     },
@@ -1119,7 +1119,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json",
+        "_base/car-combustion.json",
         "suzuki/dtc.json"
       ]
     },
@@ -1135,7 +1135,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json",
+        "_base/car-combustion.json",
         "suzuki/dtc.json"
       ]
     },
@@ -1151,7 +1151,7 @@
       },
       "item_count": 2,
       "extends": [
-        "_base/combustion.json",
+        "_base/car-combustion.json",
         "toyota/dtc.json"
       ]
     },
@@ -1187,8 +1187,8 @@
       },
       "item_count": 5,
       "extends": [
-        "_base/combustion.json",
-        "_base/electric.json",
+        "_base/car-combustion.json",
+        "_base/car-electric.json",
         "toyota/corolla/base.json",
         "toyota/dtc.json"
       ]
@@ -1205,7 +1205,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json",
+        "_base/car-combustion.json",
         "toyota/dtc.json"
       ]
     },
@@ -1221,7 +1221,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json",
+        "_base/car-combustion.json",
         "toyota/dtc.json"
       ]
     },
@@ -1237,7 +1237,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
@@ -1252,7 +1252,7 @@
       },
       "item_count": 1,
       "extends": [
-        "_base/combustion.json",
+        "_base/car-combustion.json",
         "volkswagen/dtc.json"
       ]
     },
@@ -1286,7 +1286,7 @@
       },
       "item_count": 4,
       "extends": [
-        "_base/diesel.json",
+        "_base/car-diesel.json",
         "volkswagen/golf/base.json",
         "volkswagen/dtc.json"
       ]
@@ -1303,7 +1303,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json",
+        "_base/car-combustion.json",
         "volkswagen/dtc.json"
       ]
     },
@@ -1319,7 +1319,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json",
+        "_base/car-combustion.json",
         "volkswagen/dtc.json"
       ]
     },
@@ -1335,7 +1335,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
@@ -1350,7 +1350,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
@@ -1365,7 +1365,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
@@ -1380,7 +1380,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
@@ -1395,7 +1395,7 @@
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     }
   ]

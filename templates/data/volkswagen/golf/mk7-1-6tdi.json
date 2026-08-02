@@ -1,7 +1,7 @@
 {
   "id": "vw-golf-mk7-1-6tdi",
   "extends": [
-    "_base/diesel.json",
+    "_base/car-diesel.json",
     "volkswagen/golf/base.json",
     "volkswagen/dtc.json"
   ],

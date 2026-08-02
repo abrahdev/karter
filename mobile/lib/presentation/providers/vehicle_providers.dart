@@ -11,6 +11,7 @@ import 'package:mobile/data/services/pdf_export_service.dart';
 import 'package:mobile/data/models/template_index.dart';
 import 'package:mobile/data/services/catalog_repository.dart';
 import 'package:mobile/data/services/catalog_service.dart';
+import 'package:mobile/data/services/template_resolver.dart';
 import 'package:mobile/domain/entities/fuel_log.dart';
 import 'package:mobile/domain/entities/maintenance_interval.dart';
 import 'package:mobile/domain/entities/maintenance_log.dart';
@@ -100,6 +101,18 @@ final catalogRepositoryProvider = Provider<CatalogRepository>((ref) {
 final templateIndexProvider = FutureProvider<TemplateIndex>((ref) async {
   final repo = ref.watch(catalogRepositoryProvider);
   return repo.loadIndex();
+});
+
+final templateResolutionProvider =
+    FutureProvider.family<TemplateResolution?, String>((ref, vehicleId) async {
+  final vehicle = await ref.watch(vehicleProvider(vehicleId).future);
+  if (vehicle == null) return null;
+  final repo = ref.watch(catalogRepositoryProvider);
+  return repo.findBestMatch(
+    make: vehicle.brand,
+    model: vehicle.model,
+    year: vehicle.year,
+  );
 });
 
 final pdfExportServiceProvider = Provider<PdfExportService>((ref) {

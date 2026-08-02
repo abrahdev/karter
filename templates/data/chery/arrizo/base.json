@@ -1,7 +1,7 @@
 {
   "id": "chery-arrizo",
   "extends": [
-    "_base/combustion.json"
+    "_base/car-combustion.json"
   ],
   "meta": {
     "make": "Chery",

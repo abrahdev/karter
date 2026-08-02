@@ -1,7 +1,7 @@
 {
   "id": "chery-tiggo",
   "extends": [
-    "_base/combustion.json"
+    "_base/car-combustion.json"
   ],
   "meta": {
     "make": "Chery",

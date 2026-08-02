@@ -1,8 +1,8 @@
 {
   "id": "toyota-corolla-e210-1-8-hybrid",
   "extends": [
-    "_base/combustion.json",
-    "_base/electric.json",
+    "_base/car-combustion.json",
+    "_base/car-electric.json",
     "toyota/corolla/base.json",
     "toyota/dtc.json"
   ],

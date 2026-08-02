@@ -1,7 +1,7 @@
 {
   "id": "tvs-apache-rtr-160",
   "extends": [
-    "_base/combustion.json"
+    "_base/car-combustion.json"
   ],
   "meta": {
     "make": "TVS",

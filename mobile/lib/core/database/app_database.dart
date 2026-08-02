@@ -87,6 +87,7 @@ class MaintenanceIntervals extends Table {
   DateTimeColumn get lastResetDate => dateTime().nullable()();
   BoolColumn get isEnabled => boolean().withDefault(const Constant(true))();
   BoolColumn get isCustom => boolean().withDefault(const Constant(false))();
+  TextColumn get partsJson => text().nullable()();
 
   @override
   Set<Column> get primaryKey => {id};
@@ -124,7 +125,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
   @override
-  int get schemaVersion => 14;
+  int get schemaVersion => 15;
 
   @override
   MigrationStrategy get migration {
@@ -266,6 +267,12 @@ class AppDatabase extends _$AppDatabase {
                 'ALTER TABLE vehicle_documents ADD COLUMN file_paths TEXT');
             await m.database.customStatement(
                 "UPDATE vehicle_documents SET file_paths = json_array(file_path) WHERE file_paths IS NULL");
+          } catch (_) {}
+        }
+        if (from < 15) {
+          try {
+            await m.addColumn(
+                maintenanceIntervals, maintenanceIntervals.partsJson);
           } catch (_) {}
         }
       },

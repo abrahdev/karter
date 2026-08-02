@@ -1,7 +1,7 @@
 {
   "id": "kawasaki-versys-300",
   "extends": [
-    "_base/combustion.json"
+    "_base/car-combustion.json"
   ],
   "meta": {
     "make": "Kawasaki",

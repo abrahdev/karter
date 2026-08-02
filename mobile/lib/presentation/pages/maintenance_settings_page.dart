@@ -7,6 +7,7 @@ import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
 import 'package:mobile/presentation/utils/maintenance_localizer.dart';
 import 'package:mobile/presentation/widgets/add_maintenance_interval_modal.dart';
+import 'package:mobile/presentation/widgets/interval_parts_view.dart';
 
 class MaintenanceSettingsPage extends ConsumerWidget {
   final String vehicleId;
@@ -100,7 +101,16 @@ class _IntervalTile extends StatelessWidget {
             color: interval.isEnabled ? null : theme.colorScheme.outline,
           ),
         ),
-        subtitle: Text(subtitle),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(subtitle),
+            if (interval.parts.isNotEmpty) ...[
+              const SizedBox(height: 4),
+              IntervalPartsView(parts: interval.parts),
+            ],
+          ],
+        ),
         onTap: onTap,
         trailing: Switch(
           value: interval.isEnabled,

@@ -543,6 +543,282 @@ abstract class AppLocalizations {
   /// **'Time (months)'**
   String get timeMonths;
 
+  /// No description provided for @partsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Parts'**
+  String get partsTitle;
+
+  /// No description provided for @partUnitUnit.
+  ///
+  /// In en, this message translates to:
+  /// **'unit'**
+  String get partUnitUnit;
+
+  /// No description provided for @partUnitSet.
+  ///
+  /// In en, this message translates to:
+  /// **'set'**
+  String get partUnitSet;
+
+  /// No description provided for @partUnitKit.
+  ///
+  /// In en, this message translates to:
+  /// **'kit'**
+  String get partUnitKit;
+
+  /// No description provided for @partUnitCan.
+  ///
+  /// In en, this message translates to:
+  /// **'can'**
+  String get partUnitCan;
+
+  /// No description provided for @templateFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Template found'**
+  String get templateFound;
+
+  /// No description provided for @noTemplate.
+  ///
+  /// In en, this message translates to:
+  /// **'No template'**
+  String get noTemplate;
+
+  /// No description provided for @useTemplate.
+  ///
+  /// In en, this message translates to:
+  /// **'Use template'**
+  String get useTemplate;
+
+  /// No description provided for @searchTemplate.
+  ///
+  /// In en, this message translates to:
+  /// **'Search template'**
+  String get searchTemplate;
+
+  /// No description provided for @templateWithName.
+  ///
+  /// In en, this message translates to:
+  /// **'Template: {name}'**
+  String templateWithName(Object name);
+
+  /// No description provided for @noResultsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No results'**
+  String get noResultsTitle;
+
+  /// No description provided for @noTemplateFoundDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'No template found for the entered data.'**
+  String get noTemplateFoundDescription;
+
+  /// No description provided for @searchParameters.
+  ///
+  /// In en, this message translates to:
+  /// **'Search parameters:'**
+  String get searchParameters;
+
+  /// No description provided for @defaultIntervalsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'The vehicle will use default intervals.'**
+  String get defaultIntervalsHint;
+
+  /// No description provided for @missingTemplateContribute.
+  ///
+  /// In en, this message translates to:
+  /// **'Missing a template? Contribute at github.com/abrahdev/karter'**
+  String get missingTemplateContribute;
+
+  /// No description provided for @viewAllTemplates.
+  ///
+  /// In en, this message translates to:
+  /// **'View all templates'**
+  String get viewAllTemplates;
+
+  /// No description provided for @contribute.
+  ///
+  /// In en, this message translates to:
+  /// **'Contribute'**
+  String get contribute;
+
+  /// No description provided for @contributeOnGitHub.
+  ///
+  /// In en, this message translates to:
+  /// **'Contribute on GitHub'**
+  String get contributeOnGitHub;
+
+  /// No description provided for @gotIt.
+  ///
+  /// In en, this message translates to:
+  /// **'Got it'**
+  String get gotIt;
+
+  /// No description provided for @templateUnderConstruction.
+  ///
+  /// In en, this message translates to:
+  /// **'Template under construction'**
+  String get templateUnderConstruction;
+
+  /// No description provided for @templateNotReady.
+  ///
+  /// In en, this message translates to:
+  /// **'This template is not ready yet.\nWe\'re working on it!'**
+  String get templateNotReady;
+
+  /// No description provided for @contributionsWelcome.
+  ///
+  /// In en, this message translates to:
+  /// **'Contributions are welcome — add or fix templates for your vehicle:'**
+  String get contributionsWelcome;
+
+  /// No description provided for @requestedParam.
+  ///
+  /// In en, this message translates to:
+  /// **'Requested: {params}'**
+  String requestedParam(Object params);
+
+  /// No description provided for @deleteIntervalConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this interval?'**
+  String get deleteIntervalConfirm;
+
+  /// No description provided for @addPart.
+  ///
+  /// In en, this message translates to:
+  /// **'Add part'**
+  String get addPart;
+
+  /// No description provided for @partName.
+  ///
+  /// In en, this message translates to:
+  /// **'Part name'**
+  String get partName;
+
+  /// No description provided for @quantity.
+  ///
+  /// In en, this message translates to:
+  /// **'Qty'**
+  String get quantity;
+
+  /// No description provided for @oemNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'OEM number'**
+  String get oemNumber;
+
+  /// No description provided for @addLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Add link'**
+  String get addLink;
+
+  /// No description provided for @linkUrl.
+  ///
+  /// In en, this message translates to:
+  /// **'URL'**
+  String get linkUrl;
+
+  /// No description provided for @openLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get openLink;
+
+  /// No description provided for @noLinks.
+  ///
+  /// In en, this message translates to:
+  /// **'No links'**
+  String get noLinks;
+
+  /// No description provided for @noParts.
+  ///
+  /// In en, this message translates to:
+  /// **'No parts yet'**
+  String get noParts;
+
+  /// No description provided for @invalidUrl.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid URL'**
+  String get invalidUrl;
+
+  /// No description provided for @copied.
+  ///
+  /// In en, this message translates to:
+  /// **'Copied'**
+  String get copied;
+
+  /// No description provided for @linksTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reference links'**
+  String get linksTitle;
+
+  /// No description provided for @copy.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy'**
+  String get copy;
+
+  /// No description provided for @addModeManual.
+  ///
+  /// In en, this message translates to:
+  /// **'Manual'**
+  String get addModeManual;
+
+  /// No description provided for @addModeTemplate.
+  ///
+  /// In en, this message translates to:
+  /// **'Template'**
+  String get addModeTemplate;
+
+  /// No description provided for @newFromTemplate.
+  ///
+  /// In en, this message translates to:
+  /// **'New from template'**
+  String get newFromTemplate;
+
+  /// No description provided for @updatesAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Updates available'**
+  String get updatesAvailable;
+
+  /// No description provided for @restore.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore'**
+  String get restore;
+
+  /// No description provided for @syncInstruction.
+  ///
+  /// In en, this message translates to:
+  /// **'Sync maintenance intervals from your vehicle\'s template.'**
+  String get syncInstruction;
+
+  /// No description provided for @upToDate.
+  ///
+  /// In en, this message translates to:
+  /// **'All up to date'**
+  String get upToDate;
+
+  /// No description provided for @syncAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'Interval added from template'**
+  String get syncAdded;
+
+  /// No description provided for @syncRestored.
+  ///
+  /// In en, this message translates to:
+  /// **'Interval restored from template'**
+  String get syncRestored;
+
   /// No description provided for @months.
   ///
   /// In en, this message translates to:

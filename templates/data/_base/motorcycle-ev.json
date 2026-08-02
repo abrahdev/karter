@@ -9,6 +9,22 @@
     "author": "abrahdev",
     "version": "1.0.0"
   },
+  "parts": [
+    {
+      "id": "coolant",
+      "name": "Coolant",
+      "i18n_key": "part_coolant",
+      "quantity": 1,
+      "unit": "L"
+    },
+    {
+      "id": "reduction-gearbox-oil",
+      "name": "Reduction gearbox oil",
+      "i18n_key": "part_reduction_gearbox_oil",
+      "quantity": 0.5,
+      "unit": "L"
+    }
+  ],
   "maintenance_items": [
     {
       "id": "battery-bms",
@@ -35,6 +51,12 @@
       "desc_i18n_key": "seed_desc_inverter_cooling",
       "interval_km": 20000,
       "interval_months": 24,
+      "parts": [
+        {
+          "part_id": "coolant",
+          "quantity": 1
+        }
+      ],
       "description": "If liquid-cooled, check specific coolant level and top up. If air-cooled, clean cooling fins from mud and debris."
     },
     {
@@ -53,6 +75,12 @@
       "desc_i18n_key": "seed_desc_reduction_gearbox_oil",
       "interval_km": 40000,
       "interval_months": 48,
+      "parts": [
+        {
+          "part_id": "reduction-gearbox-oil",
+          "quantity": 0.5
+        }
+      ],
       "description": "Drain and replace the small amount of oil inside the central motor reduction gear mechanism."
     }
   ]

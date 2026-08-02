@@ -1,7 +1,7 @@
 {
   "id": "subaru-outback",
   "extends": [
-    "_base/combustion.json",
+    "_base/car-combustion.json",
     "subaru/dtc.json"
   ],
   "meta": {

@@ -9,6 +9,29 @@
     "author": "abrahdev",
     "version": "1.0.0"
   },
+  "parts": [
+    {
+      "id": "gearbox-oil",
+      "name": "Gearbox oil",
+      "i18n_key": "part_gearbox_oil",
+      "quantity": 1,
+      "unit": "L"
+    },
+    {
+      "id": "two-stroke-oil",
+      "name": "2T oil",
+      "i18n_key": "part_two_stroke_oil",
+      "quantity": 1,
+      "unit": "L"
+    },
+    {
+      "id": "spark-plug",
+      "name": "Spark plug",
+      "i18n_key": "part_spark_plug",
+      "quantity": 1,
+      "unit": "unit"
+    }
+  ],
   "maintenance_items": [
     {
       "id": "gearbox-oil",
@@ -17,6 +40,12 @@
       "desc_i18n_key": "seed_desc_gearbox_oil",
       "interval_km": 5000,
       "interval_months": 12,
+      "parts": [
+        {
+          "part_id": "gearbox-oil",
+          "quantity": 1
+        }
+      ],
       "description": "Change the independent gearbox oil that lubricates the clutch and gears, separate from engine combustion."
     },
     {
@@ -25,6 +54,12 @@
       "i18n_key": "seed_interval_two_stroke_oil",
       "desc_i18n_key": "seed_desc_two_stroke_oil",
       "interval_km": 500,
+      "parts": [
+        {
+          "part_id": "two-stroke-oil",
+          "quantity": 1
+        }
+      ],
       "description": "Top up the two-stroke oil tank (if auto-lube) or accurately mix manually into petrol, typically 1.5%–2.5%."
     },
     {
@@ -33,6 +68,12 @@
       "i18n_key": "seed_interval_spark_plug",
       "desc_i18n_key": "seed_desc_spark_plug",
       "interval_km": 6000,
+      "parts": [
+        {
+          "part_id": "spark-plug",
+          "quantity": 1
+        }
+      ],
       "description": "Prone to carbon fouling and oil bridges. Inspect, clean, or replace much more frequently than 4T."
     },
     {

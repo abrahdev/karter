@@ -1,7 +1,7 @@
 {
   "id": "diesel",
   "extends": [
-    "_base/combustion.json"
+    "_base/car-combustion.json"
   ],
   "meta": {
     "make": "_base",
@@ -9,6 +9,29 @@
     "author": "abrahdev",
     "version": "1.0.0"
   },
+  "parts": [
+    {
+      "id": "fuel-filter",
+      "name": "Fuel filter",
+      "i18n_key": "part_fuel_filter",
+      "quantity": 1,
+      "unit": "unit"
+    },
+    {
+      "id": "egr-cleaner",
+      "name": "EGR cleaner",
+      "i18n_key": "part_egr_cleaner",
+      "quantity": 1,
+      "unit": "can"
+    },
+    {
+      "id": "glow-plug",
+      "name": "Glow plug",
+      "i18n_key": "part_glow_plug",
+      "quantity": 4,
+      "unit": "unit"
+    }
+  ],
   "maintenance_items": [
     {
       "id": "oil-change",
@@ -28,6 +51,12 @@
       "desc_i18n_key": "seed_desc_fuel_filter",
       "interval_km": 30000,
       "interval_months": 24,
+      "parts": [
+        {
+          "part_id": "fuel-filter",
+          "quantity": 1
+        }
+      ],
       "description": "The fuel filter traps water and contaminants. A clogged filter causes power loss and hard starting."
     },
     {
@@ -36,6 +65,12 @@
       "i18n_key": "seed_interval_egr_cleaning",
       "desc_i18n_key": "seed_desc_egr_cleaning",
       "interval_km": 60000,
+      "parts": [
+        {
+          "part_id": "egr-cleaner",
+          "quantity": 1
+        }
+      ],
       "description": "Diesel peculiarity: the EGR valve accumulates soot over time. Cleaning restores engine efficiency and reduces emissions."
     },
     {
@@ -52,6 +87,12 @@
       "i18n_key": "seed_interval_glow_plugs",
       "desc_i18n_key": "seed_desc_glow_plugs",
       "interval_km": 80000,
+      "parts": [
+        {
+          "part_id": "glow-plug",
+          "quantity": 4
+        }
+      ],
       "description": "Glow plugs preheat the combustion chamber for cold starts. A failed plug causes misfiring and white smoke."
     }
   ]

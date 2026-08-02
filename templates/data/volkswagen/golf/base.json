@@ -1,7 +1,7 @@
 {
   "id": "vw-golf",
   "extends": [
-    "_base/combustion.json",
+    "_base/car-combustion.json",
     "volkswagen/dtc.json"
   ],
   "meta": {

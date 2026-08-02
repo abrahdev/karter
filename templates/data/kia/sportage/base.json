@@ -1,7 +1,7 @@
 {
   "id": "kia-sportage",
   "extends": [
-    "_base/combustion.json",
+    "_base/car-combustion.json",
     "kia/dtc.json"
   ],
   "meta": {

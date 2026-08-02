@@ -250,6 +250,154 @@ class AppLocalizationsEn extends AppLocalizations {
   String get timeMonths => 'Time (months)';
 
   @override
+  String get partsTitle => 'Parts';
+
+  @override
+  String get partUnitUnit => 'unit';
+
+  @override
+  String get partUnitSet => 'set';
+
+  @override
+  String get partUnitKit => 'kit';
+
+  @override
+  String get partUnitCan => 'can';
+
+  @override
+  String get templateFound => 'Template found';
+
+  @override
+  String get noTemplate => 'No template';
+
+  @override
+  String get useTemplate => 'Use template';
+
+  @override
+  String get searchTemplate => 'Search template';
+
+  @override
+  String templateWithName(Object name) {
+    return 'Template: $name';
+  }
+
+  @override
+  String get noResultsTitle => 'No results';
+
+  @override
+  String get noTemplateFoundDescription =>
+      'No template found for the entered data.';
+
+  @override
+  String get searchParameters => 'Search parameters:';
+
+  @override
+  String get defaultIntervalsHint => 'The vehicle will use default intervals.';
+
+  @override
+  String get missingTemplateContribute =>
+      'Missing a template? Contribute at github.com/abrahdev/karter';
+
+  @override
+  String get viewAllTemplates => 'View all templates';
+
+  @override
+  String get contribute => 'Contribute';
+
+  @override
+  String get contributeOnGitHub => 'Contribute on GitHub';
+
+  @override
+  String get gotIt => 'Got it';
+
+  @override
+  String get templateUnderConstruction => 'Template under construction';
+
+  @override
+  String get templateNotReady =>
+      'This template is not ready yet.\nWe\'re working on it!';
+
+  @override
+  String get contributionsWelcome =>
+      'Contributions are welcome — add or fix templates for your vehicle:';
+
+  @override
+  String requestedParam(Object params) {
+    return 'Requested: $params';
+  }
+
+  @override
+  String get deleteIntervalConfirm =>
+      'Are you sure you want to delete this interval?';
+
+  @override
+  String get addPart => 'Add part';
+
+  @override
+  String get partName => 'Part name';
+
+  @override
+  String get quantity => 'Qty';
+
+  @override
+  String get oemNumber => 'OEM number';
+
+  @override
+  String get addLink => 'Add link';
+
+  @override
+  String get linkUrl => 'URL';
+
+  @override
+  String get openLink => 'Open';
+
+  @override
+  String get noLinks => 'No links';
+
+  @override
+  String get noParts => 'No parts yet';
+
+  @override
+  String get invalidUrl => 'Invalid URL';
+
+  @override
+  String get copied => 'Copied';
+
+  @override
+  String get linksTitle => 'Reference links';
+
+  @override
+  String get copy => 'Copy';
+
+  @override
+  String get addModeManual => 'Manual';
+
+  @override
+  String get addModeTemplate => 'Template';
+
+  @override
+  String get newFromTemplate => 'New from template';
+
+  @override
+  String get updatesAvailable => 'Updates available';
+
+  @override
+  String get restore => 'Restore';
+
+  @override
+  String get syncInstruction =>
+      'Sync maintenance intervals from your vehicle\'s template.';
+
+  @override
+  String get upToDate => 'All up to date';
+
+  @override
+  String get syncAdded => 'Interval added from template';
+
+  @override
+  String get syncRestored => 'Interval restored from template';
+
+  @override
   String get months => 'months';
 
   @override

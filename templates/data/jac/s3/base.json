@@ -1,7 +1,7 @@
 {
   "id": "jac-s3",
   "extends": [
-    "_base/combustion.json"
+    "_base/car-combustion.json"
   ],
   "meta": {
     "make": "JAC",

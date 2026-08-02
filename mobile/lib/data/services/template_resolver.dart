@@ -6,6 +6,7 @@ import 'package:mobile/data/models/template_dtc.dart';
 import 'package:mobile/data/models/template_index.dart';
 import 'package:mobile/data/models/template_item.dart';
 import 'package:mobile/data/models/template_meta.dart';
+import 'package:mobile/data/models/template_part.dart';
 
 class ResolvedItem {
   final String id;
@@ -15,6 +16,7 @@ class ResolvedItem {
   final int intervalKm;
   final int? intervalMonths;
   final String? description;
+  final Map<String, double> parts;
 
   ResolvedItem({
     required this.id,
@@ -23,6 +25,29 @@ class ResolvedItem {
     this.descI18nKey,
     required this.intervalKm,
     this.intervalMonths,
+    this.description,
+    this.parts = const {},
+  });
+}
+
+class ResolvedPart {
+  final String id;
+  final String? name;
+  final String? i18nKey;
+  final String? oemNumber;
+  final double? quantity;
+  final String? unit;
+  final String? userReference;
+  final String? description;
+
+  ResolvedPart({
+    required this.id,
+    this.name,
+    this.i18nKey,
+    this.oemNumber,
+    this.quantity,
+    this.unit,
+    this.userReference,
     this.description,
   });
 }
@@ -49,11 +74,13 @@ class TemplateResolution {
   final TemplateIndexEntry entry;
   final List<ResolvedItem> items;
   final List<ResolvedDtc> dtcs;
+  final List<ResolvedPart> parts;
 
   TemplateResolution({
     required this.entry,
     required this.items,
     this.dtcs = const [],
+    this.parts = const [],
   });
 }
 
@@ -120,6 +147,7 @@ class TemplateResolver {
 
     final data = await _loadRawTemplate(path, baseUrl: baseUrl);
     final items = <String, ResolvedItem>{};
+    final parts = <String, ResolvedPart>{};
     final dtcs = <String, ResolvedDtc>{};
 
     final extendsList = (data['extends'] as List?)?.cast<String>() ?? [];
@@ -127,6 +155,7 @@ class TemplateResolver {
       final ancestor =
           await _resolveWithVisited(extPath, visited, baseUrl: baseUrl);
       _applyItems(items, ancestor.items, keepExisting: false);
+      _applyParts(parts, ancestor.parts, keepExisting: false);
       _applyDtcs(dtcs, ancestor.dtcs, keepExisting: false);
     }
 
@@ -135,6 +164,18 @@ class TemplateResolver {
             .toList() ??
         const <TemplateItem>[];
     _applyTemplateItems(items, rawItems);
+
+    final rawParts = (data['parts'] as List?) ?? const [];
+    for (final raw in rawParts) {
+      final entry = TemplatePart.fromJson(raw as Map<String, dynamic>);
+      if (entry.remove) {
+        parts.remove(entry.id);
+        continue;
+      }
+      final existing = parts[entry.id];
+      parts[entry.id] =
+          existing == null ? _resolvePart(entry) : _mergePart(existing, entry);
+    }
 
     final rawDtcs = (data['obd_dtc_definitions'] as List?) ?? const [];
     for (final raw in rawDtcs) {
@@ -149,7 +190,7 @@ class TemplateResolver {
           : _mergeDtcs(existing, entry);
     }
 
-    return _ResolutionData(items: items, dtcs: dtcs);
+    return _ResolutionData(items: items, parts: parts, dtcs: dtcs);
   }
 
   void _applyDtcs(
@@ -166,6 +207,17 @@ class TemplateResolver {
   void _applyItems(
     Map<String, ResolvedItem> target,
     Map<String, ResolvedItem> source, {
+    required bool keepExisting,
+  }) {
+    for (final entry in source.entries) {
+      if (keepExisting && target.containsKey(entry.key)) continue;
+      target[entry.key] = entry.value;
+    }
+  }
+
+  void _applyParts(
+    Map<String, ResolvedPart> target,
+    Map<String, ResolvedPart> source, {
     required bool keepExisting,
   }) {
     for (final entry in source.entries) {
@@ -202,6 +254,7 @@ class TemplateResolver {
       intervalKm: item.intervalKm!,
       intervalMonths: item.intervalMonths,
       description: item.description,
+      parts: item.parts,
     );
   }
 
@@ -213,6 +266,33 @@ class TemplateResolver {
       descI18nKey: override.descI18nKey ?? existing.descI18nKey,
       intervalKm: override.intervalKm ?? existing.intervalKm,
       intervalMonths: override.intervalMonths,
+      description: override.description ?? existing.description,
+      parts: {...existing.parts, ...override.parts},
+    );
+  }
+
+  ResolvedPart _resolvePart(TemplatePart part) {
+    return ResolvedPart(
+      id: part.id,
+      name: part.name,
+      i18nKey: part.i18nKey,
+      oemNumber: part.oemNumber,
+      quantity: part.quantity,
+      unit: part.unit,
+      userReference: part.userReference,
+      description: part.description,
+    );
+  }
+
+  ResolvedPart _mergePart(ResolvedPart existing, TemplatePart override) {
+    return ResolvedPart(
+      id: existing.id,
+      name: override.name ?? existing.name,
+      i18nKey: override.i18nKey ?? existing.i18nKey,
+      oemNumber: override.oemNumber ?? existing.oemNumber,
+      quantity: override.quantity ?? existing.quantity,
+      unit: override.unit ?? existing.unit,
+      userReference: override.userReference ?? existing.userReference,
       description: override.description ?? existing.description,
     );
   }
@@ -260,6 +340,7 @@ class TemplateResolver {
       entry: entry,
       items: data.items.values.toList(),
       dtcs: data.dtcs.values.toList(),
+      parts: data.parts.values.toList(),
     );
   }
 
@@ -349,7 +430,12 @@ class TemplateResolver {
 
 class _ResolutionData {
   final Map<String, ResolvedItem> items;
+  final Map<String, ResolvedPart> parts;
   final Map<String, ResolvedDtc> dtcs;
 
-  const _ResolutionData({this.items = const {}, this.dtcs = const {}});
+  const _ResolutionData({
+    this.items = const {},
+    this.parts = const {},
+    this.dtcs = const {},
+  });
 }

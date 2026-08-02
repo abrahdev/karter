@@ -44,6 +44,7 @@ class CatalogRepository {
         vehicleId,
         inheritsGeneral: (row['inherits_general'] as int) == 1,
       ),
+      parts: _loadParts(db, vehicleId),
     );
   }
 
@@ -52,7 +53,36 @@ class CatalogRepository {
     return _loadDtcs(db, _generalVehicleId, inheritsGeneral: true);
   }
 
+  List<ResolvedPart> _loadParts(Database db, String vehicleId) {
+    return db
+        .select('SELECT * FROM parts WHERE vehicle_id = ?', [vehicleId])
+        .map(_partFromRow)
+        .toList();
+  }
+
+  ResolvedPart _partFromRow(Row row) {
+    return ResolvedPart(
+      id: row['id'] as String,
+      name: row['name'] as String?,
+      i18nKey: row['i18n_key'] as String?,
+      oemNumber: row['oem_number'] as String?,
+      quantity: (row['quantity'] as num?)?.toDouble(),
+      unit: row['unit'] as String?,
+      description: row['description'] as String?,
+    );
+  }
+
   List<ResolvedItem> _loadItems(Database db, String vehicleId) {
+    final partsByItem = <String, Map<String, double>>{};
+    for (final row in db.select(
+      'SELECT * FROM maintenance_item_parts WHERE vehicle_id = ?',
+      [vehicleId],
+    )) {
+      final itemId = row['maintenance_item_id'] as String;
+      final partId = row['part_id'] as String;
+      final quantity = (row['quantity'] as num?)?.toDouble() ?? 1;
+      (partsByItem[itemId] ??= {})[partId] = quantity;
+    }
     return db
         .select(
           'SELECT * FROM maintenance_items WHERE vehicle_id = ?',
@@ -66,6 +96,7 @@ class CatalogRepository {
               intervalKm: row['interval_km'] as int,
               intervalMonths: row['interval_months'] as int?,
               description: row['description'] as String?,
+              parts: partsByItem[row['id']] ?? const {},
             ))
         .toList();
   }

@@ -114,6 +114,10 @@
             "type": "string",
             "description": "User's preferred reference (local layer), overrides oem_number"
           },
+          "description": {
+            "type": "string",
+            "description": "Long description of the part shown in the parts section"
+          },
           "remove": {
             "type": "boolean",
             "description": "true → removes this part from the parent"
