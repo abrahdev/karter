@@ -156,23 +156,28 @@ templates/
 ├── data/                     # Vehicle templates (community-contributed)
 │   ├── index.json            # Generated manifest of all templates
 │   ├── _base/                # Base templates (powertrain types)
-│   │   ├── cars.json
-│   │   ├── combustion.json
-│   │   ├── diesel.json
+│   │   ├── car-common.json
+│   │   ├── car-combustion.json
+│   │   ├── car-diesel.json
+│   │   ├── car-electric.json
 │   │   ├── dtc.json
-│   │   ├── electric.json
-│   │   └── motorcycle-*.json
+│   │   ├── motorcycle-2t.json
+│   │   ├── motorcycle-4t.json
+│   │   ├── motorcycle-common.json
+│   │   └── motorcycle-ev.json
 │   ├── audi/                 # Per-manufacturer directories
 │   ├── toyota/
 │   └── ... (31 manufacturers)
 ├── i18n/                     # Infrastructure: community translations
 │   ├── en.json
-│   └── es.json
+│   ├── es.json
+│   └── et.json
 ├── schemas/                  # Infrastructure: template validation
 │   └── template-v2.json
 └── tools/                    # Infrastructure: generation scripts
+    ├── build_catalog.py
     ├── generate_index.py
-    ├── generate_templates.py
+    ├── i18n_json.py
     └── import_dtc.py
 ```
 
