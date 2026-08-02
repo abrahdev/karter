@@ -1,6 +1,8 @@
 ---
 sidebar_position: 2
 title: Flutter Directory Structure
+sidebar_custom_props:
+  icon: '📁'
 ---
 
 ## Directory Structure
@@ -149,7 +151,7 @@ Translations are split into two systems:
 
 ## Templates Directory Structure
 
-The `templates/` directory is a self-contained package that can be forked by communities to create their own template repos:
+The `templates/` directory is a self-contained package that can be forked by communities to create their own template repos. See [Data & Template Pipeline](../data-pipeline) for how these files become the catalog database consumed by the app:
 
 ```text
 templates/

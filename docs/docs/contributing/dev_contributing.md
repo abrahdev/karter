@@ -1,5 +1,7 @@
 ---
 sidebar_position: 2
+sidebar_custom_props:
+  icon: '🛠️'
 ---
 # Developer Contributing
 Cowde contributions are welcome! Please follow the guidelines below to ensure a smooth contribution process.

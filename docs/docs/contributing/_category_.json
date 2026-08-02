@@ -1,6 +1,9 @@
 {
   "label": "Contributing",
   "position": 2,
+  "customProps": {
+    "icon": "🚀"
+  },
   "link": {
     "type": "generated-index",
     "description": "Guidelines for contributing to Karter, including how to report issues, submit pull requests, and the code of conduct for contributors."

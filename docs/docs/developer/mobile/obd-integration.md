@@ -1,6 +1,8 @@
 ---
 sidebar_position: 4
 title: OBD Integration
+sidebar_custom_props:
+  icon: '🔌'
 ---
 
 # OBD-II Communication Module (ELM327)

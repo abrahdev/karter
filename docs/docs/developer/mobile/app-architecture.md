@@ -1,6 +1,8 @@
 ---
 sidebar_position: 1
 title: App Architecture
+sidebar_custom_props:
+  icon: '🧱'
 ---
 
 Karter follows a **clean-ish layered architecture** with three main layers: `domain/`, `data/`, and `presentation/`. State management is handled by **Riverpod**, and local persistence by **Drift** (SQLite).

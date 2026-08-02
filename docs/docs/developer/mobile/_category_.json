@@ -1,6 +1,9 @@
 {
   "label": "Mobile",
   "position": 2,
+  "customProps": {
+    "icon": "📱"
+  },
   "link": {
     "type": "generated-index",
     "description": "Developer documentation for Karter, covering architecture, setup, and contribution guidelines."
