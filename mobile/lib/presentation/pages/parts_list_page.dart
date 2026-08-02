@@ -88,12 +88,14 @@ class _PartsListPageState extends ConsumerState<PartsListPage> {
                 Card(
                   margin: const EdgeInsets.symmetric(vertical: 8),
                   child: ListTile(
-                    leading: const Icon(Icons.handyman_outlined),
-                    title: Text(entry.displayName(l)),
+                    leading: Icon(
+                      Icons.check_circle_outline,
+                      color: theme.colorScheme.primary,
+                    ),
+                    title: Text(_partLine(context, entry)),
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(_quantityLine(context, entry)),
                         if (entry.oemNumber != null &&
                             entry.oemNumber!.isNotEmpty)
                           Row(
@@ -115,6 +117,11 @@ class _PartsListPageState extends ConsumerState<PartsListPage> {
                             ],
                           ),
                         if (entry.links.isNotEmpty) _LinkChips(entry: entry),
+                        if (entry.relatedIntervals.isNotEmpty)
+                          _RelatedServicesChips(
+                            intervals: entry.relatedIntervals,
+                            onTap: _openInterval,
+                          ),
                       ],
                     ),
                     trailing: const Icon(Icons.chevron_right),
@@ -132,10 +139,16 @@ class _PartsListPageState extends ConsumerState<PartsListPage> {
     );
   }
 
-  String _quantityLine(BuildContext context, _PartEntry entry) {
+  String _partLine(BuildContext context, _PartEntry entry) {
+    final l = AppLocalizations.of(context)!;
     final unit = IntervalPartsView.unitLabel(context, entry.unit);
     final qty = IntervalPartsView.formatQuantity(entry.quantity);
-    return unit.isEmpty ? qty : '$qty \u00d7 $unit';
+    final name = entry.displayName(l);
+    if (unit.isEmpty) {
+      if (entry.quantity == 1) return name;
+      return '$name \u00d7 $qty';
+    }
+    return '$name \u00d7 $qty $unit';
   }
 
   Future<void> _copy(BuildContext context, String text) async {
@@ -171,6 +184,81 @@ class _PartsListPageState extends ConsumerState<PartsListPage> {
       await _savePart(entry, updated);
     }
   }
+
+  Future<void> _openInterval(MaintenanceInterval interval) async {
+    final l = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
+    final label = localizedLabel(
+      l.localeName,
+      interval.i18nKey,
+      interval.label,
+    );
+    final desc = localizedDesc(
+      l.localeName,
+      interval.descI18nKey,
+      interval.description ?? '',
+    );
+    final subtitleParts = <String>[
+      l.intervalSubtitleKm(_formatKm(interval.kmInterval, l)),
+    ];
+    if (interval.monthsInterval != null) {
+      subtitleParts.add(l.intervalSubtitleMonths(interval.monthsInterval.toString()));
+    }
+
+    await karterShowModalBottomSheet<void>(
+      context: context,
+      builder: (ctx) => Padding(
+        padding: const EdgeInsets.fromLTRB(20, 12, 20, 20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: Container(
+                width: 40,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: theme.colorScheme.outlineVariant,
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+            ),
+            const SizedBox(height: 16),
+            Text(label, style: theme.textTheme.titleLarge),
+            const SizedBox(height: 4),
+            Text(
+              subtitleParts.join(' / '),
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: theme.colorScheme.onSurfaceVariant,
+              ),
+            ),
+            const SizedBox(height: 12),
+            Text(
+              desc.isEmpty ? l.noDescriptionAvailable : desc,
+              style: theme.textTheme.bodyMedium,
+            ),
+            if (interval.parts.isNotEmpty) ...[
+              const SizedBox(height: 12),
+              IntervalPartsView(parts: interval.parts),
+            ],
+            const SizedBox(height: 20),
+            SizedBox(
+              width: double.infinity,
+              child: FilledButton(
+                onPressed: () => Navigator.pop(ctx),
+                child: Text(l.close),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  String _formatKm(int km, AppLocalizations l) {
+    if (km >= 1000) return l.formattedKmK((km ~/ 1000).toString());
+    return l.formattedKm(km.toString());
+  }
 }
 
 class _PartEntry {
@@ -184,6 +272,7 @@ class _PartEntry {
   final List<String> links;
   final bool isTemplate;
   final String? sourceIntervalId;
+  final List<MaintenanceInterval> relatedIntervals;
 
   _PartEntry({
     required this.partId,
@@ -196,6 +285,7 @@ class _PartEntry {
     this.description,
     this.links = const [],
     this.sourceIntervalId,
+    this.relatedIntervals = const [],
   });
 
   String displayName(AppLocalizations l) {
@@ -207,7 +297,15 @@ List<_PartEntry> _aggregate(List<MaintenanceInterval> intervals, AppLocalization
   final byId = <String, _PartEntry>{};
   final custom = <String, _PartEntry>{};
 
-  void addPart(String intervalId, IntervalPart p) {
+  List<MaintenanceInterval> mergeIntervals(
+    List<MaintenanceInterval> current,
+    MaintenanceInterval interval,
+  ) {
+    if (current.any((i) => i.id == interval.id)) return current;
+    return [...current, interval];
+  }
+
+  void addPart(String intervalId, IntervalPart p, MaintenanceInterval interval) {
     if (p.i18nKey != null) {
       final existing = byId[p.partId];
       if (existing == null) {
@@ -221,6 +319,7 @@ List<_PartEntry> _aggregate(List<MaintenanceInterval> intervals, AppLocalization
           description: p.description,
           links: p.links,
           isTemplate: true,
+          relatedIntervals: [interval],
         );
       } else {
         byId[p.partId] = _PartEntry(
@@ -233,6 +332,7 @@ List<_PartEntry> _aggregate(List<MaintenanceInterval> intervals, AppLocalization
           description: existing.description ?? p.description,
           links: existing.links.isNotEmpty ? existing.links : p.links,
           isTemplate: true,
+          relatedIntervals: mergeIntervals(existing.relatedIntervals, interval),
         );
       }
     } else {
@@ -247,13 +347,14 @@ List<_PartEntry> _aggregate(List<MaintenanceInterval> intervals, AppLocalization
         links: p.links,
         isTemplate: false,
         sourceIntervalId: intervalId,
+        relatedIntervals: [interval],
       );
     }
   }
 
   for (final interval in intervals) {
     for (final part in interval.parts) {
-      addPart(interval.id, part);
+      addPart(interval.id, part, interval);
     }
   }
 
@@ -313,6 +414,48 @@ class _LinkChips extends StatelessWidget {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(l.invalidUrl)));
     }
+  }
+}
+
+class _RelatedServicesChips extends StatelessWidget {
+  final List<MaintenanceInterval> intervals;
+  final ValueChanged<MaintenanceInterval> onTap;
+
+  const _RelatedServicesChips({
+    required this.intervals,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final l = AppLocalizations.of(context)!;
+    return Padding(
+      padding: const EdgeInsets.only(top: 8),
+      child: Wrap(
+        spacing: 6,
+        runSpacing: 6,
+        children: [
+          for (final interval in intervals)
+            ActionChip(
+              avatar: Icon(
+                Icons.build_circle_outlined,
+                size: 16,
+                color: theme.colorScheme.primary,
+              ),
+              label: Text(
+                localizedLabel(
+                  l.localeName,
+                  interval.i18nKey,
+                  interval.label,
+                ),
+              ),
+              visualDensity: VisualDensity.compact,
+              onPressed: () => onTap(interval),
+            ),
+        ],
+      ),
+    );
   }
 }
 
