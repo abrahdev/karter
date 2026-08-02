@@ -240,7 +240,12 @@ def resolve(
     data_root: str,
     cache: Dict[str, dict],
     visited: set,
+    memo: Optional[Dict[str, Resolution]] = None,
 ) -> Resolution:
+    if memo is None:
+        memo = {}
+    if path in memo:
+        return memo[path]
     if path in visited:
         return Resolution()
     visited.add(path)
@@ -249,7 +254,7 @@ def resolve(
     result = Resolution()
 
     for ext in raw.get("extends") or []:
-        ancestor = resolve(ext, data_root, cache, visited)
+        ancestor = resolve(ext, data_root, cache, visited, memo)
         _apply_map(result.items, ancestor.items, keep_existing=False)
         _apply_map(result.parts, ancestor.parts, keep_existing=False)
         _apply_map(result.dtcs, ancestor.dtcs, keep_existing=False)
@@ -263,6 +268,7 @@ def resolve(
 
     if path == GENERAL_PATH:
         result.inherits_general = True
+    memo[path] = result
     return result
 
 
@@ -421,6 +427,8 @@ def write_catalog(
     catalog_version: str,
 ) -> None:
     os.makedirs(os.path.dirname(output) or ".", exist_ok=True)
+    if os.path.exists(output):
+        os.remove(output)
     db = sqlite3.connect(output)
     try:
         db.execute("PRAGMA page_size = 4096")

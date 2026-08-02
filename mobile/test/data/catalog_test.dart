@@ -38,6 +38,17 @@ void main() {
     expect(r.items.any((i) => i.id == 'hybrid-battery-filter'), isTrue);
   });
 
+  test('findBestMatch items inherit parts through extends chains', () async {
+    final r =
+        await repo.findBestMatch(make: 'Toyota', model: 'Corolla', year: 2019);
+    expect(r, isNotNull);
+    final oilChange = r!.items.firstWhere((i) => i.id == 'oil-change');
+    expect(oilChange.parts['engine-oil'], 5.0);
+    expect(oilChange.parts['oil-filter'], 1.0);
+    final oilFilter = r.parts.firstWhere((p) => p.id == 'oil-filter');
+    expect(oilFilter.i18nKey, 'part_oil_filter');
+  });
+
   test('findBestMatch falls back to base template outside year range',
       () async {
     final r =
