@@ -1,14 +1,13 @@
 {
   "id": "subaru-outback",
   "extends": [
-    "_base/combustion.json"
+    "_base/car-combustion.json",
+    "subaru/dtc.json"
   ],
   "meta": {
     "make": "Subaru",
     "model": "Outback",
     "generation": "All",
-    "years": null,
-    "engine": null,
     "author": "abrahdev",
     "version": "1.0.0"
   },

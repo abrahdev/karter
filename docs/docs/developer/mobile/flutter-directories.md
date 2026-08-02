@@ -1,6 +1,8 @@
 ---
 sidebar_position: 2
 title: Flutter Directory Structure
+sidebar_custom_props:
+  icon: '📁'
 ---
 
 ## Directory Structure
@@ -149,26 +151,36 @@ Translations are split into two systems:
 
 ## Templates Directory Structure
 
-The `templates/` directory is a self-contained package that can be forked by communities to create their own template repos:
+The `templates/` directory is a self-contained package that can be forked by communities to create their own template repos. See [Data & Template Pipeline](../data-pipeline) for how these files become the catalog database consumed by the app:
 
 ```text
 templates/
 ├── data/                     # Vehicle templates (community-contributed)
 │   ├── index.json            # Generated manifest of all templates
 │   ├── _base/                # Base templates (powertrain types)
-│   │   ├── common-all.json
-│   │   ├── combustion.json
-│   │   ├── diesel.json
-│   │   ├── electric.json
-│   │   └── motorcycle-*.json
+│   │   ├── car-common.json
+│   │   ├── car-combustion.json
+│   │   ├── car-diesel.json
+│   │   ├── car-electric.json
+│   │   ├── dtc.json
+│   │   ├── motorcycle-2t.json
+│   │   ├── motorcycle-4t.json
+│   │   ├── motorcycle-common.json
+│   │   └── motorcycle-ev.json
 │   ├── audi/                 # Per-manufacturer directories
 │   ├── toyota/
 │   └── ... (31 manufacturers)
 ├── i18n/                     # Infrastructure: community translations
 │   ├── en.json
-│   └── es.json
-└── schemas/                  # Infrastructure: template validation
-    └── template-v1.json
+│   ├── es.json
+│   └── et.json
+├── schemas/                  # Infrastructure: template validation
+│   └── template-v2.json
+└── tools/                    # Infrastructure: generation scripts
+    ├── build_catalog.py
+    ├── generate_index.py
+    ├── i18n_json.py
+    └── import_dtc.py
 ```
 
 Repository providers are created once using `Provider<T>`. Async data providers use `FutureProvider.family` keyed by `vehicleId` to fetch per-vehicle data (fuel logs, maintenance logs, intervals, documents).

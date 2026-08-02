@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:material3_indicators/material3_indicators.dart';
 import 'package:mobile/core/database/app_database.dart';
 import 'package:mobile/core/modal_helpers.dart';
 import 'package:mobile/core/theme/app_spacing.dart';
@@ -14,7 +15,8 @@ import 'package:mobile/domain/value_objects/plate.dart';
 import 'package:mobile/domain/value_objects/vin.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
-import 'package:mobile/presentation/providers/template_source_provider.dart';
+import 'package:mobile/presentation/utils/template_interval_builder.dart';
+import 'package:mobile/presentation/widgets/interval_parts_view.dart';
 import 'package:mobile/presentation/widgets/notification_permission_modal.dart';
 import 'package:mobile/presentation/widgets/section_header.dart';
 import 'package:mobile/presentation/widgets/karter_switch_list_tile.dart';
@@ -161,30 +163,18 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
     setState(() => _isLoading = true);
 
     try {
-      final resolver = ref.read(templateResolverProvider);
-      final source = ref.read(templateSourceProvider);
-      final resolution = await resolver.findBestMatch(
+      final repo = ref.read(catalogRepositoryProvider);
+      final resolution = await repo.findBestMatch(
         make: brand,
         model: model,
         year: year,
-        baseUrl: source.enabled ? source.repoUrl : null,
       );
 
       if (!mounted) return;
 
       if (resolution != null) {
         final intervals = resolution.items.map((r) {
-          return MaintenanceInterval(
-            id: uuid.v4(),
-            vehicleId: '',
-            label: r.label,
-            i18nKey: r.i18nKey,
-            descI18nKey: r.descI18nKey,
-            kmInterval: r.intervalKm,
-            monthsInterval: r.intervalMonths,
-            description: r.description,
-            isCustom: false,
-          );
+          return intervalFromTemplate('', r, resolution);
         }).toList();
 
         final templateMeta = resolution.entry.meta;
@@ -235,11 +225,12 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
       context: context,
       builder: (ctx) {
         final theme = Theme.of(ctx);
+        final l = AppLocalizations.of(ctx)!;
         return AlertDialog(
           title: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Plantilla encontrada'),
+              Text(l.templateFound),
               const SizedBox(height: 4),
               Text(
                 name,
@@ -259,26 +250,50 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
                   '${interval.kmInterval} km',
                 ];
                 if (interval.monthsInterval != null) {
-                  parts.add('${interval.monthsInterval} meses');
+                  parts.add('${interval.monthsInterval} ${l.months}');
                 }
-                return ListTile(
-                  dense: true,
-                  title: Text(interval.label),
-                  subtitle: interval.description != null
-                      ? Text(
-                          interval.description!,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        )
-                      : null,
-                  trailing: IntrinsicWidth(
-                    child: Text(
-                      parts.join(' / '),
-                      style: theme.textTheme.bodySmall,
-                      textAlign: TextAlign.end,
-                      softWrap: false,
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ListTile(
+                      dense: true,
+                      contentPadding: EdgeInsets.zero,
+                      title: Text(interval.label),
+                      subtitle: interval.description != null
+                          ? Text(
+                              interval.description!,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            )
+                          : null,
+                      trailing: IntrinsicWidth(
+                        child: Text(
+                          parts.join(' / '),
+                          style: theme.textTheme.bodySmall,
+                          textAlign: TextAlign.end,
+                          softWrap: false,
+                        ),
+                      ),
                     ),
-                  ),
+                    if (interval.parts.isNotEmpty)
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16, right: 16, bottom: 8),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              l.partsTitle.toUpperCase(),
+                              style: theme.textTheme.labelSmall?.copyWith(
+                                color: theme.colorScheme.primary,
+                                letterSpacing: 1.2,
+                              ),
+                            ),
+                            const SizedBox(height: 2),
+                            IntervalPartsView(parts: interval.parts),
+                          ],
+                        ),
+                      ),
+                  ],
                 );
               },
             ),
@@ -291,14 +306,14 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
                   Expanded(
                     child: OutlinedButton(
                       onPressed: () => Navigator.pop(ctx, 'defaults'),
-                      child: const Text('Sin plantilla'),
+                      child: Text(l.noTemplate),
                     ),
                   ),
                   const SizedBox(width: 12),
                   Expanded(
                     child: FilledButton(
                       onPressed: () => Navigator.pop(ctx, 'template'),
-                      child: const Text('Usar plantilla'),
+                      child: Text(l.useTemplate),
                     ),
                   ),
                 ],
@@ -316,8 +331,9 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
       context: context,
       builder: (ctx) {
         final theme = Theme.of(ctx);
+        final l = AppLocalizations.of(ctx)!;
         return AlertDialog(
-          title: const Text('Template under construction'),
+          title: Text(l.templateUnderConstruction),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -329,14 +345,14 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
                   const SizedBox(width: 16),
                   Expanded(
                     child: Text(
-                      'This template is not ready yet.\nWe\'re working on it!',
+                      l.templateNotReady,
                     ),
                   ),
                 ],
               ),
               const SizedBox(height: 12),
               Text(
-                'Contributions are welcome — add or fix templates for your vehicle:',
+                l.contributionsWelcome,
                 style: theme.textTheme.bodyMedium,
               ),
               const SizedBox(height: 8),
@@ -355,7 +371,7 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
               ),
               const SizedBox(height: 12),
               Text(
-                'Requested: $searchParams',
+                l.requestedParam(searchParams),
                 style: theme.textTheme.bodySmall
                     ?.copyWith(color: theme.colorScheme.outline),
               ),
@@ -368,11 +384,11 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
                 mode: LaunchMode.externalApplication,
               ),
               icon: const Icon(Icons.open_in_new, size: 18),
-              label: const Text('Contribute on GitHub'),
+              label: Text(l.contributeOnGitHub),
             ),
             FilledButton(
               onPressed: () => Navigator.pop(ctx),
-              child: const Text('Got it'),
+              child: Text(l.gotIt),
             ),
           ],
         );
@@ -385,8 +401,9 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
       context: context,
       builder: (ctx) {
         final theme = Theme.of(ctx);
+        final l = AppLocalizations.of(ctx)!;
         return AlertDialog(
-          title: const Text('Sin resultados'),
+          title: Text(l.noResultsTitle),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -398,13 +415,13 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
                   const SizedBox(width: 16),
                   Expanded(
                     child: Text(
-                      'No se encontró ninguna plantilla para los datos ingresados.',
+                      l.noTemplateFoundDescription,
                     ),
                   ),
                 ],
               ),
               const SizedBox(height: 16),
-              Text('Parámetros de búsqueda:',
+              Text(l.searchParameters,
                   style: theme.textTheme.labelMedium),
               const SizedBox(height: 4),
               Container(
@@ -422,13 +439,13 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
               ),
               const SizedBox(height: 12),
               Text(
-                'The vehicle will use default intervals.',
+                l.defaultIntervalsHint,
                 style: theme.textTheme.bodySmall
                     ?.copyWith(color: theme.colorScheme.outline),
               ),
               const SizedBox(height: 8),
               Text(
-                'Missing a template? Contribute at github.com/abrahdev/karter',
+                l.missingTemplateContribute,
                 style: theme.textTheme.bodySmall
                     ?.copyWith(color: theme.colorScheme.primary),
               ),
@@ -441,7 +458,7 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
                 mode: LaunchMode.externalApplication,
               ),
               icon: const Icon(Icons.open_in_new, size: 18),
-              label: const Text('View all templates'),
+              label: Text(l.viewAllTemplates),
             ),
             OutlinedButton.icon(
               onPressed: () => launchUrl(
@@ -449,11 +466,11 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
                 mode: LaunchMode.externalApplication,
               ),
               icon: const Icon(Icons.open_in_new, size: 18),
-              label: const Text('Contribute'),
+              label: Text(l.contribute),
             ),
             FilledButton(
               onPressed: () => Navigator.pop(ctx),
-              child: const Text('Got it'),
+              child: Text(l.gotIt),
             ),
           ],
         );
@@ -505,6 +522,7 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
                   monthsInterval: i.monthsInterval,
                   description: i.description,
                   isCustom: false,
+                  parts: i.parts,
                 ))
             .toList();
         await repo.save(vehicle, intervals: intervals, replaceNonCustom: _isEditing);
@@ -722,8 +740,9 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
                           : const Icon(Icons.search),
                       label: Text(
                         _templateIntervals != null
-                            ? 'Plantilla: $_templateName'
-                            : 'Buscar plantilla',
+                            ? AppLocalizations.of(context)!
+                                .templateWithName(_templateName ?? '')
+                            : AppLocalizations.of(context)!.searchTemplate,
                       ),
                     ),
                     const SizedBox(height: 8),
@@ -909,11 +928,7 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
             FilledButton(
               onPressed: _isLoading ? null : _save,
               child: _isLoading
-                  ? const SizedBox(
-                      height: 20,
-                      width: 20,
-                      child: CircularProgressIndicator(strokeWidth: 2),
-                    )
+                  ? const M3LoadingIndicator(size: 20)
                   : Text(_isEditing ? l.saveChanges : l.addVehicle),
             ),
             if (_isEditing) ...[

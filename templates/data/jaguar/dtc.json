@@ -1,0 +1,992 @@
+{
+  "id": "jaguar-dtc",
+  "meta": {
+    "make": "Jaguar",
+    "model": "OBD-II codes",
+    "author": "abrahdev",
+    "version": "1.0.0",
+    "sources": [
+      "https://github.com/Wal33D/dtc-database (MIT)"
+    ]
+  },
+  "obd_dtc_definitions": [
+    {
+      "code": "P1000",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1000",
+      "description": "OBD Systems Readiness Test Not Complete"
+    },
+    {
+      "code": "P1104",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1104",
+      "description": "Mass Air Flow Sensor Circuit Ground"
+    },
+    {
+      "code": "P1111",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1111",
+      "description": "System Pass"
+    },
+    {
+      "code": "P1121",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1121",
+      "description": "Pedal Position Sensor A Circuit Range Performance"
+    },
+    {
+      "code": "P1122",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1122",
+      "description": "Pedal Position Sensor A Circuit Low Input"
+    },
+    {
+      "code": "P1123",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1123",
+      "description": "Pedal Position Sensor A Circuit High Input"
+    },
+    {
+      "code": "P1136",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1136",
+      "description": "Control Box Fan Circuit"
+    },
+    {
+      "code": "P1137",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1137",
+      "description": "Lack Of HO2S12 Switches Sensor Indicates Lean"
+    },
+    {
+      "code": "P1138",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1138",
+      "description": "Lack Of HO2S12 Switches Sensor Indicates Rich"
+    },
+    {
+      "code": "P1143",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1143",
+      "description": "Air Assisted Injector Control Valve Range Performance"
+    },
+    {
+      "code": "P1144",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1144",
+      "description": "Air Assisted Injector Control Valve Circuit"
+    },
+    {
+      "code": "P1157",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1157",
+      "description": "Lack Of HO2S22 Switches Sensor Indicates Lean"
+    },
+    {
+      "code": "P1158",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1158",
+      "description": "Lack Of HO2S22 Switches Sensor Indicates Rich"
+    },
+    {
+      "code": "P1171",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1171",
+      "description": "System Too Lean Banks 1 And 2 (Lean Fuel Fault)"
+    },
+    {
+      "code": "P1172",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1172",
+      "description": "System Too Rich Banks 1 And 2 (Rich Fuel Fault)"
+    },
+    {
+      "code": "P1174",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1174",
+      "description": "System Too Lean Banks 1 And 2 (Suspect HO2S)"
+    },
+    {
+      "code": "P1175",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1175",
+      "description": "System Too Rich Banks 1 And 2 (Suspect HO2S)"
+    },
+    {
+      "code": "P1176",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1176",
+      "description": "Long Term Fuel Trim Too Lean Banks 1 And 2 (FMFR)"
+    },
+    {
+      "code": "P1177",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1177",
+      "description": "Long Term Fuel Trim Too Rich Banks 1 And 2 (FMFR)"
+    },
+    {
+      "code": "P1178",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1178",
+      "description": "Long Term Fuel Trim Too Lean Banks 1 And 2 (AMFR)"
+    },
+    {
+      "code": "P1179",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1179",
+      "description": "Long Term Fuel Trim Too Rich Banks 1 And 2 (AMFR)"
+    },
+    {
+      "code": "P1185",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1185",
+      "description": "O2 Sensor Heater Circuit Open, Hardware Fault"
+    },
+    {
+      "code": "P1186",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1186",
+      "description": "O2 Sensor Heater Circuit Shorted, Hardware Fault"
+    },
+    {
+      "code": "P1187",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1187",
+      "description": "O2 Sensor Heater Circuit Open, Inferred Fault"
+    },
+    {
+      "code": "P1188",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1188",
+      "description": "O2 Sensor Heater Circuit Resistance"
+    },
+    {
+      "code": "P1189",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1189",
+      "description": "O2 Sensor Heater Circuit Low Resistance Fault 1"
+    },
+    {
+      "code": "P1190",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1190",
+      "description": "O2 Sensor Heater Circuit Low Resistance Fault 2"
+    },
+    {
+      "code": "P1191",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1191",
+      "description": "O2 Sensor Heater Circuit Open, HArdware Fault"
+    },
+    {
+      "code": "P1192",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1192",
+      "description": "O2 Sensor Heater Circuit Shorted"
+    },
+    {
+      "code": "P1193",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1193",
+      "description": "O2 Sensor Heater Circuit Open, Inferred Fault"
+    },
+    {
+      "code": "P1194",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1194",
+      "description": "O2 Sensor Heater Circuit Resistance Fault"
+    },
+    {
+      "code": "P1195",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1195",
+      "description": "O2 Sensor Heater Circuit Low Resistance Fault 1"
+    },
+    {
+      "code": "P1196",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1196",
+      "description": "O2 Sensor Heater Circuit Low Resistance Fault 2"
+    },
+    {
+      "code": "P1198",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1198",
+      "description": "Fuel Level Input Circuit High"
+    },
+    {
+      "code": "P1199",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1199",
+      "description": "Fuel Level Input Circuit Low"
+    },
+    {
+      "code": "P1201",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1201",
+      "description": "Cylinder 1 Injector Circuit Open/Shorted"
+    },
+    {
+      "code": "P1202",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1202",
+      "description": "Cylinder 2 Injector Circuit Open/Shorted"
+    },
+    {
+      "code": "P1203",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1203",
+      "description": "Cylinder 3 Injector Circuit Open/Shorted"
+    },
+    {
+      "code": "P1204",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1204",
+      "description": "Cylinder 4 Injector Circuit Open/Shorted"
+    },
+    {
+      "code": "P1205",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1205",
+      "description": "Cylinder 5 Injector Circuit Open/Shorted"
+    },
+    {
+      "code": "P1206",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1206",
+      "description": "Cylinder 6 Injector Circuit Open/Shorted"
+    },
+    {
+      "code": "P1207",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1207",
+      "description": "Cylinder 7 Injector Circuit Open/Shorted"
+    },
+    {
+      "code": "P1208",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1208",
+      "description": "Cylinder 8 Injector Circuit Open/Shorted"
+    },
+    {
+      "code": "P1221",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1221",
+      "description": "Pedal Demand Sensor B Circuit Range Performance"
+    },
+    {
+      "code": "P1224",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1224",
+      "description": "Electronic Throttle Control Position Error"
+    },
+    {
+      "code": "P1226",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1226",
+      "description": "Mechanical Guard Circuit Range Performance"
+    },
+    {
+      "code": "P1227",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1227",
+      "description": "Mechanical Guard Circuit Low Input"
+    },
+    {
+      "code": "P1228",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1228",
+      "description": "Mechanical Guard Circuit High Input"
+    },
+    {
+      "code": "P1229",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1229",
+      "description": "Electronic Throttle Control Circuit"
+    },
+    {
+      "code": "P1230",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1230",
+      "description": "Fuel Pump Relay"
+    },
+    {
+      "code": "P1235",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1235",
+      "description": "VSV 1/2/3 Circuit Range Performance"
+    },
+    {
+      "code": "P1236",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1236",
+      "description": "VSV 1 Circuit"
+    },
+    {
+      "code": "P1237",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1237",
+      "description": "VSV 2 Circuit"
+    },
+    {
+      "code": "P1238",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1238",
+      "description": "VSV 3 Circuit"
+    },
+    {
+      "code": "P1240",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1240",
+      "description": "Sensor Power Supply"
+    },
+    {
+      "code": "P1241",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1241",
+      "description": "Sensor Power Supply Low Input"
+    },
+    {
+      "code": "P1242",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1242",
+      "description": "Sensor Power Supply High Input"
+    },
+    {
+      "code": "P1243",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1243",
+      "description": "Analog Ground"
+    },
+    {
+      "code": "P1245",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1245",
+      "description": "Crank Signal Low Input"
+    },
+    {
+      "code": "P1246",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1246",
+      "description": "Crank Signal High Input"
+    },
+    {
+      "code": "P1250",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1250",
+      "description": "Throttle Valve Spring"
+    },
+    {
+      "code": "P1251",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1251",
+      "description": "Throttle Position"
+    },
+    {
+      "code": "P1252",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1252",
+      "description": "VSV Stuck On VA/VV"
+    },
+    {
+      "code": "P1253",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1253",
+      "description": "VSV Stuck On VR"
+    },
+    {
+      "code": "P1260",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1260",
+      "description": "Theft Detected Vehicle Immobilized"
+    },
+    {
+      "code": "P1313",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1313",
+      "description": "Misfire Rate Catalyst Damage Fault Bank 1"
+    },
+    {
+      "code": "P1314",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1314",
+      "description": "Misfire Rate Catalyst Damage Fault Bank 2"
+    },
+    {
+      "code": "P1315",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1315",
+      "description": "Persistent Misfire"
+    },
+    {
+      "code": "P1316",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1316",
+      "description": "Misfire Rate Exceeds Emissions"
+    },
+    {
+      "code": "P1336",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1336",
+      "description": "Crankshaft Camshaft Sensor Range Performance"
+    },
+    {
+      "code": "P1340",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1340",
+      "description": "Camshaft Position Sensor B Circuit"
+    },
+    {
+      "code": "P1341",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1341",
+      "description": "Camshaft Position Sensor B Circuit Range Performance"
+    },
+    {
+      "code": "P1361",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1361",
+      "description": "Ignition Coil Cylinder 1 No Activation"
+    },
+    {
+      "code": "P1362",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1362",
+      "description": "Ignition Coil Cylinder 2 No Activation"
+    },
+    {
+      "code": "P1363",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1363",
+      "description": "Ignition Coil Cylinder 3 No Activation"
+    },
+    {
+      "code": "P1364",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1364",
+      "description": "Ignition Coil Cylinder 4 No Activation"
+    },
+    {
+      "code": "P1365",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1365",
+      "description": "Ignition Coil Cylinder 5 No Activation"
+    },
+    {
+      "code": "P1366",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1366",
+      "description": "Ignition Coil Cylinder 6 No Activation"
+    },
+    {
+      "code": "P1367",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1367",
+      "description": "Ignition System Failure Group 1"
+    },
+    {
+      "code": "P1368",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1368",
+      "description": "Ignition System Failure Group 2"
+    },
+    {
+      "code": "P1370",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1370",
+      "description": "Insufficient RPM Increase During Spark Test"
+    },
+    {
+      "code": "P1371",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1371",
+      "description": "Ignition Coil Cylinder 1 Early Activation Fault"
+    },
+    {
+      "code": "P1372",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1372",
+      "description": "Ignition Coil Cylinder 2 Early Activation Fault"
+    },
+    {
+      "code": "P1373",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1373",
+      "description": "Ignition Coil Cylinder 3 Early Activation Fault"
+    },
+    {
+      "code": "P1374",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1374",
+      "description": "Ignition Coil Cylinder 4 Early Activation Fault"
+    },
+    {
+      "code": "P1375",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1375",
+      "description": "Ignition Coil Cylinder 5 Early Activation Fault"
+    },
+    {
+      "code": "P1376",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1376",
+      "description": "Ignition Coil Cylinder 6 Early Activation Fault"
+    },
+    {
+      "code": "P1384",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1384",
+      "description": "Variable Valve Timing Solenoid A Circuit"
+    },
+    {
+      "code": "P1392",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1392",
+      "description": "Variable Valve Timing Solenoid A Circuit Low Input"
+    },
+    {
+      "code": "P1393",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1393",
+      "description": "Variable Valve Timing Solenoid A Circuit High Input"
+    },
+    {
+      "code": "P1396",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1396",
+      "description": "Variable Valve Timing Solenoid B Circuit"
+    },
+    {
+      "code": "P1397",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1397",
+      "description": "Variable Valve Timing Solenoid B Circuit Low Input"
+    },
+    {
+      "code": "P1398",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1398",
+      "description": "Variable Valve Timing Solenoid B Circuit High Input"
+    },
+    {
+      "code": "P1400",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1400",
+      "description": "Exhaust Gas Recirculation Valve Postion Control"
+    },
+    {
+      "code": "P1401",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1401",
+      "description": "Exhaust Gas Recirculation Valve Postion Circuit"
+    },
+    {
+      "code": "P1408",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1408",
+      "description": "Exhaust Gas Recirculation Thermister"
+    },
+    {
+      "code": "P1409",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1409",
+      "description": "Exhaust Gas Recirculation Valve Circuit"
+    },
+    {
+      "code": "P1440",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1440",
+      "description": "Purge Valve Stuck Open"
+    },
+    {
+      "code": "P1441",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1441",
+      "description": "ELC System 1"
+    },
+    {
+      "code": "P1447",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1447",
+      "description": "ELC System Closure Valve Flow"
+    },
+    {
+      "code": "P1448",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1448",
+      "description": "ELC System 2"
+    },
+    {
+      "code": "P1453",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1453",
+      "description": "Fuel Tank Pressure Relief Valve Malfunction"
+    },
+    {
+      "code": "P1454",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1454",
+      "description": "Evaporative Emission Control System Vacuum Test"
+    },
+    {
+      "code": "P1475",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1475",
+      "description": "Fan Relay Low Circuit"
+    },
+    {
+      "code": "P1476",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1476",
+      "description": "Fan Relay High Circuit"
+    },
+    {
+      "code": "P1508",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1508",
+      "description": "Idle Air Control Circuit Open"
+    },
+    {
+      "code": "P1509",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1509",
+      "description": "Idle Air Control Circuit Shorted"
+    },
+    {
+      "code": "P1514",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1514",
+      "description": "High Load Neutral Drive Fault"
+    },
+    {
+      "code": "P1516",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1516",
+      "description": "Gear Change Neutral Drive Fault"
+    },
+    {
+      "code": "P1517",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1517",
+      "description": "Cranking Neutral Drive Fault"
+    },
+    {
+      "code": "P1534",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1534",
+      "description": "Restraint Deployment Indicator Circuit"
+    },
+    {
+      "code": "P1565",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1565",
+      "description": "Speed Control Command Switch Out Of Range High"
+    },
+    {
+      "code": "P1566",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1566",
+      "description": "Speed Control Command Switch Out Range Low"
+    },
+    {
+      "code": "P1567",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1567",
+      "description": "Speed Control Output Circuit"
+    },
+    {
+      "code": "P1568",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1568",
+      "description": "Speed Control Unable To Hold Speed"
+    },
+    {
+      "code": "P1571",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1571",
+      "description": "Brake Switch"
+    },
+    {
+      "code": "P1582",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1582",
+      "description": "Electronic Throttle Monitor Data Available"
+    },
+    {
+      "code": "P1600",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1600",
+      "description": "Loss Of Kam Power Circuit Open"
+    },
+    {
+      "code": "P1603",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1603",
+      "description": "EEPROM Malfunction"
+    },
+    {
+      "code": "P1605",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1605",
+      "description": "Keep Alive Memory Test Failure"
+    },
+    {
+      "code": "P1606",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1606",
+      "description": "ECM Control Relay Output Circuit"
+    },
+    {
+      "code": "P1607",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1607",
+      "description": "MIL Output Circuit"
+    },
+    {
+      "code": "P1608",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1608",
+      "description": "Watchdog Malfunction"
+    },
+    {
+      "code": "P1609",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1609",
+      "description": "Internal Control Module CPU To CPU Communication Failure"
+    },
+    {
+      "code": "P1611",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1611",
+      "description": "Throttle Target Malfunction 1"
+    },
+    {
+      "code": "P1612",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1612",
+      "description": "Throttle Offset Malfunction"
+    },
+    {
+      "code": "P1637",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1637",
+      "description": "CAN Link ECM ABS Control Module Circuit Network"
+    },
+    {
+      "code": "P1638",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1638",
+      "description": "CAN Link ECM INSTM Circuit Network"
+    },
+    {
+      "code": "P1641",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1641",
+      "description": "Fuel Pump Primary Circuit"
+    },
+    {
+      "code": "P1642",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1642",
+      "description": "CAN Link Circuit"
+    },
+    {
+      "code": "P1643",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1643",
+      "description": "CAN Link Engine Control Module Transmission Control Module Circuit Network"
+    },
+    {
+      "code": "P1646",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1646",
+      "description": "Linear O2 Sensor Control Chip Bank 1"
+    },
+    {
+      "code": "P1647",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1647",
+      "description": "Linear O2 Sensor Control Chip Bank 2"
+    },
+    {
+      "code": "P1648",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1648",
+      "description": "Knock Sensor Input Chip"
+    },
+    {
+      "code": "P1696",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1696",
+      "description": "CAN Link Engine Control Module Cruise Control Module Circuit Network"
+    },
+    {
+      "code": "P1697",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1697",
+      "description": "Cruise Control Distance Control Input Circuit"
+    },
+    {
+      "code": "P1700",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1700",
+      "description": "Transmission Indeterminate Failure Failed To Neutral"
+    },
+    {
+      "code": "P1720",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1720",
+      "description": "Vehicle Speed Meter Circuit"
+    },
+    {
+      "code": "P1722",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1722",
+      "description": "Stall Speed"
+    },
+    {
+      "code": "P1726",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1726",
+      "description": "Engine Overspeed"
+    },
+    {
+      "code": "P1730",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1730",
+      "description": "Gear Control Malfunction 2 3 5"
+    },
+    {
+      "code": "P1731",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1731",
+      "description": "Inconsistent Gear Ratio"
+    },
+    {
+      "code": "P1734",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1734",
+      "description": "Gear Control Malfunction"
+    },
+    {
+      "code": "P1745",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1745",
+      "description": "Pressure Regulator 1"
+    },
+    {
+      "code": "P1746",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1746",
+      "description": "Pressure Regulator 2"
+    },
+    {
+      "code": "P1747",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1747",
+      "description": "Pressure Regulator 3"
+    },
+    {
+      "code": "P1748",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1748",
+      "description": "Pressure Regulator 5"
+    },
+    {
+      "code": "P1758",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1758",
+      "description": "Pressure Solenoid Control System Incorrect Current"
+    },
+    {
+      "code": "P1775",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1775",
+      "description": "Transmission System MIL Fault"
+    },
+    {
+      "code": "P1776",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1776",
+      "description": "Ignition Retard Request Duration"
+    },
+    {
+      "code": "P1777",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1777",
+      "description": "Ignition Retard Request Circuit"
+    },
+    {
+      "code": "P1778",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1778",
+      "description": "Transmission Reverse IP Circuit"
+    },
+    {
+      "code": "P1779",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1779",
+      "description": "Load Control"
+    },
+    {
+      "code": "P1789",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1789",
+      "description": "Ignition Supply Malfunction"
+    },
+    {
+      "code": "P1790",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1790",
+      "description": "Ignition Supply Malfunction"
+    },
+    {
+      "code": "P1791",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1791",
+      "description": "Ignition Supply Malfunction"
+    },
+    {
+      "code": "P1792",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1792",
+      "description": "Ignition Supply Malfunction"
+    },
+    {
+      "code": "P1793",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1793",
+      "description": "Ignition Supply Malfunction"
+    },
+    {
+      "code": "P1794",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1794",
+      "description": "Battery Voltage Circuit"
+    },
+    {
+      "code": "P1795",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1795",
+      "description": "Inconsistent CAN Level"
+    },
+    {
+      "code": "P1796",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1796",
+      "description": "CAN Controller Circuit Bus Off"
+    },
+    {
+      "code": "P1797",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1797",
+      "description": "CAN TCM ECM Circuit Malfunction"
+    },
+    {
+      "code": "P1798",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_jaguar_p1798",
+      "description": "CAN TCM INST Circuit Malfunction"
+    }
+  ]
+}

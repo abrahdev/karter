@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:in_app_purchase_android/in_app_purchase_android.dart';
+import 'package:material3_indicators/material3_indicators.dart';
 import 'package:mobile/core/services/in_app_purchase_service.dart';
 import 'package:mobile/core/theme/app_spacing.dart';
 import 'package:mobile/l10n/app_localizations.dart';
@@ -20,7 +21,9 @@ class TipsPage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(title: Text(l.tipProgram)),
       body: iapState.loading
-          ? const Center(child: CircularProgressIndicator())
+          ? const Center(
+              child: M3LoadingIndicator(
+                  contained: true, size: 36, containerSize: 72))
           : ListView(
               padding: const EdgeInsets.all(16),
               children: [
@@ -233,11 +236,7 @@ class _TipCard extends ConsumerWidget {
                         }
                       },
                 child: buying
-                    ? const SizedBox(
-                        width: 16,
-                        height: 16,
-                        child: CircularProgressIndicator(strokeWidth: 2),
-                      )
+                    ? const M3LoadingIndicator(size: 16)
                     : Text(l.tipSupport),
               ),
       ),

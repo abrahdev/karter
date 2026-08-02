@@ -1,14 +1,13 @@
 {
   "id": "ford-focus",
   "extends": [
-    "_base/combustion.json"
+    "_base/car-combustion.json",
+    "ford/dtc.json"
   ],
   "meta": {
     "make": "Ford",
     "model": "Focus",
     "generation": "All",
-    "years": null,
-    "engine": null,
     "author": "abrahdev",
     "version": "1.0.0"
   },

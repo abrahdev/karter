@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material3_indicators/material3_indicators.dart';
 import 'package:mobile/core/theme/app_spacing.dart';
 import 'package:mobile/domain/entities/maintenance_interval.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
 import 'package:mobile/presentation/utils/maintenance_localizer.dart';
 import 'package:mobile/presentation/widgets/add_maintenance_interval_modal.dart';
+import 'package:mobile/presentation/widgets/interval_parts_view.dart';
 
 class MaintenanceSettingsPage extends ConsumerWidget {
   final String vehicleId;
@@ -50,7 +52,9 @@ class MaintenanceSettingsPage extends ConsumerWidget {
                 )),
           ],
         ),
-        loading: () => const Center(child: CircularProgressIndicator()),
+        loading: () => const Center(
+            child: M3LoadingIndicator(
+                contained: true, size: 36, containerSize: 72)),
         error: (e, _) => Center(child: Text('Error: $e')),
       ),
       floatingActionButton: FloatingActionButton(
@@ -97,7 +101,16 @@ class _IntervalTile extends StatelessWidget {
             color: interval.isEnabled ? null : theme.colorScheme.outline,
           ),
         ),
-        subtitle: Text(subtitle),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(subtitle),
+            if (interval.parts.isNotEmpty) ...[
+              const SizedBox(height: 4),
+              IntervalPartsView(parts: interval.parts),
+            ],
+          ],
+        ),
         onTap: onTap,
         trailing: Switch(
           value: interval.isEnabled,

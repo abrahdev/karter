@@ -1,14 +1,13 @@
 {
   "id": "vw-golf",
   "extends": [
-    "_base/combustion.json"
+    "_base/car-combustion.json",
+    "volkswagen/dtc.json"
   ],
   "meta": {
     "make": "Volkswagen",
     "model": "Golf",
     "generation": "All",
-    "years": null,
-    "engine": null,
     "author": "abrahdev",
     "version": "1.0.0"
   },

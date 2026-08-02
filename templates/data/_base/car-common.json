@@ -1,11 +1,51 @@
 {
-  "id": "common-all",
+  "id": "cars",
+  "extends": [
+    "_base/dtc.json"
+  ],
   "meta": {
     "make": "_base",
-    "model": "Common (all vehicles)",
+    "model": "Cars (common)",
     "author": "abrahdev",
     "version": "1.0.0"
   },
+  "parts": [
+    {
+      "id": "brake-pad-set",
+      "name": "Brake pads (set)",
+      "i18n_key": "part_brake_pads",
+      "quantity": 1,
+      "unit": "set"
+    },
+    {
+      "id": "tire",
+      "name": "Tire",
+      "i18n_key": "part_tire",
+      "quantity": 4,
+      "unit": "unit"
+    },
+    {
+      "id": "brake-fluid",
+      "name": "Brake fluid",
+      "i18n_key": "part_brake_fluid",
+      "quantity": 1,
+      "unit": "L"
+    },
+    {
+      "id": "cabin-filter",
+      "name": "Cabin filter",
+      "i18n_key": "part_cabin_filter",
+      "quantity": 1,
+      "unit": "unit"
+    },
+    {
+      "id": "coolant",
+      "name": "Coolant",
+      "i18n_key": "part_coolant",
+      "quantity": 5,
+      "unit": "L"
+    }
+  ],
   "maintenance_items": [
     {
       "id": "brake-pads",
@@ -13,7 +53,12 @@
       "i18n_key": "seed_interval_brake_pads",
       "desc_i18n_key": "seed_desc_brake_pads",
       "interval_km": 30000,
-      "interval_months": null,
+      "parts": [
+        {
+          "part_id": "brake-pad-set",
+          "quantity": 1
+        }
+      ],
       "description": "Friction compound wears with use. Below 3mm thickness, braking distance increases dangerously."
     },
     {
@@ -22,7 +67,12 @@
       "i18n_key": "seed_interval_tires",
       "desc_i18n_key": "seed_desc_tires",
       "interval_km": 50000,
-      "interval_months": null,
+      "parts": [
+        {
+          "part_id": "tire",
+          "quantity": 4
+        }
+      ],
       "description": "Tires degrade both by mileage and age. Incorrect pressure or uneven wear compromises grip and safety."
     },
     {
@@ -32,6 +82,12 @@
       "desc_i18n_key": "seed_desc_brake_fluid",
       "interval_km": 40000,
       "interval_months": 24,
+      "parts": [
+        {
+          "part_id": "brake-fluid",
+          "quantity": 1
+        }
+      ],
       "description": "Brake fluid is hygroscopic: it absorbs moisture, reducing its boiling point and braking effectiveness."
     },
     {
@@ -40,7 +96,12 @@
       "i18n_key": "seed_interval_cabin_filter",
       "desc_i18n_key": "seed_desc_cabin_filter",
       "interval_km": 20000,
-      "interval_months": null,
+      "parts": [
+        {
+          "part_id": "cabin-filter",
+          "quantity": 1
+        }
+      ],
       "description": "The cabin filter purifies the air entering the interior. A saturated filter reduces HVAC efficiency and can generate odors."
     },
     {
@@ -50,6 +111,12 @@
       "desc_i18n_key": "seed_desc_coolant",
       "interval_km": 60000,
       "interval_months": 36,
+      "parts": [
+        {
+          "part_id": "coolant",
+          "quantity": 5
+        }
+      ],
       "description": "Coolant loses its antifreeze and anticorrosive properties over time, potentially damaging the engine's internal circuit."
     }
   ]

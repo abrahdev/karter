@@ -1,14 +1,12 @@
 {
   "id": "jac-s3",
   "extends": [
-    "_base/combustion.json"
+    "_base/car-combustion.json"
   ],
   "meta": {
     "make": "JAC",
     "model": "S3",
     "generation": "All",
-    "years": null,
-    "engine": null,
     "author": "abrahdev",
     "version": "1.0.0"
   },

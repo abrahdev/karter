@@ -1,0 +1,1514 @@
+{
+  "id": "bmw-dtc",
+  "meta": {
+    "make": "BMW",
+    "model": "OBD-II codes",
+    "author": "abrahdev",
+    "version": "1.0.0",
+    "sources": [
+      "https://github.com/Wal33D/dtc-database (MIT)"
+    ]
+  },
+  "obd_dtc_definitions": [
+    {
+      "code": "P1083",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1083",
+      "description": "Fuel Control Mixture Lean Bank 1 Sensor 1"
+    },
+    {
+      "code": "P1084",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1084",
+      "description": "Fuel Control Mixture Rich Bank 1 Sensor 1"
+    },
+    {
+      "code": "P1085",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1085",
+      "description": "Fuel Control Mixture Lean Bank 2 Sensor 1"
+    },
+    {
+      "code": "P1086",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1086",
+      "description": "Fuel Control Mixture Rich Bank 2 Sensor 1"
+    },
+    {
+      "code": "P1087",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1087",
+      "description": "O2 Sensor Circuit Slow Response in Lean Control Range Bank 1 Sensor 1"
+    },
+    {
+      "code": "P1088",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1088",
+      "description": "O2 Sensor Circuit Slow Response in Rich Control Range Bank 1 Sensor 1"
+    },
+    {
+      "code": "P1089",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1089",
+      "description": "O2 Sensor Circuit Slow Response in Lean Control Range Bank 1 Sensor 2"
+    },
+    {
+      "code": "P1090",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1090",
+      "description": "Pre-Catalyst Fuel Trim Too Lean Bank 1"
+    },
+    {
+      "code": "P1091",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1091",
+      "description": "Pre-Catalyst Fuel Trim Too Rich Bank 1"
+    },
+    {
+      "code": "P1092",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1092",
+      "description": "Pre-Catalyst Fuel Trim Too Lean Bank 2"
+    },
+    {
+      "code": "P1093",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1093",
+      "description": "Pre-Catalyst Fuel Trim Too Rich Bank 2"
+    },
+    {
+      "code": "P1094",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1094",
+      "description": "O2 Sensor Circuit Slow Response in Rich Control Range Bank 2 Sensor 1"
+    },
+    {
+      "code": "P1095",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1095",
+      "description": "O2 Sensor Circuit Slow Switching From Lean to Rich Bank 1 Sensor 1"
+    },
+    {
+      "code": "P1096",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1096",
+      "description": "O2 Sensor Circuit Slow Switching From Lean to Rich Bank 2 Sensor 1"
+    },
+    {
+      "code": "P1097",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1097",
+      "description": "O2 Sensor Circuit Slow Response After Coast Down Fuel Cut-off Bank 1 Sensor 2"
+    },
+    {
+      "code": "P1098",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1098",
+      "description": "O2 Sensor Circuit Slow Response After Coast Down Fuel Cutoff Bank 2 Sensor 2"
+    },
+    {
+      "code": "P1111",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1111",
+      "description": "Engine Coolant Temperature Radiator Outlet Sensor Low Input"
+    },
+    {
+      "code": "P1112",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1112",
+      "description": "Engine Coolant Temperature Radiator Outlet Sensor High Input"
+    },
+    {
+      "code": "P1115",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1115",
+      "description": "Coolant Temperature Sensor Plausibility"
+    },
+    {
+      "code": "P1116",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1116",
+      "description": "Mass Or Volume Air Flow Circuit Range Performance Problem Bank 2"
+    },
+    {
+      "code": "P1117",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1117",
+      "description": "Mass Or Volume Air Flow Circuit Low Input Bank 2"
+    },
+    {
+      "code": "P1118",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1118",
+      "description": "Mass Or Volume Air Flow Circuit High Input Bank 2"
+    },
+    {
+      "code": "P1120",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1120",
+      "description": "Pedal Position Sensor Circuit"
+    },
+    {
+      "code": "P1121",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1121",
+      "description": "Pedal Position Sensor 1 Range Performance Problem"
+    },
+    {
+      "code": "P1122",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1122",
+      "description": "Pedal Position Sensor 1 Low Input"
+    },
+    {
+      "code": "P1123",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1123",
+      "description": "Pedal Position Sensor 1 High Input"
+    },
+    {
+      "code": "P1132",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1132",
+      "description": "O2 Sensor Heater Control Circuit Bank 1 Sensor 1"
+    },
+    {
+      "code": "P1133",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1133",
+      "description": "O2 Sensor Heater Control Circuit Bank 2 Sensor 1"
+    },
+    {
+      "code": "P1134",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1134",
+      "description": "O2 Sensor Heater Circuit Signal Intermittent Bank 1 Sensor 1"
+    },
+    {
+      "code": "P1135",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1135",
+      "description": "O2 Sensor Heater Circuit Low Voltage Bank 1 Sensor 1"
+    },
+    {
+      "code": "P1136",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1136",
+      "description": "O2 Sensor Heater Circuit High Voltage Bank 1 Sensor 1"
+    },
+    {
+      "code": "P1137",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1137",
+      "description": "O2 Sensor Heater Circuit Signal Intermittent Bank 1 Sensor 2"
+    },
+    {
+      "code": "P1138",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1138",
+      "description": "O2 Sensor Heater Circuit Low Voltage Bank 1 Sensor 2"
+    },
+    {
+      "code": "P1139",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1139",
+      "description": "O2 Sensor Heater Circuit High Voltage Bank 1 Sensor 2"
+    },
+    {
+      "code": "P1140",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1140",
+      "description": "Mass Or Volume Air Flow Circuit Range Performance Problem"
+    },
+    {
+      "code": "P1145",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1145",
+      "description": "Solenoid Valve Running Losses Control Circuit Electrical"
+    },
+    {
+      "code": "P1151",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1151",
+      "description": "O2 Sensor Heater Circuit Signal Intermittent Bank 2 Sensor 1"
+    },
+    {
+      "code": "P1152",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1152",
+      "description": "O2 Sensor Heater Circuit Low Voltage Bank 2 Sensor 1"
+    },
+    {
+      "code": "P1153",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1153",
+      "description": "O2 Sensor Heater Circuit High Voltage Bank 2 Sensor 1"
+    },
+    {
+      "code": "P1155",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1155",
+      "description": "O2 Sensor Heater Circuit Intermittent Bank 2 Sensor 2"
+    },
+    {
+      "code": "P1156",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1156",
+      "description": "O2 Sensor Heater Circuit Low Voltage Bank 2 Sensor 2"
+    },
+    {
+      "code": "P1157",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1157",
+      "description": "O2 Sensor Heater Circuit High Voltage Bank 2 Sensor 2"
+    },
+    {
+      "code": "P1158",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1158",
+      "description": "Fuel Trim Adaptation Additive Bank 1 Low"
+    },
+    {
+      "code": "P1159",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1159",
+      "description": "Fuel Trim Adaptation Additive Bank 1 High"
+    },
+    {
+      "code": "P1160",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1160",
+      "description": "Fuel Trim Adaptation Additive Bank 2 Low"
+    },
+    {
+      "code": "P1161",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1161",
+      "description": "Fuel Trim Adaptation Additive Bank 2 High"
+    },
+    {
+      "code": "P1162",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1162",
+      "description": "Fuel Trim Adaptation Additive Per Ignition Bank 1 Low"
+    },
+    {
+      "code": "P1163",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1163",
+      "description": "Fuel Trim Adaptation Additive Per Ignition Bank 1 High"
+    },
+    {
+      "code": "P1164",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1164",
+      "description": "Fuel Trim Adaptation Additive Per Ignition Bank 2 Low"
+    },
+    {
+      "code": "P1165",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1165",
+      "description": "Fuel Trim Adaptation Additive Per Ignition Bank 2 High"
+    },
+    {
+      "code": "P1174",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1174",
+      "description": "Fuel Trim Adaptation Additive Bank 1 Malfunction"
+    },
+    {
+      "code": "P1175",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1175",
+      "description": "Fuel Trim Adaptation Additive Bank 2 Malfunction"
+    },
+    {
+      "code": "P1176",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1176",
+      "description": "O2 Sensor Slow Response Bank 1"
+    },
+    {
+      "code": "P1177",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1177",
+      "description": "O2 Sensor Slow Response Bank 2"
+    },
+    {
+      "code": "P1178",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1178",
+      "description": "O2 Sensor Signal Circuit Slow Switching From Rich to Lean Bank 1 Sensor 1"
+    },
+    {
+      "code": "P1179",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1179",
+      "description": "O2 Sensor Signal Circuit Slow Switching From Rich to Lean Bank 2 Sensor 1"
+    },
+    {
+      "code": "P1180",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1180",
+      "description": "O2 Sensor Signal Circuit Slow Switching From Rich to Lean Bank 1 Sensor 2"
+    },
+    {
+      "code": "P1181",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1181",
+      "description": "O2 Sensor Signal Circuit Slow Switching From Rich to Lean Bank 2 Sensor 2"
+    },
+    {
+      "code": "P1182",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1182",
+      "description": "O2 Sensor Bank 1 Sensor 2 Open Circuit During Coast Down Fuel Cut-off"
+    },
+    {
+      "code": "P1183",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1183",
+      "description": "O2 Sensor Bank 2 Sensor 2 Open Circuit During Coast Down Fuel Cut-off"
+    },
+    {
+      "code": "P1186",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1186",
+      "description": "O2 Sensor Heater Control Circuit Bank 1 Sensor 2"
+    },
+    {
+      "code": "P1187",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1187",
+      "description": "O2 Sensor Heater Control Circuit Bank 2 Sensor 2"
+    },
+    {
+      "code": "P1188",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1188",
+      "description": "Fuel Control Bank 1 Sensor 1"
+    },
+    {
+      "code": "P1189",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1189",
+      "description": "Fuel Control Bank 2 Sensor 1"
+    },
+    {
+      "code": "P1190",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1190",
+      "description": "Pre-Catalyst Fuel Trim System Bank 1"
+    },
+    {
+      "code": "P1191",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1191",
+      "description": "Pre-Catalyst Fuel Trim System Bank 2"
+    },
+    {
+      "code": "P1192",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1192",
+      "description": "Post-Catalyst Fuel Trim System Bank 1"
+    },
+    {
+      "code": "P1193",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1193",
+      "description": "Post-Catalyst Fuel Trim System Bank 2"
+    },
+    {
+      "code": "P1221",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1221",
+      "description": "Pedal Position Sensor 2 Range Performance Problem"
+    },
+    {
+      "code": "P1222",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1222",
+      "description": "Pedal Position Sensor 2 Low Input"
+    },
+    {
+      "code": "P1223",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1223",
+      "description": "Pedal Position Sensor 2 High Input"
+    },
+    {
+      "code": "P1270",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1270",
+      "description": "Control Module Self-Test Torque Monitoring"
+    },
+    {
+      "code": "P1271",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1271",
+      "description": "Ambient Air Pressure Sensor Electrical"
+    },
+    {
+      "code": "P1283",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1283",
+      "description": "Switching Solenoid for Air Assisted Injection Valves Bank 1 Control Circuit Electrical"
+    },
+    {
+      "code": "P1284",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1284",
+      "description": "Switching Solenoid for Air Assisted Injection Valves Bank 1 Control Circuit Signal Low"
+    },
+    {
+      "code": "P1285",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1285",
+      "description": "Switching Solenoid for Air Assisted Injection Valves Bank 1 Control Circuit Signal High"
+    },
+    {
+      "code": "P1287",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1287",
+      "description": "Switching Solenoid for Air Assisted Injection Valves Bank 2 Control Circuit Electrical"
+    },
+    {
+      "code": "P1288",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1288",
+      "description": "Switching Solenoid for Air Assisted Injection Valves Bank 2 Control Circuit Signal Low"
+    },
+    {
+      "code": "P1289",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1289",
+      "description": "Switching Solenoid for Air Assisted Injection Valves Bank 2 Control Circuit Signal High"
+    },
+    {
+      "code": "P1313",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1313",
+      "description": "A Camshaft Position Plausibility"
+    },
+    {
+      "code": "P1317",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1317",
+      "description": "B Camshaft Position Plausibility"
+    },
+    {
+      "code": "P1327",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1327",
+      "description": "Knock Sensor 2 Bank 1 Low Input"
+    },
+    {
+      "code": "P1328",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1328",
+      "description": "Knock Sensor 2 Bank 1 High Input"
+    },
+    {
+      "code": "P1332",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1332",
+      "description": "Knock Sensor 4 Low Input"
+    },
+    {
+      "code": "P1333",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1333",
+      "description": "Knock Sensor 4 High Input"
+    },
+    {
+      "code": "P1340",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1340",
+      "description": "Multiple Cylinder Misfire During Start"
+    },
+    {
+      "code": "P1341",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1341",
+      "description": "Multiple Cylinder Misfire With Fuel Cut-off"
+    },
+    {
+      "code": "P1342",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1342",
+      "description": "Misfire During Start Cylinder 1"
+    },
+    {
+      "code": "P1343",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1343",
+      "description": "Misfire Cylinder 1 With Fuel Cut-off"
+    },
+    {
+      "code": "P1344",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1344",
+      "description": "Misfire During Start Cylinder 2"
+    },
+    {
+      "code": "P1345",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1345",
+      "description": "Misfire Cylinder 2 With Fuel Cut-off"
+    },
+    {
+      "code": "P1346",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1346",
+      "description": "Misfire During Start Cylinder 3"
+    },
+    {
+      "code": "P1347",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1347",
+      "description": "Misfire Cylinder 3 With Fuel Cut-off"
+    },
+    {
+      "code": "P1348",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1348",
+      "description": "Misfire During Start Cylinder 4"
+    },
+    {
+      "code": "P1349",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1349",
+      "description": "Misfire Cylinder 4 With Fuel Cut-off"
+    },
+    {
+      "code": "P1350",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1350",
+      "description": "Misfire During Start Cylinder 5"
+    },
+    {
+      "code": "P1351",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1351",
+      "description": "Misfire Cylinder 5 With Fuel Cut-off"
+    },
+    {
+      "code": "P1352",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1352",
+      "description": "Misfire During Start Cylinder 6"
+    },
+    {
+      "code": "P1353",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1353",
+      "description": "Misfire Cylinder 6 With Fuel Cut-off"
+    },
+    {
+      "code": "P1354",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1354",
+      "description": "Misfire During Start Cylinder 7"
+    },
+    {
+      "code": "P1355",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1355",
+      "description": "Misfire Cylinder 7 With Fuel Cut-off"
+    },
+    {
+      "code": "P1356",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1356",
+      "description": "Misfire During Start Cylinder 8"
+    },
+    {
+      "code": "P1357",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1357",
+      "description": "Misfire Cylinder 8 With Fuel Cut-off"
+    },
+    {
+      "code": "P1358",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1358",
+      "description": "Misfire During Start Cylinder 9"
+    },
+    {
+      "code": "P1359",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1359",
+      "description": "Misfire Cylinder 9 With Fuel Cut-off"
+    },
+    {
+      "code": "P1360",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1360",
+      "description": "Misfire During Start Cylinder 10"
+    },
+    {
+      "code": "P1361",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1361",
+      "description": "Misfire Cylinder 10 With Fuel Cut-off"
+    },
+    {
+      "code": "P1362",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1362",
+      "description": "Misfire During Start Cylinder 11"
+    },
+    {
+      "code": "P1363",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1363",
+      "description": "Misfire Cylinder 11 With Fuel Cut-off"
+    },
+    {
+      "code": "P1364",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1364",
+      "description": "Misfire During Start Cylinder 12"
+    },
+    {
+      "code": "P1365",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1365",
+      "description": "Misfire Cylinder 12 With Fuel Cut-off"
+    },
+    {
+      "code": "P1384",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1384",
+      "description": "Knock Sensor 3 Circuit"
+    },
+    {
+      "code": "P1385",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1385",
+      "description": "Knock Sensor 4 Circuit"
+    },
+    {
+      "code": "P1386",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1386",
+      "description": "Control Module Self-test Knock Control Baseline Test Bank 1"
+    },
+    {
+      "code": "P1396",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1396",
+      "description": "Crankshaft Position Sensor Segment Timing Plausibility"
+    },
+    {
+      "code": "P1397",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1397",
+      "description": "Camshaft Position Sensor B Circuit Bank 1"
+    },
+    {
+      "code": "P1400",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1400",
+      "description": "Heated Catalyst Battery Voltage or Current Too Low During Heating Bank 1"
+    },
+    {
+      "code": "P1401",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1401",
+      "description": "Heated Catalyst Current Too High During Heating Bank 1"
+    },
+    {
+      "code": "P1402",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1402",
+      "description": "Heated Catalyst Power Switch Overtemperature Condition Bank 1"
+    },
+    {
+      "code": "P1403",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1403",
+      "description": "Carbon Canister Shut Off Valve Control Circuit Electrical"
+    },
+    {
+      "code": "P1404",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1404",
+      "description": "Heated Catalyst Current Too High During Heating Bank 2"
+    },
+    {
+      "code": "P1405",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1405",
+      "description": "Heated Catalyst Power Switch Overtemperature Condition Bank 2"
+    },
+    {
+      "code": "P1406",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1406",
+      "description": "Heated Catalyst Internal Control Module Checksum ROM Error"
+    },
+    {
+      "code": "P1413",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1413",
+      "description": "Secondary Air Injection Pump Relay Control Circuit Signal Low"
+    },
+    {
+      "code": "P1414",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1414",
+      "description": "Secondary Air Injection System Monitor Circuit High"
+    },
+    {
+      "code": "P1420",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1420",
+      "description": "Secondary Air Valve Control Circuit Electrical"
+    },
+    {
+      "code": "P1421",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1421",
+      "description": "Secondary Air System Bank 1"
+    },
+    {
+      "code": "P1422",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1422",
+      "description": "Secondary Air System Bank 2"
+    },
+    {
+      "code": "P1432",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1432",
+      "description": "Secondary Air Injection System Incorrect Flow Detected"
+    },
+    {
+      "code": "P1438",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1438",
+      "description": "Purge Control Valve Control Open Circuit"
+    },
+    {
+      "code": "P1439",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1439",
+      "description": "Purge Control Valve Control Circuit Signal Low"
+    },
+    {
+      "code": "P1440",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1440",
+      "description": "Purge Control Valve Control Circuit Signal High"
+    },
+    {
+      "code": "P1441",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1441",
+      "description": "Leakage Diagnostic Pump Control Open Circuit"
+    },
+    {
+      "code": "P1442",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1442",
+      "description": "Leakage Diagnostic Pump Control Circuit Signal Low"
+    },
+    {
+      "code": "P1443",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1443",
+      "description": "Leakage Diagnostic Pump Control Circuit Signal High"
+    },
+    {
+      "code": "P1444",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1444",
+      "description": "Diagnostic Module Tank Leakage DM-TL Pump Control Open Circuit"
+    },
+    {
+      "code": "P1445",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1445",
+      "description": "Diagnostic Module Tank Leakage DM-TL Pump Control Circuit Signal Low"
+    },
+    {
+      "code": "P1446",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1446",
+      "description": "Diagnostic Module Tank Leakage DM-TL Pump Control Circuit Signal High"
+    },
+    {
+      "code": "P1447",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1447",
+      "description": "Diagnostic Module Tank Leakage DM-TL Pump Too High During Switching"
+    },
+    {
+      "code": "P1448",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1448",
+      "description": "Diagnostic Module Tank Leakage DM-TL Pump Too Low During Switching"
+    },
+    {
+      "code": "P1449",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1449",
+      "description": "Diagnostic Module Tank Leakage DM-TL Pump Too High"
+    },
+    {
+      "code": "P1450",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1450",
+      "description": "Diagnostic Module Tank Leakage DM-TL Switching Solenoid Open Circuit"
+    },
+    {
+      "code": "P1451",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1451",
+      "description": "Diagnostic Module Tank Leakage DM-TL Switching Solenoid Control Circuit Signal Low"
+    },
+    {
+      "code": "P1452",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1452",
+      "description": "Diagnostic Module Tank Leakage DM-TL Switching Solenoid Control Circuit Signal High"
+    },
+    {
+      "code": "P1453",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1453",
+      "description": "Secondary Air Injection Pump Relay Control Circuit Electrical"
+    },
+    {
+      "code": "P1454",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1454",
+      "description": "Secondary Air Injection Pump With Series Resistor Control Circuit Electrical"
+    },
+    {
+      "code": "P1456",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1456",
+      "description": "Heated Catalyst Heater Power Supply Open Circuit Bank 1"
+    },
+    {
+      "code": "P1457",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1457",
+      "description": "Heated Catalyst Heater Power Switch Temperature Sensor Electrical Bank 1"
+    },
+    {
+      "code": "P1459",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1459",
+      "description": "Heated Catalyst Heater Power Supply Open Circuit Bank 2"
+    },
+    {
+      "code": "P1460",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1460",
+      "description": "Heated Catalyst Heater Power Switch Temperature Sensor Electrical Bank 2"
+    },
+    {
+      "code": "P1461",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1461",
+      "description": "Heated Catalyst Gate Voltage Signal Low"
+    },
+    {
+      "code": "P1462",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1462",
+      "description": "Heated Catalyst Internal Control Module Checksum ROM Error"
+    },
+    {
+      "code": "P1463",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1463",
+      "description": "Heated Catalyst Battery Temperature Sensor 1 Electrical"
+    },
+    {
+      "code": "P1464",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1464",
+      "description": "Heated Catalyst Battery Temperature Sensor 2 Electrical"
+    },
+    {
+      "code": "P1465",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1465",
+      "description": "Heated Catalyst Battery Temperature Sensor 1 or 2 Plausibility"
+    },
+    {
+      "code": "P1466",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1466",
+      "description": "Heated Catalyst Power Switch Temperature Sensor Plausibility"
+    },
+    {
+      "code": "P1467",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1467",
+      "description": "Heated Catalyst Comparison Battery Voltages of Power Switches Plausibility"
+    },
+    {
+      "code": "P1468",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1468",
+      "description": "Heated Catalyst Battery Disconnecting Switch Plausibility"
+    },
+    {
+      "code": "P1470",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1470",
+      "description": "Leakage Diagnostic Pump Control Circuit Electrical"
+    },
+    {
+      "code": "P1472",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1472",
+      "description": "Diagnostic Module Tank Leakage DM-TL Switching Solenoid Control Circuit Electrical"
+    },
+    {
+      "code": "P1473",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1473",
+      "description": "Diagnostic Module Tank Leakage DM-TL Pump Current Plausibility"
+    },
+    {
+      "code": "P1475",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1475",
+      "description": "Leakage Diagnostic Pump Reed Switch Did Not Close"
+    },
+    {
+      "code": "P1476",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1476",
+      "description": "Leakage Diagnostic Pump Clamped Tube"
+    },
+    {
+      "code": "P1477",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1477",
+      "description": "Leakage Diagnostic Pump Reed Switch Did Not Open"
+    },
+    {
+      "code": "P1500",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1500",
+      "description": "Idle Speed Control Valve Stuck Open"
+    },
+    {
+      "code": "P1501",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1501",
+      "description": "Idle Speed Control Valve Stuck Closed"
+    },
+    {
+      "code": "P1502",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1502",
+      "description": "Idle Speed Control Valve Closing Solenoid Control Circuit Signal High Or Low"
+    },
+    {
+      "code": "P1503",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1503",
+      "description": "Idle Speed Control Valve Closing Solenoid Control Circuit Signal Low"
+    },
+    {
+      "code": "P1504",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1504",
+      "description": "Idle Speed Control Valve Closing Solenoid Control Open Circuit"
+    },
+    {
+      "code": "P1505",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1505",
+      "description": "Idle Speed Control Valve Closing Solenoid Control Circuit Electrical"
+    },
+    {
+      "code": "P1506",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1506",
+      "description": "Idle Speed Control Valve Open Solenoid Control Circuit Signal High"
+    },
+    {
+      "code": "P1507",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1507",
+      "description": "Idle Speed Control Valve Open Solenoid Control Circuit Signal Low"
+    },
+    {
+      "code": "P1508",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1508",
+      "description": "Idle Speed Control Valve Opening Solenoid Control Open Circuit"
+    },
+    {
+      "code": "P1509",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1509",
+      "description": "Idle Speed Control Valve Opening Solenoid Control Circuit Electrical"
+    },
+    {
+      "code": "P1510",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1510",
+      "description": "Idle Speed Control Valve Stuck"
+    },
+    {
+      "code": "P1511",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1511",
+      "description": "DISA Control Circuit Electrical"
+    },
+    {
+      "code": "P1512",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1512",
+      "description": "DISA Control Circuit Signal Low"
+    },
+    {
+      "code": "P1513",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1513",
+      "description": "DISA Control Circuit Signal High"
+    },
+    {
+      "code": "P1519",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1519",
+      "description": "A Camshaft Position Actuator Bank 1"
+    },
+    {
+      "code": "P1520",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1520",
+      "description": "B Camshaft Position Actuator Bank 1"
+    },
+    {
+      "code": "P1522",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1522",
+      "description": "A Camshaft Position Actuator Bank 2"
+    },
+    {
+      "code": "P1523",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1523",
+      "description": "A Camshaft Position Actuator Signal Low Bank 1"
+    },
+    {
+      "code": "P1524",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1524",
+      "description": "A Camshaft Position Actuator Signal High Bank 1"
+    },
+    {
+      "code": "P1525",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1525",
+      "description": "A Camshaft Position Actuator Control Open Circuit Bank 1"
+    },
+    {
+      "code": "P1526",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1526",
+      "description": "A Camshaft Position Actuator Control Open Circuit Bank 2"
+    },
+    {
+      "code": "P1527",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1527",
+      "description": "A Camshaft Position Actuator Control Circuit Signal Low Bank 1"
+    },
+    {
+      "code": "P1528",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1528",
+      "description": "A Camshaft Position Actuator Control Circuit Signal High Bank 1"
+    },
+    {
+      "code": "P1529",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1529",
+      "description": "B Camshaft Position Actuator Control Circuit Signal Low Bank 1"
+    },
+    {
+      "code": "P1530",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1530",
+      "description": "B Camshaft Position Actuator Control Circuit Signal High Bank 1"
+    },
+    {
+      "code": "P1531",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1531",
+      "description": "B Camshaft Position Actuator Control Open Circuit Bank 1"
+    },
+    {
+      "code": "P1532",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1532",
+      "description": "B Camshaft Position Actuator Control Open Circuit Bank 2"
+    },
+    {
+      "code": "P1533",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1533",
+      "description": "B Camshaft Position Actuator Control Circuit Signal Low Bank 2"
+    },
+    {
+      "code": "P1534",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1534",
+      "description": "B Camshaft Position Actuator Control Circuit Signal High Bank 2"
+    },
+    {
+      "code": "P1540",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1540",
+      "description": "Pedal Position Sensor"
+    },
+    {
+      "code": "P1541",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1541",
+      "description": "Pedal Position Sensor Double Error"
+    },
+    {
+      "code": "P1542",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1542",
+      "description": "Pedal Position Sensor Electrical"
+    },
+    {
+      "code": "P1543",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1543",
+      "description": "Pedal Position Sensor"
+    },
+    {
+      "code": "P1544",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1544",
+      "description": "Pedal Position Sensor"
+    },
+    {
+      "code": "P1545",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1545",
+      "description": "Pedal Position Sensor"
+    },
+    {
+      "code": "P1546",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1546",
+      "description": "Pedal Position Sensor"
+    },
+    {
+      "code": "P1550",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1550",
+      "description": "Idle Speed Control Valve Closing Solenoid Control Circuit Electrical"
+    },
+    {
+      "code": "P1551",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1551",
+      "description": "A Camshaft Position Actuator Control Open Circuit Bank 1"
+    },
+    {
+      "code": "P1552",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1552",
+      "description": "A Camshaft Position Actuator Control Open Circuit Bank 1"
+    },
+    {
+      "code": "P1556",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1556",
+      "description": "A Camshaft Position Actuator Control Open Circuit Bank 1"
+    },
+    {
+      "code": "P1560",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1560",
+      "description": "B Camshaft Position Actuator Control Open Circuit Bank 1"
+    },
+    {
+      "code": "P1564",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1564",
+      "description": "Control Module Selection"
+    },
+    {
+      "code": "P1565",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1565",
+      "description": "B Camshaft Position Actuator Control Open Circuit Bank 1"
+    },
+    {
+      "code": "P1569",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1569",
+      "description": "A Camshaft Position Actuator Control Open Circuit Bank 2"
+    },
+    {
+      "code": "P1580",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1580",
+      "description": "Throttle Valve Mechanically Stuck"
+    },
+    {
+      "code": "P1581",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1581",
+      "description": "B Camshaft Position Actuator Control Open Circuit Bank 2"
+    },
+    {
+      "code": "P1589",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1589",
+      "description": "Control Module Self Test Knock Control Test Pulse Bank 1"
+    },
+    {
+      "code": "P1593",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1593",
+      "description": "DISA Control Circuit Electrical"
+    },
+    {
+      "code": "P1594",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1594",
+      "description": "B Camshaft Position Actuator Control Open Circuit Bank 2"
+    },
+    {
+      "code": "P1602",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1602",
+      "description": "Control Module Self Test Control Module Defective"
+    },
+    {
+      "code": "P1603",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1603",
+      "description": "Control Module Self Test Torque Monitoring"
+    },
+    {
+      "code": "P1604",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1604",
+      "description": "Control Module Self Test Speed Monitoring"
+    },
+    {
+      "code": "P1607",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1607",
+      "description": "CAN Version"
+    },
+    {
+      "code": "P1608",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1608",
+      "description": "Serial Communicating Link Control Module"
+    },
+    {
+      "code": "P1609",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1609",
+      "description": "Serial Communicating Link EML"
+    },
+    {
+      "code": "P1611",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1611",
+      "description": "Serial Communicating Link Transmission Control Module"
+    },
+    {
+      "code": "P1619",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1619",
+      "description": "MAP Cooling Control Circuit Signal Low"
+    },
+    {
+      "code": "P1620",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1620",
+      "description": "MAP Cooling Control Circuit Signal High"
+    },
+    {
+      "code": "P1622",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1622",
+      "description": "MAP Cooling Control Circuit Electrical"
+    },
+    {
+      "code": "P1623",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1623",
+      "description": "Pedal Position Sensor Potentiometer Supply"
+    },
+    {
+      "code": "P1624",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1624",
+      "description": "Pedal Position Sensor Potentiometer Supply Channel 1 Electrical"
+    },
+    {
+      "code": "P1625",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1625",
+      "description": "Pedal Position Sensor Potentiometer Supply Channel 2 Electrical"
+    },
+    {
+      "code": "P1632",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1632",
+      "description": "Throttle Valve Adaptation Adaptation Condition Not Met"
+    },
+    {
+      "code": "P1633",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1633",
+      "description": "Throttle Valve Adaptation Limp Home Position"
+    },
+    {
+      "code": "P1634",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1634",
+      "description": "Throttle Valve Adaptation Spring Test Failed"
+    },
+    {
+      "code": "P1635",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1635",
+      "description": "Throttle Valve Adaptation Lower Mechanical Stop Not Adapted"
+    },
+    {
+      "code": "P1636",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1636",
+      "description": "Throttle Valve Control Circuit"
+    },
+    {
+      "code": "P1637",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1637",
+      "description": "Throttle Valve Position Control Control Deviation"
+    },
+    {
+      "code": "P1638",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1638",
+      "description": "Throttle Valve Position Control Throttle Stuck Temporarily"
+    },
+    {
+      "code": "P1639",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1639",
+      "description": "Throttle Valve Position Control Throttle Stuck Permanently"
+    },
+    {
+      "code": "P1640",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1640",
+      "description": "Internal Control Module ROM RAM Error"
+    },
+    {
+      "code": "P1690",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1690",
+      "description": "Malfunction Indicator Lamp MIL Electrical"
+    },
+    {
+      "code": "P1734",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1734",
+      "description": "Pressure Control Solenoid B Electrical"
+    },
+    {
+      "code": "P1738",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1738",
+      "description": "Pressure Control Solenoid C Electrical"
+    },
+    {
+      "code": "P1743",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1743",
+      "description": "Pressure Control Solenoid E Electrical"
+    },
+    {
+      "code": "P1744",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1744",
+      "description": "Pressure Control Solenoid A Electrical"
+    },
+    {
+      "code": "P1746",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1746",
+      "description": "Transmission Control Module Output Stage"
+    },
+    {
+      "code": "P1747",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1747",
+      "description": "CAN Bus Monitoring"
+    },
+    {
+      "code": "P1748",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1748",
+      "description": "Transmission Control Module Self Test"
+    },
+    {
+      "code": "P1749",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1749",
+      "description": "Secondary Pressure Solenoid Communication Error"
+    },
+    {
+      "code": "P1750",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1750",
+      "description": "Secondary Pressure Solenoid Circuit Range Performance"
+    },
+    {
+      "code": "P1751",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1751",
+      "description": "Secondary Pressure Solenoid Open Circuit"
+    },
+    {
+      "code": "P1761",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1761",
+      "description": "Shift Solenoid Malfunction"
+    },
+    {
+      "code": "P1765",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1765",
+      "description": "CAN Throttle Valve"
+    },
+    {
+      "code": "P1770",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1770",
+      "description": "CAN Torque Interface"
+    },
+    {
+      "code": "P1780",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_bmw_p1780",
+      "description": "CAN Torque Reduction"
+    }
+  ]
+}

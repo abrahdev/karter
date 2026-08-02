@@ -2,6 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://karter.abrah.dev/schemas/template-v1.json",
   "type": "object",
+  "description": "DEPRECATED: use template-v2.json. Kept for reference; new templates must target v2.",
   "required": ["id", "meta", "maintenance_items"],
   "properties": {
     "id": {
@@ -34,7 +35,11 @@
             "code": { "type": "string", "description": "Código del motor" },
             "fuel": {
               "type": "string",
-              "enum": ["gasoline", "diesel", "hybrid", "electric", "plugin-hybrid"]
+              "enum": ["gasoline", "diesel", "glp", "cng", "hydrogen", "ethanol"]
+            },
+            "powertrain": {
+              "type": "string",
+              "enum": ["combustion", "hybrid", "plugin-hybrid", "electric"]
             },
             "displacement_cc": { "type": "integer", "description": "Cilindrada en cc" },
             "power_hp": { "type": "integer", "description": "Potencia en HP" }

@@ -1,14 +1,12 @@
 {
   "id": "kawasaki-versys-300",
   "extends": [
-    "_base/combustion.json"
+    "_base/car-combustion.json"
   ],
   "meta": {
     "make": "Kawasaki",
     "model": "Versys 300",
     "generation": "All",
-    "years": null,
-    "engine": null,
     "author": "abrahdev",
     "version": "1.0.0"
   },

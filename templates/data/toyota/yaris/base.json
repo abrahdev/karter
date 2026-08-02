@@ -1,14 +1,13 @@
 {
   "id": "toyota-yaris",
   "extends": [
-    "_base/combustion.json"
+    "_base/car-combustion.json",
+    "toyota/dtc.json"
   ],
   "meta": {
     "make": "Toyota",
     "model": "Yaris",
     "generation": "All",
-    "years": null,
-    "engine": null,
     "author": "abrahdev",
     "version": "1.0.0"
   },

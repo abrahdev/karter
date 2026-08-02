@@ -1,14 +1,13 @@
 {
   "id": "suzuki-gn125",
   "extends": [
-    "_base/combustion.json"
+    "_base/car-combustion.json",
+    "suzuki/dtc.json"
   ],
   "meta": {
     "make": "Suzuki",
     "model": "GN125",
     "generation": "All",
-    "years": null,
-    "engine": null,
     "author": "abrahdev",
     "version": "1.0.0"
   },

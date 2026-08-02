@@ -1,14 +1,12 @@
 {
   "id": "royal-enfield-meteor-350",
   "extends": [
-    "_base/combustion.json"
+    "_base/car-combustion.json"
   ],
   "meta": {
     "make": "Royal Enfield",
     "model": "Meteor 350",
     "generation": "All",
-    "years": null,
-    "engine": null,
     "author": "abrahdev",
     "version": "1.0.0"
   },

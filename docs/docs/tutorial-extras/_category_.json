@@ -1,6 +1,9 @@
 {
   "label": "Tutorial - Extras",
   "position": 3,
+  "customProps": {
+    "icon": "🎓"
+  },
   "link": {
     "type": "generated-index"
   }

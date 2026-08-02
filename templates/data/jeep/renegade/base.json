@@ -1,14 +1,13 @@
 {
   "id": "jeep-renegade",
   "extends": [
-    "_base/combustion.json"
+    "_base/car-combustion.json",
+    "jeep/dtc.json"
   ],
   "meta": {
     "make": "Jeep",
     "model": "Renegade",
     "generation": "All",
-    "years": null,
-    "engine": null,
     "author": "abrahdev",
     "version": "1.0.0"
   },

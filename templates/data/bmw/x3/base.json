@@ -1,14 +1,13 @@
 {
   "id": "bmw-x3",
   "extends": [
-    "_base/combustion.json"
+    "_base/car-combustion.json",
+    "bmw/dtc.json"
   ],
   "meta": {
     "make": "BMW",
     "model": "X3",
     "generation": "All",
-    "years": null,
-    "engine": null,
     "author": "abrahdev",
     "version": "1.0.0"
   },

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:material3_indicators/material3_indicators.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
@@ -108,7 +109,7 @@ class _ChangelogSheetState extends State<ChangelogSheet> {
         else
           const Padding(
             padding: EdgeInsets.all(24),
-            child: CircularProgressIndicator(),
+            child: M3LoadingIndicator(),
           ),
       ],
     );

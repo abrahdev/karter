@@ -1,25 +1,37 @@
 {
   "id": "toyota-corolla-e210-1-8-hybrid",
   "extends": [
-    "_base/combustion.json",
-    "_base/electric.json",
-    "toyota/corolla/base.json"
+    "_base/car-combustion.json",
+    "_base/car-electric.json",
+    "toyota/corolla/base.json",
+    "toyota/dtc.json"
   ],
   "meta": {
     "make": "Toyota",
     "model": "Corolla",
     "generation": "E210",
-    "years": [2018, 2025],
+    "years": [
+      2018,
+      2025
+    ],
     "engine": {
       "code": "2ZR-FXE",
-      "fuel": "hybrid",
+      "fuel": "gasoline",
+      "powertrain": "hybrid",
       "displacement_cc": 1798,
       "power_hp": 140
     },
-    "market": ["EU", "US", "JP"],
+    "market": [
+      "EU",
+      "US",
+      "JP"
+    ],
     "author": "abrahdev",
     "version": "1.0.0",
-    "sources": ["Toyota official maintenance schedule", "toyotanation.com"]
+    "sources": [
+      "Toyota official maintenance schedule",
+      "toyotanation.com"
+    ]
   },
   "maintenance_items": [
     {

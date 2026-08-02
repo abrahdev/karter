@@ -1,14 +1,13 @@
 {
   "id": "mercedes-benz-e200",
   "extends": [
-    "_base/combustion.json"
+    "_base/car-combustion.json",
+    "mercedes-benz/dtc.json"
   ],
   "meta": {
     "make": "Mercedes-Benz",
     "model": "E200",
     "generation": "All",
-    "years": null,
-    "engine": null,
     "author": "abrahdev",
     "version": "1.0.0"
   },

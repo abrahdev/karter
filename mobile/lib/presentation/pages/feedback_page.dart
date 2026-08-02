@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:material3_indicators/material3_indicators.dart';
 import 'package:mobile/core/rating_helper.dart';
 import 'package:mobile/core/theme/app_spacing.dart';
 import 'package:mobile/l10n/app_localizations.dart';
@@ -43,7 +44,10 @@ class _FeedbackPageState extends State<FeedbackPage> {
     if (_loading) {
       return Scaffold(
         appBar: AppBar(title: Text(l.feedbackTitle)),
-        body: const Center(child: CircularProgressIndicator()),
+        body: const Center(
+          child: M3LoadingIndicator(
+              contained: true, size: 36, containerSize: 72),
+        ),
       );
     }
 

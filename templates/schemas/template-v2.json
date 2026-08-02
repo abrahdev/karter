@@ -1,0 +1,224 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://karter.abrah.dev/schemas/template-v2.json",
+  "type": "object",
+  "required": ["id", "meta"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "description": "Globally unique slug, e.g.: vw-golf-mk7-1-6tdi"
+    },
+    "extends": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^(\\.\\./)*[a-z0-9_][a-z0-9_\\-/]*\\.json$"
+      },
+      "description": "Relative paths of the templates it extends, in order of application"
+    },
+    "meta": {
+      "type": "object",
+      "required": ["make", "model", "author", "version"],
+      "additionalProperties": false,
+      "properties": {
+        "make": { "type": "string", "description": "Vehicle make" },
+        "model": { "type": "string", "description": "Vehicle model" },
+        "generation": { "type": "string", "description": "Generation / chassis code" },
+        "years": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": [
+            { "type": "integer" },
+            { "type": ["integer", "null"] }
+          ],
+          "additionalItems": false,
+          "description": "Start year (required) / end year (null if still in production)"
+        },
+        "engine": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "code": { "type": "string", "description": "Engine code" },
+            "fuel": {
+              "type": "string",
+              "enum": ["gasoline", "diesel", "lpg", "cng", "hydrogen", "ethanol"],
+              "description": "Fuel type"
+            },
+            "powertrain": {
+              "type": "string",
+              "enum": ["combustion", "hybrid", "plugin-hybrid", "electric"],
+              "description": "Powertrain architecture"
+            },
+            "displacement_cc": { "type": "integer", "description": "Displacement in cc" },
+            "power_hp": { "type": "integer", "description": "Power in HP" }
+          }
+        },
+        "market": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Target markets: EU, US, JP, etc."
+        },
+        "author": {
+          "oneOf": [
+            { "type": "string" },
+            { "type": "array", "items": { "type": "string" } }
+          ],
+          "description": "Author(s) of the template"
+        },
+        "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+        "sources": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Information sources (official manual, forums, etc.)"
+        }
+      }
+    },
+    "parts": {
+      "type": "array",
+      "description": "Part catalog. Entries merge by id with the parents. Whether an entry is new or an override is determined during resolution, so required fields for new parts (name or oem_number) are validated after merge at application level. IDs must be unique within this array; also validated by the resolver.",
+      "items": {
+        "type": "object",
+        "required": ["id"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Part ID. If it already exists in the parent, it replaces it. Otherwise, it is added."
+          },
+          "name": {
+            "type": "string",
+            "description": "Part name. Only needed if it is a new part (not inherited); validated after merge."
+          },
+          "i18n_key": {
+            "type": "string",
+            "description": "Translation key for the name, e.g.: part_oil_filter"
+          },
+          "oem_number": {
+            "type": "string",
+            "description": "Official OEM reference, e.g.: 1883037"
+          },
+          "quantity": {
+            "type": "number",
+            "minimum": 0,
+            "description": "Number of parts required"
+          },
+          "unit": {
+            "type": "string",
+            "enum": ["unit", "set", "L", "ml", "g", "kg", "kit", "can", "m"],
+            "description": "Measurement unit of the quantity"
+          },
+          "user_reference": {
+            "type": "string",
+            "description": "User's preferred reference (local layer), overrides oem_number"
+          },
+          "description": {
+            "type": "string",
+            "description": "Long description of the part shown in the parts section"
+          },
+          "remove": {
+            "type": "boolean",
+            "description": "true → removes this part from the parent"
+          }
+        }
+      }
+    },
+    "maintenance_items": {
+      "type": "array",
+      "description": "Maintenance tasks. Entries merge by id with the parents. New items must define interval_km (validated after merge at application level). IDs must be unique within this array; also validated by the resolver.",
+      "items": {
+        "type": "object",
+        "required": ["id"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Item ID. If it already exists in the parent, it replaces it. Otherwise, it is added."
+          },
+          "interval_km": { "type": "integer", "minimum": 1 },
+          "interval_months": { "type": "integer", "minimum": 1 },
+          "label": {
+            "type": "string",
+            "description": "Only needed if it is a new item (not inherited). If it is a replace, the parent's label is used."
+          },
+          "i18n_key": {
+            "type": "string",
+            "description": "Translation key for the label, e.g.: seed_interval_oil_change"
+          },
+          "desc_i18n_key": {
+            "type": "string",
+            "description": "Translation key for the description, e.g.: seed_desc_oil_change"
+          },
+          "description": { "type": "string" },
+          "parts": {
+            "type": "array",
+            "description": "Parts needed for this task, referenced by part_id",
+            "items": {
+              "type": "object",
+              "required": ["part_id"],
+              "additionalProperties": false,
+              "properties": {
+                "part_id": { "type": "string" },
+                "quantity": { "type": "number", "minimum": 0 }
+              }
+            }
+          },
+          "obd_codes": {
+            "type": "array",
+            "description": "OBD-II (DTC) codes related to this task",
+            "items": { "type": "string", "pattern": "^[PCBU][0-9A-F]{4}$" }
+          },
+          "remove": {
+            "type": "boolean",
+            "description": "true → removes this item from the parent (useful when a model does not have a generic task)"
+          }
+        }
+      }
+    },
+    "obd_dtc_definitions": {
+      "type": "array",
+      "description": "Fault codes for this model or powertrain. Entries merge by code with the parents; entries that only override inherited fields may omit description/desc_i18n_key. Codes must be unique within this array; also validated by the resolver.",
+      "items": {
+        "type": "object",
+        "required": ["code", "scope"],
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "type": "string",
+            "pattern": "^[PCBU][0-9A-F]{4}$",
+            "description": "OBD-II code, e.g.: P0171"
+          },
+          "scope": {
+            "type": "string",
+            "enum": ["standard", "manufacturer"],
+            "description": "standard → generic SAE code (P0xxx); manufacturer → manufacturer-specific code (P1xxx, P0Axx, etc.)"
+          },
+          "description": {
+            "type": "string",
+            "description": "Only needed if it is a new code (not inherited); validated after merge."
+          },
+          "desc_i18n_key": {
+            "type": "string",
+            "description": "Translation key for the description, e.g.: dtc_p0171"
+          },
+          "related_maintenance": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Suggested maintenance_item IDs to resolve the code"
+          },
+          "related_parts": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Suggested part IDs to resolve the code"
+          },
+          "remove": {
+            "type": "boolean",
+            "description": "true → removes this code from the parent"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,470 @@
+{
+  "id": "kia-dtc",
+  "meta": {
+    "make": "Kia",
+    "model": "OBD-II codes",
+    "author": "abrahdev",
+    "version": "1.0.0",
+    "sources": [
+      "https://github.com/Wal33D/dtc-database (MIT)"
+    ]
+  },
+  "obd_dtc_definitions": [
+    {
+      "code": "P1102",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1102",
+      "description": "HO2S11 Heater Circuit High Voltage"
+    },
+    {
+      "code": "P1105",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1105",
+      "description": "HO2S12 Heater Circuit High Voltage"
+    },
+    {
+      "code": "P1115",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1115",
+      "description": "H02S12 Heater Circuit Low Voltage"
+    },
+    {
+      "code": "P1117",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1117",
+      "description": "HO2S12 Heater Circuit Low Voltage"
+    },
+    {
+      "code": "P1123",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1123",
+      "description": "Long Term Fuel Trim Adaptive Air System Low"
+    },
+    {
+      "code": "P1124",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1124",
+      "description": "Long Term Fuel Trim Adaptive Air System High"
+    },
+    {
+      "code": "P1127",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1127",
+      "description": "Long Term Fuel Trim Multiplicative Air System Low"
+    },
+    {
+      "code": "P1128",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1128",
+      "description": "Long Term Fuel Trim Multiplicative Air System High"
+    },
+    {
+      "code": "P1140",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1140",
+      "description": "Load Calculation Cross Check"
+    },
+    {
+      "code": "P1170",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1170",
+      "description": "HO2S11 Circuit Voltage Stuck At Mid-Range"
+    },
+    {
+      "code": "P1195",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1195",
+      "description": "EGR Boost Or Pressure Sensor Circuit Fault"
+    },
+    {
+      "code": "P1196",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1196",
+      "description": "Ignition Switch Start Circuit Fault"
+    },
+    {
+      "code": "P1213",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1213",
+      "description": "Fuel Injector 1 Circuit High Voltage"
+    },
+    {
+      "code": "P1214",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1214",
+      "description": "Fuel Injector 2 Circuit High Voltage"
+    },
+    {
+      "code": "P1215",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1215",
+      "description": "Fuel Injector 3 Circuit High Voltage"
+    },
+    {
+      "code": "P1216",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1216",
+      "description": "Fuel Injector 4 Circuit High Voltage"
+    },
+    {
+      "code": "P1225",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1225",
+      "description": "Fuel Injector 1 Circuit Low Voltage"
+    },
+    {
+      "code": "P1226",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1226",
+      "description": "Fuel Injector 2 Circuit Low Voltage"
+    },
+    {
+      "code": "P1227",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1227",
+      "description": "Fuel Injector 3 Circuit Low Voltage"
+    },
+    {
+      "code": "P1228",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1228",
+      "description": "Fuel Injector 4 Circuit Low Voltage"
+    },
+    {
+      "code": "P1250",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1250",
+      "description": "Pressure Regulator Control Solenoid Valve Open Or Short"
+    },
+    {
+      "code": "P1252",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1252",
+      "description": "Pressure Regulator Control Solenoid Valve No. 2 Circuit Malfunction"
+    },
+    {
+      "code": "P1307",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1307",
+      "description": "Chassis Acceleration Sensor Signal Malfunction"
+    },
+    {
+      "code": "P1308",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1308",
+      "description": "Chassis Acceleration Sensor Signal Low"
+    },
+    {
+      "code": "P1309",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1309",
+      "description": "Chassis Acceleration Sensor Signal High"
+    },
+    {
+      "code": "P1345",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1345",
+      "description": "No SGC Signal 1.6L"
+    },
+    {
+      "code": "P1386",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1386",
+      "description": "Knock Sensor Control Zero Test"
+    },
+    {
+      "code": "P1401",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1401",
+      "description": "EGR Control Solenoid Circuit Signal Low"
+    },
+    {
+      "code": "P1402",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1402",
+      "description": "EGR Control Solenoid Circuit Signal High"
+    },
+    {
+      "code": "P1410",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1410",
+      "description": "EVAP Purge Control Solenoid Circuit High Voltage"
+    },
+    {
+      "code": "P1412",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1412",
+      "description": "EGR Differential Pressure Sensor Signal Low"
+    },
+    {
+      "code": "P1413",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1413",
+      "description": "EGR Differential Pressure Sensor Signal High"
+    },
+    {
+      "code": "P1425",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1425",
+      "description": "EVAP Purge Control Solenoid Circuit Low Voltage"
+    },
+    {
+      "code": "P1449",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1449",
+      "description": "Canister Drain Cut Valve Open Or Short 1.8L"
+    },
+    {
+      "code": "P1450",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1450",
+      "description": "Excessive Vacuum Leak"
+    },
+    {
+      "code": "P1455",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1455",
+      "description": "Fuel Tank Sending Unit Open Or Short 1.8L"
+    },
+    {
+      "code": "P1457",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1457",
+      "description": "Purge Solenoid Valve Low System Malfunction"
+    },
+    {
+      "code": "P1458",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1458",
+      "description": "A/C Compressor Clutch Signal Fault"
+    },
+    {
+      "code": "P1485",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1485",
+      "description": "EGR Vent Control Solenoid Circuit Fault"
+    },
+    {
+      "code": "P1486",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1486",
+      "description": "EGR Vacuum Control Solenoid Circuit Fault"
+    },
+    {
+      "code": "P1487",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1487",
+      "description": "EGR Boost Sensor Solenoid Circuit Fault"
+    },
+    {
+      "code": "P1496",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1496",
+      "description": "EGR Stepper Motor Malfunction Circuit 1 1.8L"
+    },
+    {
+      "code": "P1497",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1497",
+      "description": "EGR Stepper Motor Malfunction Circuit 2 1.8L"
+    },
+    {
+      "code": "P1498",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1498",
+      "description": "EGR Stepper Motor Malfunction Circuit 3 1.8L"
+    },
+    {
+      "code": "P1499",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1499",
+      "description": "EGR Stepper Motor Malfunction Circuit 4 1.8L"
+    },
+    {
+      "code": "P1500",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1500",
+      "description": "No Vehicle Speed Signal to TCM"
+    },
+    {
+      "code": "P1505",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1505",
+      "description": "Idle Air Control Valve Opening Coil Voltage Low"
+    },
+    {
+      "code": "P1506",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1506",
+      "description": "Idle Air Control Valve Opening Coil Voltage High"
+    },
+    {
+      "code": "P1507",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1507",
+      "description": "Idle Air Control Valve Closing Coil Voltage Low"
+    },
+    {
+      "code": "P1508",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1508",
+      "description": "Idle Air Control Valve Closing Coil Voltage High"
+    },
+    {
+      "code": "P1510",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1510",
+      "description": "Idle Air Control Valve Closing Coil High Voltage"
+    },
+    {
+      "code": "P1513",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1513",
+      "description": "Idle Air Control Valve Closing Coil Low Voltage"
+    },
+    {
+      "code": "P1515",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1515",
+      "description": "A/T To M/T Codification"
+    },
+    {
+      "code": "P1523",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1523",
+      "description": "VICS Solenoid Valve"
+    },
+    {
+      "code": "P1552",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1552",
+      "description": "Idle Air Control Valve Opening Coil Low Voltage"
+    },
+    {
+      "code": "P1553",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1553",
+      "description": "Idle Air Control Valve Opening Coil High Voltage"
+    },
+    {
+      "code": "P1586",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1586",
+      "description": "A/T To M/T Codification"
+    },
+    {
+      "code": "P1606",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1606",
+      "description": "Chassis Accelerator Sensor Signal Circuit Fault"
+    },
+    {
+      "code": "P1608",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1608",
+      "description": "PCM Malfunction"
+    },
+    {
+      "code": "P1611",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1611",
+      "description": "MIL Request Circuit Voltage Low"
+    },
+    {
+      "code": "P1614",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1614",
+      "description": "MIL Request Circuit Voltage High"
+    },
+    {
+      "code": "P1616",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1616",
+      "description": "Chassis Accelerator Sensor Signal Low Voltage"
+    },
+    {
+      "code": "P1617",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1617",
+      "description": "Chassis Accelerator Sensor Signal High Voltage"
+    },
+    {
+      "code": "P1624",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1624",
+      "description": "TCM To PCM MIL Request Signal Circuit Fault"
+    },
+    {
+      "code": "P1631",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1631",
+      "description": "Alternator T Open Or No Power Output 1.8L"
+    },
+    {
+      "code": "P1632",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1632",
+      "description": "Battery Voltage Detection Circuit for Alternator Regulator 1.8L"
+    },
+    {
+      "code": "P1633",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1633",
+      "description": "Battery Overcharge"
+    },
+    {
+      "code": "P1634",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1634",
+      "description": "Alternator B Open 1.8L"
+    },
+    {
+      "code": "P1655",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1655",
+      "description": "Unused Power Stage 'B'"
+    },
+    {
+      "code": "P1660",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1660",
+      "description": "Power Stage Group 'B'"
+    },
+    {
+      "code": "P1665",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1665",
+      "description": "Power Stage Group 'A'"
+    },
+    {
+      "code": "P1693",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1693",
+      "description": "MIL Circuit Malfunction"
+    },
+    {
+      "code": "P1743",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1743",
+      "description": "Torque Converter Clutch Solenoid Valve Open Or Short"
+    },
+    {
+      "code": "P1794",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1794",
+      "description": "Battery Or Circuit Failure"
+    },
+    {
+      "code": "P1795",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1795",
+      "description": "4WD Switch Signal Malfunction"
+    },
+    {
+      "code": "P1797",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_kia_p1797",
+      "description": "Clutch Pedal Switch MT Or P/N Switch Circuit Fault"
+    }
+  ]
+}

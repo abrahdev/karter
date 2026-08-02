@@ -1,14 +1,13 @@
 {
   "id": "honda-cr-v",
   "extends": [
-    "_base/combustion.json"
+    "_base/car-combustion.json",
+    "honda/dtc.json"
   ],
   "meta": {
     "make": "Honda",
     "model": "CR-V",
     "generation": "All",
-    "years": null,
-    "engine": null,
     "author": "abrahdev",
     "version": "1.0.0"
   },

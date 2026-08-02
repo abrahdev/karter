@@ -1,14 +1,13 @@
 {
   "id": "volkswagen-tiguan",
   "extends": [
-    "_base/combustion.json"
+    "_base/car-combustion.json",
+    "volkswagen/dtc.json"
   ],
   "meta": {
     "make": "Volkswagen",
     "model": "Tiguan",
     "generation": "All",
-    "years": null,
-    "engine": null,
     "author": "abrahdev",
     "version": "1.0.0"
   },

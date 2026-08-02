@@ -1,23 +1,45 @@
 {
   "id": "motorcycle-ev",
-  "extends": ["_base/motorcycle-common.json"],
+  "extends": [
+    "_base/motorcycle-common.json"
+  ],
   "meta": {
     "make": "_base",
     "model": "Motorcycle Electric",
     "author": "abrahdev",
     "version": "1.0.0"
   },
+  "parts": [
+    {
+      "id": "coolant",
+      "name": "Coolant",
+      "i18n_key": "part_coolant",
+      "quantity": 1,
+      "unit": "L"
+    },
+    {
+      "id": "reduction-gearbox-oil",
+      "name": "Reduction gearbox oil",
+      "i18n_key": "part_reduction_gearbox_oil",
+      "quantity": 0.5,
+      "unit": "L"
+    }
+  ],
   "maintenance_items": [
     {
       "id": "battery-bms",
       "label": "Battery health & BMS",
-      "interval_km": null,
+      "i18n_key": "seed_interval_battery_bms",
+      "desc_i18n_key": "seed_desc_battery_bms",
+      "interval_km": 12000,
       "interval_months": 12,
       "description": "Connect diagnosis tool to monitor cell degradation, capacity parameters, and balance individual cell voltages."
     },
     {
       "id": "hv-wiring",
       "label": "High-voltage wiring",
+      "i18n_key": "seed_interval_hv_wiring",
+      "desc_i18n_key": "seed_desc_hv_wiring",
       "interval_km": 10000,
       "interval_months": 12,
       "description": "Visually inspect insulation status of orange high-voltage cables, connectors, and ensure no moisture ingress."
@@ -25,22 +47,40 @@
     {
       "id": "inverter-cooling",
       "label": "Inverter & motor cooling",
+      "i18n_key": "seed_interval_inverter_cooling",
+      "desc_i18n_key": "seed_desc_inverter_cooling",
       "interval_km": 20000,
       "interval_months": 24,
+      "parts": [
+        {
+          "part_id": "coolant",
+          "quantity": 1
+        }
+      ],
       "description": "If liquid-cooled, check specific coolant level and top up. If air-cooled, clean cooling fins from mud and debris."
     },
     {
       "id": "firmware-updates",
       "label": "Firmware / software updates",
-      "interval_km": null,
+      "i18n_key": "seed_interval_firmware_updates",
+      "desc_i18n_key": "seed_desc_firmware_updates",
+      "interval_km": 12000,
       "interval_months": 12,
       "description": "Update the Vehicle Control Unit firmware for optimizations in power delivery, regen braking, and efficiency."
     },
     {
       "id": "reduction-gearbox-oil",
       "label": "Reduction gearbox lubricant",
+      "i18n_key": "seed_interval_reduction_gearbox_oil",
+      "desc_i18n_key": "seed_desc_reduction_gearbox_oil",
       "interval_km": 40000,
       "interval_months": 48,
+      "parts": [
+        {
+          "part_id": "reduction-gearbox-oil",
+          "quantity": 0.5
+        }
+      ],
       "description": "Drain and replace the small amount of oil inside the central motor reduction gear mechanism."
     }
   ]

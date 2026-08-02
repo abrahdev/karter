@@ -1,14 +1,13 @@
 {
   "id": "suzuki-gsx-s150",
   "extends": [
-    "_base/combustion.json"
+    "_base/car-combustion.json",
+    "suzuki/dtc.json"
   ],
   "meta": {
     "make": "Suzuki",
     "model": "GSX-S150",
     "generation": "All",
-    "years": null,
-    "engine": null,
     "author": "abrahdev",
     "version": "1.0.0"
   },

@@ -1,10 +1,24 @@
 {
-  "generated_at": "2026-07-12T14:20:01Z",
+  "generated_at": "2026-07-31T16:27:27Z",
   "schema_version": "1",
   "templates": [
     {
+      "id": "cars",
+      "path": "data/_base/car-common.json",
+      "meta": {
+        "make": "_base",
+        "model": "Cars (common)",
+        "author": "abrahdev",
+        "version": "1.0.0"
+      },
+      "item_count": 5,
+      "extends": [
+        "_base/dtc.json"
+      ]
+    },
+    {
       "id": "combustion",
-      "path": "_base/combustion.json",
+      "path": "data/_base/car-combustion.json",
       "meta": {
         "make": "_base",
         "model": "Combustion engine (gasoline & diesel)",
@@ -13,24 +27,12 @@
       },
       "item_count": 5,
       "extends": [
-        "_base/common-all.json"
+        "_base/car-common.json"
       ]
     },
     {
-      "id": "common-all",
-      "path": "_base/common-all.json",
-      "meta": {
-        "make": "_base",
-        "model": "Common (all vehicles)",
-        "author": "abrahdev",
-        "version": "1.0.0"
-      },
-      "item_count": 5,
-      "extends": []
-    },
-    {
       "id": "diesel",
-      "path": "_base/diesel.json",
+      "path": "data/_base/car-diesel.json",
       "meta": {
         "make": "_base",
         "model": "Diesel engine",
@@ -39,12 +41,12 @@
       },
       "item_count": 5,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
       "id": "electric",
-      "path": "_base/electric.json",
+      "path": "data/_base/car-electric.json",
       "meta": {
         "make": "_base",
         "model": "Electric vehicle",
@@ -53,12 +55,12 @@
       },
       "item_count": 5,
       "extends": [
-        "_base/common-all.json"
+        "_base/car-common.json"
       ]
     },
     {
       "id": "motorcycle-2t",
-      "path": "_base/motorcycle-2t.json",
+      "path": "data/_base/motorcycle-2t.json",
       "meta": {
         "make": "_base",
         "model": "Motorcycle 2-Stroke",
@@ -72,7 +74,7 @@
     },
     {
       "id": "motorcycle-4t",
-      "path": "_base/motorcycle-4t.json",
+      "path": "data/_base/motorcycle-4t.json",
       "meta": {
         "make": "_base",
         "model": "Motorcycle 4-Stroke",
@@ -86,7 +88,7 @@
     },
     {
       "id": "motorcycle-common",
-      "path": "_base/motorcycle-common.json",
+      "path": "data/_base/motorcycle-common.json",
       "meta": {
         "make": "_base",
         "model": "Motorcycle Common",
@@ -98,7 +100,7 @@
     },
     {
       "id": "motorcycle-ev",
-      "path": "_base/motorcycle-ev.json",
+      "path": "data/_base/motorcycle-ev.json",
       "meta": {
         "make": "_base",
         "model": "Motorcycle Electric",
@@ -112,75 +114,69 @@
     },
     {
       "id": "audi-a3",
-      "path": "audi/a3/base.json",
+      "path": "data/audi/a3/base.json",
       "meta": {
         "make": "Audi",
         "model": "A3",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json",
+        "audi/dtc.json"
       ]
     },
     {
       "id": "audi-q5",
-      "path": "audi/q5/base.json",
+      "path": "data/audi/q5/base.json",
       "meta": {
         "make": "Audi",
         "model": "Q5",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json",
+        "audi/dtc.json"
       ]
     },
     {
       "id": "bajaj-pulsar-160",
-      "path": "bajaj/pulsar-160/base.json",
+      "path": "data/bajaj/pulsar-160/base.json",
       "meta": {
         "make": "Bajaj",
         "model": "Pulsar 160",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
       "id": "bajaj-rouser-ns200",
-      "path": "bajaj/rouser-ns200/base.json",
+      "path": "data/bajaj/rouser-ns200/base.json",
       "meta": {
         "make": "Bajaj",
         "model": "Rouser NS200",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
       "id": "benelli-trk-502",
-      "path": "benelli/trk-502/base.json",
+      "path": "data/benelli/trk-502/base.json",
       "meta": {
         "make": "Benelli",
         "model": "TRK 502",
@@ -190,1066 +186,978 @@
       },
       "item_count": 17,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
       "id": "bmw-320",
-      "path": "bmw/320/base.json",
+      "path": "data/bmw/320/base.json",
       "meta": {
         "make": "BMW",
         "model": "320",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json",
+        "bmw/dtc.json"
       ]
     },
     {
       "id": "bmw-x3",
-      "path": "bmw/x3/base.json",
+      "path": "data/bmw/x3/base.json",
       "meta": {
         "make": "BMW",
         "model": "X3",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json",
+        "bmw/dtc.json"
       ]
     },
     {
       "id": "changan-alsvin",
-      "path": "changan/alsvin/base.json",
+      "path": "data/changan/alsvin/base.json",
       "meta": {
         "make": "Changan",
         "model": "Alsvin",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
       "id": "changan-cs35",
-      "path": "changan/cs35/base.json",
+      "path": "data/changan/cs35/base.json",
       "meta": {
         "make": "Changan",
         "model": "CS35",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
       "id": "chery-arrizo",
-      "path": "chery/arrizo/base.json",
+      "path": "data/chery/arrizo/base.json",
       "meta": {
         "make": "Chery",
         "model": "Arrizo",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
       "id": "chery-tiggo",
-      "path": "chery/tiggo/base.json",
+      "path": "data/chery/tiggo/base.json",
       "meta": {
         "make": "Chery",
         "model": "Tiggo",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
       "id": "chevrolet-cruze",
-      "path": "chevrolet/cruze/base.json",
+      "path": "data/chevrolet/cruze/base.json",
       "meta": {
         "make": "Chevrolet",
         "model": "Cruze",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json",
+        "chevrolet/dtc.json"
       ]
     },
     {
       "id": "chevrolet-onix",
-      "path": "chevrolet/onix/base.json",
+      "path": "data/chevrolet/onix/base.json",
       "meta": {
         "make": "Chevrolet",
         "model": "Onix",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json",
+        "chevrolet/dtc.json"
       ]
     },
     {
       "id": "chevrolet-tracker",
-      "path": "chevrolet/tracker/base.json",
+      "path": "data/chevrolet/tracker/base.json",
       "meta": {
         "make": "Chevrolet",
         "model": "Tracker",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json",
+        "chevrolet/dtc.json"
       ]
     },
     {
       "id": "citroen-c3",
-      "path": "citroen/c3/base.json",
+      "path": "data/citroen/c3/base.json",
       "meta": {
         "make": "Citroën",
         "model": "C3",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
       "id": "citroen-c4",
-      "path": "citroen/c4/base.json",
+      "path": "data/citroen/c4/base.json",
       "meta": {
         "make": "Citroën",
         "model": "C4",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
       "id": "dfsk-c35",
-      "path": "dfsk/c35/base.json",
+      "path": "data/dfsk/c35/base.json",
       "meta": {
         "make": "DFSK",
         "model": "C35",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
       "id": "dfsk-glory",
-      "path": "dfsk/glory/base.json",
+      "path": "data/dfsk/glory/base.json",
       "meta": {
         "make": "DFSK",
         "model": "Glory",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
       "id": "fiat-mobi",
-      "path": "fiat/mobi/base.json",
+      "path": "data/fiat/mobi/base.json",
       "meta": {
         "make": "Fiat",
         "model": "Mobi",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
       "id": "fiat-strada",
-      "path": "fiat/strada/base.json",
+      "path": "data/fiat/strada/base.json",
       "meta": {
         "make": "Fiat",
         "model": "Strada",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
       "id": "fiat-uno",
-      "path": "fiat/uno/base.json",
+      "path": "data/fiat/uno/base.json",
       "meta": {
         "make": "Fiat",
         "model": "Uno",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
       "id": "ford-fiesta",
-      "path": "ford/fiesta/base.json",
+      "path": "data/ford/fiesta/base.json",
       "meta": {
         "make": "Ford",
         "model": "Fiesta",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 1,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json",
+        "ford/dtc.json"
       ]
     },
     {
       "id": "ford-focus",
-      "path": "ford/focus/base.json",
+      "path": "data/ford/focus/base.json",
       "meta": {
         "make": "Ford",
         "model": "Focus",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 1,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json",
+        "ford/dtc.json"
       ]
     },
     {
       "id": "ford-ranger",
-      "path": "ford/ranger/base.json",
+      "path": "data/ford/ranger/base.json",
       "meta": {
         "make": "Ford",
         "model": "Ranger",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json",
+        "ford/dtc.json"
       ]
     },
     {
       "id": "honda-cb190",
-      "path": "honda/cb190/base.json",
+      "path": "data/honda/cb190/base.json",
       "meta": {
         "make": "Honda",
         "model": "CB190",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json",
+        "honda/dtc.json"
       ]
     },
     {
       "id": "honda-cg160-titan",
-      "path": "honda/cg160-titan/base.json",
+      "path": "data/honda/cg160-titan/base.json",
       "meta": {
         "make": "Honda",
         "model": "CG160 Titan",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json",
+        "honda/dtc.json"
       ]
     },
     {
       "id": "honda-civic",
-      "path": "honda/civic/base.json",
+      "path": "data/honda/civic/base.json",
       "meta": {
         "make": "Honda",
         "model": "Civic",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 1,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json",
+        "honda/dtc.json"
       ]
     },
     {
       "id": "honda-cr-v",
-      "path": "honda/cr-v/base.json",
+      "path": "data/honda/cr-v/base.json",
       "meta": {
         "make": "Honda",
         "model": "CR-V",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json",
+        "honda/dtc.json"
       ]
     },
     {
       "id": "honda-hr-v",
-      "path": "honda/hr-v/base.json",
+      "path": "data/honda/hr-v/base.json",
       "meta": {
         "make": "Honda",
         "model": "HR-V",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json",
+        "honda/dtc.json"
       ]
     },
     {
       "id": "honda-nxr160-bros",
-      "path": "honda/nxr160-bros/base.json",
+      "path": "data/honda/nxr160-bros/base.json",
       "meta": {
         "make": "Honda",
         "model": "NXR160 Bros",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json",
+        "honda/dtc.json"
       ]
     },
     {
       "id": "honda-xr190l",
-      "path": "honda/xr190l/base.json",
+      "path": "data/honda/xr190l/base.json",
       "meta": {
         "make": "Honda",
         "model": "XR190L",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json",
+        "honda/dtc.json"
       ]
     },
     {
       "id": "hyundai-elantra",
-      "path": "hyundai/elantra/base.json",
+      "path": "data/hyundai/elantra/base.json",
       "meta": {
         "make": "Hyundai",
         "model": "Elantra",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
       "id": "hyundai-tucson",
-      "path": "hyundai/tucson/base.json",
+      "path": "data/hyundai/tucson/base.json",
       "meta": {
         "make": "Hyundai",
         "model": "Tucson",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
       "id": "jac-s3",
-      "path": "jac/s3/base.json",
+      "path": "data/jac/s3/base.json",
       "meta": {
         "make": "JAC",
         "model": "S3",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
       "id": "jac-t6",
-      "path": "jac/t6/base.json",
+      "path": "data/jac/t6/base.json",
       "meta": {
         "make": "JAC",
         "model": "T6",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
       "id": "jeep-compass",
-      "path": "jeep/compass/base.json",
+      "path": "data/jeep/compass/base.json",
       "meta": {
         "make": "Jeep",
         "model": "Compass",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json",
+        "jeep/dtc.json"
       ]
     },
     {
       "id": "jeep-renegade",
-      "path": "jeep/renegade/base.json",
+      "path": "data/jeep/renegade/base.json",
       "meta": {
         "make": "Jeep",
         "model": "Renegade",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json",
+        "jeep/dtc.json"
       ]
     },
     {
       "id": "kawasaki-ninja-400",
-      "path": "kawasaki/ninja-400/base.json",
+      "path": "data/kawasaki/ninja-400/base.json",
       "meta": {
         "make": "Kawasaki",
         "model": "Ninja 400",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
       "id": "kawasaki-versys-300",
-      "path": "kawasaki/versys-300/base.json",
+      "path": "data/kawasaki/versys-300/base.json",
       "meta": {
         "make": "Kawasaki",
         "model": "Versys 300",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
       "id": "kia-rio",
-      "path": "kia/rio/base.json",
+      "path": "data/kia/rio/base.json",
       "meta": {
         "make": "Kia",
         "model": "Rio",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json",
+        "kia/dtc.json"
       ]
     },
     {
       "id": "kia-sportage",
-      "path": "kia/sportage/base.json",
+      "path": "data/kia/sportage/base.json",
       "meta": {
         "make": "Kia",
         "model": "Sportage",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json",
+        "kia/dtc.json"
       ]
     },
     {
       "id": "mazda-cx-5",
-      "path": "mazda/cx-5/base.json",
+      "path": "data/mazda/cx-5/base.json",
       "meta": {
         "make": "Mazda",
         "model": "CX-5",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 1,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json",
+        "mazda/dtc.json"
       ]
     },
     {
       "id": "mazda-mazda3",
-      "path": "mazda/mazda3/base.json",
+      "path": "data/mazda/mazda3/base.json",
       "meta": {
         "make": "Mazda",
         "model": "Mazda3",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 1,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json",
+        "mazda/dtc.json"
       ]
     },
     {
       "id": "mercedes-benz-c200",
-      "path": "mercedes-benz/c200/base.json",
+      "path": "data/mercedes-benz/c200/base.json",
       "meta": {
         "make": "Mercedes-Benz",
         "model": "C200",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json",
+        "mercedes-benz/dtc.json"
       ]
     },
     {
       "id": "mercedes-benz-e200",
-      "path": "mercedes-benz/e200/base.json",
+      "path": "data/mercedes-benz/e200/base.json",
       "meta": {
         "make": "Mercedes-Benz",
         "model": "E200",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json",
+        "mercedes-benz/dtc.json"
       ]
     },
     {
       "id": "mitsubishi-asx",
-      "path": "mitsubishi/asx/base.json",
+      "path": "data/mitsubishi/asx/base.json",
       "meta": {
         "make": "Mitsubishi",
         "model": "ASX",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json",
+        "mitsubishi/dtc.json"
       ]
     },
     {
       "id": "mitsubishi-l200",
-      "path": "mitsubishi/l200/base.json",
+      "path": "data/mitsubishi/l200/base.json",
       "meta": {
         "make": "Mitsubishi",
         "model": "L200",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json",
+        "mitsubishi/dtc.json"
       ]
     },
     {
       "id": "nissan-kicks",
-      "path": "nissan/kicks/base.json",
+      "path": "data/nissan/kicks/base.json",
       "meta": {
         "make": "Nissan",
         "model": "Kicks",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json",
+        "nissan/dtc.json"
       ]
     },
     {
       "id": "nissan-sentra",
-      "path": "nissan/sentra/base.json",
+      "path": "data/nissan/sentra/base.json",
       "meta": {
         "make": "Nissan",
         "model": "Sentra",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json",
+        "nissan/dtc.json"
       ]
     },
     {
       "id": "nissan-versa",
-      "path": "nissan/versa/base.json",
+      "path": "data/nissan/versa/base.json",
       "meta": {
         "make": "Nissan",
         "model": "Versa",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json",
+        "nissan/dtc.json"
       ]
     },
     {
       "id": "peugeot-208",
-      "path": "peugeot/208/base.json",
+      "path": "data/peugeot/208/base.json",
       "meta": {
         "make": "Peugeot",
         "model": "208",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
       "id": "peugeot-3008",
-      "path": "peugeot/3008/base.json",
+      "path": "data/peugeot/3008/base.json",
       "meta": {
         "make": "Peugeot",
         "model": "3008",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
       "id": "peugeot-308",
-      "path": "peugeot/308/base.json",
+      "path": "data/peugeot/308/base.json",
       "meta": {
         "make": "Peugeot",
         "model": "308",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
       "id": "renault-clio",
-      "path": "renault/clio/base.json",
+      "path": "data/renault/clio/base.json",
       "meta": {
         "make": "Renault",
         "model": "Clio",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
       "id": "renault-duster",
-      "path": "renault/duster/base.json",
+      "path": "data/renault/duster/base.json",
       "meta": {
         "make": "Renault",
         "model": "Duster",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
       "id": "renault-megane",
-      "path": "renault/megane/base.json",
+      "path": "data/renault/megane/base.json",
       "meta": {
         "make": "Renault",
         "model": "Megane",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
       "id": "royal-enfield-classic-350",
-      "path": "royal-enfield/classic-350/base.json",
+      "path": "data/royal-enfield/classic-350/base.json",
       "meta": {
         "make": "Royal Enfield",
         "model": "Classic 350",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
       "id": "royal-enfield-himalayan-450",
-      "path": "royal-enfield/himalayan-450/base.json",
+      "path": "data/royal-enfield/himalayan-450/base.json",
       "meta": {
         "make": "Royal Enfield",
         "model": "Himalayan 450",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
       "id": "royal-enfield-meteor-350",
-      "path": "royal-enfield/meteor-350/base.json",
+      "path": "data/royal-enfield/meteor-350/base.json",
       "meta": {
         "make": "Royal Enfield",
         "model": "Meteor 350",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
       "id": "subaru-forester",
-      "path": "subaru/forester/base.json",
+      "path": "data/subaru/forester/base.json",
       "meta": {
         "make": "Subaru",
         "model": "Forester",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json",
+        "subaru/dtc.json"
       ]
     },
     {
       "id": "subaru-outback",
-      "path": "subaru/outback/base.json",
+      "path": "data/subaru/outback/base.json",
       "meta": {
         "make": "Subaru",
         "model": "Outback",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json",
+        "subaru/dtc.json"
       ]
     },
     {
       "id": "suzuki-gn125",
-      "path": "suzuki/gn125/base.json",
+      "path": "data/suzuki/gn125/base.json",
       "meta": {
         "make": "Suzuki",
         "model": "GN125",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json",
+        "suzuki/dtc.json"
       ]
     },
     {
       "id": "suzuki-gsx-s150",
-      "path": "suzuki/gsx-s150/base.json",
+      "path": "data/suzuki/gsx-s150/base.json",
       "meta": {
         "make": "Suzuki",
         "model": "GSX-S150",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json",
+        "suzuki/dtc.json"
       ]
     },
     {
       "id": "suzuki-swift",
-      "path": "suzuki/swift/base.json",
+      "path": "data/suzuki/swift/base.json",
       "meta": {
         "make": "Suzuki",
         "model": "Swift",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json",
+        "suzuki/dtc.json"
       ]
     },
     {
       "id": "suzuki-v-strom-250",
-      "path": "suzuki/v-strom-250/base.json",
+      "path": "data/suzuki/v-strom-250/base.json",
       "meta": {
         "make": "Suzuki",
         "model": "V-Strom 250",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json",
+        "suzuki/dtc.json"
       ]
     },
     {
       "id": "suzuki-vitara",
-      "path": "suzuki/vitara/base.json",
+      "path": "data/suzuki/vitara/base.json",
       "meta": {
         "make": "Suzuki",
         "model": "Vitara",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json",
+        "suzuki/dtc.json"
       ]
     },
     {
       "id": "toyota-corolla",
-      "path": "toyota/corolla/base.json",
+      "path": "data/toyota/corolla/base.json",
       "meta": {
         "make": "Toyota",
         "model": "Corolla",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 2,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json",
+        "toyota/dtc.json"
       ]
     },
     {
       "id": "toyota-corolla-e210-1-8-hybrid",
-      "path": "toyota/corolla/e210-1-8-hybrid.json",
+      "path": "data/toyota/corolla/e210-1-8-hybrid.json",
       "meta": {
         "make": "Toyota",
         "model": "Corolla",
@@ -1260,7 +1168,8 @@
         ],
         "engine": {
           "code": "2ZR-FXE",
-          "fuel": "hybrid",
+          "fuel": "gasoline",
+          "powertrain": "hybrid",
           "displacement_cc": 1798,
           "power_hp": 140
         },
@@ -1278,82 +1187,78 @@
       },
       "item_count": 5,
       "extends": [
-        "_base/combustion.json",
-        "_base/electric.json",
-        "toyota/corolla/base.json"
+        "_base/car-combustion.json",
+        "_base/car-electric.json",
+        "toyota/corolla/base.json",
+        "toyota/dtc.json"
       ]
     },
     {
       "id": "toyota-hilux",
-      "path": "toyota/hilux/base.json",
+      "path": "data/toyota/hilux/base.json",
       "meta": {
         "make": "Toyota",
         "model": "Hilux",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json",
+        "toyota/dtc.json"
       ]
     },
     {
       "id": "toyota-yaris",
-      "path": "toyota/yaris/base.json",
+      "path": "data/toyota/yaris/base.json",
       "meta": {
         "make": "Toyota",
         "model": "Yaris",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json",
+        "toyota/dtc.json"
       ]
     },
     {
       "id": "tvs-apache-rtr-160",
-      "path": "tvs/apache-rtr-160/base.json",
+      "path": "data/tvs/apache-rtr-160/base.json",
       "meta": {
         "make": "TVS",
         "model": "Apache RTR 160",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
       "id": "vw-golf",
-      "path": "volkswagen/golf/base.json",
+      "path": "data/volkswagen/golf/base.json",
       "meta": {
         "make": "Volkswagen",
         "model": "Golf",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 1,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json",
+        "volkswagen/dtc.json"
       ]
     },
     {
       "id": "vw-golf-mk7-1-6tdi",
-      "path": "volkswagen/golf/mk7-1-6tdi.json",
+      "path": "data/volkswagen/golf/mk7-1-6tdi.json",
       "meta": {
         "make": "Volkswagen",
         "model": "Golf",
@@ -1365,6 +1270,7 @@
         "engine": {
           "code": "CXXB",
           "fuel": "diesel",
+          "powertrain": "combustion",
           "displacement_cc": 1598,
           "power_hp": 115
         },
@@ -1380,127 +1286,116 @@
       },
       "item_count": 4,
       "extends": [
-        "_base/diesel.json",
-        "volkswagen/golf/base.json"
+        "_base/car-diesel.json",
+        "volkswagen/golf/base.json",
+        "volkswagen/dtc.json"
       ]
     },
     {
       "id": "volkswagen-polo",
-      "path": "volkswagen/polo/base.json",
+      "path": "data/volkswagen/polo/base.json",
       "meta": {
         "make": "Volkswagen",
         "model": "Polo",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json",
+        "volkswagen/dtc.json"
       ]
     },
     {
       "id": "volkswagen-tiguan",
-      "path": "volkswagen/tiguan/base.json",
+      "path": "data/volkswagen/tiguan/base.json",
       "meta": {
         "make": "Volkswagen",
         "model": "Tiguan",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json",
+        "volkswagen/dtc.json"
       ]
     },
     {
       "id": "volvo-s60",
-      "path": "volvo/s60/base.json",
+      "path": "data/volvo/s60/base.json",
       "meta": {
         "make": "Volvo",
         "model": "S60",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
       "id": "volvo-xc60",
-      "path": "volvo/xc60/base.json",
+      "path": "data/volvo/xc60/base.json",
       "meta": {
         "make": "Volvo",
         "model": "XC60",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
       "id": "yamaha-mt-15",
-      "path": "yamaha/mt-15/base.json",
+      "path": "data/yamaha/mt-15/base.json",
       "meta": {
         "make": "Yamaha",
         "model": "MT-15",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
       "id": "yamaha-xtz150",
-      "path": "yamaha/xtz150/base.json",
+      "path": "data/yamaha/xtz150/base.json",
       "meta": {
         "make": "Yamaha",
         "model": "XTZ150",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     },
     {
       "id": "yamaha-ybr150-factor",
-      "path": "yamaha/ybr150-factor/base.json",
+      "path": "data/yamaha/ybr150-factor/base.json",
       "meta": {
         "make": "Yamaha",
         "model": "YBR150 Factor",
         "generation": "All",
-        "years": null,
-        "engine": null,
         "author": "abrahdev",
         "version": "1.0.0"
       },
       "item_count": 0,
       "extends": [
-        "_base/combustion.json"
+        "_base/car-combustion.json"
       ]
     }
   ]

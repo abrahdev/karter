@@ -18,6 +18,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get navVehicles => 'Vehículos';
 
   @override
+  String get navObd => 'OBD II';
+
+  @override
   String get navMore => 'Más';
 
   @override
@@ -94,6 +97,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get close => 'Cerrar';
+
+  @override
+  String get retry => 'Reintentar';
 
   @override
   String get overduePerformService => 'Vencido — realiza el servicio';
@@ -242,6 +248,155 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get timeMonths => 'Tiempo (meses)';
+
+  @override
+  String get partsTitle => 'Repuestos';
+
+  @override
+  String get partUnitUnit => 'unidad';
+
+  @override
+  String get partUnitSet => 'juego';
+
+  @override
+  String get partUnitKit => 'kit';
+
+  @override
+  String get partUnitCan => 'lata';
+
+  @override
+  String get templateFound => 'Plantilla encontrada';
+
+  @override
+  String get noTemplate => 'Sin plantilla';
+
+  @override
+  String get useTemplate => 'Usar plantilla';
+
+  @override
+  String get searchTemplate => 'Buscar plantilla';
+
+  @override
+  String templateWithName(Object name) {
+    return 'Plantilla: $name';
+  }
+
+  @override
+  String get noResultsTitle => 'Sin resultados';
+
+  @override
+  String get noTemplateFoundDescription =>
+      'No se encontró ninguna plantilla para los datos ingresados.';
+
+  @override
+  String get searchParameters => 'Parámetros de búsqueda:';
+
+  @override
+  String get defaultIntervalsHint =>
+      'El vehículo usará intervalos predeterminados.';
+
+  @override
+  String get missingTemplateContribute =>
+      '¿Falta una plantilla? Contribuye en github.com/abrahdev/karter';
+
+  @override
+  String get viewAllTemplates => 'Ver todas las plantillas';
+
+  @override
+  String get contribute => 'Contribuir';
+
+  @override
+  String get contributeOnGitHub => 'Contribuye en GitHub';
+
+  @override
+  String get gotIt => 'Entendido';
+
+  @override
+  String get templateUnderConstruction => 'Plantilla en construcción';
+
+  @override
+  String get templateNotReady =>
+      'Esta plantilla aún no está lista.\n¡Estamos trabajando en ello!';
+
+  @override
+  String get contributionsWelcome =>
+      'Las contribuciones son bienvenidas: añade o corrige plantillas para tu vehículo:';
+
+  @override
+  String requestedParam(Object params) {
+    return 'Solicitado: $params';
+  }
+
+  @override
+  String get deleteIntervalConfirm =>
+      '¿Seguro que quieres eliminar este intervalo?';
+
+  @override
+  String get addPart => 'Añadir repuesto';
+
+  @override
+  String get partName => 'Nombre del repuesto';
+
+  @override
+  String get quantity => 'Cant.';
+
+  @override
+  String get oemNumber => 'Número OEM';
+
+  @override
+  String get addLink => 'Añadir enlace';
+
+  @override
+  String get linkUrl => 'URL';
+
+  @override
+  String get openLink => 'Abrir';
+
+  @override
+  String get noLinks => 'Sin enlaces';
+
+  @override
+  String get noParts => 'Aún no hay repuestos';
+
+  @override
+  String get invalidUrl => 'URL no válida';
+
+  @override
+  String get copied => 'Copiado';
+
+  @override
+  String get linksTitle => 'Enlaces de referencia';
+
+  @override
+  String get copy => 'Copiar';
+
+  @override
+  String get addModeManual => 'Manual';
+
+  @override
+  String get addModeTemplate => 'Plantilla';
+
+  @override
+  String get newFromTemplate => 'Nuevos de la plantilla';
+
+  @override
+  String get updatesAvailable => 'Actualizaciones disponibles';
+
+  @override
+  String get restore => 'Restaurar';
+
+  @override
+  String get syncInstruction =>
+      'Sincroniza los intervalos de mantenimiento desde la plantilla de tu vehículo.';
+
+  @override
+  String get upToDate => 'Todo al día';
+
+  @override
+  String get syncAdded => 'Intervalo añadido desde la plantilla';
+
+  @override
+  String get syncRestored => 'Intervalo restaurado desde la plantilla';
 
   @override
   String get months => 'meses';
@@ -1124,4 +1279,40 @@ class AppLocalizationsEs extends AppLocalizations {
   String backupCount(Object current, Object max) {
     return 'Copias: $current/$max';
   }
+
+  @override
+  String get dtcLookupTitle => 'Consulta de códigos de fallo';
+
+  @override
+  String get dtcSearchHint => 'Introduce un código, p. ej. P0171';
+
+  @override
+  String get dtcEmptyState => 'Escribe un código para ver su descripción';
+
+  @override
+  String get dtcNoMatch => 'Ningún código coincide con tu búsqueda';
+
+  @override
+  String get dtcDescription => 'Descripción';
+
+  @override
+  String get dtcRelatedMaintenance => 'Mantenimiento relacionado';
+
+  @override
+  String get dtcScopeStandard => 'Estándar';
+
+  @override
+  String get dtcScopeManufacturer => 'Fabricante';
+
+  @override
+  String get dtcGeneralDb => 'Códigos OBD-II generales';
+
+  @override
+  String get dtcVehicle => 'Vehículo';
+
+  @override
+  String get dtcVehicleNotFound => 'Vehículo no encontrado';
+
+  @override
+  String get dtcLoadError => 'No se pudieron cargar los códigos de fallo';
 }

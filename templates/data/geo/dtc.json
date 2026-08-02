@@ -1,0 +1,128 @@
+{
+  "id": "geo-dtc",
+  "meta": {
+    "make": "Geo",
+    "model": "OBD-II codes",
+    "author": "abrahdev",
+    "version": "1.0.0",
+    "sources": [
+      "https://github.com/Wal33D/dtc-database (MIT)"
+    ]
+  },
+  "obd_dtc_definitions": [
+    {
+      "code": "P1250",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_geo_p1250",
+      "description": "Early Fuel Evaporation Heater Circuit Fault"
+    },
+    {
+      "code": "P1300",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_geo_p1300",
+      "description": "Ignition Coil 1 Primary Feedback Circuit"
+    },
+    {
+      "code": "P1305",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_geo_p1305",
+      "description": "Ignition Coil 2 Primary Feedback Circuit"
+    },
+    {
+      "code": "P1310",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_geo_p1310",
+      "description": "Ignition Coil 3 Primary Feedback Circuit"
+    },
+    {
+      "code": "P1315",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_geo_p1315",
+      "description": "Ignition Coil 4 Primary Feedback Circuit"
+    },
+    {
+      "code": "P1335",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_geo_p1335",
+      "description": "Crankshaft Position Sensor Circuit"
+    },
+    {
+      "code": "P1346",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_geo_p1346",
+      "description": "Intake Camshaft Position System Performance"
+    },
+    {
+      "code": "P1349",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_geo_p1349",
+      "description": "Intake Camshaft Position System"
+    },
+    {
+      "code": "P1408",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_geo_p1408",
+      "description": "MAP Sensor Circuit"
+    },
+    {
+      "code": "P1410",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_geo_p1410",
+      "description": "Fuel Tank Pressure System Fault"
+    },
+    {
+      "code": "P1450",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_geo_p1450",
+      "description": "Barometric Pressure Sensor Circuit Fault"
+    },
+    {
+      "code": "P1451",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_geo_p1451",
+      "description": "Barometric Pressure Sensor Performance"
+    },
+    {
+      "code": "P1460",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_geo_p1460",
+      "description": "Cooling Fan Control System Fault"
+    },
+    {
+      "code": "P1500",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_geo_p1500",
+      "description": "Starter Signal Circuit Fault"
+    },
+    {
+      "code": "P1510",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_geo_p1510",
+      "description": "Backup Power Supply Fault"
+    },
+    {
+      "code": "P1520",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_geo_p1520",
+      "description": "Stop Lamp Switch Circuit"
+    },
+    {
+      "code": "P1530",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_geo_p1530",
+      "description": "Ignition Timing Adjustment Switch Circuit"
+    },
+    {
+      "code": "P1600",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_geo_p1600",
+      "description": "PCM Battery Circuit Fault"
+    },
+    {
+      "code": "P1656",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_geo_p1656",
+      "description": "Intake CMP Actuator Solenoid Control Circuit"
+    }
+  ]
+}

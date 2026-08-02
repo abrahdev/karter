@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:drift/drift.dart' as drift;
 import 'package:mobile/core/database/app_database.dart';
 import 'package:mobile/domain/entities/maintenance_interval.dart';
@@ -63,6 +65,7 @@ class MaintenanceIntervalRepositoryImpl
       lastResetDate: entry.lastResetDate,
       isEnabled: entry.isEnabled,
       isCustom: entry.isCustom,
+      parts: _decodeParts(entry.partsJson),
     );
   }
 
@@ -79,6 +82,20 @@ class MaintenanceIntervalRepositoryImpl
       lastResetDate: drift.Value(interval.lastResetDate),
       isEnabled: drift.Value(interval.isEnabled),
       isCustom: drift.Value(interval.isCustom),
+      partsJson: drift.Value(_encodeParts(interval.parts)),
     );
+  }
+
+  String? _encodeParts(List<IntervalPart> parts) {
+    if (parts.isEmpty) return null;
+    return jsonEncode(parts.map((p) => p.toJson()).toList());
+  }
+
+  List<IntervalPart> _decodeParts(String? json) {
+    if (json == null || json.isEmpty) return const [];
+    final raw = jsonDecode(json) as List;
+    return raw
+        .map((e) => IntervalPart.fromJson(e as Map<String, dynamic>))
+        .toList();
   }
 }

@@ -1,14 +1,13 @@
 {
   "id": "mitsubishi-l200",
   "extends": [
-    "_base/combustion.json"
+    "_base/car-combustion.json",
+    "mitsubishi/dtc.json"
   ],
   "meta": {
     "make": "Mitsubishi",
     "model": "L200",
     "generation": "All",
-    "years": null,
-    "engine": null,
     "author": "abrahdev",
     "version": "1.0.0"
   },

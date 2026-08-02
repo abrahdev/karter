@@ -1,14 +1,13 @@
 {
   "id": "kia-sportage",
   "extends": [
-    "_base/combustion.json"
+    "_base/car-combustion.json",
+    "kia/dtc.json"
   ],
   "meta": {
     "make": "Kia",
     "model": "Sportage",
     "generation": "All",
-    "years": null,
-    "engine": null,
     "author": "abrahdev",
     "version": "1.0.0"
   },

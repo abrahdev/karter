@@ -1,12 +1,37 @@
 {
   "id": "electric",
-  "extends": ["_base/common-all.json"],
+  "extends": [
+    "_base/car-common.json"
+  ],
   "meta": {
     "make": "_base",
     "model": "Electric vehicle",
     "author": "abrahdev",
     "version": "1.0.0"
   },
+  "parts": [
+    {
+      "id": "battery-coolant",
+      "name": "Battery coolant",
+      "i18n_key": "part_battery_coolant",
+      "quantity": 1,
+      "unit": "L"
+    },
+    {
+      "id": "inverter-coolant",
+      "name": "Inverter / motor coolant",
+      "i18n_key": "part_inverter_coolant",
+      "quantity": 2,
+      "unit": "L"
+    },
+    {
+      "id": "drive-unit-oil",
+      "name": "Drive unit oil",
+      "i18n_key": "part_drive_unit_oil",
+      "quantity": 1,
+      "unit": "L"
+    }
+  ],
   "maintenance_items": [
     {
       "id": "brake-pads",
@@ -19,7 +44,12 @@
       "i18n_key": "seed_interval_battery_cooling",
       "desc_i18n_key": "seed_desc_battery_cooling",
       "interval_km": 60000,
-      "interval_months": null,
+      "parts": [
+        {
+          "part_id": "battery-coolant",
+          "quantity": 1
+        }
+      ],
       "description": "The battery cooling system is vital for maintaining optimal temperature and prolonging cell life."
     },
     {
@@ -29,6 +59,12 @@
       "desc_i18n_key": "seed_desc_inverter_coolant",
       "interval_km": 80000,
       "interval_months": 36,
+      "parts": [
+        {
+          "part_id": "inverter-coolant",
+          "quantity": 2
+        }
+      ],
       "description": "The power electronics and electric motor generate heat. Coolant prevents overheating and component failure."
     },
     {
@@ -37,7 +73,12 @@
       "i18n_key": "seed_interval_drive_unit_oil",
       "desc_i18n_key": "seed_desc_drive_unit_oil",
       "interval_km": 100000,
-      "interval_months": null,
+      "parts": [
+        {
+          "part_id": "drive-unit-oil",
+          "quantity": 1
+        }
+      ],
       "description": "The reduction gear in the drive unit has its own oil. Change intervals vary by manufacturer."
     },
     {

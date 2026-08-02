@@ -1,14 +1,12 @@
 {
   "id": "yamaha-mt-15",
   "extends": [
-    "_base/combustion.json"
+    "_base/car-combustion.json"
   ],
   "meta": {
     "make": "Yamaha",
     "model": "MT-15",
     "generation": "All",
-    "years": null,
-    "engine": null,
     "author": "abrahdev",
     "version": "1.0.0"
   },

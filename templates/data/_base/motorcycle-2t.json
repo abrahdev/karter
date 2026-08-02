@@ -1,52 +1,103 @@
 {
   "id": "motorcycle-2t",
-  "extends": ["_base/motorcycle-common.json"],
+  "extends": [
+    "_base/motorcycle-common.json"
+  ],
   "meta": {
     "make": "_base",
     "model": "Motorcycle 2-Stroke",
     "author": "abrahdev",
     "version": "1.0.0"
   },
+  "parts": [
+    {
+      "id": "gearbox-oil",
+      "name": "Gearbox oil",
+      "i18n_key": "part_gearbox_oil",
+      "quantity": 1,
+      "unit": "L"
+    },
+    {
+      "id": "two-stroke-oil",
+      "name": "2T oil",
+      "i18n_key": "part_two_stroke_oil",
+      "quantity": 1,
+      "unit": "L"
+    },
+    {
+      "id": "spark-plug",
+      "name": "Spark plug",
+      "i18n_key": "part_spark_plug",
+      "quantity": 1,
+      "unit": "unit"
+    }
+  ],
   "maintenance_items": [
     {
       "id": "gearbox-oil",
       "label": "Gearbox / transmission oil",
+      "i18n_key": "seed_interval_gearbox_oil",
+      "desc_i18n_key": "seed_desc_gearbox_oil",
       "interval_km": 5000,
       "interval_months": 12,
+      "parts": [
+        {
+          "part_id": "gearbox-oil",
+          "quantity": 1
+        }
+      ],
       "description": "Change the independent gearbox oil that lubricates the clutch and gears, separate from engine combustion."
     },
     {
       "id": "two-stroke-oil",
       "label": "2T mix / injection oil",
+      "i18n_key": "seed_interval_two_stroke_oil",
+      "desc_i18n_key": "seed_desc_two_stroke_oil",
       "interval_km": 500,
-      "interval_months": null,
+      "parts": [
+        {
+          "part_id": "two-stroke-oil",
+          "quantity": 1
+        }
+      ],
       "description": "Top up the two-stroke oil tank (if auto-lube) or accurately mix manually into petrol, typically 1.5%–2.5%."
     },
     {
       "id": "spark-plug",
       "label": "Spark plug",
+      "i18n_key": "seed_interval_spark_plug",
+      "desc_i18n_key": "seed_desc_spark_plug",
       "interval_km": 6000,
-      "interval_months": null,
+      "parts": [
+        {
+          "part_id": "spark-plug",
+          "quantity": 1
+        }
+      ],
       "description": "Prone to carbon fouling and oil bridges. Inspect, clean, or replace much more frequently than 4T."
     },
     {
       "id": "piston-rings",
       "label": "Piston & rings",
+      "i18n_key": "seed_interval_piston_rings",
+      "desc_i18n_key": "seed_desc_piston_rings",
       "interval_km": 15000,
-      "interval_months": null,
       "description": "High wear item. Measure cylinder clearance, replace piston rings and piston to prevent severe loss of compression or seizure."
     },
     {
       "id": "exhaust-power-valve",
       "label": "Exhaust power valve",
+      "i18n_key": "seed_interval_exhaust_power_valve",
+      "desc_i18n_key": "seed_desc_exhaust_power_valve",
       "interval_km": 5000,
-      "interval_months": null,
       "description": "Dismantle and clean heavy carbon and soot deposits to ensure smooth operational opening at high revs."
     },
     {
       "id": "silencer-packing",
       "label": "Silencer packing (fiber)",
-      "interval_km": null,
+      "i18n_key": "seed_interval_silencer_packing",
+      "desc_i18n_key": "seed_desc_silencer_packing",
+      "interval_km": 5000,
       "interval_months": 12,
       "description": "Replace internal fiberglass packing inside the silencer to maintain correct backpressure and exhaust noise limits."
     }

@@ -1,14 +1,12 @@
 {
   "id": "royal-enfield-himalayan-450",
   "extends": [
-    "_base/combustion.json"
+    "_base/car-combustion.json"
   ],
   "meta": {
     "make": "Royal Enfield",
     "model": "Himalayan 450",
     "generation": "All",
-    "years": null,
-    "engine": null,
     "author": "abrahdev",
     "version": "1.0.0"
   },

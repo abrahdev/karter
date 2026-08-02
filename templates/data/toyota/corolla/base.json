@@ -1,14 +1,13 @@
 {
   "id": "toyota-corolla",
   "extends": [
-    "_base/combustion.json"
+    "_base/car-combustion.json",
+    "toyota/dtc.json"
   ],
   "meta": {
     "make": "Toyota",
     "model": "Corolla",
     "generation": "All",
-    "years": null,
-    "engine": null,
     "author": "abrahdev",
     "version": "1.0.0"
   },

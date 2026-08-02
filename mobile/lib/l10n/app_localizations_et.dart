@@ -18,6 +18,9 @@ class AppLocalizationsEt extends AppLocalizations {
   String get navVehicles => 'Sõidukid';
 
   @override
+  String get navObd => 'OBD II';
+
+  @override
   String get navMore => 'Veel';
 
   @override
@@ -94,6 +97,9 @@ class AppLocalizationsEt extends AppLocalizations {
 
   @override
   String get close => 'Sulge';
+
+  @override
+  String get retry => 'Proovi uuesti';
 
   @override
   String get overduePerformService => 'Üle tähtaja - suundu hooldusesse';
@@ -242,6 +248,153 @@ class AppLocalizationsEt extends AppLocalizations {
 
   @override
   String get timeMonths => 'Aeg (kuud)';
+
+  @override
+  String get partsTitle => 'Varuosad';
+
+  @override
+  String get partUnitUnit => 'tk';
+
+  @override
+  String get partUnitSet => 'komplekt';
+
+  @override
+  String get partUnitKit => 'komplekt';
+
+  @override
+  String get partUnitCan => 'purk';
+
+  @override
+  String get templateFound => 'Mall leitud';
+
+  @override
+  String get noTemplate => 'Mall puudub';
+
+  @override
+  String get useTemplate => 'Kasuta malli';
+
+  @override
+  String get searchTemplate => 'Otsi malli';
+
+  @override
+  String templateWithName(Object name) {
+    return 'Mall: $name';
+  }
+
+  @override
+  String get noResultsTitle => 'Tulemusi pole';
+
+  @override
+  String get noTemplateFoundDescription =>
+      'Sisestatud andmete jaoks malli ei leitud.';
+
+  @override
+  String get searchParameters => 'Otsingu parameetrid:';
+
+  @override
+  String get defaultIntervalsHint => 'Sõiduk kasutab vaikimisi intervalle.';
+
+  @override
+  String get missingTemplateContribute =>
+      'Kas malli puudub? Aita kaasa aadressil github.com/abrahdev/karter';
+
+  @override
+  String get viewAllTemplates => 'Vaata kõiki malle';
+
+  @override
+  String get contribute => 'Aita kaasa';
+
+  @override
+  String get contributeOnGitHub => 'Aita GitHubis kaasa';
+
+  @override
+  String get gotIt => 'Sain aru';
+
+  @override
+  String get templateUnderConstruction => 'Mall on pooleli';
+
+  @override
+  String get templateNotReady =>
+      'See mall pole veel valmis.\nTöötame selle kallal!';
+
+  @override
+  String get contributionsWelcome =>
+      'Oodatud on panus — lisa või paranda oma sõiduki malle:';
+
+  @override
+  String requestedParam(Object params) {
+    return 'Taotletud: $params';
+  }
+
+  @override
+  String get deleteIntervalConfirm =>
+      'Kas oled kindel, et soovid selle välbi kustutada?';
+
+  @override
+  String get addPart => 'Lisa varuosa';
+
+  @override
+  String get partName => 'Varuosa nimi';
+
+  @override
+  String get quantity => 'Kogus';
+
+  @override
+  String get oemNumber => 'OEM number';
+
+  @override
+  String get addLink => 'Lisa link';
+
+  @override
+  String get linkUrl => 'URL';
+
+  @override
+  String get openLink => 'Ava';
+
+  @override
+  String get noLinks => 'Linke pole';
+
+  @override
+  String get noParts => 'Varuosasid veel pole';
+
+  @override
+  String get invalidUrl => 'Vigane URL';
+
+  @override
+  String get copied => 'Kopeeritud';
+
+  @override
+  String get linksTitle => 'Viitelingid';
+
+  @override
+  String get copy => 'Kopeeri';
+
+  @override
+  String get addModeManual => 'Käsitsi';
+
+  @override
+  String get addModeTemplate => 'Mall';
+
+  @override
+  String get newFromTemplate => 'Uued mallist';
+
+  @override
+  String get updatesAvailable => 'Uuendusi saadaval';
+
+  @override
+  String get restore => 'Taasta';
+
+  @override
+  String get syncInstruction => 'Sünkrooni hooldusvälbad oma sõiduki mallist.';
+
+  @override
+  String get upToDate => 'Kõik ajakohane';
+
+  @override
+  String get syncAdded => 'Mallist lisatud hooldusvahe';
+
+  @override
+  String get syncRestored => 'Mallist taastatud hooldusvahe';
 
   @override
   String get months => 'kuud';
@@ -1117,4 +1270,40 @@ class AppLocalizationsEt extends AppLocalizations {
   String backupCount(Object current, Object max) {
     return 'Varukoopiad: $current/$max';
   }
+
+  @override
+  String get dtcLookupTitle => 'Veakoodide otsing';
+
+  @override
+  String get dtcSearchHint => 'Sisesta kood, nt P0171';
+
+  @override
+  String get dtcEmptyState => 'Kirjuta kood, et näha selle kirjeldust';
+
+  @override
+  String get dtcNoMatch => 'Otsingule ei vasta ükski kood';
+
+  @override
+  String get dtcDescription => 'Kirjeldus';
+
+  @override
+  String get dtcRelatedMaintenance => 'Seotud hooldus';
+
+  @override
+  String get dtcScopeStandard => 'Standardne';
+
+  @override
+  String get dtcScopeManufacturer => 'Tootja';
+
+  @override
+  String get dtcGeneralDb => 'Üldised OBD-II koodid';
+
+  @override
+  String get dtcVehicle => 'Sõiduk';
+
+  @override
+  String get dtcVehicleNotFound => 'Sõidukit ei leitud';
+
+  @override
+  String get dtcLoadError => 'Veakoodide laadimine ebaõnnestus';
 }

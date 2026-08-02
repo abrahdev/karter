@@ -1,14 +1,13 @@
 {
   "id": "subaru-forester",
   "extends": [
-    "_base/combustion.json"
+    "_base/car-combustion.json",
+    "subaru/dtc.json"
   ],
   "meta": {
     "make": "Subaru",
     "model": "Forester",
     "generation": "All",
-    "years": null,
-    "engine": null,
     "author": "abrahdev",
     "version": "1.0.0"
   },

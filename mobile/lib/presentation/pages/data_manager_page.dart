@@ -5,6 +5,7 @@ import 'dart:typed_data';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material3_indicators/material3_indicators.dart';
 import 'package:mobile/core/modal_helpers.dart';
 import 'package:mobile/core/theme/app_spacing.dart';
 import 'package:mobile/data/services/export_service.dart';
@@ -89,12 +90,7 @@ class _DataManagerPageState extends ConsumerState<DataManagerPage> {
                           ? null
                           : _export,
                       icon: _isExporting
-                          ? const SizedBox(
-                              width: 18,
-                              height: 18,
-                              child:
-                                  CircularProgressIndicator(strokeWidth: 2),
-                            )
+                          ? const M3LoadingIndicator(size: 18)
                           : const Icon(Icons.upload),
                       label: Text(
                           _isExporting ? l.exporting : l.export),
@@ -106,12 +102,7 @@ class _DataManagerPageState extends ConsumerState<DataManagerPage> {
                     child: OutlinedButton.icon(
                       onPressed: _isImporting ? null : _import,
                       icon: _isImporting
-                          ? const SizedBox(
-                              width: 18,
-                              height: 18,
-                              child:
-                                  CircularProgressIndicator(strokeWidth: 2),
-                            )
+                          ? const M3LoadingIndicator(size: 18)
                           : const Icon(Icons.download),
                       label: Text(
                           _isImporting ? l.importing : l.import),
@@ -122,7 +113,9 @@ class _DataManagerPageState extends ConsumerState<DataManagerPage> {
             ),
           ],
         ),
-        loading: () => const Center(child: CircularProgressIndicator()),
+        loading: () => const Center(
+            child: M3LoadingIndicator(
+                contained: true, size: 36, containerSize: 72)),
         error: (e, _) => Center(child: Text('Error: $e')),
       ),
     );

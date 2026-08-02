@@ -1,3 +1,69 @@
+class IntervalPart {
+  final String partId;
+  final String? name;
+  final String? i18nKey;
+  final String? oemNumber;
+  final double quantity;
+  final String? unit;
+  final String? description;
+  final List<String> links;
+
+  IntervalPart({
+    required this.partId,
+    this.name,
+    this.i18nKey,
+    this.oemNumber,
+    this.quantity = 1,
+    this.unit,
+    this.description,
+    this.links = const [],
+  });
+
+  IntervalPart copyWith({
+    String? partId,
+    String? name,
+    String? i18nKey,
+    String? oemNumber,
+    double? quantity,
+    String? unit,
+    String? description,
+    List<String>? links,
+  }) {
+    return IntervalPart(
+      partId: partId ?? this.partId,
+      name: name ?? this.name,
+      i18nKey: i18nKey ?? this.i18nKey,
+      oemNumber: oemNumber ?? this.oemNumber,
+      quantity: quantity ?? this.quantity,
+      unit: unit ?? this.unit,
+      description: description ?? this.description,
+      links: links ?? this.links,
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        'partId': partId,
+        'name': name,
+        'i18nKey': i18nKey,
+        'oemNumber': oemNumber,
+        'quantity': quantity,
+        'unit': unit,
+        'description': description,
+        'links': links,
+      };
+
+  factory IntervalPart.fromJson(Map<String, dynamic> json) => IntervalPart(
+        partId: json['partId'] as String,
+        name: json['name'] as String?,
+        i18nKey: json['i18nKey'] as String?,
+        oemNumber: json['oemNumber'] as String?,
+        quantity: (json['quantity'] as num?)?.toDouble() ?? 1,
+        unit: json['unit'] as String?,
+        description: json['description'] as String?,
+        links: (json['links'] as List?)?.cast<String>() ?? const [],
+      );
+}
+
 class MaintenanceInterval {
   final String id;
   final String vehicleId;
@@ -11,6 +77,7 @@ class MaintenanceInterval {
   final bool isCustom;
   final String? i18nKey;
   final String? descI18nKey;
+  final List<IntervalPart> parts;
 
   MaintenanceInterval({
     required this.id,
@@ -25,6 +92,7 @@ class MaintenanceInterval {
     this.isCustom = false,
     this.i18nKey,
     this.descI18nKey,
+    this.parts = const [],
   });
 
   MaintenanceInterval copyWith({
@@ -40,6 +108,7 @@ class MaintenanceInterval {
     bool? isCustom,
     String? i18nKey,
     String? descI18nKey,
+    List<IntervalPart>? parts,
   }) {
     return MaintenanceInterval(
       id: id ?? this.id,
@@ -54,6 +123,7 @@ class MaintenanceInterval {
       isCustom: isCustom ?? this.isCustom,
       i18nKey: i18nKey ?? this.i18nKey,
       descI18nKey: descI18nKey ?? this.descI18nKey,
+      parts: parts ?? this.parts,
     );
   }
 
@@ -68,6 +138,7 @@ class MaintenanceInterval {
         'lastResetDate': lastResetDate?.toIso8601String(),
         'isEnabled': isEnabled,
         'isCustom': isCustom,
+        'parts': parts.map((p) => p.toJson()).toList(),
       };
 
   factory MaintenanceInterval.fromJson(Map<String, dynamic> json) =>
@@ -84,5 +155,9 @@ class MaintenanceInterval {
             : null,
         isEnabled: json['isEnabled'] ?? true,
         isCustom: json['isCustom'] ?? false,
+        parts: (json['parts'] as List?)
+                ?.map((p) => IntervalPart.fromJson(p as Map<String, dynamic>))
+                .toList() ??
+            const [],
       );
 }

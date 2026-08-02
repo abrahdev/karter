@@ -1,6 +1,8 @@
 ---
 sidebar_position: 4
 title: Native Car Integrations
+sidebar_custom_props:
+  icon: '🚗'
 ---
 
 > **Status:** Not yet implemented. This page serves as a placeholder for future development.

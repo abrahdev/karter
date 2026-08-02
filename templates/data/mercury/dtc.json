@@ -1,0 +1,2492 @@
+{
+  "id": "mercury-dtc",
+  "meta": {
+    "make": "Mercury",
+    "model": "OBD-II codes",
+    "author": "abrahdev",
+    "version": "1.0.0",
+    "sources": [
+      "https://github.com/Wal33D/dtc-database (MIT)"
+    ]
+  },
+  "obd_dtc_definitions": [
+    {
+      "code": "P1000",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1000",
+      "description": "OBD System Readiness Test Not Complete"
+    },
+    {
+      "code": "P1001",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1001",
+      "description": "KOER Test Cannot Be Completed"
+    },
+    {
+      "code": "P1039",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1039",
+      "description": "Vehicle Speed Signal Missing or Improper"
+    },
+    {
+      "code": "P1051",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1051",
+      "description": "Brake Switch Signal Missing or Improper"
+    },
+    {
+      "code": "P1100",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1100",
+      "description": "Mass Air Flow Sensor Intermittent"
+    },
+    {
+      "code": "P1101",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1101",
+      "description": "Mass Air Flow Sensor Out of Self-Test Range"
+    },
+    {
+      "code": "P1105",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1105",
+      "description": "Dual Alternator Upper Fault"
+    },
+    {
+      "code": "P1106",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1106",
+      "description": "Dual Alternator Lower Fault Manifold Absolute Pressure (MAP) Sensor Circuit Intermittent High Voltage"
+    },
+    {
+      "code": "P1107",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1107",
+      "description": "Dual Alternator Lower Circuit Malfunction Manifold Absolute Pressure (MAP) Sensor Circuit Intermittent Low Voltage"
+    },
+    {
+      "code": "P1108",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1108",
+      "description": "Dual Alternator Battery Lamp Circuit Malfunction"
+    },
+    {
+      "code": "P1109",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1109",
+      "description": "IAT B Sensor Intermittent"
+    },
+    {
+      "code": "P1111",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1111",
+      "description": "System Pass"
+    },
+    {
+      "code": "P1112",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1112",
+      "description": "Intake Air Temperature Sensor Intermittent"
+    },
+    {
+      "code": "P1114",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1114",
+      "description": "Engine Coolant Temperature (ECT) Sensor Circuit Intermittent Low Voltage IAT B Circuit Low Input"
+    },
+    {
+      "code": "P1115",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1115",
+      "description": "Engine Coolant Temperature (ECT) Sensor Circuit Intermittent High Voltage IAT B Circuit High Input"
+    },
+    {
+      "code": "P1116",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1116",
+      "description": "Engine Coolant Temperature Sensor is Out of Self-Test Range"
+    },
+    {
+      "code": "P1117",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1117",
+      "description": "Engine Coolant Temperature Sensor Intermittent"
+    },
+    {
+      "code": "P1118",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1118",
+      "description": "Manifold Absolute Temperature Circuit Low Input"
+    },
+    {
+      "code": "P1119",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1119",
+      "description": "Manifold Absolute Temperature Circuit High Input"
+    },
+    {
+      "code": "P1120",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1120",
+      "description": "Throttle Position Sensor Out of Range"
+    },
+    {
+      "code": "P1121",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1121",
+      "description": "Throttle Position Sensor Inconsistent with Mass Air Flow Sensor"
+    },
+    {
+      "code": "P1122",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1122",
+      "description": "Throttle Position TP Sensor Circuit Intermittent Low Voltage"
+    },
+    {
+      "code": "P1123",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1123",
+      "description": "Throttle Position Sensor In Range But Higher Than Expected"
+    },
+    {
+      "code": "P1124",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1124",
+      "description": "Throttle Position Sensor Out of Self-Test Range"
+    },
+    {
+      "code": "P1125",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1125",
+      "description": "Throttle Position Sensor Intermittent"
+    },
+    {
+      "code": "P1127",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1127",
+      "description": "Exhaust Not Warm Enough Downstream O2 Sensor Not Tested"
+    },
+    {
+      "code": "P1128",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1128",
+      "description": "Upstream Heated Oxygen Sensor Signals Reversed"
+    },
+    {
+      "code": "P1129",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1129",
+      "description": "Downstream Heated Oxygen Sensor Signals Reversed"
+    },
+    {
+      "code": "P1130",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1130",
+      "description": "Lack of Upstream Heated Oxygen Sensor Switch Adaptive Fuel Limit Bank 1"
+    },
+    {
+      "code": "P1131",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1131",
+      "description": "Lack of Upstream Heated Oxygen Sensor Switch Sensor Indicates Lean Bank 1"
+    },
+    {
+      "code": "P1132",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1132",
+      "description": "Lack of Upstream Heated Oxygen Sensor Switch Sensor Indicates Rich Bank 1"
+    },
+    {
+      "code": "P1133",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1133",
+      "description": "Bank 1 Fuel Control Shifted Lean"
+    },
+    {
+      "code": "P1134",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1134",
+      "description": "Bank 1 Fuel Control Shifted Rich"
+    },
+    {
+      "code": "P1135",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1135",
+      "description": "Pedal Position Sensor A Circuit Intermittent"
+    },
+    {
+      "code": "P1137",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1137",
+      "description": "Lack of Downstream Heated Oxygen Sensor Switch Sensor Indicates Lean Bank 1"
+    },
+    {
+      "code": "P1138",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1138",
+      "description": "Lack of Downstream Heated Oxygen Sensor Switch Sensor Indicates Rich Bank 1"
+    },
+    {
+      "code": "P1139",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1139",
+      "description": "Water In Fuel Indicator Circuit Malfunction"
+    },
+    {
+      "code": "P1140",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1140",
+      "description": "Water In Fuel Condition"
+    },
+    {
+      "code": "P1141",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1141",
+      "description": "Fuel Restriction Indicator Circuit Malfunction"
+    },
+    {
+      "code": "P1142",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1142",
+      "description": "Fuel Restriction Condition"
+    },
+    {
+      "code": "P1150",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1150",
+      "description": "Lack of Upstream Heated Oxygen Sensor Switch Adaptive Fuel Limit Bank 2"
+    },
+    {
+      "code": "P1151",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1151",
+      "description": "Lack of Upstream Heated Oxygen Sensor Switch Sensor Indicates Lean Bank 2"
+    },
+    {
+      "code": "P1152",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1152",
+      "description": "Lack of Upstream Heated Oxygen Sensor Switch Sensor Indicates Rich Bank 2"
+    },
+    {
+      "code": "P1153",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1153",
+      "description": "Bank 2 Fuel Control Shifted Lean"
+    },
+    {
+      "code": "P1154",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1154",
+      "description": "Bank 2 Fuel Control Shifted Rich"
+    },
+    {
+      "code": "P1155",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1155",
+      "description": "Alternative Fuel Controller"
+    },
+    {
+      "code": "P1157",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1157",
+      "description": "Lack of Downstream Heated Oxygen Sensor Switch Sensor Indicates Lean Bank 2"
+    },
+    {
+      "code": "P1158",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1158",
+      "description": "Lack of Downstream Heated Oxygen Sensor Switch Sensor Indicates Rich Bank 2"
+    },
+    {
+      "code": "P1168",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1168",
+      "description": "Fuel Rail Sensor In-Range Low Failure"
+    },
+    {
+      "code": "P1169",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1169",
+      "description": "Fuel Rail Sensor In-Range High Failure"
+    },
+    {
+      "code": "P1170",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1170",
+      "description": "ESO Engine Shut Off Solenoid Fault"
+    },
+    {
+      "code": "P1171",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1171",
+      "description": "Rotor Sensor Fault"
+    },
+    {
+      "code": "P1172",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1172",
+      "description": "Rotor Control Fault"
+    },
+    {
+      "code": "P1173",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1173",
+      "description": "Rotor Calibration Fault"
+    },
+    {
+      "code": "P1174",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1174",
+      "description": "Cam Sensor Fault"
+    },
+    {
+      "code": "P1175",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1175",
+      "description": "Cam Control Fault"
+    },
+    {
+      "code": "P1176",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1176",
+      "description": "Cam Calibration Fault"
+    },
+    {
+      "code": "P1177",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1177",
+      "description": "Synchronization Fault"
+    },
+    {
+      "code": "P1180",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1180",
+      "description": "Fuel Delivery System Malfunction Low"
+    },
+    {
+      "code": "P1181",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1181",
+      "description": "Fuel Delivery System Malfunction High"
+    },
+    {
+      "code": "P1183",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1183",
+      "description": "Engine Oil Temperature Circuit Malfunction"
+    },
+    {
+      "code": "P1184",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1184",
+      "description": "Engine Oil Temperature Out Of Self Test Range"
+    },
+    {
+      "code": "P1185",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1185",
+      "description": "FTS High Fuel Pump Temperature Sensor High"
+    },
+    {
+      "code": "P1186",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1186",
+      "description": "FTS Low Fuel Pump Temperature Sensor Low"
+    },
+    {
+      "code": "P1187",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1187",
+      "description": "Variant Selection"
+    },
+    {
+      "code": "P1188",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1188",
+      "description": "Calibration Memory Fault"
+    },
+    {
+      "code": "P1189",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1189",
+      "description": "Pump Speed Signal Fault"
+    },
+    {
+      "code": "P1190",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1190",
+      "description": "Calibration Resistor Out Of Range"
+    },
+    {
+      "code": "P1191",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1191",
+      "description": "Key Line Voltage"
+    },
+    {
+      "code": "P1192",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1192",
+      "description": "Voltage External"
+    },
+    {
+      "code": "P1193",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1193",
+      "description": "EGR Drive Overcurrent"
+    },
+    {
+      "code": "P1194",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1194",
+      "description": "ECU A/D Converter"
+    },
+    {
+      "code": "P1195",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1195",
+      "description": "SCP HBCC Failed To Initialize"
+    },
+    {
+      "code": "P1196",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1196",
+      "description": "Key Off Voltage High"
+    },
+    {
+      "code": "P1197",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1197",
+      "description": "Key Off Voltage Low"
+    },
+    {
+      "code": "P1198",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1198",
+      "description": "Pump Rotor Control Underfueling"
+    },
+    {
+      "code": "P1209",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1209",
+      "description": "Injector Control Pressure System Fault"
+    },
+    {
+      "code": "P1210",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1210",
+      "description": "Injector Control Pressure Above Expected Level"
+    },
+    {
+      "code": "P1211",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1211",
+      "description": "Injector Control Pressure Sensor Above Below Desired"
+    },
+    {
+      "code": "P1212",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1212",
+      "description": "Injector Control Pressure Not Detected During Crank"
+    },
+    {
+      "code": "P1213",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1213",
+      "description": "Start Injector Circuit Malfunction"
+    },
+    {
+      "code": "P1214",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1214",
+      "description": "Pedal Position Sensor B Circuit Intermittent"
+    },
+    {
+      "code": "P1215",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1215",
+      "description": "Pedal Position Sensor C Circuit Low Input"
+    },
+    {
+      "code": "P1216",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1216",
+      "description": "Pedal Position Sensor C Circuit High Input"
+    },
+    {
+      "code": "P1217",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1217",
+      "description": "Pedal Position Sensor C Circuit Intermittent"
+    },
+    {
+      "code": "P1218",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1218",
+      "description": "CID High"
+    },
+    {
+      "code": "P1219",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1219",
+      "description": "CID Low"
+    },
+    {
+      "code": "P1220",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1220",
+      "description": "Series Throttle Control Fault"
+    },
+    {
+      "code": "P1221",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1221",
+      "description": "Traction Control System Malfunction"
+    },
+    {
+      "code": "P1222",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1222",
+      "description": "Traction Control Output Circuit Malfunction"
+    },
+    {
+      "code": "P1223",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1223",
+      "description": "Pedal Demand Sensor B Circuit High Input"
+    },
+    {
+      "code": "P1224",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1224",
+      "description": "Throttle Position Sensor B Out of Self-Test Range"
+    },
+    {
+      "code": "P1227",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1227",
+      "description": "Wastegate Failed Closed Over Pressure"
+    },
+    {
+      "code": "P1228",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1228",
+      "description": "Wastegate Failed Open Under Pressure"
+    },
+    {
+      "code": "P1229",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1229",
+      "description": "Intercooler Pump Driver Fault"
+    },
+    {
+      "code": "P1230",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1230",
+      "description": "Open Power to Fuel Pump Circuit"
+    },
+    {
+      "code": "P1231",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1231",
+      "description": "High Speed Fuel Pump Relay Activated"
+    },
+    {
+      "code": "P1232",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1232",
+      "description": "Low Speed Fuel Pump Primary Circuit Failure"
+    },
+    {
+      "code": "P1233",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1233",
+      "description": "Fuel Pump Driver Module Off-Line"
+    },
+    {
+      "code": "P1234",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1234",
+      "description": "Fuel Pump Driver Module Off-Line"
+    },
+    {
+      "code": "P1235",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1235",
+      "description": "Fuel Pump Control Out of Range"
+    },
+    {
+      "code": "P1236",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1236",
+      "description": "Fuel Pump Control Out of Range"
+    },
+    {
+      "code": "P1237",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1237",
+      "description": "Fuel Pump Secondary Circuit Fault"
+    },
+    {
+      "code": "P1238",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1238",
+      "description": "Fuel Pump Secondary Circuit Fault"
+    },
+    {
+      "code": "P1239",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1239",
+      "description": "Speed Fuel Pump Positive Feed Fault"
+    },
+    {
+      "code": "P1243",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1243",
+      "description": "Second Fuel Pump Faulty or Ground Fault"
+    },
+    {
+      "code": "P1244",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1244",
+      "description": "Alternator Load Input Failed High"
+    },
+    {
+      "code": "P1245",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1245",
+      "description": "Alternator Load Input Failed Low"
+    },
+    {
+      "code": "P1246",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1246",
+      "description": "Alternator Load Input Failed"
+    },
+    {
+      "code": "P1247",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1247",
+      "description": "Turbo Boost Pressure Low"
+    },
+    {
+      "code": "P1248",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1248",
+      "description": "Turbo Boost Pressure Not Detected"
+    },
+    {
+      "code": "P1249",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1249",
+      "description": "Wastegate Control Valve Performance"
+    },
+    {
+      "code": "P1250",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1250",
+      "description": "Lack of Power to FPRC Solenoid"
+    },
+    {
+      "code": "P1252",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1252",
+      "description": "Pedal Correlation PDS1 and LPDS High"
+    },
+    {
+      "code": "P1253",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1253",
+      "description": "Pedal Correlation PDS1 and LPDS Low"
+    },
+    {
+      "code": "P1254",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1254",
+      "description": "Pedal Correlation PDS2 and LPDS High"
+    },
+    {
+      "code": "P1255",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1255",
+      "description": "Pedal Correlation PDS2 and LPDS Low"
+    },
+    {
+      "code": "P1256",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1256",
+      "description": "Pedal Correlation PDS1 and HPDS"
+    },
+    {
+      "code": "P1257",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1257",
+      "description": "Pedal Correlation PDS2 and HPDS"
+    },
+    {
+      "code": "P1258",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1258",
+      "description": "Pedal Correlation PDS1 and PDS2"
+    },
+    {
+      "code": "P1260",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1260",
+      "description": "Theft Detected Engine Disabled"
+    },
+    {
+      "code": "P1261",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1261",
+      "description": "Cylinder 1 High To Low Side Short"
+    },
+    {
+      "code": "P1262",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1262",
+      "description": "Cylinder 2 High To Low Side Short"
+    },
+    {
+      "code": "P1263",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1263",
+      "description": "Cylinder 3 High To Low Side Short"
+    },
+    {
+      "code": "P1264",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1264",
+      "description": "Cylinder 4 High To Low Side Short"
+    },
+    {
+      "code": "P1265",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1265",
+      "description": "Cylinder 5 High To Low Side Short"
+    },
+    {
+      "code": "P1266",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1266",
+      "description": "Cylinder 6 High To Low Side Short"
+    },
+    {
+      "code": "P1267",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1267",
+      "description": "Cylinder 7 High To Low Side Short"
+    },
+    {
+      "code": "P1268",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1268",
+      "description": "Cylinder 8 High To Low Side Short"
+    },
+    {
+      "code": "P1270",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1270",
+      "description": "Engine RPM or Vehicle Speed Limiter Reached"
+    },
+    {
+      "code": "P1271",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1271",
+      "description": "Cylinder 1 High To Low Side Open"
+    },
+    {
+      "code": "P1272",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1272",
+      "description": "Cylinder 2 High To Low Side Open"
+    },
+    {
+      "code": "P1273",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1273",
+      "description": "Cylinder 3 High To Low Side Open"
+    },
+    {
+      "code": "P1274",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1274",
+      "description": "Cylinder 4 High To Low Side Open"
+    },
+    {
+      "code": "P1275",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1275",
+      "description": "Cylinder 5 High To Low Side Open"
+    },
+    {
+      "code": "P1276",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1276",
+      "description": "Cylinder 6 High To Low Side Open"
+    },
+    {
+      "code": "P1277",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1277",
+      "description": "Cylinder 7 High To Low Side Open"
+    },
+    {
+      "code": "P1278",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1278",
+      "description": "Cylinder 8 High To Low Side Open"
+    },
+    {
+      "code": "P1280",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1280",
+      "description": "Injection Control Pressure Out Of Range Low"
+    },
+    {
+      "code": "P1281",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1281",
+      "description": "Injection Control Pressure Out Of Range High"
+    },
+    {
+      "code": "P1282",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1282",
+      "description": "Excessive Injection Control Pressure"
+    },
+    {
+      "code": "P1283",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1283",
+      "description": "IPR Circuit Failure"
+    },
+    {
+      "code": "P1284",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1284",
+      "description": "Aborted KOER ICP Failure"
+    },
+    {
+      "code": "P1285",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1285",
+      "description": "Cylinder Head Over Temp Sensed"
+    },
+    {
+      "code": "P1286",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1286",
+      "description": "Fuel Pulse In Range But Lower Than Expected"
+    },
+    {
+      "code": "P1287",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1287",
+      "description": "Fuel Pulse In Range But Higher Than Expected"
+    },
+    {
+      "code": "P1288",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1288",
+      "description": "Cylinder Head Temperature Sensor Out of Self-Test Range"
+    },
+    {
+      "code": "P1289",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1289",
+      "description": "Cylinder Head Temperature Sensor Signal Greater Than Self-Test Range"
+    },
+    {
+      "code": "P1290",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1290",
+      "description": "Cylinder Head Temperature Sensor Signal Less Than Self-Test Range"
+    },
+    {
+      "code": "P1291",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1291",
+      "description": "Injector High Side Short To GND Or VBATT Bank 1"
+    },
+    {
+      "code": "P1292",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1292",
+      "description": "Injector High Side Short To GND Or VBATT Bank 2"
+    },
+    {
+      "code": "P1293",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1293",
+      "description": "Injector High Side Open Bank 1"
+    },
+    {
+      "code": "P1294",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1294",
+      "description": "Injector High Side Open Bank 2 Target Idle Not Reached"
+    },
+    {
+      "code": "P1295",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1295",
+      "description": "Multi-faults Bank 1 With Low Side Shorts"
+    },
+    {
+      "code": "P1296",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1296",
+      "description": "Multi-faults Bank 2 With Low Side Shorts"
+    },
+    {
+      "code": "P1297",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1297",
+      "description": "Injector High Sides Shorted Together"
+    },
+    {
+      "code": "P1298",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1298",
+      "description": "IDM Failure"
+    },
+    {
+      "code": "P1299",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1299",
+      "description": "Cylinder Head Temperature Sensor Detected Engine Overheating Condition"
+    },
+    {
+      "code": "P1300",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1300",
+      "description": "Boost Calibration Fault"
+    },
+    {
+      "code": "P1301",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1301",
+      "description": "Boost Calibration High"
+    },
+    {
+      "code": "P1302",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1302",
+      "description": "Boost Calibration Low"
+    },
+    {
+      "code": "P1303",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1303",
+      "description": "EGR Calibration Fault"
+    },
+    {
+      "code": "P1304",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1304",
+      "description": "EGR Calibration High"
+    },
+    {
+      "code": "P1305",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1305",
+      "description": "EGR Calibration Low"
+    },
+    {
+      "code": "P1306",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1306",
+      "description": "Kickdown Relay Pull In Circuit Fault"
+    },
+    {
+      "code": "P1307",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1307",
+      "description": "Kickdown Relay Hold Circuit Fault"
+    },
+    {
+      "code": "P1308",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1308",
+      "description": "A/C Clutch Circuit Fault"
+    },
+    {
+      "code": "P1309",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1309",
+      "description": "Misfire Detection Monitor Not Enabled"
+    },
+    {
+      "code": "P1316",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1316",
+      "description": "Injector Circuit IDM Codes Detected"
+    },
+    {
+      "code": "P1317",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1317",
+      "description": "Injector Circuit IDM Codes Not Updated"
+    },
+    {
+      "code": "P1340",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1340",
+      "description": "Camshaft Position Sensor B Circuit Malfunction"
+    },
+    {
+      "code": "P1351",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1351",
+      "description": "Ignition Diagnostic Monitor Circuit Input Fault"
+    },
+    {
+      "code": "P1352",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1352",
+      "description": "Ignition Coil A Primary Circuit Fault"
+    },
+    {
+      "code": "P1353",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1353",
+      "description": "Ignition Coil B Primary Circuit Fault"
+    },
+    {
+      "code": "P1354",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1354",
+      "description": "Ignition Coil C Primary Circuit Fault"
+    },
+    {
+      "code": "P1355",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1355",
+      "description": "Ignition Coil D Primary Circuit Fault"
+    },
+    {
+      "code": "P1356",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1356",
+      "description": "Loss of Ignition Diagnostic Module Input to PCM"
+    },
+    {
+      "code": "P1357",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1357",
+      "description": "Ignition Diagnostic Monitor Pulsewidth Not Defined"
+    },
+    {
+      "code": "P1358",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1358",
+      "description": "Ignition Diagnostic Monitor Signal Out of Self-Test Range"
+    },
+    {
+      "code": "P1359",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1359",
+      "description": "Spark Output Circuit Fault"
+    },
+    {
+      "code": "P1360",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1360",
+      "description": "Ignition Coil A Secondary Circuit Malfunction"
+    },
+    {
+      "code": "P1361",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1361",
+      "description": "Ignition Control IC Circuit Low Voltage"
+    },
+    {
+      "code": "P1362",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1362",
+      "description": "Ignition Coil C Secondary Circuit Malfunction"
+    },
+    {
+      "code": "P1363",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1363",
+      "description": "Ignition Coil D Secondary Circuit Malfunction"
+    },
+    {
+      "code": "P1364",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1364",
+      "description": "Ignition Coil Primary Circuit Fault"
+    },
+    {
+      "code": "P1365",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1365",
+      "description": "Ignition Coil Secondary Circuit Failure"
+    },
+    {
+      "code": "P1369",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1369",
+      "description": "Engine Temperature Light Monitor Failure"
+    },
+    {
+      "code": "P1380",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1380",
+      "description": "VCT Solenoid Valve Circuit Short or Open"
+    },
+    {
+      "code": "P1381",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1381",
+      "description": "Cam Timing Advance is Excessive"
+    },
+    {
+      "code": "P1383",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1383",
+      "description": "Cam Timing Advance is Excessive"
+    },
+    {
+      "code": "P1385",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1385",
+      "description": "Variable Cam Timing Solenoid B Malfunction"
+    },
+    {
+      "code": "P1386",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1386",
+      "description": "Variable Cam Timing Overadvanced Bank 2"
+    },
+    {
+      "code": "P1388",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1388",
+      "description": "Variable Cam Timing Overretarded Bank 2"
+    },
+    {
+      "code": "P1389",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1389",
+      "description": "Glow Plug Circuit High Side Low Input"
+    },
+    {
+      "code": "P1390",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1390",
+      "description": "Octane Adjust Out of Self-Test Range"
+    },
+    {
+      "code": "P1391",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1391",
+      "description": "Glow Plug Circuit Low Input Bank 1"
+    },
+    {
+      "code": "P1392",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1392",
+      "description": "Glow Plug Circuit High Input Bank 1"
+    },
+    {
+      "code": "P1393",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1393",
+      "description": "Glow Plug Circuit Low Input Bank 2"
+    },
+    {
+      "code": "P1394",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1394",
+      "description": "Glow Plug Circuit High Input Bank 2"
+    },
+    {
+      "code": "P1395",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1395",
+      "description": "Glow Plug Monitor Fault Bank 1"
+    },
+    {
+      "code": "P1396",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1396",
+      "description": "Glow Plug Monitor Fault Bank 2"
+    },
+    {
+      "code": "P1397",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1397",
+      "description": "System Voltage Out Of Self Test Range"
+    },
+    {
+      "code": "P1399",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1399",
+      "description": "Glow Plug Circuit High Side High Input"
+    },
+    {
+      "code": "P1400",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1400",
+      "description": "Differential Pressure Feedback Electronic Sensor Circuit Low Voltage"
+    },
+    {
+      "code": "P1401",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1401",
+      "description": "Differential Pressure Feedback Electronic Sensor Circuit High Voltage"
+    },
+    {
+      "code": "P1402",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1402",
+      "description": "EGR Metering Orifice Restricted"
+    },
+    {
+      "code": "P1403",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1403",
+      "description": "Differential Pressure Feedback Electronic Sensor Hoses Reversed"
+    },
+    {
+      "code": "P1404",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1404",
+      "description": "IAT B Circuit Malfunction Exhaust Gas Recirculation Closed Position Performance"
+    },
+    {
+      "code": "P1405",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1405",
+      "description": "Differential Pressure Feedback Electronic Sensor Circuit Upstream Hose"
+    },
+    {
+      "code": "P1406",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1406",
+      "description": "Differential Pressure Feedback Electronic Sensor Circuit Downstream Hose"
+    },
+    {
+      "code": "P1407",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1407",
+      "description": "EGR No Flow Detected"
+    },
+    {
+      "code": "P1408",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1408",
+      "description": "EGR Flow Out of Self-Test Range"
+    },
+    {
+      "code": "P1409",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1409",
+      "description": "EGR Vacuum Regulator Circuit Malfunction"
+    },
+    {
+      "code": "P1410",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1410",
+      "description": "EGR Barometric Pressure Sensor VREF Voltage"
+    },
+    {
+      "code": "P1411",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1411",
+      "description": "Secondary Air is Not being diverted"
+    },
+    {
+      "code": "P1413",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1413",
+      "description": "Secondary Air Injection System Monitor Circuit Low Voltage"
+    },
+    {
+      "code": "P1414",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1414",
+      "description": "Secondary Air Injection System Monitor Circuit High Voltage"
+    },
+    {
+      "code": "P1431",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1431",
+      "description": "Misfire Monitor Disabled Unable to Learn Trigger Wheel Profile"
+    },
+    {
+      "code": "P1442",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1442",
+      "description": "Secondary Air Injection System Monitor Circuit High Voltage"
+    },
+    {
+      "code": "P1443",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1443",
+      "description": "Evaporative Emission Control System Vacuum System Purge Control Solenoid or Purge Control Valve Fault"
+    },
+    {
+      "code": "P1444",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1444",
+      "description": "Purge Flow Sensor Circuit Input Low"
+    },
+    {
+      "code": "P1445",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1445",
+      "description": "Purge Flow Sensor Circuit Input High"
+    },
+    {
+      "code": "P1450",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1450",
+      "description": "Inability of Evaporative Emission Control System to Bleed Fuel Tank"
+    },
+    {
+      "code": "P1451",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1451",
+      "description": "EVAP Control System Canister Vent Solenoid Circuit Malfunction"
+    },
+    {
+      "code": "P1452",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1452",
+      "description": "Inability of Evaporative Emission Control System to Bleed Fuel Tank"
+    },
+    {
+      "code": "P1455",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1455",
+      "description": "Substantial Leak or Blockage in Evaporative Emission Control System"
+    },
+    {
+      "code": "P1457",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1457",
+      "description": "Unable To Pull Vacuum In Tank"
+    },
+    {
+      "code": "P1460",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1460",
+      "description": "Wide Open Throttle Air Conditioning Cutoff Circuit Malfunction"
+    },
+    {
+      "code": "P1461",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1461",
+      "description": "Air Conditioning Pressure Sensor Circuit Low Input"
+    },
+    {
+      "code": "P1462",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1462",
+      "description": "Air Conditioning Pressure Sensor Circuit High Input"
+    },
+    {
+      "code": "P1463",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1463",
+      "description": "Air Conditioning Pressure Sensor Insufficient Pressure Change"
+    },
+    {
+      "code": "P1464",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1464",
+      "description": "ACCS to PCM High During Self-Test"
+    },
+    {
+      "code": "P1465",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1465",
+      "description": "A/C Relay Circuit Malfunction"
+    },
+    {
+      "code": "P1466",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1466",
+      "description": "A/C Refrigerant Temperature Sensor Circuit Malfunction"
+    },
+    {
+      "code": "P1469",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1469",
+      "description": "Low Air Conditioning Cycling Period"
+    },
+    {
+      "code": "P1473",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1473",
+      "description": "Fan Secondary High with Fans Off"
+    },
+    {
+      "code": "P1474",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1474",
+      "description": "Low Fan Control Primary Circuit"
+    },
+    {
+      "code": "P1479",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1479",
+      "description": "High Fan Control Primary Circuit"
+    },
+    {
+      "code": "P1480",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1480",
+      "description": "Fan Secondary Low with Low Fans On"
+    },
+    {
+      "code": "P1481",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1481",
+      "description": "Fan Secondary Low with High Fans On"
+    },
+    {
+      "code": "P1482",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1482",
+      "description": "SCP"
+    },
+    {
+      "code": "P1483",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1483",
+      "description": "Power to Cooling Fan Exceeded Normal Draw"
+    },
+    {
+      "code": "P1484",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1484",
+      "description": "Variable Load Control Module Pin 1 Open"
+    },
+    {
+      "code": "P1485",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1485",
+      "description": "EGRV Circuit Malfunction"
+    },
+    {
+      "code": "P1500",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1500",
+      "description": "Vehicle Speed Sensor Intermittent"
+    },
+    {
+      "code": "P1501",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1501",
+      "description": "Programmable Speedometer & Odometer Module Vehicle Speed Sensor Intermittent Circuit Failure"
+    },
+    {
+      "code": "P1502",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1502",
+      "description": "Invalid or Missing Vehicle Speed Message or Brake Data"
+    },
+    {
+      "code": "P1504",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1504",
+      "description": "Intake Air Control Circuit Malfunction"
+    },
+    {
+      "code": "P1505",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1505",
+      "description": "Idle Air Control System at Adaptive Clip"
+    },
+    {
+      "code": "P1506",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1506",
+      "description": "Idle Air Control Over Speed Error"
+    },
+    {
+      "code": "P1507",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1507",
+      "description": "Idle Air Control Under Speed Error"
+    },
+    {
+      "code": "P1512",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1512",
+      "description": "Intake Manifold Runner Control Stuck Closed"
+    },
+    {
+      "code": "P1513",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1513",
+      "description": "Intake Manifold Runner Control Stuck Closed"
+    },
+    {
+      "code": "P1516",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1516",
+      "description": "Intake Manifold Runner Control Input Error"
+    },
+    {
+      "code": "P1517",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1517",
+      "description": "Intake Manifold Runner Control Input Error"
+    },
+    {
+      "code": "P1518",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1518",
+      "description": "Intake Manifold Runner Control Fault Stuck Open"
+    },
+    {
+      "code": "P1519",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1519",
+      "description": "Intake Manifold Runner Control Stuck Open"
+    },
+    {
+      "code": "P1520",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1520",
+      "description": "Intake Manifold Runner Control Circuit Fault"
+    },
+    {
+      "code": "P1530",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1530",
+      "description": "Open or Short to A/C Compressor Clutch Circuit"
+    },
+    {
+      "code": "P1531",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1531",
+      "description": "Invalid Test Accelerator Pedal Movement"
+    },
+    {
+      "code": "P1532",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1532",
+      "description": "IMCC Circuit Malfunction Bank B"
+    },
+    {
+      "code": "P1533",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1533",
+      "description": "AAI Circuit Malfunction"
+    },
+    {
+      "code": "P1534",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1534",
+      "description": "Inertia Switch Activated"
+    },
+    {
+      "code": "P1536",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1536",
+      "description": "Parking Brake Switch Circuit Failure"
+    },
+    {
+      "code": "P1537",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1537",
+      "description": "Intake Manifold Runner Control Stuck Open"
+    },
+    {
+      "code": "P1538",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1538",
+      "description": "Intake Manifold Runner Control Stuck Open"
+    },
+    {
+      "code": "P1539",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1539",
+      "description": "Power to A/C Compressor Clutch Circuit Exceeded Normal Current Draw"
+    },
+    {
+      "code": "P1549",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1549",
+      "description": "Intake Manifold Temperature Valve Vacuum Actuator Connection"
+    },
+    {
+      "code": "P1550",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1550",
+      "description": "Power Steering Pressure Sensor Out of Self-Test Range"
+    },
+    {
+      "code": "P1565",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1565",
+      "description": "Speed Control Command Switch Out of Range High"
+    },
+    {
+      "code": "P1566",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1566",
+      "description": "Speed Control Command Switch Out of Range Low"
+    },
+    {
+      "code": "P1567",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1567",
+      "description": "Speed Control Output Circuit Continuity"
+    },
+    {
+      "code": "P1568",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1568",
+      "description": "Speed Control Unable to Hold Speed"
+    },
+    {
+      "code": "P1572",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1572",
+      "description": "Brake Pedal Switch Circuit Malfunction"
+    },
+    {
+      "code": "P1573",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1573",
+      "description": "Throttle Position Not Available"
+    },
+    {
+      "code": "P1574",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1574",
+      "description": "Throttle Position Sensor Disagreement Between Sensors"
+    },
+    {
+      "code": "P1575",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1575",
+      "description": "Pedal Position Out of Self Test Range"
+    },
+    {
+      "code": "P1576",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1576",
+      "description": "Pedal Position Not Available"
+    },
+    {
+      "code": "P1577",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1577",
+      "description": "Pedal Position Sensor Disagreement Between Sensors"
+    },
+    {
+      "code": "P1578",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1578",
+      "description": "ETC Power Less Than Demand"
+    },
+    {
+      "code": "P1579",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1579",
+      "description": "ETC In Power Limiting Mode"
+    },
+    {
+      "code": "P1580",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1580",
+      "description": "Electronic Throttle Monitor PCM Override"
+    },
+    {
+      "code": "P1581",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1581",
+      "description": "Electronic Throttle Monitor Malfunction"
+    },
+    {
+      "code": "P1582",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1582",
+      "description": "Electronic Throttle Monitor Data Available"
+    },
+    {
+      "code": "P1583",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1583",
+      "description": "Electronic Throttle Monitor Cruise Disable"
+    },
+    {
+      "code": "P1584",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1584",
+      "description": "Throttle Control Detected ETB Malfunction"
+    },
+    {
+      "code": "P1585",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1585",
+      "description": "Throttle Control Unit Malfunction"
+    },
+    {
+      "code": "P1586",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1586",
+      "description": "Throttle Control Unit Throttle Position Malfunction"
+    },
+    {
+      "code": "P1587",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1587",
+      "description": "Throttle Control Unit Modulated Command Malfunction"
+    },
+    {
+      "code": "P1588",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1588",
+      "description": "Throttle Control Unit Detected Loss of Return Spring"
+    },
+    {
+      "code": "P1589",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1589",
+      "description": "Throttle Control Unit Unable To Control Desired Throttle Angle"
+    },
+    {
+      "code": "P1600",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1600",
+      "description": "Loss of KAM Power Open Circuit"
+    },
+    {
+      "code": "P1605",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1605",
+      "description": "PCM Keep Alive Memory Test Error"
+    },
+    {
+      "code": "P1625",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1625",
+      "description": "Voltage to Vehicle Load Control Module Fan Circuit Not Detected"
+    },
+    {
+      "code": "P1626",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1626",
+      "description": "Voltage to Vehicle Load Control Module Circuit Not Detected"
+    },
+    {
+      "code": "P1634",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1634",
+      "description": "Data Output Link Circuit Failure"
+    },
+    {
+      "code": "P1635",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1635",
+      "description": "Tire Axle Ratio Out of Acceptable Range"
+    },
+    {
+      "code": "P1636",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1636",
+      "description": "Inductive Signature Chip Communication Error"
+    },
+    {
+      "code": "P1639",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1639",
+      "description": "Vehicle ID Block Corrupted or Not Programmed"
+    },
+    {
+      "code": "P1640",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1640",
+      "description": "Powertrain DTCs Available in Another Module"
+    },
+    {
+      "code": "P1641",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1641",
+      "description": "Fuel Pump Primary Circuit Failure"
+    },
+    {
+      "code": "P1642",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1642",
+      "description": "Fuel Pump Monitor Circuit High Input"
+    },
+    {
+      "code": "P1643",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1643",
+      "description": "Fuel Pump Monitor Circuit Low Input"
+    },
+    {
+      "code": "P1644",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1644",
+      "description": "Fuel Pump Speed Control Circuit Malfunction"
+    },
+    {
+      "code": "P1650",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1650",
+      "description": "Power Steering Pressure Switch Out of Self-Test Range"
+    },
+    {
+      "code": "P1651",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1651",
+      "description": "Power Steering Pressure Switch Input Fault"
+    },
+    {
+      "code": "P1656",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1656",
+      "description": "CAN Link PCM PCM Circuit Network"
+    },
+    {
+      "code": "P1657",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1657",
+      "description": "CAN Link Chip Malfunction"
+    },
+    {
+      "code": "P1660",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1660",
+      "description": "Output Circuit Check Signal High"
+    },
+    {
+      "code": "P1661",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1661",
+      "description": "Output Circuit Check Signal Low"
+    },
+    {
+      "code": "P1662",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1662",
+      "description": "IDM_EN Circuit Failure"
+    },
+    {
+      "code": "P1663",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1663",
+      "description": "Fuel Demand Command Signal Circuit Malfunction"
+    },
+    {
+      "code": "P1667",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1667",
+      "description": "CI Circuit Malfunction"
+    },
+    {
+      "code": "P1668",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1668",
+      "description": "PCM IDM Communications Error"
+    },
+    {
+      "code": "P1670",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1670",
+      "description": "Electronic Feedback Signal Not Detected"
+    },
+    {
+      "code": "P1690",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1690",
+      "description": "Wastegate Solenoid Circuit Malfunction"
+    },
+    {
+      "code": "P1700",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1700",
+      "description": "Transmission system problems"
+    },
+    {
+      "code": "P1701",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1701",
+      "description": "Reverse Engagement Error"
+    },
+    {
+      "code": "P1702",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1702",
+      "description": "Transmission system problems"
+    },
+    {
+      "code": "P1703",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1703",
+      "description": "Brake On Off Switch Out of Self-Test Range"
+    },
+    {
+      "code": "P1704",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1704",
+      "description": "Transmission system problems"
+    },
+    {
+      "code": "P1705",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1705",
+      "description": "Manual Lever Position Sensor Out of Self-Test Range"
+    },
+    {
+      "code": "P1706",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1706",
+      "description": "High Vehicle Speed Observed in Park"
+    },
+    {
+      "code": "P1707",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1707",
+      "description": "Transfer Case Neutral Indicator Hard Fault Present"
+    },
+    {
+      "code": "P1709",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1709",
+      "description": "Park or Neutral Position Switch Out of Self-Test Range"
+    },
+    {
+      "code": "P1710",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1710",
+      "description": "Transmission system problems"
+    },
+    {
+      "code": "P1711",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1711",
+      "description": "Transmission Fluid Temperature Sensor Out of Self-Test Range"
+    },
+    {
+      "code": "P1712",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1712",
+      "description": "Trans Torque Reduction Request Signal Malfunction"
+    },
+    {
+      "code": "P1713",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1713",
+      "description": "TFT Sensor In Range Failure Low Value"
+    },
+    {
+      "code": "P1714",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1714",
+      "description": "SSA Inductive Signature Malfunction"
+    },
+    {
+      "code": "P1715",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1715",
+      "description": "SSB Inductive Signature Malfunction"
+    },
+    {
+      "code": "P1716",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1716",
+      "description": "SSC Inductive Signature Malfunction"
+    },
+    {
+      "code": "P1717",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1717",
+      "description": "SSD Inductive Signature Malfunction"
+    },
+    {
+      "code": "P1718",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1718",
+      "description": "TFT Sensor In Range Failure High"
+    },
+    {
+      "code": "P1720",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1720",
+      "description": "Vehicle Speed Meter Circuit Malfunction"
+    },
+    {
+      "code": "P1721",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1721",
+      "description": "Gear 1 Incorrect Ratio"
+    },
+    {
+      "code": "P1722",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1722",
+      "description": "Gear 2 Incorrect Ratio"
+    },
+    {
+      "code": "P1723",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1723",
+      "description": "Gear 3 incorrect Ratio"
+    },
+    {
+      "code": "P1724",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1724",
+      "description": "Gear 4 Incorrect Ratio"
+    },
+    {
+      "code": "P1725",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1725",
+      "description": "Insufficient Engine Speed Increase During Self Test"
+    },
+    {
+      "code": "P1726",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1726",
+      "description": "Insufficient Engine Speed Decrease During Self Test"
+    },
+    {
+      "code": "P1727",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1727",
+      "description": "Coast Clutch Solenoid Inductive Signature Malfunction"
+    },
+    {
+      "code": "P1728",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1728",
+      "description": "Transmission Slip Error"
+    },
+    {
+      "code": "P1729",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1729",
+      "description": "4x4 Low Switch Error"
+    },
+    {
+      "code": "P1731",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1731",
+      "description": "1-2 Shift Malfunction"
+    },
+    {
+      "code": "P1732",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1732",
+      "description": "2-3 Shift Malfunction"
+    },
+    {
+      "code": "P1733",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1733",
+      "description": "3-4 Shift Malfunction"
+    },
+    {
+      "code": "P1740",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1740",
+      "description": "Transmission system problems"
+    },
+    {
+      "code": "P1741",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1741",
+      "description": "Torque Converter Clutch Control Error"
+    },
+    {
+      "code": "P1742",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1742",
+      "description": "Torque Converter Clutch Solenoid Faulty"
+    },
+    {
+      "code": "P1743",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1743",
+      "description": "Torque Converter Clutch Solenoid Faulty"
+    },
+    {
+      "code": "P1744",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1744",
+      "description": "Torque Converter Clutch System Stuck in Off Position"
+    },
+    {
+      "code": "P1745",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1745",
+      "description": "Transmission system problems"
+    },
+    {
+      "code": "P1746",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1746",
+      "description": "Electronic Pressure Control Solenoid A Open Circuit"
+    },
+    {
+      "code": "P1747",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1747",
+      "description": "Electronic Pressure Control Solenoid A Short Circuit"
+    },
+    {
+      "code": "P1748",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1748",
+      "description": "EPC Malfunction"
+    },
+    {
+      "code": "P1749",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1749",
+      "description": "Electronic Pressure Control Solenoid Failed Low"
+    },
+    {
+      "code": "P1751",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1751",
+      "description": "Shift Solenoid A Performance"
+    },
+    {
+      "code": "P1754",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1754",
+      "description": "Coast Clutch Solenoid Circuit Malfunction"
+    },
+    {
+      "code": "P1756",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1756",
+      "description": "Shift Solenoid B Performance"
+    },
+    {
+      "code": "P1760",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1760",
+      "description": "Transmission system problems"
+    },
+    {
+      "code": "P1761",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1761",
+      "description": "Shift Solenoid C Performance"
+    },
+    {
+      "code": "P1762",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1762",
+      "description": "Overdrive Band Failed Off"
+    },
+    {
+      "code": "P1766",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1766",
+      "description": "Shift Solenoid D Performance"
+    },
+    {
+      "code": "P1767",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1767",
+      "description": "Torque Converter Clutch Circuit Malfunction"
+    },
+    {
+      "code": "P1768",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1768",
+      "description": "Performance Normal Winter Mode Input Malfunction"
+    },
+    {
+      "code": "P1770",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1770",
+      "description": "Clutch Solenoid Circuit Malfunction"
+    },
+    {
+      "code": "P1779",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1779",
+      "description": "Transmission Control Indicator Lamp Circuit Malfunction"
+    },
+    {
+      "code": "P1780",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1780",
+      "description": "Transmission Control Switch Circuit is Out of Self-Test Range"
+    },
+    {
+      "code": "P1781",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1781",
+      "description": "4x4 Low Switch is Out of Self-Test Range"
+    },
+    {
+      "code": "P1782",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1782",
+      "description": "P/ES Circuit Out Of Self Test Range"
+    },
+    {
+      "code": "P1783",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1783",
+      "description": "Transmission Over-Temperature Condition"
+    },
+    {
+      "code": "P1784",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1784",
+      "description": "Transmission Mechanical Failure First And Reverse"
+    },
+    {
+      "code": "P1785",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1785",
+      "description": "Transmission Mechanical Failure First And Second"
+    },
+    {
+      "code": "P1786",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1786",
+      "description": "3-2 Downshift Error"
+    },
+    {
+      "code": "P1787",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1787",
+      "description": "2-1 Downshift Error"
+    },
+    {
+      "code": "P1788",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1788",
+      "description": "Pressure Control Solenoid B Open Circuit"
+    },
+    {
+      "code": "P1789",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1789",
+      "description": "Pressure Control Solenoid B Short Circuit"
+    },
+    {
+      "code": "P1795",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1795",
+      "description": "Idle Switch Circuit Malfunction"
+    },
+    {
+      "code": "P1804",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1804",
+      "description": "Transmission 4-Wheel Drive High Indicator Circuit Failure"
+    },
+    {
+      "code": "P1806",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1806",
+      "description": "Transmission 4-Wheel Drive High Indicator Short Circuit To Battery"
+    },
+    {
+      "code": "P1808",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1808",
+      "description": "Transmission 4-Wheel Drive Low Indicator Circuit Failure"
+    },
+    {
+      "code": "P1810",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1810",
+      "description": "TFP Valve Position Switch Circuit Transmission 4-Wheel Drive Low Indicator Short Circuit To Battery"
+    },
+    {
+      "code": "P1812",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1812",
+      "description": "Transmission 4-Wheel Drive Mode Select Circuit Failure"
+    },
+    {
+      "code": "P1815",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1815",
+      "description": "Transmission 4-Wheel Drive Mode Select Short Circuit To Ground"
+    },
+    {
+      "code": "P1819",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1819",
+      "description": "Transmission Neutral Safety Switch Short Circuit To Ground"
+    },
+    {
+      "code": "P1820",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1820",
+      "description": "Transmission Transfer Case Clockwise Shift Relay Coil Circuit Failure"
+    },
+    {
+      "code": "P1822",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1822",
+      "description": "Transmission Transfer Case Clockwise Shift Relay Coil Short Circuit To Battery"
+    },
+    {
+      "code": "P1824",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1824",
+      "description": "Transmission 4-Wheel Drive Clutch Relay Circuit Failure"
+    },
+    {
+      "code": "P1826",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1826",
+      "description": "Transmission 4-Wheel Drive Low Clutch Relay Circuit To Battery"
+    },
+    {
+      "code": "P1828",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1828",
+      "description": "Transmission Transfer Case Counter Clockwise Shift Relay Coil Circuit Failure"
+    },
+    {
+      "code": "P1830",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1830",
+      "description": "Transmission Transfer Case Counter Clockwise Shift Relay Coil Short Circuit To Battery"
+    },
+    {
+      "code": "P1832",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1832",
+      "description": "Transmission Transfer Case Differential Lock-Up Solenoid Circuit Failure"
+    },
+    {
+      "code": "P1834",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1834",
+      "description": "Transmission Transfer Case Differential Lock-Up Solenoid Short Circuit To Battery"
+    },
+    {
+      "code": "P1838",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1838",
+      "description": "Transmission Transfer Case Shift Motor Circuit Failure"
+    },
+    {
+      "code": "P1846",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1846",
+      "description": "Transmission Transfer Case Contact Plate A Circuit Failure"
+    },
+    {
+      "code": "P1850",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1850",
+      "description": "Transmission Transfer Case Contact Plate B Circuit Failure"
+    },
+    {
+      "code": "P1854",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1854",
+      "description": "Transmission Transfer Case Contact Plate C Circuit Failure"
+    },
+    {
+      "code": "P1858",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1858",
+      "description": "Transmission Transfer Case Contact Plate D Circuit Failure"
+    },
+    {
+      "code": "P1866",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1866",
+      "description": "Transmission Transfer Case System Concern Servicing Required"
+    },
+    {
+      "code": "P1867",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1867",
+      "description": "Transmission Transfer Case Contact Plate General Circuit Failure"
+    },
+    {
+      "code": "P1876",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1876",
+      "description": "Transmission Transfer Case 2-Wheel Drive Solenoid Circuit Failure"
+    },
+    {
+      "code": "P1877",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1877",
+      "description": "Transmission Transfer Case 2-Wheel Drive Solenoid Circuit Short To Battery"
+    },
+    {
+      "code": "P1881",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1881",
+      "description": "Engine Coolant Level Switch Circuit Failure GEM"
+    },
+    {
+      "code": "P1882",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1882",
+      "description": "Engine Coolant Level Switch Circuit Short to Ground"
+    },
+    {
+      "code": "P1883",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1883",
+      "description": "Engine Coolant Level Switch Circuit Failure GEM"
+    },
+    {
+      "code": "P1884",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1884",
+      "description": "Engine Coolant Level Lamp Circuit Short to Ground"
+    },
+    {
+      "code": "P1891",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1891",
+      "description": "Transmission Transfer Case Contact Plate Ground Return Open Circuit"
+    },
+    {
+      "code": "P1900",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1900",
+      "description": "Output Shaft Speed OSS Circuit Intermittent Malfunction"
+    },
+    {
+      "code": "P1901",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1901",
+      "description": "Turbine Shaft Speed TSS Circuit Intermittent Malfunction"
+    },
+    {
+      "code": "P1902",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1902",
+      "description": "Kickdown Solenoid Relay Control Circuit"
+    },
+    {
+      "code": "P1903",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1903",
+      "description": "Kickdown Solenoid Circuit Low Voltage"
+    },
+    {
+      "code": "P1904",
+      "scope": "manufacturer",
+      "desc_i18n_key": "dtc_mercury_p1904",
+      "description": "Kickdown Solenoid Circuit High Voltage"
+    }
+  ]
+}

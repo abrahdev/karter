@@ -1,14 +1,12 @@
 {
   "id": "bajaj-pulsar-160",
   "extends": [
-    "_base/combustion.json"
+    "_base/car-combustion.json"
   ],
   "meta": {
     "make": "Bajaj",
     "model": "Pulsar 160",
     "generation": "All",
-    "years": null,
-    "engine": null,
     "author": "abrahdev",
     "version": "1.0.0"
   },

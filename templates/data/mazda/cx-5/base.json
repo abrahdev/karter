@@ -1,14 +1,13 @@
 {
   "id": "mazda-cx-5",
   "extends": [
-    "_base/combustion.json"
+    "_base/car-combustion.json",
+    "mazda/dtc.json"
   ],
   "meta": {
     "make": "Mazda",
     "model": "CX-5",
     "generation": "All",
-    "years": null,
-    "engine": null,
     "author": "abrahdev",
     "version": "1.0.0"
   },

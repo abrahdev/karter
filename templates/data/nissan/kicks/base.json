@@ -1,14 +1,13 @@
 {
   "id": "nissan-kicks",
   "extends": [
-    "_base/combustion.json"
+    "_base/car-combustion.json",
+    "nissan/dtc.json"
   ],
   "meta": {
     "make": "Nissan",
     "model": "Kicks",
     "generation": "All",
-    "years": null,
-    "engine": null,
     "author": "abrahdev",
     "version": "1.0.0"
   },

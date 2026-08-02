@@ -1,14 +1,13 @@
 {
   "id": "audi-a3",
   "extends": [
-    "_base/combustion.json"
+    "_base/car-combustion.json",
+    "audi/dtc.json"
   ],
   "meta": {
     "make": "Audi",
     "model": "A3",
     "generation": "All",
-    "years": null,
-    "engine": null,
     "author": "abrahdev",
     "version": "1.0.0"
   },

@@ -12,6 +12,7 @@ class TemplateTranslations {
     await Future.wait([
       _load('en', baseUrl: baseUrl),
       _load('es', baseUrl: baseUrl),
+      _load('et', baseUrl: baseUrl),
     ]);
   }
 

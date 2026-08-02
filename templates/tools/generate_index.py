@@ -6,8 +6,7 @@ import os
 from datetime import datetime, timezone
 from pathlib import Path
 
-REPO_ROOT = Path(__file__).resolve().parent.parent
-TEMPLATES_DIR = REPO_ROOT / "templates"
+TEMPLATES_DIR = Path(__file__).resolve().parent.parent
 INDEX_FILE = TEMPLATES_DIR / "index.json"
 SCHEMA_DIR_NAME = "schemas"
 
@@ -51,6 +50,12 @@ def generate_index():
 
             if "id" not in data or "meta" not in data:
                 print(f"  WARN: skipping {relpath}: missing id or meta")
+                continue
+
+            # Skip non-vehicle fragments (DTC/parts data) that other
+            # templates extend but are not selectable vehicle templates.
+            if "maintenance_items" not in data:
+                print(f"  INFO: skipping fragment {relpath}")
                 continue
 
             meta = data["meta"]
