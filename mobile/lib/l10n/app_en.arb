@@ -41,6 +41,8 @@
 
   "vehicleFormNew": "New vehicle",
   "vehicleFormEdit": "Edit vehicle",
+  "vehicleFormDetails": "Details",
+  "vehicleFormVehicle": "Vehicle",
   "brand": "Brand",
   "model": "Model",
   "required": "Required",

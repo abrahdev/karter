@@ -116,6 +116,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get vehicleFormEdit => 'Edit vehicle';
 
   @override
+  String get vehicleFormDetails => 'Details';
+
+  @override
+  String get vehicleFormVehicle => 'Vehicle';
+
+  @override
   String get brand => 'Brand';
 
   @override

@@ -41,6 +41,8 @@
 
   "vehicleFormNew": "Nuevo vehículo",
   "vehicleFormEdit": "Editar vehículo",
+  "vehicleFormDetails": "Detalles",
+  "vehicleFormVehicle": "Vehículo",
   "brand": "Marca",
   "model": "Modelo",
   "required": "Requerido",

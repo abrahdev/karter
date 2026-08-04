@@ -86,7 +86,6 @@ class _PartsListPageState extends ConsumerState<PartsListPage> {
             children: [
               for (final entry in entries)
                 Card(
-                  margin: const EdgeInsets.symmetric(vertical: 8),
                   child: ListTile(
                     leading: Icon(
                       Icons.check_circle_outline,

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material3_indicators/material3_indicators.dart';
 import 'package:mobile/core/theme/app_spacing.dart';
+import 'package:mobile/presentation/widgets/section_header.dart';
 import 'package:mobile/domain/entities/vehicle.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
@@ -125,14 +126,10 @@ class _NotificationSettingsContentState
       controller: widget.scrollController,
       padding: const EdgeInsets.all(AppSpacing.pagePadding),
       children: [
-        Text(l.notificationOdometerSection,
-            style: theme.textTheme.titleSmall),
-        const SizedBox(height: 12),
+        SectionHeader(title: l.notificationOdometerSection),
         _buildFreqSelector(theme, l),
         const SizedBox(height: 24),
-        Text(l.notificationMaintenanceSection,
-            style: theme.textTheme.titleSmall),
-        const SizedBox(height: 12),
+        SectionHeader(title: l.notificationMaintenanceSection),
         _buildMaintenanceToggle(vehicle, theme, l),
         const SizedBox(height: 24),
         FilledButton.tonalIcon(

@@ -116,6 +116,12 @@ class AppLocalizationsEt extends AppLocalizations {
   String get vehicleFormEdit => 'Muuda sõidukit';
 
   @override
+  String get vehicleFormDetails => 'Detailid';
+
+  @override
+  String get vehicleFormVehicle => 'Sõiduk';
+
+  @override
   String get brand => 'Tootja';
 
   @override

@@ -13,6 +13,7 @@ class KarterSwitchListTile extends StatelessWidget {
     this.contentPadding,
     this.dense = false,
     this.hapticFeedback = true,
+    this.onTap,
   });
 
   final bool value;
@@ -23,10 +24,11 @@ class KarterSwitchListTile extends StatelessWidget {
   final EdgeInsetsGeometry? contentPadding;
   final bool dense;
   final bool hapticFeedback;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return SwitchListTile(
+    final tile = SwitchListTile(
       secondary: leading,
       title: title,
       subtitle: subtitle,
@@ -42,5 +44,8 @@ class KarterSwitchListTile extends StatelessWidget {
       contentPadding: contentPadding,
       dense: dense,
     );
+
+    if (onTap == null) return tile;
+    return InkWell(onTap: onTap, child: tile);
   }
 }

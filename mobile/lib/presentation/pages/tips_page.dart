@@ -25,7 +25,7 @@ class TipsPage extends ConsumerWidget {
               child: M3LoadingIndicator(
                   contained: true, size: 36, containerSize: 72))
           : ListView(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(AppSpacing.pagePadding),
               children: [
                 if (iapState.error != null)
                   Card(

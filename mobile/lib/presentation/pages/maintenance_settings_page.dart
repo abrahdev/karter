@@ -8,6 +8,7 @@ import 'package:mobile/presentation/providers/vehicle_providers.dart';
 import 'package:mobile/presentation/utils/maintenance_localizer.dart';
 import 'package:mobile/presentation/widgets/add_maintenance_interval_modal.dart';
 import 'package:mobile/presentation/widgets/interval_parts_view.dart';
+import 'package:mobile/presentation/widgets/karter_switch_list_tile.dart';
 
 class MaintenanceSettingsPage extends ConsumerWidget {
   final String vehicleId;
@@ -94,7 +95,7 @@ class _IntervalTile extends StatelessWidget {
     final subtitle = parts.join(' / ');
 
     return Card(
-      child: ListTile(
+      child: KarterSwitchListTile(
         title: Text(
           localizedLabel(l.localeName, interval.i18nKey, interval.label),
           style: TextStyle(
@@ -111,11 +112,9 @@ class _IntervalTile extends StatelessWidget {
             ],
           ],
         ),
+        value: interval.isEnabled,
+        onChanged: onToggle,
         onTap: onTap,
-        trailing: Switch(
-          value: interval.isEnabled,
-          onChanged: onToggle,
-        ),
       ),
     );
   }

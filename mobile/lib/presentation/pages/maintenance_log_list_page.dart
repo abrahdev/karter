@@ -127,7 +127,7 @@ class _MaintenanceLogListPageState
         List<MaintenanceLog>.from(logs)..sort((a, b) => b.date.compareTo(a.date));
 
     return ListView(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(AppSpacing.pagePadding),
       children: [
         ...sorted.map((log) => Card(
               child: ListTile(
@@ -188,7 +188,7 @@ class _MaintenanceLogListPageState
     final filtered = _filterLogsByRange(logs);
 
     return ListView(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(AppSpacing.pagePadding),
       children: [
         Card(
           child: ListTile(

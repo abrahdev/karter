@@ -304,6 +304,18 @@ abstract class AppLocalizations {
   /// **'Edit vehicle'**
   String get vehicleFormEdit;
 
+  /// No description provided for @vehicleFormDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Details'**
+  String get vehicleFormDetails;
+
+  /// No description provided for @vehicleFormVehicle.
+  ///
+  /// In en, this message translates to:
+  /// **'Vehicle'**
+  String get vehicleFormVehicle;
+
   /// No description provided for @brand.
   ///
   /// In en, this message translates to:

@@ -44,6 +44,8 @@
     "overduePerformService": "Üle tähtaja - suundu hooldusesse",
     "vehicleFormNew": "Uus sõiduk",
     "vehicleFormEdit": "Muuda sõidukit",
+    "vehicleFormDetails": "Detailid",
+    "vehicleFormVehicle": "Sõiduk",
     "brand": "Tootja",
     "model": "Mudel",
     "required": "Nõutav",

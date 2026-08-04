@@ -45,8 +45,7 @@ Karter is an open-source vehicle maintenance tracker built with Flutter (mobile 
 - Keys go in `app_en.arb`, `app_es.arb`, `app_et.arb`.
 
 ## Vehicle Type Selector
-- SegmentedButton with icons always visible.
-- Text label shown only on the selected segment (use conditional `label` with `SizedBox.shrink()` for unselected).
+- SegmentedButton with icons only, no text labels.
 
 ## Vehicle Form Page
 - 4-card layout: Vehicle Info, Details, Units, Actions.

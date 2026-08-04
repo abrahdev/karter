@@ -19,7 +19,6 @@ import 'package:mobile/presentation/utils/template_interval_builder.dart';
 import 'package:mobile/presentation/widgets/interval_parts_view.dart';
 import 'package:mobile/presentation/widgets/notification_permission_modal.dart';
 import 'package:mobile/presentation/widgets/section_header.dart';
-import 'package:mobile/presentation/widgets/karter_switch_list_tile.dart';
 import 'package:mobile/presentation/widgets/karter_segmented_button.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -49,6 +48,7 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
   bool _isLoading = false;
   bool _isEditing = false;
   bool _showAlias = false;
+  bool _editingAlias = false;
   bool _hasUnsavedChanges = false;
 
   List<MaintenanceInterval>? _templateIntervals;
@@ -66,8 +66,7 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
   }
 
   Future<void> _loadVehicle() async {
-    final vehicle =
-        await ref.read(vehicleProvider(widget.vehicleId!).future);
+    final vehicle = await ref.read(vehicleProvider(widget.vehicleId!).future);
     if (vehicle != null && mounted) {
       setState(() {
         _brand = vehicle.brand;
@@ -75,8 +74,8 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
         _yearController.text = vehicle.year.toString();
         _plateController.text = vehicle.plate?.value ?? '';
         _vinController.text = vehicle.vin?.code ?? '';
-        _odometerController.text =
-            vehicle.currentOdometer.distance.toStringAsFixed(0);
+        _odometerController.text = vehicle.currentOdometer.distance
+            .toStringAsFixed(0);
         _odometerUnit = vehicle.currentOdometer.unit;
         _fuelVolumeUnit = vehicle.fuelVolumeUnit;
         _currency = vehicle.currency;
@@ -135,11 +134,16 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
       await repo.delete(widget.vehicleId!);
       _hasUnsavedChanges = false;
       ref.invalidate(vehicleListProvider);
+      ref.invalidate(vehicleProvider(widget.vehicleId!));
       if (mounted) context.go('/');
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(AppLocalizations.of(context)!.homeError(e.toString()))),
+          SnackBar(
+            content: Text(
+              AppLocalizations.of(context)!.homeError(e.toString()),
+            ),
+          ),
         );
       }
     } finally {
@@ -188,7 +192,7 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
 
         if (mounted) {
           setState(() {
-             if (choice == 'template') {
+            if (choice == 'template') {
               _templateIntervals = intervals;
               _templateName = name;
               _vehicleType = _typeFromIntervals(intervals);
@@ -220,7 +224,9 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
   }
 
   Future<String?> _showTemplatePreview(
-      String name, List<MaintenanceInterval> intervals) async {
+    String name,
+    List<MaintenanceInterval> intervals,
+  ) async {
     final result = await karterShowDialog<String>(
       context: context,
       builder: (ctx) {
@@ -234,8 +240,9 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
               const SizedBox(height: 4),
               Text(
                 name,
-                style: theme.textTheme.bodyMedium
-                    ?.copyWith(color: theme.colorScheme.primary),
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: theme.colorScheme.primary,
+                ),
               ),
             ],
           ),
@@ -246,9 +253,7 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
               itemCount: intervals.length,
               itemBuilder: (ctx, i) {
                 final interval = intervals[i];
-                final parts = <String>[
-                  '${interval.kmInterval} km',
-                ];
+                final parts = <String>['${interval.kmInterval} km'];
                 if (interval.monthsInterval != null) {
                   parts.add('${interval.monthsInterval} ${l.months}');
                 }
@@ -277,7 +282,11 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
                     ),
                     if (interval.parts.isNotEmpty)
                       Padding(
-                        padding: const EdgeInsets.only(left: 16, right: 16, bottom: 8),
+                        padding: const EdgeInsets.only(
+                          left: 16,
+                          right: 16,
+                          bottom: 8,
+                        ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -340,21 +349,17 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
             children: [
               Row(
                 children: [
-                  Icon(Icons.construction,
-                      color: theme.colorScheme.primary, size: 48),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: Text(
-                      l.templateNotReady,
-                    ),
+                  Icon(
+                    Icons.construction,
+                    color: theme.colorScheme.primary,
+                    size: 48,
                   ),
+                  const SizedBox(width: 16),
+                  Expanded(child: Text(l.templateNotReady)),
                 ],
               ),
               const SizedBox(height: 12),
-              Text(
-                l.contributionsWelcome,
-                style: theme.textTheme.bodyMedium,
-              ),
+              Text(l.contributionsWelcome, style: theme.textTheme.bodyMedium),
               const SizedBox(height: 8),
               Container(
                 width: double.infinity,
@@ -365,15 +370,17 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
                 ),
                 child: Text(
                   'https://github.com/abrahdev/karter',
-                  style: theme.textTheme.bodyMedium
-                      ?.copyWith(fontFamily: 'monospace'),
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    fontFamily: 'monospace',
+                  ),
                 ),
               ),
               const SizedBox(height: 12),
               Text(
                 l.requestedParam(searchParams),
-                style: theme.textTheme.bodySmall
-                    ?.copyWith(color: theme.colorScheme.outline),
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: theme.colorScheme.outline,
+                ),
               ),
             ],
           ),
@@ -410,19 +417,17 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
             children: [
               Row(
                 children: [
-                  Icon(Icons.search_off,
-                      color: theme.colorScheme.outline, size: 48),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: Text(
-                      l.noTemplateFoundDescription,
-                    ),
+                  Icon(
+                    Icons.search_off,
+                    color: theme.colorScheme.outline,
+                    size: 48,
                   ),
+                  const SizedBox(width: 16),
+                  Expanded(child: Text(l.noTemplateFoundDescription)),
                 ],
               ),
               const SizedBox(height: 16),
-              Text(l.searchParameters,
-                  style: theme.textTheme.labelMedium),
+              Text(l.searchParameters, style: theme.textTheme.labelMedium),
               const SizedBox(height: 4),
               Container(
                 width: double.infinity,
@@ -433,21 +438,24 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
                 ),
                 child: Text(
                   searchParams,
-                  style: theme.textTheme.bodyMedium
-                      ?.copyWith(fontFamily: 'monospace'),
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    fontFamily: 'monospace',
+                  ),
                 ),
               ),
               const SizedBox(height: 12),
               Text(
                 l.defaultIntervalsHint,
-                style: theme.textTheme.bodySmall
-                    ?.copyWith(color: theme.colorScheme.outline),
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: theme.colorScheme.outline,
+                ),
               ),
               const SizedBox(height: 8),
               Text(
                 l.missingTemplateContribute,
-                style: theme.textTheme.bodySmall
-                    ?.copyWith(color: theme.colorScheme.primary),
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: theme.colorScheme.primary,
+                ),
               ),
             ],
           ),
@@ -512,26 +520,35 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
 
       if (_templateIntervals != null) {
         final intervals = _templateIntervals!
-            .map((i) => MaintenanceInterval(
-                  id: uuid.v4(),
-                  vehicleId: id,
-                  label: i.label,
-                  i18nKey: i.i18nKey,
-                  descI18nKey: i.descI18nKey,
-                  kmInterval: i.kmInterval,
-                  monthsInterval: i.monthsInterval,
-                  description: i.description,
-                  isCustom: false,
-                  parts: i.parts,
-                ))
+            .map(
+              (i) => MaintenanceInterval(
+                id: uuid.v4(),
+                vehicleId: id,
+                label: i.label,
+                i18nKey: i.i18nKey,
+                descI18nKey: i.descI18nKey,
+                kmInterval: i.kmInterval,
+                monthsInterval: i.monthsInterval,
+                description: i.description,
+                isCustom: false,
+                parts: i.parts,
+              ),
+            )
             .toList();
-        await repo.save(vehicle, intervals: intervals, replaceNonCustom: _isEditing);
+        await repo.save(
+          vehicle,
+          intervals: intervals,
+          replaceNonCustom: _isEditing,
+        );
       } else {
         await repo.save(vehicle);
       }
 
       _hasUnsavedChanges = false;
       ref.invalidate(vehicleListProvider);
+      if (_isEditing) {
+        ref.invalidate(vehicleProvider(widget.vehicleId!));
+      }
 
       if (mounted) {
         context.pop();
@@ -546,7 +563,11 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(AppLocalizations.of(context)!.homeError(e.toString()))),
+          SnackBar(
+            content: Text(
+              AppLocalizations.of(context)!.homeError(e.toString()),
+            ),
+          ),
         );
       }
     } finally {
@@ -570,6 +591,20 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
 
   void _markDirty() {
     if (!_hasUnsavedChanges) setState(() => _hasUnsavedChanges = true);
+  }
+
+  InputDecoration _fieldDecoration(String label, {String? hintText}) {
+    final theme = Theme.of(context);
+    return InputDecoration(
+      labelText: label,
+      hintText: hintText,
+      filled: true,
+      fillColor: theme.colorScheme.surfaceContainerLow,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: BorderSide.none,
+      ),
+    );
   }
 
   Future<bool> _onBackPressed() async {
@@ -600,9 +635,11 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context)!;
-    final composite = '${_brand.trim()} '
-        '${_model.trim()} '
-        '${_yearController.text.trim()}'.trim();
+    final composite =
+        '${_brand.trim()} '
+                '${_model.trim()} '
+                '${_yearController.text.trim()}'
+            .trim();
 
     return PopScope(
       canPop: !(_isEditing && _hasUnsavedChanges),
@@ -614,342 +651,431 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
         }
       },
       child: Scaffold(
-      appBar: AppBar(
-        title: Text(_isEditing ? l.vehicleFormEdit : l.vehicleFormNew),
-      ),
-      body: Form(
-        key: _formKey,
-        child: ListView(
-          padding: const EdgeInsets.all(AppSpacing.pagePadding),
-          children: [
-            if (composite.isNotEmpty)
+        appBar: AppBar(
+          title: Text(_isEditing ? l.vehicleFormEdit : l.vehicleFormNew),
+        ),
+        body: Form(
+          key: _formKey,
+          child: ListView(
+            padding: const EdgeInsets.all(AppSpacing.pagePadding),
+            children: [
+              if (composite.isNotEmpty || _showAlias || _editingAlias)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            if (composite.isNotEmpty)
+                              Text(
+                                composite,
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                            if (_showAlias && _aliasController.text.isNotEmpty)
+                              Padding(
+                                padding: const EdgeInsets.only(top: 2),
+                                child: Text(
+                                  _aliasController.text,
+                                  style: Theme.of(context).textTheme.bodyMedium
+                                      ?.copyWith(
+                                        color: Theme.of(
+                                          context,
+                                        ).colorScheme.primary,
+                                      ),
+                                ),
+                              ),
+                          ],
+                        ),
+                      ),
+                      if (_showAlias)
+                        IconButton(
+                          tooltip: l.resetToDefault,
+                          icon: const Icon(Icons.settings_backup_restore),
+                          onPressed: () => setState(() {
+                            _aliasController.clear();
+                            _showAlias = false;
+                            _editingAlias = false;
+                            _markDirty();
+                          }),
+                        ),
+                      IconButton(
+                        tooltip: l.edit,
+                        icon: Icon(_editingAlias ? Icons.check : Icons.edit),
+                        onPressed: () => setState(() {
+                          if (_editingAlias &&
+                              _aliasController.text.trim().isEmpty) {
+                            _showAlias = false;
+                          } else {
+                            _showAlias = true;
+                          }
+                          _editingAlias = !_editingAlias;
+                          _markDirty();
+                        }),
+                      ),
+                    ],
+                  ),
+                ),
+              if (_editingAlias)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: TextFormField(
+                    controller: _aliasController,
+                    autofocus: true,
+                    decoration: _fieldDecoration(
+                      l.aliasOptional,
+                      hintText: l.aliasHint,
+                    ),
+                    onChanged: (_) => _markDirty(),
+                    onFieldSubmitted: (_) => setState(() {
+                      if (_aliasController.text.trim().isNotEmpty) {
+                        _showAlias = true;
+                      } else {
+                        _showAlias = false;
+                        _editingAlias = false;
+                      }
+                    }),
+                  ),
+                ),
+
+              // ── Vehicle Type ──
+              SectionHeader(title: l.vehicleType),
+              AbsorbPointer(
+                absorbing: _templateIntervals != null,
+                child: KarterSegmentedButton<VehicleType>(
+                  segments: [
+                    ButtonSegment(
+                      value: VehicleType.combustion,
+                      icon: const Icon(Icons.local_gas_station),
+                    ),
+                    ButtonSegment(
+                      value: VehicleType.electric,
+                      icon: const Icon(Icons.electric_car),
+                    ),
+                    ButtonSegment(
+                      value: VehicleType.motorcycle,
+                      icon: const Icon(Icons.motorcycle),
+                    ),
+                  ],
+                  selected: {_vehicleType},
+                  onSelectionChanged: (v) => setState(() {
+                    _vehicleType = v.first;
+                    _markDirty();
+                  }),
+                ),
+              ),
               Padding(
-                padding: const EdgeInsets.only(bottom: 8),
+                padding: const EdgeInsets.only(top: 8),
                 child: Text(
-                  composite,
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
-              ),
-
-            // ── Vehicle Info ──
-            SectionHeader(title: l.vehicleType),
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
-                child: Column(
-                  children: [
-                    Autocomplete<String>(
-                      initialValue: TextEditingValue(text: _brand),
-                      optionsBuilder: (textEditingValue) {
-                        if (textEditingValue.text.isEmpty) return [];
-                        final query = textEditingValue.text;
-                        final index = ref.read(templateIndexProvider).value;
-                        final suggestions = <String>{};
-                        if (index != null) {
-                          suggestions.addAll(index.templates
-                              .where((e) => e.meta.make != '_base')
-                              .map((e) => e.meta.make)
-                              .toSet()
-                              .where((m) =>
-                                  m.toLowerCase().contains(query.toLowerCase())));
-                        }
-                        suggestions.add(query);
-                        return suggestions.toList()..sort();
-                      },
-                      fieldViewBuilder: (context, controller, focusNode, onSubmitted) {
-                        return TextFormField(
-                          controller: controller,
-                          focusNode: focusNode,
-                          decoration: InputDecoration(
-                            labelText: l.brand,
-                          ),
-                          onChanged: (value) {
-                            _brand = value;
-                            _hasUnsavedChanges = true;
-                          },
-                          validator: (v) =>
-                              v == null || v.trim().isEmpty ? l.required : null,
-                        );
-                      },
-                      onSelected: (value) {
-                        _brand = value;
-                      },
-                    ),
-                    const SizedBox(height: 8),
-                    Autocomplete<String>(
-                      initialValue: TextEditingValue(text: _model),
-                      optionsBuilder: (textEditingValue) {
-                        if (textEditingValue.text.isEmpty) return [];
-                        final query = textEditingValue.text;
-                        final index = ref.read(templateIndexProvider).value;
-                        final suggestions = <String>{};
-                        if (index != null && _brand.isNotEmpty) {
-                          suggestions.addAll(index.templates
-                              .where((e) =>
-                                  e.meta.make.toLowerCase() == _brand.toLowerCase() &&
-                                  e.meta.model
-                                      .toLowerCase()
-                                      .contains(query.toLowerCase()))
-                              .map((e) => e.meta.model)
-                              .toSet());
-                        }
-                        suggestions.add(query);
-                        return suggestions.toList()..sort();
-                      },
-                      fieldViewBuilder: (context, controller, focusNode, onSubmitted) {
-                        return TextFormField(
-                          controller: controller,
-                          focusNode: focusNode,
-                          decoration: InputDecoration(
-                            labelText: l.model,
-                          ),
-                          onChanged: (value) {
-                            _model = value;
-                            _hasUnsavedChanges = true;
-                          },
-                          validator: (v) =>
-                              v == null || v.trim().isEmpty ? l.required : null,
-                        );
-                      },
-                      onSelected: (value) {
-                        _model = value;
-                      },
-                    ),
-                    const SizedBox(height: 8),
-                    TextFormField(
-                      controller: _yearController,
-                      decoration: InputDecoration(
-                        labelText: l.year,
-                      ),
-                      keyboardType: TextInputType.number,
-                      onChanged: (_) => _markDirty(),
-                      validator: (v) {
-                        if (v == null || v.trim().isEmpty) return l.required;
-                        final year = int.tryParse(v);
-                        if (year == null || year < 1886 || year > DateTime.now().year + 1) {
-                          return l.invalidYear;
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(height: 8),
-                    OutlinedButton.icon(
-                      onPressed: _isLoading ? null : _searchTemplate,
-                      icon: _templateIntervals != null
-                          ? const Icon(Icons.check_circle, color: Colors.green)
-                          : const Icon(Icons.search),
-                      label: Text(
-                        _templateIntervals != null
-                            ? AppLocalizations.of(context)!
-                                .templateWithName(_templateName ?? '')
-                            : AppLocalizations.of(context)!.searchTemplate,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    AbsorbPointer(
-                      absorbing: _templateIntervals != null,
-                      child: KarterSegmentedButton<VehicleType>(
-                          segments: [
-                            ButtonSegment(
-                              value: VehicleType.combustion,
-                              icon: const Icon(Icons.local_gas_station),
-                              label: _vehicleType == VehicleType.combustion
-                                  ? Text(l.combustion)
-                                  : const SizedBox.shrink(),
-                            ),
-                            ButtonSegment(
-                              value: VehicleType.electric,
-                              icon: const Icon(Icons.electric_car),
-                              label: _vehicleType == VehicleType.electric
-                                  ? Text(l.electric)
-                                  : const SizedBox.shrink(),
-                            ),
-                            ButtonSegment(
-                              value: VehicleType.motorcycle,
-                              icon: const Icon(Icons.motorcycle),
-                              label: _vehicleType == VehicleType.motorcycle
-                                  ? Text(l.motorcycle)
-                                  : const SizedBox.shrink(),
-                            ),
-                          ],
-                          selected: {_vehicleType},
-                          onSelectionChanged: (v) => setState(() {
-                            _vehicleType = v.first;
-                            _markDirty();
-                          }),
-                        ),
-                    ),
-                    const SizedBox(height: 12),
-                  ],
-                ),
-              ),
-            ),
-
-            // ── Details ──
-            SectionHeader(title: l.vehicleFormEdit),
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
-                child: Column(
-                  children: [
-                    TextFormField(
-                      controller: _plateController,
-                      decoration: InputDecoration(
-                        labelText: l.plateOptional,
-                      ),
-                      textCapitalization: TextCapitalization.characters,
-                      onChanged: (_) => _markDirty(),
-                    ),
-                    const SizedBox(height: 8),
-                    TextFormField(
-                      controller: _vinController,
-                      decoration: InputDecoration(
-                        labelText: l.vinOptional,
-                      ),
-                      textCapitalization: TextCapitalization.characters,
-                      maxLength: 17,
-                      onChanged: (_) => _markDirty(),
-                    ),
-                    KarterSwitchListTile(
-                      title: Text(l.aliasOptional),
-                      subtitle: _showAlias && _aliasController.text.isNotEmpty
-                          ? Text(_aliasController.text)
-                          : null,
-                      value: _showAlias,
-                      onChanged: (v) => setState(() {
-                        _showAlias = v;
-                        _markDirty();
-                      }),
-                    ),
-                    if (_showAlias)
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 12),
-                        child: TextFormField(
-                          controller: _aliasController,
-                          decoration: InputDecoration(
-                            labelText: l.aliasOptional,
-                            hintText: l.aliasHint,
-                          ),
-                          onChanged: (_) => _markDirty(),
-                        ),
-                      ),
-                  ],
-                ),
-              ),
-            ),
-
-            // ── Units ──
-            SectionHeader(title: l.odometer),
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: TextFormField(
-                            controller: _odometerController,
-                            decoration: InputDecoration(
-                              labelText: l.odometer,
-                            ),
-                            keyboardType: TextInputType.number,
-                            onChanged: (_) => _markDirty(),
-                            validator: (v) {
-                              if (_validatingForSearch) return null;
-                              if (v == null || v.trim().isEmpty) return l.required;
-                              final num = double.tryParse(v);
-                              if (num == null || num < 0) return l.invalid;
-                              return null;
-                            },
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        KarterSegmentedButton<DistanceUnit>(
-                          segments: [
-                            ButtonSegment(value: DistanceUnit.kilometers, label: Text(l.unitKm)),
-                            ButtonSegment(value: DistanceUnit.miles, label: Text(l.unitMi)),
-                          ],
-                          selected: {_odometerUnit},
-                          onSelectionChanged: (v) => setState(() {
-                            _odometerUnit = v.first;
-                            _markDirty();
-                          }),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: KarterSegmentedButton<VolumeUnit>(
-                            segments: [
-                              ButtonSegment(value: VolumeUnit.liters, label: Text(l.unitL)),
-                              ButtonSegment(value: VolumeUnit.gallons, label: Text(l.unitGal)),
-                            ],
-                            selected: {_fuelVolumeUnit},
-                            onSelectionChanged: (v) => setState(() {
-                              _fuelVolumeUnit = v.first;
-                              _markDirty();
-                            }),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
-                    DropdownButtonFormField<String>(
-                      isExpanded: true,
-                      initialValue: _currency,
-                      decoration: InputDecoration(
-                        labelText: l.currency,
-                      ),
-                      items: Vehicle.currencies
-                          .map((c) => DropdownMenuItem(
-                                value: c,
-                                child: Text('${Vehicle.currencySymbol(c)}  $c'),
-                              ))
-                          .toList(),
-                      onChanged: (v) {
-                        if (v != null) {
-                          setState(() {
-                            _currency = v;
-                            _markDirty();
-                          });
-                        }
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ),
-
-            // ── Actions ──
-            const SizedBox(height: 8),
-            FilledButton(
-              onPressed: _isLoading ? null : _save,
-              child: _isLoading
-                  ? const M3LoadingIndicator(size: 20)
-                  : Text(_isEditing ? l.saveChanges : l.addVehicle),
-            ),
-            if (_isEditing) ...[
-              const SizedBox(height: 12),
-              OutlinedButton.icon(
-                onPressed: _isLoading ? null : _delete,
-                icon: const Icon(Icons.delete),
-                label: Text(l.deleteVehicle),
-                style: OutlinedButton.styleFrom(
-                  foregroundColor: Theme.of(context).colorScheme.error,
-                  side: BorderSide(
-                    color: Theme.of(context).colorScheme.error,
+                  switch (_vehicleType) {
+                    VehicleType.combustion => l.combustion,
+                    VehicleType.electric => l.electric,
+                    VehicleType.motorcycle => l.motorcycle,
+                  },
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                    color: Theme.of(context).colorScheme.primary,
                   ),
                 ),
               ),
+
+              // ── Vehicle ──
+              SectionHeader(title: l.vehicleFormVehicle),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 8),
+                  Autocomplete<String>(
+                    initialValue: TextEditingValue(text: _brand),
+                    optionsBuilder: (textEditingValue) {
+                      if (textEditingValue.text.isEmpty) return [];
+                      final query = textEditingValue.text;
+                      final index = ref.read(templateIndexProvider).value;
+                      final suggestions = <String>{};
+                      if (index != null) {
+                        suggestions.addAll(
+                          index.templates
+                              .where((e) => e.meta.make != '_base')
+                              .map((e) => e.meta.make)
+                              .toSet()
+                              .where(
+                                (m) => m.toLowerCase().contains(
+                                  query.toLowerCase(),
+                                ),
+                              ),
+                        );
+                      }
+                      suggestions.add(query);
+                      return suggestions.toList()..sort();
+                    },
+                    fieldViewBuilder:
+                        (context, controller, focusNode, onSubmitted) {
+                          return TextFormField(
+                            controller: controller,
+                            focusNode: focusNode,
+                            decoration: _fieldDecoration(l.brand),
+                            onChanged: (value) {
+                              _brand = value;
+                              _hasUnsavedChanges = true;
+                            },
+                            validator: (v) => v == null || v.trim().isEmpty
+                                ? l.required
+                                : null,
+                          );
+                        },
+                    onSelected: (value) {
+                      _brand = value;
+                    },
+                  ),
+                  const SizedBox(height: 12),
+                  LayoutBuilder(
+                    builder: (context, constraints) {
+                      final modelField = Autocomplete<String>(
+                        initialValue: TextEditingValue(text: _model),
+                        optionsBuilder: (textEditingValue) {
+                          if (textEditingValue.text.isEmpty) return [];
+                          final query = textEditingValue.text;
+                          final index = ref.read(templateIndexProvider).value;
+                          final suggestions = <String>{};
+                          if (index != null && _brand.isNotEmpty) {
+                            suggestions.addAll(
+                              index.templates
+                                  .where(
+                                    (e) =>
+                                        e.meta.make.toLowerCase() ==
+                                            _brand.toLowerCase() &&
+                                        e.meta.model.toLowerCase().contains(
+                                          query.toLowerCase(),
+                                        ),
+                                  )
+                                  .map((e) => e.meta.model)
+                                  .toSet(),
+                            );
+                          }
+                          suggestions.add(query);
+                          return suggestions.toList()..sort();
+                        },
+                        fieldViewBuilder:
+                            (context, controller, focusNode, onSubmitted) {
+                              return TextFormField(
+                                controller: controller,
+                                focusNode: focusNode,
+                                decoration: _fieldDecoration(l.model),
+                                onChanged: (value) {
+                                  _model = value;
+                                  _hasUnsavedChanges = true;
+                                },
+                                validator: (v) => v == null || v.trim().isEmpty
+                                    ? l.required
+                                    : null,
+                              );
+                            },
+                        onSelected: (value) {
+                          _model = value;
+                        },
+                      );
+                      final yearField = TextFormField(
+                        controller: _yearController,
+                        decoration: _fieldDecoration(l.year),
+                        keyboardType: TextInputType.number,
+                        onChanged: (_) => _markDirty(),
+                        validator: (v) {
+                          if (v == null || v.trim().isEmpty) return l.required;
+                          final year = int.tryParse(v);
+                          if (year == null ||
+                              year < 1886 ||
+                              year > DateTime.now().year + 1) {
+                            return l.invalidYear;
+                          }
+                          return null;
+                        },
+                      );
+                      if (constraints.maxWidth >= 320) {
+                        return Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(flex: 3, child: modelField),
+                            const SizedBox(width: 12),
+                            Expanded(flex: 2, child: yearField),
+                          ],
+                        );
+                      }
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          modelField,
+                          const SizedBox(height: 12),
+                          yearField,
+                        ],
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 8),
+                ],
+              ),
+              OutlinedButton.icon(
+                onPressed: _isLoading ? null : _searchTemplate,
+                icon: _templateIntervals != null
+                    ? const Icon(Icons.check_circle, color: Colors.green)
+                    : const Icon(Icons.search),
+                label: Text(
+                  _templateIntervals != null
+                      ? AppLocalizations.of(
+                          context,
+                        )!.templateWithName(_templateName ?? '')
+                      : AppLocalizations.of(context)!.searchTemplate,
+                ),
+              ),
+              const SizedBox(height: 8),
+
+              // ── Details ──
+              SectionHeader(title: l.vehicleFormDetails),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 8),
+                  TextFormField(
+                    controller: _plateController,
+                    decoration: _fieldDecoration(l.plateOptional),
+                    textCapitalization: TextCapitalization.characters,
+                    onChanged: (_) => _markDirty(),
+                  ),
+                  const SizedBox(height: 12),
+                  TextFormField(
+                    controller: _vinController,
+                    decoration: _fieldDecoration(l.vinOptional),
+                    textCapitalization: TextCapitalization.characters,
+                    maxLength: 17,
+                    onChanged: (_) => _markDirty(),
+                  ),
+                  const SizedBox(height: 8),
+                ],
+              ),
+
+              // ── Units ──
+              SectionHeader(title: l.odometer),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 8),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          controller: _odometerController,
+                          decoration: _fieldDecoration(l.odometer),
+                          keyboardType: TextInputType.number,
+                          onChanged: (_) => _markDirty(),
+                          validator: (v) {
+                            if (_validatingForSearch) return null;
+                            if (v == null || v.trim().isEmpty) {
+                              return l.required;
+                            }
+                            final num = double.tryParse(v);
+                            if (num == null || num < 0) return l.invalid;
+                            return null;
+                          },
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      KarterSegmentedButton<DistanceUnit>(
+                        segments: [
+                          ButtonSegment(
+                            value: DistanceUnit.kilometers,
+                            label: Text(l.unitKm),
+                          ),
+                          ButtonSegment(
+                            value: DistanceUnit.miles,
+                            label: Text(l.unitMi),
+                          ),
+                        ],
+                        selected: {_odometerUnit},
+                        onSelectionChanged: (v) => setState(() {
+                          _odometerUnit = v.first;
+                          _markDirty();
+                        }),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: KarterSegmentedButton<VolumeUnit>(
+                          segments: [
+                            ButtonSegment(
+                              value: VolumeUnit.liters,
+                              label: Text(l.unitL),
+                            ),
+                            ButtonSegment(
+                              value: VolumeUnit.gallons,
+                              label: Text(l.unitGal),
+                            ),
+                          ],
+                          selected: {_fuelVolumeUnit},
+                          onSelectionChanged: (v) => setState(() {
+                            _fuelVolumeUnit = v.first;
+                            _markDirty();
+                          }),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  DropdownButtonFormField<String>(
+                    isExpanded: true,
+                    initialValue: _currency,
+                    decoration: _fieldDecoration(l.currency),
+                    items: Vehicle.currencies
+                        .map(
+                          (c) => DropdownMenuItem(
+                            value: c,
+                            child: Text('${Vehicle.currencySymbol(c)}  $c'),
+                          ),
+                        )
+                        .toList(),
+                    onChanged: (v) {
+                      if (v != null) {
+                        setState(() {
+                          _currency = v;
+                          _markDirty();
+                        });
+                      }
+                    },
+                  ),
+                  const SizedBox(height: 8),
+                ],
+              ),
+
+              // ── Actions ──
+              const SizedBox(height: 24),
+              FilledButton(
+                onPressed: _isLoading ? null : _save,
+                child: _isLoading
+                    ? const M3LoadingIndicator(size: 20)
+                    : Text(_isEditing ? l.saveChanges : l.addVehicle),
+              ),
+              if (_isEditing) ...[
+                const SizedBox(height: 16),
+                OutlinedButton.icon(
+                  onPressed: _isLoading ? null : _delete,
+                  icon: const Icon(Icons.delete),
+                  label: Text(l.deleteVehicle),
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: Theme.of(context).colorScheme.error,
+                    side: BorderSide(
+                      color: Theme.of(context).colorScheme.error,
+                    ),
+                  ),
+                ),
+              ],
+              const SizedBox(height: 32),
             ],
-            const SizedBox(height: 24),
-          ],
+          ),
         ),
       ),
-    ),
     );
   }
 }
