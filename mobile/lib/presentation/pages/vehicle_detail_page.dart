@@ -26,6 +26,12 @@ import 'package:mobile/presentation/widgets/section_header.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 
 const _wideBreakpoint = 600.0;
+const _minSideBySideWidth = 320.0;
+
+bool _shouldStackTrailing(BuildContext context, double cardWidth) {
+  final textScale = MediaQuery.textScalerOf(context).scale(1);
+  return cardWidth / textScale < _minSideBySideWidth;
+}
 
 class VehicleDetailPage extends ConsumerStatefulWidget {
   final String vehicleId;
@@ -239,6 +245,12 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
           body: LayoutBuilder(
             builder: (context, constraints) {
               final isWide = constraints.maxWidth >= _wideBreakpoint;
+              final cardWidth = isWide
+                  ? (constraints.maxWidth -
+                          2 * AppSpacing.pagePadding -
+                          8) /
+                        2
+                  : constraints.maxWidth - 2 * AppSpacing.pagePadding;
 
               if (isWide) {
                 return Padding(
@@ -259,6 +271,7 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
                               l: l,
                               onUpdate: () =>
                                   _updateOdometer(context, vehicle.id, ref),
+                              cardWidth: cardWidth,
                             ),
                             const SizedBox(height: 8),
                             SectionHeader(title: l.actions),
@@ -276,6 +289,7 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
                               distanceKm: distanceKm,
                               l: l,
                               onShowDescription: _showDescription,
+                              cardWidth: cardWidth,
                             ),
                           ],
                         ),
@@ -295,6 +309,7 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
                     isKm: isKm,
                     l: l,
                     onUpdate: () => _updateOdometer(context, vehicle.id, ref),
+                    cardWidth: cardWidth,
                   ),
                   const SizedBox(height: 8),
                   SectionHeader(title: l.actions),
@@ -305,6 +320,7 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
                     distanceKm: distanceKm,
                     l: l,
                     onShowDescription: _showDescription,
+                    cardWidth: cardWidth,
                   ),
                   const SizedBox(height: 24),
                 ],
@@ -479,36 +495,77 @@ class _OdometerCard extends StatelessWidget {
   final bool isKm;
   final AppLocalizations l;
   final VoidCallback onUpdate;
+  final double cardWidth;
 
   const _OdometerCard({
     required this.vehicle,
     required this.isKm,
     required this.l,
     required this.onUpdate,
+    required this.cardWidth,
   });
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final distance = vehicle.currentOdometer.distance;
+    final stacked = _shouldStackTrailing(context, cardWidth);
+    final distanceText =
+        '${distance.toStringAsFixed(0)} ${isKm ? l.unitKm : l.unitMi}';
+
     return Card(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          ListTile(
-            leading: const Icon(Icons.speed),
-            title: Text(
-              '${distance.toStringAsFixed(0)} ${isKm ? l.unitKm : l.unitMi}',
-              style: theme.textTheme.titleMedium,
+      child: stacked
+          ? Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      const Icon(Icons.speed),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              distanceText,
+                              style: theme.textTheme.titleMedium,
+                            ),
+                            Text(l.odometer),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  SizedBox(
+                    width: double.infinity,
+                    child: FilledButton.tonal(
+                      onPressed: onUpdate,
+                      child: Text(l.update),
+                    ),
+                  ),
+                ],
+              ),
+            )
+          : Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ListTile(
+                  leading: const Icon(Icons.speed),
+                  title: Text(
+                    distanceText,
+                    style: theme.textTheme.titleMedium,
+                  ),
+                  subtitle: Text(l.odometer),
+                  trailing: FilledButton.tonal(
+                    onPressed: onUpdate,
+                    child: Text(l.update),
+                  ),
+                ),
+              ],
             ),
-            subtitle: Text(l.odometer),
-            trailing: FilledButton.tonal(
-              onPressed: onUpdate,
-              child: Text(l.update),
-            ),
-          ),
-        ],
-      ),
     );
   }
 }
@@ -574,18 +631,21 @@ class _MaintenanceCard extends ConsumerWidget {
   final AppLocalizations l;
   final void Function(BuildContext, AppLocalizations, dynamic)
   onShowDescription;
+  final double cardWidth;
 
   const _MaintenanceCard({
     required this.vehicleId,
     required this.distanceKm,
     required this.l,
     required this.onShowDescription,
+    required this.cardWidth,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final intervalsAsync = ref.watch(maintenanceIntervalsProvider(vehicleId));
     final theme = Theme.of(context);
+    final stacked = _shouldStackTrailing(context, cardWidth);
 
     return intervalsAsync.when(
       data: (intervals) {
@@ -627,7 +687,30 @@ class _MaintenanceCard extends ConsumerWidget {
                 accentColor = Colors.amber.shade800;
               }
 
-              return ListTile(
+              final registerButton = TextButton(
+                onPressed: () => showAddMaintenanceLogModal(
+                  context,
+                  vehicleId: vehicleId,
+                  initialDescription: localizedLabel(
+                    l.localeName,
+                    interval.i18nKey,
+                    interval.label,
+                  ),
+                  initialIntervalId: interval.id,
+                  onSaved: () {
+                    ref.invalidate(maintenanceLogsProvider(vehicleId));
+                    ref.invalidate(maintenanceIntervalsProvider(vehicleId));
+                  },
+                ),
+                child: Text(
+                  l.register,
+                  style: accentColor != null
+                      ? TextStyle(color: accentColor)
+                      : null,
+                ),
+              );
+
+              final tile = ListTile(
                 leading: Icon(Icons.build_circle_outlined, color: accentColor),
                 title: Text(
                   localizedLabel(
@@ -658,35 +741,26 @@ class _MaintenanceCard extends ConsumerWidget {
                   ],
                 ),
                 onTap: () => onShowDescription(context, l, interval),
-                trailing: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    TextButton(
-                      onPressed: () => showAddMaintenanceLogModal(
-                        context,
-                        vehicleId: vehicleId,
-                        initialDescription: localizedLabel(
-                          l.localeName,
-                          interval.i18nKey,
-                          interval.label,
-                        ),
-                        initialIntervalId: interval.id,
-                        onSaved: () {
-                          ref.invalidate(maintenanceLogsProvider(vehicleId));
-                          ref.invalidate(
-                            maintenanceIntervalsProvider(vehicleId),
-                          );
-                        },
+                trailing: stacked
+                    ? null
+                    : Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [registerButton],
                       ),
-                      child: Text(
-                        l.register,
-                        style: accentColor != null
-                            ? TextStyle(color: accentColor)
-                            : null,
-                      ),
-                    ),
-                  ],
-                ),
+              );
+
+              if (!stacked) return tile;
+
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  tile,
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 4),
+                    child: registerButton,
+                  ),
+                ],
               );
             }).toList(),
           ),
