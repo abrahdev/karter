@@ -591,6 +591,12 @@ abstract class AppLocalizations {
   /// **'Template found'**
   String get templateFound;
 
+  /// No description provided for @templateDisclaimer.
+  ///
+  /// In en, this message translates to:
+  /// **'Template data is for reference only. Always verify intervals against your vehicle\'s manual.'**
+  String get templateDisclaimer;
+
   /// No description provided for @noTemplate.
   ///
   /// In en, this message translates to:

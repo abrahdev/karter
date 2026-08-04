@@ -90,6 +90,7 @@
   "partUnitKit": "kit",
   "partUnitCan": "lata",
   "templateFound": "Plantilla encontrada",
+  "templateDisclaimer": "Los datos de la plantilla son solo de referencia. Verifica siempre los intervalos con el manual de tu vehículo.",
   "noTemplate": "Sin plantilla",
   "useTemplate": "Usar plantilla",
   "searchTemplate": "Buscar plantilla",

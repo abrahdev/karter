@@ -15,12 +15,10 @@ import 'package:mobile/domain/value_objects/plate.dart';
 import 'package:mobile/domain/value_objects/vin.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
-import 'package:mobile/presentation/utils/template_interval_builder.dart';
-import 'package:mobile/presentation/widgets/interval_parts_view.dart';
 import 'package:mobile/presentation/widgets/notification_permission_modal.dart';
 import 'package:mobile/presentation/widgets/section_header.dart';
 import 'package:mobile/presentation/widgets/karter_segmented_button.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:mobile/presentation/widgets/template_search_modal.dart';
 
 class VehicleFormPage extends ConsumerStatefulWidget {
   final String? vehicleId;
@@ -67,25 +65,46 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
 
   Future<void> _loadVehicle() async {
     final vehicle = await ref.read(vehicleProvider(widget.vehicleId!).future);
-    if (vehicle != null && mounted) {
-      setState(() {
-        _brand = vehicle.brand;
-        _model = vehicle.model;
-        _yearController.text = vehicle.year.toString();
-        _plateController.text = vehicle.plate?.value ?? '';
-        _vinController.text = vehicle.vin?.code ?? '';
-        _odometerController.text = vehicle.currentOdometer.distance
-            .toStringAsFixed(0);
-        _odometerUnit = vehicle.currentOdometer.unit;
-        _fuelVolumeUnit = vehicle.fuelVolumeUnit;
-        _currency = vehicle.currency;
-        _vehicleType = vehicle.type;
-        if (vehicle.alias != null && vehicle.alias!.isNotEmpty) {
-          _showAlias = true;
-          _aliasController.text = vehicle.alias!;
-        }
-      });
+    if (vehicle == null || !mounted) return;
+    setState(() {
+      _brand = vehicle.brand;
+      _model = vehicle.model;
+      _yearController.text = vehicle.year.toString();
+      _plateController.text = vehicle.plate?.value ?? '';
+      _vinController.text = vehicle.vin?.code ?? '';
+      _odometerController.text = vehicle.currentOdometer.distance
+          .toStringAsFixed(0);
+      _odometerUnit = vehicle.currentOdometer.unit;
+      _fuelVolumeUnit = vehicle.fuelVolumeUnit;
+      _currency = vehicle.currency;
+      _vehicleType = vehicle.type;
+      if (vehicle.alias != null && vehicle.alias!.isNotEmpty) {
+        _showAlias = true;
+        _aliasController.text = vehicle.alias!;
+      }
+    });
+
+    final intervals = await ref
+        .read(maintenanceIntervalsProvider(widget.vehicleId!).future);
+    if (!mounted) return;
+    final templateIntervals = intervals.where((i) => !i.isCustom).toList();
+    if (templateIntervals.isEmpty) return;
+    final resolution =
+        await ref.read(templateResolutionProvider(widget.vehicleId!).future);
+    if (!mounted) return;
+    String? name;
+    if (resolution != null) {
+      final meta = resolution.entry.meta;
+      name = [
+        meta.make,
+        meta.model,
+        if (meta.generation != null) meta.generation,
+      ].join(' ');
     }
+    setState(() {
+      _templateIntervals = templateIntervals;
+      _templateName = name;
+    });
   }
 
   @override
@@ -157,333 +176,29 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
     setState(() => _validatingForSearch = false);
     if (!valid) return;
 
-    final brand = _brand.trim();
-    final model = _model.trim();
-    final yearStr = _yearController.text.trim();
-
-    final year = int.tryParse(yearStr);
+    final year = int.tryParse(_yearController.text.trim());
     if (year == null) return;
 
-    setState(() => _isLoading = true);
+    final outcome = await showTemplateSearchModal(
+      context,
+      brand: _brand.trim(),
+      model: _model.trim(),
+      year: year,
+    );
 
-    try {
-      final repo = ref.read(catalogRepositoryProvider);
-      final resolution = await repo.findBestMatch(
-        make: brand,
-        model: model,
-        year: year,
-      );
+    if (!mounted || outcome == null) return;
 
-      if (!mounted) return;
-
-      if (resolution != null) {
-        final intervals = resolution.items.map((r) {
-          return intervalFromTemplate('', r, resolution);
-        }).toList();
-
-        final templateMeta = resolution.entry.meta;
-        final name = [
-          templateMeta.make,
-          templateMeta.model,
-          if (templateMeta.generation != null) templateMeta.generation,
-        ].join(' ');
-
-        final choice = await _showTemplatePreview(name, intervals);
-
-        if (mounted) {
-          setState(() {
-            if (choice == 'template') {
-              _templateIntervals = intervals;
-              _templateName = name;
-              _vehicleType = _typeFromIntervals(intervals);
-              _markDirty();
-            } else {
-              _templateIntervals = null;
-              _templateName = null;
-            }
-          });
-        }
+    setState(() {
+      if (outcome.apply) {
+        _templateIntervals = outcome.intervals;
+        _templateName = outcome.name;
+        _vehicleType = typeFromIntervals(outcome.intervals!);
+        _markDirty();
       } else {
-        final searchParams = '$brand $model $year';
-        await _showNoTemplateFound(searchParams);
-        if (mounted) {
-          setState(() {
-            _templateIntervals = null;
-            _templateName = null;
-          });
-        }
+        _templateIntervals = null;
+        _templateName = null;
       }
-    } catch (e) {
-      if (mounted) {
-        final searchParams = '$brand $model $year';
-        await _showTemplateError(searchParams);
-      }
-    } finally {
-      if (mounted) setState(() => _isLoading = false);
-    }
-  }
-
-  Future<String?> _showTemplatePreview(
-    String name,
-    List<MaintenanceInterval> intervals,
-  ) async {
-    final result = await karterShowDialog<String>(
-      context: context,
-      builder: (ctx) {
-        final theme = Theme.of(ctx);
-        final l = AppLocalizations.of(ctx)!;
-        return AlertDialog(
-          title: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(l.templateFound),
-              const SizedBox(height: 4),
-              Text(
-                name,
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  color: theme.colorScheme.primary,
-                ),
-              ),
-            ],
-          ),
-          content: SizedBox(
-            width: double.maxFinite,
-            child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: intervals.length,
-              itemBuilder: (ctx, i) {
-                final interval = intervals[i];
-                final parts = <String>['${interval.kmInterval} km'];
-                if (interval.monthsInterval != null) {
-                  parts.add('${interval.monthsInterval} ${l.months}');
-                }
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ListTile(
-                      dense: true,
-                      contentPadding: EdgeInsets.zero,
-                      title: Text(interval.label),
-                      subtitle: interval.description != null
-                          ? Text(
-                              interval.description!,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            )
-                          : null,
-                      trailing: IntrinsicWidth(
-                        child: Text(
-                          parts.join(' / '),
-                          style: theme.textTheme.bodySmall,
-                          textAlign: TextAlign.end,
-                          softWrap: false,
-                        ),
-                      ),
-                    ),
-                    if (interval.parts.isNotEmpty)
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          left: 16,
-                          right: 16,
-                          bottom: 8,
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              l.partsTitle.toUpperCase(),
-                              style: theme.textTheme.labelSmall?.copyWith(
-                                color: theme.colorScheme.primary,
-                                letterSpacing: 1.2,
-                              ),
-                            ),
-                            const SizedBox(height: 2),
-                            IntervalPartsView(parts: interval.parts),
-                          ],
-                        ),
-                      ),
-                  ],
-                );
-              },
-            ),
-          ),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: OutlinedButton(
-                      onPressed: () => Navigator.pop(ctx, 'defaults'),
-                      child: Text(l.noTemplate),
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: FilledButton(
-                      onPressed: () => Navigator.pop(ctx, 'template'),
-                      child: Text(l.useTemplate),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        );
-      },
-    );
-    return result;
-  }
-
-  Future<void> _showTemplateError(String searchParams) async {
-    await karterShowDialog(
-      context: context,
-      builder: (ctx) {
-        final theme = Theme.of(ctx);
-        final l = AppLocalizations.of(ctx)!;
-        return AlertDialog(
-          title: Text(l.templateUnderConstruction),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Icon(
-                    Icons.construction,
-                    color: theme.colorScheme.primary,
-                    size: 48,
-                  ),
-                  const SizedBox(width: 16),
-                  Expanded(child: Text(l.templateNotReady)),
-                ],
-              ),
-              const SizedBox(height: 12),
-              Text(l.contributionsWelcome, style: theme.textTheme.bodyMedium),
-              const SizedBox(height: 8),
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: theme.colorScheme.surfaceContainerHighest,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Text(
-                  'https://github.com/abrahdev/karter',
-                  style: theme.textTheme.bodyMedium?.copyWith(
-                    fontFamily: 'monospace',
-                  ),
-                ),
-              ),
-              const SizedBox(height: 12),
-              Text(
-                l.requestedParam(searchParams),
-                style: theme.textTheme.bodySmall?.copyWith(
-                  color: theme.colorScheme.outline,
-                ),
-              ),
-            ],
-          ),
-          actions: [
-            OutlinedButton.icon(
-              onPressed: () => launchUrl(
-                Uri.parse('https://github.com/abrahdev/karter'),
-                mode: LaunchMode.externalApplication,
-              ),
-              icon: const Icon(Icons.open_in_new, size: 18),
-              label: Text(l.contributeOnGitHub),
-            ),
-            FilledButton(
-              onPressed: () => Navigator.pop(ctx),
-              child: Text(l.gotIt),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  Future<void> _showNoTemplateFound(String searchParams) async {
-    await karterShowDialog(
-      context: context,
-      builder: (ctx) {
-        final theme = Theme.of(ctx);
-        final l = AppLocalizations.of(ctx)!;
-        return AlertDialog(
-          title: Text(l.noResultsTitle),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Icon(
-                    Icons.search_off,
-                    color: theme.colorScheme.outline,
-                    size: 48,
-                  ),
-                  const SizedBox(width: 16),
-                  Expanded(child: Text(l.noTemplateFoundDescription)),
-                ],
-              ),
-              const SizedBox(height: 16),
-              Text(l.searchParameters, style: theme.textTheme.labelMedium),
-              const SizedBox(height: 4),
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: theme.colorScheme.surfaceContainerHighest,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Text(
-                  searchParams,
-                  style: theme.textTheme.bodyMedium?.copyWith(
-                    fontFamily: 'monospace',
-                  ),
-                ),
-              ),
-              const SizedBox(height: 12),
-              Text(
-                l.defaultIntervalsHint,
-                style: theme.textTheme.bodySmall?.copyWith(
-                  color: theme.colorScheme.outline,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                l.missingTemplateContribute,
-                style: theme.textTheme.bodySmall?.copyWith(
-                  color: theme.colorScheme.primary,
-                ),
-              ),
-            ],
-          ),
-          actions: [
-            OutlinedButton.icon(
-              onPressed: () => launchUrl(
-                Uri.parse('https://karter.abrah.dev/templates'),
-                mode: LaunchMode.externalApplication,
-              ),
-              icon: const Icon(Icons.open_in_new, size: 18),
-              label: Text(l.viewAllTemplates),
-            ),
-            OutlinedButton.icon(
-              onPressed: () => launchUrl(
-                Uri.parse('https://github.com/abrahdev/karter'),
-                mode: LaunchMode.externalApplication,
-              ),
-              icon: const Icon(Icons.open_in_new, size: 18),
-              label: Text(l.contribute),
-            ),
-            FilledButton(
-              onPressed: () => Navigator.pop(ctx),
-              child: Text(l.gotIt),
-            ),
-          ],
-        );
-      },
-    );
+    });
   }
 
   Future<void> _save() async {
@@ -548,6 +263,7 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
       ref.invalidate(vehicleListProvider);
       if (_isEditing) {
         ref.invalidate(vehicleProvider(widget.vehicleId!));
+        ref.invalidate(maintenanceIntervalsProvider(widget.vehicleId!));
       }
 
       if (mounted) {
@@ -573,20 +289,6 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
     } finally {
       if (mounted) setState(() => _isLoading = false);
     }
-  }
-
-  VehicleType _typeFromIntervals(List<MaintenanceInterval> intervals) {
-    final keys = intervals.map((i) => i.i18nKey).toSet();
-    if (keys.contains('seed_interval_battery_cooling') ||
-        keys.contains('seed_interval_inverter_coolant')) {
-      return VehicleType.electric;
-    }
-    if (keys.contains('seed_interval_chain') ||
-        keys.contains('seed_interval_valve_adjustment') ||
-        keys.contains('seed_interval_drive_kit')) {
-      return VehicleType.motorcycle;
-    }
-    return VehicleType.combustion;
   }
 
   void _markDirty() {

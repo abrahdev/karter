@@ -274,6 +274,10 @@ class AppLocalizationsEt extends AppLocalizations {
   String get templateFound => 'Mall leitud';
 
   @override
+  String get templateDisclaimer =>
+      'Malli andmed on ainult viitamiseks. Kontrolli intervalle alati oma sõiduki käsiraamatu järgi.';
+
+  @override
   String get noTemplate => 'Mall puudub';
 
   @override

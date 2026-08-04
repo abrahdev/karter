@@ -131,6 +131,7 @@
   "partUnitKit": "komplekt",
   "partUnitCan": "purk",
   "templateFound": "Mall leitud",
+  "templateDisclaimer": "Malli andmed on ainult viitamiseks. Kontrolli intervalle alati oma sõiduki käsiraamatu järgi.",
   "noTemplate": "Mall puudub",
   "useTemplate": "Kasuta malli",
   "searchTemplate": "Otsi malli",

@@ -274,6 +274,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get templateFound => 'Template found';
 
   @override
+  String get templateDisclaimer =>
+      'Template data is for reference only. Always verify intervals against your vehicle\'s manual.';
+
+  @override
   String get noTemplate => 'No template';
 
   @override

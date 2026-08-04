@@ -274,6 +274,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get templateFound => 'Plantilla encontrada';
 
   @override
+  String get templateDisclaimer =>
+      'Los datos de la plantilla son solo de referencia. Verifica siempre los intervalos con el manual de tu vehículo.';
+
+  @override
   String get noTemplate => 'Sin plantilla';
 
   @override

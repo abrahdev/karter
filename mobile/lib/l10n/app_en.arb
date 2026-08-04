@@ -90,6 +90,7 @@
   "partUnitKit": "kit",
   "partUnitCan": "can",
   "templateFound": "Template found",
+  "templateDisclaimer": "Template data is for reference only. Always verify intervals against your vehicle's manual.",
   "noTemplate": "No template",
   "useTemplate": "Use template",
   "searchTemplate": "Search template",
