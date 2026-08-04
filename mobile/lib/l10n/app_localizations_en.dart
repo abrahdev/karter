@@ -68,6 +68,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get actions => 'Actions';
 
   @override
+  String get tools => 'Tools';
+
+  @override
   String get information => 'Information';
 
   @override
@@ -165,6 +168,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get addVehicle => 'Add vehicle';
+
+  @override
+  String get newVehicleServicesOverdueTitle => 'Services appear as overdue';
+
+  @override
+  String get newVehicleServicesOverdueBody =>
+      'Because your vehicle already has more than 500 km, all maintenance services appear as overdue.\n\nRegister the services you have already done. If you don\'t remember the exact mileage, set an approximate km value for the last service.';
 
   @override
   String get deleteVehicle => 'Delete vehicle';

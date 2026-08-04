@@ -20,6 +20,7 @@ import 'package:mobile/presentation/utils/maintenance_localizer.dart';
 import 'package:mobile/presentation/widgets/add_document_modal.dart';
 import 'package:mobile/presentation/widgets/add_fuel_log_modal.dart';
 import 'package:mobile/presentation/widgets/add_maintenance_log_modal.dart';
+import 'package:mobile/presentation/widgets/dtc_lookup_modal.dart';
 import 'package:mobile/presentation/widgets/interval_parts_view.dart';
 import 'package:mobile/presentation/widgets/odometer_dialog.dart';
 import 'package:mobile/presentation/widgets/section_header.dart';
@@ -278,6 +279,8 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
                             const SizedBox(height: 8),
                             SectionHeader(title: l.actions),
                             _ActionsCard(vehicleId: widget.vehicleId, l: l),
+                            SectionHeader(title: l.tools),
+                            _ToolsCard(vehicleId: widget.vehicleId, l: l),
                           ],
                         ),
                       ),
@@ -316,6 +319,8 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
                   const SizedBox(height: 8),
                   SectionHeader(title: l.actions),
                   _ActionsCard(vehicleId: widget.vehicleId, l: l),
+                  SectionHeader(title: l.tools),
+                  _ToolsCard(vehicleId: widget.vehicleId, l: l),
                   SectionHeader(title: l.nextMaintenance),
                   _MaintenanceCard(
                     vehicleId: widget.vehicleId,
@@ -602,11 +607,29 @@ class _ActionsCard extends StatelessWidget {
             trailing: const Icon(Icons.chevron_right),
             onTap: () => context.push('/vehicle/$vehicleId/documents'),
           ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ToolsCard extends StatelessWidget {
+  final String vehicleId;
+  final AppLocalizations l;
+
+  const _ToolsCard({required this.vehicleId, required this.l});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
           ListTile(
             leading: const Icon(Icons.search),
             title: Text(l.dtcLookupTitle),
             trailing: const Icon(Icons.chevron_right),
-            onTap: () => context.push('/vehicle/$vehicleId/dtc'),
+            onTap: () => showDtcLookupModal(context, vehicleId: vehicleId),
           ),
           ListTile(
             leading: const Icon(Icons.handyman_outlined),

@@ -68,6 +68,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get actions => 'Acciones';
 
   @override
+  String get tools => 'Herramientas';
+
+  @override
   String get information => 'Información';
 
   @override
@@ -165,6 +168,14 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get addVehicle => 'Agregar vehículo';
+
+  @override
+  String get newVehicleServicesOverdueTitle =>
+      'Los servicios aparecen como vencidos';
+
+  @override
+  String get newVehicleServicesOverdueBody =>
+      'Como tu vehículo ya tiene más de 500 km, todos los servicios de mantenimiento aparecen como vencidos.\n\nRegistra los servicios que ya hayas realizado. Si no recuerdas el kilometraje exacto, indica unos km aproximados del último servicio.';
 
   @override
   String get deleteVehicle => 'Eliminar vehículo';

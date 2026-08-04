@@ -1,21 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material3_indicators/material3_indicators.dart';
+import 'package:mobile/core/modal_helpers.dart';
 import 'package:mobile/data/services/template_resolver.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
 import 'package:mobile/presentation/widgets/dtc_search_view.dart';
 
-class DtcLookupPage extends ConsumerStatefulWidget {
-  final String vehicleId;
-
-  const DtcLookupPage({super.key, required this.vehicleId});
-
-  @override
-  ConsumerState<DtcLookupPage> createState() => _DtcLookupPageState();
+Future<void> showDtcLookupModal(
+  BuildContext context, {
+  required String vehicleId,
+}) {
+  return karterShowModalBottomSheet<void>(
+    context: context,
+    isScrollControlled: true,
+    builder: (ctx) => DtcLookupSheet(vehicleId: vehicleId),
+  );
 }
 
-class _DtcLookupPageState extends ConsumerState<DtcLookupPage> {
+class DtcLookupSheet extends ConsumerStatefulWidget {
+  final String vehicleId;
+
+  const DtcLookupSheet({super.key, required this.vehicleId});
+
+  @override
+  ConsumerState<DtcLookupSheet> createState() => _DtcLookupSheetState();
+}
+
+class _DtcLookupSheetState extends ConsumerState<DtcLookupSheet> {
   List<ResolvedDtc> _dtcs = [];
   List<ResolvedItem> _items = [];
   String _dbName = '';
@@ -90,16 +102,39 @@ class _DtcLookupPageState extends ConsumerState<DtcLookupPage> {
 
   @override
   Widget build(BuildContext context) {
-    final l = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
+    final l = AppLocalizations.of(context)!;
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l.dtcLookupTitle)),
-      body: _buildBody(theme),
+    return SizedBox(
+      height: MediaQuery.of(context).size.height * 0.85,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const SizedBox(height: 12),
+          Center(
+            child: Container(
+              width: 40,
+              height: 4,
+              decoration: BoxDecoration(
+                color: theme.colorScheme.outlineVariant,
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 16, 20, 8),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(l.dtcLookupTitle, style: theme.textTheme.titleLarge),
+            ),
+          ),
+          Expanded(child: _buildBody(theme, l)),
+        ],
+      ),
     );
   }
 
-  Widget _buildBody(ThemeData theme) {
+  Widget _buildBody(ThemeData theme, AppLocalizations l) {
     if (_loading) {
       return const Center(
         child: M3LoadingIndicator(contained: true, size: 36, containerSize: 72),
@@ -115,7 +150,7 @@ class _DtcLookupPageState extends ConsumerState<DtcLookupPage> {
             const SizedBox(height: 16),
             FilledButton.tonal(
               onPressed: _load,
-              child: Text(AppLocalizations.of(context)?.retry ?? ''),
+              child: Text(l.retry),
             ),
           ],
         ),

@@ -97,12 +97,14 @@ class VehicleCard extends StatelessWidget {
                 ? '${vehicle.brand} ${vehicle.model} ${vehicle.year}'
                 : distanceText,
           ),
-          trailing: Text(
-            distanceText,
-            style: theme.textTheme.bodySmall?.copyWith(
-              color: cs.onSurfaceVariant,
-            ),
-          ),
+          trailing: hasAlias
+              ? Text(
+                  distanceText,
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: cs.onSurfaceVariant,
+                  ),
+                )
+              : Icon(Icons.chevron_right, color: cs.onSurfaceVariant),
           onTap: onTap,
         ),
       ),

@@ -214,6 +214,12 @@ abstract class AppLocalizations {
   /// **'Actions'**
   String get actions;
 
+  /// No description provided for @tools.
+  ///
+  /// In en, this message translates to:
+  /// **'Tools'**
+  String get tools;
+
   /// No description provided for @information.
   ///
   /// In en, this message translates to:
@@ -405,6 +411,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add vehicle'**
   String get addVehicle;
+
+  /// No description provided for @newVehicleServicesOverdueTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Services appear as overdue'**
+  String get newVehicleServicesOverdueTitle;
+
+  /// No description provided for @newVehicleServicesOverdueBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Because your vehicle already has more than 500 km, all maintenance services appear as overdue.\n\nRegister the services you have already done. If you don\'t remember the exact mileage, set an approximate km value for the last service.'**
+  String get newVehicleServicesOverdueBody;
 
   /// No description provided for @deleteVehicle.
   ///

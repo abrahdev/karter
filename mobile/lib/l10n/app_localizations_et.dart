@@ -68,6 +68,9 @@ class AppLocalizationsEt extends AppLocalizations {
   String get actions => 'Tegevused';
 
   @override
+  String get tools => 'Tööriistad';
+
+  @override
   String get information => 'Teave';
 
   @override
@@ -165,6 +168,14 @@ class AppLocalizationsEt extends AppLocalizations {
 
   @override
   String get addVehicle => 'Lisa sõiduk';
+
+  @override
+  String get newVehicleServicesOverdueTitle =>
+      'Hooldustööd kuvatakse ületähtajatena';
+
+  @override
+  String get newVehicleServicesOverdueBody =>
+      'Kuna teie sõidukil on juba üle 500 km, kuvatakse kõik hooldustööd ületähtajatena.\n\nRegistreerige juba tehtud hooldustööd. Kui täpset läbisõitu ei mäleta, märkige ligikaudne km viimase hoolduse kohta.';
 
   @override
   String get deleteVehicle => 'Kustuta sõiduk';

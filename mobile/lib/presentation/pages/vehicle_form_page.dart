@@ -18,6 +18,7 @@ import 'package:mobile/presentation/providers/vehicle_providers.dart';
 import 'package:mobile/presentation/widgets/notification_permission_modal.dart';
 import 'package:mobile/presentation/widgets/section_header.dart';
 import 'package:mobile/presentation/widgets/karter_segmented_button.dart';
+import 'package:mobile/presentation/widgets/new_vehicle_overdue_modal.dart';
 import 'package:mobile/presentation/widgets/template_search_modal.dart';
 
 class VehicleFormPage extends ConsumerStatefulWidget {
@@ -269,6 +270,12 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
       if (mounted) {
         context.pop();
         if (!_isEditing) {
+          final distanceKm = _odometerUnit == DistanceUnit.kilometers
+              ? double.parse(_odometerController.text.trim())
+              : double.parse(_odometerController.text.trim()) * 1.60934;
+          if (distanceKm > 500) {
+            showNewVehicleServicesOverdueModal(context);
+          }
           final service = ref.read(notificationServiceProvider);
           final enabled = await service.areNotificationsEnabled();
           if (mounted && !enabled) {
