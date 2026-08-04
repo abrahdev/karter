@@ -302,20 +302,6 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
     if (!_hasUnsavedChanges) setState(() => _hasUnsavedChanges = true);
   }
 
-  InputDecoration _fieldDecoration(String label, {String? hintText}) {
-    final theme = Theme.of(context);
-    return InputDecoration(
-      labelText: label,
-      hintText: hintText,
-      filled: true,
-      fillColor: theme.colorScheme.surfaceContainerLow,
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide.none,
-      ),
-    );
-  }
-
   Future<bool> _onBackPressed() async {
     if (!_isEditing || !_hasUnsavedChanges) return true;
     final result = await karterShowDialog<bool>(
@@ -433,8 +419,8 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
                   child: TextFormField(
                     controller: _aliasController,
                     autofocus: true,
-                    decoration: _fieldDecoration(
-                      l.aliasOptional,
+                    decoration: InputDecoration(
+                      labelText: l.aliasOptional,
                       hintText: l.aliasHint,
                     ),
                     onChanged: (_) => _markDirty(),
@@ -524,7 +510,9 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
                           return TextFormField(
                             controller: controller,
                             focusNode: focusNode,
-                            decoration: _fieldDecoration(l.brand),
+                            decoration: InputDecoration(
+                              labelText: l.brand,
+                            ),
                             onChanged: (value) {
                               _brand = value;
                               _hasUnsavedChanges = true;
@@ -571,7 +559,9 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
                               return TextFormField(
                                 controller: controller,
                                 focusNode: focusNode,
-                                decoration: _fieldDecoration(l.model),
+                                decoration: InputDecoration(
+                                  labelText: l.model,
+                                ),
                                 onChanged: (value) {
                                   _model = value;
                                   _hasUnsavedChanges = true;
@@ -587,7 +577,9 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
                       );
                       final yearField = TextFormField(
                         controller: _yearController,
-                        decoration: _fieldDecoration(l.year),
+                        decoration: InputDecoration(
+                          labelText: l.year,
+                        ),
                         keyboardType: TextInputType.number,
                         onChanged: (_) => _markDirty(),
                         validator: (v) {
@@ -647,14 +639,18 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
                   const SizedBox(height: 8),
                   TextFormField(
                     controller: _plateController,
-                    decoration: _fieldDecoration(l.plateOptional),
+                    decoration: InputDecoration(
+                      labelText: l.plateOptional,
+                    ),
                     textCapitalization: TextCapitalization.characters,
                     onChanged: (_) => _markDirty(),
                   ),
                   const SizedBox(height: 12),
                   TextFormField(
                     controller: _vinController,
-                    decoration: _fieldDecoration(l.vinOptional),
+                    decoration: InputDecoration(
+                      labelText: l.vinOptional,
+                    ),
                     textCapitalization: TextCapitalization.characters,
                     maxLength: 17,
                     onChanged: (_) => _markDirty(),
@@ -674,7 +670,9 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
                       Expanded(
                         child: TextFormField(
                           controller: _odometerController,
-                          decoration: _fieldDecoration(l.odometer),
+                          decoration: InputDecoration(
+                            labelText: l.odometer,
+                          ),
                           keyboardType: TextInputType.number,
                           onChanged: (_) => _markDirty(),
                           validator: (v) {
@@ -736,7 +734,9 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
                   DropdownButtonFormField<String>(
                     isExpanded: true,
                     initialValue: _currency,
-                    decoration: _fieldDecoration(l.currency),
+                    decoration: InputDecoration(
+                      labelText: l.currency,
+                    ),
                     items: Vehicle.currencies
                         .map(
                           (c) => DropdownMenuItem(

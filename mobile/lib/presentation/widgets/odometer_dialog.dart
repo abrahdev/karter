@@ -176,7 +176,6 @@ class _OdometerDialogState extends State<OdometerDialog> {
                 ],
                 decoration: InputDecoration(
                   suffixText: _unitLabel(),
-                  border: const OutlineInputBorder(),
                   contentPadding: const EdgeInsets.symmetric(
                       horizontal: 8, vertical: 12),
                 ),
@@ -215,7 +214,6 @@ class _OdometerDialogState extends State<OdometerDialog> {
                       ],
                       decoration: InputDecoration(
                         suffixText: _unitLabel(),
-                        border: const OutlineInputBorder(),
                         contentPadding:
                             const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
                       ),

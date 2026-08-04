@@ -435,7 +435,6 @@ class _AddIntervalModalState extends ConsumerState<_AddIntervalModal> {
               controller: _nameCtrl,
               decoration: InputDecoration(
                 labelText: l.name,
-                border: const OutlineInputBorder(),
               ),
               validator: (v) =>
                   (v == null || v.trim().isEmpty) ? l.required : null,
@@ -447,7 +446,6 @@ class _AddIntervalModalState extends ConsumerState<_AddIntervalModal> {
             keyboardType: TextInputType.number,
             decoration: InputDecoration(
               labelText: l.unitKm,
-              border: const OutlineInputBorder(),
             ),
             validator: (v) {
               if (v == null || v.trim().isEmpty) return l.required;
@@ -470,7 +468,6 @@ class _AddIntervalModalState extends ConsumerState<_AddIntervalModal> {
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 labelText: l.months,
-                border: const OutlineInputBorder(),
               ),
             ),
           ],
@@ -481,7 +478,6 @@ class _AddIntervalModalState extends ConsumerState<_AddIntervalModal> {
             minLines: 2,
             decoration: InputDecoration(
               labelText: l.description,
-              border: const OutlineInputBorder(),
             ),
           ),
           if (_parts.isNotEmpty) ...[
@@ -607,7 +603,6 @@ class _PartRow extends StatelessWidget {
                     decoration: InputDecoration(
                       labelText: l.partName,
                       isDense: true,
-                      border: const OutlineInputBorder(),
                     ),
                   ),
           ),
@@ -623,7 +618,6 @@ class _PartRow extends StatelessWidget {
               decoration: InputDecoration(
                 labelText: l.quantity,
                 isDense: true,
-                border: const OutlineInputBorder(),
               ),
             ),
           ),

@@ -467,7 +467,6 @@ class _AddMaintenanceLogModalState
                 controller: _descriptionController,
                 decoration: InputDecoration(
                   labelText: l.descriptionRequired,
-                  border: const OutlineInputBorder(),
                 ),
                 maxLines: 3,
                 validator: (v) =>
@@ -479,7 +478,6 @@ class _AddMaintenanceLogModalState
                 decoration: InputDecoration(
                   labelText: l.odometerAtService,
                   hintText: '0',
-                  border: const OutlineInputBorder(),
                 ),
                 keyboardType: TextInputType.number,
               ),
@@ -554,7 +552,6 @@ class _AddMaintenanceLogModalState
                   hintText: '0.00',
                   prefixText:
                       '${Vehicle.currencySymbol(_vehicleCurrency)} ',
-                  border: const OutlineInputBorder(),
                 ),
                 keyboardType: const TextInputType
                     .numberWithOptions(decimal: true),
@@ -571,7 +568,6 @@ class _AddMaintenanceLogModalState
                       initialValue: _selectedIntervalId,
                       decoration: InputDecoration(
                         labelText: l.resetInterval,
-                        border: const OutlineInputBorder(),
                       ),
                       items: enabled
                           .map((i) => DropdownMenuItem(

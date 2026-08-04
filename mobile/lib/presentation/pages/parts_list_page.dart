@@ -514,7 +514,6 @@ class _PartDetailSheetState extends State<_PartDetailSheet> {
           keyboardType: TextInputType.url,
           decoration: InputDecoration(
             labelText: l.linkUrl,
-            border: const OutlineInputBorder(),
             hintText: 'https://example.com',
           ),
           onSubmitted: (v) => Navigator.pop(ctx, v),
@@ -625,7 +624,6 @@ class _PartDetailSheetState extends State<_PartDetailSheet> {
               controller: _oemCtrl,
               decoration: InputDecoration(
                 labelText: l.oemNumber,
-                border: const OutlineInputBorder(),
                 suffixIcon: IconButton(
                   icon: const Icon(Icons.copy_outlined, size: 20),
                   tooltip: l.copy,
@@ -648,7 +646,6 @@ class _PartDetailSheetState extends State<_PartDetailSheet> {
               minLines: 2,
               decoration: InputDecoration(
                 labelText: l.description,
-                border: const OutlineInputBorder(),
               ),
             ),
             const SizedBox(height: 16),
