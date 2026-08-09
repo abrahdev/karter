@@ -603,6 +603,66 @@ abstract class AppLocalizations {
   /// **'can'**
   String get partUnitCan;
 
+  /// No description provided for @partUnitLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Unit'**
+  String get partUnitLabel;
+
+  /// No description provided for @localParts.
+  ///
+  /// In en, this message translates to:
+  /// **'Local parts'**
+  String get localParts;
+
+  /// No description provided for @intervalParts.
+  ///
+  /// In en, this message translates to:
+  /// **'Interval parts'**
+  String get intervalParts;
+
+  /// No description provided for @newPart.
+  ///
+  /// In en, this message translates to:
+  /// **'New part'**
+  String get newPart;
+
+  /// No description provided for @createPart.
+  ///
+  /// In en, this message translates to:
+  /// **'Create part'**
+  String get createPart;
+
+  /// No description provided for @partsSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Parts'**
+  String get partsSection;
+
+  /// No description provided for @usedParts.
+  ///
+  /// In en, this message translates to:
+  /// **'Parts'**
+  String get usedParts;
+
+  /// No description provided for @usedInServicesCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} service(s)'**
+  String usedInServicesCount(Object count);
+
+  /// No description provided for @deletePartConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'This part is used in {count} service(s). Delete it anyway?'**
+  String deletePartConfirm(Object count);
+
+  /// No description provided for @reportPartsHeader.
+  ///
+  /// In en, this message translates to:
+  /// **'Parts'**
+  String get reportPartsHeader;
+
   /// No description provided for @templateFound.
   ///
   /// In en, this message translates to:

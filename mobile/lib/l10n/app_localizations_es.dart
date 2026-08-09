@@ -282,6 +282,40 @@ class AppLocalizationsEs extends AppLocalizations {
   String get partUnitCan => 'lata';
 
   @override
+  String get partUnitLabel => 'Unidad';
+
+  @override
+  String get localParts => 'Repuestos locales';
+
+  @override
+  String get intervalParts => 'Repuestos de intervalos';
+
+  @override
+  String get newPart => 'Nuevo repuesto';
+
+  @override
+  String get createPart => 'Crear repuesto';
+
+  @override
+  String get partsSection => 'Repuestos';
+
+  @override
+  String get usedParts => 'Repuestos';
+
+  @override
+  String usedInServicesCount(Object count) {
+    return '$count servicio(s)';
+  }
+
+  @override
+  String deletePartConfirm(Object count) {
+    return 'Este repuesto se usa en $count servicio(s). ¿Eliminarlo de todos modos?';
+  }
+
+  @override
+  String get reportPartsHeader => 'Repuestos';
+
+  @override
   String get templateFound => 'Plantilla encontrada';
 
   @override

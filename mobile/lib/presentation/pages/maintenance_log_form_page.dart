@@ -7,8 +7,10 @@ import 'package:intl/intl.dart';
 import 'package:mobile/core/database/app_database.dart';
 import 'package:mobile/core/modal_helpers.dart';
 import 'package:mobile/domain/entities/maintenance_log.dart';
+import 'package:mobile/domain/entities/maintenance_log_part.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
+import 'package:mobile/presentation/widgets/maintenance_log_parts_field.dart';
 
 class MaintenanceLogFormPage extends ConsumerStatefulWidget {
   final String vehicleId;
@@ -37,6 +39,7 @@ class _MaintenanceLogFormPageState
 
   DateTime _date = DateTime.now();
   String? _selectedIntervalId;
+  List<MaintenanceLogPart> _selectedParts = [];
   bool _isLoading = false;
   bool _isEditing = false;
 
@@ -67,6 +70,10 @@ class _MaintenanceLogFormPageState
           }
         });
       }
+      final parts = await ref
+          .read(maintenanceLogPartRepositoryProvider)
+          .getByLog(widget.logId!);
+      if (mounted) setState(() => _selectedParts = parts);
     } else {
       final vehicle =
           await ref.read(vehicleProvider(widget.vehicleId).future);
@@ -132,6 +139,12 @@ class _MaintenanceLogFormPageState
 
       final repo = ref.read(maintenanceLogRepositoryProvider);
       await repo.save(log);
+
+      final partsToSave =
+          _selectedParts.map((p) => p.copyWith(logId: logId)).toList();
+      await ref
+          .read(maintenanceLogPartRepositoryProvider)
+          .replaceForLog(logId, partsToSave);
 
       if (resetIntervalId != null) {
         final intervalRepo =
@@ -202,6 +215,9 @@ class _MaintenanceLogFormPageState
       }
 
       await repo.delete(widget.logId!);
+      await ref
+          .read(maintenanceLogPartRepositoryProvider)
+          .deleteByLog(widget.logId!);
 
       ref.invalidate(maintenanceLogsProvider(widget.vehicleId));
       ref.invalidate(maintenanceIntervalsProvider(widget.vehicleId));
@@ -254,6 +270,11 @@ class _MaintenanceLogFormPageState
                 hintText: '0',
               ),
               keyboardType: TextInputType.number,
+            ),
+            const SizedBox(height: 12),
+            MaintenanceLogPartsField(
+              initialParts: _selectedParts,
+              onChanged: (parts) => _selectedParts = parts,
             ),
             if (!_isEditing) ...[
               const SizedBox(height: 12),

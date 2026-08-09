@@ -281,6 +281,40 @@ class AppLocalizationsEn extends AppLocalizations {
   String get partUnitCan => 'can';
 
   @override
+  String get partUnitLabel => 'Unit';
+
+  @override
+  String get localParts => 'Local parts';
+
+  @override
+  String get intervalParts => 'Interval parts';
+
+  @override
+  String get newPart => 'New part';
+
+  @override
+  String get createPart => 'Create part';
+
+  @override
+  String get partsSection => 'Parts';
+
+  @override
+  String get usedParts => 'Parts';
+
+  @override
+  String usedInServicesCount(Object count) {
+    return '$count service(s)';
+  }
+
+  @override
+  String deletePartConfirm(Object count) {
+    return 'This part is used in $count service(s). Delete it anyway?';
+  }
+
+  @override
+  String get reportPartsHeader => 'Parts';
+
+  @override
   String get templateFound => 'Template found';
 
   @override

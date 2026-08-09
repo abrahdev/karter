@@ -5,11 +5,17 @@ import 'package:material3_indicators/material3_indicators.dart';
 import 'package:mobile/core/modal_helpers.dart';
 import 'package:mobile/core/theme/app_spacing.dart';
 import 'package:mobile/domain/entities/maintenance_interval.dart';
+import 'package:mobile/domain/entities/maintenance_log.dart';
+import 'package:mobile/domain/entities/maintenance_log_part.dart';
+import 'package:mobile/domain/entities/vehicle_part.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/haptic_provider.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
 import 'package:mobile/presentation/utils/maintenance_localizer.dart';
+import 'package:mobile/presentation/widgets/add_maintenance_log_modal.dart';
 import 'package:mobile/presentation/widgets/interval_parts_view.dart';
+import 'package:mobile/presentation/widgets/maintenance_log_parts_field.dart';
+import 'package:mobile/presentation/widgets/section_header.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PartsListPage extends ConsumerStatefulWidget {
@@ -22,6 +28,13 @@ class PartsListPage extends ConsumerStatefulWidget {
 }
 
 class _PartsListPageState extends ConsumerState<PartsListPage> {
+  Future<void> _createLocalPart() async {
+    final created = await showQuickCreatePartSheet(context);
+    if (created != null && mounted) {
+      ref.invalidate(vehiclePartsProvider);
+    }
+  }
+
   Future<void> _savePart(_PartEntry entry, IntervalPart updated) async {
     final repo = ref.read(maintenanceIntervalRepositoryProvider);
     final intervals = await repo.getByVehicle(widget.vehicleId);
@@ -61,73 +74,115 @@ class _PartsListPageState extends ConsumerState<PartsListPage> {
     final l = AppLocalizations.of(context)!;
     final intervalsAsync =
         ref.watch(maintenanceIntervalsProvider(widget.vehicleId));
+    final localPartsAsync = ref.watch(vehiclePartsProvider);
 
     return Scaffold(
       appBar: AppBar(title: Text(l.partsTitle)),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _createLocalPart,
+        tooltip: l.newPart,
+        child: const Icon(Icons.add),
+      ),
       body: intervalsAsync.when(
         data: (intervals) {
-          final entries = _aggregate(intervals, l);
-          if (entries.isEmpty) {
-            return Center(
-              child: Padding(
-                padding: const EdgeInsets.all(AppSpacing.pagePadding),
-                child: Text(
-                  l.noParts,
-                  textAlign: TextAlign.center,
-                  style: theme.textTheme.bodyMedium?.copyWith(
-                    color: theme.colorScheme.onSurfaceVariant,
-                  ),
-                ),
-              ),
-            );
-          }
-          return ListView(
-            padding: const EdgeInsets.all(AppSpacing.pagePadding),
-            children: [
-              for (final entry in entries)
-                Card(
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.check_circle_outline,
-                      color: theme.colorScheme.primary,
+          return localPartsAsync.when(
+            data: (localParts) {
+              final entries = _aggregate(intervals, l);
+              if (localParts.isEmpty && entries.isEmpty) {
+                return Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(AppSpacing.pagePadding),
+                    child: Text(
+                      l.noParts,
+                      textAlign: TextAlign.center,
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: theme.colorScheme.onSurfaceVariant,
+                      ),
                     ),
-                    title: Text(_partLine(context, entry)),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        if (entry.oemNumber != null &&
-                            entry.oemNumber!.isNotEmpty)
-                          Row(
+                  ),
+                );
+              }
+              return ListView(
+                padding: const EdgeInsets.all(AppSpacing.pagePadding),
+                children: [
+                  SectionHeader(title: l.localParts),
+                  if (localParts.isEmpty)
+                    Padding(
+                      padding: const EdgeInsets.only(left: 4),
+                      child: Text(
+                        l.noParts,
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          color: theme.colorScheme.onSurfaceVariant,
+                        ),
+                      ),
+                    )
+                  else
+                    for (final part in localParts)
+                      _LocalPartCard(vehicleId: widget.vehicleId, part: part),
+                  SectionHeader(title: l.intervalParts),
+                  if (entries.isEmpty)
+                    Padding(
+                      padding: const EdgeInsets.only(left: 4),
+                      child: Text(
+                        l.noParts,
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          color: theme.colorScheme.onSurfaceVariant,
+                        ),
+                      ),
+                    )
+                  else
+                    for (final entry in entries)
+                      Card(
+                        child: ListTile(
+                          leading: Icon(
+                            Icons.check_circle_outline,
+                            color: theme.colorScheme.primary,
+                          ),
+                          title: Text(_partLine(context, entry)),
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Flexible(
-                                child: Text(
-                                  '${l.oemNumber}: ${entry.oemNumber}',
-                                  overflow: TextOverflow.ellipsis,
+                              if (entry.oemNumber != null &&
+                                  entry.oemNumber!.isNotEmpty)
+                                Row(
+                                  children: [
+                                    Flexible(
+                                      child: Text(
+                                        '${l.oemNumber}: ${entry.oemNumber}',
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                    IconButton(
+                                      icon: const Icon(Icons.copy_outlined,
+                                          size: 16),
+                                      visualDensity: VisualDensity.compact,
+                                      tooltip: l.copy,
+                                      onPressed: () => _copy(
+                                          context, entry.oemNumber!),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                              IconButton(
-                                icon: const Icon(Icons.copy_outlined,
-                                    size: 16),
-                                visualDensity: VisualDensity.compact,
-                                tooltip: l.copy,
-                                onPressed: () => _copy(
-                                    context, entry.oemNumber!),
-                              ),
+                              if (entry.links.isNotEmpty)
+                                _LinkChips(links: entry.links),
+                              if (entry.relatedIntervals.isNotEmpty)
+                                _RelatedServicesChips(
+                                  intervals: entry.relatedIntervals,
+                                  onTap: _openInterval,
+                                ),
                             ],
                           ),
-                        if (entry.links.isNotEmpty) _LinkChips(entry: entry),
-                        if (entry.relatedIntervals.isNotEmpty)
-                          _RelatedServicesChips(
-                            intervals: entry.relatedIntervals,
-                            onTap: _openInterval,
-                          ),
-                      ],
-                    ),
-                    trailing: const Icon(Icons.chevron_right),
-                    onTap: () => _openDetail(entry),
-                  ),
-                ),
-            ],
+                          trailing: const Icon(Icons.chevron_right),
+                          onTap: () => _openDetail(entry),
+                        ),
+                      ),
+                ],
+              );
+            },
+            loading: () => const Center(
+              child: M3LoadingIndicator(
+                  contained: true, size: 36, containerSize: 72),
+            ),
+            error: (e, _) => Center(child: Text('Error: $e')),
           );
         },
         loading: () => const Center(
@@ -368,10 +423,547 @@ List<_PartEntry> _aggregate(List<MaintenanceInterval> intervals, AppLocalization
   return result;
 }
 
-class _LinkChips extends StatelessWidget {
-  final _PartEntry entry;
+class _LocalPartCard extends ConsumerWidget {
+  final String vehicleId;
+  final VehiclePart part;
 
-  const _LinkChips({required this.entry});
+  const _LocalPartCard({required this.vehicleId, required this.part});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = Theme.of(context);
+    final l = AppLocalizations.of(context)!;
+    final associationsAsync =
+        ref.watch(maintenanceLogPartsByPartProvider(part.id));
+    final logsAsync = ref.watch(maintenanceLogsProvider(vehicleId));
+
+    return Card(
+      child: ListTile(
+        leading: Icon(
+          Icons.inventory_2_outlined,
+          color: theme.colorScheme.primary,
+        ),
+        title: Text(part.name),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              _localPartLine(context, part),
+              style: theme.textTheme.bodySmall?.copyWith(
+                color: theme.colorScheme.onSurfaceVariant,
+              ),
+            ),
+            if (part.oemNumber != null && part.oemNumber!.isNotEmpty)
+              Row(
+                children: [
+                  Flexible(
+                    child: Text(
+                      '${l.oemNumber}: ${part.oemNumber}',
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.copy_outlined, size: 16),
+                    visualDensity: VisualDensity.compact,
+                    tooltip: l.copy,
+                    onPressed: () async {
+                      final messenger = ScaffoldMessenger.of(context);
+                      await Clipboard.setData(
+                          ClipboardData(text: part.oemNumber!));
+                      messenger.showSnackBar(SnackBar(
+                        content: Text(l.copied),
+                        duration: const Duration(seconds: 1),
+                      ));
+                    },
+                  ),
+                ],
+              ),
+            if (part.links.isNotEmpty) _LinkChips(links: part.links),
+            _RelatedLogsChips(
+              associationsAsync: associationsAsync,
+              logsAsync: logsAsync,
+              onTap: (log) => showEditMaintenanceLogModal(
+                context,
+                vehicleId: vehicleId,
+                log: log,
+                onSaved: () {
+                  ref.invalidate(maintenanceLogsProvider(vehicleId));
+                  ref.invalidate(
+                      maintenanceIntervalsProvider(vehicleId));
+                },
+              ),
+            ),
+          ],
+        ),
+        trailing: const Icon(Icons.chevron_right),
+        onTap: () => _openLocalPart(context, ref),
+      ),
+    );
+  }
+
+  String _localPartLine(BuildContext context, VehiclePart part) {
+    final unit = IntervalPartsView.unitLabel(context, part.unit);
+    final qty = IntervalPartsView.formatQuantity(part.quantity);
+    if (unit.isEmpty) {
+      if (part.quantity != 1) return '\u00d7 $qty';
+    } else {
+      return '\u00d7 $qty $unit';
+    }
+    return part.description ?? '';
+  }
+
+  Future<void> _openLocalPart(BuildContext context, WidgetRef ref) async {
+    final result = await karterShowModalBottomSheet<String>(
+      context: context,
+      isScrollControlled: true,
+      builder: (ctx) => _LocalPartDetailSheet(part: part),
+    );
+    if (result == 'saved' && context.mounted) {
+      ref.read(hapticProvider.notifier).success();
+      ref.invalidate(vehiclePartsProvider);
+    } else if (result == 'deleted' && context.mounted) {
+      ref.read(hapticProvider.notifier).delete();
+      ref.invalidate(vehiclePartsProvider);
+    }
+  }
+}
+
+class _RelatedLogsChips extends ConsumerWidget {
+  final AsyncValue<List<MaintenanceLogPart>> associationsAsync;
+  final AsyncValue<List<MaintenanceLog>> logsAsync;
+  final ValueChanged<MaintenanceLog> onTap;
+
+  const _RelatedLogsChips({
+    required this.associationsAsync,
+    required this.logsAsync,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = Theme.of(context);
+    final l = AppLocalizations.of(context)!;
+
+    final logs = logsAsync.value ?? const <MaintenanceLog>[];
+    final ids = associationsAsync.value ?? const <MaintenanceLogPart>[];
+    final related = ids
+        .map((a) => logs.where((log) => log.id == a.logId).firstOrNull)
+        .whereType<MaintenanceLog>()
+        .toList();
+    if (related.isEmpty) return const SizedBox.shrink();
+
+    return Padding(
+      padding: const EdgeInsets.only(top: 8),
+      child: Wrap(
+        spacing: 6,
+        runSpacing: 6,
+        children: [
+          for (final log in related.take(4))
+            ActionChip(
+              avatar: Icon(
+                Icons.build,
+                size: 16,
+                color: theme.colorScheme.primary,
+              ),
+              label: Text(log.description),
+              visualDensity: VisualDensity.compact,
+              onPressed: () => onTap(log),
+            ),
+          if (related.length > 4)
+            Padding(
+              padding: const EdgeInsets.only(left: 4),
+              child: Text(
+                l.usedInServicesCount((related.length - 4).toString()),
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+class _LocalPartDetailSheet extends ConsumerStatefulWidget {
+  final VehiclePart part;
+
+  const _LocalPartDetailSheet({required this.part});
+
+  @override
+  ConsumerState<_LocalPartDetailSheet> createState() =>
+      _LocalPartDetailSheetState();
+}
+
+class _LocalPartDetailSheetState
+    extends ConsumerState<_LocalPartDetailSheet> {
+  late final TextEditingController _nameCtrl;
+  late final TextEditingController _qtyCtrl;
+  late final TextEditingController _oemCtrl;
+  late final TextEditingController _descCtrl;
+  String? _unit;
+  late List<String> _links;
+  bool _deleting = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _nameCtrl = TextEditingController(text: widget.part.name);
+    _qtyCtrl = TextEditingController(
+        text: IntervalPartsView.formatQuantity(widget.part.quantity));
+    _oemCtrl = TextEditingController(text: widget.part.oemNumber ?? '');
+    _descCtrl =
+        TextEditingController(text: widget.part.description ?? '');
+    _unit = widget.part.unit;
+    _links = [...widget.part.links];
+  }
+
+  @override
+  void dispose() {
+    _nameCtrl.dispose();
+    _qtyCtrl.dispose();
+    _oemCtrl.dispose();
+    _descCtrl.dispose();
+    super.dispose();
+  }
+
+  Future<void> _addLink() async {
+    final l = AppLocalizations.of(context)!;
+    final messenger = ScaffoldMessenger.of(context);
+    final ctrl = TextEditingController();
+    final result = await karterShowDialog<String>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(l.addLink),
+        content: TextField(
+          controller: ctrl,
+          autofocus: true,
+          keyboardType: TextInputType.url,
+          decoration: InputDecoration(
+            labelText: l.linkUrl,
+            hintText: 'https://example.com',
+          ),
+          onSubmitted: (v) => Navigator.pop(ctx, v),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: Text(l.cancel),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(ctx, ctrl.text),
+            child: Text(l.add),
+          ),
+        ],
+      ),
+    );
+    if (!mounted) return;
+    final url = _normalizeUrl(result?.trim(), messenger, l);
+    if (url == null) return;
+    setState(() => _links.add(url));
+  }
+
+  String? _normalizeUrl(
+    String? raw,
+    ScaffoldMessengerState messenger,
+    AppLocalizations l,
+  ) {
+    if (raw == null || raw.isEmpty) return null;
+    var candidate = raw;
+    if (!candidate.startsWith('http://') &&
+        !candidate.startsWith('https://')) {
+      candidate = 'https://$candidate';
+    }
+    final uri = Uri.tryParse(candidate);
+    if (uri == null || !uri.hasScheme || uri.host.isEmpty) {
+      messenger.showSnackBar(SnackBar(content: Text(l.invalidUrl)));
+      return null;
+    }
+    return candidate;
+  }
+
+  Future<void> _openLink(String url) async {
+    final l = AppLocalizations.of(context)!;
+    final messenger = ScaffoldMessenger.of(context);
+    final uri = Uri.tryParse(url);
+    if (uri == null || !uri.hasScheme || uri.host.isEmpty) {
+      messenger.showSnackBar(SnackBar(content: Text(l.invalidUrl)));
+      return;
+    }
+    final opened = await launchUrl(uri, mode: LaunchMode.externalApplication);
+    if (!opened && mounted) {
+      messenger.showSnackBar(SnackBar(content: Text(l.invalidUrl)));
+    }
+  }
+
+  Future<void> _save() async {
+    final l = AppLocalizations.of(context)!;
+    if (_nameCtrl.text.trim().isEmpty) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(l.required)));
+      return;
+    }
+    final updated = widget.part.copyWith(
+      name: _nameCtrl.text.trim(),
+      quantity: double.tryParse(_qtyCtrl.text.trim()) ?? 1,
+      unit: _unit,
+      oemNumber:
+          _oemCtrl.text.trim().isEmpty ? null : _oemCtrl.text.trim(),
+      description: _descCtrl.text.trim(),
+      links: _links,
+    );
+    await ref.read(vehiclePartRepositoryProvider).save(updated);
+    if (mounted) Navigator.pop(context, 'saved');
+  }
+
+  Future<void> _delete() async {
+    final l = AppLocalizations.of(context)!;
+    final messenger = ScaffoldMessenger.of(context);
+    final associations =
+        await ref.read(maintenanceLogPartRepositoryProvider).getByPartId(
+              widget.part.id,
+            );
+    if (!mounted) return;
+    final confirmed = await karterShowDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(l.delete),
+        content: Text(associations.isEmpty
+            ? l.deletePartConfirm('0')
+            : l.deletePartConfirm(associations.length.toString())),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, false),
+            child: Text(l.cancel),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(ctx, true),
+            style: FilledButton.styleFrom(
+              backgroundColor: Theme.of(ctx).colorScheme.error,
+              foregroundColor: Theme.of(ctx).colorScheme.onError,
+            ),
+            child: Text(l.delete),
+          ),
+        ],
+      ),
+    );
+    if (confirmed != true || !mounted) return;
+    setState(() => _deleting = true);
+    try {
+      await ref.read(vehiclePartRepositoryProvider).delete(widget.part.id);
+      await ref
+          .read(maintenanceLogPartRepositoryProvider)
+          .deleteByPartId(widget.part.id);
+      if (mounted) Navigator.pop(context, 'deleted');
+    } catch (e) {
+      messenger
+          .showSnackBar(SnackBar(content: Text(l.homeError(e.toString()))));
+    } finally {
+      if (mounted) setState(() => _deleting = false);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final l = AppLocalizations.of(context)!;
+    final part = widget.part;
+
+    return Padding(
+      padding: EdgeInsets.only(
+        bottom: MediaQuery.of(context).viewInsets.bottom,
+      ),
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.fromLTRB(20, 12, 20, 20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: Container(
+                width: 40,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: theme.colorScheme.outlineVariant,
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+            ),
+            const SizedBox(height: 16),
+            Text(part.name, style: theme.textTheme.titleLarge),
+            const SizedBox(height: 16),
+            TextFormField(
+              controller: _nameCtrl,
+              decoration: InputDecoration(labelText: l.partName),
+            ),
+            const SizedBox(height: 12),
+            Row(
+              children: [
+                Expanded(
+                  child: TextFormField(
+                    controller: _qtyCtrl,
+                    decoration: InputDecoration(labelText: l.quantity),
+                    keyboardType: const TextInputType
+                        .numberWithOptions(decimal: true),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: DropdownButtonFormField<String>(
+                    initialValue: _unit,
+                    isExpanded: true,
+                    decoration: InputDecoration(
+                      labelText: l.partUnitLabel,
+                    ),
+                    items: [
+                      DropdownMenuItem(
+                        value: 'unit',
+                        child: Text(l.partUnitUnit),
+                      ),
+                      DropdownMenuItem(
+                        value: 'set',
+                        child: Text(l.partUnitSet),
+                      ),
+                      DropdownMenuItem(
+                        value: 'kit',
+                        child: Text(l.partUnitKit),
+                      ),
+                      DropdownMenuItem(
+                        value: 'can',
+                        child: Text(l.partUnitCan),
+                      ),
+                    ],
+                    onChanged: (v) => setState(() => _unit = v),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            TextFormField(
+              controller: _oemCtrl,
+              decoration: InputDecoration(
+                labelText: l.oemNumber,
+                suffixIcon: IconButton(
+                  icon: const Icon(Icons.copy_outlined, size: 20),
+                  tooltip: l.copy,
+                  onPressed: () async {
+                    final messenger = ScaffoldMessenger.of(context);
+                    await Clipboard.setData(
+                        ClipboardData(text: _oemCtrl.text));
+                    messenger.showSnackBar(SnackBar(
+                      content: Text(l.copied),
+                      duration: const Duration(seconds: 1),
+                    ));
+                  },
+                ),
+              ),
+            ),
+            const SizedBox(height: 12),
+            TextFormField(
+              controller: _descCtrl,
+              maxLines: 3,
+              minLines: 2,
+              decoration: InputDecoration(
+                labelText: l.description,
+              ),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              l.linksTitle.toUpperCase(),
+              style: theme.textTheme.labelSmall?.copyWith(
+                color: theme.colorScheme.primary,
+                fontWeight: FontWeight.w600,
+                letterSpacing: 1.2,
+              ),
+            ),
+            const SizedBox(height: 8),
+            if (_links.isEmpty)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: Text(
+                  l.noLinks,
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: theme.colorScheme.onSurfaceVariant,
+                  ),
+                ),
+              )
+            else
+              for (final link in _links)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 4),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          link,
+                          overflow: TextOverflow.ellipsis,
+                          style: theme.textTheme.bodyMedium,
+                        ),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.open_in_new, size: 20),
+                        tooltip: l.openLink,
+                        visualDensity: VisualDensity.compact,
+                        onPressed: () => _openLink(link),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.close, size: 18),
+                        tooltip: l.delete,
+                        visualDensity: VisualDensity.compact,
+                        onPressed: () =>
+                            setState(() => _links.remove(link)),
+                      ),
+                    ],
+                  ),
+                ),
+            const SizedBox(height: 8),
+            OutlinedButton.icon(
+              onPressed: _addLink,
+              icon: const Icon(Icons.add, size: 18),
+              label: Text(l.addLink),
+            ),
+            const SizedBox(height: 20),
+            Row(
+              children: [
+                Expanded(
+                  child: OutlinedButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: Text(l.cancel),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: FilledButton(
+                    onPressed: _save,
+                    child: Text(l.saveChanges),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            SizedBox(
+              width: double.infinity,
+              child: OutlinedButton.icon(
+                onPressed: _deleting ? null : _delete,
+                icon: const Icon(Icons.delete_outline),
+                label: Text(l.delete),
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: theme.colorScheme.error,
+                  side: BorderSide(color: theme.colorScheme.error),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _LinkChips extends StatelessWidget {
+  final List<String> links;
+
+  const _LinkChips({required this.links});
 
   @override
   Widget build(BuildContext context) {
@@ -382,7 +974,7 @@ class _LinkChips extends StatelessWidget {
         spacing: 6,
         runSpacing: 6,
         children: [
-          for (final link in entry.links)
+          for (final link in links)
             ActionChip(
               avatar: Icon(Icons.link,
                   size: 16, color: theme.colorScheme.primary),

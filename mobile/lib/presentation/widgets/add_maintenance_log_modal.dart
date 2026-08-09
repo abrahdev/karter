@@ -11,10 +11,13 @@ import 'package:mobile/core/database/app_database.dart';
 import 'package:mobile/core/modal_helpers.dart';
 import 'package:mobile/core/rating_helper.dart';
 import 'package:mobile/domain/entities/maintenance_log.dart';
+import 'package:mobile/domain/entities/maintenance_log_part.dart';
 import 'package:mobile/domain/entities/vehicle.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
 import 'package:mobile/presentation/widgets/full_screen_photo_viewer.dart';
+import 'package:mobile/presentation/widgets/interval_parts_view.dart';
+import 'package:mobile/presentation/widgets/maintenance_log_parts_field.dart';
 import 'package:path_provider/path_provider.dart';
 
 Future<void> showAddMaintenanceLogModal(
@@ -125,6 +128,7 @@ class _AddMaintenanceLogModalState
   String? _selectedIntervalId;
   final List<String> _selectedPhotos = [];
   String _vehicleCurrency = 'USD';
+  List<MaintenanceLogPart> _selectedParts = [];
   bool _saving = false;
   bool _isEditing = false;
 
@@ -143,7 +147,14 @@ class _AddMaintenanceLogModalState
       if (log.costAmount != null) {
         _costController.text = log.costAmount.toString();
       }
-      WidgetsBinding.instance.addPostFrameCallback((_) => _loadCurrency());
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        await _loadCurrency();
+        if (!mounted) return;
+        final parts = await ref
+            .read(maintenanceLogPartRepositoryProvider)
+            .getByLog(log.id);
+        if (mounted) setState(() => _selectedParts = parts);
+      });
     } else {
       if (widget.initialDescription != null) {
         _descriptionController.text = widget.initialDescription!;
@@ -333,6 +344,12 @@ class _AddMaintenanceLogModalState
       final repo = ref.read(maintenanceLogRepositoryProvider);
       await repo.save(log);
 
+      final partsToSave =
+          _selectedParts.map((p) => p.copyWith(logId: logId)).toList();
+      await ref
+          .read(maintenanceLogPartRepositoryProvider)
+          .replaceForLog(logId, partsToSave);
+
       if (!_isEditing && resetIntervalId != null) {
         final intervalRepo =
             ref.read(maintenanceIntervalRepositoryProvider);
@@ -403,6 +420,9 @@ class _AddMaintenanceLogModalState
       }
 
       await repo.delete(log.id);
+      await ref
+          .read(maintenanceLogPartRepositoryProvider)
+          .deleteByLog(log.id);
       ref.invalidate(maintenanceLogsProvider(widget.vehicleId));
       ref.invalidate(maintenanceIntervalsProvider(widget.vehicleId));
 
@@ -544,6 +564,11 @@ class _AddMaintenanceLogModalState
                   ),
                 ),
               ],
+              const SizedBox(height: 12),
+              MaintenanceLogPartsField(
+                initialParts: _selectedParts,
+                onChanged: (parts) => _selectedParts = parts,
+              ),
               const SizedBox(height: 12),
               TextFormField(
                 controller: _costController,
@@ -740,6 +765,7 @@ class _MaintenanceLogPreview extends ConsumerWidget {
                 '${Vehicle.currencySymbol(log.costCurrency ?? 'USD')} ${log.costAmount!.toStringAsFixed(2)}',
               ),
             ),
+          _PreviewParts(logId: log.id),
           if (hasPhotos)
             Padding(
               padding: const EdgeInsets.only(top: 4),
@@ -765,5 +791,77 @@ class _MaintenanceLogPreview extends ConsumerWidget {
         ],
       ),
     );
+  }
+}
+
+class _PreviewParts extends ConsumerWidget {
+  final String logId;
+
+  const _PreviewParts({required this.logId});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = Theme.of(context);
+    final l = AppLocalizations.of(context)!;
+    final partsAsync = ref.watch(maintenanceLogPartsProvider(logId));
+
+    return partsAsync.when(
+      data: (parts) {
+        if (parts.isEmpty) return const SizedBox.shrink();
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 12),
+            Padding(
+              padding: const EdgeInsets.only(left: 4),
+              child: Text(
+                l.usedParts.toUpperCase(),
+                style: theme.textTheme.labelSmall?.copyWith(
+                  color: theme.colorScheme.primary,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 1.2,
+                ),
+              ),
+            ),
+            const SizedBox(height: 8),
+            for (final part in parts)
+              Padding(
+                padding: const EdgeInsets.only(top: 2),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Icon(
+                      Icons.check_circle_outline,
+                      size: 14,
+                      color: theme.colorScheme.primary,
+                    ),
+                    const SizedBox(width: 6),
+                    Expanded(
+                      child: Text(
+                        _partLine(context, part),
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: theme.colorScheme.onSurfaceVariant,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+          ],
+        );
+      },
+      loading: () => const SizedBox.shrink(),
+      error: (_, _) => const SizedBox.shrink(),
+    );
+  }
+
+  String _partLine(BuildContext context, MaintenanceLogPart part) {
+    final unit = IntervalPartsView.unitLabel(context, part.unit);
+    final qty = IntervalPartsView.formatQuantity(part.quantity);
+    if (unit.isEmpty) {
+      if (part.quantity == 1) return part.name;
+      return '${part.name} \u00d7 $qty';
+    }
+    return '${part.name} \u00d7 $qty $unit';
   }
 }

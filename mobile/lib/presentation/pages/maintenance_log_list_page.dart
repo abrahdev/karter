@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:material3_indicators/material3_indicators.dart';
 import 'package:mobile/core/theme/app_spacing.dart';
 import 'package:mobile/domain/entities/maintenance_log.dart';
+import 'package:mobile/domain/entities/maintenance_log_part.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
 import 'package:mobile/presentation/widgets/add_maintenance_log_modal.dart';
@@ -82,6 +83,11 @@ class _MaintenanceLogListPageState
         : widget.vehicleId;
 
     final pdfService = ref.read(pdfExportServiceProvider);
+    final logPartRepo = ref.read(maintenanceLogPartRepositoryProvider);
+    final partsByLog = <String, List<MaintenanceLogPart>>{};
+    for (final log in filtered) {
+      partsByLog[log.id] = await logPartRepo.getByLog(log.id);
+    }
     final pdfBytes = await pdfService.generateMaintenanceReport(
       vehicleName: vehicleName,
       logs: filtered,
@@ -95,6 +101,8 @@ class _MaintenanceLogListPageState
       descriptionHeader: l.maintenanceReportDescHeader,
       odometerHeader: l.maintenanceReportOdometerHeader,
       kmSuffix: l.km,
+      partsHeader: l.reportPartsHeader,
+      partsByLog: partsByLog,
     );
 
     if (!mounted) return;
@@ -139,7 +147,13 @@ class _MaintenanceLogListPageState
                           .colorScheme.onSecondaryContainer),
                 ),
                 title: Text(log.description),
-                subtitle: Text(dateFmt.format(log.date)),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(dateFmt.format(log.date)),
+                    _PartsCountBadge(logId: log.id),
+                  ],
+                ),
                 trailing: log.odometerAtService > 0
                     ? Text(
                         '${log.odometerAtService.toStringAsFixed(0)} ${l.km}',
@@ -364,6 +378,47 @@ class _MaintenanceLogListPageState
               child: const Icon(Icons.add),
             )
           : null,
+    );
+  }
+}
+
+class _PartsCountBadge extends ConsumerWidget {
+  final String logId;
+
+  const _PartsCountBadge({required this.logId});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = Theme.of(context);
+    final partsAsync = ref.watch(maintenanceLogPartsProvider(logId));
+
+    return partsAsync.when(
+      data: (parts) {
+        if (parts.isEmpty) return const SizedBox.shrink();
+        return Padding(
+          padding: const EdgeInsets.only(top: 4),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.build_circle_outlined,
+                size: 14,
+                color: theme.colorScheme.primary,
+              ),
+              const SizedBox(width: 4),
+              Text(
+                parts.length.toString(),
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: theme.colorScheme.primary,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+      loading: () => const SizedBox.shrink(),
+      error: (_, _) => const SizedBox.shrink(),
     );
   }
 }

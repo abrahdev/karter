@@ -5,6 +5,7 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 import 'package:mobile/domain/entities/maintenance_log.dart';
+import 'package:mobile/domain/entities/maintenance_log_part.dart';
 
 class PdfExportService {
   Future<Uint8List> generateMaintenanceReport({
@@ -20,6 +21,8 @@ class PdfExportService {
     String descriptionHeader = 'Description',
     String odometerHeader = 'Odometer',
     String kmSuffix = 'km',
+    String partsHeader = 'Parts',
+    Map<String, List<MaintenanceLogPart>> partsByLog = const {},
   }) async {
     final font = await PdfGoogleFonts.robotoRegular();
     final boldFont = await PdfGoogleFonts.robotoBold();
@@ -102,14 +105,20 @@ class PdfExportService {
                 bottom: pw.BorderSide(
                     color: PdfColors.grey300, width: 0.5),
               ),
-              headers: [dateHeader, descriptionHeader, odometerHeader],
-              data: logs.map((log) => [
-                    dateFmt.format(log.date),
-                    log.description,
-                    log.odometerAtService > 0
-                        ? '${log.odometerAtService.toStringAsFixed(0)} $kmSuffix'
-                        : '-',
-                  ]).toList(),
+              headers: [dateHeader, descriptionHeader, partsHeader, odometerHeader],
+              data: logs.map((log) {
+                final parts = (partsByLog[log.id] ?? const <MaintenanceLogPart>[])
+                    .map((p) => _partText(p))
+                    .join(', ');
+                return [
+                  dateFmt.format(log.date),
+                  log.description,
+                  parts.isEmpty ? '-' : parts,
+                  log.odometerAtService > 0
+                      ? '${log.odometerAtService.toStringAsFixed(0)} $kmSuffix'
+                      : '-',
+                ];
+              }).toList(),
             ),
           ],
         ],
@@ -117,5 +126,20 @@ class PdfExportService {
     );
 
     return pdf.save();
+  }
+
+  String _partText(MaintenanceLogPart part) {
+    if (part.unit == null || part.unit!.isEmpty) {
+      if (part.quantity == 1) return part.name;
+      return '${part.name} \u00d7 ${_fmtQty(part.quantity)}';
+    }
+    return '${part.name} \u00d7 ${_fmtQty(part.quantity)} ${part.unit}';
+  }
+
+  String _fmtQty(double quantity) {
+    if (quantity == quantity.roundToDouble()) {
+      return quantity.round().toString();
+    }
+    return quantity.toString();
   }
 }

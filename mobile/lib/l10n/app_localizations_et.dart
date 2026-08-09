@@ -282,6 +282,40 @@ class AppLocalizationsEt extends AppLocalizations {
   String get partUnitCan => 'purk';
 
   @override
+  String get partUnitLabel => 'Ühik';
+
+  @override
+  String get localParts => 'Kohalikud varuosad';
+
+  @override
+  String get intervalParts => 'Intervallide varuosad';
+
+  @override
+  String get newPart => 'Uus varuosa';
+
+  @override
+  String get createPart => 'Loo varuosa';
+
+  @override
+  String get partsSection => 'Varuosad';
+
+  @override
+  String get usedParts => 'Varuosad';
+
+  @override
+  String usedInServicesCount(Object count) {
+    return '$count hooldust';
+  }
+
+  @override
+  String deletePartConfirm(Object count) {
+    return 'Seda varuosa kasutatakse $count hoolduse juures. Kustutada ikkagi?';
+  }
+
+  @override
+  String get reportPartsHeader => 'Varuosad';
+
+  @override
   String get templateFound => 'Mall leitud';
 
   @override
