@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart' show BlockPicker;
@@ -26,6 +24,7 @@ import 'package:mobile/presentation/providers/template_source_provider.dart';
 import 'package:mobile/presentation/providers/theme_provider.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:uuid/uuid.dart';
 
 class MorePage extends ConsumerWidget {
   const MorePage({super.key});
@@ -679,6 +678,8 @@ class _AboutInfoCard extends ConsumerWidget {
   final AppLocalizations l;
   const _AboutInfoCard({required this.l});
 
+  static const _deviceIdKey = 'device_id';
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return FutureBuilder<PackageInfo>(
@@ -688,7 +689,7 @@ class _AboutInfoCard extends ConsumerWidget {
         final version = info != null
             ? '${info.version}+${info.buildNumber}'
             : '...';
-        final deviceId = _deviceId();
+        final deviceId = _deviceId(ref);
 
         return Card(
           clipBehavior: Clip.antiAlias,
@@ -737,14 +738,13 @@ class _AboutInfoCard extends ConsumerWidget {
     );
   }
 
-  static String _deviceId() {
-    final bytes = utf8.encode('karter-device');
-    var hash = 0x811c9dc5;
-    for (final byte in bytes) {
-      hash ^= byte;
-      hash = (hash * 0x01000193) & 0xFFFFFFFF;
-    }
-    return hash.toRadixString(16).toUpperCase().padLeft(8, '0') * 4;
+  static String _deviceId(WidgetRef ref) {
+    final prefs = ref.watch(sharedPreferencesProvider);
+    final existing = prefs.getString(_deviceIdKey);
+    if (existing != null) return existing;
+    final id = const Uuid().v4();
+    prefs.setString(_deviceIdKey, id);
+    return id;
   }
 }
 
