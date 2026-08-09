@@ -747,7 +747,7 @@ class _MaintenanceCard extends ConsumerWidget {
               );
 
               final tile = ListTile(
-                tileColor: tileColor,
+                tileColor: stacked ? null : tileColor,
                 leading: Icon(Icons.build_circle_outlined, color: contentColor),
                 title: Text(
                   localizedLabel(
@@ -794,7 +794,7 @@ class _MaintenanceCard extends ConsumerWidget {
 
               if (!stacked) return tile;
 
-              return Column(
+              final block = Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -805,6 +805,9 @@ class _MaintenanceCard extends ConsumerWidget {
                   ),
                 ],
               );
+
+              if (tileColor == null) return block;
+              return ColoredBox(color: tileColor, child: block);
             }).toList(),
           ),
         );
