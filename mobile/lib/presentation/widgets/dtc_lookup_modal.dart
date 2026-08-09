@@ -3,13 +3,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material3_indicators/material3_indicators.dart';
 import 'package:mobile/core/modal_helpers.dart';
 import 'package:mobile/data/services/template_resolver.dart';
+import 'package:mobile/domain/entities/vehicle.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
 import 'package:mobile/presentation/widgets/dtc_search_view.dart';
 
 Future<void> showDtcLookupModal(
   BuildContext context, {
-  required String vehicleId,
+  String? vehicleId,
 }) {
   return karterShowModalBottomSheet<void>(
     context: context,
@@ -19,9 +20,9 @@ Future<void> showDtcLookupModal(
 }
 
 class DtcLookupSheet extends ConsumerStatefulWidget {
-  final String vehicleId;
+  final String? vehicleId;
 
-  const DtcLookupSheet({super.key, required this.vehicleId});
+  const DtcLookupSheet({super.key, this.vehicleId});
 
   @override
   ConsumerState<DtcLookupSheet> createState() => _DtcLookupSheetState();
@@ -33,10 +34,12 @@ class _DtcLookupSheetState extends ConsumerState<DtcLookupSheet> {
   String _dbName = '';
   bool _loading = true;
   String? _error;
+  String? _selectedVehicleId;
 
   @override
   void initState() {
     super.initState();
+    _selectedVehicleId = widget.vehicleId;
     _load();
   }
 
@@ -47,7 +50,22 @@ class _DtcLookupSheetState extends ConsumerState<DtcLookupSheet> {
     });
 
     try {
-      final vehicle = await ref.read(vehicleProvider(widget.vehicleId).future);
+      final repo = ref.read(catalogRepositoryProvider);
+
+      if (_selectedVehicleId == null) {
+        final dtcs = await repo.resolveGeneralDtcs();
+        if (!mounted) return;
+        setState(() {
+          _dtcs = dtcs;
+          _items = [];
+          _dbName = AppLocalizations.of(context)?.dtcGeneralDb ?? '';
+          _loading = false;
+        });
+        return;
+      }
+
+      final vehicle = await ref
+          .read(vehicleProvider(_selectedVehicleId!).future);
       if (!mounted) return;
 
       if (vehicle == null) {
@@ -57,8 +75,6 @@ class _DtcLookupSheetState extends ConsumerState<DtcLookupSheet> {
         });
         return;
       }
-
-      final repo = ref.read(catalogRepositoryProvider);
 
       final resolution = await repo.findBestMatch(
         make: vehicle.brand,
@@ -100,6 +116,11 @@ class _DtcLookupSheetState extends ConsumerState<DtcLookupSheet> {
     }
   }
 
+  void _onVehicleChanged(String? vehicleId) {
+    setState(() => _selectedVehicleId = vehicleId);
+    _load();
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -128,9 +149,43 @@ class _DtcLookupSheetState extends ConsumerState<DtcLookupSheet> {
               child: Text(l.dtcLookupTitle, style: theme.textTheme.titleLarge),
             ),
           ),
+          if (widget.vehicleId == null)
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 8),
+              child: _buildVehicleSelector(l),
+            ),
           Expanded(child: _buildBody(theme, l)),
         ],
       ),
+    );
+  }
+
+  Widget _buildVehicleSelector(AppLocalizations l) {
+    final vehicles = ref.watch(vehicleListProvider).value;
+    final list = vehicles ?? const <Vehicle>[];
+
+    return DropdownButtonFormField<String>(
+      initialValue: _selectedVehicleId,
+      decoration: InputDecoration(
+        labelText: l.dtcVehicle,
+        prefixIcon: const Icon(Icons.directions_car),
+      ),
+      items: [
+        DropdownMenuItem<String>(
+          value: null,
+          child: Text(l.dtcGeneralDb),
+        ),
+        ...list.map(
+          (v) => DropdownMenuItem<String>(
+            value: v.id,
+            child: Text(
+              v.displayName,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        ),
+      ],
+      onChanged: _onVehicleChanged,
     );
   }
 
