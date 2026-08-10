@@ -15,6 +15,7 @@ import 'package:mobile/presentation/pages/privacy_policy_page.dart';
 import 'package:mobile/presentation/pages/tips_page.dart';
 import 'package:mobile/presentation/widgets/section_header.dart';
 import 'package:mobile/presentation/widgets/karter_switch_list_tile.dart';
+import 'package:mobile/presentation/widgets/grouped_card.dart';
 import 'package:mobile/presentation/providers/backup_provider.dart';
 import 'package:mobile/presentation/providers/color_provider.dart';
 import 'package:mobile/presentation/providers/haptic_provider.dart';
@@ -68,7 +69,7 @@ class MorePage extends ConsumerWidget {
                   child: ListView(
                     children: [
                       SectionHeader(title: l.sectionPreferences),
-                      _GroupedCard(
+                      GroupedCard(
                         children: [
                           ListTile(
                             leading: const Icon(Icons.dark_mode_outlined),
@@ -176,7 +177,7 @@ class MorePage extends ConsumerWidget {
                       SectionHeader(title: l.sectionData),
                       _DataSection(),
                       SectionHeader(title: l.sectionTips),
-                      _GroupedCard(
+                      GroupedCard(
                         children: [
                           ListTile(
                             leading: const Icon(Icons.volunteer_activism),
@@ -207,7 +208,7 @@ class MorePage extends ConsumerWidget {
                   child: ListView(
                     children: [
                       SectionHeader(title: l.sectionFeedbackCommunity),
-                      _GroupedCard(
+                      GroupedCard(
                         children: [
                           ListTile(
                             leading: const Icon(Icons.rate_review),
@@ -247,7 +248,7 @@ class MorePage extends ConsumerWidget {
                         ],
                       ),
                       SectionHeader(title: l.sectionAbout),
-                      _GroupedCard(
+                      GroupedCard(
                         children: [
                           ListTile(
                             leading: const Icon(Icons.language),
@@ -306,7 +307,7 @@ class MorePage extends ConsumerWidget {
           padding: const EdgeInsets.all(AppSpacing.pagePadding),
           children: [
             SectionHeader(title: l.sectionPreferences),
-            _GroupedCard(
+            GroupedCard(
               children: [
                 ListTile(
                   leading: const Icon(Icons.dark_mode_outlined),
@@ -416,7 +417,7 @@ class MorePage extends ConsumerWidget {
             _DataSection(),
 
             SectionHeader(title: l.sectionFeedbackCommunity),
-            _GroupedCard(
+            GroupedCard(
               children: [
                 ListTile(
                   leading: const Icon(Icons.rate_review),
@@ -457,7 +458,7 @@ class MorePage extends ConsumerWidget {
             ),
 
             SectionHeader(title: l.sectionTips),
-            _GroupedCard(
+            GroupedCard(
               children: [
                 ListTile(
                   leading: const Icon(Icons.volunteer_activism),
@@ -482,7 +483,7 @@ class MorePage extends ConsumerWidget {
             ),
 
             SectionHeader(title: l.sectionAbout),
-            _GroupedCard(
+            GroupedCard(
               children: [
                 ListTile(
                   leading: const Icon(Icons.language),
@@ -714,12 +715,9 @@ class _AboutInfoCard extends ConsumerWidget {
                   leading: const Icon(Icons.description_outlined),
                   title: Text(l.changelog),
                   trailing: const Icon(Icons.chevron_right),
-                  onTap: () => showModalBottomSheet(
+                  onTap: () => karterShowModalBottomSheet(
                     context: context,
                     isScrollControlled: true,
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
-                    ),
                     builder: (_) => const ChangelogSheet(),
                   ),
                 ),
@@ -747,25 +745,6 @@ class _AboutInfoCard extends ConsumerWidget {
     final id = const Uuid().v4();
     prefs.setString(_deviceIdKey, id);
     return id;
-  }
-}
-
-class _GroupedCard extends StatelessWidget {
-  final List<Widget> children;
-  const _GroupedCard({required this.children});
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      clipBehavior: Clip.antiAlias,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: ListTile.divideTiles(
-          context: context,
-          tiles: children,
-        ).toList(),
-      ),
-    );
   }
 }
 
@@ -823,16 +802,7 @@ class _DataSection extends ConsumerWidget {
       );
     }
 
-    return Card(
-      clipBehavior: Clip.antiAlias,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: ListTile.divideTiles(
-          context: context,
-          tiles: tiles,
-        ).toList(),
-      ),
-    );
+    return GroupedCard(children: tiles);
   }
 
   Future<void> _editUrl(
@@ -886,12 +856,9 @@ class _DataSection extends ConsumerWidget {
   }
 
   void _openBackupSheet(BuildContext context, WidgetRef ref) {
-    showModalBottomSheet(
+    karterShowModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-      ),
       builder: (_) => const _BackupSheet(),
     );
   }
@@ -1020,7 +987,7 @@ class _CatalogCheckSheet extends StatelessWidget {
             shrinkWrap: true,
             padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
             children: [
-              Text(l.testConnection, style: theme.textTheme.titleLarge),
+              Text(l.testConnection, style: theme.textTheme.titleMedium),
               const SizedBox(height: 4),
               Text(
                 check.baseUrl,
@@ -1286,7 +1253,7 @@ class _BackupSheetState extends ConsumerState<_BackupSheet> {
 
     if (!context.mounted) return;
 
-    final selected = await showModalBottomSheet<String>(
+    final selected = await karterShowModalBottomSheet<String>(
       context: context,
       builder: (ctx) => Consumer(
         builder: (context, ref, _) {

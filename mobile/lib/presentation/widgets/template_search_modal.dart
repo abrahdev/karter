@@ -8,6 +8,7 @@ import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
 import 'package:mobile/presentation/utils/template_interval_builder.dart';
 import 'package:mobile/presentation/widgets/interval_parts_view.dart';
+import 'package:mobile/presentation/widgets/section_header.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TemplateSearchOutcome {
@@ -331,14 +332,12 @@ class _TemplateSearchModalState extends ConsumerState<_TemplateSearchModal> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          l.partsTitle.toUpperCase(),
-                          style: theme.textTheme.labelSmall?.copyWith(
-                            color: theme.colorScheme.primary,
-                            letterSpacing: 1.2,
-                          ),
+                        SectionHeader(
+                          title: l.partsTitle,
+                          topPadding: 0,
+                          bottomPadding: 2,
+                          leftPadding: 0,
                         ),
-                        const SizedBox(height: 2),
                         IntervalPartsView(parts: interval.parts),
                       ],
                     ),

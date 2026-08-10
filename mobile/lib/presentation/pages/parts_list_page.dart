@@ -867,16 +867,7 @@ class _LocalPartDetailSheetState
                 labelText: l.description,
               ),
             ),
-            const SizedBox(height: 16),
-            Text(
-              l.linksTitle.toUpperCase(),
-              style: theme.textTheme.labelSmall?.copyWith(
-                color: theme.colorScheme.primary,
-                fontWeight: FontWeight.w600,
-                letterSpacing: 1.2,
-              ),
-            ),
-            const SizedBox(height: 8),
+            SectionHeader(title: l.linksTitle),
             if (_links.isEmpty)
               Padding(
                 padding: const EdgeInsets.only(bottom: 8),
@@ -1240,16 +1231,7 @@ class _PartDetailSheetState extends State<_PartDetailSheet> {
                 labelText: l.description,
               ),
             ),
-            const SizedBox(height: 16),
-            Text(
-              l.linksTitle.toUpperCase(),
-              style: theme.textTheme.labelSmall?.copyWith(
-                color: theme.colorScheme.primary,
-                fontWeight: FontWeight.w600,
-                letterSpacing: 1.2,
-              ),
-            ),
-            const SizedBox(height: 8),
+            SectionHeader(title: l.linksTitle),
             if (_links.isEmpty)
               Padding(
                 padding: const EdgeInsets.only(bottom: 8),

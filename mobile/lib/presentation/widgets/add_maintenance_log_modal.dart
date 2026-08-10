@@ -18,6 +18,7 @@ import 'package:mobile/presentation/providers/vehicle_providers.dart';
 import 'package:mobile/presentation/widgets/full_screen_photo_viewer.dart';
 import 'package:mobile/presentation/widgets/interval_parts_view.dart';
 import 'package:mobile/presentation/widgets/maintenance_log_parts_field.dart';
+import 'package:mobile/presentation/widgets/section_header.dart';
 import 'package:path_provider/path_provider.dart';
 
 Future<void> showAddMaintenanceLogModal(
@@ -811,19 +812,7 @@ class _PreviewParts extends ConsumerWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 12),
-            Padding(
-              padding: const EdgeInsets.only(left: 4),
-              child: Text(
-                l.usedParts.toUpperCase(),
-                style: theme.textTheme.labelSmall?.copyWith(
-                  color: theme.colorScheme.primary,
-                  fontWeight: FontWeight.w600,
-                  letterSpacing: 1.2,
-                ),
-              ),
-            ),
-            const SizedBox(height: 8),
+            SectionHeader(title: l.usedParts),
             for (final part in parts)
               Padding(
                 padding: const EdgeInsets.only(top: 2),

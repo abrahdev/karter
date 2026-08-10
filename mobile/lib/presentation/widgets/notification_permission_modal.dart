@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material3_indicators/material3_indicators.dart';
+import 'package:mobile/core/modal_helpers.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 Future<void> showNotificationPermissionModal(BuildContext context) {
-  return showModalBottomSheet(
+  return karterShowModalBottomSheet(
     context: context,
     isScrollControlled: true,
-    isDismissible: true,
-    enableDrag: true,
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
-    ),
     builder: (_) => const NotificationPermissionModal(),
   );
 }

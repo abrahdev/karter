@@ -4,6 +4,7 @@ import 'package:mobile/core/rating_helper.dart';
 import 'package:mobile/core/theme/app_spacing.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/widgets/karter_switch_list_tile.dart';
+import 'package:mobile/presentation/widgets/grouped_card.dart';
 
 class FeedbackPage extends StatefulWidget {
   const FeedbackPage({super.key});
@@ -56,45 +57,50 @@ class _FeedbackPageState extends State<FeedbackPage> {
       body: ListView(
         padding: const EdgeInsets.all(AppSpacing.pagePadding),
         children: [
-          const SizedBox(height: 8),
-          ListTile(
-            leading: const Icon(Icons.star_outline),
-            title: Text(l.moreRate),
-            subtitle: Text(l.moreRateSubtitle),
-            trailing: const Icon(Icons.open_in_new),
-            onTap: () => openStorePage(),
+          GroupedCard(
+            children: [
+              ListTile(
+                leading: const Icon(Icons.star_outline),
+                title: Text(l.moreRate),
+                subtitle: Text(l.moreRateSubtitle),
+                trailing: const Icon(Icons.open_in_new),
+                onTap: () => openStorePage(),
+              ),
+            ],
           ),
-          const Divider(),
-          KarterSwitchListTile(
-            leading: Icon(
-              _enabled ? Icons.notifications_active : Icons.notifications_off,
-            ),
-            title: Text(l.feedbackReminderToggle),
-            subtitle: Text(l.feedbackReminderToggleSubtitle),
-            value: _enabled,
-            onChanged: (v) async {
-              await setRatingPromptEnabled(v);
-              setState(() => _enabled = v);
-            },
+          GroupedCard(
+            children: [
+              KarterSwitchListTile(
+                leading: Icon(
+                  _enabled ? Icons.notifications_active : Icons.notifications_off,
+                ),
+                title: Text(l.feedbackReminderToggle),
+                subtitle: Text(l.feedbackReminderToggleSubtitle),
+                value: _enabled,
+                onChanged: (v) async {
+                  await setRatingPromptEnabled(v);
+                  setState(() => _enabled = v);
+                },
+              ),
+              if (_enabled) ...[
+                ListTile(
+                  leading: const Icon(Icons.build),
+                  title: Text(l.feedbackServicesInterval),
+                  subtitle:
+                      Text(l.feedbackServicesIntervalValue(_servicesInterval)),
+                  trailing: const Icon(Icons.edit),
+                  onTap: () => _editServicesInterval(context),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.calendar_today),
+                  title: Text(l.feedbackRepeatDays),
+                  subtitle: Text(l.feedbackRepeatDaysValue(_repeatDays)),
+                  trailing: const Icon(Icons.edit),
+                  onTap: () => _editRepeatDays(context),
+                ),
+              ],
+            ],
           ),
-          if (_enabled) ...[
-            const Divider(height: 1, indent: 16, endIndent: 16),
-            ListTile(
-              leading: const Icon(Icons.build),
-              title: Text(l.feedbackServicesInterval),
-              subtitle: Text(l.feedbackServicesIntervalValue(_servicesInterval)),
-              trailing: const Icon(Icons.edit),
-              onTap: () => _editServicesInterval(context),
-            ),
-            const Divider(height: 1, indent: 16, endIndent: 16),
-            ListTile(
-              leading: const Icon(Icons.calendar_today),
-              title: Text(l.feedbackRepeatDays),
-              subtitle: Text(l.feedbackRepeatDaysValue(_repeatDays)),
-              trailing: const Icon(Icons.edit),
-              onTap: () => _editRepeatDays(context),
-            ),
-          ],
         ],
       ),
     );
