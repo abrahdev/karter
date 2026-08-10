@@ -25,6 +25,7 @@
   "odometer": "Odometer",
   "update": "Update",
   "actions": "Actions",
+  "tools": "Tools",
   "information": "Information",
   "fuelLogs": "Fuel logs",
   "maintenanceHistory": "Maintenance history",
@@ -41,6 +42,8 @@
 
   "vehicleFormNew": "New vehicle",
   "vehicleFormEdit": "Edit vehicle",
+  "vehicleFormDetails": "Details",
+  "vehicleFormVehicle": "Vehicle",
   "brand": "Brand",
   "model": "Model",
   "required": "Required",
@@ -56,6 +59,8 @@
   "aliasHint": "E.g.: My ride, The beast, etc.",
   "saveChanges": "Save changes",
   "addVehicle": "Add vehicle",
+  "newVehicleServicesOverdueTitle": "Services appear as overdue",
+  "newVehicleServicesOverdueBody": "Because your vehicle already has more than 500 km, all maintenance services appear as overdue.\n\nRegister the services you have already done. If you don't remember the exact mileage, set an approximate km value for the last service.",
   "deleteVehicle": "Delete vehicle",
   "deleteVehicleConfirm": "This action cannot be undone. All fuel logs, maintenance records, and intervals associated will be deleted.",
   "cancel": "Cancel",
@@ -87,7 +92,18 @@
   "partUnitSet": "set",
   "partUnitKit": "kit",
   "partUnitCan": "can",
+  "partUnitLabel": "Unit",
+  "localParts": "Local parts",
+  "intervalParts": "Interval parts",
+  "newPart": "New part",
+  "createPart": "Create part",
+  "partsSection": "Parts",
+  "usedParts": "Parts",
+  "usedInServicesCount": "{count} service(s)",
+  "deletePartConfirm": "This part is used in {count} service(s). Delete it anyway?",
+  "reportPartsHeader": "Parts",
   "templateFound": "Template found",
+  "templateDisclaimer": "Template data is for reference only. Always verify intervals against your vehicle's manual.",
   "noTemplate": "No template",
   "useTemplate": "Use template",
   "searchTemplate": "Search template",
@@ -376,9 +392,93 @@
   "moreTemplateSourceOnline": "Online (GitHub)",
   "moreTemplateSourceUrl": "Repo URL",
   "moreTemplateSourceReset": "Reset to default",
-  "moreTemplateSourceUrlHint": "https://raw.githubusercontent.com/...",
+  "moreTemplateSourceUrlHint": "https://github.com/abrahdev/karter/templates",
   "moreTemplateSourceEditUrl": "Edit URL",
   "moreTemplateSourceUrlSaved": "URL updated",
+
+  "testConnection": "Test connection",
+  "catalogDbModifiedAt": "Last modified: {date}",
+  "@catalogDbModifiedAt": {
+    "description": "Modification date of the catalog database on GitHub",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "importCheckTranslations": "Translations",
+  "importCheckTranslationsResult": "{found} of {total} available",
+  "@importCheckTranslationsResult": {
+    "description": "Number of template translations fetched from GitHub",
+    "placeholders": {
+      "found": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "importCheckIndex": "Template index",
+  "importCheckIndexResult": "{count} templates",
+  "@importCheckIndexResult": {
+    "description": "Number of templates available in the index",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "importCheckDb": "Catalog database (remote)",
+  "importCheckDbRemoteFound": "Available on GitHub",
+  "importCheckDbRemoteNotFound": "Only local (not on GitHub)",
+  "importCheckDbLocal": "Imported database data",
+  "importCheckCatalogVersion": "Version: {version}",
+  "@importCheckCatalogVersion": {
+    "description": "Version of the imported catalog database",
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "importCheckVehicles": "Vehicles: {count}",
+  "@importCheckVehicles": {
+    "description": "Vehicle models in the imported database",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "importCheckMaintenanceItems": "Maintenance items: {count}",
+  "@importCheckMaintenanceItems": {
+    "description": "Maintenance items in the imported database",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "importCheckParts": "Parts: {count}",
+  "@importCheckParts": {
+    "description": "Parts in the imported database",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "importCheckObdCodes": "OBD codes: {count}",
+  "@importCheckObdCodes": {
+    "description": "OBD codes in the imported database",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "importCheckDbLocalFailed": "Could not read the imported database",
 
   "onboardingSkip": "Skip",
   "onboardingNext": "Next",
@@ -428,6 +528,8 @@
   "dtcScopeStandard": "Standard",
   "dtcScopeManufacturer": "Manufacturer",
   "dtcGeneralDb": "General OBD-II codes",
+  "dtcCatalogBrands": "Catalog brands",
+  "dtcMyVehicles": "My vehicles",
   "dtcVehicle": "Vehicle",
   "dtcVehicleNotFound": "Vehicle not found",
   "dtcLoadError": "Couldn't load fault codes"

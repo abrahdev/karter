@@ -23,7 +23,6 @@ import 'package:workmanager/workmanager.dart';
 import 'package:mobile/presentation/pages/dashboard_page.dart';
 import 'package:mobile/presentation/pages/data_manager_page.dart';
 import 'package:mobile/presentation/pages/document_list_page.dart';
-import 'package:mobile/presentation/pages/dtc_lookup_page.dart';
 import 'package:mobile/presentation/pages/fuel_log_form_page.dart';
 import 'package:mobile/presentation/pages/fuel_log_list_page.dart';
 import 'package:mobile/presentation/pages/home_page.dart';
@@ -107,12 +106,6 @@ final _router = GoRouter(
             GoRoute(
               path: 'parts',
               builder: (_, state) => PartsListPage(
-                vehicleId: state.pathParameters['id']!,
-              ),
-            ),
-            GoRoute(
-              path: 'dtc',
-              builder: (_, state) => DtcLookupPage(
                 vehicleId: state.pathParameters['id']!,
               ),
             ),
@@ -539,7 +532,9 @@ Future<void> main() async {
 
   final templateSource = TemplateSourceConfig.fromPrefs(prefs);
   await TemplateTranslations.preload(
-    baseUrl: templateSource.enabled ? templateSource.repoUrl : null,
+    baseUrl: templateSource.enabled
+        ? CatalogService.resolveRawBaseUrl(templateSource.repoUrl)
+        : null,
   );
 
   final catalogService = CatalogService();

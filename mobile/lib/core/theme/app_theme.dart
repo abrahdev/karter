@@ -32,6 +32,30 @@ class AppTheme {
         elevation: 2,
         margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 8),
       ),
+      inputDecorationTheme: InputDecorationTheme(
+        filled: true,
+        fillColor: effectiveScheme.surfaceContainerLow,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide.none,
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide.none,
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide.none,
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(color: effectiveScheme.error),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(color: effectiveScheme.error, width: 2),
+        ),
+      ),
       pageTransitionsTheme: PageTransitionsTheme(
         builders: {
           TargetPlatform.android: SharedAxisPageTransitionsBuilder(
@@ -111,7 +135,16 @@ class AppTheme {
         ),
       ),
       navigationBarTheme: NavigationBarThemeData(
+        height: 64,
         labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
+        iconTheme: WidgetStateProperty.resolveWith(
+          (states) => const IconThemeData(size: 22),
+        ),
+        labelTextStyle: WidgetStateProperty.resolveWith(
+          (states) => states.contains(WidgetState.selected)
+              ? const TextStyle(fontSize: 12, fontWeight: FontWeight.w600)
+              : const TextStyle(fontSize: 12),
+        ),
       ),
       floatingActionButtonTheme: FloatingActionButtonThemeData(
         shape: RoundedRectangleBorder(

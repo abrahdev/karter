@@ -3316,6 +3316,1135 @@ class MaintenanceIntervalsCompanion
   }
 }
 
+class $VehiclePartsTable extends VehicleParts
+    with TableInfo<$VehiclePartsTable, VehiclePartEntry> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $VehiclePartsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _partIdMeta = const VerificationMeta('partId');
+  @override
+  late final GeneratedColumn<String> partId = GeneratedColumn<String>(
+    'part_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _quantityMeta = const VerificationMeta(
+    'quantity',
+  );
+  @override
+  late final GeneratedColumn<String> quantity = GeneratedColumn<String>(
+    'quantity',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _unitMeta = const VerificationMeta('unit');
+  @override
+  late final GeneratedColumn<String> unit = GeneratedColumn<String>(
+    'unit',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _oemNumberMeta = const VerificationMeta(
+    'oemNumber',
+  );
+  @override
+  late final GeneratedColumn<String> oemNumber = GeneratedColumn<String>(
+    'oem_number',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _descriptionMeta = const VerificationMeta(
+    'description',
+  );
+  @override
+  late final GeneratedColumn<String> description = GeneratedColumn<String>(
+    'description',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _linksMeta = const VerificationMeta('links');
+  @override
+  late final GeneratedColumn<String> links = GeneratedColumn<String>(
+    'links',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    name,
+    partId,
+    quantity,
+    unit,
+    oemNumber,
+    description,
+    links,
+    createdAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'vehicle_parts';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<VehiclePartEntry> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('part_id')) {
+      context.handle(
+        _partIdMeta,
+        partId.isAcceptableOrUnknown(data['part_id']!, _partIdMeta),
+      );
+    }
+    if (data.containsKey('quantity')) {
+      context.handle(
+        _quantityMeta,
+        quantity.isAcceptableOrUnknown(data['quantity']!, _quantityMeta),
+      );
+    }
+    if (data.containsKey('unit')) {
+      context.handle(
+        _unitMeta,
+        unit.isAcceptableOrUnknown(data['unit']!, _unitMeta),
+      );
+    }
+    if (data.containsKey('oem_number')) {
+      context.handle(
+        _oemNumberMeta,
+        oemNumber.isAcceptableOrUnknown(data['oem_number']!, _oemNumberMeta),
+      );
+    }
+    if (data.containsKey('description')) {
+      context.handle(
+        _descriptionMeta,
+        description.isAcceptableOrUnknown(
+          data['description']!,
+          _descriptionMeta,
+        ),
+      );
+    }
+    if (data.containsKey('links')) {
+      context.handle(
+        _linksMeta,
+        links.isAcceptableOrUnknown(data['links']!, _linksMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  VehiclePartEntry map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return VehiclePartEntry(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      partId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}part_id'],
+      ),
+      quantity: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}quantity'],
+      ),
+      unit: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}unit'],
+      ),
+      oemNumber: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}oem_number'],
+      ),
+      description: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}description'],
+      ),
+      links: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}links'],
+      ),
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+    );
+  }
+
+  @override
+  $VehiclePartsTable createAlias(String alias) {
+    return $VehiclePartsTable(attachedDatabase, alias);
+  }
+}
+
+class VehiclePartEntry extends DataClass
+    implements Insertable<VehiclePartEntry> {
+  final String id;
+  final String name;
+  final String? partId;
+  final String? quantity;
+  final String? unit;
+  final String? oemNumber;
+  final String? description;
+  final String? links;
+  final DateTime createdAt;
+  const VehiclePartEntry({
+    required this.id,
+    required this.name,
+    this.partId,
+    this.quantity,
+    this.unit,
+    this.oemNumber,
+    this.description,
+    this.links,
+    required this.createdAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['name'] = Variable<String>(name);
+    if (!nullToAbsent || partId != null) {
+      map['part_id'] = Variable<String>(partId);
+    }
+    if (!nullToAbsent || quantity != null) {
+      map['quantity'] = Variable<String>(quantity);
+    }
+    if (!nullToAbsent || unit != null) {
+      map['unit'] = Variable<String>(unit);
+    }
+    if (!nullToAbsent || oemNumber != null) {
+      map['oem_number'] = Variable<String>(oemNumber);
+    }
+    if (!nullToAbsent || description != null) {
+      map['description'] = Variable<String>(description);
+    }
+    if (!nullToAbsent || links != null) {
+      map['links'] = Variable<String>(links);
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    return map;
+  }
+
+  VehiclePartsCompanion toCompanion(bool nullToAbsent) {
+    return VehiclePartsCompanion(
+      id: Value(id),
+      name: Value(name),
+      partId: partId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(partId),
+      quantity: quantity == null && nullToAbsent
+          ? const Value.absent()
+          : Value(quantity),
+      unit: unit == null && nullToAbsent ? const Value.absent() : Value(unit),
+      oemNumber: oemNumber == null && nullToAbsent
+          ? const Value.absent()
+          : Value(oemNumber),
+      description: description == null && nullToAbsent
+          ? const Value.absent()
+          : Value(description),
+      links: links == null && nullToAbsent
+          ? const Value.absent()
+          : Value(links),
+      createdAt: Value(createdAt),
+    );
+  }
+
+  factory VehiclePartEntry.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return VehiclePartEntry(
+      id: serializer.fromJson<String>(json['id']),
+      name: serializer.fromJson<String>(json['name']),
+      partId: serializer.fromJson<String?>(json['partId']),
+      quantity: serializer.fromJson<String?>(json['quantity']),
+      unit: serializer.fromJson<String?>(json['unit']),
+      oemNumber: serializer.fromJson<String?>(json['oemNumber']),
+      description: serializer.fromJson<String?>(json['description']),
+      links: serializer.fromJson<String?>(json['links']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'name': serializer.toJson<String>(name),
+      'partId': serializer.toJson<String?>(partId),
+      'quantity': serializer.toJson<String?>(quantity),
+      'unit': serializer.toJson<String?>(unit),
+      'oemNumber': serializer.toJson<String?>(oemNumber),
+      'description': serializer.toJson<String?>(description),
+      'links': serializer.toJson<String?>(links),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+    };
+  }
+
+  VehiclePartEntry copyWith({
+    String? id,
+    String? name,
+    Value<String?> partId = const Value.absent(),
+    Value<String?> quantity = const Value.absent(),
+    Value<String?> unit = const Value.absent(),
+    Value<String?> oemNumber = const Value.absent(),
+    Value<String?> description = const Value.absent(),
+    Value<String?> links = const Value.absent(),
+    DateTime? createdAt,
+  }) => VehiclePartEntry(
+    id: id ?? this.id,
+    name: name ?? this.name,
+    partId: partId.present ? partId.value : this.partId,
+    quantity: quantity.present ? quantity.value : this.quantity,
+    unit: unit.present ? unit.value : this.unit,
+    oemNumber: oemNumber.present ? oemNumber.value : this.oemNumber,
+    description: description.present ? description.value : this.description,
+    links: links.present ? links.value : this.links,
+    createdAt: createdAt ?? this.createdAt,
+  );
+  VehiclePartEntry copyWithCompanion(VehiclePartsCompanion data) {
+    return VehiclePartEntry(
+      id: data.id.present ? data.id.value : this.id,
+      name: data.name.present ? data.name.value : this.name,
+      partId: data.partId.present ? data.partId.value : this.partId,
+      quantity: data.quantity.present ? data.quantity.value : this.quantity,
+      unit: data.unit.present ? data.unit.value : this.unit,
+      oemNumber: data.oemNumber.present ? data.oemNumber.value : this.oemNumber,
+      description: data.description.present
+          ? data.description.value
+          : this.description,
+      links: data.links.present ? data.links.value : this.links,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('VehiclePartEntry(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('partId: $partId, ')
+          ..write('quantity: $quantity, ')
+          ..write('unit: $unit, ')
+          ..write('oemNumber: $oemNumber, ')
+          ..write('description: $description, ')
+          ..write('links: $links, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    name,
+    partId,
+    quantity,
+    unit,
+    oemNumber,
+    description,
+    links,
+    createdAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is VehiclePartEntry &&
+          other.id == this.id &&
+          other.name == this.name &&
+          other.partId == this.partId &&
+          other.quantity == this.quantity &&
+          other.unit == this.unit &&
+          other.oemNumber == this.oemNumber &&
+          other.description == this.description &&
+          other.links == this.links &&
+          other.createdAt == this.createdAt);
+}
+
+class VehiclePartsCompanion extends UpdateCompanion<VehiclePartEntry> {
+  final Value<String> id;
+  final Value<String> name;
+  final Value<String?> partId;
+  final Value<String?> quantity;
+  final Value<String?> unit;
+  final Value<String?> oemNumber;
+  final Value<String?> description;
+  final Value<String?> links;
+  final Value<DateTime> createdAt;
+  final Value<int> rowid;
+  const VehiclePartsCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.partId = const Value.absent(),
+    this.quantity = const Value.absent(),
+    this.unit = const Value.absent(),
+    this.oemNumber = const Value.absent(),
+    this.description = const Value.absent(),
+    this.links = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  VehiclePartsCompanion.insert({
+    required String id,
+    required String name,
+    this.partId = const Value.absent(),
+    this.quantity = const Value.absent(),
+    this.unit = const Value.absent(),
+    this.oemNumber = const Value.absent(),
+    this.description = const Value.absent(),
+    this.links = const Value.absent(),
+    required DateTime createdAt,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       name = Value(name),
+       createdAt = Value(createdAt);
+  static Insertable<VehiclePartEntry> custom({
+    Expression<String>? id,
+    Expression<String>? name,
+    Expression<String>? partId,
+    Expression<String>? quantity,
+    Expression<String>? unit,
+    Expression<String>? oemNumber,
+    Expression<String>? description,
+    Expression<String>? links,
+    Expression<DateTime>? createdAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (partId != null) 'part_id': partId,
+      if (quantity != null) 'quantity': quantity,
+      if (unit != null) 'unit': unit,
+      if (oemNumber != null) 'oem_number': oemNumber,
+      if (description != null) 'description': description,
+      if (links != null) 'links': links,
+      if (createdAt != null) 'created_at': createdAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  VehiclePartsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? name,
+    Value<String?>? partId,
+    Value<String?>? quantity,
+    Value<String?>? unit,
+    Value<String?>? oemNumber,
+    Value<String?>? description,
+    Value<String?>? links,
+    Value<DateTime>? createdAt,
+    Value<int>? rowid,
+  }) {
+    return VehiclePartsCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      partId: partId ?? this.partId,
+      quantity: quantity ?? this.quantity,
+      unit: unit ?? this.unit,
+      oemNumber: oemNumber ?? this.oemNumber,
+      description: description ?? this.description,
+      links: links ?? this.links,
+      createdAt: createdAt ?? this.createdAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (partId.present) {
+      map['part_id'] = Variable<String>(partId.value);
+    }
+    if (quantity.present) {
+      map['quantity'] = Variable<String>(quantity.value);
+    }
+    if (unit.present) {
+      map['unit'] = Variable<String>(unit.value);
+    }
+    if (oemNumber.present) {
+      map['oem_number'] = Variable<String>(oemNumber.value);
+    }
+    if (description.present) {
+      map['description'] = Variable<String>(description.value);
+    }
+    if (links.present) {
+      map['links'] = Variable<String>(links.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('VehiclePartsCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('partId: $partId, ')
+          ..write('quantity: $quantity, ')
+          ..write('unit: $unit, ')
+          ..write('oemNumber: $oemNumber, ')
+          ..write('description: $description, ')
+          ..write('links: $links, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $MaintenanceLogPartsTable extends MaintenanceLogParts
+    with TableInfo<$MaintenanceLogPartsTable, MaintenanceLogPartEntry> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $MaintenanceLogPartsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _logIdMeta = const VerificationMeta('logId');
+  @override
+  late final GeneratedColumn<String> logId = GeneratedColumn<String>(
+    'log_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES maintenance_logs (id)',
+    ),
+  );
+  static const VerificationMeta _partIdMeta = const VerificationMeta('partId');
+  @override
+  late final GeneratedColumn<String> partId = GeneratedColumn<String>(
+    'part_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _quantityMeta = const VerificationMeta(
+    'quantity',
+  );
+  @override
+  late final GeneratedColumn<String> quantity = GeneratedColumn<String>(
+    'quantity',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _unitMeta = const VerificationMeta('unit');
+  @override
+  late final GeneratedColumn<String> unit = GeneratedColumn<String>(
+    'unit',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _oemNumberMeta = const VerificationMeta(
+    'oemNumber',
+  );
+  @override
+  late final GeneratedColumn<String> oemNumber = GeneratedColumn<String>(
+    'oem_number',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _descriptionMeta = const VerificationMeta(
+    'description',
+  );
+  @override
+  late final GeneratedColumn<String> description = GeneratedColumn<String>(
+    'description',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _linksMeta = const VerificationMeta('links');
+  @override
+  late final GeneratedColumn<String> links = GeneratedColumn<String>(
+    'links',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    logId,
+    partId,
+    name,
+    quantity,
+    unit,
+    oemNumber,
+    description,
+    links,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'maintenance_log_parts';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<MaintenanceLogPartEntry> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('log_id')) {
+      context.handle(
+        _logIdMeta,
+        logId.isAcceptableOrUnknown(data['log_id']!, _logIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_logIdMeta);
+    }
+    if (data.containsKey('part_id')) {
+      context.handle(
+        _partIdMeta,
+        partId.isAcceptableOrUnknown(data['part_id']!, _partIdMeta),
+      );
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('quantity')) {
+      context.handle(
+        _quantityMeta,
+        quantity.isAcceptableOrUnknown(data['quantity']!, _quantityMeta),
+      );
+    }
+    if (data.containsKey('unit')) {
+      context.handle(
+        _unitMeta,
+        unit.isAcceptableOrUnknown(data['unit']!, _unitMeta),
+      );
+    }
+    if (data.containsKey('oem_number')) {
+      context.handle(
+        _oemNumberMeta,
+        oemNumber.isAcceptableOrUnknown(data['oem_number']!, _oemNumberMeta),
+      );
+    }
+    if (data.containsKey('description')) {
+      context.handle(
+        _descriptionMeta,
+        description.isAcceptableOrUnknown(
+          data['description']!,
+          _descriptionMeta,
+        ),
+      );
+    }
+    if (data.containsKey('links')) {
+      context.handle(
+        _linksMeta,
+        links.isAcceptableOrUnknown(data['links']!, _linksMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  MaintenanceLogPartEntry map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return MaintenanceLogPartEntry(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      logId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}log_id'],
+      )!,
+      partId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}part_id'],
+      ),
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      quantity: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}quantity'],
+      ),
+      unit: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}unit'],
+      ),
+      oemNumber: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}oem_number'],
+      ),
+      description: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}description'],
+      ),
+      links: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}links'],
+      ),
+    );
+  }
+
+  @override
+  $MaintenanceLogPartsTable createAlias(String alias) {
+    return $MaintenanceLogPartsTable(attachedDatabase, alias);
+  }
+}
+
+class MaintenanceLogPartEntry extends DataClass
+    implements Insertable<MaintenanceLogPartEntry> {
+  final String id;
+  final String logId;
+  final String? partId;
+  final String name;
+  final String? quantity;
+  final String? unit;
+  final String? oemNumber;
+  final String? description;
+  final String? links;
+  const MaintenanceLogPartEntry({
+    required this.id,
+    required this.logId,
+    this.partId,
+    required this.name,
+    this.quantity,
+    this.unit,
+    this.oemNumber,
+    this.description,
+    this.links,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['log_id'] = Variable<String>(logId);
+    if (!nullToAbsent || partId != null) {
+      map['part_id'] = Variable<String>(partId);
+    }
+    map['name'] = Variable<String>(name);
+    if (!nullToAbsent || quantity != null) {
+      map['quantity'] = Variable<String>(quantity);
+    }
+    if (!nullToAbsent || unit != null) {
+      map['unit'] = Variable<String>(unit);
+    }
+    if (!nullToAbsent || oemNumber != null) {
+      map['oem_number'] = Variable<String>(oemNumber);
+    }
+    if (!nullToAbsent || description != null) {
+      map['description'] = Variable<String>(description);
+    }
+    if (!nullToAbsent || links != null) {
+      map['links'] = Variable<String>(links);
+    }
+    return map;
+  }
+
+  MaintenanceLogPartsCompanion toCompanion(bool nullToAbsent) {
+    return MaintenanceLogPartsCompanion(
+      id: Value(id),
+      logId: Value(logId),
+      partId: partId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(partId),
+      name: Value(name),
+      quantity: quantity == null && nullToAbsent
+          ? const Value.absent()
+          : Value(quantity),
+      unit: unit == null && nullToAbsent ? const Value.absent() : Value(unit),
+      oemNumber: oemNumber == null && nullToAbsent
+          ? const Value.absent()
+          : Value(oemNumber),
+      description: description == null && nullToAbsent
+          ? const Value.absent()
+          : Value(description),
+      links: links == null && nullToAbsent
+          ? const Value.absent()
+          : Value(links),
+    );
+  }
+
+  factory MaintenanceLogPartEntry.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return MaintenanceLogPartEntry(
+      id: serializer.fromJson<String>(json['id']),
+      logId: serializer.fromJson<String>(json['logId']),
+      partId: serializer.fromJson<String?>(json['partId']),
+      name: serializer.fromJson<String>(json['name']),
+      quantity: serializer.fromJson<String?>(json['quantity']),
+      unit: serializer.fromJson<String?>(json['unit']),
+      oemNumber: serializer.fromJson<String?>(json['oemNumber']),
+      description: serializer.fromJson<String?>(json['description']),
+      links: serializer.fromJson<String?>(json['links']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'logId': serializer.toJson<String>(logId),
+      'partId': serializer.toJson<String?>(partId),
+      'name': serializer.toJson<String>(name),
+      'quantity': serializer.toJson<String?>(quantity),
+      'unit': serializer.toJson<String?>(unit),
+      'oemNumber': serializer.toJson<String?>(oemNumber),
+      'description': serializer.toJson<String?>(description),
+      'links': serializer.toJson<String?>(links),
+    };
+  }
+
+  MaintenanceLogPartEntry copyWith({
+    String? id,
+    String? logId,
+    Value<String?> partId = const Value.absent(),
+    String? name,
+    Value<String?> quantity = const Value.absent(),
+    Value<String?> unit = const Value.absent(),
+    Value<String?> oemNumber = const Value.absent(),
+    Value<String?> description = const Value.absent(),
+    Value<String?> links = const Value.absent(),
+  }) => MaintenanceLogPartEntry(
+    id: id ?? this.id,
+    logId: logId ?? this.logId,
+    partId: partId.present ? partId.value : this.partId,
+    name: name ?? this.name,
+    quantity: quantity.present ? quantity.value : this.quantity,
+    unit: unit.present ? unit.value : this.unit,
+    oemNumber: oemNumber.present ? oemNumber.value : this.oemNumber,
+    description: description.present ? description.value : this.description,
+    links: links.present ? links.value : this.links,
+  );
+  MaintenanceLogPartEntry copyWithCompanion(MaintenanceLogPartsCompanion data) {
+    return MaintenanceLogPartEntry(
+      id: data.id.present ? data.id.value : this.id,
+      logId: data.logId.present ? data.logId.value : this.logId,
+      partId: data.partId.present ? data.partId.value : this.partId,
+      name: data.name.present ? data.name.value : this.name,
+      quantity: data.quantity.present ? data.quantity.value : this.quantity,
+      unit: data.unit.present ? data.unit.value : this.unit,
+      oemNumber: data.oemNumber.present ? data.oemNumber.value : this.oemNumber,
+      description: data.description.present
+          ? data.description.value
+          : this.description,
+      links: data.links.present ? data.links.value : this.links,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MaintenanceLogPartEntry(')
+          ..write('id: $id, ')
+          ..write('logId: $logId, ')
+          ..write('partId: $partId, ')
+          ..write('name: $name, ')
+          ..write('quantity: $quantity, ')
+          ..write('unit: $unit, ')
+          ..write('oemNumber: $oemNumber, ')
+          ..write('description: $description, ')
+          ..write('links: $links')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    logId,
+    partId,
+    name,
+    quantity,
+    unit,
+    oemNumber,
+    description,
+    links,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is MaintenanceLogPartEntry &&
+          other.id == this.id &&
+          other.logId == this.logId &&
+          other.partId == this.partId &&
+          other.name == this.name &&
+          other.quantity == this.quantity &&
+          other.unit == this.unit &&
+          other.oemNumber == this.oemNumber &&
+          other.description == this.description &&
+          other.links == this.links);
+}
+
+class MaintenanceLogPartsCompanion
+    extends UpdateCompanion<MaintenanceLogPartEntry> {
+  final Value<String> id;
+  final Value<String> logId;
+  final Value<String?> partId;
+  final Value<String> name;
+  final Value<String?> quantity;
+  final Value<String?> unit;
+  final Value<String?> oemNumber;
+  final Value<String?> description;
+  final Value<String?> links;
+  final Value<int> rowid;
+  const MaintenanceLogPartsCompanion({
+    this.id = const Value.absent(),
+    this.logId = const Value.absent(),
+    this.partId = const Value.absent(),
+    this.name = const Value.absent(),
+    this.quantity = const Value.absent(),
+    this.unit = const Value.absent(),
+    this.oemNumber = const Value.absent(),
+    this.description = const Value.absent(),
+    this.links = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  MaintenanceLogPartsCompanion.insert({
+    required String id,
+    required String logId,
+    this.partId = const Value.absent(),
+    required String name,
+    this.quantity = const Value.absent(),
+    this.unit = const Value.absent(),
+    this.oemNumber = const Value.absent(),
+    this.description = const Value.absent(),
+    this.links = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       logId = Value(logId),
+       name = Value(name);
+  static Insertable<MaintenanceLogPartEntry> custom({
+    Expression<String>? id,
+    Expression<String>? logId,
+    Expression<String>? partId,
+    Expression<String>? name,
+    Expression<String>? quantity,
+    Expression<String>? unit,
+    Expression<String>? oemNumber,
+    Expression<String>? description,
+    Expression<String>? links,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (logId != null) 'log_id': logId,
+      if (partId != null) 'part_id': partId,
+      if (name != null) 'name': name,
+      if (quantity != null) 'quantity': quantity,
+      if (unit != null) 'unit': unit,
+      if (oemNumber != null) 'oem_number': oemNumber,
+      if (description != null) 'description': description,
+      if (links != null) 'links': links,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  MaintenanceLogPartsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? logId,
+    Value<String?>? partId,
+    Value<String>? name,
+    Value<String?>? quantity,
+    Value<String?>? unit,
+    Value<String?>? oemNumber,
+    Value<String?>? description,
+    Value<String?>? links,
+    Value<int>? rowid,
+  }) {
+    return MaintenanceLogPartsCompanion(
+      id: id ?? this.id,
+      logId: logId ?? this.logId,
+      partId: partId ?? this.partId,
+      name: name ?? this.name,
+      quantity: quantity ?? this.quantity,
+      unit: unit ?? this.unit,
+      oemNumber: oemNumber ?? this.oemNumber,
+      description: description ?? this.description,
+      links: links ?? this.links,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (logId.present) {
+      map['log_id'] = Variable<String>(logId.value);
+    }
+    if (partId.present) {
+      map['part_id'] = Variable<String>(partId.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (quantity.present) {
+      map['quantity'] = Variable<String>(quantity.value);
+    }
+    if (unit.present) {
+      map['unit'] = Variable<String>(unit.value);
+    }
+    if (oemNumber.present) {
+      map['oem_number'] = Variable<String>(oemNumber.value);
+    }
+    if (description.present) {
+      map['description'] = Variable<String>(description.value);
+    }
+    if (links.present) {
+      map['links'] = Variable<String>(links.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MaintenanceLogPartsCompanion(')
+          ..write('id: $id, ')
+          ..write('logId: $logId, ')
+          ..write('partId: $partId, ')
+          ..write('name: $name, ')
+          ..write('quantity: $quantity, ')
+          ..write('unit: $unit, ')
+          ..write('oemNumber: $oemNumber, ')
+          ..write('description: $description, ')
+          ..write('links: $links, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $VehicleDocumentsTable extends VehicleDocuments
     with TableInfo<$VehicleDocumentsTable, VehicleDocumentEntry> {
   @override
@@ -4035,6 +5164,9 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   );
   late final $MaintenanceIntervalsTable maintenanceIntervals =
       $MaintenanceIntervalsTable(this);
+  late final $VehiclePartsTable vehicleParts = $VehiclePartsTable(this);
+  late final $MaintenanceLogPartsTable maintenanceLogParts =
+      $MaintenanceLogPartsTable(this);
   late final $VehicleDocumentsTable vehicleDocuments = $VehicleDocumentsTable(
     this,
   );
@@ -4047,6 +5179,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     fuelLogs,
     maintenanceLogs,
     maintenanceIntervals,
+    vehicleParts,
+    maintenanceLogParts,
     vehicleDocuments,
   ];
 }
@@ -5453,6 +6587,30 @@ final class $$MaintenanceLogsTableReferences
       manager.$state.copyWith(prefetchedData: [item]),
     );
   }
+
+  static MultiTypedResultKey<
+    $MaintenanceLogPartsTable,
+    List<MaintenanceLogPartEntry>
+  >
+  _maintenanceLogPartsRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.maintenanceLogParts,
+        aliasName: 'maintenance_logs__id__maintenance_log_parts__log_id',
+      );
+
+  $$MaintenanceLogPartsTableProcessedTableManager get maintenanceLogPartsRefs {
+    final manager = $$MaintenanceLogPartsTableTableManager(
+      $_db,
+      $_db.maintenanceLogParts,
+    ).filter((f) => f.logId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _maintenanceLogPartsRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
 }
 
 class $$MaintenanceLogsTableFilterComposer
@@ -5540,6 +6698,31 @@ class $$MaintenanceLogsTableFilterComposer
           ),
     );
     return composer;
+  }
+
+  Expression<bool> maintenanceLogPartsRefs(
+    Expression<bool> Function($$MaintenanceLogPartsTableFilterComposer f) f,
+  ) {
+    final $$MaintenanceLogPartsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.maintenanceLogParts,
+      getReferencedColumn: (t) => t.logId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MaintenanceLogPartsTableFilterComposer(
+            $db: $db,
+            $table: $db.maintenanceLogParts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
   }
 }
 
@@ -5711,6 +6894,32 @@ class $$MaintenanceLogsTableAnnotationComposer
     );
     return composer;
   }
+
+  Expression<T> maintenanceLogPartsRefs<T extends Object>(
+    Expression<T> Function($$MaintenanceLogPartsTableAnnotationComposer a) f,
+  ) {
+    final $$MaintenanceLogPartsTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.maintenanceLogParts,
+          getReferencedColumn: (t) => t.logId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$MaintenanceLogPartsTableAnnotationComposer(
+                $db: $db,
+                $table: $db.maintenanceLogParts,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
 }
 
 class $$MaintenanceLogsTableTableManager
@@ -5726,7 +6935,7 @@ class $$MaintenanceLogsTableTableManager
           $$MaintenanceLogsTableUpdateCompanionBuilder,
           (MaintenanceLogEntry, $$MaintenanceLogsTableReferences),
           MaintenanceLogEntry,
-          PrefetchHooks Function({bool vehicleId})
+          PrefetchHooks Function({bool vehicleId, bool maintenanceLogPartsRefs})
         > {
   $$MaintenanceLogsTableTableManager(
     _$AppDatabase db,
@@ -5809,49 +7018,74 @@ class $$MaintenanceLogsTableTableManager
                 ),
               )
               .toList(),
-          prefetchHooksCallback: ({vehicleId = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [],
-              addJoins:
-                  <
-                    T extends TableManagerState<
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic
-                    >
-                  >(state) {
-                    if (vehicleId) {
-                      state =
-                          state.withJoin(
-                                currentTable: table,
-                                currentColumn: table.vehicleId,
-                                referencedTable:
-                                    $$MaintenanceLogsTableReferences
-                                        ._vehicleIdTable(db),
-                                referencedColumn:
-                                    $$MaintenanceLogsTableReferences
-                                        ._vehicleIdTable(db)
-                                        .id,
-                              )
-                              as T;
-                    }
+          prefetchHooksCallback:
+              ({vehicleId = false, maintenanceLogPartsRefs = false}) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (maintenanceLogPartsRefs) db.maintenanceLogParts,
+                  ],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (vehicleId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.vehicleId,
+                                    referencedTable:
+                                        $$MaintenanceLogsTableReferences
+                                            ._vehicleIdTable(db),
+                                    referencedColumn:
+                                        $$MaintenanceLogsTableReferences
+                                            ._vehicleIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
 
-                    return state;
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (maintenanceLogPartsRefs)
+                        await $_getPrefetchedData<
+                          MaintenanceLogEntry,
+                          $MaintenanceLogsTable,
+                          MaintenanceLogPartEntry
+                        >(
+                          currentTable: table,
+                          referencedTable: $$MaintenanceLogsTableReferences
+                              ._maintenanceLogPartsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$MaintenanceLogsTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).maintenanceLogPartsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.logId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
                   },
-              getPrefetchedDataCallback: (items) async {
-                return [];
+                );
               },
-            );
-          },
         ),
       );
 }
@@ -5868,7 +7102,7 @@ typedef $$MaintenanceLogsTableProcessedTableManager =
       $$MaintenanceLogsTableUpdateCompanionBuilder,
       (MaintenanceLogEntry, $$MaintenanceLogsTableReferences),
       MaintenanceLogEntry,
-      PrefetchHooks Function({bool vehicleId})
+      PrefetchHooks Function({bool vehicleId, bool maintenanceLogPartsRefs})
     >;
 typedef $$MaintenanceIntervalsTableCreateCompanionBuilder =
     MaintenanceIntervalsCompanion Function({
@@ -6349,6 +7583,699 @@ typedef $$MaintenanceIntervalsTableProcessedTableManager =
       MaintenanceIntervalEntry,
       PrefetchHooks Function({bool vehicleId})
     >;
+typedef $$VehiclePartsTableCreateCompanionBuilder =
+    VehiclePartsCompanion Function({
+      required String id,
+      required String name,
+      Value<String?> partId,
+      Value<String?> quantity,
+      Value<String?> unit,
+      Value<String?> oemNumber,
+      Value<String?> description,
+      Value<String?> links,
+      required DateTime createdAt,
+      Value<int> rowid,
+    });
+typedef $$VehiclePartsTableUpdateCompanionBuilder =
+    VehiclePartsCompanion Function({
+      Value<String> id,
+      Value<String> name,
+      Value<String?> partId,
+      Value<String?> quantity,
+      Value<String?> unit,
+      Value<String?> oemNumber,
+      Value<String?> description,
+      Value<String?> links,
+      Value<DateTime> createdAt,
+      Value<int> rowid,
+    });
+
+class $$VehiclePartsTableFilterComposer
+    extends Composer<_$AppDatabase, $VehiclePartsTable> {
+  $$VehiclePartsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get partId => $composableBuilder(
+    column: $table.partId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get quantity => $composableBuilder(
+    column: $table.quantity,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get unit => $composableBuilder(
+    column: $table.unit,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get oemNumber => $composableBuilder(
+    column: $table.oemNumber,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get links => $composableBuilder(
+    column: $table.links,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$VehiclePartsTableOrderingComposer
+    extends Composer<_$AppDatabase, $VehiclePartsTable> {
+  $$VehiclePartsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get partId => $composableBuilder(
+    column: $table.partId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get quantity => $composableBuilder(
+    column: $table.quantity,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get unit => $composableBuilder(
+    column: $table.unit,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get oemNumber => $composableBuilder(
+    column: $table.oemNumber,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get links => $composableBuilder(
+    column: $table.links,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$VehiclePartsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $VehiclePartsTable> {
+  $$VehiclePartsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get partId =>
+      $composableBuilder(column: $table.partId, builder: (column) => column);
+
+  GeneratedColumn<String> get quantity =>
+      $composableBuilder(column: $table.quantity, builder: (column) => column);
+
+  GeneratedColumn<String> get unit =>
+      $composableBuilder(column: $table.unit, builder: (column) => column);
+
+  GeneratedColumn<String> get oemNumber =>
+      $composableBuilder(column: $table.oemNumber, builder: (column) => column);
+
+  GeneratedColumn<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get links =>
+      $composableBuilder(column: $table.links, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+}
+
+class $$VehiclePartsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $VehiclePartsTable,
+          VehiclePartEntry,
+          $$VehiclePartsTableFilterComposer,
+          $$VehiclePartsTableOrderingComposer,
+          $$VehiclePartsTableAnnotationComposer,
+          $$VehiclePartsTableCreateCompanionBuilder,
+          $$VehiclePartsTableUpdateCompanionBuilder,
+          (
+            VehiclePartEntry,
+            BaseReferences<_$AppDatabase, $VehiclePartsTable, VehiclePartEntry>,
+          ),
+          VehiclePartEntry,
+          PrefetchHooks Function()
+        > {
+  $$VehiclePartsTableTableManager(_$AppDatabase db, $VehiclePartsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$VehiclePartsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$VehiclePartsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$VehiclePartsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<String?> partId = const Value.absent(),
+                Value<String?> quantity = const Value.absent(),
+                Value<String?> unit = const Value.absent(),
+                Value<String?> oemNumber = const Value.absent(),
+                Value<String?> description = const Value.absent(),
+                Value<String?> links = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => VehiclePartsCompanion(
+                id: id,
+                name: name,
+                partId: partId,
+                quantity: quantity,
+                unit: unit,
+                oemNumber: oemNumber,
+                description: description,
+                links: links,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String name,
+                Value<String?> partId = const Value.absent(),
+                Value<String?> quantity = const Value.absent(),
+                Value<String?> unit = const Value.absent(),
+                Value<String?> oemNumber = const Value.absent(),
+                Value<String?> description = const Value.absent(),
+                Value<String?> links = const Value.absent(),
+                required DateTime createdAt,
+                Value<int> rowid = const Value.absent(),
+              }) => VehiclePartsCompanion.insert(
+                id: id,
+                name: name,
+                partId: partId,
+                quantity: quantity,
+                unit: unit,
+                oemNumber: oemNumber,
+                description: description,
+                links: links,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$VehiclePartsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $VehiclePartsTable,
+      VehiclePartEntry,
+      $$VehiclePartsTableFilterComposer,
+      $$VehiclePartsTableOrderingComposer,
+      $$VehiclePartsTableAnnotationComposer,
+      $$VehiclePartsTableCreateCompanionBuilder,
+      $$VehiclePartsTableUpdateCompanionBuilder,
+      (
+        VehiclePartEntry,
+        BaseReferences<_$AppDatabase, $VehiclePartsTable, VehiclePartEntry>,
+      ),
+      VehiclePartEntry,
+      PrefetchHooks Function()
+    >;
+typedef $$MaintenanceLogPartsTableCreateCompanionBuilder =
+    MaintenanceLogPartsCompanion Function({
+      required String id,
+      required String logId,
+      Value<String?> partId,
+      required String name,
+      Value<String?> quantity,
+      Value<String?> unit,
+      Value<String?> oemNumber,
+      Value<String?> description,
+      Value<String?> links,
+      Value<int> rowid,
+    });
+typedef $$MaintenanceLogPartsTableUpdateCompanionBuilder =
+    MaintenanceLogPartsCompanion Function({
+      Value<String> id,
+      Value<String> logId,
+      Value<String?> partId,
+      Value<String> name,
+      Value<String?> quantity,
+      Value<String?> unit,
+      Value<String?> oemNumber,
+      Value<String?> description,
+      Value<String?> links,
+      Value<int> rowid,
+    });
+
+final class $$MaintenanceLogPartsTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $MaintenanceLogPartsTable,
+          MaintenanceLogPartEntry
+        > {
+  $$MaintenanceLogPartsTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $MaintenanceLogsTable _logIdTable(_$AppDatabase db) => db
+      .maintenanceLogs
+      .createAlias('maintenance_log_parts__log_id__maintenance_logs__id');
+
+  $$MaintenanceLogsTableProcessedTableManager get logId {
+    final $_column = $_itemColumn<String>('log_id')!;
+
+    final manager = $$MaintenanceLogsTableTableManager(
+      $_db,
+      $_db.maintenanceLogs,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_logIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$MaintenanceLogPartsTableFilterComposer
+    extends Composer<_$AppDatabase, $MaintenanceLogPartsTable> {
+  $$MaintenanceLogPartsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get partId => $composableBuilder(
+    column: $table.partId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get quantity => $composableBuilder(
+    column: $table.quantity,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get unit => $composableBuilder(
+    column: $table.unit,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get oemNumber => $composableBuilder(
+    column: $table.oemNumber,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get links => $composableBuilder(
+    column: $table.links,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$MaintenanceLogsTableFilterComposer get logId {
+    final $$MaintenanceLogsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.logId,
+      referencedTable: $db.maintenanceLogs,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MaintenanceLogsTableFilterComposer(
+            $db: $db,
+            $table: $db.maintenanceLogs,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$MaintenanceLogPartsTableOrderingComposer
+    extends Composer<_$AppDatabase, $MaintenanceLogPartsTable> {
+  $$MaintenanceLogPartsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get partId => $composableBuilder(
+    column: $table.partId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get quantity => $composableBuilder(
+    column: $table.quantity,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get unit => $composableBuilder(
+    column: $table.unit,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get oemNumber => $composableBuilder(
+    column: $table.oemNumber,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get links => $composableBuilder(
+    column: $table.links,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$MaintenanceLogsTableOrderingComposer get logId {
+    final $$MaintenanceLogsTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.logId,
+      referencedTable: $db.maintenanceLogs,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MaintenanceLogsTableOrderingComposer(
+            $db: $db,
+            $table: $db.maintenanceLogs,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$MaintenanceLogPartsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $MaintenanceLogPartsTable> {
+  $$MaintenanceLogPartsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get partId =>
+      $composableBuilder(column: $table.partId, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get quantity =>
+      $composableBuilder(column: $table.quantity, builder: (column) => column);
+
+  GeneratedColumn<String> get unit =>
+      $composableBuilder(column: $table.unit, builder: (column) => column);
+
+  GeneratedColumn<String> get oemNumber =>
+      $composableBuilder(column: $table.oemNumber, builder: (column) => column);
+
+  GeneratedColumn<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get links =>
+      $composableBuilder(column: $table.links, builder: (column) => column);
+
+  $$MaintenanceLogsTableAnnotationComposer get logId {
+    final $$MaintenanceLogsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.logId,
+      referencedTable: $db.maintenanceLogs,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MaintenanceLogsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.maintenanceLogs,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$MaintenanceLogPartsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $MaintenanceLogPartsTable,
+          MaintenanceLogPartEntry,
+          $$MaintenanceLogPartsTableFilterComposer,
+          $$MaintenanceLogPartsTableOrderingComposer,
+          $$MaintenanceLogPartsTableAnnotationComposer,
+          $$MaintenanceLogPartsTableCreateCompanionBuilder,
+          $$MaintenanceLogPartsTableUpdateCompanionBuilder,
+          (MaintenanceLogPartEntry, $$MaintenanceLogPartsTableReferences),
+          MaintenanceLogPartEntry,
+          PrefetchHooks Function({bool logId})
+        > {
+  $$MaintenanceLogPartsTableTableManager(
+    _$AppDatabase db,
+    $MaintenanceLogPartsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$MaintenanceLogPartsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$MaintenanceLogPartsTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$MaintenanceLogPartsTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> logId = const Value.absent(),
+                Value<String?> partId = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<String?> quantity = const Value.absent(),
+                Value<String?> unit = const Value.absent(),
+                Value<String?> oemNumber = const Value.absent(),
+                Value<String?> description = const Value.absent(),
+                Value<String?> links = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => MaintenanceLogPartsCompanion(
+                id: id,
+                logId: logId,
+                partId: partId,
+                name: name,
+                quantity: quantity,
+                unit: unit,
+                oemNumber: oemNumber,
+                description: description,
+                links: links,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String logId,
+                Value<String?> partId = const Value.absent(),
+                required String name,
+                Value<String?> quantity = const Value.absent(),
+                Value<String?> unit = const Value.absent(),
+                Value<String?> oemNumber = const Value.absent(),
+                Value<String?> description = const Value.absent(),
+                Value<String?> links = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => MaintenanceLogPartsCompanion.insert(
+                id: id,
+                logId: logId,
+                partId: partId,
+                name: name,
+                quantity: quantity,
+                unit: unit,
+                oemNumber: oemNumber,
+                description: description,
+                links: links,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$MaintenanceLogPartsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({logId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (logId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.logId,
+                                referencedTable:
+                                    $$MaintenanceLogPartsTableReferences
+                                        ._logIdTable(db),
+                                referencedColumn:
+                                    $$MaintenanceLogPartsTableReferences
+                                        ._logIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$MaintenanceLogPartsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $MaintenanceLogPartsTable,
+      MaintenanceLogPartEntry,
+      $$MaintenanceLogPartsTableFilterComposer,
+      $$MaintenanceLogPartsTableOrderingComposer,
+      $$MaintenanceLogPartsTableAnnotationComposer,
+      $$MaintenanceLogPartsTableCreateCompanionBuilder,
+      $$MaintenanceLogPartsTableUpdateCompanionBuilder,
+      (MaintenanceLogPartEntry, $$MaintenanceLogPartsTableReferences),
+      MaintenanceLogPartEntry,
+      PrefetchHooks Function({bool logId})
+    >;
 typedef $$VehicleDocumentsTableCreateCompanionBuilder =
     VehicleDocumentsCompanion Function({
       required String id,
@@ -6826,6 +8753,10 @@ class $AppDatabaseManager {
       $$MaintenanceLogsTableTableManager(_db, _db.maintenanceLogs);
   $$MaintenanceIntervalsTableTableManager get maintenanceIntervals =>
       $$MaintenanceIntervalsTableTableManager(_db, _db.maintenanceIntervals);
+  $$VehiclePartsTableTableManager get vehicleParts =>
+      $$VehiclePartsTableTableManager(_db, _db.vehicleParts);
+  $$MaintenanceLogPartsTableTableManager get maintenanceLogParts =>
+      $$MaintenanceLogPartsTableTableManager(_db, _db.maintenanceLogParts);
   $$VehicleDocumentsTableTableManager get vehicleDocuments =>
       $$VehicleDocumentsTableTableManager(_db, _db.vehicleDocuments);
 }

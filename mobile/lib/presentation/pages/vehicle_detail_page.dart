@@ -20,6 +20,7 @@ import 'package:mobile/presentation/utils/maintenance_localizer.dart';
 import 'package:mobile/presentation/widgets/add_document_modal.dart';
 import 'package:mobile/presentation/widgets/add_fuel_log_modal.dart';
 import 'package:mobile/presentation/widgets/add_maintenance_log_modal.dart';
+import 'package:mobile/presentation/widgets/dtc_lookup_modal.dart';
 import 'package:mobile/presentation/widgets/interval_parts_view.dart';
 import 'package:mobile/presentation/widgets/odometer_dialog.dart';
 import 'package:mobile/presentation/widgets/section_header.dart';
@@ -110,8 +111,9 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
         onSave: (double newDistance) async {
           final repo = ref.read(vehicleRepositoryProvider);
           final updated = vehicle.copyWith(
-            currentOdometer: vehicle.currentOdometer.add(
-              newDistance - vehicle.currentOdometer.distance,
+            currentOdometer: Odometer(
+              newDistance,
+              vehicle.currentOdometer.unit,
             ),
             odometerReminderLastNotified: DateTime.now(),
           );
@@ -146,8 +148,9 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
           final vehicle = await repo.getById(vehicleId);
           if (vehicle != null) {
             final updated = vehicle.copyWith(
-              currentOdometer: vehicle.currentOdometer.add(
-                newDistance - vehicle.currentOdometer.distance,
+              currentOdometer: Odometer(
+                newDistance,
+                vehicle.currentOdometer.unit,
               ),
               odometerReminderLastNotified: DateTime.now(),
             );
@@ -276,6 +279,8 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
                             const SizedBox(height: 8),
                             SectionHeader(title: l.actions),
                             _ActionsCard(vehicleId: widget.vehicleId, l: l),
+                            SectionHeader(title: l.tools),
+                            _ToolsCard(vehicleId: widget.vehicleId, l: l),
                           ],
                         ),
                       ),
@@ -314,6 +319,8 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
                   const SizedBox(height: 8),
                   SectionHeader(title: l.actions),
                   _ActionsCard(vehicleId: widget.vehicleId, l: l),
+                  SectionHeader(title: l.tools),
+                  _ToolsCard(vehicleId: widget.vehicleId, l: l),
                   SectionHeader(title: l.nextMaintenance),
                   _MaintenanceCard(
                     vehicleId: widget.vehicleId,
@@ -600,11 +607,29 @@ class _ActionsCard extends StatelessWidget {
             trailing: const Icon(Icons.chevron_right),
             onTap: () => context.push('/vehicle/$vehicleId/documents'),
           ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ToolsCard extends StatelessWidget {
+  final String vehicleId;
+  final AppLocalizations l;
+
+  const _ToolsCard({required this.vehicleId, required this.l});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
           ListTile(
             leading: const Icon(Icons.search),
             title: Text(l.dtcLookupTitle),
             trailing: const Icon(Icons.chevron_right),
-            onTap: () => context.push('/vehicle/$vehicleId/dtc'),
+            onTap: () => showDtcLookupModal(context, vehicleId: vehicleId),
           ),
           ListTile(
             leading: const Icon(Icons.handyman_outlined),
@@ -676,15 +701,26 @@ class _MaintenanceCard extends ConsumerWidget {
               });
 
         return Card(
+          clipBehavior: Clip.antiAlias,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: intervalData.map((data) {
               final interval = data.interval;
-              Color? accentColor;
+              final isDark = theme.brightness == Brightness.dark;
+              Color? tileColor;
+              Color? contentColor;
               if (data.isDue) {
-                accentColor = theme.colorScheme.onErrorContainer;
+                tileColor = isDark
+                    ? Colors.red.shade900.withValues(alpha: 0.35)
+                    : Colors.red.shade50;
+                contentColor = isDark ? Colors.red.shade200 : Colors.red.shade900;
               } else if (data.isApproaching) {
-                accentColor = Colors.amber.shade800;
+                tileColor = isDark
+                    ? Colors.amber.shade900.withValues(alpha: 0.35)
+                    : Colors.amber.shade50;
+                contentColor = isDark
+                    ? Colors.amber.shade200
+                    : Colors.amber.shade900;
               }
 
               final registerButton = TextButton(
@@ -704,14 +740,15 @@ class _MaintenanceCard extends ConsumerWidget {
                 ),
                 child: Text(
                   l.register,
-                  style: accentColor != null
-                      ? TextStyle(color: accentColor)
+                  style: contentColor != null
+                      ? TextStyle(color: contentColor)
                       : null,
                 ),
               );
 
               final tile = ListTile(
-                leading: Icon(Icons.build_circle_outlined, color: accentColor),
+                tileColor: stacked ? null : tileColor,
+                leading: Icon(Icons.build_circle_outlined, color: contentColor),
                 title: Text(
                   localizedLabel(
                     l.localeName,
@@ -719,13 +756,19 @@ class _MaintenanceCard extends ConsumerWidget {
                     interval.label,
                   ),
                   style: TextStyle(
+                    color: contentColor,
                     fontWeight: data.isDue ? FontWeight.bold : null,
                   ),
                 ),
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(data.subtitle),
+                    Text(
+                      data.subtitle,
+                      style: contentColor != null
+                          ? TextStyle(color: contentColor)
+                          : null,
+                    ),
                     if (interval.parts.isNotEmpty)
                       Padding(
                         padding: const EdgeInsets.only(top: 4),
@@ -735,7 +778,7 @@ class _MaintenanceCard extends ConsumerWidget {
                       Text(
                         data.lastResetInfo!,
                         style: theme.textTheme.bodySmall?.copyWith(
-                          color: theme.colorScheme.onSurfaceVariant,
+                          color: contentColor ?? theme.colorScheme.onSurfaceVariant,
                         ),
                       ),
                   ],
@@ -751,7 +794,7 @@ class _MaintenanceCard extends ConsumerWidget {
 
               if (!stacked) return tile;
 
-              return Column(
+              final block = Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -762,6 +805,9 @@ class _MaintenanceCard extends ConsumerWidget {
                   ),
                 ],
               );
+
+              if (tileColor == null) return block;
+              return ColoredBox(color: tileColor, child: block);
             }).toList(),
           ),
         );
@@ -928,7 +974,7 @@ class _IntervalData {
     final isDue = isKmDue || isMonthsDue;
     final isApproaching =
         !isDue &&
-        ((kmRemaining > 0 && kmRemaining <= 100) ||
+        ((kmRemaining > 0 && kmRemaining <= 500) ||
             (monthsRemaining != null &&
                 monthsRemaining > 0 &&
                 monthsRemaining <= 1));

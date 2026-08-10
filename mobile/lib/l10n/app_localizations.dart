@@ -214,6 +214,12 @@ abstract class AppLocalizations {
   /// **'Actions'**
   String get actions;
 
+  /// No description provided for @tools.
+  ///
+  /// In en, this message translates to:
+  /// **'Tools'**
+  String get tools;
+
   /// No description provided for @information.
   ///
   /// In en, this message translates to:
@@ -304,6 +310,18 @@ abstract class AppLocalizations {
   /// **'Edit vehicle'**
   String get vehicleFormEdit;
 
+  /// No description provided for @vehicleFormDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Details'**
+  String get vehicleFormDetails;
+
+  /// No description provided for @vehicleFormVehicle.
+  ///
+  /// In en, this message translates to:
+  /// **'Vehicle'**
+  String get vehicleFormVehicle;
+
   /// No description provided for @brand.
   ///
   /// In en, this message translates to:
@@ -393,6 +411,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add vehicle'**
   String get addVehicle;
+
+  /// No description provided for @newVehicleServicesOverdueTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Services appear as overdue'**
+  String get newVehicleServicesOverdueTitle;
+
+  /// No description provided for @newVehicleServicesOverdueBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Because your vehicle already has more than 500 km, all maintenance services appear as overdue.\n\nRegister the services you have already done. If you don\'t remember the exact mileage, set an approximate km value for the last service.'**
+  String get newVehicleServicesOverdueBody;
 
   /// No description provided for @deleteVehicle.
   ///
@@ -573,11 +603,77 @@ abstract class AppLocalizations {
   /// **'can'**
   String get partUnitCan;
 
+  /// No description provided for @partUnitLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Unit'**
+  String get partUnitLabel;
+
+  /// No description provided for @localParts.
+  ///
+  /// In en, this message translates to:
+  /// **'Local parts'**
+  String get localParts;
+
+  /// No description provided for @intervalParts.
+  ///
+  /// In en, this message translates to:
+  /// **'Interval parts'**
+  String get intervalParts;
+
+  /// No description provided for @newPart.
+  ///
+  /// In en, this message translates to:
+  /// **'New part'**
+  String get newPart;
+
+  /// No description provided for @createPart.
+  ///
+  /// In en, this message translates to:
+  /// **'Create part'**
+  String get createPart;
+
+  /// No description provided for @partsSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Parts'**
+  String get partsSection;
+
+  /// No description provided for @usedParts.
+  ///
+  /// In en, this message translates to:
+  /// **'Parts'**
+  String get usedParts;
+
+  /// No description provided for @usedInServicesCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} service(s)'**
+  String usedInServicesCount(Object count);
+
+  /// No description provided for @deletePartConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'This part is used in {count} service(s). Delete it anyway?'**
+  String deletePartConfirm(Object count);
+
+  /// No description provided for @reportPartsHeader.
+  ///
+  /// In en, this message translates to:
+  /// **'Parts'**
+  String get reportPartsHeader;
+
   /// No description provided for @templateFound.
   ///
   /// In en, this message translates to:
   /// **'Template found'**
   String get templateFound;
+
+  /// No description provided for @templateDisclaimer.
+  ///
+  /// In en, this message translates to:
+  /// **'Template data is for reference only. Always verify intervals against your vehicle\'s manual.'**
+  String get templateDisclaimer;
 
   /// No description provided for @noTemplate.
   ///
@@ -2166,7 +2262,7 @@ abstract class AppLocalizations {
   /// No description provided for @moreTemplateSourceUrlHint.
   ///
   /// In en, this message translates to:
-  /// **'https://raw.githubusercontent.com/...'**
+  /// **'https://github.com/abrahdev/karter/templates'**
   String get moreTemplateSourceUrlHint;
 
   /// No description provided for @moreTemplateSourceEditUrl.
@@ -2180,6 +2276,102 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'URL updated'**
   String get moreTemplateSourceUrlSaved;
+
+  /// No description provided for @testConnection.
+  ///
+  /// In en, this message translates to:
+  /// **'Test connection'**
+  String get testConnection;
+
+  /// Modification date of the catalog database on GitHub
+  ///
+  /// In en, this message translates to:
+  /// **'Last modified: {date}'**
+  String catalogDbModifiedAt(String date);
+
+  /// No description provided for @importCheckTranslations.
+  ///
+  /// In en, this message translates to:
+  /// **'Translations'**
+  String get importCheckTranslations;
+
+  /// Number of template translations fetched from GitHub
+  ///
+  /// In en, this message translates to:
+  /// **'{found} of {total} available'**
+  String importCheckTranslationsResult(int found, int total);
+
+  /// No description provided for @importCheckIndex.
+  ///
+  /// In en, this message translates to:
+  /// **'Template index'**
+  String get importCheckIndex;
+
+  /// Number of templates available in the index
+  ///
+  /// In en, this message translates to:
+  /// **'{count} templates'**
+  String importCheckIndexResult(int count);
+
+  /// No description provided for @importCheckDb.
+  ///
+  /// In en, this message translates to:
+  /// **'Catalog database (remote)'**
+  String get importCheckDb;
+
+  /// No description provided for @importCheckDbRemoteFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Available on GitHub'**
+  String get importCheckDbRemoteFound;
+
+  /// No description provided for @importCheckDbRemoteNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Only local (not on GitHub)'**
+  String get importCheckDbRemoteNotFound;
+
+  /// No description provided for @importCheckDbLocal.
+  ///
+  /// In en, this message translates to:
+  /// **'Imported database data'**
+  String get importCheckDbLocal;
+
+  /// Version of the imported catalog database
+  ///
+  /// In en, this message translates to:
+  /// **'Version: {version}'**
+  String importCheckCatalogVersion(String version);
+
+  /// Vehicle models in the imported database
+  ///
+  /// In en, this message translates to:
+  /// **'Vehicles: {count}'**
+  String importCheckVehicles(int count);
+
+  /// Maintenance items in the imported database
+  ///
+  /// In en, this message translates to:
+  /// **'Maintenance items: {count}'**
+  String importCheckMaintenanceItems(int count);
+
+  /// Parts in the imported database
+  ///
+  /// In en, this message translates to:
+  /// **'Parts: {count}'**
+  String importCheckParts(int count);
+
+  /// OBD codes in the imported database
+  ///
+  /// In en, this message translates to:
+  /// **'OBD codes: {count}'**
+  String importCheckObdCodes(int count);
+
+  /// No description provided for @importCheckDbLocalFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not read the imported database'**
+  String get importCheckDbLocalFailed;
 
   /// No description provided for @onboardingSkip.
   ///
@@ -2468,6 +2660,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'General OBD-II codes'**
   String get dtcGeneralDb;
+
+  /// No description provided for @dtcCatalogBrands.
+  ///
+  /// In en, this message translates to:
+  /// **'Catalog brands'**
+  String get dtcCatalogBrands;
+
+  /// No description provided for @dtcMyVehicles.
+  ///
+  /// In en, this message translates to:
+  /// **'My vehicles'**
+  String get dtcMyVehicles;
 
   /// No description provided for @dtcVehicle.
   ///

@@ -68,6 +68,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get actions => 'Actions';
 
   @override
+  String get tools => 'Tools';
+
+  @override
   String get information => 'Information';
 
   @override
@@ -116,6 +119,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get vehicleFormEdit => 'Edit vehicle';
 
   @override
+  String get vehicleFormDetails => 'Details';
+
+  @override
+  String get vehicleFormVehicle => 'Vehicle';
+
+  @override
   String get brand => 'Brand';
 
   @override
@@ -159,6 +168,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get addVehicle => 'Add vehicle';
+
+  @override
+  String get newVehicleServicesOverdueTitle => 'Services appear as overdue';
+
+  @override
+  String get newVehicleServicesOverdueBody =>
+      'Because your vehicle already has more than 500 km, all maintenance services appear as overdue.\n\nRegister the services you have already done. If you don\'t remember the exact mileage, set an approximate km value for the last service.';
 
   @override
   String get deleteVehicle => 'Delete vehicle';
@@ -265,7 +281,45 @@ class AppLocalizationsEn extends AppLocalizations {
   String get partUnitCan => 'can';
 
   @override
+  String get partUnitLabel => 'Unit';
+
+  @override
+  String get localParts => 'Local parts';
+
+  @override
+  String get intervalParts => 'Interval parts';
+
+  @override
+  String get newPart => 'New part';
+
+  @override
+  String get createPart => 'Create part';
+
+  @override
+  String get partsSection => 'Parts';
+
+  @override
+  String get usedParts => 'Parts';
+
+  @override
+  String usedInServicesCount(Object count) {
+    return '$count service(s)';
+  }
+
+  @override
+  String deletePartConfirm(Object count) {
+    return 'This part is used in $count service(s). Delete it anyway?';
+  }
+
+  @override
+  String get reportPartsHeader => 'Parts';
+
+  @override
   String get templateFound => 'Template found';
+
+  @override
+  String get templateDisclaimer =>
+      'Template data is for reference only. Always verify intervals against your vehicle\'s manual.';
 
   @override
   String get noTemplate => 'No template';
@@ -1129,13 +1183,77 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get moreTemplateSourceUrlHint =>
-      'https://raw.githubusercontent.com/...';
+      'https://github.com/abrahdev/karter/templates';
 
   @override
   String get moreTemplateSourceEditUrl => 'Edit URL';
 
   @override
   String get moreTemplateSourceUrlSaved => 'URL updated';
+
+  @override
+  String get testConnection => 'Test connection';
+
+  @override
+  String catalogDbModifiedAt(String date) {
+    return 'Last modified: $date';
+  }
+
+  @override
+  String get importCheckTranslations => 'Translations';
+
+  @override
+  String importCheckTranslationsResult(int found, int total) {
+    return '$found of $total available';
+  }
+
+  @override
+  String get importCheckIndex => 'Template index';
+
+  @override
+  String importCheckIndexResult(int count) {
+    return '$count templates';
+  }
+
+  @override
+  String get importCheckDb => 'Catalog database (remote)';
+
+  @override
+  String get importCheckDbRemoteFound => 'Available on GitHub';
+
+  @override
+  String get importCheckDbRemoteNotFound => 'Only local (not on GitHub)';
+
+  @override
+  String get importCheckDbLocal => 'Imported database data';
+
+  @override
+  String importCheckCatalogVersion(String version) {
+    return 'Version: $version';
+  }
+
+  @override
+  String importCheckVehicles(int count) {
+    return 'Vehicles: $count';
+  }
+
+  @override
+  String importCheckMaintenanceItems(int count) {
+    return 'Maintenance items: $count';
+  }
+
+  @override
+  String importCheckParts(int count) {
+    return 'Parts: $count';
+  }
+
+  @override
+  String importCheckObdCodes(int count) {
+    return 'OBD codes: $count';
+  }
+
+  @override
+  String get importCheckDbLocalFailed => 'Could not read the imported database';
 
   @override
   String get onboardingSkip => 'Skip';
@@ -1296,6 +1414,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get dtcGeneralDb => 'General OBD-II codes';
+
+  @override
+  String get dtcCatalogBrands => 'Catalog brands';
+
+  @override
+  String get dtcMyVehicles => 'My vehicles';
 
   @override
   String get dtcVehicle => 'Vehicle';

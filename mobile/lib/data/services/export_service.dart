@@ -4,12 +4,16 @@ import 'dart:io';
 import 'package:mobile/domain/entities/fuel_log.dart';
 import 'package:mobile/domain/entities/maintenance_interval.dart';
 import 'package:mobile/domain/entities/maintenance_log.dart';
+import 'package:mobile/domain/entities/maintenance_log_part.dart';
 import 'package:mobile/domain/entities/vehicle.dart';
 import 'package:mobile/domain/entities/vehicle_document.dart';
+import 'package:mobile/domain/entities/vehicle_part.dart';
 import 'package:mobile/domain/repositories/fuel_log_repository.dart';
 import 'package:mobile/domain/repositories/maintenance_interval_repository.dart';
+import 'package:mobile/domain/repositories/maintenance_log_part_repository.dart';
 import 'package:mobile/domain/repositories/maintenance_log_repository.dart';
 import 'package:mobile/domain/repositories/vehicle_document_repository.dart';
+import 'package:mobile/domain/repositories/vehicle_part_repository.dart';
 import 'package:mobile/domain/repositories/vehicle_repository.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -21,6 +25,8 @@ class ExportData {
   final List<MaintenanceLog> maintenanceLogs;
   final List<MaintenanceInterval> maintenanceIntervals;
   final List<VehicleDocument> vehicleDocuments;
+  final List<VehiclePart> vehicleParts;
+  final List<MaintenanceLogPart> maintenanceLogParts;
 
   ExportData({
     required this.version,
@@ -30,6 +36,8 @@ class ExportData {
     required this.maintenanceLogs,
     required this.maintenanceIntervals,
     required this.vehicleDocuments,
+    this.vehicleParts = const [],
+    this.maintenanceLogParts = const [],
   });
 
   Map<String, dynamic> toJson() => {
@@ -42,6 +50,9 @@ class ExportData {
             maintenanceIntervals.map((i) => i.toJson()).toList(),
         'vehicleDocuments':
             vehicleDocuments.map((d) => d.toJson()).toList(),
+        'vehicleParts': vehicleParts.map((p) => p.toJson()).toList(),
+        'maintenanceLogParts':
+            maintenanceLogParts.map((p) => p.toJson()).toList(),
       };
 
   factory ExportData.fromJson(Map<String, dynamic> json) => ExportData(
@@ -63,6 +74,14 @@ class ExportData {
                 ?.map((d) => VehicleDocument.fromJson(d))
                 .toList() ??
             [],
+        vehicleParts: (json['vehicleParts'] as List?)
+                ?.map((p) => VehiclePart.fromJson(p))
+                .toList() ??
+            [],
+        maintenanceLogParts: (json['maintenanceLogParts'] as List?)
+                ?.map((p) => MaintenanceLogPart.fromJson(p))
+                .toList() ??
+            [],
       );
 }
 
@@ -72,6 +91,8 @@ class ExportService {
   final MaintenanceLogRepository _maintenanceLogRepo;
   final MaintenanceIntervalRepository _intervalRepo;
   final VehicleDocumentRepository _documentRepo;
+  final MaintenanceLogPartRepository _logPartRepo;
+  final VehiclePartRepository _vehiclePartRepo;
 
   ExportService(
     this._vehicleRepo,
@@ -79,6 +100,8 @@ class ExportService {
     this._maintenanceLogRepo,
     this._intervalRepo,
     this._documentRepo,
+    this._logPartRepo,
+    this._vehiclePartRepo,
   );
 
   Future<String> exportVehicles(Set<String> vehicleIds) async {
@@ -90,6 +113,7 @@ class ExportService {
     final maintenanceLogs = <MaintenanceLog>[];
     final intervals = <MaintenanceInterval>[];
     final documents = <VehicleDocument>[];
+    final logParts = <MaintenanceLogPart>[];
 
     for (final v in selected) {
       fuelLogs.addAll(await _fuelLogRepo.getByVehicle(v.id));
@@ -110,16 +134,26 @@ class ExportService {
           documents.add(doc);
         }
       }
+      for (final log in maintenanceLogs.where((l) => l.vehicleId == v.id)) {
+        logParts.addAll(await _logPartRepo.getByLog(log.id));
+      }
     }
 
+    final allLogPartIds = logParts.map((p) => p.partId).toSet();
+    final vehicleParts = (await _vehiclePartRepo.getAll())
+        .where((p) => allLogPartIds.contains(p.id))
+        .toList();
+
     final data = ExportData(
-      version: 1,
+      version: 2,
       exportedAt: DateTime.now(),
       vehicles: selected,
       fuelLogs: fuelLogs,
       maintenanceLogs: maintenanceLogs,
       maintenanceIntervals: intervals,
       vehicleDocuments: documents,
+      vehicleParts: vehicleParts,
+      maintenanceLogParts: logParts,
     );
 
     return const JsonEncoder.withIndent('  ').convert(data.toJson());
@@ -163,12 +197,25 @@ class ExportService {
       }
       await _documentRepo.save(saved);
     }
+
+    for (final part in data.vehicleParts) {
+      await _vehiclePartRepo.save(part);
+    }
+
+    final partsByLog = <String, List<MaintenanceLogPart>>{};
+    for (final part in data.maintenanceLogParts) {
+      partsByLog.putIfAbsent(part.logId, () => []).add(part);
+    }
+    for (final entry in partsByLog.entries) {
+      await _logPartRepo.replaceForLog(entry.key, entry.value);
+    }
   }
 
   static ExportData? preview(String json) {
     try {
       final map = jsonDecode(json) as Map<String, dynamic>;
-      if (map['version'] != 1) return null;
+      final version = map['version'];
+      if (version != 1 && version != 2) return null;
       return ExportData.fromJson(map);
     } catch (_) {
       return null;

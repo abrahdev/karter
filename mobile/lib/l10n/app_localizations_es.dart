@@ -68,6 +68,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get actions => 'Acciones';
 
   @override
+  String get tools => 'Herramientas';
+
+  @override
   String get information => 'Información';
 
   @override
@@ -116,6 +119,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get vehicleFormEdit => 'Editar vehículo';
 
   @override
+  String get vehicleFormDetails => 'Detalles';
+
+  @override
+  String get vehicleFormVehicle => 'Vehículo';
+
+  @override
   String get brand => 'Marca';
 
   @override
@@ -159,6 +168,14 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get addVehicle => 'Agregar vehículo';
+
+  @override
+  String get newVehicleServicesOverdueTitle =>
+      'Los servicios aparecen como vencidos';
+
+  @override
+  String get newVehicleServicesOverdueBody =>
+      'Como tu vehículo ya tiene más de 500 km, todos los servicios de mantenimiento aparecen como vencidos.\n\nRegistra los servicios que ya hayas realizado. Si no recuerdas el kilometraje exacto, indica unos km aproximados del último servicio.';
 
   @override
   String get deleteVehicle => 'Eliminar vehículo';
@@ -265,7 +282,45 @@ class AppLocalizationsEs extends AppLocalizations {
   String get partUnitCan => 'lata';
 
   @override
+  String get partUnitLabel => 'Unidad';
+
+  @override
+  String get localParts => 'Repuestos locales';
+
+  @override
+  String get intervalParts => 'Repuestos de intervalos';
+
+  @override
+  String get newPart => 'Nuevo repuesto';
+
+  @override
+  String get createPart => 'Crear repuesto';
+
+  @override
+  String get partsSection => 'Repuestos';
+
+  @override
+  String get usedParts => 'Repuestos';
+
+  @override
+  String usedInServicesCount(Object count) {
+    return '$count servicio(s)';
+  }
+
+  @override
+  String deletePartConfirm(Object count) {
+    return 'Este repuesto se usa en $count servicio(s). ¿Eliminarlo de todos modos?';
+  }
+
+  @override
+  String get reportPartsHeader => 'Repuestos';
+
+  @override
   String get templateFound => 'Plantilla encontrada';
+
+  @override
+  String get templateDisclaimer =>
+      'Los datos de la plantilla son solo de referencia. Verifica siempre los intervalos con el manual de tu vehículo.';
 
   @override
   String get noTemplate => 'Sin plantilla';
@@ -1138,13 +1193,78 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get moreTemplateSourceUrlHint =>
-      'https://raw.githubusercontent.com/...';
+      'https://github.com/abrahdev/karter/templates';
 
   @override
   String get moreTemplateSourceEditUrl => 'Editar URL';
 
   @override
   String get moreTemplateSourceUrlSaved => 'URL actualizada';
+
+  @override
+  String get testConnection => 'Probar conexión';
+
+  @override
+  String catalogDbModifiedAt(String date) {
+    return 'Última modificación: $date';
+  }
+
+  @override
+  String get importCheckTranslations => 'Traducciones';
+
+  @override
+  String importCheckTranslationsResult(int found, int total) {
+    return '$found de $total disponibles';
+  }
+
+  @override
+  String get importCheckIndex => 'Índice de plantillas';
+
+  @override
+  String importCheckIndexResult(int count) {
+    return '$count plantillas';
+  }
+
+  @override
+  String get importCheckDb => 'Base de datos del catálogo (remota)';
+
+  @override
+  String get importCheckDbRemoteFound => 'Disponible en GitHub';
+
+  @override
+  String get importCheckDbRemoteNotFound => 'Solo local (no en GitHub)';
+
+  @override
+  String get importCheckDbLocal => 'Datos de la base de datos importada';
+
+  @override
+  String importCheckCatalogVersion(String version) {
+    return 'Versión: $version';
+  }
+
+  @override
+  String importCheckVehicles(int count) {
+    return 'Vehículos: $count';
+  }
+
+  @override
+  String importCheckMaintenanceItems(int count) {
+    return 'Tareas de mantenimiento: $count';
+  }
+
+  @override
+  String importCheckParts(int count) {
+    return 'Repuestos: $count';
+  }
+
+  @override
+  String importCheckObdCodes(int count) {
+    return 'Códigos OBD: $count';
+  }
+
+  @override
+  String get importCheckDbLocalFailed =>
+      'No se pudo leer la base de datos importada';
 
   @override
   String get onboardingSkip => 'Omitir';
@@ -1306,6 +1426,12 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get dtcGeneralDb => 'Códigos OBD-II generales';
+
+  @override
+  String get dtcCatalogBrands => 'Marcas del catálogo';
+
+  @override
+  String get dtcMyVehicles => 'Mis vehículos';
 
   @override
   String get dtcVehicle => 'Vehículo';

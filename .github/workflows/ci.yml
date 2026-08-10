@@ -27,6 +27,12 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - run: python templates/tools/build_catalog.py
+
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.44.4'

@@ -10,6 +10,7 @@ class KarterSegmentedButton<T> extends StatelessWidget {
     required this.onSelectionChanged,
     this.style,
     this.hapticFeedback = true,
+    this.emptySelectionAllowed = false,
   });
 
   final List<ButtonSegment<T>> segments;
@@ -17,12 +18,14 @@ class KarterSegmentedButton<T> extends StatelessWidget {
   final ValueChanged<Set<T>>? onSelectionChanged;
   final ButtonStyle? style;
   final bool hapticFeedback;
+  final bool emptySelectionAllowed;
 
   @override
   Widget build(BuildContext context) {
     return SegmentedButton<T>(
       segments: segments,
       selected: selected,
+      emptySelectionAllowed: emptySelectionAllowed,
       onSelectionChanged: onSelectionChanged != null
           ? (v) {
               if (hapticFeedback) {

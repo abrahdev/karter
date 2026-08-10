@@ -93,6 +93,38 @@ class MaintenanceIntervals extends Table {
   Set<Column> get primaryKey => {id};
 }
 
+@DataClassName('VehiclePartEntry')
+class VehicleParts extends Table {
+  TextColumn get id => text()();
+  TextColumn get name => text()();
+  TextColumn get partId => text().nullable()();
+  TextColumn get quantity => text().nullable()();
+  TextColumn get unit => text().nullable()();
+  TextColumn get oemNumber => text().nullable()();
+  TextColumn get description => text().nullable()();
+  TextColumn get links => text().nullable()();
+  DateTimeColumn get createdAt => dateTime()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+@DataClassName('MaintenanceLogPartEntry')
+class MaintenanceLogParts extends Table {
+  TextColumn get id => text()();
+  TextColumn get logId => text().references(MaintenanceLogs, #id)();
+  TextColumn get partId => text().nullable()();
+  TextColumn get name => text()();
+  TextColumn get quantity => text().nullable()();
+  TextColumn get unit => text().nullable()();
+  TextColumn get oemNumber => text().nullable()();
+  TextColumn get description => text().nullable()();
+  TextColumn get links => text().nullable()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
 @DataClassName('VehicleDocumentEntry')
 class VehicleDocuments extends Table {
   TextColumn get id => text()();
@@ -118,6 +150,8 @@ class VehicleDocuments extends Table {
     FuelLogs,
     MaintenanceLogs,
     MaintenanceIntervals,
+    VehicleParts,
+    MaintenanceLogParts,
     VehicleDocuments,
   ],
 )
@@ -125,7 +159,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
   @override
-  int get schemaVersion => 15;
+  int get schemaVersion => 16;
 
   @override
   MigrationStrategy get migration {
@@ -274,6 +308,10 @@ class AppDatabase extends _$AppDatabase {
             await m.addColumn(
                 maintenanceIntervals, maintenanceIntervals.partsJson);
           } catch (_) {}
+        }
+        if (from < 16) {
+          await m.createTable(vehicleParts);
+          await m.createTable(maintenanceLogParts);
         }
       },
     );

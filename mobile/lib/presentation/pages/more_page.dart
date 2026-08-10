@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart' show BlockPicker;
@@ -9,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:material3_indicators/material3_indicators.dart';
 import 'package:mobile/core/modal_helpers.dart';
 import 'package:mobile/core/theme/app_spacing.dart';
+import 'package:mobile/data/services/catalog_service.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/pages/changelog_page.dart';
 import 'package:mobile/presentation/pages/onboarding_page.dart';
@@ -16,6 +15,7 @@ import 'package:mobile/presentation/pages/privacy_policy_page.dart';
 import 'package:mobile/presentation/pages/tips_page.dart';
 import 'package:mobile/presentation/widgets/section_header.dart';
 import 'package:mobile/presentation/widgets/karter_switch_list_tile.dart';
+import 'package:mobile/presentation/widgets/grouped_card.dart';
 import 'package:mobile/presentation/providers/backup_provider.dart';
 import 'package:mobile/presentation/providers/color_provider.dart';
 import 'package:mobile/presentation/providers/haptic_provider.dart';
@@ -24,8 +24,10 @@ import 'package:mobile/presentation/providers/locale_provider.dart';
 import 'package:mobile/presentation/providers/surface_tint_provider.dart';
 import 'package:mobile/presentation/providers/template_source_provider.dart';
 import 'package:mobile/presentation/providers/theme_provider.dart';
+import 'package:mobile/presentation/providers/vehicle_providers.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:uuid/uuid.dart';
 
 class MorePage extends ConsumerWidget {
   const MorePage({super.key});
@@ -67,7 +69,7 @@ class MorePage extends ConsumerWidget {
                   child: ListView(
                     children: [
                       SectionHeader(title: l.sectionPreferences),
-                      _GroupedCard(
+                      GroupedCard(
                         children: [
                           ListTile(
                             leading: const Icon(Icons.dark_mode_outlined),
@@ -175,7 +177,7 @@ class MorePage extends ConsumerWidget {
                       SectionHeader(title: l.sectionData),
                       _DataSection(),
                       SectionHeader(title: l.sectionTips),
-                      _GroupedCard(
+                      GroupedCard(
                         children: [
                           ListTile(
                             leading: const Icon(Icons.volunteer_activism),
@@ -206,7 +208,7 @@ class MorePage extends ConsumerWidget {
                   child: ListView(
                     children: [
                       SectionHeader(title: l.sectionFeedbackCommunity),
-                      _GroupedCard(
+                      GroupedCard(
                         children: [
                           ListTile(
                             leading: const Icon(Icons.rate_review),
@@ -246,7 +248,7 @@ class MorePage extends ConsumerWidget {
                         ],
                       ),
                       SectionHeader(title: l.sectionAbout),
-                      _GroupedCard(
+                      GroupedCard(
                         children: [
                           ListTile(
                             leading: const Icon(Icons.language),
@@ -305,7 +307,7 @@ class MorePage extends ConsumerWidget {
           padding: const EdgeInsets.all(AppSpacing.pagePadding),
           children: [
             SectionHeader(title: l.sectionPreferences),
-            _GroupedCard(
+            GroupedCard(
               children: [
                 ListTile(
                   leading: const Icon(Icons.dark_mode_outlined),
@@ -415,7 +417,7 @@ class MorePage extends ConsumerWidget {
             _DataSection(),
 
             SectionHeader(title: l.sectionFeedbackCommunity),
-            _GroupedCard(
+            GroupedCard(
               children: [
                 ListTile(
                   leading: const Icon(Icons.rate_review),
@@ -456,7 +458,7 @@ class MorePage extends ConsumerWidget {
             ),
 
             SectionHeader(title: l.sectionTips),
-            _GroupedCard(
+            GroupedCard(
               children: [
                 ListTile(
                   leading: const Icon(Icons.volunteer_activism),
@@ -481,7 +483,7 @@ class MorePage extends ConsumerWidget {
             ),
 
             SectionHeader(title: l.sectionAbout),
-            _GroupedCard(
+            GroupedCard(
               children: [
                 ListTile(
                   leading: const Icon(Icons.language),
@@ -679,6 +681,8 @@ class _AboutInfoCard extends ConsumerWidget {
   final AppLocalizations l;
   const _AboutInfoCard({required this.l});
 
+  static const _deviceIdKey = 'device_id';
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return FutureBuilder<PackageInfo>(
@@ -688,7 +692,7 @@ class _AboutInfoCard extends ConsumerWidget {
         final version = info != null
             ? '${info.version}+${info.buildNumber}'
             : '...';
-        final deviceId = _deviceId();
+        final deviceId = _deviceId(ref);
 
         return Card(
           clipBehavior: Clip.antiAlias,
@@ -711,12 +715,9 @@ class _AboutInfoCard extends ConsumerWidget {
                   leading: const Icon(Icons.description_outlined),
                   title: Text(l.changelog),
                   trailing: const Icon(Icons.chevron_right),
-                  onTap: () => showModalBottomSheet(
+                  onTap: () => karterShowModalBottomSheet(
                     context: context,
                     isScrollControlled: true,
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
-                    ),
                     builder: (_) => const ChangelogSheet(),
                   ),
                 ),
@@ -737,33 +738,13 @@ class _AboutInfoCard extends ConsumerWidget {
     );
   }
 
-  static String _deviceId() {
-    final bytes = utf8.encode('karter-device');
-    var hash = 0x811c9dc5;
-    for (final byte in bytes) {
-      hash ^= byte;
-      hash = (hash * 0x01000193) & 0xFFFFFFFF;
-    }
-    return hash.toRadixString(16).toUpperCase().padLeft(8, '0') * 4;
-  }
-}
-
-class _GroupedCard extends StatelessWidget {
-  final List<Widget> children;
-  const _GroupedCard({required this.children});
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      clipBehavior: Clip.antiAlias,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: ListTile.divideTiles(
-          context: context,
-          tiles: children,
-        ).toList(),
-      ),
-    );
+  static String _deviceId(WidgetRef ref) {
+    final prefs = ref.watch(sharedPreferencesProvider);
+    final existing = prefs.getString(_deviceIdKey);
+    if (existing != null) return existing;
+    final id = const Uuid().v4();
+    prefs.setString(_deviceIdKey, id);
+    return id;
   }
 }
 
@@ -809,22 +790,19 @@ class _DataSection extends ConsumerWidget {
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.bodySmall,
           ),
-          trailing: const Icon(Icons.edit),
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _TestCatalogButton(url: config.repoUrl),
+              const Icon(Icons.edit),
+            ],
+          ),
           onTap: () => _editUrl(context, ref, config.repoUrl),
         ),
       );
     }
 
-    return Card(
-      clipBehavior: Clip.antiAlias,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: ListTile.divideTiles(
-          context: context,
-          tiles: tiles,
-        ).toList(),
-      ),
-    );
+    return GroupedCard(children: tiles);
   }
 
   Future<void> _editUrl(
@@ -878,13 +856,191 @@ class _DataSection extends ConsumerWidget {
   }
 
   void _openBackupSheet(BuildContext context, WidgetRef ref) {
-    showModalBottomSheet(
+    karterShowModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-      ),
       builder: (_) => const _BackupSheet(),
+    );
+  }
+}
+
+class _TestCatalogButton extends ConsumerStatefulWidget {
+  const _TestCatalogButton({required this.url});
+
+  final String url;
+
+  @override
+  ConsumerState<_TestCatalogButton> createState() => _TestCatalogButtonState();
+}
+
+class _TestCatalogButtonState extends ConsumerState<_TestCatalogButton> {
+  bool _loading = false;
+
+  Future<void> _run() async {
+    setState(() => _loading = true);
+    final check =
+        await ref.read(catalogServiceProvider).checkImport(widget.url);
+    if (!mounted) return;
+    setState(() => _loading = false);
+    await karterShowModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      builder: (_) => _CatalogCheckSheet(check: check),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_loading) {
+      return const Padding(
+        padding: EdgeInsets.symmetric(horizontal: 12),
+        child: SizedBox(
+          width: 20,
+          height: 20,
+          child: CircularProgressIndicator(strokeWidth: 2.5),
+        ),
+      );
+    }
+    return IconButton(
+      icon: const Icon(Icons.play_circle_outline),
+      tooltip: AppLocalizations.of(context)!.testConnection,
+      onPressed: _run,
+    );
+  }
+}
+
+class _CatalogCheckSheet extends StatelessWidget {
+  const _CatalogCheckSheet({required this.check});
+
+  final CatalogImportCheck check;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
+    final okColor = theme.colorScheme.primary;
+    final errColor = theme.colorScheme.error;
+
+    Widget statusRow(bool ok, String text, {String? detail}) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Icon(
+              ok ? Icons.check_circle : Icons.error_outline,
+              color: ok ? okColor : errColor,
+              size: 20,
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(text, style: theme.textTheme.bodyMedium),
+                  if (detail != null)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 2),
+                      child: Text(
+                        detail,
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: theme.colorScheme.onSurfaceVariant,
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
+    Widget section(String title) {
+      return Padding(
+        padding: const EdgeInsets.only(top: 16, bottom: 8),
+        child: Text(
+          title,
+          style: theme.textTheme.titleSmall
+              ?.copyWith(color: theme.colorScheme.primary),
+        ),
+      );
+    }
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const SizedBox(height: 12),
+        Center(
+          child: Container(
+            width: 40,
+            height: 4,
+            margin: const EdgeInsets.only(bottom: 16),
+            decoration: BoxDecoration(
+              color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.4),
+              borderRadius: BorderRadius.circular(2),
+            ),
+          ),
+        ),
+        Flexible(
+          child: ListView(
+            shrinkWrap: true,
+            padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
+            children: [
+              Text(l.testConnection, style: theme.textTheme.titleMedium),
+              const SizedBox(height: 4),
+              Text(
+                check.baseUrl,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: theme.textTheme.bodySmall
+                    ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+              ),
+              section(l.importCheckTranslations),
+              statusRow(
+                check.translationsOk,
+                l.importCheckTranslationsResult(
+                  check.translationsFound,
+                  check.translationsTotal,
+                ),
+              ),
+              section(l.importCheckIndex),
+              statusRow(
+                check.indexOk,
+                l.importCheckIndexResult(check.templateCount),
+              ),
+              section(l.importCheckDb),
+              statusRow(
+                check.dbRemoteFound,
+                check.dbRemoteFound
+                    ? l.importCheckDbRemoteFound
+                    : l.importCheckDbRemoteNotFound,
+                detail: check.dbRemoteFound && check.dbRemoteModified != null
+                    ? l.catalogDbModifiedAt(
+                        DateFormat.yMMMd()
+                            .add_jm()
+                            .format(check.dbRemoteModified!.toLocal()),
+                      )
+                    : null,
+              ),
+              if (check.dbRemoteFound) ...[
+                section(l.importCheckDbLocal),
+                if (check.localDbOk) ...[
+                  if (check.catalogVersion != null)
+                    statusRow(true,
+                        l.importCheckCatalogVersion(check.catalogVersion!)),
+                  statusRow(true, l.importCheckVehicles(check.vehicles)),
+                  statusRow(
+                      true, l.importCheckMaintenanceItems(check.maintenanceItems)),
+                  statusRow(true, l.importCheckParts(check.parts)),
+                  statusRow(true, l.importCheckObdCodes(check.obdCodes)),
+                ] else
+                  statusRow(false, l.importCheckDbLocalFailed),
+              ],
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
@@ -1097,7 +1253,7 @@ class _BackupSheetState extends ConsumerState<_BackupSheet> {
 
     if (!context.mounted) return;
 
-    final selected = await showModalBottomSheet<String>(
+    final selected = await karterShowModalBottomSheet<String>(
       context: context,
       builder: (ctx) => Consumer(
         builder: (context, ref, _) {

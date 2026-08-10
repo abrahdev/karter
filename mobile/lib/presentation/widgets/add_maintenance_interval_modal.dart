@@ -12,6 +12,7 @@ import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
 import 'package:mobile/presentation/utils/maintenance_localizer.dart';
 import 'package:mobile/presentation/widgets/interval_parts_view.dart';
+import 'package:mobile/presentation/widgets/section_header.dart';
 import 'package:uuid/uuid.dart';
 
 Future<void> showAddCustomIntervalModal(
@@ -435,7 +436,6 @@ class _AddIntervalModalState extends ConsumerState<_AddIntervalModal> {
               controller: _nameCtrl,
               decoration: InputDecoration(
                 labelText: l.name,
-                border: const OutlineInputBorder(),
               ),
               validator: (v) =>
                   (v == null || v.trim().isEmpty) ? l.required : null,
@@ -447,7 +447,6 @@ class _AddIntervalModalState extends ConsumerState<_AddIntervalModal> {
             keyboardType: TextInputType.number,
             decoration: InputDecoration(
               labelText: l.unitKm,
-              border: const OutlineInputBorder(),
             ),
             validator: (v) {
               if (v == null || v.trim().isEmpty) return l.required;
@@ -470,7 +469,6 @@ class _AddIntervalModalState extends ConsumerState<_AddIntervalModal> {
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 labelText: l.months,
-                border: const OutlineInputBorder(),
               ),
             ),
           ],
@@ -481,20 +479,10 @@ class _AddIntervalModalState extends ConsumerState<_AddIntervalModal> {
             minLines: 2,
             decoration: InputDecoration(
               labelText: l.description,
-              border: const OutlineInputBorder(),
             ),
           ),
           if (_parts.isNotEmpty) ...[
-            const SizedBox(height: 16),
-            Text(
-              l.partsTitle.toUpperCase(),
-              style: theme.textTheme.labelSmall?.copyWith(
-                color: theme.colorScheme.primary,
-                fontWeight: FontWeight.w600,
-                letterSpacing: 1.2,
-              ),
-            ),
-            const SizedBox(height: 8),
+            SectionHeader(title: l.partsTitle),
             for (var i = 0; i < _parts.length; i++)
               _PartRow(
                 part: _parts[i],
@@ -607,7 +595,6 @@ class _PartRow extends StatelessWidget {
                     decoration: InputDecoration(
                       labelText: l.partName,
                       isDense: true,
-                      border: const OutlineInputBorder(),
                     ),
                   ),
           ),
@@ -623,7 +610,6 @@ class _PartRow extends StatelessWidget {
               decoration: InputDecoration(
                 labelText: l.quantity,
                 isDense: true,
-                border: const OutlineInputBorder(),
               ),
             ),
           ),
@@ -744,8 +730,11 @@ class _TemplateSyncSectionState extends ConsumerState<_TemplateSyncSection> {
           )
         else ...[
           if (newItems.isNotEmpty) ...[
-            Text(l.newFromTemplate.toUpperCase(), style: _sectionStyle(theme)),
-            const SizedBox(height: 4),
+            SectionHeader(
+              title: l.newFromTemplate,
+              topPadding: 0,
+              bottomPadding: 4,
+            ),
             for (final item in newItems)
               _buildNewTile(theme, l, resolution, item),
             const SizedBox(height: 12),
@@ -762,8 +751,11 @@ class _TemplateSyncSectionState extends ConsumerState<_TemplateSyncSection> {
           ],
           if (updateItems.isNotEmpty) ...[
             if (newItems.isNotEmpty) const SizedBox(height: 20),
-            Text(l.updatesAvailable.toUpperCase(), style: _sectionStyle(theme)),
-            const SizedBox(height: 4),
+            SectionHeader(
+              title: l.updatesAvailable,
+              topPadding: 0,
+              bottomPadding: 4,
+            ),
             for (final item in updateItems)
               _buildUpdateTile(
                 theme,
@@ -777,13 +769,6 @@ class _TemplateSyncSectionState extends ConsumerState<_TemplateSyncSection> {
       ],
     );
   }
-
-  TextStyle? _sectionStyle(ThemeData theme) =>
-      theme.textTheme.labelSmall?.copyWith(
-        color: theme.colorScheme.primary,
-        fontWeight: FontWeight.w600,
-        letterSpacing: 1.2,
-      );
 
   Widget _buildNewTile(
     ThemeData theme,

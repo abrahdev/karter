@@ -408,7 +408,6 @@ class _AddFuelLogModalState extends ConsumerState<_AddFuelLogModal> {
                   labelText:
                       '${l.volume} (${_volumeUnit == VolumeUnit.liters ? l.unitL : l.unitGal})',
                   hintText: '0.0',
-                  border: const OutlineInputBorder(),
                 ),
                 keyboardType: const TextInputType
                     .numberWithOptions(decimal: true),
@@ -427,7 +426,6 @@ class _AddFuelLogModalState extends ConsumerState<_AddFuelLogModal> {
                 decoration: InputDecoration(
                   labelText: l.odometer,
                   hintText: '0',
-                  border: const OutlineInputBorder(),
                 ),
                 keyboardType: TextInputType.number,
                 validator: (v) {
@@ -447,7 +445,6 @@ class _AddFuelLogModalState extends ConsumerState<_AddFuelLogModal> {
                   hintText: '0.00',
                   prefixText:
                       '${Vehicle.currencySymbol(_vehicleCurrency)} ',
-                  border: const OutlineInputBorder(),
                 ),
                 keyboardType: const TextInputType
                     .numberWithOptions(decimal: true),

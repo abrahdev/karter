@@ -2,8 +2,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/core/database/app_database.dart';
 import 'package:mobile/data/repositories/fuel_log_repository_impl.dart';
 import 'package:mobile/data/repositories/maintenance_interval_repository_impl.dart';
+import 'package:mobile/data/repositories/maintenance_log_part_repository_impl.dart';
 import 'package:mobile/data/repositories/maintenance_log_repository_impl.dart';
 import 'package:mobile/data/repositories/vehicle_document_repository_impl.dart';
+import 'package:mobile/data/repositories/vehicle_part_repository_impl.dart';
 import 'package:mobile/data/repositories/vehicle_repository_impl.dart';
 import 'package:mobile/data/services/export_service.dart';
 import 'package:mobile/data/services/notification_service.dart';
@@ -15,12 +17,16 @@ import 'package:mobile/data/services/template_resolver.dart';
 import 'package:mobile/domain/entities/fuel_log.dart';
 import 'package:mobile/domain/entities/maintenance_interval.dart';
 import 'package:mobile/domain/entities/maintenance_log.dart';
+import 'package:mobile/domain/entities/maintenance_log_part.dart';
 import 'package:mobile/domain/entities/vehicle.dart';
 import 'package:mobile/domain/entities/vehicle_document.dart';
+import 'package:mobile/domain/entities/vehicle_part.dart';
 import 'package:mobile/domain/repositories/fuel_log_repository.dart';
 import 'package:mobile/domain/repositories/maintenance_interval_repository.dart';
+import 'package:mobile/domain/repositories/maintenance_log_part_repository.dart';
 import 'package:mobile/domain/repositories/maintenance_log_repository.dart';
 import 'package:mobile/domain/repositories/vehicle_document_repository.dart';
+import 'package:mobile/domain/repositories/vehicle_part_repository.dart';
 import 'package:mobile/domain/repositories/vehicle_repository.dart';
 
 final appDatabaseProvider = Provider<AppDatabase>((ref) {
@@ -43,6 +49,36 @@ final maintenanceIntervalRepositoryProvider =
     Provider<MaintenanceIntervalRepository>((ref) {
   return MaintenanceIntervalRepositoryImpl(ref.watch(appDatabaseProvider));
 });
+
+final vehiclePartRepositoryProvider = Provider<VehiclePartRepository>((ref) {
+  return VehiclePartRepositoryImpl(ref.watch(appDatabaseProvider));
+});
+
+final maintenanceLogPartRepositoryProvider =
+    Provider<MaintenanceLogPartRepository>((ref) {
+  return MaintenanceLogPartRepositoryImpl(ref.watch(appDatabaseProvider));
+});
+
+final vehiclePartsProvider = FutureProvider<List<VehiclePart>>((ref) async {
+  final repo = ref.watch(vehiclePartRepositoryProvider);
+  return repo.getAll();
+});
+
+final maintenanceLogPartsProvider =
+    FutureProvider.family<List<MaintenanceLogPart>, String>(
+  (ref, logId) async {
+    final repo = ref.watch(maintenanceLogPartRepositoryProvider);
+    return repo.getByLog(logId);
+  },
+);
+
+final maintenanceLogPartsByPartProvider =
+    FutureProvider.family<List<MaintenanceLogPart>, String>(
+  (ref, partId) async {
+    final repo = ref.watch(maintenanceLogPartRepositoryProvider);
+    return repo.getByPartId(partId);
+  },
+);
 
 final vehicleListProvider = FutureProvider<List<Vehicle>>((ref) async {
   final repo = ref.watch(vehicleRepositoryProvider);
@@ -85,6 +121,8 @@ final exportServiceProvider = Provider<ExportService>((ref) {
     ref.watch(maintenanceLogRepositoryProvider),
     ref.watch(maintenanceIntervalRepositoryProvider),
     ref.watch(vehicleDocumentRepositoryProvider),
+    ref.watch(maintenanceLogPartRepositoryProvider),
+    ref.watch(vehiclePartRepositoryProvider),
   );
 });
 

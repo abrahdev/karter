@@ -73,7 +73,7 @@ Three tools in `templates/tools/` turn the source tree into artifacts:
 | :--- | :--- | :--- |
 | `generate_index.py` | every `*.json` under `templates/data/` | `templates/index.json` |
 | `i18n_json.py` | every template's `i18n_key` / `desc_i18n_key` defaults | `templates/i18n/en.json` |
-| `build_catalog.py` | `index.json` + `data/**` + `i18n/en.json` | `mobile/assets/catalog/karter-catalog.db` |
+| `build_catalog.py` | `index.json` + `data/**` + `i18n/en.json` | `templates/karter-catalog.db` (symlinked from `mobile/assets/catalog/`) |
 
 `generate_index.py` walks `templates/data/` and emits one `index.json` entry per template that has a `maintenance_items` array (fragments without items are skipped). Entries are sorted `_base` first, then by make/model. The `generated_at` timestamp doubles as the `catalog_version` stored inside the database.
 
@@ -95,7 +95,8 @@ flowchart LR
     subgraph Artifacts["Generated artifacts"]
         IDX["index.json<br/>template manifest"]
         EN["i18n/en.json<br/>English defaults"]
-        DB["mobile/assets/catalog/<br/>karter-catalog.db (SQLite)"]
+        DB["templates/<br/>karter-catalog.db (SQLite)"]
+        SYM["mobile/assets/catalog/<br/>karter-catalog.db (symlink)"]
     end
 
     subgraph Dist["Distribution (GitHub Actions)"]
@@ -117,6 +118,8 @@ flowchart LR
     EN --> BUILD
     SCHEMA -. validates .-> DATA
     BUILD --> DB
+    DB --> SYM
+    SYM --> BUNDLED
     DB --> CI
     DB --> UPD --> REL
     BUNDLED --> FETCH
@@ -257,12 +260,14 @@ The app bundles the catalog and templates as assets, and refreshes them over the
 
 | Mechanism | File | Behavior |
 | :--- | :--- | :--- |
-| Bundled catalog | `mobile/assets/catalog/karter-catalog.db` | Copied from assets to the documents directory on first run (`CatalogService.catalogFile`) |
+| Bundled catalog | `templates/karter-catalog.db` | Built by `build_catalog.py`, symlinked from `mobile/assets/catalog/karter-catalog.db` and copied to the documents directory on first run (`CatalogService.catalogFile`) |
 | Live catalog | `CatalogService.refreshFromRelease()` | Downloads the latest DB from the rolling GitHub release `catalog`, compares `catalog_version`, and swaps the file only if different |
-| Template JSONs | `TemplateResolver` | Fetches `index.json` and `data/**/*.json` from the configured repo URL (default `https://raw.githubusercontent.com/abrahdev/karter/main/templates`), falling back to bundled assets |
+| Template JSONs | `TemplateResolver` | Fetches `index.json` and `data/**/*.json` from the configured repo URL (default `https://github.com/abrahdev/karter/templates`), falling back to bundled assets |
 | Translations | `TemplateTranslations` | Fetches `i18n/{locale}.json` from the same URL at startup, falling back to bundled assets |
 
 The template source URL is configurable in the More page (`TemplateSourceConfig`), which is what allows community forks to plug in their own template repo. The catalog refresh is fire-and-forget at startup and silently ignores network errors so the app always works offline.
+
+Because the catalog DB is generated (and gitignored), a fresh checkout must run `python templates/tools/build_catalog.py` before building the app; the `build_catalog.py` step creates `templates/karter-catalog.db` and the `mobile/assets/catalog/` symlink. CI and release workflows already do this.
 
 ```mermaid
 sequenceDiagram
@@ -293,7 +298,7 @@ sequenceDiagram
 | Workflow | Trigger | What it does |
 | :--- | :--- | :--- |
 | `ci.yml` | PRs and pushes to `main` | Runs `build_catalog.py --check-only` (validates every template merge) and `flutter analyze` + `flutter test` |
-| `update-index.yml` | `templates/**` changes on `main` | Regenerates `index.json`, rebuilds `karter-catalog.db`, commits both if changed, and uploads the DB to the rolling `catalog` release |
+| `update-index.yml` | `templates/**` changes on `main` | Regenerates `index.json`, rebuilds `templates/karter-catalog.db`, commits `index.json` if changed, and uploads the DB to the rolling `catalog` release |
 | `release.yml` | `VERSION` change | Builds the Android APK and Linux bundle and publishes a GitHub release |
 | `deploy-docs.yml` | `docs/**` changes | Builds and deploys this documentation site |
 

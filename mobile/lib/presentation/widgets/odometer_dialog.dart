@@ -176,7 +176,6 @@ class _OdometerDialogState extends State<OdometerDialog> {
                 ],
                 decoration: InputDecoration(
                   suffixText: _unitLabel(),
-                  border: const OutlineInputBorder(),
                   contentPadding: const EdgeInsets.symmetric(
                       horizontal: 8, vertical: 12),
                 ),
@@ -215,7 +214,6 @@ class _OdometerDialogState extends State<OdometerDialog> {
                       ],
                       decoration: InputDecoration(
                         suffixText: _unitLabel(),
-                        border: const OutlineInputBorder(),
                         contentPadding:
                             const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
                       ),
@@ -235,13 +233,19 @@ class _OdometerDialogState extends State<OdometerDialog> {
               ),
             ],
             const SizedBox(height: 8),
-            Row(
-              children: [
-                Expanded(child: _chip(100, theme)),
-                Expanded(child: _chip(500, theme)),
-                Expanded(child: _chip(1000, theme)),
-                Expanded(child: _chip(5000, theme)),
-              ],
+            SizedBox(
+              width: double.infinity,
+              child: Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                alignment: WrapAlignment.center,
+                children: [
+                  _chip(100, theme),
+                  _chip(500, theme),
+                  _chip(1000, theme),
+                  _chip(5000, theme),
+                ],
+              ),
             ),
             if (_warning != null) ...[
               const SizedBox(height: 16),
@@ -329,7 +333,7 @@ class _OdometerDialogState extends State<OdometerDialog> {
 
   Widget _chip(int value, ThemeData theme) {
     final isNegative = value < 0;
-    final label = isNegative ? '$value' : '+$value';
+    final label = '$value';
     return ActionChip(
       avatar: Icon(
         isNegative ? Icons.remove : Icons.add,

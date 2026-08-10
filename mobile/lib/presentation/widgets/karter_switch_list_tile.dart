@@ -13,6 +13,7 @@ class KarterSwitchListTile extends StatelessWidget {
     this.contentPadding,
     this.dense = false,
     this.hapticFeedback = true,
+    this.onTap,
   });
 
   final bool value;
@@ -23,9 +24,34 @@ class KarterSwitchListTile extends StatelessWidget {
   final EdgeInsetsGeometry? contentPadding;
   final bool dense;
   final bool hapticFeedback;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
+    if (onTap != null) {
+      return ListTile(
+        leading: leading,
+        title: title,
+        subtitle: subtitle,
+        contentPadding: contentPadding,
+        dense: dense,
+        trailing: Switch(
+          value: value,
+          onChanged: onChanged != null
+              ? (v) {
+                  if (hapticFeedback) {
+                    ProviderScope.containerOf(context)
+                        .read(hapticProvider.notifier)
+                        .success();
+                  }
+                  onChanged!.call(v);
+                }
+              : null,
+        ),
+        onTap: onTap,
+      );
+    }
+
     return SwitchListTile(
       secondary: leading,
       title: title,
@@ -34,7 +60,9 @@ class KarterSwitchListTile extends StatelessWidget {
       onChanged: onChanged != null
           ? (v) {
               if (hapticFeedback) {
-                ProviderScope.containerOf(context).read(hapticProvider.notifier).success();
+                ProviderScope.containerOf(context)
+                    .read(hapticProvider.notifier)
+                    .success();
               }
               onChanged!.call(v);
             }

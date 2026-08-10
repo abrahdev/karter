@@ -159,6 +159,7 @@ class _NotificationSettingsModalState
             ButtonSegment(value: -1, label: Text(l.notificationFreqCustom)),
           ],
           selected: _selectedFreq,
+          emptySelectionAllowed: true,
           onSelectionChanged: (selectedSet) {
             setState(() => _selectedFreq = selectedSet);
             if (selectedSet.isEmpty) {

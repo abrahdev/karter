@@ -68,6 +68,9 @@ class AppLocalizationsEt extends AppLocalizations {
   String get actions => 'Tegevused';
 
   @override
+  String get tools => 'Tööriistad';
+
+  @override
   String get information => 'Teave';
 
   @override
@@ -116,6 +119,12 @@ class AppLocalizationsEt extends AppLocalizations {
   String get vehicleFormEdit => 'Muuda sõidukit';
 
   @override
+  String get vehicleFormDetails => 'Detailid';
+
+  @override
+  String get vehicleFormVehicle => 'Sõiduk';
+
+  @override
   String get brand => 'Tootja';
 
   @override
@@ -159,6 +168,14 @@ class AppLocalizationsEt extends AppLocalizations {
 
   @override
   String get addVehicle => 'Lisa sõiduk';
+
+  @override
+  String get newVehicleServicesOverdueTitle =>
+      'Hooldustööd kuvatakse ületähtajatena';
+
+  @override
+  String get newVehicleServicesOverdueBody =>
+      'Kuna teie sõidukil on juba üle 500 km, kuvatakse kõik hooldustööd ületähtajatena.\n\nRegistreerige juba tehtud hooldustööd. Kui täpset läbisõitu ei mäleta, märkige ligikaudne km viimase hoolduse kohta.';
 
   @override
   String get deleteVehicle => 'Kustuta sõiduk';
@@ -265,7 +282,45 @@ class AppLocalizationsEt extends AppLocalizations {
   String get partUnitCan => 'purk';
 
   @override
+  String get partUnitLabel => 'Ühik';
+
+  @override
+  String get localParts => 'Kohalikud varuosad';
+
+  @override
+  String get intervalParts => 'Intervallide varuosad';
+
+  @override
+  String get newPart => 'Uus varuosa';
+
+  @override
+  String get createPart => 'Loo varuosa';
+
+  @override
+  String get partsSection => 'Varuosad';
+
+  @override
+  String get usedParts => 'Varuosad';
+
+  @override
+  String usedInServicesCount(Object count) {
+    return '$count hooldust';
+  }
+
+  @override
+  String deletePartConfirm(Object count) {
+    return 'Seda varuosa kasutatakse $count hoolduse juures. Kustutada ikkagi?';
+  }
+
+  @override
+  String get reportPartsHeader => 'Varuosad';
+
+  @override
   String get templateFound => 'Mall leitud';
+
+  @override
+  String get templateDisclaimer =>
+      'Malli andmed on ainult viitamiseks. Kontrolli intervalle alati oma sõiduki käsiraamatu järgi.';
 
   @override
   String get noTemplate => 'Mall puudub';
@@ -1130,13 +1185,78 @@ class AppLocalizationsEt extends AppLocalizations {
 
   @override
   String get moreTemplateSourceUrlHint =>
-      'https://raw.githubusercontent.com/...';
+      'https://github.com/abrahdev/karter/templates';
 
   @override
   String get moreTemplateSourceEditUrl => 'Edit URL';
 
   @override
   String get moreTemplateSourceUrlSaved => 'URL updated';
+
+  @override
+  String get testConnection => 'Ühenduse testimine';
+
+  @override
+  String catalogDbModifiedAt(String date) {
+    return 'Viimati muudetud: $date';
+  }
+
+  @override
+  String get importCheckTranslations => 'Tõlked';
+
+  @override
+  String importCheckTranslationsResult(int found, int total) {
+    return '$found/$total saadaval';
+  }
+
+  @override
+  String get importCheckIndex => 'Mallide indeks';
+
+  @override
+  String importCheckIndexResult(int count) {
+    return '$count malli';
+  }
+
+  @override
+  String get importCheckDb => 'Kataloogi andmebaas (kaug)';
+
+  @override
+  String get importCheckDbRemoteFound => 'Saadaval GitHubis';
+
+  @override
+  String get importCheckDbRemoteNotFound => 'Ainult kohalik (mitte GitHubis)';
+
+  @override
+  String get importCheckDbLocal => 'Imporditud andmebaasi andmed';
+
+  @override
+  String importCheckCatalogVersion(String version) {
+    return 'Versioon: $version';
+  }
+
+  @override
+  String importCheckVehicles(int count) {
+    return 'Sõidukid: $count';
+  }
+
+  @override
+  String importCheckMaintenanceItems(int count) {
+    return 'Hooldustööd: $count';
+  }
+
+  @override
+  String importCheckParts(int count) {
+    return 'Varuosad: $count';
+  }
+
+  @override
+  String importCheckObdCodes(int count) {
+    return 'OBD-koodid: $count';
+  }
+
+  @override
+  String get importCheckDbLocalFailed =>
+      'Imporditud andmebaasi ei õnnestunud lugeda';
 
   @override
   String get onboardingSkip => 'Jäta vahele';
@@ -1297,6 +1417,12 @@ class AppLocalizationsEt extends AppLocalizations {
 
   @override
   String get dtcGeneralDb => 'Üldised OBD-II koodid';
+
+  @override
+  String get dtcCatalogBrands => 'Kataloogi kaubamärgid';
+
+  @override
+  String get dtcMyVehicles => 'Minu sõidukid';
 
   @override
   String get dtcVehicle => 'Sõiduk';

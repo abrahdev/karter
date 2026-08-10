@@ -408,7 +408,6 @@ class _AddDocumentModalState extends ConsumerState<_AddDocumentModal> {
               initialValue: _selectedType,
               decoration: InputDecoration(
                 labelText: l.documentType,
-                border: const OutlineInputBorder(),
               ),
               items: DocumentType.values.map((type) {
                 return DropdownMenuItem(
@@ -426,7 +425,6 @@ class _AddDocumentModalState extends ConsumerState<_AddDocumentModal> {
               decoration: InputDecoration(
                 labelText: 'Title',
                 hintText: _selectedFileNames.isNotEmpty ? _selectedFileNames.first : null,
-                border: const OutlineInputBorder(),
               ),
             ),
             const SizedBox(height: 12),
@@ -434,7 +432,6 @@ class _AddDocumentModalState extends ConsumerState<_AddDocumentModal> {
               controller: _notesController,
               decoration: InputDecoration(
                 labelText: l.notesOptional,
-                border: const OutlineInputBorder(),
               ),
               maxLines: 3,
             ),
