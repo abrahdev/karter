@@ -807,7 +807,7 @@ class _MaintenanceCard extends ConsumerWidget {
               );
 
               if (tileColor == null) return block;
-              return ColoredBox(color: tileColor, child: block);
+              return Material(color: tileColor, child: block);
             }).toList(),
           ),
         );
