@@ -532,7 +532,9 @@ Future<void> main() async {
 
   final templateSource = TemplateSourceConfig.fromPrefs(prefs);
   await TemplateTranslations.preload(
-    baseUrl: templateSource.enabled ? templateSource.repoUrl : null,
+    baseUrl: templateSource.enabled
+        ? CatalogService.resolveRawBaseUrl(templateSource.repoUrl)
+        : null,
   );
 
   final catalogService = CatalogService();

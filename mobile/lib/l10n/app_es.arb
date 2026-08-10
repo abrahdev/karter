@@ -390,9 +390,34 @@
   "moreTemplateSourceOnline": "En línea (GitHub)",
   "moreTemplateSourceUrl": "URL del repositorio",
   "moreTemplateSourceReset": "Restablecer valor por defecto",
-  "moreTemplateSourceUrlHint": "https://raw.githubusercontent.com/...",
+  "moreTemplateSourceUrlHint": "https://github.com/abrahdev/karter/templates",
   "moreTemplateSourceEditUrl": "Editar URL",
   "moreTemplateSourceUrlSaved": "URL actualizada",
+
+  "testConnection": "Probar conexión",
+  "catalogDbModifiedAt": "Última modificación: {date}",
+  "@catalogDbModifiedAt": {
+    "description": "Fecha de modificación de la base de datos del catálogo en GitHub",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "importCheckTranslations": "Traducciones",
+  "importCheckTranslationsResult": "{found} de {total} disponibles",
+  "importCheckIndex": "Índice de plantillas",
+  "importCheckIndexResult": "{count} plantillas",
+  "importCheckDb": "Base de datos del catálogo (remota)",
+  "importCheckDbRemoteFound": "Disponible en GitHub",
+  "importCheckDbRemoteNotFound": "Solo local (no en GitHub)",
+  "importCheckDbLocal": "Datos de la base de datos importada",
+  "importCheckCatalogVersion": "Versión: {version}",
+  "importCheckVehicles": "Vehículos: {count}",
+  "importCheckMaintenanceItems": "Tareas de mantenimiento: {count}",
+  "importCheckParts": "Repuestos: {count}",
+  "importCheckObdCodes": "Códigos OBD: {count}",
+  "importCheckDbLocalFailed": "No se pudo leer la base de datos importada",
 
   "onboardingSkip": "Omitir",
   "onboardingNext": "Siguiente",

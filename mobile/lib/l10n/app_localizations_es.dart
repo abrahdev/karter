@@ -1193,13 +1193,78 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get moreTemplateSourceUrlHint =>
-      'https://raw.githubusercontent.com/...';
+      'https://github.com/abrahdev/karter/templates';
 
   @override
   String get moreTemplateSourceEditUrl => 'Editar URL';
 
   @override
   String get moreTemplateSourceUrlSaved => 'URL actualizada';
+
+  @override
+  String get testConnection => 'Probar conexión';
+
+  @override
+  String catalogDbModifiedAt(String date) {
+    return 'Última modificación: $date';
+  }
+
+  @override
+  String get importCheckTranslations => 'Traducciones';
+
+  @override
+  String importCheckTranslationsResult(int found, int total) {
+    return '$found de $total disponibles';
+  }
+
+  @override
+  String get importCheckIndex => 'Índice de plantillas';
+
+  @override
+  String importCheckIndexResult(int count) {
+    return '$count plantillas';
+  }
+
+  @override
+  String get importCheckDb => 'Base de datos del catálogo (remota)';
+
+  @override
+  String get importCheckDbRemoteFound => 'Disponible en GitHub';
+
+  @override
+  String get importCheckDbRemoteNotFound => 'Solo local (no en GitHub)';
+
+  @override
+  String get importCheckDbLocal => 'Datos de la base de datos importada';
+
+  @override
+  String importCheckCatalogVersion(String version) {
+    return 'Versión: $version';
+  }
+
+  @override
+  String importCheckVehicles(int count) {
+    return 'Vehículos: $count';
+  }
+
+  @override
+  String importCheckMaintenanceItems(int count) {
+    return 'Tareas de mantenimiento: $count';
+  }
+
+  @override
+  String importCheckParts(int count) {
+    return 'Repuestos: $count';
+  }
+
+  @override
+  String importCheckObdCodes(int count) {
+    return 'Códigos OBD: $count';
+  }
+
+  @override
+  String get importCheckDbLocalFailed =>
+      'No se pudo leer la base de datos importada';
 
   @override
   String get onboardingSkip => 'Omitir';

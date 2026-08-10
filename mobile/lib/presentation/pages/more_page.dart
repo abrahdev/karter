@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:material3_indicators/material3_indicators.dart';
 import 'package:mobile/core/modal_helpers.dart';
 import 'package:mobile/core/theme/app_spacing.dart';
+import 'package:mobile/data/services/catalog_service.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/pages/changelog_page.dart';
 import 'package:mobile/presentation/pages/onboarding_page.dart';
@@ -22,6 +23,7 @@ import 'package:mobile/presentation/providers/locale_provider.dart';
 import 'package:mobile/presentation/providers/surface_tint_provider.dart';
 import 'package:mobile/presentation/providers/template_source_provider.dart';
 import 'package:mobile/presentation/providers/theme_provider.dart';
+import 'package:mobile/presentation/providers/vehicle_providers.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:uuid/uuid.dart';
@@ -809,7 +811,13 @@ class _DataSection extends ConsumerWidget {
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.bodySmall,
           ),
-          trailing: const Icon(Icons.edit),
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _TestCatalogButton(url: config.repoUrl),
+              const Icon(Icons.edit),
+            ],
+          ),
           onTap: () => _editUrl(context, ref, config.repoUrl),
         ),
       );
@@ -885,6 +893,187 @@ class _DataSection extends ConsumerWidget {
         borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
       ),
       builder: (_) => const _BackupSheet(),
+    );
+  }
+}
+
+class _TestCatalogButton extends ConsumerStatefulWidget {
+  const _TestCatalogButton({required this.url});
+
+  final String url;
+
+  @override
+  ConsumerState<_TestCatalogButton> createState() => _TestCatalogButtonState();
+}
+
+class _TestCatalogButtonState extends ConsumerState<_TestCatalogButton> {
+  bool _loading = false;
+
+  Future<void> _run() async {
+    setState(() => _loading = true);
+    final check =
+        await ref.read(catalogServiceProvider).checkImport(widget.url);
+    if (!mounted) return;
+    setState(() => _loading = false);
+    await karterShowModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      builder: (_) => _CatalogCheckSheet(check: check),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_loading) {
+      return const Padding(
+        padding: EdgeInsets.symmetric(horizontal: 12),
+        child: SizedBox(
+          width: 20,
+          height: 20,
+          child: CircularProgressIndicator(strokeWidth: 2.5),
+        ),
+      );
+    }
+    return IconButton(
+      icon: const Icon(Icons.play_circle_outline),
+      tooltip: AppLocalizations.of(context)!.testConnection,
+      onPressed: _run,
+    );
+  }
+}
+
+class _CatalogCheckSheet extends StatelessWidget {
+  const _CatalogCheckSheet({required this.check});
+
+  final CatalogImportCheck check;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
+    final okColor = theme.colorScheme.primary;
+    final errColor = theme.colorScheme.error;
+
+    Widget statusRow(bool ok, String text, {String? detail}) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Icon(
+              ok ? Icons.check_circle : Icons.error_outline,
+              color: ok ? okColor : errColor,
+              size: 20,
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(text, style: theme.textTheme.bodyMedium),
+                  if (detail != null)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 2),
+                      child: Text(
+                        detail,
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: theme.colorScheme.onSurfaceVariant,
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
+    Widget section(String title) {
+      return Padding(
+        padding: const EdgeInsets.only(top: 16, bottom: 8),
+        child: Text(
+          title,
+          style: theme.textTheme.titleSmall
+              ?.copyWith(color: theme.colorScheme.primary),
+        ),
+      );
+    }
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const SizedBox(height: 12),
+        Center(
+          child: Container(
+            width: 40,
+            height: 4,
+            margin: const EdgeInsets.only(bottom: 16),
+            decoration: BoxDecoration(
+              color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.4),
+              borderRadius: BorderRadius.circular(2),
+            ),
+          ),
+        ),
+        Flexible(
+          child: ListView(
+            shrinkWrap: true,
+            padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
+            children: [
+              Text(l.testConnection, style: theme.textTheme.titleLarge),
+              const SizedBox(height: 4),
+              Text(
+                check.baseUrl,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: theme.textTheme.bodySmall
+                    ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+              ),
+              section(l.importCheckTranslations),
+              statusRow(
+                check.translationsOk,
+                l.importCheckTranslationsResult(
+                  check.translationsFound,
+                  check.translationsTotal,
+                ),
+              ),
+              section(l.importCheckIndex),
+              statusRow(
+                check.indexOk,
+                l.importCheckIndexResult(check.templateCount),
+              ),
+              section(l.importCheckDb),
+              statusRow(
+                check.dbRemoteFound,
+                check.dbRemoteFound
+                    ? l.importCheckDbRemoteFound
+                    : l.importCheckDbRemoteNotFound,
+                detail: check.dbRemoteFound && check.dbRemoteModified != null
+                    ? l.catalogDbModifiedAt(
+                        DateFormat.yMMMd()
+                            .add_jm()
+                            .format(check.dbRemoteModified!.toLocal()),
+                      )
+                    : null,
+              ),
+              if (check.dbRemoteFound) ...[
+                section(l.importCheckDbLocal),
+                if (check.localDbOk) ...[
+                  if (check.catalogVersion != null)
+                    statusRow(true,
+                        l.importCheckCatalogVersion(check.catalogVersion!)),
+                  statusRow(true, l.importCheckVehicles(check.vehicles)),
+                  statusRow(
+                      true, l.importCheckMaintenanceItems(check.maintenanceItems)),
+                  statusRow(true, l.importCheckParts(check.parts)),
+                  statusRow(true, l.importCheckObdCodes(check.obdCodes)),
+                ] else
+                  statusRow(false, l.importCheckDbLocalFailed),
+              ],
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

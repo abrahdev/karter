@@ -1185,13 +1185,78 @@ class AppLocalizationsEt extends AppLocalizations {
 
   @override
   String get moreTemplateSourceUrlHint =>
-      'https://raw.githubusercontent.com/...';
+      'https://github.com/abrahdev/karter/templates';
 
   @override
   String get moreTemplateSourceEditUrl => 'Edit URL';
 
   @override
   String get moreTemplateSourceUrlSaved => 'URL updated';
+
+  @override
+  String get testConnection => 'Ühenduse testimine';
+
+  @override
+  String catalogDbModifiedAt(String date) {
+    return 'Viimati muudetud: $date';
+  }
+
+  @override
+  String get importCheckTranslations => 'Tõlked';
+
+  @override
+  String importCheckTranslationsResult(int found, int total) {
+    return '$found/$total saadaval';
+  }
+
+  @override
+  String get importCheckIndex => 'Mallide indeks';
+
+  @override
+  String importCheckIndexResult(int count) {
+    return '$count malli';
+  }
+
+  @override
+  String get importCheckDb => 'Kataloogi andmebaas (kaug)';
+
+  @override
+  String get importCheckDbRemoteFound => 'Saadaval GitHubis';
+
+  @override
+  String get importCheckDbRemoteNotFound => 'Ainult kohalik (mitte GitHubis)';
+
+  @override
+  String get importCheckDbLocal => 'Imporditud andmebaasi andmed';
+
+  @override
+  String importCheckCatalogVersion(String version) {
+    return 'Versioon: $version';
+  }
+
+  @override
+  String importCheckVehicles(int count) {
+    return 'Sõidukid: $count';
+  }
+
+  @override
+  String importCheckMaintenanceItems(int count) {
+    return 'Hooldustööd: $count';
+  }
+
+  @override
+  String importCheckParts(int count) {
+    return 'Varuosad: $count';
+  }
+
+  @override
+  String importCheckObdCodes(int count) {
+    return 'OBD-koodid: $count';
+  }
+
+  @override
+  String get importCheckDbLocalFailed =>
+      'Imporditud andmebaasi ei õnnestunud lugeda';
 
   @override
   String get onboardingSkip => 'Jäta vahele';

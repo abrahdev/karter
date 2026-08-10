@@ -17,3 +17,6 @@ build/
 # Python
 __pycache__/
 *.pyc
+
+# Generated catalog database (built by templates/tools/build_catalog.py)
+templates/karter-catalog.db

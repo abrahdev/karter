@@ -33,7 +33,10 @@ REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 DEFAULT_DATA_ROOT = os.path.join(REPO_ROOT, "templates", "data")
 DEFAULT_INDEX = os.path.join(REPO_ROOT, "templates", "index.json")
 DEFAULT_I18N = os.path.join(REPO_ROOT, "templates", "i18n", "en.json")
-DEFAULT_OUTPUT = os.path.join(REPO_ROOT, "mobile", "assets", "catalog", "karter-catalog.db")
+DEFAULT_OUTPUT = os.path.join(REPO_ROOT, "templates", "karter-catalog.db")
+SYMLINK_PATH = os.path.join(
+    REPO_ROOT, "mobile", "assets", "catalog", "karter-catalog.db"
+)
 
 GENERAL_VEHICLE_ID = "general"
 GENERAL_PATH = "_base/dtc.json"
@@ -658,6 +661,26 @@ def _self_check(output: str, general: Resolution) -> None:
 index_templates = []
 
 
+def _ensure_symlink(output: str) -> None:
+    link_dir = os.path.dirname(SYMLINK_PATH)
+    target = os.path.relpath(output, link_dir)
+    os.makedirs(link_dir, exist_ok=True)
+    if os.path.islink(SYMLINK_PATH):
+        if os.readlink(SYMLINK_PATH) == target:
+            return
+        os.remove(SYMLINK_PATH)
+    elif os.path.exists(SYMLINK_PATH):
+        os.remove(SYMLINK_PATH)
+    try:
+        os.symlink(target, SYMLINK_PATH)
+    except OSError as exc:
+        raise SystemExit(
+            f"Failed to create symlink {SYMLINK_PATH} -> {target}: {exc}\n"
+            "Enable symlink support (e.g. Windows Developer Mode) and retry."
+        )
+    print(f"Symlinked {SYMLINK_PATH} -> {target}")
+
+
 def main(argv: Optional[List[str]] = None) -> int:
     global index_templates
     parser = argparse.ArgumentParser(description="Compile karter-templates to SQLite catalog")
@@ -720,6 +743,7 @@ def main(argv: Optional[List[str]] = None) -> int:
         catalog_version,
     )
     _self_check(args.output, general)
+    _ensure_symlink(args.output)
     size = os.path.getsize(args.output)
     print(f"Wrote {args.output} ({size / 1024 / 1024:.2f} MB, catalog_version={catalog_version})")
     return 0

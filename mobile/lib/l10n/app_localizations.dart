@@ -2262,7 +2262,7 @@ abstract class AppLocalizations {
   /// No description provided for @moreTemplateSourceUrlHint.
   ///
   /// In en, this message translates to:
-  /// **'https://raw.githubusercontent.com/...'**
+  /// **'https://github.com/abrahdev/karter/templates'**
   String get moreTemplateSourceUrlHint;
 
   /// No description provided for @moreTemplateSourceEditUrl.
@@ -2276,6 +2276,102 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'URL updated'**
   String get moreTemplateSourceUrlSaved;
+
+  /// No description provided for @testConnection.
+  ///
+  /// In en, this message translates to:
+  /// **'Test connection'**
+  String get testConnection;
+
+  /// Modification date of the catalog database on GitHub
+  ///
+  /// In en, this message translates to:
+  /// **'Last modified: {date}'**
+  String catalogDbModifiedAt(String date);
+
+  /// No description provided for @importCheckTranslations.
+  ///
+  /// In en, this message translates to:
+  /// **'Translations'**
+  String get importCheckTranslations;
+
+  /// Number of template translations fetched from GitHub
+  ///
+  /// In en, this message translates to:
+  /// **'{found} of {total} available'**
+  String importCheckTranslationsResult(int found, int total);
+
+  /// No description provided for @importCheckIndex.
+  ///
+  /// In en, this message translates to:
+  /// **'Template index'**
+  String get importCheckIndex;
+
+  /// Number of templates available in the index
+  ///
+  /// In en, this message translates to:
+  /// **'{count} templates'**
+  String importCheckIndexResult(int count);
+
+  /// No description provided for @importCheckDb.
+  ///
+  /// In en, this message translates to:
+  /// **'Catalog database (remote)'**
+  String get importCheckDb;
+
+  /// No description provided for @importCheckDbRemoteFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Available on GitHub'**
+  String get importCheckDbRemoteFound;
+
+  /// No description provided for @importCheckDbRemoteNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Only local (not on GitHub)'**
+  String get importCheckDbRemoteNotFound;
+
+  /// No description provided for @importCheckDbLocal.
+  ///
+  /// In en, this message translates to:
+  /// **'Imported database data'**
+  String get importCheckDbLocal;
+
+  /// Version of the imported catalog database
+  ///
+  /// In en, this message translates to:
+  /// **'Version: {version}'**
+  String importCheckCatalogVersion(String version);
+
+  /// Vehicle models in the imported database
+  ///
+  /// In en, this message translates to:
+  /// **'Vehicles: {count}'**
+  String importCheckVehicles(int count);
+
+  /// Maintenance items in the imported database
+  ///
+  /// In en, this message translates to:
+  /// **'Maintenance items: {count}'**
+  String importCheckMaintenanceItems(int count);
+
+  /// Parts in the imported database
+  ///
+  /// In en, this message translates to:
+  /// **'Parts: {count}'**
+  String importCheckParts(int count);
+
+  /// OBD codes in the imported database
+  ///
+  /// In en, this message translates to:
+  /// **'OBD codes: {count}'**
+  String importCheckObdCodes(int count);
+
+  /// No description provided for @importCheckDbLocalFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not read the imported database'**
+  String get importCheckDbLocalFailed;
 
   /// No description provided for @onboardingSkip.
   ///

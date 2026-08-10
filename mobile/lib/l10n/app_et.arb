@@ -326,5 +326,21 @@
     "dtcGeneralDb": "Üldised OBD-II koodid",
     "dtcVehicle": "Sõiduk",
     "dtcVehicleNotFound": "Sõidukit ei leitud",
-    "dtcLoadError": "Veakoodide laadimine ebaõnnestus"
+    "dtcLoadError": "Veakoodide laadimine ebaõnnestus",
+    "testConnection": "Ühenduse testimine",
+    "catalogDbModifiedAt": "Viimati muudetud: {date}",
+    "importCheckTranslations": "Tõlked",
+    "importCheckTranslationsResult": "{found}/{total} saadaval",
+    "importCheckIndex": "Mallide indeks",
+    "importCheckIndexResult": "{count} malli",
+    "importCheckDb": "Kataloogi andmebaas (kaug)",
+    "importCheckDbRemoteFound": "Saadaval GitHubis",
+    "importCheckDbRemoteNotFound": "Ainult kohalik (mitte GitHubis)",
+    "importCheckDbLocal": "Imporditud andmebaasi andmed",
+    "importCheckCatalogVersion": "Versioon: {version}",
+    "importCheckVehicles": "Sõidukid: {count}",
+    "importCheckMaintenanceItems": "Hooldustööd: {count}",
+    "importCheckParts": "Varuosad: {count}",
+    "importCheckObdCodes": "OBD-koodid: {count}",
+    "importCheckDbLocalFailed": "Imporditud andmebaasi ei õnnestunud lugeda"
 }
