@@ -467,6 +467,8 @@
   "dtcScopeStandard": "Estándar",
   "dtcScopeManufacturer": "Fabricante",
   "dtcGeneralDb": "Códigos OBD-II generales",
+  "dtcCatalogBrands": "Marcas del catálogo",
+  "dtcMyVehicles": "Mis vehículos",
   "dtcVehicle": "Vehículo",
   "dtcVehicleNotFound": "Vehículo no encontrado",
   "dtcLoadError": "No se pudieron cargar los códigos de fallo"

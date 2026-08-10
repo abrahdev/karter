@@ -2661,6 +2661,18 @@ abstract class AppLocalizations {
   /// **'General OBD-II codes'**
   String get dtcGeneralDb;
 
+  /// No description provided for @dtcCatalogBrands.
+  ///
+  /// In en, this message translates to:
+  /// **'Catalog brands'**
+  String get dtcCatalogBrands;
+
+  /// No description provided for @dtcMyVehicles.
+  ///
+  /// In en, this message translates to:
+  /// **'My vehicles'**
+  String get dtcMyVehicles;
+
   /// No description provided for @dtcVehicle.
   ///
   /// In en, this message translates to:

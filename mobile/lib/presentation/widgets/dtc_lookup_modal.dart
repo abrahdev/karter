@@ -29,18 +29,31 @@ class DtcLookupSheet extends ConsumerStatefulWidget {
 }
 
 class _DtcLookupSheetState extends ConsumerState<DtcLookupSheet> {
+  static const _sourceMakePrefix = 'make:';
+  static const _headerCatalog = '__header_catalog__';
+  static const _headerVehicles = '__header_vehicles__';
+
   List<ResolvedDtc> _dtcs = [];
   List<ResolvedItem> _items = [];
+  List<String> _makes = [];
   String _dbName = '';
   bool _loading = true;
   String? _error;
-  String? _selectedVehicleId;
+  String? _source;
 
   @override
   void initState() {
     super.initState();
-    _selectedVehicleId = widget.vehicleId;
+    _source = widget.vehicleId;
     _load();
+    _loadMakes();
+  }
+
+  Future<void> _loadMakes() async {
+    try {
+      final makes = await ref.read(catalogRepositoryProvider).listMakes();
+      if (mounted) setState(() => _makes = makes);
+    } catch (_) {}
   }
 
   Future<void> _load() async {
@@ -51,21 +64,34 @@ class _DtcLookupSheetState extends ConsumerState<DtcLookupSheet> {
 
     try {
       final repo = ref.read(catalogRepositoryProvider);
+      final l = AppLocalizations.of(context);
 
-      if (_selectedVehicleId == null) {
+      if (_source == null) {
         final dtcs = await repo.resolveGeneralDtcs();
         if (!mounted) return;
         setState(() {
           _dtcs = dtcs;
           _items = [];
-          _dbName = AppLocalizations.of(context)?.dtcGeneralDb ?? '';
+          _dbName = l?.dtcGeneralDb ?? '';
           _loading = false;
         });
         return;
       }
 
-      final vehicle = await ref
-          .read(vehicleProvider(_selectedVehicleId!).future);
+      if (_source!.startsWith(_sourceMakePrefix)) {
+        final make = _source!.substring(_sourceMakePrefix.length);
+        final result = await repo.resolveBrandDtcs(make);
+        if (!mounted) return;
+        setState(() {
+          _dtcs = result.dtcs;
+          _items = result.items;
+          _dbName = make;
+          _loading = false;
+        });
+        return;
+      }
+
+      final vehicle = await ref.read(vehicleProvider(_source!).future);
       if (!mounted) return;
 
       if (vehicle == null) {
@@ -116,8 +142,8 @@ class _DtcLookupSheetState extends ConsumerState<DtcLookupSheet> {
     }
   }
 
-  void _onVehicleChanged(String? vehicleId) {
-    setState(() => _selectedVehicleId = vehicleId);
+  void _onSourceChanged(String? source) {
+    setState(() => _source = source);
     _load();
   }
 
@@ -152,7 +178,7 @@ class _DtcLookupSheetState extends ConsumerState<DtcLookupSheet> {
           if (widget.vehicleId == null)
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 0, 20, 8),
-              child: _buildVehicleSelector(l),
+              child: _buildSourceSelector(l),
             ),
           Expanded(child: _buildBody(theme, l)),
         ],
@@ -160,32 +186,60 @@ class _DtcLookupSheetState extends ConsumerState<DtcLookupSheet> {
     );
   }
 
-  Widget _buildVehicleSelector(AppLocalizations l) {
-    final vehicles = ref.watch(vehicleListProvider).value;
-    final list = vehicles ?? const <Vehicle>[];
+  Widget _buildSourceSelector(AppLocalizations l) {
+    final vehicles = ref.watch(vehicleListProvider).value ?? const <Vehicle>[];
+    final theme = Theme.of(context);
 
     return DropdownButtonFormField<String>(
-      initialValue: _selectedVehicleId,
+      initialValue: _source,
       decoration: InputDecoration(
         labelText: l.dtcVehicle,
         prefixIcon: const Icon(Icons.directions_car),
       ),
       items: [
         DropdownMenuItem<String>(
-          value: null,
-          child: Text(l.dtcGeneralDb),
-        ),
-        ...list.map(
-          (v) => DropdownMenuItem<String>(
-            value: v.id,
-            child: Text(
-              v.displayName,
-              overflow: TextOverflow.ellipsis,
+          value: _headerCatalog,
+          enabled: false,
+          child: Text(
+            l.dtcCatalogBrands,
+            style: theme.textTheme.labelSmall?.copyWith(
+              color: theme.colorScheme.primary,
+              fontWeight: FontWeight.w600,
             ),
           ),
         ),
+        DropdownMenuItem<String>(
+          value: null,
+          child: Text(l.dtcGeneralDb),
+        ),
+        for (final make in _makes)
+          DropdownMenuItem<String>(
+            value: '$_sourceMakePrefix$make',
+            child: Text(make),
+          ),
+        if (vehicles.isNotEmpty) ...[
+          DropdownMenuItem<String>(
+            value: _headerVehicles,
+            enabled: false,
+            child: Text(
+              l.dtcMyVehicles,
+              style: theme.textTheme.labelSmall?.copyWith(
+                color: theme.colorScheme.primary,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+          for (final v in vehicles)
+            DropdownMenuItem<String>(
+              value: v.id,
+              child: Text(
+                v.displayName,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+        ],
       ],
-      onChanged: _onVehicleChanged,
+      onChanged: _onSourceChanged,
     );
   }
 

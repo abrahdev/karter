@@ -1419,6 +1419,12 @@ class AppLocalizationsEt extends AppLocalizations {
   String get dtcGeneralDb => 'Üldised OBD-II koodid';
 
   @override
+  String get dtcCatalogBrands => 'Kataloogi kaubamärgid';
+
+  @override
+  String get dtcMyVehicles => 'Minu sõidukid';
+
+  @override
   String get dtcVehicle => 'Sõiduk';
 
   @override

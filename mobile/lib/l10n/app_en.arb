@@ -528,6 +528,8 @@
   "dtcScopeStandard": "Standard",
   "dtcScopeManufacturer": "Manufacturer",
   "dtcGeneralDb": "General OBD-II codes",
+  "dtcCatalogBrands": "Catalog brands",
+  "dtcMyVehicles": "My vehicles",
   "dtcVehicle": "Vehicle",
   "dtcVehicleNotFound": "Vehicle not found",
   "dtcLoadError": "Couldn't load fault codes"

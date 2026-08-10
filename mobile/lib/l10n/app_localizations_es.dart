@@ -1428,6 +1428,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get dtcGeneralDb => 'Códigos OBD-II generales';
 
   @override
+  String get dtcCatalogBrands => 'Marcas del catálogo';
+
+  @override
+  String get dtcMyVehicles => 'Mis vehículos';
+
+  @override
   String get dtcVehicle => 'Vehículo';
 
   @override

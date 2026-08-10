@@ -53,6 +53,57 @@ class CatalogRepository {
     return _loadDtcs(db, _generalVehicleId, inheritsGeneral: true);
   }
 
+  Future<List<String>> listMakes() async {
+    final db = await service.database();
+    final rows = db.select(
+      "SELECT DISTINCT make FROM vehicles "
+      "WHERE kind = 'vehicle' AND make != '_base' ORDER BY make",
+    );
+    return rows.map((r) => r['make'] as String).toList();
+  }
+
+  Future<({List<ResolvedDtc> dtcs, List<ResolvedItem> items})> resolveBrandDtcs(
+    String make,
+  ) async {
+    final db = await service.database();
+    final rows = db.select(
+      "SELECT * FROM vehicles WHERE kind = 'vehicle' "
+      "AND make != '_base' AND LOWER(make) = LOWER(?)",
+      [make],
+    );
+
+    final dtcByCode = <String, ResolvedDtc>{};
+    final itemById = <String, ResolvedItem>{};
+
+    void addDtcs(List<ResolvedDtc> dtcs) {
+      for (final dtc in dtcs) {
+        final existing = dtcByCode[dtc.code];
+        dtcByCode[dtc.code] =
+            existing == null ? dtc : _mergeResolvedDtc(existing, dtc);
+      }
+    }
+
+    void addItems(List<ResolvedItem> items) {
+      for (final item in items) {
+        final existing = itemById[item.id];
+        itemById[item.id] =
+            existing == null ? item : _mergeResolvedItem(existing, item);
+      }
+    }
+
+    addDtcs(_loadDtcs(db, _generalVehicleId, inheritsGeneral: true));
+    addItems(_loadItems(db, _generalVehicleId));
+
+    for (final row in rows) {
+      final vehicleId = row['id'] as String;
+      final inheritsGeneral = (row['inherits_general'] as int) == 1;
+      addDtcs(_loadDtcs(db, vehicleId, inheritsGeneral: inheritsGeneral));
+      addItems(_loadItems(db, vehicleId));
+    }
+
+    return (dtcs: dtcByCode.values.toList(), items: itemById.values.toList());
+  }
+
   List<ResolvedPart> _loadParts(Database db, String vehicleId) {
     return db
         .select('SELECT * FROM parts WHERE vehicle_id = ?', [vehicleId])
@@ -166,6 +217,37 @@ class CatalogRepository {
       relatedMaintenance: relatedMaint,
       relatedParts: relatedParts,
     );
+  }
+
+  ResolvedDtc _mergeResolvedDtc(ResolvedDtc a, ResolvedDtc b) {
+    final manufacturer = a.scope == 'manufacturer' || b.scope == 'manufacturer';
+    return ResolvedDtc(
+      code: a.code,
+      scope: manufacturer ? 'manufacturer' : a.scope,
+      descI18nKey: b.descI18nKey ?? a.descI18nKey,
+      description: b.description ?? a.description,
+      relatedMaintenance:
+          _unionIds(a.relatedMaintenance, b.relatedMaintenance),
+      relatedParts: _unionIds(a.relatedParts, b.relatedParts),
+    );
+  }
+
+  ResolvedItem _mergeResolvedItem(ResolvedItem a, ResolvedItem b) {
+    return ResolvedItem(
+      id: a.id,
+      label: b.label.isNotEmpty ? b.label : a.label,
+      i18nKey: b.i18nKey ?? a.i18nKey,
+      descI18nKey: b.descI18nKey ?? a.descI18nKey,
+      intervalKm: b.intervalKm,
+      intervalMonths: b.intervalMonths ?? a.intervalMonths,
+      description: b.description ?? a.description,
+      parts: {...a.parts, ...b.parts},
+    );
+  }
+
+  List<String> _unionIds(List<String> a, List<String> b) {
+    final seen = <String>{...a};
+    return [...a, ...b.where(seen.add)];
   }
 
   TemplateIndexEntry _entryFromRow(Row row) {
