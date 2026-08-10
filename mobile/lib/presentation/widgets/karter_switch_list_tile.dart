@@ -28,7 +28,31 @@ class KarterSwitchListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tile = SwitchListTile(
+    if (onTap != null) {
+      return ListTile(
+        leading: leading,
+        title: title,
+        subtitle: subtitle,
+        contentPadding: contentPadding,
+        dense: dense,
+        trailing: Switch(
+          value: value,
+          onChanged: onChanged != null
+              ? (v) {
+                  if (hapticFeedback) {
+                    ProviderScope.containerOf(context)
+                        .read(hapticProvider.notifier)
+                        .success();
+                  }
+                  onChanged!.call(v);
+                }
+              : null,
+        ),
+        onTap: onTap,
+      );
+    }
+
+    return SwitchListTile(
       secondary: leading,
       title: title,
       subtitle: subtitle,
@@ -36,7 +60,9 @@ class KarterSwitchListTile extends StatelessWidget {
       onChanged: onChanged != null
           ? (v) {
               if (hapticFeedback) {
-                ProviderScope.containerOf(context).read(hapticProvider.notifier).success();
+                ProviderScope.containerOf(context)
+                    .read(hapticProvider.notifier)
+                    .success();
               }
               onChanged!.call(v);
             }
@@ -44,8 +70,5 @@ class KarterSwitchListTile extends StatelessWidget {
       contentPadding: contentPadding,
       dense: dense,
     );
-
-    if (onTap == null) return tile;
-    return InkWell(onTap: onTap, child: tile);
   }
 }
