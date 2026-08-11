@@ -20,3 +20,8 @@ __pycache__/
 
 # Generated catalog database (built by templates/tools/build_catalog.py)
 templates/karter-catalog.db
+
+# Flatpak build output
+flatpak/build/
+flatpak/repo/
+flatpak/build.log

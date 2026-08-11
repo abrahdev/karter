@@ -1,0 +1,13 @@
+[Desktop Entry]
+Name=Karter
+Name[es]=Karter
+Name[et]=Karter
+Comment=Open source vehicle maintenance tracker
+Comment[es]=Rastreador de mantenimiento de vehículos de código abierto
+Comment[et]=Avatud lähtekoodiga sõiduki hoolduse jälgija
+Exec=karter
+Icon=dev.abrah.karter
+Terminal=false
+Type=Application
+Categories=Utility;
+StartupWMClass=karter
