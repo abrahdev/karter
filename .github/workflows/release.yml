@@ -163,6 +163,12 @@ jobs:
       - name: Generate catalog database
         run: python templates/tools/build_catalog.py
 
+      - name: Cache Flatpak runtimes
+        uses: actions/cache@v4
+        with:
+          path: ~/.local/share/flatpak
+          key: flatpak-runtimes-25.08-llvm22-v1
+
       - name: Install Flatpak tooling
         run: |
           sudo apt-get update
