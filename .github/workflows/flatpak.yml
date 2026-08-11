@@ -27,12 +27,12 @@ jobs:
 
       - name: Add Flathub remote
         run: |
-          flatpak remote-add --if-not-exists flathub \
+          flatpak remote-add --user --if-not-exists flathub \
             https://flathub.org/repo/flathub.flatpakrepo
 
       - name: Install runtime
         run: |
-          flatpak install -y --noninteractive \
+          flatpak install --user -y --noninteractive \
             org.freedesktop.Sdk//25.08 \
             org.freedesktop.Platform//25.08
 
@@ -43,6 +43,7 @@ jobs:
             --force-clean \
             --disable-rofiles-fuse \
             --install-deps-from=flathub \
+            --repo=flatpak/repo \
             flatpak/build flatpak/dev.abrah.karter.yml
 
       - name: Smoke test (list exported files)
