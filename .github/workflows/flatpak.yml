@@ -34,7 +34,8 @@ jobs:
         run: |
           flatpak install --user -y --noninteractive \
             org.freedesktop.Sdk//25.08 \
-            org.freedesktop.Platform//25.08
+            org.freedesktop.Platform//25.08 \
+            org.freedesktop.Sdk.Extension.llvm//25.08
 
       - name: Build Flatpak
         run: |
