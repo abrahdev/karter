@@ -39,9 +39,11 @@ modules:
 
   - name: karter
     buildsystem: simple
+    build-options:
+      env:
+        PATH: /app/lib/flutter/bin:/usr/bin:/bin
+        PUB_CACHE: /app/lib/flutter/.pub-cache
     build-commands:
-      - export PATH=/app/lib/flutter/bin:$PATH
-      - export PUB_CACHE=/app/lib/flutter/.pub-cache
       - mkdir -p "$PUB_CACHE"
       - flutter config --no-analytics
       - cd mobile && flutter pub get
