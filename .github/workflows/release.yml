@@ -9,16 +9,45 @@ on:
 
 permissions:
   contents: write
-  pages: write
-  id-token: write
 
 concurrency:
   group: "release"
   cancel-in-progress: false
 
 jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - run: python templates/tools/build_catalog.py
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.44.4'
+
+      - uses: actions/cache@v6
+        with:
+          path: ~/.pub-cache
+          key: flutter-pub-${{ hashFiles('mobile/pubspec.lock') }}
+          restore-keys: flutter-pub-
+
+      - run: flutter pub get
+        working-directory: mobile
+
+      - run: flutter analyze --no-fatal-infos --no-fatal-warnings
+        working-directory: mobile
+
+      - run: flutter test
+        working-directory: mobile
+
   build-android:
     runs-on: ubuntu-latest
+    needs: [lint-and-test]
     steps:
       - uses: actions/checkout@v7
 
@@ -49,19 +78,15 @@ jobs:
       - run: flutter pub get
         working-directory: mobile
 
-      - run: flutter analyze --no-fatal-infos --no-fatal-warnings
-        working-directory: mobile
-
-      - run: flutter test
-        working-directory: mobile
-
       - name: Setup keystore
         run: |
           echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > /tmp/upload-keystore.jks
-          echo "storeFile=/tmp/upload-keystore.jks" > mobile/android/key.properties
-          echo "storePassword=${{ secrets.KEYSTORE_PASSWORD }}" >> mobile/android/key.properties
-          echo "keyPassword=${{ secrets.KEYSTORE_PASSWORD }}" >> mobile/android/key.properties
-          echo "keyAlias=${{ secrets.KEYSTORE_ALIAS }}" >> mobile/android/key.properties
+          cat <<EOF > mobile/android/key.properties
+          storeFile=/tmp/upload-keystore.jks
+          storePassword=${{ secrets.KEYSTORE_PASSWORD }}
+          keyPassword=${{ secrets.KEYSTORE_PASSWORD }}
+          keyAlias=${{ secrets.KEYSTORE_ALIAS }}
+          EOF
 
       - run: flutter build apk --release --build-name=$(cat ../VERSION)
         working-directory: mobile
@@ -77,8 +102,13 @@ jobs:
           name: app-release-apk
           path: karter-*.apk
 
+      - name: Cleanup keystore
+        if: always()
+        run: rm -f /tmp/upload-keystore.jks
+
   build-linux:
     runs-on: ubuntu-latest
+    needs: [lint-and-test]
     steps:
       - uses: actions/checkout@v7
 
@@ -122,8 +152,16 @@ jobs:
 
   build-flatpak:
     runs-on: ubuntu-latest
+    needs: [lint-and-test]
     steps:
       - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Generate catalog database
+        run: python templates/tools/build_catalog.py
 
       - name: Install Flatpak tooling
         run: |
@@ -173,14 +211,17 @@ jobs:
       - uses: actions/download-artifact@v8
         with:
           name: app-release-apk
+          path: .
 
       - uses: actions/download-artifact@v8
         with:
           name: karter-linux-x64
+          path: .
 
       - uses: actions/download-artifact@v8
         with:
           name: karter-flatpak
+          path: .
 
       - name: Create GitHub Release
         run: |
