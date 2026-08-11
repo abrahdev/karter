@@ -120,9 +120,51 @@ jobs:
           name: karter-linux-x64
           path: karter-*-linux-x64.tar.gz
 
+  build-flatpak:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Install Flatpak tooling
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y flatpak flatpak-builder
+
+      - name: Add Flathub remote
+        run: |
+          flatpak remote-add --if-not-exists flathub \
+            https://flathub.org/repo/flathub.flatpakrepo
+
+      - name: Install runtime
+        run: |
+          flatpak install -y --noninteractive \
+            org.freedesktop.Sdk//25.08 \
+            org.freedesktop.Platform//25.08
+
+      - name: Build Flatpak
+        run: |
+          flatpak-builder \
+            --user \
+            --force-clean \
+            --disable-rofiles-fuse \
+            --install-deps-from=flathub \
+            flatpak/build flatpak/dev.abrah.karter.yml
+
+      - name: Create Flatpak bundle
+        run: |
+          VERSION=$(cat VERSION)
+          flatpak build-bundle \
+            flatpak/repo "karter-${VERSION}-x86_64.flatpak" \
+            dev.abrah.karter
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: karter-flatpak
+          path: karter-*.flatpak
+
   release:
     runs-on: ubuntu-latest
-    needs: [build-android, build-linux]
+    needs: [build-android, build-linux, build-flatpak]
     steps:
       - uses: actions/checkout@v7
 
@@ -134,6 +176,10 @@ jobs:
         with:
           name: karter-linux-x64
 
+      - uses: actions/download-artifact@v8
+        with:
+          name: karter-flatpak
+
       - name: Create GitHub Release
         run: |
           VERSION=$(cat VERSION)
@@ -141,6 +187,7 @@ jobs:
             --title "v$VERSION" \
             --generate-notes \
             karter-*.apk \
-            karter-*-linux-x64.tar.gz
+            karter-*-linux-x64.tar.gz \
+            karter-*.flatpak
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,52 @@
+name: Flatpak
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'flatpak/**'
+      - 'mobile/linux/**'
+      - 'mobile/pubspec.yaml'
+  pull_request:
+    paths:
+      - 'flatpak/**'
+      - 'mobile/linux/**'
+      - 'mobile/pubspec.yaml'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Flatpak tooling
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y flatpak flatpak-builder
+
+      - name: Add Flathub remote
+        run: |
+          flatpak remote-add --if-not-exists flathub \
+            https://flathub.org/repo/flathub.flatpakrepo
+
+      - name: Install runtime
+        run: |
+          flatpak install -y --noninteractive \
+            org.freedesktop.Sdk//25.08 \
+            org.freedesktop.Platform//25.08
+
+      - name: Build Flatpak
+        run: |
+          flatpak-builder \
+            --user \
+            --force-clean \
+            --disable-rofiles-fuse \
+            --install-deps-from=flathub \
+            flatpak/build flatpak/dev.abrah.karter.yml
+
+      - name: Smoke test (list exported files)
+        run: |
+          test -f flatpak/build/files/bin/karter
+          test -f flatpak/build/files/share/applications/dev.abrah.karter.desktop
+          test -f flatpak/build/files/share/icons/hicolor/256x256/apps/dev.abrah.karter.png
