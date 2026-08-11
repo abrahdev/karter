@@ -40,6 +40,8 @@ modules:
   - name: karter
     buildsystem: simple
     build-options:
+      build-args:
+        - --share=network
       env:
         PATH: /app/lib/flutter/bin:/usr/bin:/bin
         PUB_CACHE: /app/lib/flutter/.pub-cache
