@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2027.08.0+19] - 2027-08-01
+
+### Added
+
+- Flatpak packaging for Linux builds (#64, #65)
+- UI improvements, parts, and OBD catalog (#59)
+
+### Changed
+
+- Updated translations (#56, #58)
+- Upgraded AGP 9.3.1, Gradle 9.6.1, enabled resource optimization (#52)
+
+### Fixed
+
+- Material for stacked maintenance tile background (#61)
+- Stack update/register buttons when detail column is narrow (#53, #57)
+- Parts for year-specific templates + related services in parts list (#55)
+- Release workflow security and efficiency (#67)
+- Docusaurus swizzle deps for pnpm build
+
 ## [2026.07.14+18] - 2026-07-30
 
 ### Added
