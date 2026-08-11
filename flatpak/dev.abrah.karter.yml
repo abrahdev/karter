@@ -3,8 +3,6 @@ runtime: org.freedesktop.Platform
 runtime-version: '25.08'
 sdk: org.freedesktop.Sdk
 command: karter
-rename-desktop-file: dev.abrah.karter.desktop
-rename-icon: dev.abrah.karter
 
 finish-args:
   # Networking: catalog database download + Google Drive backup/cloud sync.
