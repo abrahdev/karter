@@ -22,7 +22,8 @@ REPO_DIR="$SCRIPT_DIR/repo"
 echo "Installing flatpak runtimes (if missing)..."
 flatpak --user install -y --noninteractive \
   org.freedesktop.Sdk//25.08 \
-  org.freedesktop.Platform//25.08 >/dev/null 2>&1 || true
+  org.freedesktop.Platform//25.08 \
+  org.freedesktop.Sdk.Extension.llvm22//25.08 >/dev/null 2>&1 || true
 
 echo "Building with flatpak-builder..."
 flatpak-builder \
