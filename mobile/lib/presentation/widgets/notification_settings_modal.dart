@@ -6,6 +6,7 @@ import 'package:mobile/core/modal_helpers.dart';
 import 'package:mobile/domain/entities/vehicle.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
+import 'package:mobile/presentation/widgets/drag_handle.dart';
 import 'package:mobile/presentation/widgets/karter_switch_list_tile.dart';
 import 'package:mobile/presentation/widgets/karter_segmented_button.dart';
 
@@ -111,16 +112,7 @@ class _NotificationSettingsModalState
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Center(
-              child: Container(
-                width: 40,
-                height: 4,
-                decoration: BoxDecoration(
-                  color: theme.colorScheme.outlineVariant,
-                  borderRadius: BorderRadius.circular(2),
-                ),
-              ),
-            ),
+            const DragHandle(),
             const SizedBox(height: 16),
             Text(l.notificationSettingsTitle,
                 style: theme.textTheme.titleLarge),

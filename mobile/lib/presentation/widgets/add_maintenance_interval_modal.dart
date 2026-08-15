@@ -11,6 +11,7 @@ import 'package:mobile/domain/entities/maintenance_interval.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
 import 'package:mobile/presentation/utils/maintenance_localizer.dart';
+import 'package:mobile/presentation/widgets/drag_handle.dart';
 import 'package:mobile/presentation/widgets/interval_parts_view.dart';
 import 'package:mobile/presentation/widgets/section_header.dart';
 import 'package:uuid/uuid.dart';
@@ -116,16 +117,7 @@ class _IntervalPreview extends ConsumerWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Center(
-            child: Container(
-              width: 40,
-              height: 4,
-              decoration: BoxDecoration(
-                color: theme.colorScheme.outlineVariant,
-                borderRadius: BorderRadius.circular(2),
-              ),
-            ),
-          ),
+          const DragHandle(),
           if (desc.isNotEmpty) ...[
             const SizedBox(height: 16),
             Text(desc, style: theme.textTheme.bodyMedium),
@@ -370,16 +362,7 @@ class _AddIntervalModalState extends ConsumerState<_AddIntervalModal> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Center(
-              child: Container(
-                width: 40,
-                height: 4,
-                decoration: BoxDecoration(
-                  color: theme.colorScheme.outlineVariant,
-                  borderRadius: BorderRadius.circular(2),
-                ),
-              ),
-            ),
+            const DragHandle(),
             if (!_isEditing) ...[
               const SizedBox(height: 16),
               SizedBox(

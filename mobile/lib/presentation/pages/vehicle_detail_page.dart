@@ -20,6 +20,7 @@ import 'package:mobile/presentation/utils/maintenance_localizer.dart';
 import 'package:mobile/presentation/widgets/add_document_modal.dart';
 import 'package:mobile/presentation/widgets/add_fuel_log_modal.dart';
 import 'package:mobile/presentation/widgets/add_maintenance_log_modal.dart';
+import 'package:mobile/presentation/widgets/drag_handle.dart';
 import 'package:mobile/presentation/widgets/dtc_lookup_modal.dart';
 import 'package:mobile/presentation/widgets/interval_parts_view.dart';
 import 'package:mobile/presentation/widgets/odometer_dialog.dart';
@@ -188,16 +189,7 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Center(
-              child: Container(
-                width: 40,
-                height: 4,
-                decoration: BoxDecoration(
-                  color: theme.colorScheme.outlineVariant,
-                  borderRadius: BorderRadius.circular(2),
-                ),
-              ),
-            ),
+            const DragHandle(),
             const SizedBox(height: 16),
             Text(label, style: theme.textTheme.titleLarge),
             const SizedBox(height: 12),

@@ -13,9 +13,12 @@ import 'package:mobile/presentation/providers/haptic_provider.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
 import 'package:mobile/presentation/utils/maintenance_localizer.dart';
 import 'package:mobile/presentation/widgets/add_maintenance_log_modal.dart';
+import 'package:mobile/presentation/widgets/drag_handle.dart';
 import 'package:mobile/presentation/widgets/interval_parts_view.dart';
 import 'package:mobile/presentation/widgets/maintenance_log_parts_field.dart';
 import 'package:mobile/presentation/widgets/section_header.dart';
+import 'package:mobile/presentation/utils/part_line_formatter.dart';
+import 'package:mobile/presentation/utils/url_helpers.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PartsListPage extends ConsumerStatefulWidget {
@@ -195,14 +198,11 @@ class _PartsListPageState extends ConsumerState<PartsListPage> {
 
   String _partLine(BuildContext context, _PartEntry entry) {
     final l = AppLocalizations.of(context)!;
-    final unit = IntervalPartsView.unitLabel(context, entry.unit);
-    final qty = IntervalPartsView.formatQuantity(entry.quantity);
-    final name = entry.displayName(l);
-    if (unit.isEmpty) {
-      if (entry.quantity == 1) return name;
-      return '$name \u00d7 $qty';
-    }
-    return '$name \u00d7 $qty $unit';
+    return formatPartLine(
+      name: entry.displayName(l),
+      formattedQuantity: IntervalPartsView.formatQuantity(entry.quantity),
+      unitLabel: IntervalPartsView.unitLabel(context, entry.unit),
+    );
   }
 
   Future<void> _copy(BuildContext context, String text) async {
@@ -267,16 +267,7 @@ class _PartsListPageState extends ConsumerState<PartsListPage> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Center(
-              child: Container(
-                width: 40,
-                height: 4,
-                decoration: BoxDecoration(
-                  color: theme.colorScheme.outlineVariant,
-                  borderRadius: BorderRadius.circular(2),
-                ),
-              ),
-            ),
+            const DragHandle(),
             const SizedBox(height: 16),
             Text(label, style: theme.textTheme.titleLarge),
             const SizedBox(height: 4),
@@ -667,34 +658,9 @@ class _LocalPartDetailSheetState
     String? raw,
     ScaffoldMessengerState messenger,
     AppLocalizations l,
-  ) {
-    if (raw == null || raw.isEmpty) return null;
-    var candidate = raw;
-    if (!candidate.startsWith('http://') &&
-        !candidate.startsWith('https://')) {
-      candidate = 'https://$candidate';
-    }
-    final uri = Uri.tryParse(candidate);
-    if (uri == null || !uri.hasScheme || uri.host.isEmpty) {
-      messenger.showSnackBar(SnackBar(content: Text(l.invalidUrl)));
-      return null;
-    }
-    return candidate;
-  }
+  ) => normalizeUrl(raw, messenger, l);
 
-  Future<void> _openLink(String url) async {
-    final l = AppLocalizations.of(context)!;
-    final messenger = ScaffoldMessenger.of(context);
-    final uri = Uri.tryParse(url);
-    if (uri == null || !uri.hasScheme || uri.host.isEmpty) {
-      messenger.showSnackBar(SnackBar(content: Text(l.invalidUrl)));
-      return;
-    }
-    final opened = await launchUrl(uri, mode: LaunchMode.externalApplication);
-    if (!opened && mounted) {
-      messenger.showSnackBar(SnackBar(content: Text(l.invalidUrl)));
-    }
-  }
+  Future<void> _openLink(String url) => openLink(context, url);
 
   Future<void> _save() async {
     final l = AppLocalizations.of(context)!;
@@ -779,16 +745,7 @@ class _LocalPartDetailSheetState
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Center(
-              child: Container(
-                width: 40,
-                height: 4,
-                decoration: BoxDecoration(
-                  color: theme.colorScheme.outlineVariant,
-                  borderRadius: BorderRadius.circular(2),
-                ),
-              ),
-            ),
+            const DragHandle(),
             const SizedBox(height: 16),
             Text(part.name, style: theme.textTheme.titleLarge),
             const SizedBox(height: 16),
@@ -1123,34 +1080,9 @@ class _PartDetailSheetState extends State<_PartDetailSheet> {
     String? raw,
     ScaffoldMessengerState messenger,
     AppLocalizations l,
-  ) {
-    if (raw == null || raw.isEmpty) return null;
-    var candidate = raw;
-    if (!candidate.startsWith('http://') &&
-        !candidate.startsWith('https://')) {
-      candidate = 'https://$candidate';
-    }
-    final uri = Uri.tryParse(candidate);
-    if (uri == null || !uri.hasScheme || uri.host.isEmpty) {
-      messenger.showSnackBar(SnackBar(content: Text(l.invalidUrl)));
-      return null;
-    }
-    return candidate;
-  }
+  ) => normalizeUrl(raw, messenger, l);
 
-  Future<void> _openLink(String url) async {
-    final l = AppLocalizations.of(context)!;
-    final messenger = ScaffoldMessenger.of(context);
-    final uri = Uri.tryParse(url);
-    if (uri == null || !uri.hasScheme || uri.host.isEmpty) {
-      messenger.showSnackBar(SnackBar(content: Text(l.invalidUrl)));
-      return;
-    }
-    final opened = await launchUrl(uri, mode: LaunchMode.externalApplication);
-    if (!opened && mounted) {
-      messenger.showSnackBar(SnackBar(content: Text(l.invalidUrl)));
-    }
-  }
+  Future<void> _openLink(String url) => openLink(context, url);
 
   void _save() {
     Navigator.pop(
@@ -1179,16 +1111,7 @@ class _PartDetailSheetState extends State<_PartDetailSheet> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Center(
-              child: Container(
-                width: 40,
-                height: 4,
-                decoration: BoxDecoration(
-                  color: theme.colorScheme.outlineVariant,
-                  borderRadius: BorderRadius.circular(2),
-                ),
-              ),
-            ),
+            const DragHandle(),
             const SizedBox(height: 16),
             Text(
               entry.displayName(l),

@@ -1,7 +1,6 @@
-import 'dart:convert';
-
 import 'package:mobile/core/database/app_database.dart';
 import 'package:mobile/data/repositories/seed_intervals.dart';
+import 'package:mobile/data/utils/parts_codec.dart' as parts_codec;
 import 'package:mobile/domain/entities/maintenance_interval.dart';
 import 'package:mobile/domain/entities/vehicle.dart';
 import 'package:mobile/domain/enums/distance_unit.dart';
@@ -120,13 +119,8 @@ class VehicleRepositoryImpl implements VehicleRepository {
       lastResetDate: drift.Value(interval.lastResetDate),
       isEnabled: drift.Value(interval.isEnabled),
       isCustom: drift.Value(interval.isCustom),
-      partsJson: drift.Value(_encodeParts(interval.parts)),
+      partsJson: drift.Value(parts_codec.encodeParts(interval.parts)),
     );
-  }
-
-  String? _encodeParts(List<IntervalPart> parts) {
-    if (parts.isEmpty) return null;
-    return jsonEncode(parts.map((p) => p.toJson()).toList());
   }
 
   @override

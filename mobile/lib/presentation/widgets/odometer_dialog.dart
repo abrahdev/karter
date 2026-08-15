@@ -7,6 +7,7 @@ import 'package:mobile/domain/enums/distance_unit.dart';
 import 'package:mobile/domain/value_objects/odometer.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/haptic_provider.dart';
+import 'package:mobile/presentation/widgets/drag_handle.dart';
 
 class OdometerDialog extends StatefulWidget {
   final Odometer current;
@@ -144,16 +145,7 @@ class _OdometerDialogState extends State<OdometerDialog> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Center(
-              child: Container(
-                width: 40,
-                height: 4,
-                decoration: BoxDecoration(
-                  color: theme.colorScheme.outlineVariant,
-                  borderRadius: BorderRadius.circular(2),
-                ),
-              ),
-            ),
+            const DragHandle(),
             const SizedBox(height: 16),
             Text(l.odometerUpdateTitle,
                 style: theme.textTheme.titleLarge),

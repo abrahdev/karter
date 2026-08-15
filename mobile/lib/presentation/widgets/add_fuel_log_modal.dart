@@ -17,7 +17,9 @@ import 'package:mobile/domain/value_objects/odometer.dart';
 import 'package:mobile/domain/value_objects/volume.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
+import 'package:mobile/presentation/widgets/drag_handle.dart';
 import 'package:mobile/presentation/widgets/full_screen_photo_viewer.dart';
+import 'package:mobile/presentation/widgets/photo_source_picker.dart';
 import 'package:path_provider/path_provider.dart';
 
 Future<void> showAddFuelLogModal(
@@ -172,40 +174,11 @@ class _AddFuelLogModalState extends ConsumerState<_AddFuelLogModal> {
   }
 
   void _showPhotoSourcePicker() {
-    final l = AppLocalizations.of(context)!;
-    karterShowModalBottomSheet(
+    showPhotoSourcePicker(
       context: context,
-      builder: (ctx) => SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ListTile(
-              leading: const Icon(Icons.camera_alt),
-              title: Text(l.takePhoto),
-              onTap: () {
-                Navigator.pop(ctx);
-                _pickFromCamera();
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.photo_library),
-              title: Text(l.chooseFromGallery),
-              onTap: () {
-                Navigator.pop(ctx);
-                _pickFromGallery();
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.attach_file),
-              title: Text(l.browseFiles),
-              onTap: () {
-                Navigator.pop(ctx);
-                _pickFiles();
-              },
-            ),
-          ],
-        ),
-      ),
+      onTakePhoto: _pickFromCamera,
+      onChooseFromGallery: _pickFromGallery,
+      onBrowseFiles: _pickFiles,
     );
   }
 
@@ -378,16 +351,7 @@ class _AddFuelLogModalState extends ConsumerState<_AddFuelLogModal> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Center(
-                child: Container(
-                  width: 40,
-                  height: 4,
-                  decoration: BoxDecoration(
-                    color: theme.colorScheme.outlineVariant,
-                    borderRadius: BorderRadius.circular(2),
-                  ),
-                ),
-              ),
+              const DragHandle(),
               const SizedBox(height: 16),
               Text(
                 _isEditing ? 'Edit fuel-up' : l.fuelFormTitle,
@@ -576,16 +540,7 @@ class _FuelLogPreview extends ConsumerWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Center(
-            child: Container(
-              width: 40,
-              height: 4,
-              decoration: BoxDecoration(
-                color: theme.colorScheme.outlineVariant,
-                borderRadius: BorderRadius.circular(2),
-              ),
-            ),
-          ),
+          const DragHandle(),
           const SizedBox(height: 16),
           if (hasPhotos) ...[
               SizedBox(
