@@ -45,6 +45,8 @@ import 'package:mobile/presentation/pages/privacy_policy_page.dart';
 import 'package:mobile/presentation/pages/changelog_page.dart';
 import 'package:mobile/presentation/widgets/notification_settings_modal.dart';
 import 'package:mobile/presentation/widgets/notification_permission_modal.dart';
+import 'package:mobile/presentation/widgets/custom_title_bar.dart';
+import 'package:window_manager/window_manager.dart';
 
 final _router = GoRouter(
   initialLocation: '/',
@@ -238,52 +240,66 @@ class _ShellState extends State<_Shell> {
           final extended = canExtend && _extended;
 
           return Scaffold(
-            body: Row(
+            body: Column(
               children: [
-                NavigationRail(
-                  selectedIndex: currentIndex,
-                  onDestinationSelected: onDestinationSelected,
-                  labelType: extended ? null : NavigationRailLabelType.all,
-                  extended: extended,
-                  trailingAtBottom: true,
-                  trailing: canExtend
-                      ? IconButton(
-                          icon: Icon(extended ? Icons.chevron_left : Icons.chevron_right),
-                          onPressed: () => setState(() => _extended = !_extended),
-                        )
-                      : null,
-                  destinations: [
-                    NavigationRailDestination(
-                      icon: Icon(Icons.dashboard_outlined),
-                      selectedIcon: Icon(Icons.dashboard),
-                      label: Text(l.navDashboard),
-                    ),
-                    NavigationRailDestination(
-                      icon: Icon(Icons.directions_car_outlined),
-                      selectedIcon: Icon(Icons.directions_car),
-                      label: Text(l.navVehicles),
-                    ),
-                    NavigationRailDestination(
-                      icon: Icon(Icons.speed_outlined),
-                      selectedIcon: Icon(Icons.speed),
-                      label: Text(l.navObd),
-                    ),
-                    NavigationRailDestination(
-                      icon: Icon(Icons.more_horiz_outlined),
-                      selectedIcon: Icon(Icons.more_horiz),
-                      label: Text(l.navMore),
-                    ),
-                  ],
+                if (isDesktop)
+                  const CustomTitleBar(title: 'Karter'),
+                Expanded(
+                  child: Row(
+                    children: [
+                      NavigationRail(
+                        selectedIndex: currentIndex,
+                        onDestinationSelected: onDestinationSelected,
+                        labelType: extended ? null : NavigationRailLabelType.all,
+                        extended: extended,
+                        trailingAtBottom: true,
+                        trailing: canExtend
+                            ? IconButton(
+                                icon: Icon(extended ? Icons.chevron_left : Icons.chevron_right),
+                                onPressed: () => setState(() => _extended = !_extended),
+                              )
+                            : null,
+                        destinations: [
+                          NavigationRailDestination(
+                            icon: Icon(Icons.dashboard_outlined),
+                            selectedIcon: Icon(Icons.dashboard),
+                            label: Text(l.navDashboard),
+                          ),
+                          NavigationRailDestination(
+                            icon: Icon(Icons.directions_car_outlined),
+                            selectedIcon: Icon(Icons.directions_car),
+                            label: Text(l.navVehicles),
+                          ),
+                          NavigationRailDestination(
+                            icon: Icon(Icons.speed_outlined),
+                            selectedIcon: Icon(Icons.speed),
+                            label: Text(l.navObd),
+                          ),
+                          NavigationRailDestination(
+                            icon: Icon(Icons.more_horiz_outlined),
+                            selectedIcon: Icon(Icons.more_horiz),
+                            label: Text(l.navMore),
+                          ),
+                        ],
+                      ),
+                      const VerticalDivider(width: 1),
+                      Expanded(child: widget.child),
+                    ],
+                  ),
                 ),
-                const VerticalDivider(width: 1),
-                Expanded(child: widget.child),
               ],
             ),
           );
         }
 
         return Scaffold(
-          body: widget.child,
+          body: Column(
+            children: [
+              if (isDesktop)
+                const CustomTitleBar(title: 'Karter'),
+              Expanded(child: widget.child),
+            ],
+          ),
           bottomNavigationBar: NavigationBar(
             selectedIndex: currentIndex,
             onDestinationSelected: onDestinationSelected,
@@ -505,6 +521,23 @@ class _NotificationListPageState extends ConsumerState<_NotificationListPage> {
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  if (isDesktop) {
+    await windowManager.ensureInitialized();
+    WindowOptions windowOptions = const WindowOptions(
+      size: Size(1280, 720),
+      center: true,
+      backgroundColor: Colors.transparent,
+      skipTaskbar: false,
+      titleBarStyle: TitleBarStyle.hidden,
+      windowButtonVisibility: false,
+    );
+    windowManager.waitUntilReadyToShow(windowOptions, () async {
+      await windowManager.show();
+      await windowManager.focus();
+    });
+  }
+
   SystemTheme.fallbackColor = AppTheme.fallbackSeed;
   await SystemTheme.accentColor.load();
   final prefs = await SharedPreferences.getInstance();
