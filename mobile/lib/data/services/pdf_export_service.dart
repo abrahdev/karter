@@ -6,6 +6,7 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 import 'package:mobile/domain/entities/maintenance_log.dart';
 import 'package:mobile/domain/entities/maintenance_log_part.dart';
+import 'package:mobile/presentation/utils/part_line_formatter.dart';
 
 class PdfExportService {
   Future<Uint8List> generateMaintenanceReport({
@@ -129,11 +130,11 @@ class PdfExportService {
   }
 
   String _partText(MaintenanceLogPart part) {
-    if (part.unit == null || part.unit!.isEmpty) {
-      if (part.quantity == 1) return part.name;
-      return '${part.name} \u00d7 ${_fmtQty(part.quantity)}';
-    }
-    return '${part.name} \u00d7 ${_fmtQty(part.quantity)} ${part.unit}';
+    return formatPartLine(
+      name: part.name,
+      formattedQuantity: _fmtQty(part.quantity),
+      unitLabel: part.unit ?? '',
+    );
   }
 
   String _fmtQty(double quantity) {

@@ -6,6 +6,7 @@ import 'package:mobile/data/services/template_resolver.dart';
 import 'package:mobile/domain/entities/vehicle.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
+import 'package:mobile/presentation/widgets/drag_handle.dart';
 import 'package:mobile/presentation/widgets/dtc_search_view.dart';
 
 Future<void> showDtcLookupModal(
@@ -158,16 +159,7 @@ class _DtcLookupSheetState extends ConsumerState<DtcLookupSheet> {
         mainAxisSize: MainAxisSize.min,
         children: [
           const SizedBox(height: 12),
-          Center(
-            child: Container(
-              width: 40,
-              height: 4,
-              decoration: BoxDecoration(
-                color: theme.colorScheme.outlineVariant,
-                borderRadius: BorderRadius.circular(2),
-              ),
-            ),
-          ),
+          const DragHandle(),
           Padding(
             padding: const EdgeInsets.fromLTRB(20, 16, 20, 8),
             child: Align(

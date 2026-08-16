@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mobile/domain/entities/maintenance_interval.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/utils/maintenance_localizer.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:mobile/presentation/utils/part_line_formatter.dart';
+import 'package:mobile/presentation/utils/url_helpers.dart';
 
 class IntervalPartsView extends StatelessWidget {
   final List<IntervalPart> parts;
@@ -79,30 +80,16 @@ class IntervalPartsView extends StatelessWidget {
     );
   }
 
-  Future<void> _openLink(BuildContext context, String url) async {
-    final l = AppLocalizations.of(context)!;
-    final uri = Uri.tryParse(url);
-    if (uri == null || !uri.hasScheme || uri.host.isEmpty) {
-      if (context.mounted) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text(l.invalidUrl)));
-      }
-      return;
-    }
-    final opened = await launchUrl(uri, mode: LaunchMode.externalApplication);
-    if (!opened && context.mounted) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(l.invalidUrl)));
-    }
-  }
+  Future<void> _openLink(BuildContext context, String url) =>
+      openLink(context, url);
 
   String _partText(BuildContext context, String locale, IntervalPart part) {
     final name = localizedLabel(locale, part.i18nKey, part.name ?? part.partId);
     final unit = unitLabel(context, part.unit);
-    if (unit.isEmpty) {
-      if (part.quantity == 1) return name;
-      return '$name \u00d7 ${formatQuantity(part.quantity)}';
-    }
-    return '$name \u00d7 ${formatQuantity(part.quantity)} $unit';
+    return formatPartLine(
+      name: name,
+      formattedQuantity: formatQuantity(part.quantity),
+      unitLabel: unit,
+    );
   }
 }

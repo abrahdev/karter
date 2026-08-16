@@ -892,11 +892,11 @@ class AppLocalizationsEs extends AppLocalizations {
   String get notificationsPermissionOpenSettings => 'Abrir ajustes';
 
   @override
-  String get shakeToOdometer => 'Shake to update odometer';
+  String get shakeToOdometer => 'Agitar para actualizar cuentakilómetros';
 
   @override
   String get shakeToOdometerDesc =>
-      'Shake device to open odometer update on vehicle screen';
+      'Agita el dispositivo para abrir la actualización del cuentakilómetros en la pantalla del vehículo';
 
   @override
   String get feedbackReminderToggle => 'Recordatorio de valoración';

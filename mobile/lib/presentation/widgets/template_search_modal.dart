@@ -8,6 +8,7 @@ import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
 import 'package:mobile/presentation/utils/template_interval_builder.dart';
 import 'package:mobile/presentation/widgets/interval_parts_view.dart';
+import 'package:mobile/presentation/widgets/drag_handle.dart';
 import 'package:mobile/presentation/widgets/section_header.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -157,16 +158,7 @@ class _TemplateSearchModalState extends ConsumerState<_TemplateSearchModal> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Center(
-              child: Container(
-                width: 40,
-                height: 4,
-                decoration: BoxDecoration(
-                  color: theme.colorScheme.outlineVariant,
-                  borderRadius: BorderRadius.circular(2),
-                ),
-              ),
-            ),
+            const DragHandle(),
             const SizedBox(height: 16),
             Text(l.searchTemplate, style: theme.textTheme.titleLarge),
             const SizedBox(height: 16),

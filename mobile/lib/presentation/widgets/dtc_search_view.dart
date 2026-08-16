@@ -4,6 +4,7 @@ import 'package:mobile/core/theme/app_spacing.dart';
 import 'package:mobile/data/services/template_resolver.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/utils/maintenance_localizer.dart';
+import 'package:mobile/presentation/widgets/drag_handle.dart';
 
 class DtcSearchView extends StatefulWidget {
   final List<ResolvedDtc> dtcs;
@@ -62,16 +63,7 @@ class _DtcSearchViewState extends State<DtcSearchView> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Center(
-              child: Container(
-                width: 40,
-                height: 4,
-                decoration: BoxDecoration(
-                  color: theme.colorScheme.outlineVariant,
-                  borderRadius: BorderRadius.circular(2),
-                ),
-              ),
-            ),
+            const DragHandle(),
             const SizedBox(height: 16),
             Row(
               children: [

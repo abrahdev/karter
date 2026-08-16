@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/core/modal_helpers.dart';
 import 'package:mobile/l10n/app_localizations.dart';
+import 'package:mobile/presentation/widgets/drag_handle.dart';
 
 Future<void> showNewVehicleServicesOverdueModal(BuildContext context) {
   return karterShowModalBottomSheet<void>(
@@ -23,14 +24,7 @@ class _NewVehicleOverdueModal extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         const SizedBox(height: 12),
-        Container(
-          width: 40,
-          height: 4,
-          decoration: BoxDecoration(
-            color: cs.outlineVariant,
-            borderRadius: BorderRadius.circular(2),
-          ),
-        ),
+        const DragHandle(),
         Padding(
           padding: const EdgeInsets.fromLTRB(24, 20, 24, 24),
           child: Column(

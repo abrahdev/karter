@@ -7,7 +7,9 @@ import 'package:mobile/domain/entities/vehicle_part.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/haptic_provider.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
+import 'package:mobile/presentation/widgets/drag_handle.dart';
 import 'package:mobile/presentation/widgets/interval_parts_view.dart';
+import 'package:mobile/presentation/utils/part_line_formatter.dart';
 import 'package:mobile/presentation/widgets/section_header.dart';
 
 class MaintenanceLogPartsField extends ConsumerStatefulWidget {
@@ -98,13 +100,11 @@ class _MaintenanceLogPartsFieldState
   }
 
   String _partLine(BuildContext context, MaintenanceLogPart part) {
-    final unit = IntervalPartsView.unitLabel(context, part.unit);
-    final qty = IntervalPartsView.formatQuantity(part.quantity);
-    if (unit.isEmpty) {
-      if (part.quantity == 1) return part.name;
-      return '${part.name} \u00d7 $qty';
-    }
-    return '${part.name} \u00d7 $qty $unit';
+    return formatPartLine(
+      name: part.name,
+      formattedQuantity: IntervalPartsView.formatQuantity(part.quantity),
+      unitLabel: IntervalPartsView.unitLabel(context, part.unit),
+    );
   }
 }
 
@@ -180,16 +180,7 @@ class _PartPickerSheetState extends ConsumerState<_PartPickerSheet> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Center(
-            child: Container(
-              width: 40,
-              height: 4,
-              decoration: BoxDecoration(
-                color: theme.colorScheme.outlineVariant,
-                borderRadius: BorderRadius.circular(2),
-              ),
-            ),
-          ),
+          const DragHandle(),
           const SizedBox(height: 16),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -359,16 +350,7 @@ class _QuickCreatePartSheetState extends ConsumerState<QuickCreatePartSheet> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Center(
-                child: Container(
-                  width: 40,
-                  height: 4,
-                  decoration: BoxDecoration(
-                    color: theme.colorScheme.outlineVariant,
-                    borderRadius: BorderRadius.circular(2),
-                  ),
-                ),
-              ),
+              const DragHandle(),
               const SizedBox(height: 16),
               Text(l.newPart, style: theme.textTheme.titleLarge),
               const SizedBox(height: 16),

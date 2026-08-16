@@ -15,7 +15,26 @@ import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:uuid/uuid.dart';
+import 'package:mobile/presentation/widgets/drag_handle.dart';
 import 'package:mobile/presentation/widgets/full_screen_photo_viewer.dart';
+
+bool isImageFile(String path) {
+  final ext = path.split('.').last.toLowerCase();
+  return ['jpg', 'jpeg', 'png', 'gif', 'webp', 'heic', 'heif'].contains(ext);
+}
+
+String documentTypeLabel(AppLocalizations l, DocumentType type) {
+  return switch (type) {
+    DocumentType.fine => l.docTypeFine,
+    DocumentType.parkingFee => l.docTypeParkingFee,
+    DocumentType.insurance => l.docTypeInsurance,
+    DocumentType.vehicleCheck => l.docTypeVehicleCheck,
+    DocumentType.tax => l.docTypeTax,
+    DocumentType.complexInsurance => l.docTypeComplexInsurance,
+    DocumentType.vehicleRegister => l.docTypeVehicleRegister,
+    DocumentType.other => l.docTypeOther,
+  };
+}
 
 Future<void> showAddDocumentModal(
   BuildContext context, {
@@ -323,12 +342,6 @@ class _AddDocumentModalState extends ConsumerState<_AddDocumentModal> {
     }
   }
 
-  bool _isImageFile(String path) {
-    final ext = path.split('.').last.toLowerCase();
-    return ['jpg', 'jpeg', 'png', 'gif', 'webp', 'heic', 'heif']
-        .contains(ext);
-  }
-
   Future<void> _delete() async {
     final l = AppLocalizations.of(context)!;
     final confirmed = await karterShowDialog<bool>(
@@ -389,16 +402,7 @@ class _AddDocumentModalState extends ConsumerState<_AddDocumentModal> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Center(
-              child: Container(
-                width: 40,
-                height: 4,
-                decoration: BoxDecoration(
-                  color: theme.colorScheme.outlineVariant,
-                  borderRadius: BorderRadius.circular(2),
-                ),
-              ),
-            ),
+            const DragHandle(),
             const SizedBox(height: 16),
             Text(_editingId != null ? 'Edit document' : l.addDocument,
                 style: theme.textTheme.titleLarge),
@@ -412,7 +416,7 @@ class _AddDocumentModalState extends ConsumerState<_AddDocumentModal> {
               items: DocumentType.values.map((type) {
                 return DropdownMenuItem(
                   value: type,
-                  child: Text(_documentTypeLabel(l, type)),
+                  child: Text(documentTypeLabel(l, type)),
                 );
               }).toList(),
               onChanged: (v) {
@@ -466,7 +470,7 @@ class _AddDocumentModalState extends ConsumerState<_AddDocumentModal> {
                     children: [
                       ClipRRect(
                         borderRadius: BorderRadius.circular(8),
-                        child: _isImageFile(_selectedFilePaths[i])
+                        child: isImageFile(_selectedFilePaths[i])
                             ? Image.file(
                                 File(_selectedFilePaths[i]),
                                 width: 80,
@@ -549,19 +553,6 @@ class _AddDocumentModalState extends ConsumerState<_AddDocumentModal> {
       ),
     );
   }
-
-  String _documentTypeLabel(AppLocalizations l, DocumentType type) {
-    return switch (type) {
-      DocumentType.fine => l.docTypeFine,
-      DocumentType.parkingFee => l.docTypeParkingFee,
-      DocumentType.insurance => l.docTypeInsurance,
-      DocumentType.vehicleCheck => l.docTypeVehicleCheck,
-      DocumentType.tax => l.docTypeTax,
-      DocumentType.complexInsurance => l.docTypeComplexInsurance,
-      DocumentType.vehicleRegister => l.docTypeVehicleRegister,
-      DocumentType.other => l.docTypeOther,
-    };
-  }
 }
 
 class _DocumentPreview extends ConsumerWidget {
@@ -573,33 +564,14 @@ class _DocumentPreview extends ConsumerWidget {
     required this.document,
   });
 
-  bool _isImageFile(String path) {
-    final ext = path.split('.').last.toLowerCase();
-    return ['jpg', 'jpeg', 'png', 'gif', 'webp', 'heic', 'heif']
-        .contains(ext);
-  }
-
-  String _documentTypeLabel(AppLocalizations l, DocumentType type) {
-    return switch (type) {
-      DocumentType.fine => l.docTypeFine,
-      DocumentType.parkingFee => l.docTypeParkingFee,
-      DocumentType.insurance => l.docTypeInsurance,
-      DocumentType.vehicleCheck => l.docTypeVehicleCheck,
-      DocumentType.tax => l.docTypeTax,
-      DocumentType.complexInsurance => l.docTypeComplexInsurance,
-      DocumentType.vehicleRegister => l.docTypeVehicleRegister,
-      DocumentType.other => l.docTypeOther,
-    };
-  }
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     final doc = document;
     final allPaths = doc.filePaths.isNotEmpty ? doc.filePaths : [doc.filePath];
-    final imagePaths = allPaths.where(_isImageFile).toList();
-    final nonImagePaths = allPaths.where((p) => !_isImageFile(p)).toList();
+    final imagePaths = allPaths.where(isImageFile).toList();
+    final nonImagePaths = allPaths.where((p) => !isImageFile(p)).toList();
     final hasImages = imagePaths.isNotEmpty;
     final width = MediaQuery.of(context).size.width - 40;
 
@@ -609,16 +581,7 @@ class _DocumentPreview extends ConsumerWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Center(
-            child: Container(
-              width: 40,
-              height: 4,
-              decoration: BoxDecoration(
-                color: theme.colorScheme.outlineVariant,
-                borderRadius: BorderRadius.circular(2),
-              ),
-            ),
-          ),
+          const DragHandle(),
           const SizedBox(height: 16),
           if (hasImages && imagePaths.length == 1)
             GestureDetector(
@@ -800,7 +763,7 @@ class _DocumentPreview extends ConsumerWidget {
           ListTile(
             contentPadding: EdgeInsets.zero,
             leading: const Icon(Icons.label),
-            title: Text(_documentTypeLabel(l, doc.type)),
+            title: Text(documentTypeLabel(l, doc.type)),
           ),
           if (doc.notes != null && doc.notes!.isNotEmpty)
             ListTile(
