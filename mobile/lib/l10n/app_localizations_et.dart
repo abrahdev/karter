@@ -440,6 +440,15 @@ class AppLocalizationsEt extends AppLocalizations {
   String get restore => 'Taasta';
 
   @override
+  String get windowMinimize => 'Minimeeri';
+
+  @override
+  String get windowMaximize => 'Maksimeeri';
+
+  @override
+  String get windowClose => 'Sulge';
+
+  @override
   String get syncInstruction => 'Sünkrooni hooldusvälbad oma sõiduki mallist.';
 
   @override

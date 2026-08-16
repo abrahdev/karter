@@ -441,6 +441,15 @@ class AppLocalizationsEs extends AppLocalizations {
   String get restore => 'Restaurar';
 
   @override
+  String get windowMinimize => 'Minimizar';
+
+  @override
+  String get windowMaximize => 'Maximizar';
+
+  @override
+  String get windowClose => 'Cerrar';
+
+  @override
   String get syncInstruction =>
       'Sincroniza los intervalos de mantenimiento desde la plantilla de tu vehículo.';
 
@@ -892,11 +901,11 @@ class AppLocalizationsEs extends AppLocalizations {
   String get notificationsPermissionOpenSettings => 'Abrir ajustes';
 
   @override
-  String get shakeToOdometer => 'Shake to update odometer';
+  String get shakeToOdometer => 'Agitar para actualizar cuentakilómetros';
 
   @override
   String get shakeToOdometerDesc =>
-      'Shake device to open odometer update on vehicle screen';
+      'Agita el dispositivo para abrir la actualización del cuentakilómetros en la pantalla del vehículo';
 
   @override
   String get feedbackReminderToggle => 'Recordatorio de valoración';

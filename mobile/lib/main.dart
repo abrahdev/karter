@@ -45,6 +45,8 @@ import 'package:mobile/presentation/pages/privacy_policy_page.dart';
 import 'package:mobile/presentation/pages/changelog_page.dart';
 import 'package:mobile/presentation/widgets/notification_settings_modal.dart';
 import 'package:mobile/presentation/widgets/notification_permission_modal.dart';
+import 'package:mobile/presentation/widgets/linux_title_bar.dart';
+import 'package:window_manager/window_manager.dart';
 
 final _router = GoRouter(
   initialLocation: '/',
@@ -379,7 +381,8 @@ class _KarterAppState extends ConsumerState<KarterApp> {
                 }
               });
             }
-            return child ?? const SizedBox.shrink();
+            final content = child ?? const SizedBox.shrink();
+            return isDesktop ? LinuxTitleBar(child: content) : content;
           },
         );
       },
@@ -505,6 +508,20 @@ class _NotificationListPageState extends ConsumerState<_NotificationListPage> {
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  if (isDesktop) {
+    await windowManager.ensureInitialized();
+    WindowOptions windowOptions = const WindowOptions(
+      size: Size(1280, 720),
+      center: true,
+      titleBarStyle: TitleBarStyle.hidden,
+    );
+    windowManager.waitUntilReadyToShow(windowOptions, () async {
+      await windowManager.show();
+      await windowManager.focus();
+    });
+  }
+
   SystemTheme.fallbackColor = AppTheme.fallbackSeed;
   await SystemTheme.accentColor.load();
   final prefs = await SharedPreferences.getInstance();

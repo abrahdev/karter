@@ -891,6 +891,24 @@ abstract class AppLocalizations {
   /// **'Restore'**
   String get restore;
 
+  /// No description provided for @windowMinimize.
+  ///
+  /// In en, this message translates to:
+  /// **'Minimize'**
+  String get windowMinimize;
+
+  /// No description provided for @windowMaximize.
+  ///
+  /// In en, this message translates to:
+  /// **'Maximize'**
+  String get windowMaximize;
+
+  /// No description provided for @windowClose.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get windowClose;
+
   /// No description provided for @syncInstruction.
   ///
   /// In en, this message translates to:
