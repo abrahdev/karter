@@ -77,6 +77,19 @@ class _LinuxTitleBarState extends State<LinuxTitleBar> with WindowListener {
                 ),
               ),
               Positioned(
+                left: 12,
+                top: 0,
+                bottom: 0,
+                child: Center(
+                  child: Text(
+                    'Karter',
+                    style: theme.textTheme.titleSmall?.copyWith(
+                      color: theme.colorScheme.onSurface,
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
                 top: 0,
                 right: 0,
                 child: Row(
