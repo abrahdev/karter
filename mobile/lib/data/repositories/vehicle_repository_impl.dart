@@ -37,71 +37,73 @@ class VehicleRepositoryImpl implements VehicleRepository {
     List<MaintenanceInterval>? intervals,
     bool replaceNonCustom = false,
   }) async {
-    final existing = await (_db.select(
-      _db.vehicles,
-    )..where((t) => t.id.equals(vehicle.id))).getSingleOrNull();
-    final isNew = existing == null;
+    await _db.transaction(() async {
+      final existing = await (_db.select(
+        _db.vehicles,
+      )..where((t) => t.id.equals(vehicle.id))).getSingleOrNull();
+      final isNew = existing == null;
 
-    await _db.into(_db.vehicles).insertOnConflictUpdate(_toEntry(vehicle));
+      await _db.into(_db.vehicles).insertOnConflictUpdate(_toEntry(vehicle));
 
-    if (isNew) {
-      final seedIntervals =
-          intervals ?? defaultIntervalsFor(vehicle.type, vehicle.id);
-      for (final interval in seedIntervals) {
-        await _db
-            .into(_db.maintenanceIntervals)
-            .insert(_intervalToCompanion(interval));
-      }
-    } else if (intervals != null && replaceNonCustom) {
-      final toDelete =
-          await (_db.select(_db.maintenanceIntervals)
-                ..where((t) => t.vehicleId.equals(vehicle.id))
-                ..where((t) => t.isCustom.equals(false)))
-              .get();
-      for (final entry in toDelete) {
-        await (_db.delete(
-          _db.maintenanceIntervals,
-        )..where((t) => t.id.equals(entry.id))).go();
-      }
-      for (final interval in intervals) {
-        await _db
-            .into(_db.maintenanceIntervals)
-            .insert(_intervalToCompanion(interval));
-      }
-    } else if (intervals != null) {
-      final existingList = await (_db.select(
-        _db.maintenanceIntervals,
-      )..where((t) => t.vehicleId.equals(vehicle.id))).get();
-      final existingByKey = <String, MaintenanceIntervalEntry>{};
-      for (final entry in existingList) {
-        if (entry.i18nKey != null) {
-          existingByKey[entry.i18nKey!] = entry;
-        }
-      }
-      for (final interval in intervals) {
-        if (interval.i18nKey != null &&
-            existingByKey.containsKey(interval.i18nKey)) {
-          final existing = existingByKey[interval.i18nKey!]!;
-          if (!existing.isCustom) {
-            await (_db.update(
-              _db.maintenanceIntervals,
-            )..where((t) => t.id.equals(existing.id))).write(
-              _intervalToCompanion(interval).copyWith(
-                id: drift.Value(existing.id),
-                vehicleId: drift.Value(existing.vehicleId),
-                lastResetKm: drift.Value(existing.lastResetKm),
-                lastResetDate: drift.Value(existing.lastResetDate),
-                isEnabled: drift.Value(existing.isEnabled),
-              ),
-            );
-          }
-        } else {
+      if (isNew) {
+        final seedIntervals =
+            intervals ?? defaultIntervalsFor(vehicle.type, vehicle.id);
+        for (final interval in seedIntervals) {
           await _db
               .into(_db.maintenanceIntervals)
               .insert(_intervalToCompanion(interval));
         }
+      } else if (intervals != null && replaceNonCustom) {
+        final toDelete =
+            await (_db.select(_db.maintenanceIntervals)
+                  ..where((t) => t.vehicleId.equals(vehicle.id))
+                  ..where((t) => t.isCustom.equals(false)))
+                .get();
+        for (final entry in toDelete) {
+          await (_db.delete(
+            _db.maintenanceIntervals,
+          )..where((t) => t.id.equals(entry.id))).go();
+        }
+        for (final interval in intervals) {
+          await _db
+              .into(_db.maintenanceIntervals)
+              .insert(_intervalToCompanion(interval));
+        }
+      } else if (intervals != null) {
+        final existingList = await (_db.select(
+          _db.maintenanceIntervals,
+        )..where((t) => t.vehicleId.equals(vehicle.id))).get();
+        final existingByKey = <String, MaintenanceIntervalEntry>{};
+        for (final entry in existingList) {
+          if (entry.i18nKey != null) {
+            existingByKey[entry.i18nKey!] = entry;
+          }
+        }
+        for (final interval in intervals) {
+          if (interval.i18nKey != null &&
+              existingByKey.containsKey(interval.i18nKey)) {
+            final existing = existingByKey[interval.i18nKey!]!;
+            if (!existing.isCustom) {
+              await (_db.update(
+                _db.maintenanceIntervals,
+              )..where((t) => t.id.equals(existing.id))).write(
+                _intervalToCompanion(interval).copyWith(
+                  id: drift.Value(existing.id),
+                  vehicleId: drift.Value(existing.vehicleId),
+                  lastResetKm: drift.Value(existing.lastResetKm),
+                  lastResetDate: drift.Value(existing.lastResetDate),
+                  isEnabled: drift.Value(existing.isEnabled),
+                ),
+              );
+            }
+          } else {
+            await _db
+                .into(_db.maintenanceIntervals)
+                .insert(_intervalToCompanion(interval));
+          }
+        }
       }
-    }
+    });
   }
 
   MaintenanceIntervalsCompanion _intervalToCompanion(

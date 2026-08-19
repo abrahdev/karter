@@ -1438,4 +1438,57 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get dtcLoadError => 'Couldn\'t load fault codes';
+
+  @override
+  String get notificationOdometerTitle => 'Update odometer';
+
+  @override
+  String notificationOdometerBody(String name, int days) {
+    return '$name — $days days since last reminder.';
+  }
+
+  @override
+  String get notificationMaintenanceTitle => 'Pending maintenance';
+
+  @override
+  String notificationMaintenanceBody(String name) {
+    return '$name — check your maintenance intervals.';
+  }
+
+  @override
+  String errorGeneric(String error) {
+    return 'Error: $error';
+  }
+
+  @override
+  String get deleteFuelUp => 'Delete fuel-up';
+
+  @override
+  String get deleteFuelUpConfirm =>
+      'Are you sure you want to delete this fuel-up?';
+
+  @override
+  String get editFuelUp => 'Edit fuel-up';
+
+  @override
+  String get deleteDocument => 'Delete document';
+
+  @override
+  String get deleteDocumentConfirm =>
+      'Are you sure you want to delete this document?';
+
+  @override
+  String get editDocument => 'Edit document';
+
+  @override
+  String get title => 'Title';
+
+  @override
+  String get selectExpiryDate => 'Select expiry date';
+
+  @override
+  String get addMoreFiles => 'Add more files';
+
+  @override
+  String get consumptionUnit => 'L/100km';
 }

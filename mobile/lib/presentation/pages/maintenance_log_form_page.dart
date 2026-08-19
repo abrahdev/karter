@@ -251,7 +251,7 @@ class _MaintenanceLogFormPageState
           children: [
             ListTile(
               leading: const Icon(Icons.calendar_today),
-              title: Text(l.date(DateFormat('dd/MM/yyyy').format(_date))),
+              title: Text(l.date(DateFormat.yMd(l.localeName).format(_date))),
               onTap: _pickDate,
             ),
             const SizedBox(height: 12),

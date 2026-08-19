@@ -124,7 +124,8 @@ class _OdometerDialogState extends State<OdometerDialog> {
   }
 
   String _unitLabel() {
-    return widget.current.unit == DistanceUnit.kilometers ? 'km' : 'mi';
+    final l = AppLocalizations.of(context)!;
+    return widget.current.unit == DistanceUnit.kilometers ? l.unitKm : l.unitMi;
   }
 
   @override

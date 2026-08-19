@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:material3_indicators/material3_indicators.dart';
 import 'package:mobile/presentation/providers/haptic_provider.dart';
 import 'package:file_picker/file_picker.dart';
@@ -334,7 +335,7 @@ class _AddDocumentModalState extends ConsumerState<_AddDocumentModal> {
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error: $e')),
+          SnackBar(content: Text(l.errorGeneric(e.toString()))),
         );
       }
     } finally {
@@ -347,8 +348,8 @@ class _AddDocumentModalState extends ConsumerState<_AddDocumentModal> {
     final confirmed = await karterShowDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text('Delete document'),
-        content: Text('Are you sure you want to delete this document?'),
+        title: Text(l.deleteDocument),
+        content: Text(l.deleteDocumentConfirm),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
@@ -404,7 +405,7 @@ class _AddDocumentModalState extends ConsumerState<_AddDocumentModal> {
           children: [
             const DragHandle(),
             const SizedBox(height: 16),
-            Text(_editingId != null ? 'Edit document' : l.addDocument,
+            Text(_editingId != null ? l.editDocument : l.addDocument,
                 style: theme.textTheme.titleLarge),
             const SizedBox(height: 20),
             DropdownButtonFormField<DocumentType>(
@@ -427,7 +428,7 @@ class _AddDocumentModalState extends ConsumerState<_AddDocumentModal> {
             TextField(
               controller: _nameController,
               decoration: InputDecoration(
-                labelText: 'Title',
+                labelText: l.title,
                 hintText: _selectedFileNames.isNotEmpty ? _selectedFileNames.first : null,
               ),
             ),
@@ -445,8 +446,8 @@ class _AddDocumentModalState extends ConsumerState<_AddDocumentModal> {
               leading: const Icon(Icons.calendar_today),
               title: Text(
                 _expiryDate != null
-                    ? '${_expiryDate!.day}/${_expiryDate!.month}/${_expiryDate!.year}'
-                    : 'Select expiry date',
+                    ? DateFormat.yMd(l.localeName).format(_expiryDate!)
+                    : l.selectExpiryDate,
               ),
               onTap: _pickExpiryDate,
             ),
@@ -455,7 +456,7 @@ class _AddDocumentModalState extends ConsumerState<_AddDocumentModal> {
               onPressed: _showSourcePicker,
               icon: const Icon(Icons.attach_file),
               label: Text(
-                _selectedFilePaths.isNotEmpty ? 'Add more files' : l.selectFile,
+                _selectedFilePaths.isNotEmpty ? l.addMoreFiles : l.selectFile,
               ),
             ),
             if (_selectedFilePaths.isNotEmpty) ...[

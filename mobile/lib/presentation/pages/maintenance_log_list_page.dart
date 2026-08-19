@@ -129,7 +129,7 @@ class _MaintenanceLogListPageState
   Widget _buildHistoryTab(List<MaintenanceLog> logs) {
     final theme = Theme.of(context);
     final l = AppLocalizations.of(context)!;
-    final dateFmt = DateFormat('dd/MM/yy');
+    final dateFmt = DateFormat.yMd(l.localeName);
 
     final sorted =
         List<MaintenanceLog>.from(logs)..sort((a, b) => b.date.compareTo(a.date));
@@ -196,8 +196,8 @@ class _MaintenanceLogListPageState
   Widget _buildPreviewTab(List<MaintenanceLog> logs) {
     final theme = Theme.of(context);
     final l = AppLocalizations.of(context)!;
-    final dateFmt = DateFormat('dd/MM/yy');
-    final rangeFmt = DateFormat('dd/MM/yyyy');
+    final dateFmt = DateFormat.yMd(l.localeName);
+    final rangeFmt = DateFormat.yMd(l.localeName);
 
     final filtered = _filterLogsByRange(logs);
 

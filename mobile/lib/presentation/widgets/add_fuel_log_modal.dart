@@ -292,8 +292,8 @@ class _AddFuelLogModalState extends ConsumerState<_AddFuelLogModal> {
       context: context,
       builder: (ctx) {
         return AlertDialog(
-          title: const Text('Delete fuel-up'),
-          content: const Text('Are you sure you want to delete this fuel-up?'),
+          title: Text(l.deleteFuelUp),
+          content: Text(l.deleteFuelUpConfirm),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(ctx, false),
@@ -354,7 +354,7 @@ class _AddFuelLogModalState extends ConsumerState<_AddFuelLogModal> {
               const DragHandle(),
               const SizedBox(height: 16),
               Text(
-                _isEditing ? 'Edit fuel-up' : l.fuelFormTitle,
+                _isEditing ? l.editFuelUp : l.fuelFormTitle,
                 style: theme.textTheme.titleLarge,
               ),
               const SizedBox(height: 20),
@@ -362,7 +362,7 @@ class _AddFuelLogModalState extends ConsumerState<_AddFuelLogModal> {
                 contentPadding: EdgeInsets.zero,
                 leading: const Icon(Icons.calendar_today),
                 title: Text(
-                    l.date(DateFormat('dd/MM/yyyy').format(_date))),
+                    l.date(DateFormat.yMd(l.localeName).format(_date))),
                 onTap: _pickDate,
               ),
               const SizedBox(height: 8),
@@ -603,7 +603,7 @@ class _FuelLogPreview extends ConsumerWidget {
             contentPadding: EdgeInsets.zero,
             leading: const Icon(Icons.calendar_today),
             title: Text(
-                l.date(DateFormat('dd/MM/yyyy').format(log.date))),
+                l.date(DateFormat.yMd(l.localeName).format(log.date))),
           ),
           ListTile(
             contentPadding: EdgeInsets.zero,
@@ -638,7 +638,7 @@ class _FuelLogPreview extends ConsumerWidget {
                   const Icon(Icons.trending_down, size: 16),
                   const SizedBox(width: 4),
                   Text(
-                    '${consumption.toStringAsFixed(1)} L/100km',
+                    '${consumption.toStringAsFixed(1)} ${l.consumptionUnit}',
                     style: theme.textTheme.bodySmall,
                   ),
                 ],

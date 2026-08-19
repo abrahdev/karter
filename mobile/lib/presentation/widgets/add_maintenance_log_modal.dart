@@ -445,7 +445,7 @@ class _AddMaintenanceLogModalState
                 contentPadding: EdgeInsets.zero,
                 leading: const Icon(Icons.calendar_today),
                 title: Text(
-                    l.date(DateFormat('dd/MM/yyyy').format(_date))),
+                    l.date(DateFormat.yMd(l.localeName).format(_date))),
                 onTap: _pickDate,
               ),
               const SizedBox(height: 8),
@@ -700,7 +700,7 @@ class _MaintenanceLogPreview extends ConsumerWidget {
             contentPadding: EdgeInsets.zero,
             leading: const Icon(Icons.calendar_today),
             title: Text(
-                l.date(DateFormat('dd/MM/yyyy').format(log.date))),
+                l.date(DateFormat.yMd(l.localeName).format(log.date))),
           ),
           ListTile(
             contentPadding: EdgeInsets.zero,

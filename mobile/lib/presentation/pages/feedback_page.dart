@@ -110,37 +110,41 @@ class _FeedbackPageState extends State<FeedbackPage> {
     final l = AppLocalizations.of(context)!;
     final controller = TextEditingController(text: _servicesInterval.toString());
 
-    final result = await showDialog<int>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(l.feedbackServicesInterval),
-        content: TextField(
-          controller: controller,
-          keyboardType: TextInputType.number,
-          decoration: InputDecoration(
-            suffixText: l.feedbackServicesSuffix,
+    try {
+      final result = await showDialog<int>(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: Text(l.feedbackServicesInterval),
+          content: TextField(
+            controller: controller,
+            keyboardType: TextInputType.number,
+            decoration: InputDecoration(
+              suffixText: l.feedbackServicesSuffix,
+            ),
+            autofocus: true,
           ),
-          autofocus: true,
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx),
+              child: Text(l.cancel),
+            ),
+            FilledButton(
+              onPressed: () {
+                final val = int.tryParse(controller.text.trim());
+                if (val != null && val >= 1) Navigator.pop(ctx, val);
+              },
+              child: Text(l.saveChangesShort),
+            ),
+          ],
         ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx),
-            child: Text(l.cancel),
-          ),
-          FilledButton(
-            onPressed: () {
-              final val = int.tryParse(controller.text.trim());
-              if (val != null && val >= 1) Navigator.pop(ctx, val);
-            },
-            child: Text(l.saveChangesShort),
-          ),
-        ],
-      ),
-    );
+      );
 
-    if (result != null) {
-      await setServicesInterval(result);
-      setState(() => _servicesInterval = result);
+      if (result != null) {
+        await setServicesInterval(result);
+        setState(() => _servicesInterval = result);
+      }
+    } finally {
+      controller.dispose();
     }
   }
 
@@ -148,37 +152,41 @@ class _FeedbackPageState extends State<FeedbackPage> {
     final l = AppLocalizations.of(context)!;
     final controller = TextEditingController(text: _repeatDays.toString());
 
-    final result = await showDialog<int>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(l.feedbackRepeatDays),
-        content: TextField(
-          controller: controller,
-          keyboardType: TextInputType.number,
-          decoration: InputDecoration(
-            suffixText: l.feedbackRepeatDaysSuffix,
+    try {
+      final result = await showDialog<int>(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: Text(l.feedbackRepeatDays),
+          content: TextField(
+            controller: controller,
+            keyboardType: TextInputType.number,
+            decoration: InputDecoration(
+              suffixText: l.feedbackRepeatDaysSuffix,
+            ),
+            autofocus: true,
           ),
-          autofocus: true,
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx),
+              child: Text(l.cancel),
+            ),
+            FilledButton(
+              onPressed: () {
+                final val = int.tryParse(controller.text.trim());
+                if (val != null && val >= 1) Navigator.pop(ctx, val);
+              },
+              child: Text(l.saveChangesShort),
+            ),
+          ],
         ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx),
-            child: Text(l.cancel),
-          ),
-          FilledButton(
-            onPressed: () {
-              final val = int.tryParse(controller.text.trim());
-              if (val != null && val >= 1) Navigator.pop(ctx, val);
-            },
-            child: Text(l.saveChangesShort),
-          ),
-        ],
-      ),
-    );
+      );
 
-    if (result != null) {
-      await setRepeatDays(result);
-      setState(() => _repeatDays = result);
+      if (result != null) {
+        await setRepeatDays(result);
+        setState(() => _repeatDays = result);
+      }
+    } finally {
+      controller.dispose();
     }
   }
 }

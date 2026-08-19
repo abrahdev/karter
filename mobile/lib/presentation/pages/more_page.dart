@@ -810,48 +810,52 @@ class _DataSection extends ConsumerWidget {
     final l = AppLocalizations.of(context)!;
     final controller = TextEditingController(text: currentUrl);
 
-    final result = await karterShowDialog<String>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(l.moreTemplateSourceEditUrl),
-        content: TextField(
-          controller: controller,
-          decoration: InputDecoration(
-            hintText: l.moreTemplateSourceUrlHint,
+    try {
+      final result = await karterShowDialog<String>(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: Text(l.moreTemplateSourceEditUrl),
+          content: TextField(
+            controller: controller,
+            decoration: InputDecoration(
+              hintText: l.moreTemplateSourceUrlHint,
+            ),
+            keyboardType: TextInputType.url,
+            autofocus: true,
           ),
-          keyboardType: TextInputType.url,
-          autofocus: true,
+          actions: [
+            TextButton(
+              onPressed: () {
+                ref.read(templateSourceProvider.notifier).resetToDefault();
+                Navigator.pop(ctx);
+              },
+              child: Text(l.moreTemplateSourceReset),
+            ),
+            TextButton(
+              onPressed: () => Navigator.pop(ctx),
+              child: Text(l.cancel),
+            ),
+            FilledButton(
+              onPressed: () {
+                final url = controller.text.trim();
+                if (url.isNotEmpty) Navigator.pop(ctx, url);
+              },
+              child: Text(l.saveChangesShort),
+            ),
+          ],
         ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              ref.read(templateSourceProvider.notifier).resetToDefault();
-              Navigator.pop(ctx);
-            },
-            child: Text(l.moreTemplateSourceReset),
-          ),
-          TextButton(
-            onPressed: () => Navigator.pop(ctx),
-            child: Text(l.cancel),
-          ),
-          FilledButton(
-            onPressed: () {
-              final url = controller.text.trim();
-              if (url.isNotEmpty) Navigator.pop(ctx, url);
-            },
-            child: Text(l.saveChangesShort),
-          ),
-        ],
-      ),
-    );
+      );
 
-    if (result != null && result.isNotEmpty) {
-      await ref.read(templateSourceProvider.notifier).setRepoUrl(result);
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l.moreTemplateSourceUrlSaved)),
-        );
+      if (result != null && result.isNotEmpty) {
+        await ref.read(templateSourceProvider.notifier).setRepoUrl(result);
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(l.moreTemplateSourceUrlSaved)),
+          );
+        }
       }
+    } finally {
+      controller.dispose();
     }
   }
 

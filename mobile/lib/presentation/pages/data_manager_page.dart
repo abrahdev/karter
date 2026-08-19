@@ -116,7 +116,7 @@ class _DataManagerPageState extends ConsumerState<DataManagerPage> {
         loading: () => const Center(
             child: M3LoadingIndicator(
                 contained: true, size: 36, containerSize: 72)),
-        error: (e, _) => Center(child: Text('Error: $e')),
+        error: (e, _) => Center(child: Text(l.errorGeneric(e.toString()))),
       ),
     );
   }

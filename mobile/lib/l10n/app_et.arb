@@ -347,5 +347,38 @@
     "importCheckMaintenanceItems": "Hooldustööd: {count}",
     "importCheckParts": "Varuosad: {count}",
     "importCheckObdCodes": "OBD-koodid: {count}",
-    "importCheckDbLocalFailed": "Imporditud andmebaasi ei õnnestunud lugeda"
+    "importCheckDbLocalFailed": "Imporditud andmebaasi ei õnnestunud lugeda",
+
+    "notificationOdometerTitle": "Uuenda odomeetrit",
+    "notificationOdometerBody": "{name} — {days} päeva viimasest meeldetuletusest.",
+    "@notificationOdometerBody": {
+      "placeholders": {
+        "name": {"type": "String"},
+        "days": {"type": "int"}
+      }
+    },
+    "notificationMaintenanceTitle": "Ootel hooldus",
+    "notificationMaintenanceBody": "{name} — vaata hooldusintervallide staatust.",
+    "@notificationMaintenanceBody": {
+      "placeholders": {
+        "name": {"type": "String"}
+      }
+    },
+
+    "errorGeneric": "Viga: {error}",
+    "@errorGeneric": {
+      "placeholders": {
+        "error": {"type": "String"}
+      }
+    },
+    "deleteFuelUp": "Kustuta tankimine",
+    "deleteFuelUpConfirm": "Kas olete kindel, et soovite selle tankimise kustutada?",
+    "editFuelUp": "Muuda tankimist",
+    "deleteDocument": "Kustuta dokument",
+    "deleteDocumentConfirm": "Kas olete kindel, et soovite selle dokumendi kustutada?",
+    "editDocument": "Muuda dokumenti",
+    "title": "Pealkiri",
+    "selectExpiryDate": "Vali aegumiskuupäev",
+    "addMoreFiles": "Lisa veel faile",
+    "consumptionUnit": "L/100km"
 }

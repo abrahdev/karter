@@ -535,5 +535,38 @@
   "dtcMyVehicles": "My vehicles",
   "dtcVehicle": "Vehicle",
   "dtcVehicleNotFound": "Vehicle not found",
-  "dtcLoadError": "Couldn't load fault codes"
+  "dtcLoadError": "Couldn't load fault codes",
+
+  "notificationOdometerTitle": "Update odometer",
+  "notificationOdometerBody": "{name} — {days} days since last reminder.",
+  "@notificationOdometerBody": {
+    "placeholders": {
+      "name": {"type": "String"},
+      "days": {"type": "int"}
+    }
+  },
+  "notificationMaintenanceTitle": "Pending maintenance",
+  "notificationMaintenanceBody": "{name} — check your maintenance intervals.",
+  "@notificationMaintenanceBody": {
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+
+  "errorGeneric": "Error: {error}",
+  "@errorGeneric": {
+    "placeholders": {
+      "error": {"type": "String"}
+    }
+  },
+  "deleteFuelUp": "Delete fuel-up",
+  "deleteFuelUpConfirm": "Are you sure you want to delete this fuel-up?",
+  "editFuelUp": "Edit fuel-up",
+  "deleteDocument": "Delete document",
+  "deleteDocumentConfirm": "Are you sure you want to delete this document?",
+  "editDocument": "Edit document",
+  "title": "Title",
+  "selectExpiryDate": "Select expiry date",
+  "addMoreFiles": "Add more files",
+  "consumptionUnit": "L/100km"
 }

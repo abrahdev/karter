@@ -120,9 +120,13 @@ class TemplateResolver {
   Future<TemplateIndex> loadIndex({String? baseUrl}) async {
     if (_index != null && _lastBaseUrl == baseUrl) return _index!;
     final jsonStr = await _loadIndex(baseUrl: baseUrl);
-    _index = TemplateIndex.fromJson(json.decode(jsonStr) as Map<String, dynamic>);
-    _lastBaseUrl = baseUrl;
-    return _index!;
+    try {
+      _index = TemplateIndex.fromJson(json.decode(jsonStr) as Map<String, dynamic>);
+      _lastBaseUrl = baseUrl;
+      return _index!;
+    } catch (e) {
+      throw FormatException('Invalid template index JSON: $e');
+    }
   }
 
   Future<Map<String, dynamic>> _loadRawTemplate(
@@ -132,9 +136,13 @@ class TemplateResolver {
     final cacheKey = '$baseUrl|$path';
     if (_templateCache.containsKey(cacheKey)) return _templateCache[cacheKey]!;
     final jsonStr = await _loadTemplate(path, baseUrl: baseUrl);
-    final data = json.decode(jsonStr) as Map<String, dynamic>;
-    _templateCache[cacheKey] = data;
-    return data;
+    try {
+      final data = json.decode(jsonStr) as Map<String, dynamic>;
+      _templateCache[cacheKey] = data;
+      return data;
+    } catch (e) {
+      throw FormatException('Invalid template JSON for $path: $e');
+    }
   }
 
   Future<_ResolutionData> _resolveWithVisited(

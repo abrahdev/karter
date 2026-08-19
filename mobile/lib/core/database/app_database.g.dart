@@ -1149,7 +1149,7 @@ class $FuelLogsTable extends FuelLogs
     type: DriftSqlType.string,
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES vehicles (id)',
+      'REFERENCES vehicles (id) ON DELETE CASCADE',
     ),
   );
   static const VerificationMeta _dateMeta = const VerificationMeta('date');
@@ -1841,7 +1841,7 @@ class $MaintenanceLogsTable extends MaintenanceLogs
     type: DriftSqlType.string,
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES vehicles (id)',
+      'REFERENCES vehicles (id) ON DELETE CASCADE',
     ),
   );
   static const VerificationMeta _dateMeta = const VerificationMeta('date');
@@ -2598,7 +2598,7 @@ class $MaintenanceIntervalsTable extends MaintenanceIntervals
     type: DriftSqlType.string,
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES vehicles (id)',
+      'REFERENCES vehicles (id) ON DELETE CASCADE',
     ),
   );
   static const VerificationMeta _labelMeta = const VerificationMeta('label');
@@ -3902,7 +3902,7 @@ class $MaintenanceLogPartsTable extends MaintenanceLogParts
     type: DriftSqlType.string,
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES maintenance_logs (id)',
+      'REFERENCES maintenance_logs (id) ON DELETE CASCADE',
     ),
   );
   static const VerificationMeta _partIdMeta = const VerificationMeta('partId');
@@ -4471,7 +4471,7 @@ class $VehicleDocumentsTable extends VehicleDocuments
     type: DriftSqlType.string,
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES vehicles (id)',
+      'REFERENCES vehicles (id) ON DELETE CASCADE',
     ),
   );
   static const VerificationMeta _typeMeta = const VerificationMeta('type');
@@ -5170,6 +5170,38 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $VehicleDocumentsTable vehicleDocuments = $VehicleDocumentsTable(
     this,
   );
+  late final Index idxFuelLogsVehicleId = Index(
+    'idx_fuel_logs_vehicle_id',
+    'CREATE INDEX idx_fuel_logs_vehicle_id ON fuel_logs (vehicle_id)',
+  );
+  late final Index idxFuelLogsDate = Index(
+    'idx_fuel_logs_date',
+    'CREATE INDEX idx_fuel_logs_date ON fuel_logs (date)',
+  );
+  late final Index idxMaintenanceLogsVehicleId = Index(
+    'idx_maintenance_logs_vehicle_id',
+    'CREATE INDEX idx_maintenance_logs_vehicle_id ON maintenance_logs (vehicle_id)',
+  );
+  late final Index idxMaintenanceLogsDate = Index(
+    'idx_maintenance_logs_date',
+    'CREATE INDEX idx_maintenance_logs_date ON maintenance_logs (date)',
+  );
+  late final Index idxMaintenanceIntervalsVehicleId = Index(
+    'idx_maintenance_intervals_vehicle_id',
+    'CREATE INDEX idx_maintenance_intervals_vehicle_id ON maintenance_intervals (vehicle_id)',
+  );
+  late final Index idxMaintenanceLogPartsLogId = Index(
+    'idx_maintenance_log_parts_log_id',
+    'CREATE INDEX idx_maintenance_log_parts_log_id ON maintenance_log_parts (log_id)',
+  );
+  late final Index idxMaintenanceLogPartsPartId = Index(
+    'idx_maintenance_log_parts_part_id',
+    'CREATE INDEX idx_maintenance_log_parts_part_id ON maintenance_log_parts (part_id)',
+  );
+  late final Index idxVehicleDocumentsVehicleId = Index(
+    'idx_vehicle_documents_vehicle_id',
+    'CREATE INDEX idx_vehicle_documents_vehicle_id ON vehicle_documents (vehicle_id)',
+  );
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -5182,7 +5214,53 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     vehicleParts,
     maintenanceLogParts,
     vehicleDocuments,
+    idxFuelLogsVehicleId,
+    idxFuelLogsDate,
+    idxMaintenanceLogsVehicleId,
+    idxMaintenanceLogsDate,
+    idxMaintenanceIntervalsVehicleId,
+    idxMaintenanceLogPartsLogId,
+    idxMaintenanceLogPartsPartId,
+    idxVehicleDocumentsVehicleId,
   ];
+  @override
+  StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules([
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'vehicles',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('fuel_logs', kind: UpdateKind.delete)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'vehicles',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('maintenance_logs', kind: UpdateKind.delete)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'vehicles',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('maintenance_intervals', kind: UpdateKind.delete)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'maintenance_logs',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('maintenance_log_parts', kind: UpdateKind.delete)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'vehicles',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('vehicle_documents', kind: UpdateKind.delete)],
+    ),
+  ]);
 }
 
 typedef $$VehiclesTableCreateCompanionBuilder =
