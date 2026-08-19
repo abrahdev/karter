@@ -42,7 +42,6 @@ import 'package:mobile/presentation/pages/vehicle_form_page.dart';
 import 'package:mobile/presentation/pages/feedback_page.dart';
 import 'package:mobile/presentation/pages/tips_page.dart';
 import 'package:mobile/presentation/pages/privacy_policy_page.dart';
-import 'package:mobile/presentation/pages/changelog_page.dart';
 import 'package:mobile/presentation/widgets/notification_settings_modal.dart';
 import 'package:mobile/presentation/widgets/notification_permission_modal.dart';
 import 'package:mobile/presentation/widgets/linux_title_bar.dart';
@@ -186,10 +185,6 @@ final _router = GoRouter(
     GoRoute(
       path: '/privacy',
       builder: (_, _) => const PrivacyPolicyPage(),
-    ),
-    GoRoute(
-      path: '/changelog',
-      builder: (_, _) => const ChangelogSheet(),
     ),
   ],
 );

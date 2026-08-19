@@ -244,15 +244,15 @@ class _AddDocumentModalState extends ConsumerState<_AddDocumentModal> {
         'xlsx',
       ],
     );
-    if (result != null && result.files.isNotEmpty && mounted) {
+    if (result.isNotEmpty && mounted) {
       setState(() {
-        for (final f in result.files) {
+        for (final f in result) {
           if (f.path != null) {
             _selectedFilePaths.add(f.path!);
             _selectedFileNames.add(f.name);
           }
         }
-        if (_nameController.text.isEmpty) _nameController.text = result.files.first.name;
+        if (_nameController.text.isEmpty) _nameController.text = result.first.name;
       });
     }
   }

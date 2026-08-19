@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material3_indicators/material3_indicators.dart';
+import 'package:mobile/core/modal_helpers.dart';
 import 'package:mobile/core/theme/app_spacing.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
@@ -35,6 +36,7 @@ class _FuelLogFormPageState extends ConsumerState<FuelLogFormPage> {
   String _vehicleCurrency = 'USD';
   bool _isFullTank = false;
   bool _isLoading = false;
+  bool _hasUnsavedChanges = false;
 
   @override
   void initState() {
@@ -109,74 +111,108 @@ class _FuelLogFormPageState extends ConsumerState<FuelLogFormPage> {
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context)!;
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l.fuelFormTitle)),
-      body: Form(
-        key: _formKey,
-        child: ListView(
-            padding: const EdgeInsets.all(AppSpacing.pagePadding),
-          children: [
-            ListTile(
-              leading: const Icon(Icons.calendar_today),
-              title: Text(l.date(DateFormat.yMd(l.localeName).format(_date))),
-              onTap: _pickDate,
+    return PopScope(
+      canPop: !_hasUnsavedChanges,
+      onPopInvokedWithResult: (didPop, _) async {
+        if (didPop) return;
+        if (_hasUnsavedChanges) {
+          final shouldPop = await karterShowDialog<bool>(
+            context: context,
+            builder: (ctx) => AlertDialog(
+              title: Text(l.unsavedChanges),
+              content: Text(l.discardChangesConfirm),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(ctx, false),
+                  child: Text(l.cancel),
+                ),
+                FilledButton(
+                  onPressed: () => Navigator.pop(ctx, true),
+                  child: Text(l.discard),
+                ),
+              ],
             ),
-            const SizedBox(height: 12),
-            TextFormField(
-              controller: _volumeController,
-              decoration: InputDecoration(
-                labelText:
-                    '${l.volume} (${_volumeUnit == VolumeUnit.liters ? l.unitL : l.unitGal})',
-                hintText: '0.0',
+          );
+          if (shouldPop == true && context.mounted) {
+            context.pop();
+          }
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(title: Text(l.fuelFormTitle)),
+        body: Form(
+          key: _formKey,
+          child: ListView(
+              padding: const EdgeInsets.all(AppSpacing.pagePadding),
+            children: [
+              ListTile(
+                leading: const Icon(Icons.calendar_today),
+                title: Text(l.date(DateFormat.yMd(l.localeName).format(_date))),
+                onTap: _pickDate,
               ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-              validator: (v) {
-                if (v == null || v.trim().isEmpty) return l.required;
-                final n = double.tryParse(v);
-                if (n == null || n <= 0) return l.invalid;
-                return null;
-              },
-            ),
-            const SizedBox(height: 12),
-            TextFormField(
-              controller: _odometerController,
-              decoration:
-                  InputDecoration(labelText: l.odometer, hintText: '0'),
-              keyboardType: TextInputType.number,
-              validator: (v) {
-                if (v == null || v.trim().isEmpty) return l.required;
-                final n = double.tryParse(v);
-                if (n == null || n < 0) return l.invalid;
-                return null;
-              },
-            ),
-            const SizedBox(height: 12),
-            TextFormField(
-              controller: _priceController,
-              decoration: InputDecoration(
-                labelText: l.pricePerUnit,
-                hintText: '0.00',
-                prefixText:
-                    '${Vehicle.currencySymbol(_vehicleCurrency)} ',
+              const SizedBox(height: 12),
+              TextFormField(
+                controller: _volumeController,
+                decoration: InputDecoration(
+                  labelText:
+                      '${l.volume} (${_volumeUnit == VolumeUnit.liters ? l.unitL : l.unitGal})',
+                  hintText: '0.0',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+                validator: (v) {
+                  if (v == null || v.trim().isEmpty) return l.required;
+                  final n = double.tryParse(v);
+                  if (n == null || n <= 0) return l.invalid;
+                  return null;
+                },
+                onChanged: (_) => setState(() => _hasUnsavedChanges = true),
               ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
-            const SizedBox(height: 12),
-            KarterSwitchListTile(
-              title: Text(l.fullTank),
-              value: _isFullTank,
-              onChanged: (v) => setState(() => _isFullTank = v),
-            ),
-            const SizedBox(height: 24),
-            FilledButton(
-              onPressed: _isLoading ? null : _save,
-              child: _isLoading
-                  ? const M3LoadingIndicator(size: 20)
-                  : Text(l.saveFuelUp),
-            ),
-          ],
+              const SizedBox(height: 12),
+              TextFormField(
+                controller: _odometerController,
+                decoration:
+                    InputDecoration(labelText: l.odometer, hintText: '0'),
+                keyboardType: TextInputType.number,
+                validator: (v) {
+                  if (v == null || v.trim().isEmpty) return l.required;
+                  final n = double.tryParse(v);
+                  if (n == null || n < 0) return l.invalid;
+                  return null;
+                },
+                onChanged: (_) => setState(() => _hasUnsavedChanges = true),
+              ),
+              const SizedBox(height: 12),
+              TextFormField(
+                controller: _priceController,
+                decoration: InputDecoration(
+                  labelText: l.pricePerUnit,
+                  hintText: '0.00',
+                  prefixText:
+                      '${Vehicle.currencySymbol(_vehicleCurrency)} ',
+                ),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+                onChanged: (_) => setState(() => _hasUnsavedChanges = true),
+              ),
+              const SizedBox(height: 12),
+              KarterSwitchListTile(
+                title: Text(l.fullTank),
+                value: _isFullTank,
+                onChanged: (v) => setState(() {
+                  _isFullTank = v;
+                  _hasUnsavedChanges = true;
+                }),
+              ),
+              const SizedBox(height: 24),
+              FilledButton(
+                onPressed: _isLoading ? null : _save,
+                child: _isLoading
+                    ? const M3LoadingIndicator(size: 20)
+                    : Text(l.saveFuelUp),
+              ),
+            ],
+          ),
         ),
       ),
     );

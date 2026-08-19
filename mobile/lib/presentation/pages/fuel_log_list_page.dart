@@ -43,45 +43,51 @@ class FuelLogListPage extends ConsumerWidget {
           return vehicleAsync.when(
             data: (vehicle) {
               final currencySymbol = vehicle != null ? Vehicle.currencySymbol(vehicle.currency) : '\$';
-              return ListView.builder(
-                padding: const EdgeInsets.all(AppSpacing.pagePadding),
-                itemCount: logs.length,
-                itemBuilder: (_, i) {
-                  final log = logs[i];
-                  final dateStr = DateFormat.yMd(l.localeName).format(log.date);
-                  final volUnit = log.fueledVolume.unit == VolumeUnit.liters ? l.unitL : l.unitGal;
-                  final volStr =
-                      '${log.fueledVolume.amount.toStringAsFixed(1)} $volUnit';
-                  final odoUnit = log.odometerAtFueling.unit == DistanceUnit.kilometers ? l.unitKm : l.unitMi;
-                  final odoStr =
-                      '${log.odometerAtFueling.distance.toStringAsFixed(0)} $odoUnit';
-
-                  return Card(
-                    child: ListTile(
-                      leading: CircleAvatar(
-                        backgroundColor: theme.colorScheme.primaryContainer,
-                        child: Icon(Icons.local_gas_station,
-                            color: theme.colorScheme.onPrimaryContainer),
-                      ),
-                      title: Text(volStr),
-                      subtitle: Text('$dateStr · $odoStr'),
-                      trailing: log.pricePerUnit != null
-                          ? Text(
-                              '$currencySymbol${log.pricePerUnit!.toStringAsFixed(2)}/$volUnit',
-                              style: theme.textTheme.bodySmall,
-                            )
-                          : null,
-                      onTap: () => showEditFuelLogModal(
-                        context,
-                        vehicleId: vehicleId,
-                        log: log,
-                        onSaved: () {
-                          ref.invalidate(fuelLogsProvider(vehicleId));
-                        },
-                      ),
-                    ),
-                  );
+              return RefreshIndicator(
+                onRefresh: () async {
+                  ref.invalidate(fuelLogsProvider(vehicleId));
+                  await ref.read(fuelLogsProvider(vehicleId).future);
                 },
+                child: ListView.builder(
+                  padding: const EdgeInsets.all(AppSpacing.pagePadding),
+                  itemCount: logs.length,
+                  itemBuilder: (_, i) {
+                    final log = logs[i];
+                    final dateStr = DateFormat.yMd(l.localeName).format(log.date);
+                    final volUnit = log.fueledVolume.unit == VolumeUnit.liters ? l.unitL : l.unitGal;
+                    final volStr =
+                        '${log.fueledVolume.amount.toStringAsFixed(1)} $volUnit';
+                    final odoUnit = log.odometerAtFueling.unit == DistanceUnit.kilometers ? l.unitKm : l.unitMi;
+                    final odoStr =
+                        '${log.odometerAtFueling.distance.toStringAsFixed(0)} $odoUnit';
+
+                    return Card(
+                      child: ListTile(
+                        leading: CircleAvatar(
+                          backgroundColor: theme.colorScheme.primaryContainer,
+                          child: Icon(Icons.local_gas_station,
+                              color: theme.colorScheme.onPrimaryContainer),
+                        ),
+                        title: Text(volStr),
+                        subtitle: Text('$dateStr · $odoStr'),
+                        trailing: log.pricePerUnit != null
+                            ? Text(
+                                '$currencySymbol${log.pricePerUnit!.toStringAsFixed(2)}/$volUnit',
+                                style: theme.textTheme.bodySmall,
+                              )
+                            : null,
+                        onTap: () => showEditFuelLogModal(
+                          context,
+                          vehicleId: vehicleId,
+                          log: log,
+                          onSaved: () {
+                            ref.invalidate(fuelLogsProvider(vehicleId));
+                          },
+                        ),
+                      ),
+                    );
+                  },
+                ),
               );
             },
             loading: () => const Center(
@@ -103,6 +109,7 @@ class FuelLogListPage extends ConsumerWidget {
             ref.invalidate(fuelLogsProvider(vehicleId));
           },
         ),
+        tooltip: l.fuelFormTitle,
         child: const Icon(Icons.add),
       ),
     );

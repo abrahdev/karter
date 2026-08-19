@@ -77,36 +77,40 @@ class VehicleCard extends StatelessWidget {
         _showContextMenu(context, position);
       },
       child: Card(
-        child: ListTile(
-          leading: Hero(
-            tag: 'vehicle-avatar-${vehicle.id}',
-            child: CircleAvatar(
-              backgroundColor: cs.primaryContainer,
-              child: Icon(
-                switch (vehicle.type) {
-                  VehicleType.combustion => Icons.local_gas_station,
-                  VehicleType.electric => Icons.electric_car,
-                  VehicleType.motorcycle => Icons.motorcycle,
-                },
-                color: cs.onPrimaryContainer,
+        child: Semantics(
+          button: true,
+          label: vehicle.displayName,
+          child: ListTile(
+            leading: Hero(
+              tag: 'vehicle-avatar-${vehicle.id}',
+              child: CircleAvatar(
+                backgroundColor: cs.primaryContainer,
+                child: Icon(
+                  switch (vehicle.type) {
+                    VehicleType.combustion => Icons.local_gas_station,
+                    VehicleType.electric => Icons.electric_car,
+                    VehicleType.motorcycle => Icons.motorcycle,
+                  },
+                  color: cs.onPrimaryContainer,
+                ),
               ),
             ),
+            title: Text(vehicle.displayName),
+            subtitle: Text(
+              hasAlias
+                  ? '${vehicle.brand} ${vehicle.model} ${vehicle.year}'
+                  : distanceText,
+            ),
+            trailing: hasAlias
+                ? Text(
+                    distanceText,
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: cs.onSurfaceVariant,
+                    ),
+                  )
+                : Icon(Icons.chevron_right, color: cs.onSurfaceVariant),
+            onTap: onTap,
           ),
-          title: Text(vehicle.displayName),
-          subtitle: Text(
-            hasAlias
-                ? '${vehicle.brand} ${vehicle.model} ${vehicle.year}'
-                : distanceText,
-          ),
-          trailing: hasAlias
-              ? Text(
-                  distanceText,
-                  style: theme.textTheme.bodySmall?.copyWith(
-                    color: cs.onSurfaceVariant,
-                  ),
-                )
-              : Icon(Icons.chevron_right, color: cs.onSurfaceVariant),
-          onTap: onTap,
         ),
       ),
     );

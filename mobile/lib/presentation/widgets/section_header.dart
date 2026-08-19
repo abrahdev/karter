@@ -30,6 +30,7 @@ class SectionHeader extends StatelessWidget {
           fontWeight: FontWeight.w600,
           letterSpacing: 1.2,
         ),
+        locale: Localizations.localeOf(context),
       ),
     );
   }

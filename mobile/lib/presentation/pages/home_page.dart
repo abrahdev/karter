@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:material3_indicators/material3_indicators.dart';
 import 'package:mobile/core/theme/app_spacing.dart';
 import 'package:mobile/l10n/app_localizations.dart';
+import 'package:mobile/presentation/providers/haptic_provider.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
 import 'package:mobile/presentation/widgets/vehicle_card.dart';
 
@@ -40,19 +41,25 @@ class HomePage extends ConsumerWidget {
               ),
             );
           }
-          return ListView.builder(
-            padding: const EdgeInsets.all(AppSpacing.pagePadding),
-            itemCount: vehicles.length,
-            itemBuilder: (context, index) {
-              final vehicle = vehicles[index];
-              return _StaggeredFadeIn(
-                index: index,
-                child: VehicleCard(
-                  vehicle: vehicle,
-                  onTap: () => context.push('/vehicle/${vehicle.id}'),
-                ),
-              );
+          return RefreshIndicator(
+            onRefresh: () async {
+              ref.invalidate(vehicleListProvider);
+              await ref.read(vehicleListProvider.future);
             },
+            child: ListView.builder(
+              padding: const EdgeInsets.all(AppSpacing.pagePadding),
+              itemCount: vehicles.length,
+              itemBuilder: (context, index) {
+                final vehicle = vehicles[index];
+                return _StaggeredFadeIn(
+                  index: index,
+                  child: VehicleCard(
+                    vehicle: vehicle,
+                    onTap: () => context.push('/vehicle/${vehicle.id}'),
+                  ),
+                );
+              },
+            ),
           );
         },
         loading: () => const Center(
@@ -65,14 +72,14 @@ class HomePage extends ConsumerWidget {
   }
 }
 
-class _AnimatedFab extends StatefulWidget {
+class _AnimatedFab extends ConsumerStatefulWidget {
   const _AnimatedFab();
 
   @override
-  State<_AnimatedFab> createState() => _AnimatedFabState();
+  ConsumerState<_AnimatedFab> createState() => _AnimatedFabState();
 }
 
-class _AnimatedFabState extends State<_AnimatedFab>
+class _AnimatedFabState extends ConsumerState<_AnimatedFab>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _fade;
@@ -107,6 +114,7 @@ class _AnimatedFabState extends State<_AnimatedFab>
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     return AnimatedBuilder(
       animation: _controller,
       builder: (context, child) {
@@ -116,7 +124,11 @@ class _AnimatedFabState extends State<_AnimatedFab>
         );
       },
       child: FloatingActionButton(
-        onPressed: () => context.push('/vehicle/new'),
+        onPressed: () {
+          ref.read(hapticProvider.notifier).selectionTap();
+          context.push('/vehicle/new');
+        },
+        tooltip: l.addVehicle,
         child: const Icon(Icons.add),
       ),
     );
