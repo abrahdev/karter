@@ -185,13 +185,13 @@ class _PartsListPageState extends ConsumerState<PartsListPage> {
               child: M3LoadingIndicator(
                   contained: true, size: 36, containerSize: 72),
             ),
-            error: (e, _) => Center(child: Text('Error: $e')),
+            error: (e, _) => Center(child: Text(l.errorGeneric(e.toString()))),
           );
         },
         loading: () => const Center(
           child: M3LoadingIndicator(contained: true, size: 36, containerSize: 72),
         ),
-        error: (e, _) => Center(child: Text('Error: $e')),
+        error: (e, _) => Center(child: Text(l.errorGeneric(e.toString()))),
       ),
     );
   }
@@ -622,36 +622,40 @@ class _LocalPartDetailSheetState
     final l = AppLocalizations.of(context)!;
     final messenger = ScaffoldMessenger.of(context);
     final ctrl = TextEditingController();
-    final result = await karterShowDialog<String>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(l.addLink),
-        content: TextField(
-          controller: ctrl,
-          autofocus: true,
-          keyboardType: TextInputType.url,
-          decoration: InputDecoration(
-            labelText: l.linkUrl,
-            hintText: 'https://example.com',
+    try {
+      final result = await karterShowDialog<String>(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: Text(l.addLink),
+          content: TextField(
+            controller: ctrl,
+            autofocus: true,
+            keyboardType: TextInputType.url,
+            decoration: InputDecoration(
+              labelText: l.linkUrl,
+              hintText: 'https://example.com',
+            ),
+            onSubmitted: (v) => Navigator.pop(ctx, v),
           ),
-          onSubmitted: (v) => Navigator.pop(ctx, v),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx),
+              child: Text(l.cancel),
+            ),
+            FilledButton(
+              onPressed: () => Navigator.pop(ctx, ctrl.text),
+              child: Text(l.add),
+            ),
+          ],
         ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx),
-            child: Text(l.cancel),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.pop(ctx, ctrl.text),
-            child: Text(l.add),
-          ),
-        ],
-      ),
-    );
-    if (!mounted) return;
-    final url = _normalizeUrl(result?.trim(), messenger, l);
-    if (url == null) return;
-    setState(() => _links.add(url));
+      );
+      if (!mounted) return;
+      final url = _normalizeUrl(result?.trim(), messenger, l);
+      if (url == null) return;
+      setState(() => _links.add(url));
+    } finally {
+      ctrl.dispose();
+    }
   }
 
   String? _normalizeUrl(
@@ -1044,36 +1048,40 @@ class _PartDetailSheetState extends State<_PartDetailSheet> {
     final l = AppLocalizations.of(context)!;
     final messenger = ScaffoldMessenger.of(context);
     final ctrl = TextEditingController();
-    final result = await karterShowDialog<String>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(l.addLink),
-        content: TextField(
-          controller: ctrl,
-          autofocus: true,
-          keyboardType: TextInputType.url,
-          decoration: InputDecoration(
-            labelText: l.linkUrl,
-            hintText: 'https://example.com',
+    try {
+      final result = await karterShowDialog<String>(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: Text(l.addLink),
+          content: TextField(
+            controller: ctrl,
+            autofocus: true,
+            keyboardType: TextInputType.url,
+            decoration: InputDecoration(
+              labelText: l.linkUrl,
+              hintText: 'https://example.com',
+            ),
+            onSubmitted: (v) => Navigator.pop(ctx, v),
           ),
-          onSubmitted: (v) => Navigator.pop(ctx, v),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx),
+              child: Text(l.cancel),
+            ),
+            FilledButton(
+              onPressed: () => Navigator.pop(ctx, ctrl.text),
+              child: Text(l.add),
+            ),
+          ],
         ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx),
-            child: Text(l.cancel),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.pop(ctx, ctrl.text),
-            child: Text(l.add),
-          ),
-        ],
-      ),
-    );
-    if (!mounted) return;
-    final url = _normalizeUrl(result?.trim(), messenger, l);
-    if (url == null) return;
-    setState(() => _links.add(url));
+      );
+      if (!mounted) return;
+      final url = _normalizeUrl(result?.trim(), messenger, l);
+      if (url == null) return;
+      setState(() => _links.add(url));
+    } finally {
+      ctrl.dispose();
+    }
   }
 
   String? _normalizeUrl(

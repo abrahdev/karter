@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:googleapis/drive/v3.dart' as drive;
@@ -19,27 +20,39 @@ class DriveBackupMetadata {
 
 class GoogleDriveService {
   static const _folderName = 'KarterBackups';
+  static const _maxDownloadSize = 100 * 1024 * 1024;
 
   final drive.DriveApi _api;
+  Future<String>? _folderFuture;
 
   GoogleDriveService(http.Client client) : _api = drive.DriveApi(client);
 
-  Future<String> _ensureFolder() async {
-    final existing = await _api.files.list(
-      q: "name = '$_folderName' and mimeType = 'application/vnd.google-apps.folder' and trashed = false",
-      spaces: 'drive',
-    );
+  Future<String> _ensureFolder() {
+    _folderFuture ??= _createFolder();
+    return _folderFuture!;
+  }
 
-    if (existing.files != null && existing.files!.isNotEmpty) {
-      return existing.files!.first.id!;
+  Future<String> _createFolder() async {
+    try {
+      final existing = await _api.files.list(
+        q: "name = '$_folderName' and mimeType = 'application/vnd.google-apps.folder' and trashed = false",
+        spaces: 'drive',
+      );
+
+      if (existing.files != null && existing.files!.isNotEmpty) {
+        return existing.files!.first.id!;
+      }
+
+      final folder = await _api.files.create(
+        drive.File()
+          ..name = _folderName
+          ..mimeType = 'application/vnd.google-apps.folder',
+      );
+      return folder.id!;
+    } catch (_) {
+      _folderFuture = null;
+      rethrow;
     }
-
-    final folder = await _api.files.create(
-      drive.File()
-        ..name = _folderName
-        ..mimeType = 'application/vnd.google-apps.folder',
-    );
-    return folder.id!;
   }
 
   Future<String> uploadBackup(String filename, Uint8List data) async {
@@ -92,6 +105,9 @@ class GoogleDriveService {
       final bytes = <int>[];
       await for (final chunk in response.stream) {
         bytes.addAll(chunk);
+        if (bytes.length > _maxDownloadSize) {
+          throw Exception('Backup file too large (>${_maxDownloadSize ~/ (1024 * 1024)}MB)');
+        }
       }
       return Uint8List.fromList(bytes);
     }

@@ -1441,4 +1441,57 @@ class AppLocalizationsEt extends AppLocalizations {
 
   @override
   String get dtcLoadError => 'Veakoodide laadimine ebaõnnestus';
+
+  @override
+  String get notificationOdometerTitle => 'Uuenda odomeetrit';
+
+  @override
+  String notificationOdometerBody(String name, int days) {
+    return '$name — $days päeva viimasest meeldetuletusest.';
+  }
+
+  @override
+  String get notificationMaintenanceTitle => 'Ootel hooldus';
+
+  @override
+  String notificationMaintenanceBody(String name) {
+    return '$name — vaata hooldusintervallide staatust.';
+  }
+
+  @override
+  String errorGeneric(String error) {
+    return 'Viga: $error';
+  }
+
+  @override
+  String get deleteFuelUp => 'Kustuta tankimine';
+
+  @override
+  String get deleteFuelUpConfirm =>
+      'Kas olete kindel, et soovite selle tankimise kustutada?';
+
+  @override
+  String get editFuelUp => 'Muuda tankimist';
+
+  @override
+  String get deleteDocument => 'Kustuta dokument';
+
+  @override
+  String get deleteDocumentConfirm =>
+      'Kas olete kindel, et soovite selle dokumendi kustutada?';
+
+  @override
+  String get editDocument => 'Muuda dokumenti';
+
+  @override
+  String get title => 'Pealkiri';
+
+  @override
+  String get selectExpiryDate => 'Vali aegumiskuupäev';
+
+  @override
+  String get addMoreFiles => 'Lisa veel faile';
+
+  @override
+  String get consumptionUnit => 'L/100km';
 }

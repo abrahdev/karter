@@ -38,9 +38,11 @@ class Vehicles extends Table {
 }
 
 @DataClassName('FuelLogEntry')
+@TableIndex(name: 'idx_fuel_logs_vehicle_id', columns: {#vehicleId})
+@TableIndex(name: 'idx_fuel_logs_date', columns: {#date})
 class FuelLogs extends Table {
   TextColumn get id => text()();
-  TextColumn get vehicleId => text().references(Vehicles, #id)();
+  TextColumn get vehicleId => text().references(Vehicles, #id, onDelete: KeyAction.cascade)();
   DateTimeColumn get date => dateTime()();
   RealColumn get volumeAmount => real()();
   TextColumn get volumeUnit => text()();
@@ -56,9 +58,11 @@ class FuelLogs extends Table {
 }
 
 @DataClassName('MaintenanceLogEntry')
+@TableIndex(name: 'idx_maintenance_logs_vehicle_id', columns: {#vehicleId})
+@TableIndex(name: 'idx_maintenance_logs_date', columns: {#date})
 class MaintenanceLogs extends Table {
   TextColumn get id => text()();
-  TextColumn get vehicleId => text().references(Vehicles, #id)();
+  TextColumn get vehicleId => text().references(Vehicles, #id, onDelete: KeyAction.cascade)();
   DateTimeColumn get date => dateTime()();
   TextColumn get description => text()();
   RealColumn get odometerAtService => real().withDefault(const Constant(0.0))();
@@ -75,9 +79,10 @@ class MaintenanceLogs extends Table {
 }
 
 @DataClassName('MaintenanceIntervalEntry')
+@TableIndex(name: 'idx_maintenance_intervals_vehicle_id', columns: {#vehicleId})
 class MaintenanceIntervals extends Table {
   TextColumn get id => text()();
-  TextColumn get vehicleId => text().references(Vehicles, #id)();
+  TextColumn get vehicleId => text().references(Vehicles, #id, onDelete: KeyAction.cascade)();
   TextColumn get label => text()();
   IntColumn get kmInterval => integer()();
   IntColumn get monthsInterval => integer().nullable()();
@@ -110,9 +115,11 @@ class VehicleParts extends Table {
 }
 
 @DataClassName('MaintenanceLogPartEntry')
+@TableIndex(name: 'idx_maintenance_log_parts_log_id', columns: {#logId})
+@TableIndex(name: 'idx_maintenance_log_parts_part_id', columns: {#partId})
 class MaintenanceLogParts extends Table {
   TextColumn get id => text()();
-  TextColumn get logId => text().references(MaintenanceLogs, #id)();
+  TextColumn get logId => text().references(MaintenanceLogs, #id, onDelete: KeyAction.cascade)();
   TextColumn get partId => text().nullable()();
   TextColumn get name => text()();
   TextColumn get quantity => text().nullable()();
@@ -126,9 +133,10 @@ class MaintenanceLogParts extends Table {
 }
 
 @DataClassName('VehicleDocumentEntry')
+@TableIndex(name: 'idx_vehicle_documents_vehicle_id', columns: {#vehicleId})
 class VehicleDocuments extends Table {
   TextColumn get id => text()();
-  TextColumn get vehicleId => text().references(Vehicles, #id)();
+  TextColumn get vehicleId => text().references(Vehicles, #id, onDelete: KeyAction.cascade)();
   TextColumn get type => text()();
   TextColumn get name => text()();
   TextColumn get fileName => text()();
@@ -159,12 +167,15 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
   @override
-  int get schemaVersion => 16;
+  int get schemaVersion => 17;
 
   @override
   MigrationStrategy get migration {
     return MigrationStrategy(
       onCreate: (m) async => await m.createAll(),
+      beforeOpen: (details) async {
+        await customStatement('PRAGMA foreign_keys = ON');
+      },
       onUpgrade: (m, from, to) async {
         if (from < 2) {
           await m.addColumn(vehicles, vehicles.type);
@@ -312,6 +323,175 @@ class AppDatabase extends _$AppDatabase {
         if (from < 16) {
           await m.createTable(vehicleParts);
           await m.createTable(maintenanceLogParts);
+        }
+        if (from < 17) {
+          await m.database.customStatement('PRAGMA foreign_keys = OFF');
+
+          await m.database.customStatement('''
+            CREATE TABLE IF NOT EXISTS fuel_logs_new (
+              id TEXT NOT NULL PRIMARY KEY,
+              vehicle_id TEXT NOT NULL REFERENCES vehicles(id) ON DELETE CASCADE,
+              date TEXT NOT NULL,
+              volume_amount REAL NOT NULL,
+              volume_unit TEXT NOT NULL,
+              odometer_distance REAL NOT NULL,
+              odometer_unit TEXT NOT NULL,
+              is_synced INTEGER NOT NULL,
+              is_full_tank INTEGER NOT NULL DEFAULT 0,
+              price_per_unit REAL,
+              photo_paths TEXT
+            )
+          ''');
+          await m.database.customStatement('''
+            INSERT INTO fuel_logs_new (
+              id, vehicle_id, date, volume_amount, volume_unit,
+              odometer_distance, odometer_unit, is_synced, is_full_tank,
+              price_per_unit, photo_paths
+            )
+            SELECT
+              id, vehicle_id, date, volume_amount, volume_unit,
+              odometer_distance, odometer_unit,
+              COALESCE(is_synced, 0), COALESCE(is_full_tank, 0),
+              price_per_unit, photo_paths
+            FROM fuel_logs
+          ''');
+          await m.database.customStatement('DROP TABLE fuel_logs');
+          await m.database.customStatement('ALTER TABLE fuel_logs_new RENAME TO fuel_logs');
+          await m.database.customStatement('CREATE INDEX idx_fuel_logs_vehicle_id ON fuel_logs(vehicle_id)');
+          await m.database.customStatement('CREATE INDEX idx_fuel_logs_date ON fuel_logs(date)');
+
+          await m.database.customStatement('''
+            CREATE TABLE IF NOT EXISTS maintenance_logs_new (
+              id TEXT NOT NULL PRIMARY KEY,
+              vehicle_id TEXT NOT NULL REFERENCES vehicles(id) ON DELETE CASCADE,
+              date TEXT NOT NULL,
+              description TEXT NOT NULL,
+              odometer_at_service REAL NOT NULL DEFAULT 0.0,
+              is_synced INTEGER NOT NULL,
+              reset_interval_id TEXT,
+              restore_reset_km REAL,
+              restore_reset_date TEXT,
+              photo_paths TEXT,
+              cost_amount REAL,
+              cost_currency TEXT
+            )
+          ''');
+          await m.database.customStatement('''
+            INSERT INTO maintenance_logs_new (
+              id, vehicle_id, date, description, odometer_at_service,
+              is_synced, reset_interval_id, restore_reset_km,
+              restore_reset_date, photo_paths, cost_amount, cost_currency
+            )
+            SELECT
+              id, vehicle_id, date, description,
+              COALESCE(odometer_at_service, 0.0),
+              COALESCE(is_synced, 0),
+              reset_interval_id, restore_reset_km,
+              restore_reset_date, photo_paths, cost_amount, cost_currency
+            FROM maintenance_logs
+          ''');
+          await m.database.customStatement('DROP TABLE maintenance_logs');
+          await m.database.customStatement('ALTER TABLE maintenance_logs_new RENAME TO maintenance_logs');
+          await m.database.customStatement('CREATE INDEX idx_maintenance_logs_vehicle_id ON maintenance_logs(vehicle_id)');
+          await m.database.customStatement('CREATE INDEX idx_maintenance_logs_date ON maintenance_logs(date)');
+
+          await m.database.customStatement('''
+            CREATE TABLE IF NOT EXISTS maintenance_intervals_new (
+              id TEXT NOT NULL PRIMARY KEY,
+              vehicle_id TEXT NOT NULL REFERENCES vehicles(id) ON DELETE CASCADE,
+              label TEXT NOT NULL,
+              km_interval INTEGER NOT NULL,
+              months_interval INTEGER,
+              description TEXT,
+              i18n_key TEXT,
+              last_reset_km REAL NOT NULL DEFAULT 0.0,
+              last_reset_date TEXT,
+              is_enabled INTEGER NOT NULL DEFAULT 1,
+              is_custom INTEGER NOT NULL DEFAULT 0,
+              parts_json TEXT
+            )
+          ''');
+          await m.database.customStatement('''
+            INSERT INTO maintenance_intervals_new (
+              id, vehicle_id, label, km_interval, months_interval,
+              description, i18n_key, last_reset_km, last_reset_date,
+              is_enabled, is_custom, parts_json
+            )
+            SELECT
+              id, vehicle_id, label, km_interval, months_interval,
+              description, i18n_key,
+              COALESCE(last_reset_km, 0.0),
+              last_reset_date,
+              COALESCE(is_enabled, 1),
+              COALESCE(is_custom, 0),
+              parts_json
+            FROM maintenance_intervals
+          ''');
+          await m.database.customStatement('DROP TABLE maintenance_intervals');
+          await m.database.customStatement('ALTER TABLE maintenance_intervals_new RENAME TO maintenance_intervals');
+          await m.database.customStatement('CREATE INDEX idx_maintenance_intervals_vehicle_id ON maintenance_intervals(vehicle_id)');
+
+          await m.database.customStatement('''
+            CREATE TABLE IF NOT EXISTS maintenance_log_parts_new (
+              id TEXT NOT NULL PRIMARY KEY,
+              log_id TEXT NOT NULL REFERENCES maintenance_logs(id) ON DELETE CASCADE,
+              part_id TEXT,
+              name TEXT NOT NULL,
+              quantity TEXT,
+              unit TEXT,
+              oem_number TEXT,
+              description TEXT,
+              links TEXT
+            )
+          ''');
+          await m.database.customStatement('''
+            INSERT INTO maintenance_log_parts_new (
+              id, log_id, part_id, name, quantity, unit,
+              oem_number, description, links
+            )
+            SELECT
+              id, log_id, part_id, name, quantity, unit,
+              oem_number, description, links
+            FROM maintenance_log_parts
+          ''');
+          await m.database.customStatement('DROP TABLE maintenance_log_parts');
+          await m.database.customStatement('ALTER TABLE maintenance_log_parts_new RENAME TO maintenance_log_parts');
+          await m.database.customStatement('CREATE INDEX idx_maintenance_log_parts_log_id ON maintenance_log_parts(log_id)');
+          await m.database.customStatement('CREATE INDEX idx_maintenance_log_parts_part_id ON maintenance_log_parts(part_id)');
+
+          await m.database.customStatement('''
+            CREATE TABLE IF NOT EXISTS vehicle_documents_new (
+              id TEXT NOT NULL PRIMARY KEY,
+              vehicle_id TEXT NOT NULL REFERENCES vehicles(id) ON DELETE CASCADE,
+              type TEXT NOT NULL,
+              name TEXT NOT NULL,
+              file_name TEXT NOT NULL,
+              file_path TEXT NOT NULL,
+              mime_type TEXT,
+              file_size REAL,
+              notes TEXT,
+              expiry_date TEXT,
+              created_at TEXT NOT NULL,
+              file_paths TEXT
+            )
+          ''');
+          await m.database.customStatement('''
+            INSERT INTO vehicle_documents_new (
+              id, vehicle_id, type, name, file_name, file_path,
+              mime_type, file_size, notes, expiry_date,
+              created_at, file_paths
+            )
+            SELECT
+              id, vehicle_id, type, name, file_name, file_path,
+              mime_type, file_size, notes, expiry_date,
+              created_at, file_paths
+            FROM vehicle_documents
+          ''');
+          await m.database.customStatement('DROP TABLE vehicle_documents');
+          await m.database.customStatement('ALTER TABLE vehicle_documents_new RENAME TO vehicle_documents');
+          await m.database.customStatement('CREATE INDEX idx_vehicle_documents_vehicle_id ON vehicle_documents(vehicle_id)');
+
+          await m.database.customStatement('PRAGMA foreign_keys = ON');
         }
       },
     );

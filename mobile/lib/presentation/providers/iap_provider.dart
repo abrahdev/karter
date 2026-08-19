@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:mobile/core/services/in_app_purchase_service.dart';
@@ -41,11 +43,16 @@ class IapState {
 
 class IapNotifier extends Notifier<IapState> {
   late final InAppPurchaseService _service;
+  StreamSubscription<List<PurchaseDetails>>? _subscription;
   static const _prefsKey = 'karter_purchased_skus';
 
   @override
   IapState build() {
     _service = ref.read(iapServiceProvider);
+    ref.onDispose(() {
+      _subscription?.cancel();
+      _service.dispose();
+    });
     _init();
     return const IapState();
   }
@@ -64,7 +71,7 @@ class IapNotifier extends Notifier<IapState> {
 
     final products = await _service.loadProducts();
 
-    _service.purchaseStream.listen((purchases) {
+    _subscription = _service.purchaseStream.listen((purchases) {
       _onPurchaseUpdate(purchases);
     });
 
@@ -129,7 +136,9 @@ class IapNotifier extends Notifier<IapState> {
 }
 
 final iapServiceProvider = Provider<InAppPurchaseService>((ref) {
-  return InAppPurchaseService();
+  final service = InAppPurchaseService();
+  ref.onDispose(service.dispose);
+  return service;
 });
 
 final iapProvider = NotifierProvider<IapNotifier, IapState>(IapNotifier.new);

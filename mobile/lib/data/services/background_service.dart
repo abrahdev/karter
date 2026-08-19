@@ -3,6 +3,11 @@ import 'package:mobile/data/repositories/vehicle_repository_impl.dart';
 import 'package:mobile/data/services/notification_service.dart';
 import 'package:mobile/domain/entities/vehicle.dart';
 import 'package:mobile/domain/repositories/vehicle_repository.dart';
+import 'package:mobile/l10n/app_localizations.dart';
+import 'package:mobile/l10n/app_localizations_en.dart';
+import 'package:mobile/l10n/app_localizations_es.dart';
+import 'package:mobile/l10n/app_localizations_et.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:workmanager/workmanager.dart';
 
 const _odometerChannel = 1000;
@@ -15,21 +20,44 @@ void callbackDispatcher() {
     await service.init();
 
     final db = AppDatabase();
-    final VehicleRepository repo = VehicleRepositoryImpl(db);
-    final vehicles = await repo.getVehicles();
+    try {
+      final VehicleRepository repo = VehicleRepositoryImpl(db);
+      final vehicles = await repo.getVehicles();
 
-    for (final v in vehicles) {
-      await _checkOdometerReminder(service, v);
-      await _checkMaintenanceReminder(service, v);
+      final l = await _loadLocalizations();
+
+      for (final v in vehicles) {
+        try {
+          await _checkOdometerReminder(service, v, l);
+          await _checkMaintenanceReminder(service, v, l);
+        } catch (_) {}
+      }
+    } finally {
+      await db.close();
     }
-
-    await db.close();
     return true;
   });
 }
 
+Future<AppLocalizations> _loadLocalizations() async {
+  final prefs = await SharedPreferences.getInstance();
+  final locale = prefs.getString('locale') ?? 'en';
+  switch (locale) {
+    case 'es':
+      return AppLocalizationsEs();
+    case 'et':
+      return AppLocalizationsEt();
+    default:
+      return AppLocalizationsEn();
+  }
+}
+
+int _notificationId(int channel, String vehicleId) {
+  return channel + (vehicleId.hashCode & 0x7FFFFFFF) % 1000;
+}
+
 Future<void> _checkOdometerReminder(
-    NotificationService service, Vehicle v) async {
+    NotificationService service, Vehicle v, AppLocalizations l) async {
   final freq = v.odometerReminderFreqDays;
   if (freq == null || freq <= 0) return;
 
@@ -40,26 +68,24 @@ Future<void> _checkOdometerReminder(
   }
 
   await service.showNotification(
-    id: _odometerChannel + v.id.hashCode,
-    title: 'Actualiza el odómetro',
-    body:
-        '${v.alias ?? v.brand} — han pasado $freq días desde el último recordatorio.',
+    id: _notificationId(_odometerChannel, v.id),
+    title: l.notificationOdometerTitle,
+    body: l.notificationOdometerBody(v.alias ?? v.brand, freq),
     payload: 'odometer:${v.id}',
   );
 }
 
 Future<void> _checkMaintenanceReminder(
-    NotificationService service, Vehicle v) async {
+    NotificationService service, Vehicle v, AppLocalizations l) async {
   if (!v.maintenanceReminderEnabled) return;
 
   final snoozedUntil = v.maintenanceReminderSnoozedUntil;
   if (snoozedUntil != null && DateTime.now().isBefore(snoozedUntil)) return;
 
   await service.showNotification(
-    id: _maintenanceChannel + v.id.hashCode,
-    title: 'Mantenimiento pendiente',
-    body:
-        '${v.alias ?? v.brand} — revisa el estado de los intervalos de mantenimiento.',
+    id: _notificationId(_maintenanceChannel, v.id),
+    title: l.notificationMaintenanceTitle,
+    body: l.notificationMaintenanceBody(v.alias ?? v.brand),
     payload: 'maintenance:${v.id}',
   );
 }

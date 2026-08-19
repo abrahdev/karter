@@ -30,7 +30,9 @@ import 'package:mobile/domain/repositories/vehicle_part_repository.dart';
 import 'package:mobile/domain/repositories/vehicle_repository.dart';
 
 final appDatabaseProvider = Provider<AppDatabase>((ref) {
-  return AppDatabase();
+  final db = AppDatabase();
+  ref.onDispose(() => db.close());
+  return db;
 });
 
 final vehicleRepositoryProvider = Provider<VehicleRepository>((ref) {
@@ -116,6 +118,7 @@ final maintenanceIntervalsProvider =
 
 final exportServiceProvider = Provider<ExportService>((ref) {
   return ExportService(
+    ref.watch(appDatabaseProvider),
     ref.watch(vehicleRepositoryProvider),
     ref.watch(fuelLogRepositoryProvider),
     ref.watch(maintenanceLogRepositoryProvider),

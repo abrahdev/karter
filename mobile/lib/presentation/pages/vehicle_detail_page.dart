@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -77,6 +78,7 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
   }
 
   void _startShakeListener() {
+    if (!Platform.isAndroid && !Platform.isIOS) return;
     const threshold = 30.0;
     _accelSub =
         accelerometerEventStream(
@@ -434,7 +436,7 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
       ),
       error: (error, _) => Scaffold(
         appBar: AppBar(),
-        body: Center(child: Text('Error: $error')),
+        body: Center(child: Text(l.errorGeneric(error.toString()))),
       ),
     );
   }

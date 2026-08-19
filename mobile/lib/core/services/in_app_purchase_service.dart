@@ -99,6 +99,10 @@ class InAppPurchaseService {
   Future<void> _handlePurchase(PurchaseDetails purchase) async {
     if (purchase.status == PurchaseStatus.purchased ||
         purchase.status == PurchaseStatus.restored) {
+      if (!_isValidPurchase(purchase)) {
+        debugPrint('IAP purchase validation failed for ${purchase.productID}');
+        return;
+      }
       if (purchase.pendingCompletePurchase) {
         await _iap.completePurchase(purchase);
       }
@@ -107,5 +111,23 @@ class InAppPurchaseService {
     } else if (purchase.status == PurchaseStatus.canceled) {
       debugPrint('IAP purchase canceled');
     }
+  }
+
+  bool _isValidPurchase(PurchaseDetails purchase) {
+    if (purchase.purchaseID == null || purchase.purchaseID!.isEmpty) {
+      return false;
+    }
+    final purchaseDate = purchase.transactionDate;
+    if (purchaseDate != null) {
+      final date = DateTime.fromMillisecondsSinceEpoch(int.tryParse(purchaseDate) ?? 0);
+      final now = DateTime.now();
+      if (date.isAfter(now.add(const Duration(days: 1)))) {
+        return false;
+      }
+      if (date.isBefore(now.subtract(const Duration(days: 365 * 5)))) {
+        return false;
+      }
+    }
+    return true;
   }
 }

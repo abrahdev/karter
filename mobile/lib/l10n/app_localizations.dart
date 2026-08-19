@@ -2708,6 +2708,96 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Couldn\'t load fault codes'**
   String get dtcLoadError;
+
+  /// No description provided for @notificationOdometerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Update odometer'**
+  String get notificationOdometerTitle;
+
+  /// No description provided for @notificationOdometerBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} — {days} days since last reminder.'**
+  String notificationOdometerBody(String name, int days);
+
+  /// No description provided for @notificationMaintenanceTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending maintenance'**
+  String get notificationMaintenanceTitle;
+
+  /// No description provided for @notificationMaintenanceBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} — check your maintenance intervals.'**
+  String notificationMaintenanceBody(String name);
+
+  /// No description provided for @errorGeneric.
+  ///
+  /// In en, this message translates to:
+  /// **'Error: {error}'**
+  String errorGeneric(String error);
+
+  /// No description provided for @deleteFuelUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete fuel-up'**
+  String get deleteFuelUp;
+
+  /// No description provided for @deleteFuelUpConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this fuel-up?'**
+  String get deleteFuelUpConfirm;
+
+  /// No description provided for @editFuelUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit fuel-up'**
+  String get editFuelUp;
+
+  /// No description provided for @deleteDocument.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete document'**
+  String get deleteDocument;
+
+  /// No description provided for @deleteDocumentConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this document?'**
+  String get deleteDocumentConfirm;
+
+  /// No description provided for @editDocument.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit document'**
+  String get editDocument;
+
+  /// No description provided for @title.
+  ///
+  /// In en, this message translates to:
+  /// **'Title'**
+  String get title;
+
+  /// No description provided for @selectExpiryDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Select expiry date'**
+  String get selectExpiryDate;
+
+  /// No description provided for @addMoreFiles.
+  ///
+  /// In en, this message translates to:
+  /// **'Add more files'**
+  String get addMoreFiles;
+
+  /// No description provided for @consumptionUnit.
+  ///
+  /// In en, this message translates to:
+  /// **'L/100km'**
+  String get consumptionUnit;
 }
 
 class _AppLocalizationsDelegate

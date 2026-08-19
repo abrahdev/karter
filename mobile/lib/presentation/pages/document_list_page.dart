@@ -55,7 +55,7 @@ class DocumentListPage extends ConsumerWidget {
                   subtitle: Text(doc.fileName),
                   trailing: doc.expiryDate != null
                       ? Text(
-                          DateFormat('dd/MM/yy')
+                          DateFormat.yMd(l.localeName)
                               .format(doc.expiryDate!),
                           style: theme.textTheme.bodySmall)
                       : null,
@@ -74,7 +74,7 @@ class DocumentListPage extends ConsumerWidget {
         loading: () => const Center(
             child: M3LoadingIndicator(
                 contained: true, size: 36, containerSize: 72)),
-        error: (e, _) => Center(child: Text('$e')),
+        error: (e, _) => Center(child: Text(l.errorGeneric(e.toString()))),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => showAddDocumentModal(

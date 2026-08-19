@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:mobile/core/database/app_database.dart';
 import 'package:mobile/domain/entities/fuel_log.dart';
 import 'package:mobile/domain/entities/maintenance_interval.dart';
 import 'package:mobile/domain/entities/maintenance_log.dart';
@@ -86,6 +87,7 @@ class ExportData {
 }
 
 class ExportService {
+  final AppDatabase _db;
   final VehicleRepository _vehicleRepo;
   final FuelLogRepository _fuelLogRepo;
   final MaintenanceLogRepository _maintenanceLogRepo;
@@ -95,6 +97,7 @@ class ExportService {
   final VehiclePartRepository _vehiclePartRepo;
 
   ExportService(
+    this._db,
     this._vehicleRepo,
     this._fuelLogRepo,
     this._maintenanceLogRepo,
@@ -160,55 +163,62 @@ class ExportService {
   }
 
   Future<void> importJson(String json) async {
-    final map = jsonDecode(json) as Map<String, dynamic>;
+    final Map<String, dynamic> map;
+    try {
+      map = jsonDecode(json) as Map<String, dynamic>;
+    } catch (e) {
+      throw FormatException('Invalid JSON: $e');
+    }
     final data = ExportData.fromJson(map);
 
-    for (final vehicle in data.vehicles) {
-      await _vehicleRepo.save(vehicle);
-    }
-
-    for (final log in data.fuelLogs) {
-      await _fuelLogRepo.save(log);
-    }
-
-    for (final log in data.maintenanceLogs) {
-      await _maintenanceLogRepo.save(log);
-    }
-
-    for (final interval in data.maintenanceIntervals) {
-      await _intervalRepo.save(interval);
-    }
-
-    for (final doc in data.vehicleDocuments) {
-      var saved = doc;
-      if (doc.fileDataBase64 != null) {
-        try {
-          final bytes = base64Decode(doc.fileDataBase64!);
-          final dir = await getApplicationDocumentsDirectory();
-          final newPath =
-              '${dir.path}/documents/${doc.id}_${doc.fileName}';
-          await File(newPath).parent.create(recursive: true);
-          await File(newPath).writeAsBytes(bytes);
-          saved = doc.copyWith(
-            filePath: newPath,
-            fileDataBase64: null,
-          );
-        } catch (_) {}
+    await _db.transaction(() async {
+      for (final vehicle in data.vehicles) {
+        await _vehicleRepo.save(vehicle);
       }
-      await _documentRepo.save(saved);
-    }
 
-    for (final part in data.vehicleParts) {
-      await _vehiclePartRepo.save(part);
-    }
+      for (final log in data.fuelLogs) {
+        await _fuelLogRepo.save(log);
+      }
 
-    final partsByLog = <String, List<MaintenanceLogPart>>{};
-    for (final part in data.maintenanceLogParts) {
-      partsByLog.putIfAbsent(part.logId, () => []).add(part);
-    }
-    for (final entry in partsByLog.entries) {
-      await _logPartRepo.replaceForLog(entry.key, entry.value);
-    }
+      for (final log in data.maintenanceLogs) {
+        await _maintenanceLogRepo.save(log);
+      }
+
+      for (final interval in data.maintenanceIntervals) {
+        await _intervalRepo.save(interval);
+      }
+
+      for (final doc in data.vehicleDocuments) {
+        var saved = doc;
+        if (doc.fileDataBase64 != null) {
+          try {
+            final bytes = base64Decode(doc.fileDataBase64!);
+            final dir = await getApplicationDocumentsDirectory();
+            final newPath =
+                '${dir.path}/documents/${doc.id}_${doc.fileName}';
+            await File(newPath).parent.create(recursive: true);
+            await File(newPath).writeAsBytes(bytes);
+            saved = doc.copyWith(
+              filePath: newPath,
+              fileDataBase64: null,
+            );
+          } catch (_) {}
+        }
+        await _documentRepo.save(saved);
+      }
+
+      for (final part in data.vehicleParts) {
+        await _vehiclePartRepo.save(part);
+      }
+
+      final partsByLog = <String, List<MaintenanceLogPart>>{};
+      for (final part in data.maintenanceLogParts) {
+        partsByLog.putIfAbsent(part.logId, () => []).add(part);
+      }
+      for (final entry in partsByLog.entries) {
+        await _logPartRepo.replaceForLog(entry.key, entry.value);
+      }
+    });
   }
 
   static ExportData? preview(String json) {

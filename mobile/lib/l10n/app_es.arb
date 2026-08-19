@@ -476,5 +476,38 @@
   "dtcMyVehicles": "Mis vehículos",
   "dtcVehicle": "Vehículo",
   "dtcVehicleNotFound": "Vehículo no encontrado",
-  "dtcLoadError": "No se pudieron cargar los códigos de fallo"
+  "dtcLoadError": "No se pudieron cargar los códigos de fallo",
+
+  "notificationOdometerTitle": "Actualiza el odómetro",
+  "notificationOdometerBody": "{name} — han pasado {days} días desde el último recordatorio.",
+  "@notificationOdometerBody": {
+    "placeholders": {
+      "name": {"type": "String"},
+      "days": {"type": "int"}
+    }
+  },
+  "notificationMaintenanceTitle": "Mantenimiento pendiente",
+  "notificationMaintenanceBody": "{name} — revisa el estado de los intervalos de mantenimiento.",
+  "@notificationMaintenanceBody": {
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+
+  "errorGeneric": "Error: {error}",
+  "@errorGeneric": {
+    "placeholders": {
+      "error": {"type": "String"}
+    }
+  },
+  "deleteFuelUp": "Eliminar repostaje",
+  "deleteFuelUpConfirm": "¿Seguro que quieres eliminar este repostaje?",
+  "editFuelUp": "Editar repostaje",
+  "deleteDocument": "Eliminar documento",
+  "deleteDocumentConfirm": "¿Seguro que quieres eliminar este documento?",
+  "editDocument": "Editar documento",
+  "title": "Título",
+  "selectExpiryDate": "Seleccionar fecha de vencimiento",
+  "addMoreFiles": "Añadir más archivos",
+  "consumptionUnit": "L/100km"
 }

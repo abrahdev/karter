@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/data/services/backup_service.dart';
 import 'package:mobile/data/services/google_drive_auth_service.dart';
 import 'package:mobile/data/services/google_drive_service.dart';
+import 'package:mobile/presentation/providers/vehicle_providers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class BackupState {
@@ -113,9 +114,14 @@ class BackupNotifier extends Notifier<BackupState> {
   }
 
   Future<void> backupNow() async {
+    final client = _auth.client;
+    if (client == null) {
+      state = state.copyWith(backingUp: false, error: 'Not signed in. Please sign in again.');
+      return;
+    }
     state = state.copyWith(backingUp: true, error: null);
     try {
-      final drive = GoogleDriveService(_auth.client!);
+      final drive = GoogleDriveService(client);
 
       final backups = await drive.listBackups();
       if (backups.length >= state.maxBackups) {
@@ -151,8 +157,13 @@ class BackupNotifier extends Notifier<BackupState> {
 
   Future<void> listBackups() async {
     if (!_auth.isSignedIn) return;
+    final client = _auth.client;
+    if (client == null) {
+      state = state.copyWith(error: 'Not signed in. Please sign in again.');
+      return;
+    }
     try {
-      final drive = GoogleDriveService(_auth.client!);
+      final drive = GoogleDriveService(client);
       final backups = await drive.listBackups();
       state = state.copyWith(driveBackups: backups);
     } catch (e) {
@@ -161,9 +172,14 @@ class BackupNotifier extends Notifier<BackupState> {
   }
 
   Future<void> deleteBackup(String fileId) async {
+    final client = _auth.client;
+    if (client == null) {
+      state = state.copyWith(loading: false, error: 'Not signed in. Please sign in again.');
+      return;
+    }
     state = state.copyWith(loading: true, error: null);
     try {
-      final drive = GoogleDriveService(_auth.client!);
+      final drive = GoogleDriveService(client);
       await drive.deleteBackup(fileId);
       state = state.copyWith(
         loading: false,
@@ -175,12 +191,18 @@ class BackupNotifier extends Notifier<BackupState> {
   }
 
   Future<void> restoreBackup(String fileId) async {
+    final client = _auth.client;
+    if (client == null) {
+      state = state.copyWith(restoring: false, error: 'Not signed in. Please sign in again.');
+      return;
+    }
     state = state.copyWith(restoring: true, error: null);
     try {
-      final drive = GoogleDriveService(_auth.client!);
+      final drive = GoogleDriveService(client);
       final encrypted = await drive.downloadBackup(fileId);
       final restoredPath = await _backup.restoreFromEncrypted(encrypted);
       await _backup.replaceDb(restoredPath);
+      ref.invalidate(appDatabaseProvider);
       state = state.copyWith(restoring: false);
       await listBackups();
     } catch (e) {

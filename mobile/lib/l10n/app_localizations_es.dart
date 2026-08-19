@@ -1450,4 +1450,57 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get dtcLoadError => 'No se pudieron cargar los códigos de fallo';
+
+  @override
+  String get notificationOdometerTitle => 'Actualiza el odómetro';
+
+  @override
+  String notificationOdometerBody(String name, int days) {
+    return '$name — han pasado $days días desde el último recordatorio.';
+  }
+
+  @override
+  String get notificationMaintenanceTitle => 'Mantenimiento pendiente';
+
+  @override
+  String notificationMaintenanceBody(String name) {
+    return '$name — revisa el estado de los intervalos de mantenimiento.';
+  }
+
+  @override
+  String errorGeneric(String error) {
+    return 'Error: $error';
+  }
+
+  @override
+  String get deleteFuelUp => 'Eliminar repostaje';
+
+  @override
+  String get deleteFuelUpConfirm =>
+      '¿Seguro que quieres eliminar este repostaje?';
+
+  @override
+  String get editFuelUp => 'Editar repostaje';
+
+  @override
+  String get deleteDocument => 'Eliminar documento';
+
+  @override
+  String get deleteDocumentConfirm =>
+      '¿Seguro que quieres eliminar este documento?';
+
+  @override
+  String get editDocument => 'Editar documento';
+
+  @override
+  String get title => 'Título';
+
+  @override
+  String get selectExpiryDate => 'Seleccionar fecha de vencimiento';
+
+  @override
+  String get addMoreFiles => 'Añadir más archivos';
+
+  @override
+  String get consumptionUnit => 'L/100km';
 }

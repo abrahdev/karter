@@ -38,6 +38,7 @@ class NotificationService {
   }
 
   Future<bool?> requestNotificationPermission() async {
+    if (!_initialized) await init();
     if (Platform.isLinux) return true;
     final android = _plugin.resolvePlatformSpecificImplementation<
         AndroidFlutterLocalNotificationsPlugin>();

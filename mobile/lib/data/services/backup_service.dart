@@ -65,9 +65,22 @@ class BackupService {
   Future<void> replaceDb(String restoredDbPath) async {
     final dir = await getApplicationDocumentsDirectory();
     final dbPath = '${dir.path}/karter.db';
+    final tempPath = '${dir.path}/karter.db.old';
 
-    await File(dbPath).delete();
-    await File(restoredDbPath).rename(dbPath);
+    try {
+      if (await File(dbPath).exists()) {
+        await File(dbPath).rename(tempPath);
+      }
+      await File(restoredDbPath).rename(dbPath);
+      if (await File(tempPath).exists()) {
+        await File(tempPath).delete();
+      }
+    } catch (_) {
+      if (await File(tempPath).exists() && !await File(dbPath).exists()) {
+        await File(tempPath).rename(dbPath);
+      }
+      rethrow;
+    }
   }
 
   Future<String> formatFileSize(int bytes) async {

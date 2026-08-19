@@ -45,10 +45,11 @@ class VehicleCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final cs = theme.colorScheme;
+    final l = AppLocalizations.of(context)!;
     final distance = vehicle.currentOdometer.distance;
     final isKm = vehicle.currentOdometer.unit.name == 'kilometers';
     final distanceText =
-        '${distance.toStringAsFixed(0)} ${isKm ? 'km' : 'mi'}';
+        '${distance.toStringAsFixed(0)} ${isKm ? l.unitKm : l.unitMi}';
     final hasAlias =
         vehicle.alias != null && vehicle.alias!.isNotEmpty;
 

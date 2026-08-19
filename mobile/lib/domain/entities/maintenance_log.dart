@@ -28,6 +28,36 @@ class MaintenanceLog {
     this.costCurrency,
   });
 
+  MaintenanceLog copyWith({
+    String? id,
+    String? vehicleId,
+    DateTime? date,
+    String? description,
+    double? odometerAtService,
+    bool? isSynced,
+    String? resetIntervalId,
+    double? restoreResetKm,
+    DateTime? restoreResetDate,
+    List<String>? photoPaths,
+    double? costAmount,
+    String? costCurrency,
+  }) {
+    return MaintenanceLog(
+      id: id ?? this.id,
+      vehicleId: vehicleId ?? this.vehicleId,
+      date: date ?? this.date,
+      description: description ?? this.description,
+      odometerAtService: odometerAtService ?? this.odometerAtService,
+      isSynced: isSynced ?? this.isSynced,
+      resetIntervalId: resetIntervalId ?? this.resetIntervalId,
+      restoreResetKm: restoreResetKm ?? this.restoreResetKm,
+      restoreResetDate: restoreResetDate ?? this.restoreResetDate,
+      photoPaths: photoPaths ?? this.photoPaths,
+      costAmount: costAmount ?? this.costAmount,
+      costCurrency: costCurrency ?? this.costCurrency,
+    );
+  }
+
   Map<String, dynamic> toJson() => {
         'id': id,
         'vehicleId': vehicleId,
@@ -38,6 +68,9 @@ class MaintenanceLog {
         'resetIntervalId': resetIntervalId,
         'restoreResetKm': restoreResetKm,
         'restoreResetDate': restoreResetDate?.toIso8601String(),
+        'photoPaths': photoPaths,
+        'costAmount': costAmount,
+        'costCurrency': costCurrency,
       };
 
   factory MaintenanceLog.fromJson(Map<String, dynamic> json) =>
@@ -53,5 +86,8 @@ class MaintenanceLog {
         restoreResetDate: json['restoreResetDate'] != null
             ? DateTime.parse(json['restoreResetDate'])
             : null,
+        photoPaths: (json['photoPaths'] as List?)?.cast<String>() ?? const [],
+        costAmount: (json['costAmount'] as num?)?.toDouble(),
+        costCurrency: json['costCurrency'],
       );
 }

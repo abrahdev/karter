@@ -19,7 +19,9 @@ class Plate {
   factory Plate.nullable(String? value) => Plate._((value ?? '').toUpperCase());
 
   bool _isValid(String value) {
-    return true; // To-do Implement validation logic
+    if (value.length < 2 || value.length > 10) return false;
+    final validChars = RegExp(r'^[A-Z0-9\s\-]+$');
+    return validChars.hasMatch(value);
   }
 
   String getValue() => value;
