@@ -242,9 +242,9 @@ class _AddMaintenanceLogModalState
       type: FileType.custom,
       allowedExtensions: ['jpg', 'jpeg', 'png', 'heic', 'webp'],
     );
-    if (result != null && mounted) {
+    if (result.isNotEmpty && mounted) {
       setState(() {
-        for (final f in result.files) {
+        for (final f in result) {
           if (f.path != null) {
             _selectedPhotos.add(f.path!);
           }

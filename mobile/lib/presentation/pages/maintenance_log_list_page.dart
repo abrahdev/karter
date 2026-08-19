@@ -349,12 +349,18 @@ class _MaintenanceLogListPageState
         ),
       ),
       body: logsAsync.when(
-        data: (logs) => TabBarView(
-          controller: _tabController,
-          children: [
-            _buildHistoryTab(logs),
-            _buildPreviewTab(logs),
-          ],
+        data: (logs) => RefreshIndicator(
+          onRefresh: () async {
+            ref.invalidate(maintenanceLogsProvider(widget.vehicleId));
+            await ref.read(maintenanceLogsProvider(widget.vehicleId).future);
+          },
+          child: TabBarView(
+            controller: _tabController,
+            children: [
+              _buildHistoryTab(logs),
+              _buildPreviewTab(logs),
+            ],
+          ),
         ),
         loading: () => const Center(
             child: M3LoadingIndicator(
@@ -375,6 +381,7 @@ class _MaintenanceLogListPageState
                           widget.vehicleId));
                 },
               ),
+              tooltip: l.maintenanceLogTitleNew,
               child: const Icon(Icons.add),
             )
           : null,

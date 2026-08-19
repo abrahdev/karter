@@ -46,8 +46,10 @@ class _DtcLookupSheetState extends ConsumerState<DtcLookupSheet> {
   void initState() {
     super.initState();
     _source = widget.vehicleId;
-    _load();
-    _loadMakes();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _load();
+      _loadMakes();
+    });
   }
 
   Future<void> _loadMakes() async {

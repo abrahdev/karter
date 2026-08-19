@@ -42,6 +42,7 @@ class _MaintenanceLogFormPageState
   List<MaintenanceLogPart> _selectedParts = [];
   bool _isLoading = false;
   bool _isEditing = false;
+  bool _hasUnsavedChanges = false;
 
   @override
   void initState() {
@@ -240,88 +241,124 @@ class _MaintenanceLogFormPageState
         ref.watch(maintenanceIntervalsProvider(widget.vehicleId));
     final theme = Theme.of(context);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(_isEditing ? l.maintenanceLogTitleEdit : l.maintenanceLogTitleNew),
-      ),
-      body: Form(
-        key: _formKey,
-        child: ListView(
-            padding: const EdgeInsets.all(AppSpacing.pagePadding),
-          children: [
-            ListTile(
-              leading: const Icon(Icons.calendar_today),
-              title: Text(l.date(DateFormat.yMd(l.localeName).format(_date))),
-              onTap: _pickDate,
-            ),
-            const SizedBox(height: 12),
-            TextFormField(
-              controller: _descriptionController,
-              decoration: InputDecoration(labelText: l.descriptionRequired),
-              maxLines: 3,
-              validator: (v) =>
-                  v == null || v.trim().isEmpty ? l.required : null,
-            ),
-            const SizedBox(height: 12),
-            TextFormField(
-              controller: _odometerController,
-              decoration: InputDecoration(
-                labelText: l.odometerAtService,
-                hintText: '0',
-              ),
-              keyboardType: TextInputType.number,
-            ),
-            const SizedBox(height: 12),
-            MaintenanceLogPartsField(
-              initialParts: _selectedParts,
-              onChanged: (parts) => _selectedParts = parts,
-            ),
-            if (!_isEditing) ...[
-              const SizedBox(height: 12),
-              intervalsAsync.when(
-                data: (intervals) {
-                  final enabled = intervals.where((i) => i.isEnabled).toList();
-                  if (enabled.isEmpty) return const SizedBox.shrink();
-                  return DropdownButtonFormField<String>(
-                    isExpanded: true,
-                    initialValue: _selectedIntervalId,
-                    decoration: InputDecoration(
-                      labelText: l.resetInterval,
-                    ),
-                    items: enabled
-                        .map((i) => DropdownMenuItem(
-                              value: i.id,
-                              child: Text(i.label),
-                            ))
-                        .toList(),
-                    onChanged: (v) =>
-                        setState(() => _selectedIntervalId = v),
-                  );
-                },
-                loading: () => const SizedBox.shrink(),
-                error: (_, _) => const SizedBox.shrink(),
-              ),
-            ],
-            const SizedBox(height: 24),
-            FilledButton(
-              onPressed: _isLoading ? null : _save,
-              child: _isLoading
-                  ? const M3LoadingIndicator(size: 20)
-                  : Text(_isEditing ? l.saveChangesShort : l.saveService),
-            ),
-            if (_isEditing) ...[
-              const SizedBox(height: 12),
-              OutlinedButton.icon(
-                onPressed: _isLoading ? null : _delete,
-                icon: const Icon(Icons.delete_outline),
-                label: Text(l.deleteService),
-                style: OutlinedButton.styleFrom(
-                  foregroundColor: theme.colorScheme.error,
-                  side: BorderSide(color: theme.colorScheme.error),
+    return PopScope(
+      canPop: !_hasUnsavedChanges,
+      onPopInvokedWithResult: (didPop, _) async {
+        if (didPop) return;
+        if (_hasUnsavedChanges) {
+          final shouldPop = await karterShowDialog<bool>(
+            context: context,
+            builder: (ctx) => AlertDialog(
+              title: Text(l.unsavedChanges),
+              content: Text(l.discardChangesConfirm),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(ctx, false),
+                  child: Text(l.cancel),
                 ),
+                FilledButton(
+                  onPressed: () => Navigator.pop(ctx, true),
+                  child: Text(l.discard),
+                ),
+              ],
+            ),
+          );
+          if (shouldPop == true && context.mounted) {
+            context.pop();
+          }
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(_isEditing ? l.maintenanceLogTitleEdit : l.maintenanceLogTitleNew),
+        ),
+        body: Form(
+          key: _formKey,
+          child: ListView(
+              padding: const EdgeInsets.all(AppSpacing.pagePadding),
+            children: [
+              ListTile(
+                leading: const Icon(Icons.calendar_today),
+                title: Text(l.date(DateFormat.yMd(l.localeName).format(_date))),
+                onTap: _pickDate,
               ),
+              const SizedBox(height: 12),
+              TextFormField(
+                controller: _descriptionController,
+                decoration: InputDecoration(labelText: l.descriptionRequired),
+                maxLines: 3,
+                validator: (v) =>
+                    v == null || v.trim().isEmpty ? l.required : null,
+                onChanged: (_) => setState(() => _hasUnsavedChanges = true),
+              ),
+              const SizedBox(height: 12),
+              TextFormField(
+                controller: _odometerController,
+                decoration: InputDecoration(
+                  labelText: l.odometerAtService,
+                  hintText: '0',
+                ),
+                keyboardType: TextInputType.number,
+                onChanged: (_) => setState(() => _hasUnsavedChanges = true),
+              ),
+              const SizedBox(height: 12),
+              MaintenanceLogPartsField(
+                initialParts: _selectedParts,
+                onChanged: (parts) {
+                  _selectedParts = parts;
+                  setState(() => _hasUnsavedChanges = true);
+                },
+              ),
+              if (!_isEditing) ...[
+                const SizedBox(height: 12),
+                intervalsAsync.when(
+                  data: (intervals) {
+                    final enabled = intervals.where((i) => i.isEnabled).toList();
+                    if (enabled.isEmpty) return const SizedBox.shrink();
+                    return DropdownButtonFormField<String>(
+                      isExpanded: true,
+                      initialValue: _selectedIntervalId,
+                      decoration: InputDecoration(
+                        labelText: l.resetInterval,
+                      ),
+                      items: enabled
+                          .map((i) => DropdownMenuItem(
+                                value: i.id,
+                                child: Text(i.label),
+                              ))
+                          .toList(),
+                      onChanged: (v) =>
+                          setState(() {
+                            _selectedIntervalId = v;
+                            _hasUnsavedChanges = true;
+                          }),
+                    );
+                  },
+                  loading: () => const SizedBox.shrink(),
+                  error: (_, _) => const SizedBox.shrink(),
+                ),
+              ],
+              const SizedBox(height: 24),
+              FilledButton(
+                onPressed: _isLoading ? null : _save,
+                child: _isLoading
+                    ? const M3LoadingIndicator(size: 20)
+                    : Text(_isEditing ? l.saveChangesShort : l.saveService),
+              ),
+              if (_isEditing) ...[
+                const SizedBox(height: 12),
+                OutlinedButton.icon(
+                  onPressed: _isLoading ? null : _delete,
+                  icon: const Icon(Icons.delete_outline),
+                  label: Text(l.deleteService),
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: theme.colorScheme.error,
+                    side: BorderSide(color: theme.colorScheme.error),
+                  ),
+                ),
+              ],
             ],
-          ],
+          ),
         ),
       ),
     );

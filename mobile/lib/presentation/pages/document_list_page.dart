@@ -36,39 +36,45 @@ class DocumentListPage extends ConsumerWidget {
               ),
             );
           }
-          return ListView.builder(
-            padding: const EdgeInsets.all(AppSpacing.pagePadding),
-            itemCount: docs.length,
-            itemBuilder: (_, i) {
-              final doc = docs[i];
-              final theme = Theme.of(context);
-              return Card(
-                child: ListTile(
-                  leading: CircleAvatar(
-                    backgroundColor:
-                        theme.colorScheme.secondaryContainer,
-                    child: Icon(_iconForType(doc.type.name),
-                        color: theme
-                            .colorScheme.onSecondaryContainer),
-                  ),
-                  title: Text(doc.name),
-                  subtitle: Text(doc.fileName),
-                  trailing: doc.expiryDate != null
-                      ? Text(
-                          DateFormat.yMd(l.localeName)
-                              .format(doc.expiryDate!),
-                          style: theme.textTheme.bodySmall)
-                      : null,
-                  onTap: () => showEditDocumentModal(
-                    context,
-                    vehicleId: vehicleId,
-                    document: doc,
-                    onSaved: () => ref
-                        .invalidate(vehicleDocumentsProvider(vehicleId)),
-                  ),
-                ),
-              );
+          return RefreshIndicator(
+            onRefresh: () async {
+              ref.invalidate(vehicleDocumentsProvider(vehicleId));
+              await ref.read(vehicleDocumentsProvider(vehicleId).future);
             },
+            child: ListView.builder(
+              padding: const EdgeInsets.all(AppSpacing.pagePadding),
+              itemCount: docs.length,
+              itemBuilder: (_, i) {
+                final doc = docs[i];
+                final theme = Theme.of(context);
+                return Card(
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      backgroundColor:
+                          theme.colorScheme.secondaryContainer,
+                      child: Icon(_iconForType(doc.type.name),
+                          color: theme
+                              .colorScheme.onSecondaryContainer),
+                    ),
+                    title: Text(doc.name),
+                    subtitle: Text(doc.fileName),
+                    trailing: doc.expiryDate != null
+                        ? Text(
+                            DateFormat.yMd(l.localeName)
+                                .format(doc.expiryDate!),
+                            style: theme.textTheme.bodySmall)
+                        : null,
+                    onTap: () => showEditDocumentModal(
+                      context,
+                      vehicleId: vehicleId,
+                      document: doc,
+                      onSaved: () => ref
+                          .invalidate(vehicleDocumentsProvider(vehicleId)),
+                    ),
+                  ),
+                );
+              },
+            ),
           );
         },
         loading: () => const Center(
@@ -83,6 +89,7 @@ class DocumentListPage extends ConsumerWidget {
           onSaved: () =>
               ref.invalidate(vehicleDocumentsProvider(vehicleId)),
         ),
+        tooltip: l.addDocument,
         child: const Icon(Icons.add),
       ),
     );
