@@ -439,6 +439,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get restore => 'Restore';
 
   @override
+  String get windowMinimize => 'Minimize';
+
+  @override
+  String get windowMaximize => 'Maximize';
+
+  @override
+  String get windowClose => 'Close';
+
+  @override
   String get syncInstruction =>
       'Sync maintenance intervals from your vehicle\'s template.';
 
