@@ -139,10 +139,10 @@ class _DataManagerPageState extends ConsumerState<DataManagerPage> {
           bytes: Uint8List.fromList(utf8.encode(json)),
         );
         if (path != null) {
-          await File(path).writeAsString(json);
+          await File(path.toFilePath()).writeAsString(json);
           if (mounted) {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(l.exportedAt(path))),
+              SnackBar(content: Text(l.exportedAt(path.toFilePath()))),
             );
           }
         }
@@ -176,9 +176,9 @@ class _DataManagerPageState extends ConsumerState<DataManagerPage> {
       allowedExtensions: ['json'],
     );
 
-    if (result == null || result.files.single.path == null) return;
+    if (result.isEmpty || result.first.path == null) return;
 
-    final file = File(result.files.single.path!);
+    final file = File(result.first.path!);
     final json = await file.readAsString();
 
     final preview = ExportService.preview(json);

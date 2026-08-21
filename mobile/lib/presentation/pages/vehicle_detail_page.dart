@@ -12,6 +12,7 @@ import 'package:mobile/core/theme/app_spacing.dart';
 import 'package:mobile/domain/entities/maintenance_interval.dart';
 import 'package:mobile/domain/entities/vehicle.dart';
 import 'package:mobile/domain/enums/distance_unit.dart';
+import 'package:mobile/domain/enums/vehicle_type.dart';
 import 'package:mobile/domain/value_objects/odometer.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/haptic_provider.dart';
@@ -234,8 +235,11 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
             actions: [
               IconButton(
                 icon: const Icon(Icons.edit),
-                onPressed: () =>
-                    context.push('/vehicle/${widget.vehicleId}/edit'),
+                tooltip: l.edit,
+                onPressed: () {
+                  ref.read(hapticProvider.notifier).selectionTap();
+                  context.push('/vehicle/${widget.vehicleId}/edit');
+                },
               ),
             ],
           ),
@@ -339,11 +343,13 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
                   padding: const EdgeInsets.only(bottom: 8),
                   child: FloatingActionButton.small(
                     heroTag: 'add_service',
+                    tooltip: l.registerService,
                     backgroundColor: Theme.of(
                       context,
                     ).colorScheme.secondaryContainer,
                     onPressed: () {
                       setState(() => _fabOpen = false);
+                      ref.read(hapticProvider.notifier).selectionTap();
                       showAddMaintenanceLogModal(
                         context,
                         vehicleId: widget.vehicleId,
@@ -368,11 +374,13 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
                   padding: const EdgeInsets.only(bottom: 8),
                   child: FloatingActionButton.small(
                     heroTag: 'add_fuel',
+                    tooltip: l.fuelFormTitle,
                     backgroundColor: Theme.of(
                       context,
                     ).colorScheme.secondaryContainer,
                     onPressed: () {
                       setState(() => _fabOpen = false);
+                      ref.read(hapticProvider.notifier).selectionTap();
                       showAddFuelLogModal(
                         context,
                         vehicleId: widget.vehicleId,
@@ -392,11 +400,13 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
                   padding: const EdgeInsets.only(bottom: 8),
                   child: FloatingActionButton.small(
                     heroTag: 'add_doc',
+                    tooltip: l.addDocument,
                     backgroundColor: Theme.of(
                       context,
                     ).colorScheme.secondaryContainer,
                     onPressed: () {
                       setState(() => _fabOpen = false);
+                      ref.read(hapticProvider.notifier).selectionTap();
                       showAddDocumentModal(
                         context,
                         vehicleId: widget.vehicleId,
@@ -413,7 +423,11 @@ class _VehicleDetailPageState extends ConsumerState<VehicleDetailPage> {
               ),
               FloatingActionButton(
                 heroTag: 'main_fab',
-                onPressed: () => setState(() => _fabOpen = !_fabOpen),
+                tooltip: l.actions,
+                onPressed: () {
+                  ref.read(hapticProvider.notifier).selectionTap();
+                  setState(() => _fabOpen = !_fabOpen);
+                },
                 child: AnimatedRotation(
                   turns: _fabOpen ? 0.125 : 0,
                   duration: const Duration(milliseconds: 200),
@@ -456,7 +470,20 @@ class _VehicleInfoCard extends StatelessWidget {
         children: [
           if (vehicle.alias != null && vehicle.alias!.isNotEmpty)
             ListTile(
-              leading: const Icon(Icons.person_outline, size: 20),
+              leading: Hero(
+                tag: 'vehicle-avatar-${vehicle.id}',
+                child: CircleAvatar(
+                  backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+                  child: Icon(
+                    switch (vehicle.type) {
+                      VehicleType.combustion => Icons.local_gas_station,
+                      VehicleType.electric => Icons.electric_car,
+                      VehicleType.motorcycle => Icons.motorcycle,
+                    },
+                    color: Theme.of(context).colorScheme.onPrimaryContainer,
+                  ),
+                ),
+              ),
               title: Text(vehicle.alias!),
               subtitle: Text(
                 '${vehicle.brand} ${vehicle.model} ${vehicle.year}',

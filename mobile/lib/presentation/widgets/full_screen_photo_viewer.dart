@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:mobile/l10n/app_localizations.dart';
 import 'package:share_plus/share_plus.dart';
 
 class FullScreenPhotoViewer extends StatefulWidget {
@@ -74,6 +75,7 @@ class _FullScreenPhotoViewerState extends State<FullScreenPhotoViewer> {
             left: 8,
             child: IconButton(
               icon: const Icon(Icons.close, color: Colors.white),
+              tooltip: AppLocalizations.of(context)!.close,
               onPressed: () => Navigator.pop(context),
             ),
           ),
@@ -85,6 +87,7 @@ class _FullScreenPhotoViewerState extends State<FullScreenPhotoViewer> {
               children: [
                 IconButton(
                   icon: const Icon(Icons.share, color: Colors.white),
+                  tooltip: AppLocalizations.of(context)!.share,
                   onPressed: () {
                     SharePlus.instance.share(ShareParams(files: [XFile(widget.paths[_currentIndex])]));
                   },
