@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mobile/main.dart';
+import 'package:mobile/app.dart';
 import 'package:mobile/presentation/providers/template_source_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

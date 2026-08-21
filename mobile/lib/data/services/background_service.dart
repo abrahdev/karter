@@ -13,6 +13,21 @@ import 'package:workmanager/workmanager.dart';
 const _odometerChannel = 1000;
 const _maintenanceChannel = 2000;
 
+Future<void> initBackgroundTasks() async {
+  await Workmanager().initialize(
+    callbackDispatcher,
+  );
+  await Workmanager().registerPeriodicTask(
+    'karter-reminder-check',
+    'odometerMaintenanceCheck',
+    frequency: const Duration(minutes: 15),
+    constraints: Constraints(
+      networkType: NetworkType.notRequired,
+      requiresBatteryNotLow: false,
+    ),
+  );
+}
+
 @pragma('vm:entry-point')
 void callbackDispatcher() {
   Workmanager().executeTask((task, inputData) async {
