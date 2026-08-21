@@ -506,6 +506,12 @@ class _NotificationListPageState extends ConsumerState<_NotificationListPage> {
   }
 }
 
+String resolveTemplateLocale(String code) {
+  if (code != 'system' && const ['en', 'es', 'et'].contains(code)) return code;
+  final platform = Platform.localeName.split('_').first;
+  return const ['en', 'es', 'et'].contains(platform) ? platform : 'en';
+}
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -550,6 +556,7 @@ Future<void> main() async {
 
   final templateSource = TemplateSourceConfig.fromPrefs(prefs);
   await TemplateTranslations.preload(
+    locale: resolveTemplateLocale(savedLocale),
     baseUrl: templateSource.enabled
         ? CatalogService.resolveRawBaseUrl(templateSource.repoUrl)
         : null,

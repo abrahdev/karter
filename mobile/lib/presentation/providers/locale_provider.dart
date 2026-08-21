@@ -1,7 +1,9 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mobile/data/services/template_translations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final localeProvider = NotifierProvider<LocaleNotifier, Locale>(
@@ -29,6 +31,7 @@ class LocaleNotifier extends Notifier<Locale> {
     await prefs.setString(_key, languageCode);
     _rawCode = languageCode;
     state = _resolve(languageCode);
+    unawaited(TemplateTranslations.ensureLocale(state.languageCode));
   }
 
   Locale _resolve(String code) {
