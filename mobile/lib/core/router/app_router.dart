@@ -1,19 +1,14 @@
 import 'package:go_router/go_router.dart';
-import 'package:mobile/domain/entities/maintenance_log.dart';
-import 'package:mobile/presentation/pages/changelog_page.dart';
 import 'package:mobile/presentation/pages/dashboard_page.dart';
 import 'package:mobile/presentation/pages/data_manager_page.dart';
 import 'package:mobile/presentation/pages/document_list_page.dart';
 import 'package:mobile/presentation/pages/feedback_page.dart';
-import 'package:mobile/presentation/pages/fuel_log_form_page.dart';
 import 'package:mobile/presentation/pages/fuel_log_list_page.dart';
 import 'package:mobile/presentation/pages/home_page.dart';
-import 'package:mobile/presentation/pages/maintenance_log_form_page.dart';
 import 'package:mobile/presentation/pages/maintenance_log_list_page.dart';
 import 'package:mobile/presentation/pages/maintenance_settings_page.dart';
 import 'package:mobile/presentation/pages/more_page.dart';
 import 'package:mobile/presentation/pages/notification_list_page.dart';
-import 'package:mobile/presentation/pages/notification_settings_page.dart';
 import 'package:mobile/presentation/pages/obd_page.dart';
 import 'package:mobile/presentation/pages/onboarding_page.dart';
 import 'package:mobile/presentation/pages/parts_list_page.dart';
@@ -65,14 +60,6 @@ final appRouter = GoRouter(
           builder: (_, state) => FuelLogListPage(
             vehicleId: state.pathParameters['id']!,
           ),
-          routes: [
-            GoRoute(
-              path: 'new',
-              builder: (_, state) => FuelLogFormPage(
-                vehicleId: state.pathParameters['id']!,
-              ),
-            ),
-          ],
         ),
         GoRoute(
           path: 'documents',
@@ -93,40 +80,10 @@ final appRouter = GoRouter(
           ),
           routes: [
             GoRoute(
-              path: 'new',
-              builder: (_, state) {
-                final extra = state.extra;
-                String? description;
-                String? intervalId;
-                if (extra is Map<String, String>) {
-                  description = extra['description'];
-                  intervalId = extra['intervalId'];
-                }
-                return MaintenanceLogFormPage(
-                  vehicleId: state.pathParameters['id']!,
-                  initialDescription: description,
-                  initialIntervalId: intervalId,
-                );
-              },
-            ),
-            GoRoute(
               path: 'settings',
               builder: (_, state) => MaintenanceSettingsPage(
                 vehicleId: state.pathParameters['id']!,
               ),
-            ),
-            GoRoute(
-              path: ':logId',
-              builder: (_, state) {
-                final extra = state.extra;
-                MaintenanceLog? log;
-                if (extra is MaintenanceLog) log = extra;
-                return MaintenanceLogFormPage(
-                  vehicleId: state.pathParameters['id']!,
-                  logId: state.pathParameters['logId'],
-                  initialDescription: log?.description,
-                );
-              },
             ),
           ],
         ),
@@ -139,12 +96,6 @@ final appRouter = GoRouter(
     GoRoute(
       path: '/notifications',
       builder: (_, _) => const NotificationListPage(),
-    ),
-    GoRoute(
-      path: '/notifications/:vehicleId',
-      builder: (_, state) => NotificationSettingsPage(
-        vehicleId: state.pathParameters['vehicleId']!,
-      ),
     ),
     GoRoute(
       path: '/onboarding',
@@ -161,10 +112,6 @@ final appRouter = GoRouter(
     GoRoute(
       path: '/privacy',
       builder: (_, _) => const PrivacyPolicyPage(),
-    ),
-    GoRoute(
-      path: '/changelog',
-      builder: (_, _) => const ChangelogSheet(),
     ),
   ],
 );

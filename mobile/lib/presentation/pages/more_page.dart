@@ -10,9 +10,6 @@ import 'package:mobile/core/theme/app_spacing.dart';
 import 'package:mobile/data/services/catalog_service.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/pages/changelog_page.dart';
-import 'package:mobile/presentation/pages/onboarding_page.dart';
-import 'package:mobile/presentation/pages/privacy_policy_page.dart';
-import 'package:mobile/presentation/pages/tips_page.dart';
 import 'package:mobile/presentation/widgets/section_header.dart';
 import 'package:mobile/presentation/widgets/karter_switch_list_tile.dart';
 import 'package:mobile/presentation/widgets/grouped_card.dart';
@@ -184,12 +181,7 @@ class MorePage extends ConsumerWidget {
                             title: Text(l.tipProgram),
                             subtitle: Text(l.tipBadgesNone),
                             trailing: const Icon(Icons.chevron_right),
-                            onTap: () => Navigator.of(context).push(
-                              MaterialPageRoute(
-                                fullscreenDialog: true,
-                                builder: (_) => const TipsPage(),
-                              ),
-                            ),
+                            onTap: () => context.push('/tips'),
                           ),
                           ListTile(
                             leading: const Icon(Icons.favorite, color: Colors.red),
@@ -236,14 +228,7 @@ class MorePage extends ConsumerWidget {
                             title: Text(l.onboardingReplay),
                             subtitle: Text(l.onboardingReplaySubtitle),
                             trailing: const Icon(Icons.chevron_right),
-                            onTap: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  fullscreenDialog: true,
-                                  builder: (_) => const OnboardingPage(),
-                                ),
-                              );
-                            },
+                            onTap: () => context.push('/onboarding'),
                           ),
                         ],
                       ),
@@ -275,12 +260,7 @@ class MorePage extends ConsumerWidget {
                             leading: const Icon(Icons.privacy_tip_outlined),
                             title: Text(l.privacyPolicy),
                             trailing: const Icon(Icons.chevron_right),
-                            onTap: () => Navigator.of(context).push(
-                              MaterialPageRoute(
-                                fullscreenDialog: true,
-                                builder: (_) => const PrivacyPolicyPage(),
-                              ),
-                            ),
+                            onTap: () => context.push('/privacy'),
                           ),
                         ],
                       ),
@@ -445,14 +425,7 @@ class MorePage extends ConsumerWidget {
                   title: Text(l.onboardingReplay),
                   subtitle: Text(l.onboardingReplaySubtitle),
                   trailing: const Icon(Icons.chevron_right),
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        fullscreenDialog: true,
-                        builder: (_) => const OnboardingPage(),
-                      ),
-                    );
-                  },
+                  onTap: () => context.push('/onboarding'),
                 ),
               ],
             ),
@@ -465,12 +438,7 @@ class MorePage extends ConsumerWidget {
                   title: Text(l.tipProgram),
                   subtitle: Text(l.tipBadgesNone),
                   trailing: const Icon(Icons.chevron_right),
-                  onTap: () => Navigator.of(context).push(
-                    MaterialPageRoute(
-                      fullscreenDialog: true,
-                      builder: (_) => const TipsPage(),
-                    ),
-                  ),
+                  onTap: () => context.push('/tips'),
                 ),
                 ListTile(
                   leading: const Icon(Icons.favorite, color: Colors.red),
@@ -510,12 +478,7 @@ class MorePage extends ConsumerWidget {
                   leading: const Icon(Icons.privacy_tip_outlined),
                   title: Text(l.privacyPolicy),
                   trailing: const Icon(Icons.chevron_right),
-                  onTap: () => Navigator.of(context).push(
-                    MaterialPageRoute(
-                      fullscreenDialog: true,
-                      builder: (_) => const PrivacyPolicyPage(),
-                    ),
-                  ),
+                  onTap: () => context.push('/privacy'),
                 ),
               ],
             ),
