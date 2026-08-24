@@ -23,6 +23,8 @@ The source of truth is the `templates/` directory at the repository root. It is 
 | `templates/tools/` | Generation scripts (`build_catalog.py`, `generate_index.py`, `i18n_json.py`, `import_dtc.py`) |
 | `templates/NOTICE.md` | MIT attribution for the `dtc-database` (Wal33D) that feeds the general OBD codes |
 
+> New to authoring templates? Read the step-by-step guide in [`templates/README.md`](https://github.com/abrahdev/karter/blob/main/templates/README.md): directory layout, `extends`-chain semantics, required vs optional fields per section, i18n keys, and how to run the build tools.
+
 ### Template format (v2)
 
 Every template JSON describes one vehicle (or a shared base fragment) and references other fragments through an `extends` chain:
@@ -53,7 +55,7 @@ Every template JSON describes one vehicle (or a shared base fragment) and refere
   "obd_dtc_definitions": [
     {
       "code": "P1100",
-      "scope": "toyota",
+      "scope": "manufacturer",
       "related_maintenance": ["oil-change"],
       "related_parts": ["oil-filter"]
     }
@@ -131,7 +133,7 @@ flowchart LR
 
 ## build_catalog.py: resolution, validation, and writing
 
-`build_catalog.py` is the heart of the pipeline. It mirrors the resolution logic in the app (`mobile/lib/data/services/template_resolver.dart`) so that what is built locally and what the app computes at runtime stay in sync. It supports a `--check-only` mode used by CI to validate without writing the database.
+`build_catalog.py` is the heart of the pipeline. It mirrors the resolution logic in the app (`mobile/lib/data/services/template_resolver.dart`) so that what is built locally and what the app computes at runtime stay in sync. It supports a `--check-only` mode used by CI to validate without writing the database, and a `--schema-check` mode that validates every raw `data/**/*.json` file against `schemas/template-v2.json` (including rules the JSON Schema cannot express in draft-07: intra-array id/code uniqueness and `meta.years` ordering).
 
 ```mermaid
 flowchart TD
@@ -297,7 +299,7 @@ sequenceDiagram
 
 | Workflow | Trigger | What it does |
 | :--- | :--- | :--- |
-| `ci.yml` | PRs and pushes to `main` | Runs `build_catalog.py --check-only` (validates every template merge) and `flutter analyze` + `flutter test` |
+| `ci.yml` | PRs and pushes to `main` | Runs `build_catalog.py --check-only --schema-check` (validates every raw template against the JSON Schema and every template merge) and `flutter analyze` + `flutter test` |
 | `update-index.yml` | `templates/**` changes on `main` | Regenerates `index.json`, rebuilds `templates/karter-catalog.db`, commits `index.json` if changed, and uploads the DB to the rolling `catalog` release |
 | `release.yml` | `VERSION` change | Builds the Android APK and Linux bundle and publishes a GitHub release |
 | `deploy-docs.yml` | `docs/**` changes | Builds and deploys this documentation site |
