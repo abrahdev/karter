@@ -1,12 +1,14 @@
 class EngineMeta {
   final String? code;
   final String? fuel;
+  final String? powertrain;
   final int? displacementCc;
   final int? powerHp;
 
   EngineMeta({
     this.code,
     this.fuel,
+    this.powertrain,
     this.displacementCc,
     this.powerHp,
   });
@@ -14,6 +16,7 @@ class EngineMeta {
   factory EngineMeta.fromJson(Map<String, dynamic> json) => EngineMeta(
         code: json['code'] as String?,
         fuel: json['fuel'] as String?,
+        powertrain: json['powertrain'] as String?,
         displacementCc: json['displacement_cc'] as int?,
         powerHp: json['power_hp'] as int?,
       );
@@ -23,7 +26,7 @@ class TemplateMeta {
   final String make;
   final String model;
   final String? generation;
-  final List<int>? years;
+  final List<int?>? years;
   final EngineMeta? engine;
   final String author;
   final String version;
@@ -47,7 +50,7 @@ class TemplateMeta {
         model: json['model'] as String,
         generation: json['generation'] as String?,
         years: json['years'] != null
-            ? (json['years'] as List).cast<int>()
+            ? (json['years'] as List).cast<int?>()
             : null,
         engine: json['engine'] != null
             ? EngineMeta.fromJson(json['engine'] as Map<String, dynamic>)

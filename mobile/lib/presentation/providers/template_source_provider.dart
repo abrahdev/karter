@@ -14,7 +14,8 @@ class TemplateSourceConfig {
     this.repoUrl = TemplateSourceConfig.defaultRepoUrl,
   });
 
-  static const defaultRepoUrl = 'https://github.com/abrahdev/karter/templates';
+  static const defaultRepoUrl =
+      'https://raw.githubusercontent.com/abrahdev/karter/<tag>/templates';
   static const _enabledKey = 'template_source_enabled';
   static const _urlKey = 'template_source_url';
 

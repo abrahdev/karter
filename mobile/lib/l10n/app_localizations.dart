@@ -2798,6 +2798,600 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'L/100km'**
   String get consumptionUnit;
+
+  /// No description provided for @sectionTemplates.
+  ///
+  /// In en, this message translates to:
+  /// **'Templates'**
+  String get sectionTemplates;
+
+  /// No description provided for @templatesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Templates'**
+  String get templatesTitle;
+
+  /// No description provided for @templatesSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Browse the community template catalog'**
+  String get templatesSubtitle;
+
+  /// No description provided for @createTemplate.
+  ///
+  /// In en, this message translates to:
+  /// **'Create template'**
+  String get createTemplate;
+
+  /// No description provided for @createTemplateSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Author a template and export it as JSON'**
+  String get createTemplateSubtitle;
+
+  /// No description provided for @templatesLoadError.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not load the template catalog.'**
+  String get templatesLoadError;
+
+  /// No description provided for @searchTemplatesHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by make, model or generation'**
+  String get searchTemplatesHint;
+
+  /// No description provided for @allMakes.
+  ///
+  /// In en, this message translates to:
+  /// **'All makes'**
+  String get allMakes;
+
+  /// No description provided for @noTemplatesFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No templates match your search.'**
+  String get noTemplatesFound;
+
+  /// No description provided for @templateItemsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} maintenance items'**
+  String templateItemsCount(int count);
+
+  /// No description provided for @templateYearsOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'present'**
+  String get templateYearsOpen;
+
+  /// No description provided for @templateNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Template not found'**
+  String get templateNotFound;
+
+  /// No description provided for @templateInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Template info'**
+  String get templateInfo;
+
+  /// No description provided for @templateYears.
+  ///
+  /// In en, this message translates to:
+  /// **'Years'**
+  String get templateYears;
+
+  /// No description provided for @templateEngine.
+  ///
+  /// In en, this message translates to:
+  /// **'Engine'**
+  String get templateEngine;
+
+  /// No description provided for @templateAuthor.
+  ///
+  /// In en, this message translates to:
+  /// **'Author'**
+  String get templateAuthor;
+
+  /// No description provided for @templateVersion.
+  ///
+  /// In en, this message translates to:
+  /// **'Version'**
+  String get templateVersion;
+
+  /// No description provided for @templateSources.
+  ///
+  /// In en, this message translates to:
+  /// **'Sources'**
+  String get templateSources;
+
+  /// No description provided for @dtcCodesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Fault codes'**
+  String get dtcCodesTitle;
+
+  /// No description provided for @dtcCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} fault code(s)'**
+  String dtcCount(int count);
+
+  /// No description provided for @noPartsFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No parts'**
+  String get noPartsFound;
+
+  /// No description provided for @createCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Template JSON copied to clipboard'**
+  String get createCopied;
+
+  /// No description provided for @saveTemplate.
+  ///
+  /// In en, this message translates to:
+  /// **'Save template'**
+  String get saveTemplate;
+
+  /// No description provided for @savedAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved at {path}'**
+  String savedAt(String path);
+
+  /// No description provided for @createHasErrors.
+  ///
+  /// In en, this message translates to:
+  /// **'Fix the errors to export'**
+  String get createHasErrors;
+
+  /// No description provided for @createMake.
+  ///
+  /// In en, this message translates to:
+  /// **'Make'**
+  String get createMake;
+
+  /// No description provided for @createModel.
+  ///
+  /// In en, this message translates to:
+  /// **'Model'**
+  String get createModel;
+
+  /// No description provided for @createGeneration.
+  ///
+  /// In en, this message translates to:
+  /// **'Generation'**
+  String get createGeneration;
+
+  /// No description provided for @createYearFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'Year from'**
+  String get createYearFrom;
+
+  /// No description provided for @createYearTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Year to'**
+  String get createYearTo;
+
+  /// No description provided for @createFuel.
+  ///
+  /// In en, this message translates to:
+  /// **'Fuel'**
+  String get createFuel;
+
+  /// No description provided for @createPowertrain.
+  ///
+  /// In en, this message translates to:
+  /// **'Powertrain'**
+  String get createPowertrain;
+
+  /// No description provided for @createEngineCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Engine code'**
+  String get createEngineCode;
+
+  /// No description provided for @createDisplacement.
+  ///
+  /// In en, this message translates to:
+  /// **'Displacement (cc)'**
+  String get createDisplacement;
+
+  /// No description provided for @createPower.
+  ///
+  /// In en, this message translates to:
+  /// **'Power (hp)'**
+  String get createPower;
+
+  /// No description provided for @templateMetadata.
+  ///
+  /// In en, this message translates to:
+  /// **'Metadata & inheritance'**
+  String get templateMetadata;
+
+  /// No description provided for @createAuthor.
+  ///
+  /// In en, this message translates to:
+  /// **'Author'**
+  String get createAuthor;
+
+  /// No description provided for @createAuthorHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Your GitHub username'**
+  String get createAuthorHint;
+
+  /// No description provided for @createExtends.
+  ///
+  /// In en, this message translates to:
+  /// **'Extends (base templates)'**
+  String get createExtends;
+
+  /// No description provided for @createExtendsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Inherit shared maintenance data'**
+  String get createExtendsHint;
+
+  /// No description provided for @createCustomExtends.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom extends paths'**
+  String get createCustomExtends;
+
+  /// No description provided for @createAddPart.
+  ///
+  /// In en, this message translates to:
+  /// **'Add part'**
+  String get createAddPart;
+
+  /// No description provided for @createNoParts.
+  ///
+  /// In en, this message translates to:
+  /// **'No parts yet. Parts are optional.'**
+  String get createNoParts;
+
+  /// No description provided for @partSingular.
+  ///
+  /// In en, this message translates to:
+  /// **'Part'**
+  String get partSingular;
+
+  /// No description provided for @createAddItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Add maintenance item'**
+  String get createAddItem;
+
+  /// No description provided for @createNoItems.
+  ///
+  /// In en, this message translates to:
+  /// **'No maintenance items yet.'**
+  String get createNoItems;
+
+  /// No description provided for @createPreview.
+  ///
+  /// In en, this message translates to:
+  /// **'Preview'**
+  String get createPreview;
+
+  /// No description provided for @createErrorsFound.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} validation error(s)'**
+  String createErrorsFound(int count);
+
+  /// No description provided for @createCopy.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy'**
+  String get createCopy;
+
+  /// No description provided for @createShare.
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get createShare;
+
+  /// No description provided for @createSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get createSave;
+
+  /// No description provided for @createQuantity.
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity'**
+  String get createQuantity;
+
+  /// No description provided for @createI18nKey.
+  ///
+  /// In en, this message translates to:
+  /// **'i18n key'**
+  String get createI18nKey;
+
+  /// No description provided for @createDescI18nKey.
+  ///
+  /// In en, this message translates to:
+  /// **'Description i18n key'**
+  String get createDescI18nKey;
+
+  /// No description provided for @createIntervalKm.
+  ///
+  /// In en, this message translates to:
+  /// **'Interval (km)'**
+  String get createIntervalKm;
+
+  /// No description provided for @createIntervalMonths.
+  ///
+  /// In en, this message translates to:
+  /// **'Interval (months)'**
+  String get createIntervalMonths;
+
+  /// No description provided for @createDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get createDescription;
+
+  /// No description provided for @createAddPartRef.
+  ///
+  /// In en, this message translates to:
+  /// **'Add part reference'**
+  String get createAddPartRef;
+
+  /// No description provided for @createFieldId.
+  ///
+  /// In en, this message translates to:
+  /// **'ID'**
+  String get createFieldId;
+
+  /// No description provided for @createFieldName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get createFieldName;
+
+  /// No description provided for @createFieldUnit.
+  ///
+  /// In en, this message translates to:
+  /// **'Unit'**
+  String get createFieldUnit;
+
+  /// No description provided for @createFieldOem.
+  ///
+  /// In en, this message translates to:
+  /// **'OEM number'**
+  String get createFieldOem;
+
+  /// No description provided for @createFieldLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Label'**
+  String get createFieldLabel;
+
+  /// No description provided for @createFieldPart.
+  ///
+  /// In en, this message translates to:
+  /// **'Part'**
+  String get createFieldPart;
+
+  /// No description provided for @fuelGasoline.
+  ///
+  /// In en, this message translates to:
+  /// **'Gasoline'**
+  String get fuelGasoline;
+
+  /// No description provided for @fuelDiesel.
+  ///
+  /// In en, this message translates to:
+  /// **'Diesel'**
+  String get fuelDiesel;
+
+  /// No description provided for @fuelLpg.
+  ///
+  /// In en, this message translates to:
+  /// **'LPG'**
+  String get fuelLpg;
+
+  /// No description provided for @fuelCng.
+  ///
+  /// In en, this message translates to:
+  /// **'CNG'**
+  String get fuelCng;
+
+  /// No description provided for @fuelHydrogen.
+  ///
+  /// In en, this message translates to:
+  /// **'Hydrogen'**
+  String get fuelHydrogen;
+
+  /// No description provided for @fuelEthanol.
+  ///
+  /// In en, this message translates to:
+  /// **'Ethanol'**
+  String get fuelEthanol;
+
+  /// No description provided for @powertrainCombustion.
+  ///
+  /// In en, this message translates to:
+  /// **'Combustion'**
+  String get powertrainCombustion;
+
+  /// No description provided for @powertrainHybrid.
+  ///
+  /// In en, this message translates to:
+  /// **'Hybrid'**
+  String get powertrainHybrid;
+
+  /// No description provided for @powertrainPluginHybrid.
+  ///
+  /// In en, this message translates to:
+  /// **'Plugin Hybrid'**
+  String get powertrainPluginHybrid;
+
+  /// No description provided for @powertrainElectric.
+  ///
+  /// In en, this message translates to:
+  /// **'Electric'**
+  String get powertrainElectric;
+
+  /// No description provided for @catalogDb.
+  ///
+  /// In en, this message translates to:
+  /// **'Catalog database'**
+  String get catalogDb;
+
+  /// No description provided for @catalogSourceBuiltin.
+  ///
+  /// In en, this message translates to:
+  /// **'Bundled (default)'**
+  String get catalogSourceBuiltin;
+
+  /// No description provided for @catalogSourceOnline.
+  ///
+  /// In en, this message translates to:
+  /// **'Online (GitHub release)'**
+  String get catalogSourceOnline;
+
+  /// No description provided for @catalogSourcesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Available catalogs'**
+  String get catalogSourcesTitle;
+
+  /// No description provided for @catalogCannotDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Default catalog — cannot be deleted'**
+  String get catalogCannotDelete;
+
+  /// No description provided for @catalogVersionOf.
+  ///
+  /// In en, this message translates to:
+  /// **'Version {version}'**
+  String catalogVersionOf(String version);
+
+  /// No description provided for @catalogVersionUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Version unavailable'**
+  String get catalogVersionUnknown;
+
+  /// No description provided for @catalogRefreshOnline.
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh online catalog'**
+  String get catalogRefreshOnline;
+
+  /// No description provided for @catalogRefreshed.
+  ///
+  /// In en, this message translates to:
+  /// **'Online catalog refreshed'**
+  String get catalogRefreshed;
+
+  /// No description provided for @catalogRefreshFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not refresh the online catalog'**
+  String get catalogRefreshFailed;
+
+  /// No description provided for @catalogNotAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'This catalog is not available'**
+  String get catalogNotAvailable;
+
+  /// No description provided for @catalogImportDb.
+  ///
+  /// In en, this message translates to:
+  /// **'Import local DB'**
+  String get catalogImportDb;
+
+  /// No description provided for @catalogImported.
+  ///
+  /// In en, this message translates to:
+  /// **'Catalog imported'**
+  String get catalogImported;
+
+  /// No description provided for @catalogImportFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not import the catalog'**
+  String get catalogImportFailed;
+
+  /// No description provided for @catalogDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete catalog'**
+  String get catalogDelete;
+
+  /// No description provided for @catalogDeleteConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete {name}? This cannot be undone.'**
+  String catalogDeleteConfirm(String name);
+
+  /// No description provided for @catalogOnlineUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not download the online catalog. Check your connection and try again.'**
+  String get catalogOnlineUnavailable;
+
+  /// No description provided for @templateUrlExample.
+  ///
+  /// In en, this message translates to:
+  /// **'Example: https://raw.githubusercontent.com/abrahdev/karter/<tag>/templates'**
+  String get templateUrlExample;
+
+  /// No description provided for @templateUrlTagExplanation.
+  ///
+  /// In en, this message translates to:
+  /// **'<tag> is replaced by the latest release of that repository. You can use any GitHub repository or paste a direct link. If the tag cannot be resolved, the link is used as-is and the test will show the failure.'**
+  String get templateUrlTagExplanation;
+
+  /// No description provided for @templateUrlUsage.
+  ///
+  /// In en, this message translates to:
+  /// **'Used to fetch the catalog, the template index and translations (i18n).'**
+  String get templateUrlUsage;
+
+  /// No description provided for @templateUrlResolvesTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Resolves to: {url}'**
+  String templateUrlResolvesTo(String url);
+
+  /// No description provided for @templateUrlVersion.
+  ///
+  /// In en, this message translates to:
+  /// **'Version'**
+  String get templateUrlVersion;
+
+  /// No description provided for @templateUrlLatest.
+  ///
+  /// In en, this message translates to:
+  /// **'Latest (<tag>)'**
+  String get templateUrlLatest;
+
+  /// No description provided for @templateUrlVersionsFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not load versions'**
+  String get templateUrlVersionsFailed;
+
+  /// No description provided for @templateUrlHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'URL help'**
+  String get templateUrlHelp;
 }
 
 class _AppLocalizationsDelegate

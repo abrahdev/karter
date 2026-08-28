@@ -404,7 +404,10 @@ CREATE TABLE vehicles (
   powertrain TEXT,
   displacement_cc INTEGER,
   power_hp INTEGER,
+  author TEXT,
+  version TEXT,
   market_json TEXT,
+  sources_json TEXT,
   specificity INTEGER NOT NULL DEFAULT 0,
   item_count INTEGER NOT NULL DEFAULT 0,
   inherits_general INTEGER NOT NULL DEFAULT 0
@@ -544,8 +547,9 @@ def write_catalog(
                 "INSERT INTO vehicles("
                 "id, path, kind, make, model, generation, year_from, year_to, "
                 "engine_code, fuel, powertrain, displacement_cc, power_hp, "
-                "market_json, specificity, item_count, inherits_general) "
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                "author, version, market_json, sources_json, "
+                "specificity, item_count, inherits_general) "
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 (
                     entry["id"],
                     entry["path"],
@@ -560,7 +564,10 @@ def write_catalog(
                     engine.get("powertrain"),
                     engine.get("displacement_cc"),
                     engine.get("power_hp"),
+                    meta.get("author", ""),
+                    meta.get("version", ""),
                     json.dumps(meta.get("market")) if meta.get("market") else None,
+                    json.dumps(meta.get("sources")) if meta.get("sources") else None,
                     _specificity(meta),
                     len(res.items),
                     1 if res.inherits_general else 0,

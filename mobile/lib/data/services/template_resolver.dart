@@ -377,7 +377,10 @@ class TemplateResolver {
       if (!_matchesMakeModel(entry.meta, make, model)) continue;
 
       if (entry.meta.years != null) {
-        if (year < entry.meta.years![0] || year > entry.meta.years![1]) continue;
+        final years = entry.meta.years!;
+        if (year < years[0]! || (years[1] != null && year > years[1]!)) {
+          continue;
+        }
       }
 
       candidates.add(entry);
@@ -407,8 +410,10 @@ class TemplateResolver {
 
       final aYear = a.meta.years;
       final bYear = b.meta.years;
-      final aInRange = aYear != null && year >= aYear[0] && year <= aYear[1];
-      final bInRange = bYear != null && year >= bYear[0] && year <= bYear[1];
+      final aInRange =
+          aYear != null && year >= aYear[0]! && (aYear[1] == null || year <= aYear[1]!);
+      final bInRange =
+          bYear != null && year >= bYear[0]! && (bYear[1] == null || year <= bYear[1]!);
       if (aInRange != bInRange) return aInRange ? -1 : 1;
 
       final aScore = _specificityScore(a);

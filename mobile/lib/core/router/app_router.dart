@@ -14,6 +14,9 @@ import 'package:mobile/presentation/pages/onboarding_page.dart';
 import 'package:mobile/presentation/pages/parts_list_page.dart';
 import 'package:mobile/presentation/pages/privacy_policy_page.dart';
 import 'package:mobile/presentation/pages/tips_page.dart';
+import 'package:mobile/presentation/pages/template_creator_page.dart';
+import 'package:mobile/presentation/pages/template_detail_page.dart';
+import 'package:mobile/presentation/pages/template_list_page.dart';
 import 'package:mobile/presentation/pages/vehicle_detail_page.dart';
 import 'package:mobile/presentation/pages/vehicle_form_page.dart';
 import 'package:mobile/presentation/widgets/app_shell.dart';
@@ -92,6 +95,22 @@ final appRouter = GoRouter(
     GoRoute(
       path: '/data',
       builder: (_, _) => const DataManagerPage(),
+    ),
+    GoRoute(
+      path: '/templates',
+      builder: (_, _) => const TemplateListPage(),
+      routes: [
+        GoRoute(
+          path: 'create',
+          builder: (_, _) => const TemplateCreatorPage(),
+        ),
+        GoRoute(
+          path: ':id',
+          builder: (_, state) => TemplateDetailPage(
+            vehicleId: state.pathParameters['id']!,
+          ),
+        ),
+      ],
     ),
     GoRoute(
       path: '/notifications',

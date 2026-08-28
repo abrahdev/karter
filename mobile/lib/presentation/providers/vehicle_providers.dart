@@ -156,6 +156,12 @@ final templateResolutionProvider =
   );
 });
 
+final templateByIdProvider =
+    FutureProvider.family<TemplateResolution?, String>((ref, vehicleId) async {
+  final repo = ref.watch(catalogRepositoryProvider);
+  return repo.resolveTemplate(vehicleId);
+});
+
 final pdfExportServiceProvider = Provider<PdfExportService>((ref) {
   return PdfExportService();
 });

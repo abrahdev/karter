@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:mobile/data/models/template_index.dart';
 import 'package:mobile/data/models/template_meta.dart';
 import 'package:mobile/data/services/catalog_service.dart';
@@ -36,6 +38,23 @@ class CatalogRepository {
     if (rows.isEmpty) return null;
     final row = rows.single;
     final vehicleId = row['id'] as String;
+    return TemplateResolution(
+      entry: _entryFromRow(row),
+      items: _loadItems(db, vehicleId),
+      dtcs: _loadDtcs(
+        db,
+        vehicleId,
+        inheritsGeneral: (row['inherits_general'] as int) == 1,
+      ),
+      parts: _loadParts(db, vehicleId),
+    );
+  }
+
+  Future<TemplateResolution?> resolveTemplate(String vehicleId) async {
+    final db = await service.database();
+    final rows = db.select('SELECT * FROM vehicles WHERE id = ?', [vehicleId]);
+    if (rows.isEmpty) return null;
+    final row = rows.single;
     return TemplateResolution(
       entry: _entryFromRow(row),
       items: _loadItems(db, vehicleId),
@@ -250,23 +269,37 @@ class CatalogRepository {
     return [...a, ...b.where(seen.add)];
   }
 
+  List<String>? _stringList(String? jsonValue) {
+    if (jsonValue == null || jsonValue.isEmpty) return null;
+    try {
+      return (jsonDecode(jsonValue) as List).cast<String>();
+    } catch (_) {
+      return null;
+    }
+  }
+
   TemplateIndexEntry _entryFromRow(Row row) {
-    final years = <int>[];
+    final years = <int?>[];
     final yearFrom = row['year_from'] as int?;
     final yearTo = row['year_to'] as int?;
-    if (yearFrom != null) years.add(yearFrom);
-    if (yearTo != null) years.add(yearTo);
+    if (yearFrom != null) {
+      years.add(yearFrom);
+      years.add(yearTo);
+    }
     final engineCode = row['engine_code'] as String?;
     final fuel = row['fuel'] as String?;
+    final powertrain = row['powertrain'] as String?;
     final displacement = row['displacement_cc'] as int?;
     final power = row['power_hp'] as int?;
     final engine = (engineCode != null ||
             fuel != null ||
+            powertrain != null ||
             displacement != null ||
             power != null)
         ? EngineMeta(
             code: engineCode,
             fuel: fuel,
+            powertrain: powertrain,
             displacementCc: displacement,
             powerHp: power,
           )
@@ -280,8 +313,10 @@ class CatalogRepository {
         generation: row['generation'] as String?,
         years: years.isEmpty ? null : years,
         engine: engine,
-        author: '',
-        version: '',
+        author: row['author'] as String? ?? '',
+        version: row['version'] as String? ?? '',
+        market: _stringList(row['market_json']),
+        sources: _stringList(row['sources_json']),
       ),
       itemCount: row['item_count'] as int,
       extendsPaths: const [],

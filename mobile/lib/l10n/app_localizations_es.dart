@@ -1503,4 +1503,324 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get consumptionUnit => 'L/100km';
+
+  @override
+  String get sectionTemplates => 'Plantillas';
+
+  @override
+  String get templatesTitle => 'Plantillas';
+
+  @override
+  String get templatesSubtitle =>
+      'Explora el catálogo de plantillas de la comunidad';
+
+  @override
+  String get createTemplate => 'Crear plantilla';
+
+  @override
+  String get createTemplateSubtitle =>
+      'Redacta una plantilla y expórtala como JSON';
+
+  @override
+  String get templatesLoadError =>
+      'No se pudo cargar el catálogo de plantillas.';
+
+  @override
+  String get searchTemplatesHint => 'Buscar por marca, modelo o generación';
+
+  @override
+  String get allMakes => 'Todas las marcas';
+
+  @override
+  String get noTemplatesFound => 'Ninguna plantilla coincide con tu búsqueda.';
+
+  @override
+  String templateItemsCount(int count) {
+    return '$count elementos de mantenimiento';
+  }
+
+  @override
+  String get templateYearsOpen => 'actualidad';
+
+  @override
+  String get templateNotFound => 'Plantilla no encontrada';
+
+  @override
+  String get templateInfo => 'Información de la plantilla';
+
+  @override
+  String get templateYears => 'Años';
+
+  @override
+  String get templateEngine => 'Motor';
+
+  @override
+  String get templateAuthor => 'Autor';
+
+  @override
+  String get templateVersion => 'Versión';
+
+  @override
+  String get templateSources => 'Fuentes';
+
+  @override
+  String get dtcCodesTitle => 'Códigos de avería';
+
+  @override
+  String dtcCount(int count) {
+    return '$count código(s) de avería';
+  }
+
+  @override
+  String get noPartsFound => 'Sin piezas';
+
+  @override
+  String get createCopied => 'JSON de la plantilla copiado al portapapeles';
+
+  @override
+  String get saveTemplate => 'Guardar plantilla';
+
+  @override
+  String savedAt(String path) {
+    return 'Guardado en $path';
+  }
+
+  @override
+  String get createHasErrors => 'Corrige los errores para exportar';
+
+  @override
+  String get createMake => 'Marca';
+
+  @override
+  String get createModel => 'Modelo';
+
+  @override
+  String get createGeneration => 'Generación';
+
+  @override
+  String get createYearFrom => 'Año desde';
+
+  @override
+  String get createYearTo => 'Año hasta';
+
+  @override
+  String get createFuel => 'Combustible';
+
+  @override
+  String get createPowertrain => 'Propulsión';
+
+  @override
+  String get createEngineCode => 'Código de motor';
+
+  @override
+  String get createDisplacement => 'Cilindrada (cc)';
+
+  @override
+  String get createPower => 'Potencia (cv)';
+
+  @override
+  String get templateMetadata => 'Metadatos y herencia';
+
+  @override
+  String get createAuthor => 'Autor';
+
+  @override
+  String get createAuthorHint => 'Tu usuario de GitHub';
+
+  @override
+  String get createExtends => 'Extiende (plantillas base)';
+
+  @override
+  String get createExtendsHint => 'Hereda datos de mantenimiento compartidos';
+
+  @override
+  String get createCustomExtends => 'Rutas de extends personalizadas';
+
+  @override
+  String get createAddPart => 'Añadir pieza';
+
+  @override
+  String get createNoParts => 'Aún no hay piezas. Las piezas son opcionales.';
+
+  @override
+  String get partSingular => 'Pieza';
+
+  @override
+  String get createAddItem => 'Añadir elemento de mantenimiento';
+
+  @override
+  String get createNoItems => 'Aún no hay elementos de mantenimiento.';
+
+  @override
+  String get createPreview => 'Vista previa';
+
+  @override
+  String createErrorsFound(int count) {
+    return '$count error(es) de validación';
+  }
+
+  @override
+  String get createCopy => 'Copiar';
+
+  @override
+  String get createShare => 'Compartir';
+
+  @override
+  String get createSave => 'Guardar';
+
+  @override
+  String get createQuantity => 'Cantidad';
+
+  @override
+  String get createI18nKey => 'Clave i18n';
+
+  @override
+  String get createDescI18nKey => 'Clave i18n de la descripción';
+
+  @override
+  String get createIntervalKm => 'Intervalo (km)';
+
+  @override
+  String get createIntervalMonths => 'Intervalo (meses)';
+
+  @override
+  String get createDescription => 'Descripción';
+
+  @override
+  String get createAddPartRef => 'Añadir referencia de pieza';
+
+  @override
+  String get createFieldId => 'ID';
+
+  @override
+  String get createFieldName => 'Nombre';
+
+  @override
+  String get createFieldUnit => 'Unidad';
+
+  @override
+  String get createFieldOem => 'Referencia OEM';
+
+  @override
+  String get createFieldLabel => 'Etiqueta';
+
+  @override
+  String get createFieldPart => 'Pieza';
+
+  @override
+  String get fuelGasoline => 'Gasolina';
+
+  @override
+  String get fuelDiesel => 'Diésel';
+
+  @override
+  String get fuelLpg => 'GLP';
+
+  @override
+  String get fuelCng => 'GNC';
+
+  @override
+  String get fuelHydrogen => 'Hidrógeno';
+
+  @override
+  String get fuelEthanol => 'Etanol';
+
+  @override
+  String get powertrainCombustion => 'Combustión';
+
+  @override
+  String get powertrainHybrid => 'Híbrido';
+
+  @override
+  String get powertrainPluginHybrid => 'Híbrido enchufable';
+
+  @override
+  String get powertrainElectric => 'Eléctrico';
+
+  @override
+  String get catalogDb => 'Base de datos de catálogo';
+
+  @override
+  String get catalogSourceBuiltin => 'Empaquetada (por defecto)';
+
+  @override
+  String get catalogSourceOnline => 'En línea (release de GitHub)';
+
+  @override
+  String get catalogSourcesTitle => 'Catálogos disponibles';
+
+  @override
+  String get catalogCannotDelete =>
+      'Catálogo por defecto: no se puede eliminar';
+
+  @override
+  String catalogVersionOf(String version) {
+    return 'Versión $version';
+  }
+
+  @override
+  String get catalogVersionUnknown => 'Versión no disponible';
+
+  @override
+  String get catalogRefreshOnline => 'Actualizar catálogo en línea';
+
+  @override
+  String get catalogRefreshed => 'Catálogo en línea actualizado';
+
+  @override
+  String get catalogRefreshFailed =>
+      'No se pudo actualizar el catálogo en línea';
+
+  @override
+  String get catalogNotAvailable => 'Este catálogo no está disponible';
+
+  @override
+  String get catalogImportDb => 'Importar DB local';
+
+  @override
+  String get catalogImported => 'Catálogo importado';
+
+  @override
+  String get catalogImportFailed => 'No se pudo importar el catálogo';
+
+  @override
+  String get catalogDelete => 'Eliminar catálogo';
+
+  @override
+  String catalogDeleteConfirm(String name) {
+    return '¿Eliminar $name? Esta acción no se puede deshacer.';
+  }
+
+  @override
+  String get catalogOnlineUnavailable =>
+      'No se pudo descargar el catálogo en línea. Comprueba tu conexión e inténtalo de nuevo.';
+
+  @override
+  String get templateUrlExample =>
+      'Ejemplo: https://raw.githubusercontent.com/abrahdev/karter/<tag>/templates';
+
+  @override
+  String get templateUrlTagExplanation =>
+      '<tag> se sustituye por la última release de ese repositorio. Puedes usar cualquier repositorio de GitHub o pegar un enlace directo. Si el tag no se puede resolver, se usa el enlace tal cual y el test mostrará el fallo.';
+
+  @override
+  String get templateUrlUsage =>
+      'Se usa para obtener el catálogo, el índice de plantillas y las traducciones (i18n).';
+
+  @override
+  String templateUrlResolvesTo(String url) {
+    return 'Resuelve a: $url';
+  }
+
+  @override
+  String get templateUrlVersion => 'Versión';
+
+  @override
+  String get templateUrlLatest => 'Última (<tag>)';
+
+  @override
+  String get templateUrlVersionsFailed => 'No se pudieron cargar las versiones';
+
+  @override
+  String get templateUrlHelp => 'Ayuda de la URL';
 }
