@@ -674,5 +674,7 @@
   "templateUrlVersion": "Version",
   "templateUrlLatest": "Latest (<tag>)",
   "templateUrlVersionsFailed": "Could not load versions",
-  "templateUrlHelp": "URL help"
+  "templateUrlHelp": "URL help",
+  "moreTemplateSourceUrlLabel": "Repo URL",
+  "moreTemplateSourceVersionLatest": "Latest"
 }

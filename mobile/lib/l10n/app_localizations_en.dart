@@ -1807,4 +1807,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get templateUrlHelp => 'URL help';
+
+  @override
+  String get moreTemplateSourceUrlLabel => 'Repo URL';
+
+  @override
+  String get moreTemplateSourceVersionLatest => 'Latest';
 }

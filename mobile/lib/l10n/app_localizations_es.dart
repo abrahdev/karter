@@ -1823,4 +1823,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get templateUrlHelp => 'Ayuda de la URL';
+
+  @override
+  String get moreTemplateSourceUrlLabel => 'URL del repositorio';
+
+  @override
+  String get moreTemplateSourceVersionLatest => 'Última';
 }

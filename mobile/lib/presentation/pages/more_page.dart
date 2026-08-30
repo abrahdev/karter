@@ -799,24 +799,42 @@ class _DataSection extends ConsumerWidget {
     ];
 
     if (config.enabled) {
+      final versionLabel = config.version.isEmpty
+          ? l.moreTemplateSourceVersionLatest
+          : config.version;
+      final testUrl = config.version.isEmpty || !config.repoUrl.contains('<tag>')
+          ? config.repoUrl
+          : config.repoUrl.replaceAll('<tag>', config.version);
+
       tiles.add(
         ListTile(
           leading: const Icon(Icons.link),
           title: Text(l.moreTemplateSourceUrl),
-          subtitle: Text(
-            config.repoUrl,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.bodySmall,
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                config.repoUrl,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+              Text(
+                versionLabel,
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
+                    ),
+              ),
+            ],
           ),
           trailing: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              _TestCatalogButton(url: config.repoUrl),
+              _TestCatalogButton(url: testUrl),
               const Icon(Icons.edit),
             ],
           ),
-          onTap: () => _editUrl(context, ref, config.repoUrl),
+          onTap: () => _editUrl(context, ref, config.repoUrl, config.version),
         ),
       );
     }
@@ -825,17 +843,21 @@ class _DataSection extends ConsumerWidget {
   }
 
   Future<void> _editUrl(
-      BuildContext context, WidgetRef ref, String currentUrl) async {
+      BuildContext context, WidgetRef ref, String currentUrl, String currentVersion) async {
     final l = AppLocalizations.of(context)!;
 
-    final result = await karterShowModalBottomSheet<String>(
+    final result = await karterShowModalBottomSheet<(String, String)>(
       context: context,
       isScrollControlled: true,
-      builder: (_) => _EditTemplateSourceSheet(initialUrl: currentUrl),
+      builder: (_) => _EditTemplateSourceSheet(
+        initialUrl: currentUrl,
+        initialVersion: currentVersion,
+      ),
     );
 
-    if (result != null && result.isNotEmpty) {
-      await ref.read(templateSourceProvider.notifier).setRepoUrl(result);
+    if (result != null && result.$1.isNotEmpty) {
+      await ref.read(templateSourceProvider.notifier).setRepoUrl(result.$1);
+      await ref.read(templateSourceProvider.notifier).setVersion(result.$2);
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(l.moreTemplateSourceUrlSaved)),
@@ -997,6 +1019,7 @@ class _CatalogSourcesSheetState extends ConsumerState<_CatalogSourcesSheet> {
     final l = AppLocalizations.of(context)!;
     final state = ref.watch(catalogSourcesProvider);
     final active = state.active;
+    final config = ref.watch(templateSourceProvider);
 
     return DraggableScrollableSheet(
       expand: false,
@@ -1078,14 +1101,35 @@ class _CatalogSourcesSheetState extends ConsumerState<_CatalogSourcesSheet> {
               ListTile(
                 leading: Icon(catalogSourceIcon(source)),
                 title: Text(catalogSourceLabel(l, source)),
-                subtitle: source.isBuiltin
-                    ? Text(
-                        l.catalogCannotDelete,
-                        style: theme.textTheme.bodySmall?.copyWith(
-                          color: theme.colorScheme.onSurfaceVariant,
-                        ),
+                subtitle: source.isOnline
+                    ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            config.repoUrl,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: theme.textTheme.bodySmall,
+                          ),
+                          const SizedBox(height: 2),
+                          Text(
+                            _version != null
+                                ? l.catalogVersionOf(_version!)
+                                : l.catalogVersionUnknown,
+                            style: theme.textTheme.bodySmall?.copyWith(
+                              color: theme.colorScheme.onSurfaceVariant,
+                            ),
+                          ),
+                        ],
                       )
-                    : null,
+                    : source.isBuiltin
+                        ? Text(
+                            l.catalogCannotDelete,
+                            style: theme.textTheme.bodySmall?.copyWith(
+                              color: theme.colorScheme.onSurfaceVariant,
+                            ),
+                          )
+                        : null,
                 selected: source.id == state.activeId,
                 trailing: source.deletable
                     ? IconButton(
@@ -1123,9 +1167,13 @@ class _CatalogSourcesSheetState extends ConsumerState<_CatalogSourcesSheet> {
 }
 
 class _EditTemplateSourceSheet extends ConsumerStatefulWidget {
-  const _EditTemplateSourceSheet({required this.initialUrl});
+  const _EditTemplateSourceSheet({
+    required this.initialUrl,
+    required this.initialVersion,
+  });
 
   final String initialUrl;
+  final String initialVersion;
 
   @override
   ConsumerState<_EditTemplateSourceSheet> createState() =>
@@ -1148,6 +1196,7 @@ class _EditTemplateSourceSheetState
   void initState() {
     super.initState();
     _controller = TextEditingController(text: widget.initialUrl);
+    _selectedTag = widget.initialVersion;
     _scheduleRefresh();
   }
 
@@ -1298,6 +1347,7 @@ class _EditTemplateSourceSheetState
                 controller: _controller,
                 onChanged: _onChanged,
                 decoration: InputDecoration(
+                  labelText: l.moreTemplateSourceUrlLabel,
                   hintText: l.moreTemplateSourceUrlHint,
                 ),
                 keyboardType: TextInputType.url,
@@ -1376,7 +1426,9 @@ class _EditTemplateSourceSheetState
                 child: FilledButton(
                   onPressed: () {
                     final url = _controller.text.trim();
-                    if (url.isNotEmpty) Navigator.pop(context, url);
+                    if (url.isNotEmpty) {
+                      Navigator.pop(context, (url, _selectedTag));
+                    }
                   },
                   child: Text(l.saveChangesShort),
                 ),

@@ -615,5 +615,7 @@
   "templateUrlVersion": "Versión",
   "templateUrlLatest": "Última (<tag>)",
   "templateUrlVersionsFailed": "No se pudieron cargar las versiones",
-  "templateUrlHelp": "Ayuda de la URL"
+  "templateUrlHelp": "Ayuda de la URL",
+  "moreTemplateSourceUrlLabel": "URL del repositorio",
+  "moreTemplateSourceVersionLatest": "Última"
 }

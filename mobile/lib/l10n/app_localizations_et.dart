@@ -1810,4 +1810,10 @@ class AppLocalizationsEt extends AppLocalizations {
 
   @override
   String get templateUrlHelp => 'URL-i abi';
+
+  @override
+  String get moreTemplateSourceUrlLabel => 'Repo URL';
+
+  @override
+  String get moreTemplateSourceVersionLatest => 'Uusim';
 }

@@ -3392,6 +3392,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'URL help'**
   String get templateUrlHelp;
+
+  /// No description provided for @moreTemplateSourceUrlLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Repo URL'**
+  String get moreTemplateSourceUrlLabel;
+
+  /// No description provided for @moreTemplateSourceVersionLatest.
+  ///
+  /// In en, this message translates to:
+  /// **'Latest'**
+  String get moreTemplateSourceVersionLatest;
 }
 
 class _AppLocalizationsDelegate

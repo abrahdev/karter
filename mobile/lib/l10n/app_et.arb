@@ -486,5 +486,7 @@
   "templateUrlVersion": "Versioon",
   "templateUrlLatest": "Uusim (<tag>)",
   "templateUrlVersionsFailed": "Versioone ei õnnestunud laadida",
-  "templateUrlHelp": "URL-i abi"
+  "templateUrlHelp": "URL-i abi",
+  "moreTemplateSourceUrlLabel": "Repo URL",
+  "moreTemplateSourceVersionLatest": "Uusim"
 }
