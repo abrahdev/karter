@@ -3404,6 +3404,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Latest'**
   String get moreTemplateSourceVersionLatest;
+
+  /// No description provided for @catalogDbVersion.
+  ///
+  /// In en, this message translates to:
+  /// **'DB version: {version}'**
+  String catalogDbVersion(String version);
+
+  /// No description provided for @templateSourceRelease.
+  ///
+  /// In en, this message translates to:
+  /// **'Release: {version}'**
+  String templateSourceRelease(String version);
 }
 
 class _AppLocalizationsDelegate

@@ -1816,4 +1816,14 @@ class AppLocalizationsEt extends AppLocalizations {
 
   @override
   String get moreTemplateSourceVersionLatest => 'Uusim';
+
+  @override
+  String catalogDbVersion(String version) {
+    return 'Andmebaasi versioon: $version';
+  }
+
+  @override
+  String templateSourceRelease(String version) {
+    return 'Väljalase: $version';
+  }
 }

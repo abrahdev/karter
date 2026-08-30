@@ -1829,4 +1829,14 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get moreTemplateSourceVersionLatest => 'Última';
+
+  @override
+  String catalogDbVersion(String version) {
+    return 'Versión BD: $version';
+  }
+
+  @override
+  String templateSourceRelease(String version) {
+    return 'Lanzamiento: $version';
+  }
 }

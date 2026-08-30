@@ -488,5 +488,9 @@
   "templateUrlVersionsFailed": "Versioone ei õnnestunud laadida",
   "templateUrlHelp": "URL-i abi",
   "moreTemplateSourceUrlLabel": "Repo URL",
-  "moreTemplateSourceVersionLatest": "Uusim"
+  "moreTemplateSourceVersionLatest": "Uusim",
+  "catalogDbVersion": "Andmebaasi versioon: {version}",
+  "@catalogDbVersion": { "placeholders": { "version": {"type": "String"} } },
+  "templateSourceRelease": "Väljalase: {version}",
+  "@templateSourceRelease": { "placeholders": { "version": {"type": "String"} } }
 }

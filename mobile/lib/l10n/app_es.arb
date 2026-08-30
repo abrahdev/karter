@@ -617,5 +617,9 @@
   "templateUrlVersionsFailed": "No se pudieron cargar las versiones",
   "templateUrlHelp": "Ayuda de la URL",
   "moreTemplateSourceUrlLabel": "URL del repositorio",
-  "moreTemplateSourceVersionLatest": "Última"
+  "moreTemplateSourceVersionLatest": "Última",
+  "catalogDbVersion": "Versión BD: {version}",
+  "@catalogDbVersion": { "placeholders": { "version": {"type": "String"} } },
+  "templateSourceRelease": "Lanzamiento: {version}",
+  "@templateSourceRelease": { "placeholders": { "version": {"type": "String"} } }
 }

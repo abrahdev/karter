@@ -1069,12 +1069,25 @@ class _CatalogSourcesSheetState extends ConsumerState<_CatalogSourcesSheet> {
                           const SizedBox(height: 2),
                           Text(
                             _version != null
-                                ? l.catalogVersionOf(_version!)
+                                ? l.catalogDbVersion(_version!)
                                 : l.catalogVersionUnknown,
                             style: theme.textTheme.bodySmall?.copyWith(
                               color: theme.colorScheme.onSurfaceVariant,
                             ),
                           ),
+                          if (active?.isOnline ?? false) ...[
+                            const SizedBox(height: 2),
+                            Text(
+                              l.templateSourceRelease(
+                                config.version.isEmpty
+                                    ? l.moreTemplateSourceVersionLatest
+                                    : config.version,
+                              ),
+                              style: theme.textTheme.bodySmall?.copyWith(
+                                color: theme.colorScheme.onSurfaceVariant,
+                              ),
+                            ),
+                          ],
                         ],
                       ),
                     ),
@@ -1113,9 +1126,9 @@ class _CatalogSourcesSheetState extends ConsumerState<_CatalogSourcesSheet> {
                           ),
                           const SizedBox(height: 2),
                           Text(
-                            _version != null
-                                ? l.catalogVersionOf(_version!)
-                                : l.catalogVersionUnknown,
+                            config.version.isEmpty
+                                ? l.moreTemplateSourceVersionLatest
+                                : config.version,
                             style: theme.textTheme.bodySmall?.copyWith(
                               color: theme.colorScheme.onSurfaceVariant,
                             ),

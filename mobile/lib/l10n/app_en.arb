@@ -676,5 +676,9 @@
   "templateUrlVersionsFailed": "Could not load versions",
   "templateUrlHelp": "URL help",
   "moreTemplateSourceUrlLabel": "Repo URL",
-  "moreTemplateSourceVersionLatest": "Latest"
+  "moreTemplateSourceVersionLatest": "Latest",
+  "catalogDbVersion": "DB version: {version}",
+  "@catalogDbVersion": { "placeholders": { "version": {"type": "String"} } },
+  "templateSourceRelease": "Release: {version}",
+  "@templateSourceRelease": { "placeholders": { "version": {"type": "String"} } }
 }
