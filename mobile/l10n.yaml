@@ -3,5 +3,13 @@ template-arb-file: app_en.arb
 output-localization-file: app_localizations.dart
 output-class: AppLocalizations
 preferred-supported-locales:
-  - es
   - en
+  - es
+  - et
+  - pt
+  - de
+  - ru
+  - fr
+  - pl
+  - it
+  - nl

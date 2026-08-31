@@ -572,67 +572,68 @@ class AppLocalizationsEt extends AppLocalizations {
   String get maintenanceEmpty => 'Teenuseid ei ole registreeritud';
 
   @override
-  String get maintenanceHistoryTab => 'History';
+  String get maintenanceHistoryTab => 'Ajalugu';
 
   @override
-  String get maintenancePdfExportTab => 'PDF Export';
+  String get maintenancePdfExportTab => 'PDF-i eksport';
 
   @override
   String maintenanceServicesInPeriod(Object count) {
-    return '$count service(s) in this period';
+    return '$count teenus(t) selles perioodis';
   }
 
   @override
   String maintenanceMoreServices(Object count) {
-    return '... and $count more';
+    return '... ja $count veel';
   }
 
   @override
-  String get maintenanceNoServicesInRange => 'No services in this date range.';
+  String get maintenanceNoServicesInRange =>
+      'Selles kuupäevavahemikus pole teenuseid.';
 
   @override
-  String get maintenanceExportPdf => 'Export PDF';
+  String get maintenanceExportPdf => 'Ekspordi PDF';
 
   @override
-  String get maintenanceSharePdf => 'Share';
+  String get maintenanceSharePdf => 'Jaga';
 
   @override
-  String get maintenanceReportTitle => 'Maintenance Report';
+  String get maintenanceReportTitle => 'Hooldusaruanne';
 
   @override
   String maintenanceReportGenerated(Object date, Object time) {
-    return 'Generated $date $time';
+    return 'Loodud $date $time';
   }
 
   @override
-  String get maintenanceReportEmpty => 'No maintenance logs in this period.';
+  String get maintenanceReportEmpty => 'Selles perioodis pole hoolduslogisid.';
 
   @override
-  String get maintenanceReportDateHeader => 'Date';
+  String get maintenanceReportDateHeader => 'Kuupäev';
 
   @override
-  String get maintenanceReportDescHeader => 'Description';
+  String get maintenanceReportDescHeader => 'Kirjeldus';
 
   @override
-  String get maintenanceReportOdometerHeader => 'Odometer';
+  String get maintenanceReportOdometerHeader => 'Läbisõidumõõdik';
 
   @override
-  String get addDocument => 'Add document';
+  String get addDocument => 'Lisa dokument';
 
   @override
-  String get documentType => 'Document type';
+  String get documentType => 'Dokumendi tüüp';
 
   @override
-  String get selectFile => 'Select file';
+  String get selectFile => 'Vali fail';
 
   @override
-  String get noFileSelected => 'No file selected';
+  String get noFileSelected => 'Faili pole valitud';
 
   @override
-  String get notesOptional => 'Notes (optional)';
+  String get notesOptional => 'Märkused (valikuline)';
 
   @override
-  String get expiryDateOptional => 'Expiry date (optional)';
+  String get expiryDateOptional => 'Aegumiskuupäev (valikuline)';
 
   @override
   String get pleaseSelectFile => 'Palun vali fail';
@@ -668,19 +669,19 @@ class AppLocalizationsEt extends AppLocalizations {
   String get docTypeComplexInsurance => 'Kompleksne kindlustus';
 
   @override
-  String get docTypeVehicleRegister => 'Vehicle register';
+  String get docTypeVehicleRegister => 'Sõidukiregister';
 
   @override
-  String get docTypeOther => 'Other';
+  String get docTypeOther => 'Muu';
 
   @override
-  String get vehicleDocuments => 'Documents';
+  String get vehicleDocuments => 'Dokumendid';
 
   @override
-  String get fuelFormTitle => 'New fuel-up';
+  String get fuelFormTitle => 'Uus kütuse sissekanne';
 
   @override
-  String get volume => 'Volume';
+  String get volume => 'Maht';
 
   @override
   String get unitL => 'L';
@@ -695,35 +696,35 @@ class AppLocalizationsEt extends AppLocalizations {
   String get unitMi => 'mi';
 
   @override
-  String get pricePerUnit => 'Price per unit (optional)';
+  String get pricePerUnit => 'Hind ühiku kohta (valikuline)';
 
   @override
-  String get fullTank => 'Full tank';
+  String get fullTank => 'Täis paak';
 
   @override
-  String get volumeUnit => 'Fuel volume unit';
+  String get volumeUnit => 'Kütuse mahu ühik';
 
   @override
-  String get currency => 'Currency';
+  String get currency => 'Valuuta';
 
   @override
-  String get cost => 'Cost (optional)';
+  String get cost => 'Kulud (valikuline)';
 
   @override
-  String get saveFuelUp => 'Save fuel-up';
+  String get saveFuelUp => 'Salvesta kütuse sissekanne';
 
   @override
-  String get fuelListTitle => 'Fuel logs';
+  String get fuelListTitle => 'Kütuse logid';
 
   @override
-  String get fuelEmpty => 'No fuel-ups recorded';
+  String get fuelEmpty => 'Kütuse sissekandeid pole';
 
   @override
-  String get moreAbout => 'About Karter';
+  String get moreAbout => 'Karterist';
 
   @override
   String get moreDescription =>
-      'Karter is a local-first, open source vehicle maintenance app that respects your privacy.';
+      'Karter on kohalik-põhine, avatud lähtekoodiga sõidukihoolduse rakendus, mis austab sinu privaatsust.';
 
   @override
   String get moreExport => 'Ekspordi / Impordi andmeid';
@@ -732,25 +733,25 @@ class AppLocalizationsEt extends AppLocalizations {
   String get moreExportSubtitle => 'Varundage või teisaldage oma teave';
 
   @override
-  String get moreDocs => 'Documentation';
+  String get moreDocs => 'Dokumentatsioon';
 
   @override
-  String get moreDocsSubtitle => 'Usage guide and features';
+  String get moreDocsSubtitle => 'Kasutusjuhend ja funktsioonid';
 
   @override
-  String get moreSource => 'Source code';
+  String get moreSource => 'Lähtekood';
 
   @override
-  String get moreSourceSubtitle => 'GitHub repository';
+  String get moreSourceSubtitle => 'GitHubi hoidla';
 
   @override
-  String get moreDonate => 'Donate';
+  String get moreDonate => 'Anneta';
 
   @override
-  String get moreDonateSubtitle => 'Support development on GitHub Sponsors';
+  String get moreDonateSubtitle => 'Toeta arendust GitHub Sponsorsi kaudu';
 
   @override
-  String get moreFooter => 'Made with ❤️ by abrahdev';
+  String get moreFooter => 'Tehtud ❤️ abrahdev poolt';
 
   @override
   String get moreRate => 'Hinda Karterit';
@@ -1023,7 +1024,7 @@ class AppLocalizationsEt extends AppLocalizations {
   String get changelog => 'Muudatuste logi';
 
   @override
-  String get openSourceLicenses => 'Open-source licenses';
+  String get openSourceLicenses => 'Avatud lähtekoodiga litsentsid';
 
   @override
   String get language => 'Keel';
@@ -1044,163 +1045,164 @@ class AppLocalizationsEt extends AppLocalizations {
   String get eesti => 'Eesti';
 
   @override
-  String get odometerUpdateTitle => 'Update odometer';
+  String get odometerUpdateTitle => 'Uuenda läbisõidumõõdikut';
 
   @override
   String odometerLastReading(Object unit, Object value) {
-    return 'Last: $value $unit';
+    return 'Viimane: $value $unit';
   }
 
   @override
   String odometerLowerWarning(Object unit, Object value) {
-    return 'The value is lower than the last record ($value $unit).';
+    return 'Väärtus on madalam kui viimane kirje ($value $unit).';
   }
 
   @override
   String odometerDeltaWarning(Object delta, Object unit) {
-    return 'You drove $delta $unit since last time. Is this correct?';
+    return 'Oled viimati sõitnud $delta $unit. Kas see on õige?';
   }
 
   @override
-  String get odometerSave => 'Save';
+  String get odometerSave => 'Salvesta';
 
   @override
-  String get odometerCancel => 'Cancel';
+  String get odometerCancel => 'Tühista';
 
   @override
-  String get moreNotifications => 'Notifications';
+  String get moreNotifications => 'Teavitused';
 
   @override
-  String get moreNotificationsSubtitle => 'Odometer and maintenance reminders';
+  String get moreNotificationsSubtitle =>
+      'Läbisõidumõõdiku ja hoolduse meeldetuletused';
 
   @override
-  String get notificationSettingsTitle => 'Notification settings';
+  String get notificationSettingsTitle => 'Teavituste seaded';
 
   @override
   String get notificationSettingsSubtitle =>
-      'Configure reminders for this vehicle';
+      'Seadista meeldetuletusi sellele sõidukile';
 
   @override
-  String get notificationOdometerSection => 'Odometer reminder';
+  String get notificationOdometerSection => 'Läbisõidumõõdiku meeldetuletus';
 
   @override
-  String get notificationMaintenanceSection => 'Maintenance reminder';
+  String get notificationMaintenanceSection => 'Hoolduse meeldetuletus';
 
   @override
-  String get notificationFreqLabel => 'Reminder frequency';
+  String get notificationFreqLabel => 'Meeldetuletuse sagedus';
 
   @override
-  String get notificationFreqOff => 'Off';
+  String get notificationFreqOff => 'Väljas';
 
   @override
   String notificationFreqValue(Object days) {
-    return 'Every $days days';
+    return 'Iga $days päeva tagant';
   }
 
   @override
-  String get notificationMaintenanceToggle => 'Maintenance reminders';
+  String get notificationMaintenanceToggle => 'Hoolduse meeldetuletused';
 
   @override
   String get notificationMaintenanceToggleSubtitle =>
-      'Receive daily reminders about pending maintenance';
+      'Saa igapäevaseid meeldetuletusi ootavate hoolduste kohta';
 
   @override
   String notificationSnoozedBanner(Object days) {
-    return 'Snoozed for $days more day(s)';
+    return 'Edasi lükatud veel $days päev(a)';
   }
 
   @override
-  String get notificationSnoozeCancel => 'Cancel snooze';
+  String get notificationSnoozeCancel => 'Tühista edasilükkamine';
 
   @override
-  String get notificationNoVehicles =>
-      'Add a vehicle to configure notifications';
+  String get notificationNoVehicles => 'Lisa sõiduk teavituste seadistamiseks';
 
   @override
   String notificationVehicleSubtitle(Object freq, Object maint) {
-    return 'Odometer: $freq • Maintenance: $maint';
+    return 'Läbisõidumõõdik: $freq • Hooldus: $maint';
   }
 
   @override
-  String get notificationConfigure => 'Configure';
+  String get notificationConfigure => 'Seadista';
 
   @override
-  String get notificationMaintOn => 'On';
+  String get notificationMaintOn => 'Sees';
 
   @override
-  String get notificationMaintOff => 'Off';
+  String get notificationMaintOff => 'Väljas';
 
   @override
-  String get notificationSnoozeAction => 'Snooze for 1 week';
+  String get notificationSnoozeAction => 'Lükka 1 nädala võrra edasi';
 
   @override
   String notificationSnoozeConfirm(Object date) {
-    return 'Snoozed until $date';
+    return 'Edasi lükatud kuni $date';
   }
 
   @override
-  String get notificationFreqWeekly => 'Every 7 days';
+  String get notificationFreqWeekly => 'Iga 7 päeva tagant';
 
   @override
-  String get notificationFreqMonthly => 'Every 30 days';
+  String get notificationFreqMonthly => 'Iga 30 päeva tagant';
 
   @override
-  String get notificationFreqCustom => 'Custom';
+  String get notificationFreqCustom => 'Kohandatud';
 
   @override
   String notificationFreqDays(Object days) {
-    return '$days days';
+    return '$days päeva';
   }
 
   @override
-  String get notificationMaintenanceSnooze => 'Snooze maintenance for 1 week';
+  String get notificationMaintenanceSnooze =>
+      'Lükka hoolduse meeldetuletus 1 nädala võrra edasi';
 
   @override
-  String get notificationSnoozeToggle => 'Snooze reminders';
+  String get notificationSnoozeToggle => 'Lükka meeldetuletusi edasi';
 
   @override
   String notificationSnoozeDays(Object days) {
-    return '$days days';
+    return '$days päeva';
   }
 
   @override
-  String get unsavedChanges => 'Unsaved changes';
+  String get unsavedChanges => 'Salvestamata muudatused';
 
   @override
   String get discardChangesConfirm =>
-      'You have unsaved changes. Are you sure you want to leave?';
+      'Sul on salvestamata muudatusi. Kas oled kindel, et soovid lahkuda?';
 
   @override
-  String get discard => 'Discard';
+  String get discard => 'Loobu';
 
   @override
-  String get moreTemplateSource => 'Template source';
+  String get moreTemplateSource => 'Malli allikas';
 
   @override
   String get moreTemplateSourceSubtitle =>
-      'Fetch templates from GitHub or use local assets';
+      'Hangi malle GitHubist või kasuta kohalikke varasid';
 
   @override
-  String get moreTemplateSourceOffline => 'Local (offline)';
+  String get moreTemplateSourceOffline => 'Kohalik (võrguühenduseta)';
 
   @override
-  String get moreTemplateSourceOnline => 'Online (GitHub)';
+  String get moreTemplateSourceOnline => 'Veebis (GitHub)';
 
   @override
-  String get moreTemplateSourceUrl => 'Repo URL';
+  String get moreTemplateSourceUrl => 'Hoidla URL';
 
   @override
-  String get moreTemplateSourceReset => 'Reset to default';
+  String get moreTemplateSourceReset => 'Lähtesta vaikeväärtusele';
 
   @override
   String get moreTemplateSourceUrlHint =>
       'https://github.com/abrahdev/karter/templates';
 
   @override
-  String get moreTemplateSourceEditUrl => 'Edit URL';
+  String get moreTemplateSourceEditUrl => 'Muuda URL-i';
 
   @override
-  String get moreTemplateSourceUrlSaved => 'URL updated';
+  String get moreTemplateSourceUrlSaved => 'URL uuendatud';
 
   @override
   String get testConnection => 'Ühenduse testimine';
