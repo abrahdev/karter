@@ -73,6 +73,7 @@ class CatalogSourcesNotifier extends Notifier<CatalogSourcesState> {
     state = CatalogSourcesState(sources: current.sources, activeId: id);
     final prefs = ref.read(sharedPreferencesProvider);
     await prefs.setString(_activeKey, id);
+    _setActiveFile(abs);
   }
 
   Future<void> refreshOnline() async {
@@ -85,6 +86,7 @@ class CatalogSourcesNotifier extends Notifier<CatalogSourcesState> {
     if (state.active?.isOnline ?? false) {
       final abs = await _abs(_onlineRel);
       service.useFile(abs);
+      _setActiveFile(abs);
     }
   }
 
@@ -125,7 +127,12 @@ class CatalogSourcesNotifier extends Notifier<CatalogSourcesState> {
     if (current.activeId == id) {
       final absBuiltin = await _abs(_builtinRel);
       ref.read(catalogServiceProvider).useFile(absBuiltin);
+      _setActiveFile(absBuiltin);
     }
+  }
+
+  void _setActiveFile(String abs) {
+    ref.read(activeCatalogFileProvider.notifier).set(abs);
   }
 
   Future<void> _persist() async {
@@ -141,6 +148,7 @@ class CatalogSourcesNotifier extends Notifier<CatalogSourcesState> {
         final abs = await _abs(source.filePath);
         if (File(abs).existsSync()) {
           ref.read(catalogServiceProvider).useFile(abs);
+          _setActiveFile(abs);
         }
       } catch (_) {}
     });

@@ -136,7 +136,23 @@ final catalogServiceProvider = Provider<CatalogService>((ref) {
   return service;
 });
 
+/// Path of the currently active catalog file (null = bundled). Updated by
+/// [CatalogSourcesNotifier] whenever the active source file changes, so that
+/// catalog-derived providers recompute automatically.
+class ActiveCatalogFileNotifier extends Notifier<String?> {
+  @override
+  String? build() => null;
+
+  void set(String? value) => state = value;
+}
+
+final activeCatalogFileProvider =
+    NotifierProvider<ActiveCatalogFileNotifier, String?>(
+  ActiveCatalogFileNotifier.new,
+);
+
 final catalogRepositoryProvider = Provider<CatalogRepository>((ref) {
+  ref.watch(activeCatalogFileProvider);
   return CatalogRepository(ref.watch(catalogServiceProvider));
 });
 

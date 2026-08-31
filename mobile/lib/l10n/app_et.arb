@@ -497,5 +497,7 @@
   "createInheritedItems": "Päritud hooldus (extends-ist)",
   "templateExtendsNotLoaded": "Mõnda extendsi ei õnnestunud laadida",
   "templateRepoLoading": "Laadimine mallide repositooriumist…",
-  "templateRepoError": "Ei õnnestunud mallide repositooriumiga ühendust saada"
+  "templateRepoError": "Ei õnnestunud mallide repositooriumiga ühendust saada",
+  "templateBy": "autor: {author}",
+  "@templateBy": { "placeholders": { "author": {"type": "String"} } }
 }

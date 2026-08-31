@@ -1838,4 +1838,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get templateRepoError => 'Couldn\'t reach the template repo';
+
+  @override
+  String templateBy(String author) {
+    return 'by $author';
+  }
 }

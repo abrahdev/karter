@@ -1857,4 +1857,9 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get templateRepoError =>
       'No se pudo conectar con el repositorio de plantillas';
+
+  @override
+  String templateBy(String author) {
+    return 'por $author';
+  }
 }

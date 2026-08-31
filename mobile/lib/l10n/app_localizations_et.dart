@@ -1842,4 +1842,9 @@ class AppLocalizationsEt extends AppLocalizations {
   @override
   String get templateRepoError =>
       'Ei õnnestunud mallide repositooriumiga ühendust saada';
+
+  @override
+  String templateBy(String author) {
+    return 'autor: $author';
+  }
 }

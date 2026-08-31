@@ -626,5 +626,7 @@
   "createInheritedItems": "Mantenimiento heredado (de extends)",
   "templateExtendsNotLoaded": "Algunos extends no se pudieron cargar",
   "templateRepoLoading": "Cargando desde el repositorio de plantillas…",
-  "templateRepoError": "No se pudo conectar con el repositorio de plantillas"
+  "templateRepoError": "No se pudo conectar con el repositorio de plantillas",
+  "templateBy": "por {author}",
+  "@templateBy": { "placeholders": { "author": {"type": "String"} } }
 }

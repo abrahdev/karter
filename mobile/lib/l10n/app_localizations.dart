@@ -3446,6 +3446,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Couldn\'t reach the template repo'**
   String get templateRepoError;
+
+  /// No description provided for @templateBy.
+  ///
+  /// In en, this message translates to:
+  /// **'by {author}'**
+  String templateBy(String author);
 }
 
 class _AppLocalizationsDelegate

@@ -685,5 +685,7 @@
   "createInheritedItems": "Inherited maintenance (from extends)",
   "templateExtendsNotLoaded": "Some extends could not be loaded",
   "templateRepoLoading": "Loading from template repo…",
-  "templateRepoError": "Couldn't reach the template repo"
+  "templateRepoError": "Couldn't reach the template repo",
+  "templateBy": "by {author}",
+  "@templateBy": { "placeholders": { "author": {"type": "String"} } }
 }

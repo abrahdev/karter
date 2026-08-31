@@ -296,7 +296,9 @@ class _TemplateCard extends StatelessWidget {
                 children: [
                   Flexible(
                     child: Text(
-                      l.templateItemsCount(entry.itemCount),
+                      meta.author.isEmpty
+                          ? 'v${meta.version}'
+                          : 'v${meta.version} · ${l.templateBy(meta.author)}',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: theme.textTheme.labelMedium?.copyWith(
@@ -306,7 +308,9 @@ class _TemplateCard extends StatelessWidget {
                   ),
                   const SizedBox(width: 8),
                   Text(
-                    'v${meta.version}',
+                    l.templateItemsCount(entry.itemCount),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: theme.textTheme.labelMedium?.copyWith(
                       color: theme.colorScheme.onSurfaceVariant,
                     ),
