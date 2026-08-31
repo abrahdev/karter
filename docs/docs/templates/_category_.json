@@ -1,0 +1,11 @@
+{
+  "label": "Templates",
+  "position": 2,
+  "customProps": {
+    "icon": "🧩"
+  },
+  "link": {
+    "type": "generated-index",
+    "description": "How vehicle maintenance templates are authored and compiled into the catalog database consumed by the app."
+  }
+}

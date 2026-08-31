@@ -1,12 +1,11 @@
 {
   "label": "Developer",
-  "position": 2,
+  "position": 3,
   "customProps": {
     "icon": "💻"
   },
   "link": {
     "type": "generated-index",
-    "description": "Developer documentation for Karter, covering architecture, setup, and contribution guidelines."
+    "description": "Technical documentation for Karter: architecture, directory structure, design workflow, and the mobile app."
   }
-
 }

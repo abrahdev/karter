@@ -1,12 +1,11 @@
 {
   "label": "Mobile",
-  "position": 2,
+  "position": 1,
   "customProps": {
     "icon": "📱"
   },
   "link": {
     "type": "generated-index",
-    "description": "Developer documentation for Karter, covering architecture, setup, and contribution guidelines."
+    "description": "Mobile app development: environment setup, OBD integration, and in-car plans."
   }
-
 }
