@@ -1826,4 +1826,20 @@ class AppLocalizationsEt extends AppLocalizations {
   String templateSourceRelease(String version) {
     return 'Väljalase: $version';
   }
+
+  @override
+  String get createInheritedParts => 'Päritud osad (extends-ist)';
+
+  @override
+  String get createInheritedItems => 'Päritud hooldus (extends-ist)';
+
+  @override
+  String get templateExtendsNotLoaded => 'Mõnda extendsi ei õnnestunud laadida';
+
+  @override
+  String get templateRepoLoading => 'Laadimine mallide repositooriumist…';
+
+  @override
+  String get templateRepoError =>
+      'Ei õnnestunud mallide repositooriumiga ühendust saada';
 }

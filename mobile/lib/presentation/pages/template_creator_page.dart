@@ -1,14 +1,19 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile/core/theme/app_spacing.dart';
+import 'package:mobile/data/services/template_resolver.dart';
 import 'package:mobile/data/services/template_validator.dart';
 import 'package:mobile/l10n/app_localizations.dart';
-import 'package:mobile/presentation/widgets/grouped_card.dart';
+import 'package:mobile/presentation/providers/template_source_provider.dart';
+import 'package:mobile/presentation/providers/vehicle_providers.dart';
 import 'package:mobile/presentation/widgets/section_header.dart';
+import 'package:mobile/presentation/widgets/template_autocomplete_field.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -86,16 +91,17 @@ class _ItemDraft {
   final List<_PartRefDraft> parts = [];
 }
 
-class TemplateCreatorPage extends StatefulWidget {
+class TemplateCreatorPage extends ConsumerStatefulWidget {
   const TemplateCreatorPage({super.key});
 
   @override
-  State<TemplateCreatorPage> createState() => _TemplateCreatorPageState();
+  ConsumerState<TemplateCreatorPage> createState() =>
+      _TemplateCreatorPageState();
 }
 
-class _TemplateCreatorPageState extends State<TemplateCreatorPage> {
-  final _make = TextEditingController();
-  final _model = TextEditingController();
+class _TemplateCreatorPageState extends ConsumerState<TemplateCreatorPage> {
+  String _make = '';
+  String _model = '';
   final _generation = TextEditingController();
   final _yearsFrom = TextEditingController();
   final _yearsTo = TextEditingController();
@@ -112,11 +118,22 @@ class _TemplateCreatorPageState extends State<TemplateCreatorPage> {
   final Set<String> _extendsSelected = {};
   final List<_PartDraft> _parts = [];
   final List<_ItemDraft> _items = [];
+  List<InheritedItem> _inheritedItems = [];
+  List<InheritedPart> _inheritedParts = [];
+  List<String> _inheritedFailed = [];
+  Timer? _extendsDebounce;
+  int _extendsRequestId = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    ref.read(onlineTemplateIndexProvider);
+    ref.read(onlineTemplateBaseUrlProvider);
+  }
 
   @override
   void dispose() {
-    _make.dispose();
-    _model.dispose();
+    _extendsDebounce?.cancel();
     _generation.dispose();
     _yearsFrom.dispose();
     _yearsTo.dispose();
@@ -131,8 +148,8 @@ class _TemplateCreatorPageState extends State<TemplateCreatorPage> {
 
   Map<String, dynamic> _buildJson() {
     final meta = <String, dynamic>{};
-    final make = _make.text.trim();
-    final model = _model.text.trim();
+    final make = _make.trim();
+    final model = _model.trim();
     if (make.isNotEmpty) meta['make'] = make;
     if (model.isNotEmpty) meta['model'] = model;
     final generation = _generation.text.trim();
@@ -282,7 +299,7 @@ class _TemplateCreatorPageState extends State<TemplateCreatorPage> {
       _showErrors();
       return;
     }
-    final fileName = '${_templateId(_make.text.trim(), _model.text.trim())}.json';
+    final fileName = '${_templateId(_make, _model)}.json';
 
     if (!Platform.isLinux) {
       final dir = await getTemporaryDirectory();
@@ -323,6 +340,84 @@ class _TemplateCreatorPageState extends State<TemplateCreatorPage> {
 
   void _setState() => setState(() {});
 
+  List<String> _computedExtends() {
+    final index = ref.read(onlineTemplateIndexProvider).value;
+    if (index == null) return const [];
+    final make = _make.trim().toLowerCase();
+    final model = _model.trim().toLowerCase();
+    if (make.isEmpty || model.isEmpty) return const [];
+    final result = <String>{};
+    for (final entry in index.templates) {
+      if (entry.meta.make.toLowerCase() != make) continue;
+      if (entry.meta.model.toLowerCase() != model) continue;
+      result.addAll(entry.extendsPaths);
+    }
+    return result.toList();
+  }
+
+  List<String> _activeExtends() {
+    return <String>[
+      ..._extendsSelected,
+      ..._customExtends.text
+          .split(',')
+          .map((e) => e.trim())
+          .where((e) => e.isNotEmpty),
+    ];
+  }
+
+  Future<void> _reloadInherited() async {
+    final id = ++_extendsRequestId;
+    String? baseUrl;
+    try {
+      baseUrl = await ref.read(onlineTemplateBaseUrlProvider.future);
+    } catch (_) {}
+    final content = await ref
+        .read(templateResolverProvider)
+        .resolveExtendsChain(_activeExtends(), baseUrl: baseUrl);
+    if (!mounted || id != _extendsRequestId) return;
+    setState(() {
+      _inheritedItems = content.items;
+      _inheritedParts = content.parts;
+      _inheritedFailed = content.failedPaths;
+    });
+  }
+
+  void _onMakeModelChanged(String value, bool isMake) {
+    if (isMake) {
+      _make = value;
+    } else {
+      _model = value;
+    }
+    final computed = _computedExtends();
+    if (computed.isNotEmpty) {
+      _extendsSelected
+        ..clear()
+        ..addAll(computed);
+    }
+    _setState();
+    _reloadInherited();
+  }
+
+  void _toggleExtend(String path, bool selected) {
+    setState(() {
+      if (selected) {
+        _extendsSelected.add(path);
+      } else {
+        _extendsSelected.remove(path);
+      }
+    });
+    _reloadInherited();
+  }
+
+  void _onCustomExtendsChanged() {
+    _setState();
+    _extendsDebounce?.cancel();
+    _extendsDebounce = Timer(
+      const Duration(milliseconds: 300),
+      _reloadInherited,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context)!;
@@ -339,6 +434,8 @@ class _TemplateCreatorPageState extends State<TemplateCreatorPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                _buildRepoSource(l),
+                const SizedBox(height: 8),
                 _buildVehicleInfo(l),
                 _buildEngine(l),
                 _buildMetadata(l),
@@ -355,7 +452,12 @@ class _TemplateCreatorPageState extends State<TemplateCreatorPage> {
               padding: const EdgeInsets.only(bottom: 24),
               children: [
                 form,
-                preview,
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppSpacing.pagePadding,
+                  ),
+                  child: preview,
+                ),
               ],
             );
           }
@@ -375,53 +477,140 @@ class _TemplateCreatorPageState extends State<TemplateCreatorPage> {
     );
   }
 
+  Widget _buildRepoSource(AppLocalizations l) {
+    final theme = Theme.of(context);
+    final config = ref.watch(templateSourceProvider);
+    final indexState = ref.watch(onlineTemplateIndexProvider);
+    return Card(
+      margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 8),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        child: Row(
+          children: [
+            const Icon(Icons.cloud_outlined, size: 20),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Text(
+                      config.repoUrl,
+                      style: theme.textTheme.bodySmall,
+                    ),
+                  ),
+                  if (indexState.isLoading)
+                    Text(
+                      l.templateRepoLoading,
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        color: theme.colorScheme.onSurfaceVariant,
+                      ),
+                    ),
+                  if (indexState.hasError)
+                    Text(
+                      l.templateRepoError,
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        color: theme.colorScheme.error,
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget _buildVehicleInfo(AppLocalizations l) {
+    final onlineIndex = ref.watch(onlineTemplateIndexProvider).value;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SectionHeader(title: l.templateInfo),
-        GroupedCard(
+        const SizedBox(height: 8),
+        KarterAutocompleteField(
+          label: l.createMake,
+          hint: 'Toyota',
+          initialValue: _make,
+          index: onlineIndex,
+          optionsBuilder: (query, index) {
+            final suggestions = <String>{};
+            if (index != null) {
+              suggestions.addAll(
+                index.templates
+                    .where((e) => e.meta.make != '_base')
+                    .map((e) => e.meta.make)
+                    .toSet()
+                    .where(
+                      (m) => m.toLowerCase().contains(query.toLowerCase()),
+                    ),
+              );
+            }
+            suggestions.add(query);
+            return suggestions.toList()..sort();
+          },
+          onChanged: (value) => _onMakeModelChanged(value, true),
+        ),
+        const SizedBox(height: 12),
+        KarterAutocompleteField(
+          label: l.createModel,
+          hint: 'Corolla',
+          initialValue: _model,
+          index: onlineIndex,
+          optionsBuilder: (query, index) {
+            final suggestions = <String>{};
+            if (index != null && _make.isNotEmpty) {
+              suggestions.addAll(
+                index.templates
+                    .where(
+                      (e) =>
+                          e.meta.make.toLowerCase() == _make.toLowerCase(),
+                    )
+                    .where(
+                      (e) => e.meta.model.toLowerCase().contains(
+                        query.toLowerCase(),
+                      ),
+                    )
+                    .map((e) => e.meta.model),
+              );
+            }
+            suggestions.add(query);
+            return suggestions.toList()..sort();
+          },
+          onChanged: (value) => _onMakeModelChanged(value, false),
+        ),
+        const SizedBox(height: 12),
+        _textTile(
+          controller: _generation,
+          label: l.createGeneration,
+          hint: 'E210',
+          onChanged: _setState,
+        ),
+        const SizedBox(height: 12),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _textTile(
-              controller: _make,
-              label: l.createMake,
-              hint: 'Toyota',
-              onChanged: _setState,
+            Expanded(
+              child: _textTile(
+                controller: _yearsFrom,
+                label: l.createYearFrom,
+                hint: '2019',
+                keyboardType: TextInputType.number,
+                onChanged: _setState,
+              ),
             ),
-            _textTile(
-              controller: _model,
-              label: l.createModel,
-              hint: 'Corolla',
-              onChanged: _setState,
-            ),
-            _textTile(
-              controller: _generation,
-              label: l.createGeneration,
-              hint: 'E210',
-              onChanged: _setState,
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: _textTile(
-                    controller: _yearsFrom,
-                    label: l.createYearFrom,
-                    hint: '2019',
-                    keyboardType: TextInputType.number,
-                    onChanged: _setState,
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: _textTile(
-                    controller: _yearsTo,
-                    label: l.createYearTo,
-                    hint: '2024',
-                    keyboardType: TextInputType.number,
-                    onChanged: _setState,
-                  ),
-                ),
-              ],
+            const SizedBox(width: 12),
+            Expanded(
+              child: _textTile(
+                controller: _yearsTo,
+                label: l.createYearTo,
+                hint: '2024',
+                keyboardType: TextInputType.number,
+                onChanged: _setState,
+              ),
             ),
           ],
         ),
@@ -434,54 +623,55 @@ class _TemplateCreatorPageState extends State<TemplateCreatorPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SectionHeader(title: l.templateEngine),
-        GroupedCard(
+        const SizedBox(height: 8),
+        _selectTile(
+          label: l.createFuel,
+          value: _fuel,
+          options: _fuelOptions,
+          onChanged: (v) {
+            _fuel = v;
+            setState(() {});
+          },
+        ),
+        const SizedBox(height: 12),
+        _selectTile(
+          label: l.createPowertrain,
+          value: _powertrain,
+          options: _powertrainOptions,
+          onChanged: (v) {
+            _powertrain = v;
+            setState(() {});
+          },
+        ),
+        const SizedBox(height: 12),
+        _textTile(
+          controller: _engineCode,
+          label: l.createEngineCode,
+          hint: 'M20A-FKS',
+          onChanged: _setState,
+        ),
+        const SizedBox(height: 12),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _selectTile(
-              label: l.createFuel,
-              value: _fuel,
-              options: _fuelOptions,
-              onChanged: (v) {
-                _fuel = v;
-                setState(() {});
-              },
+            Expanded(
+              child: _textTile(
+                controller: _engineDisplacement,
+                label: l.createDisplacement,
+                hint: '1987',
+                keyboardType: TextInputType.number,
+                onChanged: _setState,
+              ),
             ),
-            _selectTile(
-              label: l.createPowertrain,
-              value: _powertrain,
-              options: _powertrainOptions,
-              onChanged: (v) {
-                _powertrain = v;
-                setState(() {});
-              },
-            ),
-            _textTile(
-              controller: _engineCode,
-              label: l.createEngineCode,
-              hint: 'M20A-FKS',
-              onChanged: _setState,
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: _textTile(
-                    controller: _engineDisplacement,
-                    label: l.createDisplacement,
-                    hint: '1987',
-                    keyboardType: TextInputType.number,
-                    onChanged: _setState,
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: _textTile(
-                    controller: _enginePower,
-                    label: l.createPower,
-                    hint: '169',
-                    keyboardType: TextInputType.number,
-                    onChanged: _setState,
-                  ),
-                ),
-              ],
+            const SizedBox(width: 12),
+            Expanded(
+              child: _textTile(
+                controller: _enginePower,
+                label: l.createPower,
+                hint: '169',
+                keyboardType: TextInputType.number,
+                onChanged: _setState,
+              ),
             ),
           ],
         ),
@@ -490,55 +680,66 @@ class _TemplateCreatorPageState extends State<TemplateCreatorPage> {
   }
 
   Widget _buildMetadata(AppLocalizations l) {
+    final theme = Theme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SectionHeader(title: l.templateMetadata),
-        GroupedCard(
+        const SizedBox(height: 8),
+        _textTile(
+          controller: _author,
+          label: l.createAuthor,
+          hint: l.createAuthorHint,
+          onChanged: _setState,
+        ),
+        const SizedBox(height: 12),
+        _textTile(
+          controller: _version,
+          label: l.templateVersion,
+          hint: '1.0.0',
+          onChanged: _setState,
+        ),
+        const SizedBox(height: 12),
+        Text(
+          l.createExtends,
+          style: theme.textTheme.labelLarge,
+        ),
+        const SizedBox(height: 8),
+        Wrap(
+          spacing: 8,
+          runSpacing: 8,
           children: [
-            _textTile(
-              controller: _author,
-              label: l.createAuthor,
-              hint: l.createAuthorHint,
-              onChanged: _setState,
-            ),
-            _textTile(
-              controller: _version,
-              label: l.templateVersion,
-              hint: '1.0.0',
-              onChanged: _setState,
-            ),
-            ListTile(
-              leading: const Icon(Icons.account_tree_outlined),
-              title: Text(l.createExtends),
-              subtitle: Text(l.createExtendsHint),
-            ),
             for (final (value, label) in kBaseTemplateOptions)
-              CheckboxListTile(
-                dense: true,
-                controlAffinity: ListTileControlAffinity.leading,
-                value: _extendsSelected.contains(value),
-                title: Text(
-                  label,
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-                onChanged: (checked) {
-                  setState(() {
-                    if (checked == true) {
-                      _extendsSelected.add(value);
-                    } else {
-                      _extendsSelected.remove(value);
-                    }
-                  });
-                },
+              FilterChip(
+                label: Text(label),
+                selected: _extendsSelected.contains(value),
+                onSelected: (selected) => _toggleExtend(value, selected),
               ),
-            _textTile(
-              controller: _customExtends,
-              label: l.createCustomExtends,
-              hint: 'audi/a3/base.json, _base/dtc.json',
-              onChanged: _setState,
-            ),
+            for (final path in _extendsSelected)
+              if (!kBaseTemplateOptions.any((o) => o.$1 == path))
+                FilterChip(
+                  label: Text(path),
+                  selected: true,
+                  onSelected: (selected) => _toggleExtend(path, selected),
+                ),
           ],
+        ),
+        if (_inheritedFailed.isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.only(top: 8),
+            child: Text(
+              l.templateExtendsNotLoaded,
+              style: theme.textTheme.bodySmall?.copyWith(
+                color: theme.colorScheme.error,
+              ),
+            ),
+          ),
+        const SizedBox(height: 12),
+        _textTile(
+          controller: _customExtends,
+          label: l.createCustomExtends,
+          hint: 'audi/a3/base.json, _base/dtc.json',
+          onChanged: _onCustomExtendsChanged,
         ),
       ],
     );
@@ -555,6 +756,18 @@ class _TemplateCreatorPageState extends State<TemplateCreatorPage> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              if (_inheritedParts.isNotEmpty) ...[
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 12, 16, 4),
+                  child: Text(
+                    l.createInheritedParts,
+                    style: theme.textTheme.labelLarge,
+                  ),
+                ),
+                for (final inherited in _inheritedParts)
+                  _InheritedPartRow(inherited: inherited),
+                const Divider(height: 24),
+              ],
               for (var i = 0; i < _parts.length; i++)
                 _PartEditor(
                   key: ObjectKey(_parts[i]),
@@ -601,6 +814,18 @@ class _TemplateCreatorPageState extends State<TemplateCreatorPage> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              if (_inheritedItems.isNotEmpty) ...[
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 12, 16, 4),
+                  child: Text(
+                    l.createInheritedItems,
+                    style: theme.textTheme.labelLarge,
+                  ),
+                ),
+                for (final inherited in _inheritedItems)
+                  _InheritedItemRow(inherited: inherited),
+                const Divider(height: 24),
+              ],
               for (var i = 0; i < _items.length; i++)
                 _ItemEditor(
                   key: ObjectKey(_items[i]),
@@ -741,18 +966,14 @@ class _TemplateCreatorPageState extends State<TemplateCreatorPage> {
     TextInputType? keyboardType,
     required VoidCallback onChanged,
   }) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-      child: TextField(
-        controller: controller,
-        decoration: InputDecoration(
-          labelText: label,
-          hintText: hint,
-          isDense: true,
-        ),
-        keyboardType: keyboardType,
-        onChanged: (_) => onChanged(),
+    return TextField(
+      controller: controller,
+      decoration: InputDecoration(
+        labelText: label,
+        hintText: hint,
       ),
+      keyboardType: keyboardType,
+      onChanged: (_) => onChanged(),
     );
   }
 
@@ -762,24 +983,22 @@ class _TemplateCreatorPageState extends State<TemplateCreatorPage> {
     required List<(String, String)> options,
     required ValueChanged<String> onChanged,
   }) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-      child: DropdownButtonFormField<String>(
-        initialValue: value,
-        decoration: InputDecoration(labelText: label, isDense: true),
-        items: [
+    return DropdownButtonFormField<String>(
+      initialValue: value,
+      isExpanded: true,
+      decoration: InputDecoration(labelText: label),
+      items: [
+        DropdownMenuItem<String>(
+          value: '',
+          child: Text('—'),
+        ),
+        for (final (optionValue, optionLabel) in options)
           DropdownMenuItem<String>(
-            value: '',
-            child: Text('—'),
+            value: optionValue,
+            child: Text(optionLabel),
           ),
-          for (final (optionValue, optionLabel) in options)
-            DropdownMenuItem<String>(
-              value: optionValue,
-              child: Text(optionLabel),
-            ),
-        ],
-        onChanged: (v) => onChanged(v ?? ''),
-      ),
+      ],
+      onChanged: (v) => onChanged(v ?? ''),
     );
   }
 }
@@ -1117,6 +1336,120 @@ class _ItemEditorState extends State<_ItemEditor> {
                 label: Text(l.createAddPartRef),
               ),
             ),
+        ],
+      ),
+    );
+  }
+}
+
+String _originLabel(String origin) {
+  final slash = origin.lastIndexOf('/');
+  return slash == -1 ? origin : origin.substring(slash + 1);
+}
+
+class _InheritedPartRow extends StatelessWidget {
+  const _InheritedPartRow({required this.inherited});
+
+  final InheritedPart inherited;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final part = inherited.part;
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  part.name ?? part.id,
+                  style: theme.textTheme.bodyMedium,
+                ),
+                if (part.oemNumber != null && part.oemNumber!.isNotEmpty)
+                  Text(
+                    '${part.id} · ${part.oemNumber}',
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: theme.colorScheme.onSurfaceVariant,
+                    ),
+                  )
+                else
+                  Text(
+                    part.id,
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: theme.colorScheme.onSurfaceVariant,
+                    ),
+                  ),
+              ],
+            ),
+          ),
+          const SizedBox(width: 8),
+          Tooltip(
+            message: inherited.origin,
+            child: Chip(
+              visualDensity: VisualDensity.compact,
+              label: Text(_originLabel(inherited.origin)),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _InheritedItemRow extends StatelessWidget {
+  const _InheritedItemRow({required this.inherited});
+
+  final InheritedItem inherited;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
+    final item = inherited.item;
+    final parts = <String>[l.intervalSubtitleKm(item.intervalKm)];
+    if (item.intervalMonths != null) {
+      parts.add(l.intervalSubtitleMonths(item.intervalMonths.toString()));
+    }
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  item.label,
+                  style: theme.textTheme.bodyMedium,
+                ),
+                Text(
+                  item.id,
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: theme.colorScheme.onSurfaceVariant,
+                  ),
+                ),
+                Text(
+                  parts.join(' · '),
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: theme.colorScheme.onSurfaceVariant,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: 8),
+          Tooltip(
+            message: inherited.origin,
+            child: Chip(
+              visualDensity: VisualDensity.compact,
+              label: Text(_originLabel(inherited.origin)),
+            ),
+          ),
         ],
       ),
     );

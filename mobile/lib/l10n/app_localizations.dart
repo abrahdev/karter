@@ -3416,6 +3416,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Release: {version}'**
   String templateSourceRelease(String version);
+
+  /// No description provided for @createInheritedParts.
+  ///
+  /// In en, this message translates to:
+  /// **'Inherited parts (from extends)'**
+  String get createInheritedParts;
+
+  /// No description provided for @createInheritedItems.
+  ///
+  /// In en, this message translates to:
+  /// **'Inherited maintenance (from extends)'**
+  String get createInheritedItems;
+
+  /// No description provided for @templateExtendsNotLoaded.
+  ///
+  /// In en, this message translates to:
+  /// **'Some extends could not be loaded'**
+  String get templateExtendsNotLoaded;
+
+  /// No description provided for @templateRepoLoading.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading from template repo…'**
+  String get templateRepoLoading;
+
+  /// No description provided for @templateRepoError.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t reach the template repo'**
+  String get templateRepoError;
 }
 
 class _AppLocalizationsDelegate

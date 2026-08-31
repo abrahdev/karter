@@ -680,5 +680,10 @@
   "catalogDbVersion": "DB version: {version}",
   "@catalogDbVersion": { "placeholders": { "version": {"type": "String"} } },
   "templateSourceRelease": "Release: {version}",
-  "@templateSourceRelease": { "placeholders": { "version": {"type": "String"} } }
+  "@templateSourceRelease": { "placeholders": { "version": {"type": "String"} } },
+  "createInheritedParts": "Inherited parts (from extends)",
+  "createInheritedItems": "Inherited maintenance (from extends)",
+  "templateExtendsNotLoaded": "Some extends could not be loaded",
+  "templateRepoLoading": "Loading from template repo…",
+  "templateRepoError": "Couldn't reach the template repo"
 }

@@ -492,5 +492,10 @@
   "catalogDbVersion": "Andmebaasi versioon: {version}",
   "@catalogDbVersion": { "placeholders": { "version": {"type": "String"} } },
   "templateSourceRelease": "Väljalase: {version}",
-  "@templateSourceRelease": { "placeholders": { "version": {"type": "String"} } }
+  "@templateSourceRelease": { "placeholders": { "version": {"type": "String"} } },
+  "createInheritedParts": "Päritud osad (extends-ist)",
+  "createInheritedItems": "Päritud hooldus (extends-ist)",
+  "templateExtendsNotLoaded": "Mõnda extendsi ei õnnestunud laadida",
+  "templateRepoLoading": "Laadimine mallide repositooriumist…",
+  "templateRepoError": "Ei õnnestunud mallide repositooriumiga ühendust saada"
 }

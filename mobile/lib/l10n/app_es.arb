@@ -621,5 +621,10 @@
   "catalogDbVersion": "Versión BD: {version}",
   "@catalogDbVersion": { "placeholders": { "version": {"type": "String"} } },
   "templateSourceRelease": "Lanzamiento: {version}",
-  "@templateSourceRelease": { "placeholders": { "version": {"type": "String"} } }
+  "@templateSourceRelease": { "placeholders": { "version": {"type": "String"} } },
+  "createInheritedParts": "Piezas heredadas (de extends)",
+  "createInheritedItems": "Mantenimiento heredado (de extends)",
+  "templateExtendsNotLoaded": "Algunos extends no se pudieron cargar",
+  "templateRepoLoading": "Cargando desde el repositorio de plantillas…",
+  "templateRepoError": "No se pudo conectar con el repositorio de plantillas"
 }

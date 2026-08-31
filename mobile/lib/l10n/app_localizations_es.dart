@@ -1839,4 +1839,22 @@ class AppLocalizationsEs extends AppLocalizations {
   String templateSourceRelease(String version) {
     return 'Lanzamiento: $version';
   }
+
+  @override
+  String get createInheritedParts => 'Piezas heredadas (de extends)';
+
+  @override
+  String get createInheritedItems => 'Mantenimiento heredado (de extends)';
+
+  @override
+  String get templateExtendsNotLoaded =>
+      'Algunos extends no se pudieron cargar';
+
+  @override
+  String get templateRepoLoading =>
+      'Cargando desde el repositorio de plantillas…';
+
+  @override
+  String get templateRepoError =>
+      'No se pudo conectar con el repositorio de plantillas';
 }

@@ -1823,4 +1823,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String templateSourceRelease(String version) {
     return 'Release: $version';
   }
+
+  @override
+  String get createInheritedParts => 'Inherited parts (from extends)';
+
+  @override
+  String get createInheritedItems => 'Inherited maintenance (from extends)';
+
+  @override
+  String get templateExtendsNotLoaded => 'Some extends could not be loaded';
+
+  @override
+  String get templateRepoLoading => 'Loading from template repo…';
+
+  @override
+  String get templateRepoError => 'Couldn\'t reach the template repo';
 }
