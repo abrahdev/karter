@@ -1,12 +1,11 @@
 {
   "label": "Contributing",
-  "position": 2,
+  "position": 1,
   "customProps": {
-    "icon": "🚀"
+    "icon": "🤝"
   },
   "link": {
     "type": "generated-index",
-    "description": "Guidelines for contributing to Karter, including how to report issues, submit pull requests, and the code of conduct for contributors."
+    "description": "How to help Karter: report issues, translate on Weblate, or contribute code."
   }
-
 }

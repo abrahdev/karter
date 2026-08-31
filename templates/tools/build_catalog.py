@@ -16,8 +16,10 @@ dumps the result into normalized SQLite tables consumed by the mobile app:
 
 Usage:
   python build_catalog.py [--check-only] [--output PATH] [--version VERSION]
+                          [--schema-check]
 
-Exit code is non-zero when any post-merge validation error is found.
+Exit code is non-zero when any validation error is found (schema and/or
+post-merge).
 """
 
 import argparse
@@ -33,6 +35,7 @@ REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 DEFAULT_DATA_ROOT = os.path.join(REPO_ROOT, "templates", "data")
 DEFAULT_INDEX = os.path.join(REPO_ROOT, "templates", "index.json")
 DEFAULT_I18N = os.path.join(REPO_ROOT, "templates", "i18n", "en.json")
+DEFAULT_SCHEMA = os.path.join(REPO_ROOT, "templates", "schemas", "template-v2.json")
 DEFAULT_OUTPUT = os.path.join(REPO_ROOT, "templates", "karter-catalog.db")
 SYMLINK_PATH = os.path.join(
     REPO_ROOT, "mobile", "assets", "catalog", "karter-catalog.db"
@@ -276,6 +279,74 @@ def resolve(
 
 
 # ---------------------------------------------------------------------------
+# Raw-file schema validation (per-file, before any merge)
+# ---------------------------------------------------------------------------
+
+
+def validate_schema(data_root: str, schema_path: str, errors: List[str]) -> None:
+    """Validate every templates/data/**/*.json against the JSON Schema.
+
+    Also enforces rules that draft-07 cannot express: intra-array uniqueness
+    of ids/codes and meta.years ordering. Requires the `jsonschema` package
+    (see templates/tools/requirements.txt).
+    """
+    try:
+        from jsonschema import Draft7Validator
+    except ImportError as exc:
+        raise SystemExit(
+            "Missing dependency 'jsonschema'. Install it with:\n"
+            "  pip install -r templates/tools/requirements.txt"
+        ) from exc
+
+    with open(schema_path, encoding="utf-8") as fh:
+        schema = json.load(fh)
+    Draft7Validator.check_schema(schema)
+    validator = Draft7Validator(schema)
+
+    for dirpath, _dirs, files in os.walk(data_root):
+        for name in sorted(files):
+            if not name.endswith(".json"):
+                continue
+            rel = os.path.relpath(os.path.join(dirpath, name), data_root)
+            path = "data/" + rel.replace(os.sep, "/")
+
+            with open(os.path.join(dirpath, name), encoding="utf-8") as fh:
+                raw = json.load(fh)
+
+            for error in sorted(
+                validator.iter_errors(raw), key=lambda e: list(e.path)
+            ):
+                where = "/".join(str(p) for p in error.path) or "<root>"
+                errors.append(f"{path}: schema error at {where}: {error.message}")
+
+            for section, key in (
+                ("parts", "id"),
+                ("maintenance_items", "id"),
+                ("obd_dtc_definitions", "code"),
+            ):
+                seen = set()
+                for entry in raw.get(section) or []:
+                    ident = entry.get(key)
+                    if ident in seen:
+                        errors.append(
+                            f"{path}: duplicate {key} {ident!r} in {section}"
+                        )
+                    seen.add(ident)
+
+            years = (raw.get("meta") or {}).get("years")
+            if years and len(years) == 2:
+                start, end = years[0], years[1]
+                if (
+                    start is not None
+                    and end is not None
+                    and start > end
+                ):
+                    errors.append(
+                        f"{path}: meta.years start ({start}) must be <= end ({end})"
+                    )
+
+
+# ---------------------------------------------------------------------------
 # Strict post-merge validation (no pending merge, so nothing may be missing)
 # ---------------------------------------------------------------------------
 
@@ -333,7 +404,10 @@ CREATE TABLE vehicles (
   powertrain TEXT,
   displacement_cc INTEGER,
   power_hp INTEGER,
+  author TEXT,
+  version TEXT,
   market_json TEXT,
+  sources_json TEXT,
   specificity INTEGER NOT NULL DEFAULT 0,
   item_count INTEGER NOT NULL DEFAULT 0,
   inherits_general INTEGER NOT NULL DEFAULT 0
@@ -473,8 +547,9 @@ def write_catalog(
                 "INSERT INTO vehicles("
                 "id, path, kind, make, model, generation, year_from, year_to, "
                 "engine_code, fuel, powertrain, displacement_cc, power_hp, "
-                "market_json, specificity, item_count, inherits_general) "
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                "author, version, market_json, sources_json, "
+                "specificity, item_count, inherits_general) "
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 (
                     entry["id"],
                     entry["path"],
@@ -489,7 +564,10 @@ def write_catalog(
                     engine.get("powertrain"),
                     engine.get("displacement_cc"),
                     engine.get("power_hp"),
+                    meta.get("author", ""),
+                    meta.get("version", ""),
                     json.dumps(meta.get("market")) if meta.get("market") else None,
+                    json.dumps(meta.get("sources")) if meta.get("sources") else None,
                     _specificity(meta),
                     len(res.items),
                     1 if res.inherits_general else 0,
@@ -690,6 +768,16 @@ def main(argv: Optional[List[str]] = None) -> int:
     parser.add_argument("--data-root", default=DEFAULT_DATA_ROOT)
     parser.add_argument("--index", default=DEFAULT_INDEX)
     parser.add_argument("--i18n", default=DEFAULT_I18N)
+    parser.add_argument(
+        "--schema",
+        default=DEFAULT_SCHEMA,
+        help="JSON Schema that validates the raw template files",
+    )
+    parser.add_argument(
+        "--schema-check",
+        action="store_true",
+        help="validate all templates/data/**/*.json against the JSON Schema",
+    )
     args = parser.parse_args(argv)
 
     with open(args.index, encoding="utf-8") as fh:
@@ -701,9 +789,10 @@ def main(argv: Optional[List[str]] = None) -> int:
         i18n_en = json.load(fh)
 
     cache: Dict[str, dict] = {}
-    general = resolve(GENERAL_PATH, args.data_root, cache, set())
-
     errors: List[str] = []
+    if args.schema_check:
+        validate_schema(args.data_root, args.schema, errors)
+    general = resolve(GENERAL_PATH, args.data_root, cache, set())
     validate(general, "data/" + GENERAL_PATH, i18n_en, errors)
 
     vehicles: Dict[str, tuple] = {}

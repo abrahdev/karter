@@ -17,6 +17,7 @@ import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
 import 'package:mobile/presentation/widgets/notification_permission_modal.dart';
 import 'package:mobile/presentation/widgets/section_header.dart';
+import 'package:mobile/presentation/widgets/template_autocomplete_field.dart';
 import 'package:mobile/presentation/widgets/karter_segmented_button.dart';
 import 'package:mobile/presentation/widgets/new_vehicle_overdue_modal.dart';
 import 'package:mobile/presentation/widgets/template_search_modal.dart';
@@ -482,12 +483,10 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(height: 8),
-                  Autocomplete<String>(
-                    initialValue: TextEditingValue(text: _brand),
-                    optionsBuilder: (textEditingValue) {
-                      if (textEditingValue.text.isEmpty) return [];
-                      final query = textEditingValue.text;
-                      final index = ref.read(templateIndexProvider).value;
+                  KarterAutocompleteField(
+                    label: l.brand,
+                    initialValue: _brand,
+                    optionsBuilder: (query, index) {
                       final suggestions = <String>{};
                       if (index != null) {
                         suggestions.addAll(
@@ -505,36 +504,21 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
                       suggestions.add(query);
                       return suggestions.toList()..sort();
                     },
-                    fieldViewBuilder:
-                        (context, controller, focusNode, onSubmitted) {
-                          return TextFormField(
-                            controller: controller,
-                            focusNode: focusNode,
-                            decoration: InputDecoration(
-                              labelText: l.brand,
-                            ),
-                            onChanged: (value) {
-                              _brand = value;
-                              _hasUnsavedChanges = true;
-                            },
-                            validator: (v) => v == null || v.trim().isEmpty
-                                ? l.required
-                                : null,
-                          );
-                        },
-                    onSelected: (value) {
+                    onChanged: (value) {
                       _brand = value;
+                      _hasUnsavedChanges = true;
                     },
+                    validator: (v) => v == null || v.trim().isEmpty
+                        ? l.required
+                        : null,
                   ),
                   const SizedBox(height: 12),
                   LayoutBuilder(
                     builder: (context, constraints) {
-                      final modelField = Autocomplete<String>(
-                        initialValue: TextEditingValue(text: _model),
-                        optionsBuilder: (textEditingValue) {
-                          if (textEditingValue.text.isEmpty) return [];
-                          final query = textEditingValue.text;
-                          final index = ref.read(templateIndexProvider).value;
+                      final modelField = KarterAutocompleteField(
+                        label: l.model,
+                        initialValue: _model,
+                        optionsBuilder: (query, index) {
                           final suggestions = <String>{};
                           if (index != null && _brand.isNotEmpty) {
                             suggestions.addAll(
@@ -542,38 +526,26 @@ class _VehicleFormPageState extends ConsumerState<VehicleFormPage> {
                                   .where(
                                     (e) =>
                                         e.meta.make.toLowerCase() ==
-                                            _brand.toLowerCase() &&
-                                        e.meta.model.toLowerCase().contains(
-                                          query.toLowerCase(),
-                                        ),
+                                        _brand.toLowerCase(),
                                   )
-                                  .map((e) => e.meta.model)
-                                  .toSet(),
+                                  .where(
+                                    (e) => e.meta.model.toLowerCase().contains(
+                                      query.toLowerCase(),
+                                    ),
+                                  )
+                                  .map((e) => e.meta.model),
                             );
                           }
                           suggestions.add(query);
                           return suggestions.toList()..sort();
                         },
-                        fieldViewBuilder:
-                            (context, controller, focusNode, onSubmitted) {
-                              return TextFormField(
-                                controller: controller,
-                                focusNode: focusNode,
-                                decoration: InputDecoration(
-                                  labelText: l.model,
-                                ),
-                                onChanged: (value) {
-                                  _model = value;
-                                  _hasUnsavedChanges = true;
-                                },
-                                validator: (v) => v == null || v.trim().isEmpty
-                                    ? l.required
-                                    : null,
-                              );
-                            },
-                        onSelected: (value) {
+                        onChanged: (value) {
                           _model = value;
+                          _hasUnsavedChanges = true;
                         },
+                        validator: (v) => v == null || v.trim().isEmpty
+                            ? l.required
+                            : null,
                       );
                       final yearField = TextFormField(
                         controller: _yearController,

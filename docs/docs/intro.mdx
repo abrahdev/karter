@@ -7,17 +7,48 @@ sidebar_custom_props:
 
 import AppVersion from "@site/src/components/AppVersion";
 
-# Overview
+# Karter
 
-**Karter** was born with the mission of creating the best **Open Source** vehicle maintenance app, respecting privacy and donating **20% of affiliate revenue** to social causes.
+**Karter** is a privacy-first, **open source** vehicle maintenance tracker built
+with Flutter. It was born with the mission of creating the best vehicle
+maintenance app while respecting your privacy and donating **20% of affiliate
+revenue** to social causes.
 
 > **Latest release:** [<AppVersion />](https://github.com/abrahdev/karter/releases/tag/<AppVersion />)
 
-## Why Open Source?
+## Features
 
-* **Privacy:** Your mechanical and location data should not be commodified.
+- **Multi-vehicle management** — add, edit, delete vehicles with type, VIN, and plate
+- **Fuel tracking** — log fill-ups with automatic economy calculations (L/100km, MPG, km/L)
+- **Maintenance log** — track repairs, part replacements, and service history
+- **Service intervals** — set reminders based on distance or time, seeded from community templates
+- **Spare parts** — catalog and track replacement parts
+- **Odometer tracking** — log readings in km or mi
+- **Dashboard & charts** — statistics over your vehicles' data
+- **JSON export / import** — full data backup, portable between devices
+- **Community templates** — maintenance schedules contributed per make/model, synced from an online repo
+- **OBD-II integration** — ELM327 support (coming soon)
+- **Material Design 3** — dynamic colors and dark mode
+- **100% offline** — no accounts, no telemetry, no tracking
 
-* **Transparency:** Anyone can audit how we calculate maintenance costs.
+## Why Karter?
+
+- **Privacy-first:** All data stays on your device in a local SQLite database. No accounts, no cloud, no analytics, no tracking.
+- **Open source:** Anyone can audit the code, verify how costs are calculated, and contribute. Karter is licensed under **AGPL-3.0**.
+- **Community-driven data:** Vehicle maintenance templates are a forkable, human-editable JSON package — add your car and open a pull request.
 
 ## The 20% Promise 🎗️
-We donate 20% of the revenue generated through affiliate links (parts, tools) to NGOs chosen by the community.
+
+We donate **20% of the revenue** generated through affiliate links (parts, tools) to NGOs chosen by the community.
+
+## Getting started
+
+- **Download** the latest APK from [GitHub Releases](https://github.com/abrahdev/karter/releases) (or add the repo as an app source in [Obtainium](https://obtanium.org)).
+- **Browse** the community [maintenance templates](/templates) or build your own with the [web template creator](/templates/creator).
+
+## Documentation
+
+- **Templates** — [authoring guide](/templates/authoring) and the [data & template pipeline](/templates/data-pipeline)
+- **Developer** — [architecture](/developer/architecture), [directory structure](/developer/directory-structure), and the [mobile app](/developer/mobile/development-setup)
+- **Roadmap** — [what's next](/roadmap)
+- **Contributing** — [report issues, translate, or write code](/contributing/contributing)

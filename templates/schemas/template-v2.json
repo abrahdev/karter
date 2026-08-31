@@ -1,14 +1,17 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://karter.abrah.dev/schemas/template-v2.json",
+  "title": "Karter maintenance template (v2)",
   "type": "object",
   "required": ["id", "meta"],
   "additionalProperties": false,
+  "description": "Schema for Karter maintenance templates. Validates the raw file structure; merge-time invariants (interval_km/label/description present after inheritance) and checks not expressible in draft-07 (unique ids/codes within an array, meta.years ordering) are enforced by templates/tools/build_catalog.py.",
   "properties": {
     "id": {
       "type": "string",
       "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
-      "description": "Globally unique slug, e.g.: vw-golf-mk7-1-6tdi"
+      "description": "Globally unique slug, e.g.: vw-golf-mk7-1-6tdi",
+      "examples": ["vw-golf-mk7-1-6tdi", "toyota-corolla", "cars"]
     },
     "extends": {
       "type": "array",
@@ -16,16 +19,49 @@
         "type": "string",
         "pattern": "^(\\.\\./)*[a-z0-9_][a-z0-9_\\-/]*\\.json$"
       },
-      "description": "Relative paths of the templates it extends, in order of application"
+      "description": "Relative paths (from templates/data/) of the templates it extends, in order of application. Entities in later files override earlier ones by id.",
+      "examples": [["_base/car-common.json", "toyota/corolla/base.json"]]
     },
+    "meta": { "$ref": "#/$defs/meta" },
+    "parts": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Part catalog. Entries merge by id with the parents. Whether an entry is new or an override is determined during resolution, so required fields for new parts (name or i18n_key) are validated after merge at application level. Ids must be unique within this array; also validated by build_catalog.py.",
+      "items": { "$ref": "#/$defs/part" }
+    },
+    "maintenance_items": {
+      "type": "array",
+      "description": "Maintenance tasks. Entries merge by id with the parents. New items must define interval_km (validated after merge at application level). Ids must be unique within this array; also validated by build_catalog.py. May be empty in per-model base.json placeholder fragments.",
+      "items": { "$ref": "#/$defs/maintenanceItem" }
+    },
+    "obd_dtc_definitions": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Fault codes for this model or powertrain. Entries merge by code with the parents; entries that only override inherited fields may omit description/desc_i18n_key. Codes must be unique within this array; also validated by build_catalog.py.",
+      "items": { "$ref": "#/$defs/dtc" }
+    }
+  },
+  "$defs": {
     "meta": {
       "type": "object",
       "required": ["make", "model", "author", "version"],
       "additionalProperties": false,
       "properties": {
-        "make": { "type": "string", "description": "Vehicle make" },
-        "model": { "type": "string", "description": "Vehicle model" },
-        "generation": { "type": "string", "description": "Generation / chassis code" },
+        "make": {
+          "type": "string",
+          "description": "Vehicle make, e.g.: Toyota",
+          "examples": ["Toyota", "Volkswagen", "_base"]
+        },
+        "model": {
+          "type": "string",
+          "description": "Vehicle model, e.g.: Corolla",
+          "examples": ["Corolla", "Golf"]
+        },
+        "generation": {
+          "type": "string",
+          "description": "Generation / chassis code",
+          "examples": ["E210", "MK7"]
+        },
         "years": {
           "type": "array",
           "minItems": 2,
@@ -35,190 +71,265 @@
             { "type": ["integer", "null"] }
           ],
           "additionalItems": false,
-          "description": "Start year (required) / end year (null if still in production)"
+          "description": "Start year (required) / end year (null if still in production). Ordering (start <= end) is validated by build_catalog.py.",
+          "examples": [[2019, 2024], [2013, null]]
         },
-        "engine": {
-          "type": "object",
-          "additionalProperties": false,
-          "properties": {
-            "code": { "type": "string", "description": "Engine code" },
-            "fuel": {
-              "type": "string",
-              "enum": ["gasoline", "diesel", "lpg", "cng", "hydrogen", "ethanol"],
-              "description": "Fuel type"
-            },
-            "powertrain": {
-              "type": "string",
-              "enum": ["combustion", "hybrid", "plugin-hybrid", "electric"],
-              "description": "Powertrain architecture"
-            },
-            "displacement_cc": { "type": "integer", "description": "Displacement in cc" },
-            "power_hp": { "type": "integer", "description": "Power in HP" }
-          }
-        },
+        "engine": { "$ref": "#/$defs/engine" },
         "market": {
           "type": "array",
           "items": { "type": "string" },
-          "description": "Target markets: EU, US, JP, etc."
+          "description": "Target markets: EU, US, JP, etc.",
+          "examples": [["EU", "US"]]
         },
         "author": {
           "oneOf": [
             { "type": "string" },
             { "type": "array", "items": { "type": "string" } }
           ],
-          "description": "Author(s) of the template"
+          "description": "Author(s) of the template",
+          "examples": ["abrahdev", ["alice", "bob"]]
         },
-        "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+        "version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$",
+          "description": "Template version, semantic versioning",
+          "examples": ["1.0.0", "2.3.1"]
+        },
         "sources": {
           "type": "array",
           "items": { "type": "string" },
-          "description": "Information sources (official manual, forums, etc.)"
+          "description": "Information sources (official manual, forums, etc.)",
+          "examples": [["https://example.com/owner-manual"]]
         }
       }
     },
-    "parts": {
-      "type": "array",
-      "description": "Part catalog. Entries merge by id with the parents. Whether an entry is new or an override is determined during resolution, so required fields for new parts (name or oem_number) are validated after merge at application level. IDs must be unique within this array; also validated by the resolver.",
-      "items": {
-        "type": "object",
-        "required": ["id"],
-        "additionalProperties": false,
-        "properties": {
-          "id": {
-            "type": "string",
-            "description": "Part ID. If it already exists in the parent, it replaces it. Otherwise, it is added."
-          },
-          "name": {
-            "type": "string",
-            "description": "Part name. Only needed if it is a new part (not inherited); validated after merge."
-          },
-          "i18n_key": {
-            "type": "string",
-            "description": "Translation key for the name, e.g.: part_oil_filter"
-          },
-          "oem_number": {
-            "type": "string",
-            "description": "Official OEM reference, e.g.: 1883037"
-          },
-          "quantity": {
-            "type": "number",
-            "minimum": 0,
-            "description": "Number of parts required"
-          },
-          "unit": {
-            "type": "string",
-            "enum": ["unit", "set", "L", "ml", "g", "kg", "kit", "can", "m"],
-            "description": "Measurement unit of the quantity"
-          },
-          "user_reference": {
-            "type": "string",
-            "description": "User's preferred reference (local layer), overrides oem_number"
-          },
-          "description": {
-            "type": "string",
-            "description": "Long description of the part shown in the parts section"
-          },
-          "remove": {
-            "type": "boolean",
-            "description": "true → removes this part from the parent"
-          }
+    "engine": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Engine specifics used for template matching",
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "Engine code",
+          "examples": ["M20A-FKS", "EA189"]
+        },
+        "fuel": {
+          "type": "string",
+          "enum": ["gasoline", "diesel", "lpg", "cng", "hydrogen", "ethanol"],
+          "description": "Fuel type",
+          "examples": ["gasoline", "diesel"]
+        },
+        "powertrain": {
+          "type": "string",
+          "enum": ["combustion", "hybrid", "plugin-hybrid", "electric"],
+          "description": "Powertrain architecture",
+          "examples": ["combustion", "plugin-hybrid"]
+        },
+        "displacement_cc": {
+          "type": "integer",
+          "description": "Displacement in cc",
+          "examples": [1987, 1598]
+        },
+        "power_hp": {
+          "type": "integer",
+          "description": "Power in HP",
+          "examples": [169, 105]
         }
       }
     },
-    "maintenance_items": {
-      "type": "array",
-      "description": "Maintenance tasks. Entries merge by id with the parents. New items must define interval_km (validated after merge at application level). IDs must be unique within this array; also validated by the resolver.",
-      "items": {
-        "type": "object",
-        "required": ["id"],
-        "additionalProperties": false,
-        "properties": {
-          "id": {
-            "type": "string",
-            "description": "Item ID. If it already exists in the parent, it replaces it. Otherwise, it is added."
-          },
-          "interval_km": { "type": "integer", "minimum": 1 },
-          "interval_months": { "type": "integer", "minimum": 1 },
-          "label": {
-            "type": "string",
-            "description": "Only needed if it is a new item (not inherited). If it is a replace, the parent's label is used."
-          },
-          "i18n_key": {
-            "type": "string",
-            "description": "Translation key for the label, e.g.: seed_interval_oil_change"
-          },
-          "desc_i18n_key": {
-            "type": "string",
-            "description": "Translation key for the description, e.g.: seed_desc_oil_change"
-          },
-          "description": { "type": "string" },
-          "parts": {
-            "type": "array",
-            "description": "Parts needed for this task, referenced by part_id",
-            "items": {
-              "type": "object",
-              "required": ["part_id"],
-              "additionalProperties": false,
-              "properties": {
-                "part_id": { "type": "string" },
-                "quantity": { "type": "number", "minimum": 0 }
-              }
-            }
-          },
-          "obd_codes": {
-            "type": "array",
-            "description": "OBD-II (DTC) codes related to this task",
-            "items": { "type": "string", "pattern": "^[PCBU][0-9A-F]{4}$" }
-          },
-          "remove": {
-            "type": "boolean",
-            "description": "true → removes this item from the parent (useful when a model does not have a generic task)"
-          }
+    "part": {
+      "type": "object",
+      "required": ["id"],
+      "additionalProperties": false,
+      "description": "A part in the catalog. id is always required; name or i18n_key is required for parts that are new (not inherited) - validated after merge.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+          "description": "Part ID. If it already exists in the parent, it replaces it. Otherwise, it is added.",
+          "examples": ["oil-filter", "brake-pad-set"]
+        },
+        "name": {
+          "type": "string",
+          "description": "Part name. Only needed if it is a new part (not inherited); validated after merge.",
+          "examples": ["Oil filter"]
+        },
+        "i18n_key": {
+          "$ref": "#/$defs/i18nKey",
+          "description": "Translation key for the name, e.g.: part_oil_filter"
+        },
+        "oem_number": {
+          "type": "string",
+          "description": "Official OEM reference, e.g.: 1883037",
+          "examples": ["1883037", "90915-YZZE3"]
+        },
+        "quantity": {
+          "$ref": "#/$defs/quantity",
+          "description": "Number of parts required"
+        },
+        "unit": {
+          "type": "string",
+          "enum": ["unit", "set", "L", "ml", "g", "kg", "kit", "can", "m"],
+          "description": "Measurement unit of the quantity",
+          "examples": ["unit", "L"]
+        },
+        "user_reference": {
+          "type": "string",
+          "description": "User's preferred reference (local layer), overrides oem_number",
+          "examples": ["MANN W 610/6"]
+        },
+        "description": {
+          "type": "string",
+          "description": "Long description of the part shown in the parts section",
+          "examples": ["Synthetic 5W-30 engine oil, 4L jug"]
+        },
+        "remove": {
+          "$ref": "#/$defs/remove",
+          "description": "true -> removes this part from the parent"
         }
       }
     },
-    "obd_dtc_definitions": {
-      "type": "array",
-      "description": "Fault codes for this model or powertrain. Entries merge by code with the parents; entries that only override inherited fields may omit description/desc_i18n_key. Codes must be unique within this array; also validated by the resolver.",
-      "items": {
-        "type": "object",
-        "required": ["code", "scope"],
-        "additionalProperties": false,
-        "properties": {
-          "code": {
-            "type": "string",
-            "pattern": "^[PCBU][0-9A-F]{4}$",
-            "description": "OBD-II code, e.g.: P0171"
-          },
-          "scope": {
-            "type": "string",
-            "enum": ["standard", "manufacturer"],
-            "description": "standard → generic SAE code (P0xxx); manufacturer → manufacturer-specific code (P1xxx, P0Axx, etc.)"
-          },
-          "description": {
-            "type": "string",
-            "description": "Only needed if it is a new code (not inherited); validated after merge."
-          },
-          "desc_i18n_key": {
-            "type": "string",
-            "description": "Translation key for the description, e.g.: dtc_p0171"
-          },
-          "related_maintenance": {
-            "type": "array",
-            "items": { "type": "string" },
-            "description": "Suggested maintenance_item IDs to resolve the code"
-          },
-          "related_parts": {
-            "type": "array",
-            "items": { "type": "string" },
-            "description": "Suggested part IDs to resolve the code"
-          },
-          "remove": {
-            "type": "boolean",
-            "description": "true → removes this code from the parent"
-          }
+    "partRef": {
+      "type": "object",
+      "required": ["part_id"],
+      "additionalProperties": false,
+      "description": "A part referenced by a maintenance item",
+      "properties": {
+        "part_id": {
+          "type": "string",
+          "description": "Part id as declared in the parts catalog",
+          "examples": ["oil-filter"]
+        },
+        "quantity": {
+          "$ref": "#/$defs/quantity",
+          "description": "Quantity of this part used by the task (defaults to 1 when omitted)"
         }
       }
+    },
+    "maintenanceItem": {
+      "type": "object",
+      "required": ["id"],
+      "additionalProperties": false,
+      "description": "A maintenance task. id is always required; interval_km and a label are required for items that are new (not inherited) - validated after merge.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+          "description": "Item ID. If it already exists in the parent, it replaces it. Otherwise, it is added.",
+          "examples": ["oil-change", "brake-pads"]
+        },
+        "interval_km": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Interval in km",
+          "examples": [15000, 30000]
+        },
+        "interval_months": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Interval in months",
+          "examples": [12, 24]
+        },
+        "label": {
+          "type": "string",
+          "description": "Only needed if it is a new item (not inherited). If it is a replace, the parent's label is used.",
+          "examples": ["Oil change"]
+        },
+        "i18n_key": {
+          "$ref": "#/$defs/i18nKey",
+          "description": "Translation key for the label, e.g.: seed_interval_oil_change"
+        },
+        "desc_i18n_key": {
+          "$ref": "#/$defs/i18nKey",
+          "description": "Translation key for the description, e.g.: seed_desc_oil_change"
+        },
+        "description": {
+          "type": "string",
+          "description": "Long description shown in the maintenance section",
+          "examples": ["Replace engine oil and filter. Use OEM-spec 5W-30."]
+        },
+        "parts": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/partRef" },
+          "description": "Parts needed for this task, referenced by part_id"
+        },
+        "obd_codes": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/dtcCode" },
+          "description": "OBD-II (DTC) codes related to this task",
+          "examples": [["P0171", "P0420"]]
+        },
+        "remove": {
+          "$ref": "#/$defs/remove",
+          "description": "true -> removes this item from the parent (useful when a model does not have a generic task)"
+        }
+      }
+    },
+    "dtc": {
+      "type": "object",
+      "required": ["code", "scope"],
+      "additionalProperties": false,
+      "description": "An OBD-II fault code definition. code and scope are always required; description is required for codes that are new (not inherited) - validated after merge.",
+      "properties": {
+        "code": {
+          "$ref": "#/$defs/dtcCode",
+          "description": "OBD-II code, e.g.: P0171"
+        },
+        "scope": {
+          "type": "string",
+          "enum": ["standard", "manufacturer"],
+          "description": "standard -> generic SAE code (P0xxx); manufacturer -> manufacturer-specific code (P1xxx, P0Axx, etc.)",
+          "examples": ["standard", "manufacturer"]
+        },
+        "description": {
+          "type": "string",
+          "description": "Only needed if it is a new code (not inherited); validated after merge.",
+          "examples": ["System too lean (Bank 1)"]
+        },
+        "desc_i18n_key": {
+          "$ref": "#/$defs/i18nKey",
+          "description": "Translation key for the description, e.g.: dtc_p0171"
+        },
+        "related_maintenance": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Suggested maintenance_item IDs to resolve the code",
+          "examples": [["oil-change", "spark-plugs"]]
+        },
+        "related_parts": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Suggested part IDs to resolve the code",
+          "examples": [["maf-sensor", "air-filter"]]
+        },
+        "remove": {
+          "$ref": "#/$defs/remove",
+          "description": "true -> removes this code from the parent"
+        }
+      }
+    },
+    "i18nKey": {
+      "type": "string",
+      "pattern": "^[a-z0-9_]+$",
+      "description": "Translation key, must exist in templates/i18n/{locale}.json",
+      "examples": ["part_oil_filter", "seed_interval_oil_change"]
+    },
+    "dtcCode": {
+      "type": "string",
+      "pattern": "^[PCBU][0-9A-F]{4}$",
+      "description": "OBD-II code (5 chars: letter + 4 hex digits)",
+      "examples": ["P0171", "P0420", "U0100"]
+    },
+    "quantity": {
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "description": "Amount of a part. Must be greater than 0 (fractions allowed).",
+      "examples": [1, 4, 0.5]
+    },
+    "remove": {
+      "type": "boolean",
+      "description": "true -> removes the inherited entity from this template's result",
+      "examples": [true, false]
     }
   }
 }

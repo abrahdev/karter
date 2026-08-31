@@ -19,7 +19,13 @@ class CatalogService {
   static const releaseUrl =
       'https://github.com/abrahdev/karter/releases/download/catalog/karter-catalog.db';
 
+  /// Fallback used when the rolling `catalog` release does not exist yet:
+  /// the catalog committed on the default branch.
+  static const fallbackCatalogUrl =
+      'https://raw.githubusercontent.com/abrahdev/karter/main/templates/karter-catalog.db';
+
   static const catalogDbFileName = 'karter-catalog.db';
+  static const onlineCatalogDbFileName = 'online-catalog.db';
   static const defaultBranch = 'main';
 
   static final _githubPathRegExp = RegExp(
@@ -50,12 +56,138 @@ class CatalogService {
     return base;
   }
 
+  /// Parses `owner/repo` from a github.com or raw.githubusercontent.com URL.
+  static (String, String)? parseOwnerRepo(String url) {
+    final base = url.trim().replaceAll(RegExp(r'/+$'), '');
+    final raw = RegExp(
+      r'^https?://raw\.githubusercontent\.com/([^/]+)/([^/]+)/',
+    ).firstMatch(base);
+    if (raw != null) return (raw.group(1)!, raw.group(2)!);
+    final blob = _githubPathRegExp.firstMatch(base);
+    if (blob != null) return (blob.group(1)!, blob.group(2)!);
+    final bare = _githubBarePathRegExp.firstMatch(base);
+    if (bare != null) return (bare.group(1)!, bare.group(2)!);
+    return null;
+  }
+
+  /// Latest release tag (`tag_name`) of a GitHub repository, or null when it
+  /// cannot be resolved (offline, no releases, unknown repo, rate limit).
+  static Future<String?> latestReleaseRef({
+    required String owner,
+    required String repo,
+    http.Client? client,
+    Duration timeout = const Duration(seconds: 10),
+  }) async {
+    final own = client == null;
+    final c = client ?? http.Client();
+    try {
+      final resp = await c
+          .get(
+            Uri.parse('https://api.github.com/repos/$owner/$repo/releases/latest'),
+            headers: const {'Accept': 'application/vnd.github+json'},
+          )
+          .timeout(timeout);
+      if (resp.statusCode != 200) return null;
+      final data = jsonDecode(resp.body) as Map<String, dynamic>;
+      return data['tag_name'] as String?;
+    } catch (_) {
+      return null;
+    } finally {
+      if (own) c.close();
+    }
+  }
+
+  /// Version tags of a GitHub repository (empty when they cannot be listed).
+  static Future<List<String>> listTags({
+    required String owner,
+    required String repo,
+    http.Client? client,
+    Duration timeout = const Duration(seconds: 10),
+  }) async {
+    final own = client == null;
+    final c = client ?? http.Client();
+    try {
+      final resp = await c
+          .get(
+            Uri.parse(
+              'https://api.github.com/repos/$owner/$repo/tags?per_page=100',
+            ),
+            headers: const {'Accept': 'application/vnd.github+json'},
+          )
+          .timeout(timeout);
+      if (resp.statusCode != 200) return const [];
+      final list = jsonDecode(resp.body) as List<dynamic>;
+      return list
+          .map((e) => (e as Map<String, dynamic>)['name'] as String)
+          .toList();
+    } catch (_) {
+      return const [];
+    } finally {
+      if (own) c.close();
+    }
+  }
+
+  /// Resolves a template-source base URL.
+  ///
+  /// When the URL contains a `<tag>` placeholder, the latest release tag of the
+  /// repository embedded in the URL is substituted (any GitHub repo is
+  /// supported). If the tag cannot be resolved the URL is returned unchanged
+  /// (Option B), so connection tests surface the failure instead of silently
+  /// falling back to the development branch.
+  static Future<String> resolveBaseUrl(
+    String repoUrl, {
+    http.Client? client,
+    Duration timeout = const Duration(seconds: 10),
+  }) async {
+    final base = repoUrl.trim().replaceAll(RegExp(r'/+$'), '');
+    if (base.contains('<tag>')) {
+      final parsed = parseOwnerRepo(base);
+      if (parsed == null) return base;
+      final tag = await latestReleaseRef(
+        owner: parsed.$1,
+        repo: parsed.$2,
+        client: client,
+        timeout: timeout,
+      );
+      if (tag == null) return base;
+      final github = _githubBarePathRegExp.firstMatch(base);
+      if (github != null) {
+        final rest = github.group(3)!;
+        final slash = rest.indexOf('/');
+        final path = slash == -1 ? rest : rest.substring(slash + 1);
+        return 'https://raw.githubusercontent.com/${github.group(1)}/'
+                '${github.group(2)}/$tag/$path'
+            .replaceAll('<tag>', tag);
+      }
+      return base.replaceAll('<tag>', tag);
+    }
+    return resolveRawBaseUrl(base);
+  }
+
   final Directory? _documentsDirectory;
   final String _bundleAssetName;
   final String _fileName;
 
   Database? _db;
   File? _file;
+
+  Future<Directory> get documentsDirectory async =>
+      _documentsDirectory ?? await getApplicationDocumentsDirectory();
+
+  /// Path of the "online" catalog: the refreshed copy downloaded from the
+  /// rolling GitHub release. Distinct from the immutable bundled catalog.
+  Future<File> onlineCatalogFile() async {
+    final dir = await documentsDirectory;
+    return File(p.join(dir.path, onlineCatalogDbFileName));
+  }
+
+  /// Switches which catalog file is read by the app. Callers own lifecycle of
+  /// the target file (imported local DBs, online copy, or the bundled copy).
+  void useFile(String path) {
+    _db?.close();
+    _db = null;
+    _file = File(path);
+  }
 
   Future<File> catalogFile() async {
     final cached = _file;
@@ -94,13 +226,20 @@ class CatalogService {
   Future<void> refreshFromRelease({
     Duration timeout = const Duration(seconds: 30),
   }) async {
-    final file = await catalogFile();
-    final resp = await http.get(Uri.parse(releaseUrl)).timeout(timeout);
+    final online = await onlineCatalogFile();
+    await online.parent.create(recursive: true);
+
+    var resp = await http.get(Uri.parse(releaseUrl)).timeout(timeout);
     if (resp.statusCode != 200) {
-      throw StateError('HTTP ${resp.statusCode} for $releaseUrl');
+      resp = await http.get(Uri.parse(fallbackCatalogUrl)).timeout(timeout);
     }
-    final tmp = File('${file.path}.tmp');
+    if (resp.statusCode != 200) {
+      throw StateError('HTTP ${resp.statusCode} for catalog download');
+    }
+
+    final tmp = File('${online.path}.tmp');
     await tmp.writeAsBytes(resp.bodyBytes, flush: true);
+
     String? downloadedVersion;
     final check = sqlite3.open(tmp.path, mode: OpenMode.readOnly);
     try {
@@ -113,15 +252,28 @@ class CatalogService {
     } finally {
       check.close();
     }
-    final currentVersion = await catalogVersion();
+
+    String? currentVersion;
+    if (await online.exists()) {
+      final cur = sqlite3.open(online.path, mode: OpenMode.readOnly);
+      try {
+        final rows =
+            cur.select("SELECT v FROM meta WHERE k = 'catalog_version'");
+        if (rows.isNotEmpty) currentVersion = rows.single['v'] as String;
+      } finally {
+        cur.close();
+      }
+    }
+
     if (downloadedVersion == currentVersion) {
       await tmp.delete();
       return;
     }
+
     _db = null;
-    if (await file.exists()) await file.delete();
-    await tmp.rename(file.path);
-    _file = file;
+    if (await online.exists()) await online.delete();
+    await tmp.rename(online.path);
+    if (_file?.path == online.path) _file = online;
   }
 
   void dispose() {
@@ -134,9 +286,9 @@ class CatalogService {
     http.Client? client,
     Duration timeout = const Duration(seconds: 20),
   }) async {
-    final base = resolveRawBaseUrl(repoUrl);
     final ownClient = client == null;
     final c = client ?? http.Client();
+    final base = await resolveBaseUrl(repoUrl, client: c);
     try {
       var translationsFound = 0;
       var translationsTotal = 0;

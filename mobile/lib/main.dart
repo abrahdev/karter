@@ -55,11 +55,15 @@ Future<void> main() async {
   await notificationService.init();
 
   final templateSource = TemplateSourceConfig.fromPrefs(prefs);
+  final baseUrl = templateSource.enabled
+      ? await CatalogService.resolveBaseUrl(
+          templateSource.repoUrl,
+          timeout: const Duration(seconds: 5),
+        )
+      : null;
   await TemplateTranslations.preload(
     locale: resolveTemplateLocale(savedLocale),
-    baseUrl: templateSource.enabled
-        ? CatalogService.resolveRawBaseUrl(templateSource.repoUrl)
-        : null,
+    baseUrl: baseUrl,
   );
 
   final catalogService = CatalogService();

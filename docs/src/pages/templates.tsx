@@ -7,6 +7,7 @@ const INDEX_URL =
 
 interface Engine {
   fuel?: string;
+  powertrain?: string;
   displacement_cc?: number;
 }
 
@@ -37,19 +38,33 @@ interface IndexData {
 const FUEL_LABELS: Record<string, string> = {
   gasoline: "Gasoline",
   diesel: "Diesel",
-  hybrid: "Hybrid",
-  electric: "Electric",
+  lpg: "LPG",
+  cng: "CNG",
   hydrogen: "Hydrogen",
-  "plugin-hybrid": "Plugin Hybrid",
+  ethanol: "Ethanol",
 };
 
 const FUEL_COLORS: Record<string, string> = {
   gasoline: "#eab308",
   diesel: "#2563eb",
-  hybrid: "#16a34a",
-  electric: "#8b5cf6",
+  lpg: "#64748b",
+  cng: "#0ea5e9",
   hydrogen: "#06b6d4",
+  ethanol: "#16a34a",
+};
+
+const POWERTRAIN_LABELS: Record<string, string> = {
+  combustion: "Combustion",
+  hybrid: "Hybrid",
+  "plugin-hybrid": "Plugin Hybrid",
+  electric: "Electric",
+};
+
+const POWERTRAIN_COLORS: Record<string, string> = {
+  combustion: "#8b5cf6",
+  hybrid: "#16a34a",
   "plugin-hybrid": "#0891b2",
+  electric: "#8b5cf6",
 };
 
 const STYLES: Record<string, React.CSSProperties> = {
@@ -175,6 +190,7 @@ function Modal({
 }) {
   const m = t.meta;
   const fuel = m.engine?.fuel;
+  const powertrain = m.engine?.powertrain;
 
   const years =
     m.years ? `${m.years[0]}–${m.years[1]}` : null;
@@ -192,6 +208,10 @@ function Modal({
     { label: "Years", value: years },
     { label: "Displacement", value: displacement },
     { label: "Fuel", value: fuel ? FUEL_LABELS[fuel] || fuel : null },
+    {
+      label: "Powertrain",
+      value: powertrain ? POWERTRAIN_LABELS[powertrain] || powertrain : null,
+    },
     { label: "Author", value: m.author },
     { label: "Version", value: m.version },
     { label: "Items", value: String(t.item_count) },
@@ -512,6 +532,7 @@ function Card({
 }) {
   const m = t.meta;
   const fuel = m.engine?.fuel;
+  const powertrain = m.engine?.powertrain;
   const years =
     m.years ? `${m.years[0]}–${m.years[1]}` : "";
   const engine =
@@ -537,16 +558,28 @@ function Card({
         <h3 style={STYLES.cardTitle}>
           {m.make} {m.model}{m.generation ? ` ${m.generation}` : ""}
         </h3>
-        {fuel && (
-          <span
-            style={{
-              ...STYLES.badge,
-              backgroundColor: FUEL_COLORS[fuel] || "#666",
-            }}
-          >
-            {FUEL_LABELS[fuel] || fuel}
-          </span>
-        )}
+        <div style={{ display: "flex", gap: "0.4rem", flexWrap: "wrap" }}>
+          {fuel && (
+            <span
+              style={{
+                ...STYLES.badge,
+                backgroundColor: FUEL_COLORS[fuel] || "#666",
+              }}
+            >
+              {FUEL_LABELS[fuel] || fuel}
+            </span>
+          )}
+          {powertrain && (
+            <span
+              style={{
+                ...STYLES.badge,
+                backgroundColor: POWERTRAIN_COLORS[powertrain] || "#666",
+              }}
+            >
+              {POWERTRAIN_LABELS[powertrain] || powertrain}
+            </span>
+          )}
+        </div>
       </div>
       <div style={STYLES.cardBody}>
         {[years, engine, m.author ? `by ${m.author}` : ""]

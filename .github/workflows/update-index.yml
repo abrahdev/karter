@@ -21,11 +21,14 @@ jobs:
         with:
           python-version: '3.x'
 
+      - name: Install template tooling deps
+        run: pip install -r templates/tools/requirements.txt
+
       - name: Regenerate index.json
         run: python templates/tools/generate_index.py
 
       - name: Build catalog db
-        run: python templates/tools/build_catalog.py
+        run: python templates/tools/build_catalog.py --schema-check
 
       - name: Commit if changed
         run: |

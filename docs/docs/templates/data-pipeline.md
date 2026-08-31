@@ -23,6 +23,8 @@ The source of truth is the `templates/` directory at the repository root. It is 
 | `templates/tools/` | Generation scripts (`build_catalog.py`, `generate_index.py`, `i18n_json.py`, `import_dtc.py`) |
 | `templates/NOTICE.md` | MIT attribution for the `dtc-database` (Wal33D) that feeds the general OBD codes |
 
+> New to authoring templates? Read the step-by-step guide in [Authoring templates](./authoring) (or the [`templates/README.md`](https://github.com/abrahdev/karter/blob/main/templates/README.md) in the repo): directory layout, `extends`-chain semantics, required vs optional fields per section, i18n keys, and how to run the build tools.
+
 ### Template format (v2)
 
 Every template JSON describes one vehicle (or a shared base fragment) and references other fragments through an `extends` chain:
@@ -53,7 +55,7 @@ Every template JSON describes one vehicle (or a shared base fragment) and refere
   "obd_dtc_definitions": [
     {
       "code": "P1100",
-      "scope": "toyota",
+      "scope": "manufacturer",
       "related_maintenance": ["oil-change"],
       "related_parts": ["oil-filter"]
     }
@@ -131,7 +133,7 @@ flowchart LR
 
 ## build_catalog.py: resolution, validation, and writing
 
-`build_catalog.py` is the heart of the pipeline. It mirrors the resolution logic in the app (`mobile/lib/data/services/template_resolver.dart`) so that what is built locally and what the app computes at runtime stay in sync. It supports a `--check-only` mode used by CI to validate without writing the database.
+`build_catalog.py` is the heart of the pipeline. It mirrors the resolution logic in the app (`mobile/lib/data/services/template_resolver.dart`) so that what is built locally and what the app computes at runtime stay in sync. It supports a `--check-only` mode used by CI to validate without writing the database, and a `--schema-check` mode that validates every raw `data/**/*.json` file against `schemas/template-v2.json` (including rules the JSON Schema cannot express in draft-07: intra-array id/code uniqueness and `meta.years` ordering).
 
 ```mermaid
 flowchart TD
@@ -262,10 +264,12 @@ The app bundles the catalog and templates as assets, and refreshes them over the
 | :--- | :--- | :--- |
 | Bundled catalog | `templates/karter-catalog.db` | Built by `build_catalog.py`, symlinked from `mobile/assets/catalog/karter-catalog.db` and copied to the documents directory on first run (`CatalogService.catalogFile`) |
 | Live catalog | `CatalogService.refreshFromRelease()` | Downloads the latest DB from the rolling GitHub release `catalog`, compares `catalog_version`, and swaps the file only if different |
-| Template JSONs | `TemplateResolver` | Fetches `index.json` and `data/**/*.json` from the configured repo URL (default `https://github.com/abrahdev/karter/templates`), falling back to bundled assets |
+| Template JSONs | `TemplateResolver` | Fetches `index.json` and `data/**/*.json` from the configured repo URL (default `https://raw.githubusercontent.com/abrahdev/karter/<tag>/templates`, `<tag>` resolved to the latest release), falling back to bundled assets |
 | Translations | `TemplateTranslations` | Fetches `i18n/{locale}.json` from the same URL at startup, falling back to bundled assets |
 
 The template source URL is configurable in the More page (`TemplateSourceConfig`), which is what allows community forks to plug in their own template repo. The catalog refresh is fire-and-forget at startup and silently ignores network errors so the app always works offline.
+
+The More page also lets the user pick which **catalog database** to read (`CatalogSourcesNotifier`): the bundled `builtin` catalog, the `online` copy refreshed from the rolling release, or a local `.db` imported by the user. The active source is persisted in `SharedPreferences` and switched via `CatalogService.useFile`. The catalog sheet shows the **DB version** (the `catalog_version` stored in `meta`) and, for the online source, the **Release** tag of the template source being used.
 
 Because the catalog DB is generated (and gitignored), a fresh checkout must run `python templates/tools/build_catalog.py` before building the app; the `build_catalog.py` step creates `templates/karter-catalog.db` and the `mobile/assets/catalog/` symlink. CI and release workflows already do this.
 
@@ -293,11 +297,24 @@ sequenceDiagram
     CS-->>R: rows (vehicles, items, parts, DTCs)
 ```
 
+## The template creator (Create Template)
+
+The **Create Template** page (`mobile/lib/presentation/pages/template_creator_page.dart`) is a JSON authoring tool that always reads from the **online template repo** configured in More → Repo URL — never from the catalog DB, which stays a pure distribution artifact for the app.
+
+- `onlineTemplateBaseUrlProvider` resolves the configured repo URL (applying the selected version by substituting `<tag>`) into a raw base URL via `CatalogService.resolveBaseUrl`.
+- `onlineTemplateIndexProvider` fetches `index.json` from that base URL, feeding the **Make / Model autocomplete** (a shared `KarterAutocompleteField` widget, also used by the vehicle creation form) and providing each template's `extends` list.
+- **Extends** are computed from the `extendsPaths` of the matched make/model and offered as `FilterChip`s, plus a free-text field for custom extends paths.
+- **Inherited parts and maintenance items** are resolved from the full `extends` chain of the selected extends (`TemplateResolver.resolveExtendsChain`), fetched as `data/**/*.json`, and shown read-only at the top of the parts / maintenance lists, each tagged with a chip identifying the **origin file** (`InheritedContent` → `InheritedItem` / `InheritedPart`).
+- A block at the top of the page shows the source repo URL (horizontally scrollable) together with the loading/error state of the online fetch.
+- The page validates the assembled JSON against the template schema and lets the author **copy, share, or save** it (to upload to GitHub).
+
+`resolveExtendsChain` follows the same override / `remove` semantics as `build_catalog.py`, so the previewed inherited content matches what the compiled catalog would contain.
+
 ## CI / CD
 
 | Workflow | Trigger | What it does |
 | :--- | :--- | :--- |
-| `ci.yml` | PRs and pushes to `main` | Runs `build_catalog.py --check-only` (validates every template merge) and `flutter analyze` + `flutter test` |
+| `ci.yml` | PRs and pushes to `main` | Runs `build_catalog.py --check-only --schema-check` (validates every raw template against the JSON Schema and every template merge) and `flutter analyze` + `flutter test` |
 | `update-index.yml` | `templates/**` changes on `main` | Regenerates `index.json`, rebuilds `templates/karter-catalog.db`, commits `index.json` if changed, and uploads the DB to the rolling `catalog` release |
 | `release.yml` | `VERSION` change | Builds the Android APK and Linux bundle and publishes a GitHub release |
 | `deploy-docs.yml` | `docs/**` changes | Builds and deploys this documentation site |

@@ -1491,4 +1491,356 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get consumptionUnit => 'L/100km';
+
+  @override
+  String get sectionTemplates => 'Templates';
+
+  @override
+  String get templatesTitle => 'Templates';
+
+  @override
+  String get templatesSubtitle => 'Browse the community template catalog';
+
+  @override
+  String get createTemplate => 'Create template';
+
+  @override
+  String get createTemplateSubtitle =>
+      'Author a template and export it as JSON';
+
+  @override
+  String get templatesLoadError => 'Could not load the template catalog.';
+
+  @override
+  String get searchTemplatesHint => 'Search by make, model or generation';
+
+  @override
+  String get allMakes => 'All makes';
+
+  @override
+  String get noTemplatesFound => 'No templates match your search.';
+
+  @override
+  String templateItemsCount(int count) {
+    return '$count maintenance items';
+  }
+
+  @override
+  String get templateYearsOpen => 'present';
+
+  @override
+  String get templateNotFound => 'Template not found';
+
+  @override
+  String get templateInfo => 'Template info';
+
+  @override
+  String get templateYears => 'Years';
+
+  @override
+  String get templateEngine => 'Engine';
+
+  @override
+  String get templateAuthor => 'Author';
+
+  @override
+  String get templateVersion => 'Version';
+
+  @override
+  String get templateSources => 'Sources';
+
+  @override
+  String get dtcCodesTitle => 'Fault codes';
+
+  @override
+  String dtcCount(int count) {
+    return '$count fault code(s)';
+  }
+
+  @override
+  String get noPartsFound => 'No parts';
+
+  @override
+  String get createCopied => 'Template JSON copied to clipboard';
+
+  @override
+  String get saveTemplate => 'Save template';
+
+  @override
+  String savedAt(String path) {
+    return 'Saved at $path';
+  }
+
+  @override
+  String get createHasErrors => 'Fix the errors to export';
+
+  @override
+  String get createMake => 'Make';
+
+  @override
+  String get createModel => 'Model';
+
+  @override
+  String get createGeneration => 'Generation';
+
+  @override
+  String get createYearFrom => 'Year from';
+
+  @override
+  String get createYearTo => 'Year to';
+
+  @override
+  String get createFuel => 'Fuel';
+
+  @override
+  String get createPowertrain => 'Powertrain';
+
+  @override
+  String get createEngineCode => 'Engine code';
+
+  @override
+  String get createDisplacement => 'Displacement (cc)';
+
+  @override
+  String get createPower => 'Power (hp)';
+
+  @override
+  String get templateMetadata => 'Metadata & inheritance';
+
+  @override
+  String get createAuthor => 'Author';
+
+  @override
+  String get createAuthorHint => 'Your GitHub username';
+
+  @override
+  String get createExtends => 'Extends (base templates)';
+
+  @override
+  String get createExtendsHint => 'Inherit shared maintenance data';
+
+  @override
+  String get createCustomExtends => 'Custom extends paths';
+
+  @override
+  String get createAddPart => 'Add part';
+
+  @override
+  String get createNoParts => 'No parts yet. Parts are optional.';
+
+  @override
+  String get partSingular => 'Part';
+
+  @override
+  String get createAddItem => 'Add maintenance item';
+
+  @override
+  String get createNoItems => 'No maintenance items yet.';
+
+  @override
+  String get createPreview => 'Preview';
+
+  @override
+  String createErrorsFound(int count) {
+    return '$count validation error(s)';
+  }
+
+  @override
+  String get createCopy => 'Copy';
+
+  @override
+  String get createShare => 'Share';
+
+  @override
+  String get createSave => 'Save';
+
+  @override
+  String get createQuantity => 'Quantity';
+
+  @override
+  String get createI18nKey => 'i18n key';
+
+  @override
+  String get createDescI18nKey => 'Description i18n key';
+
+  @override
+  String get createIntervalKm => 'Interval (km)';
+
+  @override
+  String get createIntervalMonths => 'Interval (months)';
+
+  @override
+  String get createDescription => 'Description';
+
+  @override
+  String get createAddPartRef => 'Add part reference';
+
+  @override
+  String get createFieldId => 'ID';
+
+  @override
+  String get createFieldName => 'Name';
+
+  @override
+  String get createFieldUnit => 'Unit';
+
+  @override
+  String get createFieldOem => 'OEM number';
+
+  @override
+  String get createFieldLabel => 'Label';
+
+  @override
+  String get createFieldPart => 'Part';
+
+  @override
+  String get fuelGasoline => 'Gasoline';
+
+  @override
+  String get fuelDiesel => 'Diesel';
+
+  @override
+  String get fuelLpg => 'LPG';
+
+  @override
+  String get fuelCng => 'CNG';
+
+  @override
+  String get fuelHydrogen => 'Hydrogen';
+
+  @override
+  String get fuelEthanol => 'Ethanol';
+
+  @override
+  String get powertrainCombustion => 'Combustion';
+
+  @override
+  String get powertrainHybrid => 'Hybrid';
+
+  @override
+  String get powertrainPluginHybrid => 'Plugin Hybrid';
+
+  @override
+  String get powertrainElectric => 'Electric';
+
+  @override
+  String get catalogDb => 'Catalog database';
+
+  @override
+  String get catalogSourceBuiltin => 'Bundled (default)';
+
+  @override
+  String get catalogSourceOnline => 'Online (GitHub release)';
+
+  @override
+  String get catalogSourcesTitle => 'Available catalogs';
+
+  @override
+  String get catalogCannotDelete => 'Default catalog — cannot be deleted';
+
+  @override
+  String catalogVersionOf(String version) {
+    return 'Version $version';
+  }
+
+  @override
+  String get catalogVersionUnknown => 'Version unavailable';
+
+  @override
+  String get catalogRefreshOnline => 'Refresh online catalog';
+
+  @override
+  String get catalogRefreshed => 'Online catalog refreshed';
+
+  @override
+  String get catalogRefreshFailed => 'Could not refresh the online catalog';
+
+  @override
+  String get catalogNotAvailable => 'This catalog is not available';
+
+  @override
+  String get catalogImportDb => 'Import local DB';
+
+  @override
+  String get catalogImported => 'Catalog imported';
+
+  @override
+  String get catalogImportFailed => 'Could not import the catalog';
+
+  @override
+  String get catalogDelete => 'Delete catalog';
+
+  @override
+  String catalogDeleteConfirm(String name) {
+    return 'Delete $name? This cannot be undone.';
+  }
+
+  @override
+  String get catalogOnlineUnavailable =>
+      'Could not download the online catalog. Check your connection and try again.';
+
+  @override
+  String get templateUrlExample =>
+      'Example: https://raw.githubusercontent.com/abrahdev/karter/<tag>/templates';
+
+  @override
+  String get templateUrlTagExplanation =>
+      '<tag> is replaced by the latest release of that repository. You can use any GitHub repository or paste a direct link. If the tag cannot be resolved, the link is used as-is and the test will show the failure.';
+
+  @override
+  String get templateUrlUsage =>
+      'Used to fetch the catalog, the template index and translations (i18n).';
+
+  @override
+  String templateUrlResolvesTo(String url) {
+    return 'Resolves to: $url';
+  }
+
+  @override
+  String get templateUrlVersion => 'Version';
+
+  @override
+  String get templateUrlLatest => 'Latest (<tag>)';
+
+  @override
+  String get templateUrlVersionsFailed => 'Could not load versions';
+
+  @override
+  String get templateUrlHelp => 'URL help';
+
+  @override
+  String get moreTemplateSourceUrlLabel => 'Repo URL';
+
+  @override
+  String get moreTemplateSourceVersionLatest => 'Latest';
+
+  @override
+  String catalogDbVersion(String version) {
+    return 'DB version: $version';
+  }
+
+  @override
+  String templateSourceRelease(String version) {
+    return 'Release: $version';
+  }
+
+  @override
+  String get createInheritedParts => 'Inherited parts (from extends)';
+
+  @override
+  String get createInheritedItems => 'Inherited maintenance (from extends)';
+
+  @override
+  String get templateExtendsNotLoaded => 'Some extends could not be loaded';
+
+  @override
+  String get templateRepoLoading => 'Loading from template repo…';
+
+  @override
+  String get templateRepoError => 'Couldn\'t reach the template repo';
+
+  @override
+  String templateBy(String author) {
+    return 'by $author';
+  }
 }

@@ -1494,4 +1494,357 @@ class AppLocalizationsEt extends AppLocalizations {
 
   @override
   String get consumptionUnit => 'L/100km';
+
+  @override
+  String get sectionTemplates => 'Mallid';
+
+  @override
+  String get templatesTitle => 'Mallid';
+
+  @override
+  String get templatesSubtitle => 'Vaata kogukonna mallikataloogi';
+
+  @override
+  String get createTemplate => 'Loo mall';
+
+  @override
+  String get createTemplateSubtitle =>
+      'Koosta mall ja ekspordi see JSON-failina';
+
+  @override
+  String get templatesLoadError => 'Mallikataloogi ei õnnestunud laadida.';
+
+  @override
+  String get searchTemplatesHint => 'Otsi margi, mudeli või põlvkonna järgi';
+
+  @override
+  String get allMakes => 'Kõik margid';
+
+  @override
+  String get noTemplatesFound => 'Ükski mall ei vasta sinu otsingule.';
+
+  @override
+  String templateItemsCount(int count) {
+    return '$count hooldustööd';
+  }
+
+  @override
+  String get templateYearsOpen => 'praeguseni';
+
+  @override
+  String get templateNotFound => 'Malli ei leitud';
+
+  @override
+  String get templateInfo => 'Malli teave';
+
+  @override
+  String get templateYears => 'Aastad';
+
+  @override
+  String get templateEngine => 'Mootor';
+
+  @override
+  String get templateAuthor => 'Autor';
+
+  @override
+  String get templateVersion => 'Versioon';
+
+  @override
+  String get templateSources => 'Allikad';
+
+  @override
+  String get dtcCodesTitle => 'Veakoodid';
+
+  @override
+  String dtcCount(int count) {
+    return '$count veakoodi';
+  }
+
+  @override
+  String get noPartsFound => 'Varugi pole';
+
+  @override
+  String get createCopied => 'Malli JSON kopeeritud lõikelauale';
+
+  @override
+  String get saveTemplate => 'Salvesta mall';
+
+  @override
+  String savedAt(String path) {
+    return 'Salvestatud: $path';
+  }
+
+  @override
+  String get createHasErrors => 'Paranda vead, et eksportida';
+
+  @override
+  String get createMake => 'Mark';
+
+  @override
+  String get createModel => 'Mudel';
+
+  @override
+  String get createGeneration => 'Põlvkond';
+
+  @override
+  String get createYearFrom => 'Aasta alates';
+
+  @override
+  String get createYearTo => 'Aasta kuni';
+
+  @override
+  String get createFuel => 'Kütus';
+
+  @override
+  String get createPowertrain => 'Jõuallikas';
+
+  @override
+  String get createEngineCode => 'Mootori kood';
+
+  @override
+  String get createDisplacement => 'Töömaht (cc)';
+
+  @override
+  String get createPower => 'Võimsus (hj)';
+
+  @override
+  String get templateMetadata => 'Metaandmed ja pärandumine';
+
+  @override
+  String get createAuthor => 'Autor';
+
+  @override
+  String get createAuthorHint => 'Sinu GitHubi kasutajanimi';
+
+  @override
+  String get createExtends => 'Laiendab (põhimalle)';
+
+  @override
+  String get createExtendsHint => 'Päri ühiseid hooldusandmeid';
+
+  @override
+  String get createCustomExtends => 'Kohandatud extends-teed';
+
+  @override
+  String get createAddPart => 'Lisa varuosa';
+
+  @override
+  String get createNoParts => 'Varuosasid veel pole. Need on valikulised.';
+
+  @override
+  String get partSingular => 'Varuosa';
+
+  @override
+  String get createAddItem => 'Lisa hooldustöö';
+
+  @override
+  String get createNoItems => 'Hooldustööd puuduvad.';
+
+  @override
+  String get createPreview => 'Eelvaade';
+
+  @override
+  String createErrorsFound(int count) {
+    return '$count valideerimisviga';
+  }
+
+  @override
+  String get createCopy => 'Kopeeri';
+
+  @override
+  String get createShare => 'Jaga';
+
+  @override
+  String get createSave => 'Salvesta';
+
+  @override
+  String get createQuantity => 'Kogus';
+
+  @override
+  String get createI18nKey => 'i18n-võti';
+
+  @override
+  String get createDescI18nKey => 'Kirjelduse i18n-võti';
+
+  @override
+  String get createIntervalKm => 'Intervall (km)';
+
+  @override
+  String get createIntervalMonths => 'Intervall (kuud)';
+
+  @override
+  String get createDescription => 'Kirjeldus';
+
+  @override
+  String get createAddPartRef => 'Lisa varuosa viide';
+
+  @override
+  String get createFieldId => 'ID';
+
+  @override
+  String get createFieldName => 'Nimi';
+
+  @override
+  String get createFieldUnit => 'Ühik';
+
+  @override
+  String get createFieldOem => 'OEM-number';
+
+  @override
+  String get createFieldLabel => 'Silt';
+
+  @override
+  String get createFieldPart => 'Varuosa';
+
+  @override
+  String get fuelGasoline => 'Bensiin';
+
+  @override
+  String get fuelDiesel => 'Diisel';
+
+  @override
+  String get fuelLpg => 'LPG';
+
+  @override
+  String get fuelCng => 'CNG';
+
+  @override
+  String get fuelHydrogen => 'Vesinik';
+
+  @override
+  String get fuelEthanol => 'Etanool';
+
+  @override
+  String get powertrainCombustion => 'Põlemismootor';
+
+  @override
+  String get powertrainHybrid => 'Hübriid';
+
+  @override
+  String get powertrainPluginHybrid => 'Pistikühendusega hübriid';
+
+  @override
+  String get powertrainElectric => 'Elekter';
+
+  @override
+  String get catalogDb => 'Kataloogi andmebaas';
+
+  @override
+  String get catalogSourceBuiltin => 'Kaasas olev (vaikevaade)';
+
+  @override
+  String get catalogSourceOnline => 'Veebis (GitHub release)';
+
+  @override
+  String get catalogSourcesTitle => 'Saadaolevad kataloogid';
+
+  @override
+  String get catalogCannotDelete => 'Vaikekataloog — seda ei saa kustutada';
+
+  @override
+  String catalogVersionOf(String version) {
+    return 'Versioon $version';
+  }
+
+  @override
+  String get catalogVersionUnknown => 'Versioon puudub';
+
+  @override
+  String get catalogRefreshOnline => 'Värskenda veebikataloogi';
+
+  @override
+  String get catalogRefreshed => 'Veebikataloog värskendatud';
+
+  @override
+  String get catalogRefreshFailed => 'Veebikataloogi ei õnnestunud värskendada';
+
+  @override
+  String get catalogNotAvailable => 'See kataloog pole saadaval';
+
+  @override
+  String get catalogImportDb => 'Impordi kohalik andmebaas';
+
+  @override
+  String get catalogImported => 'Kataloog imporditud';
+
+  @override
+  String get catalogImportFailed => 'Kataloogi ei õnnestunud importida';
+
+  @override
+  String get catalogDelete => 'Kustuta kataloog';
+
+  @override
+  String catalogDeleteConfirm(String name) {
+    return 'Kustutada kataloog $name? Seda ei saa tagasi võtta.';
+  }
+
+  @override
+  String get catalogOnlineUnavailable =>
+      'Veebikataloogi ei õnnestunud alla laadida. Kontrolli ühendust ja proovi uuesti.';
+
+  @override
+  String get templateUrlExample =>
+      'Näide: https://raw.githubusercontent.com/abrahdev/karter/<tag>/templates';
+
+  @override
+  String get templateUrlTagExplanation =>
+      '<tag> asendatakse selle repositooriumi viimase väljalaskega. Võid kasutada mõnda teist GitHubi repositooriumit või kleepida otse lingi. Kui tag\'i ei saa määrata, kasutatakse linki nii nagu on ja test näitab tõrke.';
+
+  @override
+  String get templateUrlUsage =>
+      'Kasutatakse kataloogi, mallide indeksi ja tõlgete (i18n) hankimiseks.';
+
+  @override
+  String templateUrlResolvesTo(String url) {
+    return 'Laheneb: $url';
+  }
+
+  @override
+  String get templateUrlVersion => 'Versioon';
+
+  @override
+  String get templateUrlLatest => 'Uusim (<tag>)';
+
+  @override
+  String get templateUrlVersionsFailed => 'Versioone ei õnnestunud laadida';
+
+  @override
+  String get templateUrlHelp => 'URL-i abi';
+
+  @override
+  String get moreTemplateSourceUrlLabel => 'Repo URL';
+
+  @override
+  String get moreTemplateSourceVersionLatest => 'Uusim';
+
+  @override
+  String catalogDbVersion(String version) {
+    return 'Andmebaasi versioon: $version';
+  }
+
+  @override
+  String templateSourceRelease(String version) {
+    return 'Väljalase: $version';
+  }
+
+  @override
+  String get createInheritedParts => 'Päritud osad (extends-ist)';
+
+  @override
+  String get createInheritedItems => 'Päritud hooldus (extends-ist)';
+
+  @override
+  String get templateExtendsNotLoaded => 'Mõnda extendsi ei õnnestunud laadida';
+
+  @override
+  String get templateRepoLoading => 'Laadimine mallide repositooriumist…';
+
+  @override
+  String get templateRepoError =>
+      'Ei õnnestunud mallide repositooriumiga ühendust saada';
+
+  @override
+  String templateBy(String author) {
+    return 'autor: $author';
+  }
 }

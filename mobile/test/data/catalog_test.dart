@@ -93,5 +93,8 @@ void main() {
     final index = await repo.loadIndex();
     expect(index.templates.length, greaterThan(80));
     expect(index.templates.any((e) => e.meta.make == 'Toyota'), isTrue);
+    final toyota = index.templates.firstWhere((e) => e.meta.make == 'Toyota');
+    expect(toyota.meta.author, isNotEmpty);
+    expect(toyota.meta.version, isNotEmpty);
   });
 }

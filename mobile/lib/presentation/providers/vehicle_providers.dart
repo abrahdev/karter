@@ -28,6 +28,7 @@ import 'package:mobile/domain/repositories/maintenance_log_repository.dart';
 import 'package:mobile/domain/repositories/vehicle_document_repository.dart';
 import 'package:mobile/domain/repositories/vehicle_part_repository.dart';
 import 'package:mobile/domain/repositories/vehicle_repository.dart';
+import 'package:mobile/presentation/providers/template_source_provider.dart';
 
 final appDatabaseProvider = Provider<AppDatabase>((ref) {
   final db = AppDatabase();
@@ -135,13 +136,55 @@ final catalogServiceProvider = Provider<CatalogService>((ref) {
   return service;
 });
 
+/// Path of the currently active catalog file (null = bundled). Updated by
+/// [CatalogSourcesNotifier] whenever the active source file changes, so that
+/// catalog-derived providers recompute automatically.
+class ActiveCatalogFileNotifier extends Notifier<String?> {
+  @override
+  String? build() => null;
+
+  void set(String? value) => state = value;
+}
+
+final activeCatalogFileProvider =
+    NotifierProvider<ActiveCatalogFileNotifier, String?>(
+  ActiveCatalogFileNotifier.new,
+);
+
 final catalogRepositoryProvider = Provider<CatalogRepository>((ref) {
+  ref.watch(activeCatalogFileProvider);
   return CatalogRepository(ref.watch(catalogServiceProvider));
 });
 
 final templateIndexProvider = FutureProvider<TemplateIndex>((ref) async {
   final repo = ref.watch(catalogRepositoryProvider);
   return repo.loadIndex();
+});
+
+final templateResolverProvider = Provider<TemplateResolver>((ref) {
+  return TemplateResolver();
+});
+
+/// Resolved raw base URL of the configured online template repo (same value
+/// as the "Repo URL" in More). Null when the template source is disabled.
+final onlineTemplateBaseUrlProvider = FutureProvider<String?>((ref) async {
+  final config = ref.watch(templateSourceProvider);
+  if (!config.enabled) return null;
+  final url = config.version.isEmpty || !config.repoUrl.contains('<tag>')
+      ? config.repoUrl
+      : config.repoUrl.replaceAll('<tag>', config.version);
+  return CatalogService.resolveBaseUrl(
+    url,
+    timeout: const Duration(seconds: 10),
+  );
+});
+
+/// Template index (with extends) fetched as JSON from the online template
+/// repo, used by the template creator.
+final onlineTemplateIndexProvider = FutureProvider<TemplateIndex>((ref) async {
+  final baseUrl = await ref.watch(onlineTemplateBaseUrlProvider.future);
+  final resolver = ref.watch(templateResolverProvider);
+  return resolver.loadIndex(baseUrl: baseUrl);
 });
 
 final templateResolutionProvider =
@@ -154,6 +197,12 @@ final templateResolutionProvider =
     model: vehicle.model,
     year: vehicle.year,
   );
+});
+
+final templateByIdProvider =
+    FutureProvider.family<TemplateResolution?, String>((ref, vehicleId) async {
+  final repo = ref.watch(catalogRepositoryProvider);
+  return repo.resolveTemplate(vehicleId);
 });
 
 final pdfExportServiceProvider = Provider<PdfExportService>((ref) {

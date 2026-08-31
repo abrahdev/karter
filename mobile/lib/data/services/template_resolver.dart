@@ -84,6 +84,32 @@ class TemplateResolution {
   });
 }
 
+class InheritedItem {
+  final String origin;
+  final ResolvedItem item;
+
+  const InheritedItem({required this.origin, required this.item});
+}
+
+class InheritedPart {
+  final String origin;
+  final ResolvedPart part;
+
+  const InheritedPart({required this.origin, required this.part});
+}
+
+class InheritedContent {
+  final List<InheritedItem> items;
+  final List<InheritedPart> parts;
+  final List<String> failedPaths;
+
+  const InheritedContent({
+    this.items = const [],
+    this.parts = const [],
+    this.failedPaths = const [],
+  });
+}
+
 class TemplateResolver {
   String? _lastBaseUrl;
   TemplateIndex? _index;
@@ -361,6 +387,75 @@ class TemplateResolver {
     return data.dtcs.values.toList();
   }
 
+  /// Resolves the full `extends` chain of a list of extends paths (as a
+  /// virtual template), tracking the origin file of every part/item.
+  /// Paths that cannot be loaded are collected in [InheritedContent.failedPaths].
+  Future<InheritedContent> resolveExtendsChain(
+    List<String> extendsPaths, {
+    String? baseUrl,
+  }) async {
+    final visited = <String>{};
+    final items = <String, InheritedItem>{};
+    final parts = <String, InheritedPart>{};
+    final failed = <String>[];
+    for (final path in extendsPaths) {
+      if (path.trim().isEmpty) continue;
+      try {
+        await _resolveInheritedPath(
+          path,
+          visited,
+          items,
+          parts,
+          baseUrl: baseUrl,
+        );
+      } catch (_) {
+        failed.add(path);
+      }
+    }
+    return InheritedContent(
+      items: items.values.toList(),
+      parts: parts.values.toList(),
+      failedPaths: failed,
+    );
+  }
+
+  Future<void> _resolveInheritedPath(
+    String path,
+    Set<String> visited,
+    Map<String, InheritedItem> items,
+    Map<String, InheritedPart> parts, {
+    String? baseUrl,
+  }) async {
+    if (visited.contains(path)) return;
+    visited.add(path);
+
+    final data = await _loadRawTemplate(path, baseUrl: baseUrl);
+    final extendsList = (data['extends'] as List?)?.cast<String>() ?? [];
+    for (final ext in extendsList) {
+      await _resolveInheritedPath(ext, visited, items, parts, baseUrl: baseUrl);
+    }
+
+    final rawParts = (data['parts'] as List?) ?? const [];
+    for (final raw in rawParts) {
+      final entry = TemplatePart.fromJson(raw as Map<String, dynamic>);
+      if (entry.remove) {
+        parts.remove(entry.id);
+        continue;
+      }
+      parts[entry.id] = InheritedPart(origin: path, part: _resolvePart(entry));
+    }
+
+    final rawItems = (data['maintenance_items'] as List?) ?? const [];
+    for (final raw in rawItems) {
+      final entry = TemplateItem.fromJson(raw as Map<String, dynamic>);
+      if (entry.remove) {
+        items.remove(entry.id);
+        continue;
+      }
+      items[entry.id] = InheritedItem(origin: path, item: _resolveItem(entry));
+    }
+  }
+
   Future<TemplateResolution?> findBestMatch({
     required String make,
     required String model,
@@ -377,7 +472,10 @@ class TemplateResolver {
       if (!_matchesMakeModel(entry.meta, make, model)) continue;
 
       if (entry.meta.years != null) {
-        if (year < entry.meta.years![0] || year > entry.meta.years![1]) continue;
+        final years = entry.meta.years!;
+        if (year < years[0]! || (years[1] != null && year > years[1]!)) {
+          continue;
+        }
       }
 
       candidates.add(entry);
@@ -407,8 +505,10 @@ class TemplateResolver {
 
       final aYear = a.meta.years;
       final bYear = b.meta.years;
-      final aInRange = aYear != null && year >= aYear[0] && year <= aYear[1];
-      final bInRange = bYear != null && year >= bYear[0] && year <= bYear[1];
+      final aInRange =
+          aYear != null && year >= aYear[0]! && (aYear[1] == null || year <= aYear[1]!);
+      final bInRange =
+          bYear != null && year >= bYear[0]! && (bYear[1] == null || year <= bYear[1]!);
       if (aInRange != bInRange) return aInRange ? -1 : 1;
 
       final aScore = _specificityScore(a);

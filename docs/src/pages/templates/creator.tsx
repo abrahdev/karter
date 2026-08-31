@@ -6,28 +6,36 @@ const INDEX_URL =
   "https://raw.githubusercontent.com/abrahdev/karter/main/templates/index.json";
 
 const RAW_BASE =
-  "https://raw.githubusercontent.com/abrahdev/karter/main/templates/data";
+  "https://raw.githubusercontent.com/abrahdev/karter/main/templates";
 
 const BASE_OPTIONS = [
   { value: "", label: "None (start from scratch)" },
-  { value: "data/_base/common-all.json", label: "_base/common-all.json" },
-  { value: "data/_base/combustion.json", label: "_base/combustion.json (gasoline)" },
-  { value: "data/_base/diesel.json", label: "_base/diesel.json" },
-  { value: "data/_base/electric.json", label: "_base/electric.json" },
-  { value: "data/_base/motorcycle-common.json", label: "_base/motorcycle-common.json" },
-  { value: "data/_base/motorcycle-2t.json", label: "_base/motorcycle-2t.json (2-stroke)" },
-  { value: "data/_base/motorcycle-4t.json", label: "_base/motorcycle-4t.json (4-stroke)" },
-  { value: "data/_base/motorcycle-ev.json", label: "_base/motorcycle-ev.json (electric)" },
+  { value: "_base/car-common.json", label: "_base/car-common.json" },
+  { value: "_base/car-combustion.json", label: "_base/car-combustion.json" },
+  { value: "_base/car-diesel.json", label: "_base/car-diesel.json" },
+  { value: "_base/car-electric.json", label: "_base/car-electric.json" },
+  { value: "_base/motorcycle-common.json", label: "_base/motorcycle-common.json" },
+  { value: "_base/motorcycle-2t.json", label: "_base/motorcycle-2t.json (2-stroke)" },
+  { value: "_base/motorcycle-4t.json", label: "_base/motorcycle-4t.json (4-stroke)" },
+  { value: "_base/motorcycle-ev.json", label: "_base/motorcycle-ev.json (electric)" },
 ];
 
 const FUEL_OPTIONS = [
   { value: "", label: "Select fuel type" },
   { value: "gasoline", label: "Gasoline" },
   { value: "diesel", label: "Diesel" },
+  { value: "lpg", label: "LPG" },
+  { value: "cng", label: "CNG" },
+  { value: "hydrogen", label: "Hydrogen" },
+  { value: "ethanol", label: "Ethanol" },
+];
+
+const POWERTRAIN_OPTIONS = [
+  { value: "", label: "Select powertrain" },
+  { value: "combustion", label: "Combustion" },
   { value: "hybrid", label: "Hybrid" },
   { value: "plugin-hybrid", label: "Plugin Hybrid" },
   { value: "electric", label: "Electric" },
-  { value: "hydrogen", label: "Hydrogen" },
 ];
 
 interface IMaintItem {
@@ -49,6 +57,7 @@ interface IFormState {
   yearsTo: string;
   engineCode: string;
   engineFuel: string;
+  enginePowertrain: string;
   engineDisplacement: string;
   enginePower: string;
   author: string;
@@ -67,6 +76,7 @@ function defaultForm(): IFormState {
     yearsTo: "",
     engineCode: "",
     engineFuel: "",
+    enginePowertrain: "",
     engineDisplacement: "",
     enginePower: "",
     author: "",
@@ -109,19 +119,22 @@ function generateBaseJson(form: IFormState): string {
     const from = form.yearsFrom ? parseInt(form.yearsFrom, 10) : 2000;
     const to = form.yearsTo ? parseInt(form.yearsTo, 10) : 2030;
     meta.years = [from, to];
-  } else {
-    meta.years = null;
   }
 
-  if (form.engineFuel || form.engineCode || form.engineDisplacement || form.enginePower) {
+  if (
+    form.engineFuel ||
+    form.enginePowertrain ||
+    form.engineCode ||
+    form.engineDisplacement ||
+    form.enginePower
+  ) {
     const engine: Record<string, unknown> = {};
     if (form.engineFuel) engine.fuel = form.engineFuel;
+    if (form.enginePowertrain) engine.powertrain = form.enginePowertrain;
     if (form.engineCode) engine.code = form.engineCode;
     if (form.engineDisplacement) engine.displacement_cc = parseInt(form.engineDisplacement, 10);
     if (form.enginePower) engine.power_hp = parseInt(form.enginePower, 10);
-    meta.engine = Object.keys(engine).length > 0 ? engine : null;
-  } else {
-    meta.engine = null;
+    meta.engine = Object.keys(engine).length > 0 ? engine : undefined;
   }
 
   meta.author = form.author || "your-username";
@@ -489,10 +502,10 @@ function ItemEditor({
       </div>
       <div style={STYLES.row}>
         <div style={STYLES.col}>
-          <Input label="i18n Key" value={item.i18nKey} onChange={(v) => set("i18nKey", v)} placeholder="e.g. seedIntervalOilChange" />
+          <Input label="i18n Key" value={item.i18nKey} onChange={(v) => set("i18nKey", v)} placeholder="e.g. seed_interval_oil_change" />
         </div>
         <div style={STYLES.col}>
-          <Input label="Desc i18n Key" value={item.descI18nKey} onChange={(v) => set("descI18nKey", v)} placeholder="e.g. seedDescOilChange" />
+          <Input label="Desc i18n Key" value={item.descI18nKey} onChange={(v) => set("descI18nKey", v)} placeholder="e.g. seed_desc_oil_change" />
         </div>
       </div>
       <Input label="Description" value={item.description} onChange={(v) => set("description", v)} placeholder="Explain what this maintenance involves..." />
@@ -565,6 +578,7 @@ export default function TemplateCreatorPage() {
         yearsTo: meta.years?.[1] != null ? String(meta.years[1]) : "",
         engineCode: eng.code || "",
         engineFuel: eng.fuel || "",
+        enginePowertrain: eng.powertrain || "",
         engineDisplacement: eng.displacement_cc != null ? String(eng.displacement_cc) : "",
         enginePower: eng.power_hp != null ? String(eng.power_hp) : "",
         author: meta.author || "",
@@ -694,6 +708,9 @@ export default function TemplateCreatorPage() {
               <div style={STYLES.row}>
                 <div style={STYLES.col}>
                   <Select label="Fuel type" value={form.engineFuel} options={FUEL_OPTIONS} onChange={(v) => patchForm({ engineFuel: v })} />
+                </div>
+                <div style={STYLES.col}>
+                  <Select label="Powertrain" value={form.enginePowertrain} options={POWERTRAIN_OPTIONS} onChange={(v) => patchForm({ enginePowertrain: v })} />
                 </div>
                 <div style={STYLES.col}>
                   <Input label="Engine code" value={form.engineCode} onChange={(v) => patchForm({ engineCode: v })} placeholder="e.g. K20C2" />
