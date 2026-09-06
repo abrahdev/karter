@@ -17,7 +17,7 @@ Existing keys in en.json that are not referenced by any template are kept, so
 curated/unused entries are never lost. Keys referenced by templates are
 re-synced to the template text and new keys are appended at the end.
 
-Run from the repo root:  python3 templates/tools/i18n_json.py
+Run from the repo root:  python3 templates/tools/i18n_json/i18n_json.py
 """
 
 import argparse
@@ -25,7 +25,7 @@ import json
 import os
 import sys
 
-REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
 DEFAULT_DATA_ROOT = os.path.join(REPO_ROOT, "templates", "data")
 DEFAULT_I18N = os.path.join(REPO_ROOT, "templates", "i18n", "en.json")
 

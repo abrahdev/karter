@@ -31,7 +31,7 @@ import sys
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional
 
-REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
 DEFAULT_DATA_ROOT = os.path.join(REPO_ROOT, "templates", "data")
 DEFAULT_INDEX = os.path.join(REPO_ROOT, "templates", "index.json")
 DEFAULT_I18N = os.path.join(REPO_ROOT, "templates", "i18n", "en.json")

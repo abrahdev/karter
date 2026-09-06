@@ -22,3 +22,7 @@ __pycache__/
 flatpak/build/
 flatpak/repo/
 flatpak/build.log
+
+# i18n tool API keys / checkpoints
+*templates/tools/translate_i18n/.env
+*templates/tools/translate_i18n/.checkpoints/

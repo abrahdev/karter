@@ -107,7 +107,7 @@ template and reference it through a key:
 - `desc_i18n_key` — description of a maintenance item or DTC
 - `meta.author` / `meta.sources` are free text and are not localized
 
-Run `python templates/tools/i18n_json.py` to (re)generate `i18n/en.json` from
+Run `python templates/tools/i18n_json/i18n_json.py` to (re)generate `i18n/en.json` from
 the templates. `es.json` and `et.json` are curated translations (via Weblate);
 leave them alone unless you speak the language.
 
@@ -115,11 +115,11 @@ leave them alone unless you speak the language.
 
 ```bash
 # Post-merge validation (interval_km/label/description present after inheritance)
-python templates/tools/build_catalog.py --check-only
+python templates/tools/build_catalog/build_catalog.py --check-only
 
 # Also validate every raw file against schemas/template-v2.json
 # (needs: pip install -r templates/tools/requirements.txt)
-python templates/tools/build_catalog.py --check-only --schema-check
+python templates/tools/build_catalog/build_catalog.py --check-only --schema-check
 ```
 
 CI runs the schema check on every pull request. Any validation error exits

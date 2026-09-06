@@ -5,8 +5,8 @@ on:
     branches: [main]
     paths:
       - 'templates/**/*.json'
-      - 'templates/tools/generate_index.py'
-      - 'templates/tools/build_catalog.py'
+      - 'templates/tools/generate_index/generate_index.py'
+      - 'templates/tools/build_catalog/build_catalog.py'
 
 permissions:
   contents: write
@@ -25,10 +25,10 @@ jobs:
         run: pip install -r templates/tools/requirements.txt
 
       - name: Regenerate index.json
-        run: python templates/tools/generate_index.py
+        run: python templates/tools/generate_index/generate_index.py
 
       - name: Build catalog db
-        run: python templates/tools/build_catalog.py --schema-check
+        run: python templates/tools/build_catalog/build_catalog.py --schema-check
 
       - name: Commit if changed
         run: |
