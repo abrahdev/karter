@@ -30,13 +30,32 @@ jobs:
       - name: Build catalog db
         run: python templates/tools/build_catalog/build_catalog.py --schema-check
 
-      - name: Commit if changed
+      - name: Commit and open pull request if changed
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add templates/index.json templates/karter-catalog.db
-          git diff --staged --quiet && echo "No changes" || \
-            (git commit -m "chore(templates): regenerate index.json and karter-catalog.db" && git push)
+          if git diff --staged --quiet; then
+            echo "No changes"
+            exit 0
+          fi
+
+          branch="chore/update-template-index"
+          git checkout -b "$branch"
+          git commit -m "chore(templates): regenerate index.json and karter-catalog.db"
+          git push --force origin "$branch"
+
+          if gh pr view "$branch" --json number --jq .number >/dev/null 2>&1; then
+            echo "PR already exists; pushing updated branch"
+          else
+            gh pr create \
+              --base main \
+              --head "$branch" \
+              --title "chore(templates): regenerate index.json and karter-catalog.db" \
+              --body "Automated catalog refresh (template data changed on main)."
+          fi
 
       - name: Publish catalog to rolling release
         env:
