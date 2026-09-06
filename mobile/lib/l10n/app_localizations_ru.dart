@@ -1053,6 +1053,27 @@ class AppLocalizationsRu extends AppLocalizations {
   String get eesti => 'Эстонский';
 
   @override
+  String get german => 'Немецкий';
+
+  @override
+  String get portuguese => 'Португальский';
+
+  @override
+  String get russian => 'Русский';
+
+  @override
+  String get french => 'Французский';
+
+  @override
+  String get polish => 'Польский';
+
+  @override
+  String get italian => 'Итальянский';
+
+  @override
+  String get dutch => 'Голландский';
+
+  @override
   String get odometerUpdateTitle => 'Обновить одометр';
 
   @override

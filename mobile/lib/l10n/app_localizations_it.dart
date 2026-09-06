@@ -1052,6 +1052,27 @@ class AppLocalizationsIt extends AppLocalizations {
   String get eesti => 'Eesti';
 
   @override
+  String get german => 'Tedesco';
+
+  @override
+  String get portuguese => 'Portoghese';
+
+  @override
+  String get russian => 'Russo';
+
+  @override
+  String get french => 'Francese';
+
+  @override
+  String get polish => 'Polacco';
+
+  @override
+  String get italian => 'Italiano';
+
+  @override
+  String get dutch => 'Olandese';
+
+  @override
   String get odometerUpdateTitle => 'Aggiorna contachilometri';
 
   @override

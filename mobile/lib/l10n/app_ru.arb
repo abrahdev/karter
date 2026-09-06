@@ -1,21 +1,16 @@
 {
   "@@locale": "ru",
   "@@info": "Переводы на русский язык для Karter",
-
   "appTitle": "Karter",
-
   "navDashboard": "Главная",
   "navVehicles": "Транспорт",
   "navObd": "OBD II",
   "navMore": "Ещё",
-
   "homeEmptyTitle": "Нет транспортных средств",
   "homeEmptySubtitle": "Добавьте свой первый автомобиль",
   "homeError": "Ошибка: {error}",
-
   "dashboardTitle": "Главная",
   "dashboardComingSoon": "Скоро",
-
   "vehicleDetailTitle": "Автомобиль",
   "vehicleNotFound": "Автомобиль не найден",
   "plate": "Гос. номер",
@@ -39,7 +34,6 @@
   "retry": "Повторить",
   "overduePerformService": "Просрочено — выполните обслуживание",
   "nextIn": "Следующее через {parts}",
-
   "vehicleFormNew": "Новый автомобиль",
   "vehicleFormEdit": "Редактировать автомобиль",
   "vehicleFormDetails": "Детали",
@@ -66,7 +60,6 @@
   "cancel": "Отмена",
   "resetToDefault": "Сбросить к значениям по умолчанию",
   "delete": "Удалить",
-
   "dataManagerTitle": "Экспорт / Импорт данных",
   "selectAll": "Выбрать всё",
   "exporting": "Экспорт...",
@@ -82,7 +75,6 @@
   "importError": "Ошибка импорта: {error}",
   "invalidJson": "Некорректный JSON-файл",
   "exportShareText": "Экспорт Karter — {count} транспортных средств",
-
   "maintenanceSettingsTitle": "Интервалы обслуживания",
   "maintenanceSettingsInstruction": "Включайте или отключайте пункты в соответствии с потребностями вашего автомобиля. Пользовательские интервалы можно удалять.",
   "km": "км",
@@ -162,7 +154,6 @@
   "formattedKm": "{km} км",
   "intervalSubtitleKm": "каждые {km}",
   "intervalSubtitleMonths": "{months} мес.",
-
   "maintenanceLogTitleEdit": "Редактировать обслуживание",
   "maintenanceLogTitleNew": "Новое обслуживание",
   "date": "Дата: {date}",
@@ -179,7 +170,6 @@
   "share": "Поделиться",
   "deleteService": "Удалить обслуживание",
   "deleteServiceConfirm": "Вы уверены, что хотите удалить это обслуживание?",
-
   "maintenanceListTitle": "Обслуживание",
   "maintenanceEmpty": "Нет записей об обслуживании",
   "maintenanceHistoryTab": "История",
@@ -195,7 +185,6 @@
   "maintenanceReportDateHeader": "Дата",
   "maintenanceReportDescHeader": "Описание",
   "maintenanceReportOdometerHeader": "Пробег",
-
   "addDocument": "Добавить документ",
   "documentType": "Тип документа",
   "selectFile": "Выбрать файл",
@@ -207,7 +196,6 @@
   "takePhoto": "Сделать фото",
   "chooseFromGallery": "Выбрать из галереи",
   "browseFiles": "Обзор файлов",
-
   "docTypeFine": "Штраф",
   "docTypeParkingFee": "Парковка",
   "docTypeInsurance": "Страховка",
@@ -216,9 +204,7 @@
   "docTypeComplexInsurance": "Комплексное страхование",
   "docTypeVehicleRegister": "Регистрация ТС",
   "docTypeOther": "Другое",
-
   "vehicleDocuments": "Документы",
-
   "fuelFormTitle": "Новая заправка",
   "volume": "Объём",
   "unitL": "л",
@@ -231,10 +217,8 @@
   "currency": "Валюта",
   "cost": "Стоимость (необязательно)",
   "saveFuelUp": "Сохранить заправку",
-
   "fuelListTitle": "Заправки",
   "fuelEmpty": "Нет записей о заправках",
-
   "moreAbout": "О Karter",
   "moreDescription": "Karter — это локальное приложение с открытым исходным кодом для обслуживания автомобилей, которое уважает вашу конфиденциальность.",
   "moreExport": "Экспорт / Импорт данных",
@@ -304,7 +288,6 @@
   "ratePromptMessage": "Нравится Karter? Отзыв поможет другим открыть для себя это приложение!",
   "rate": "Оценить",
   "moreUrlError": "Не удалось открыть {url}",
-
   "tipProgram": "Программа чаевых",
   "tipProgramComingSoon": "Эта функция находится в разработке и будет доступна в ближайшее время.",
   "tipBadges": "Значки",
@@ -322,7 +305,6 @@
   "tipBronzeMonthly": "Бронза / месяц",
   "tipSilverMonthly": "Серебро / месяц",
   "tipGoldMonthly": "Золото / месяц",
-
   "officialWebsite": "Официальный сайт",
   "communityForums": "Форумы сообщества",
   "translations": "Переводы",
@@ -333,24 +315,27 @@
   "deviceId": "ID устройства",
   "changelog": "Журнал изменений",
   "openSourceLicenses": "Лицензии с открытым исходным кодом",
-
   "language": "Язык",
   "selectLanguage": "Выберите язык",
   "languageSystem": "Системный язык",
   "english": "Английский",
   "spanish": "Испанский",
   "eesti": "Эстонский",
-
+  "german": "Немецкий",
+  "portuguese": "Португальский",
+  "russian": "Русский",
+  "french": "Французский",
+  "polish": "Польский",
+  "italian": "Итальянский",
+  "dutch": "Голландский",
   "odometerUpdateTitle": "Обновить одометр",
   "odometerLastReading": "Последнее: {value} {unit}",
   "odometerLowerWarning": "Значение ниже последней записи ({value} {unit}).",
   "odometerDeltaWarning": "Вы проехали {delta} {unit} с прошлого раза. Всё верно?",
   "odometerSave": "Сохранить",
   "odometerCancel": "Отмена",
-
   "moreNotifications": "Уведомления",
   "moreNotificationsSubtitle": "Напоминания о пробеге и обслуживании",
-
   "notificationSettingsTitle": "Настройки уведомлений",
   "notificationSettingsSubtitle": "Настройте напоминания для этого автомобиля",
   "notificationOdometerSection": "Напоминание о пробеге",
@@ -388,7 +373,6 @@
   "@discard": {
     "description": "Discard / discard changes button label"
   },
-
   "moreTemplateSource": "Источник шаблонов",
   "moreTemplateSourceSubtitle": "Загружать шаблоны с GitHub или использовать локальные ресурсы",
   "moreTemplateSourceOffline": "Локальный (офлайн)",
@@ -398,7 +382,6 @@
   "moreTemplateSourceUrlHint": "https://github.com/abrahdev/karter/templates",
   "moreTemplateSourceEditUrl": "Изменить URL",
   "moreTemplateSourceUrlSaved": "URL обновлён",
-
   "testConnection": "Проверить соединение",
   "catalogDbModifiedAt": "Изменено: {date}",
   "@catalogDbModifiedAt": {
@@ -482,7 +465,6 @@
     }
   },
   "importCheckDbLocalFailed": "Не удалось прочитать импортированную базу данных",
-
   "onboardingSkip": "Пропустить",
   "onboardingNext": "Далее",
   "onboardingDone": "Начать",
@@ -536,27 +518,33 @@
   "dtcVehicle": "Автомобиль",
   "dtcVehicleNotFound": "Автомобиль не найден",
   "dtcLoadError": "Не удалось загрузить коды неисправностей",
-
   "notificationOdometerTitle": "Обновить одометр",
   "notificationOdometerBody": "{name} — прошло {days} дн. с последнего напоминания.",
   "@notificationOdometerBody": {
     "placeholders": {
-      "name": {"type": "String"},
-      "days": {"type": "int"}
+      "name": {
+        "type": "String"
+      },
+      "days": {
+        "type": "int"
+      }
     }
   },
   "notificationMaintenanceTitle": "Предстоящее обслуживание",
   "notificationMaintenanceBody": "{name} — проверьте интервалы обслуживания.",
   "@notificationMaintenanceBody": {
     "placeholders": {
-      "name": {"type": "String"}
+      "name": {
+        "type": "String"
+      }
     }
   },
-
   "errorGeneric": "Ошибка: {error}",
   "@errorGeneric": {
     "placeholders": {
-      "error": {"type": "String"}
+      "error": {
+        "type": "String"
+      }
     }
   },
   "deleteFuelUp": "Удалить заправку",
@@ -579,7 +567,13 @@
   "allMakes": "Все марки",
   "noTemplatesFound": "По вашему запросу шаблоны не найдены.",
   "templateItemsCount": "{count} пунктов обслуживания",
-  "@templateItemsCount": { "placeholders": { "count": {"type": "int"} } },
+  "@templateItemsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "templateYearsOpen": "наст. время",
   "templateNotFound": "Шаблон не найден",
   "templateInfo": "Информация о шаблоне",
@@ -590,12 +584,24 @@
   "templateSources": "Источники",
   "dtcCodesTitle": "Коды неисправностей",
   "dtcCount": "{count} кодов неисправности",
-  "@dtcCount": { "placeholders": { "count": {"type": "int"} } },
+  "@dtcCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "noPartsFound": "Запчастей нет",
   "createCopied": "JSON шаблона скопирован в буфер обмена",
   "saveTemplate": "Сохранить шаблон",
   "savedAt": "Сохранено в {path}",
-  "@savedAt": { "placeholders": { "path": {"type": "String"} } },
+  "@savedAt": {
+    "placeholders": {
+      "path": {
+        "type": "String"
+      }
+    }
+  },
   "createHasErrors": "Исправьте ошибки, чтобы экспортировать",
   "createMake": "Марка",
   "createModel": "Модель",
@@ -620,7 +626,13 @@
   "createNoItems": "Пунктов обслуживания пока нет.",
   "createPreview": "Предпросмотр",
   "createErrorsFound": "{count} ошибок валидации",
-  "@createErrorsFound": { "placeholders": { "count": {"type": "int"} } },
+  "@createErrorsFound": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "createCopy": "Копировать",
   "createShare": "Поделиться",
   "createSave": "Сохранить",
@@ -653,7 +665,13 @@
   "catalogSourcesTitle": "Доступные каталоги",
   "catalogCannotDelete": "Каталог по умолчанию — нельзя удалить",
   "catalogVersionOf": "Версия {version}",
-  "@catalogVersionOf": { "placeholders": { "version": {"type": "String"} } },
+  "@catalogVersionOf": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
   "catalogVersionUnknown": "Версия недоступна",
   "catalogRefreshOnline": "Обновить онлайн-каталог",
   "catalogRefreshed": "Онлайн-каталог обновлён",
@@ -664,13 +682,25 @@
   "catalogImportFailed": "Не удалось импортировать каталог",
   "catalogDelete": "Удалить каталог",
   "catalogDeleteConfirm": "Удалить {name}? Это действие нельзя отменить.",
-  "@catalogDeleteConfirm": { "placeholders": { "name": {"type": "String"} } },
+  "@catalogDeleteConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "catalogOnlineUnavailable": "Не удалось загрузить онлайн-каталог. Проверьте соединение и попробуйте снова.",
   "templateUrlExample": "Пример: https://raw.githubusercontent.com/abrahdev/karter/<tag>/templates",
   "templateUrlTagExplanation": "<tag> заменяется на последний релиз этого репозитория. Вы можете использовать любой репозиторий GitHub или вставить прямую ссылку. Если тег не удаётся определить, ссылка используется как есть, и тест покажет ошибку.",
   "templateUrlUsage": "Используется для получения каталога, индекса шаблонов и переводов (i18n).",
   "templateUrlResolvesTo": "Разрешается в: {url}",
-  "@templateUrlResolvesTo": { "placeholders": { "url": {"type": "String"} } },
+  "@templateUrlResolvesTo": {
+    "placeholders": {
+      "url": {
+        "type": "String"
+      }
+    }
+  },
   "templateUrlVersion": "Версия",
   "templateUrlLatest": "Последняя (<tag>)",
   "templateUrlVersionsFailed": "Не удалось загрузить версии",
@@ -678,14 +708,32 @@
   "moreTemplateSourceUrlLabel": "URL репозитория",
   "moreTemplateSourceVersionLatest": "Последняя",
   "catalogDbVersion": "Версия БД: {version}",
-  "@catalogDbVersion": { "placeholders": { "version": {"type": "String"} } },
+  "@catalogDbVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
   "templateSourceRelease": "Релиз: {version}",
-  "@templateSourceRelease": { "placeholders": { "version": {"type": "String"} } },
+  "@templateSourceRelease": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
   "createInheritedParts": "Наследуемые запчасти (из extends)",
   "createInheritedItems": "Наследуемое обслуживание (из extends)",
   "templateExtendsNotLoaded": "Некоторые расширения не удалось загрузить",
   "templateRepoLoading": "Загрузка из репозитория шаблонов…",
   "templateRepoError": "Не удалось связаться с репозиторием шаблонов",
   "templateBy": "от {author}",
-  "@templateBy": { "placeholders": { "author": {"type": "String"} } }
+  "@templateBy": {
+    "placeholders": {
+      "author": {
+        "type": "String"
+      }
+    }
+  }
 }

@@ -1052,6 +1052,27 @@ class AppLocalizationsNl extends AppLocalizations {
   String get eesti => 'Eesti';
 
   @override
+  String get german => 'Duits';
+
+  @override
+  String get portuguese => 'Portugees';
+
+  @override
+  String get russian => 'Russisch';
+
+  @override
+  String get french => 'Frans';
+
+  @override
+  String get polish => 'Pools';
+
+  @override
+  String get italian => 'Italiaans';
+
+  @override
+  String get dutch => 'Nederlands';
+
+  @override
   String get odometerUpdateTitle => 'Kilometerteller bijwerken';
 
   @override

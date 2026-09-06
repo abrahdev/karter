@@ -1,21 +1,16 @@
 {
   "@@locale": "de",
   "@@info": "Deutsche Übersetzungen für Karter",
-
   "appTitle": "Karter",
-
   "navDashboard": "Dashboard",
   "navVehicles": "Fahrzeuge",
   "navObd": "OBD II",
   "navMore": "Mehr",
-
   "homeEmptyTitle": "Keine Fahrzeuge",
   "homeEmptySubtitle": "Füge dein erstes Fahrzeug hinzu",
   "homeError": "Fehler: {error}",
-
   "dashboardTitle": "Dashboard",
   "dashboardComingSoon": "Bald verfügbar",
-
   "vehicleDetailTitle": "Fahrzeug",
   "vehicleNotFound": "Fahrzeug nicht gefunden",
   "plate": "Kennzeichen",
@@ -39,7 +34,6 @@
   "retry": "Erneut versuchen",
   "overduePerformService": "Überfällig – Service durchführen",
   "nextIn": "In {parts}",
-
   "vehicleFormNew": "Neues Fahrzeug",
   "vehicleFormEdit": "Fahrzeug bearbeiten",
   "vehicleFormDetails": "Details",
@@ -66,7 +60,6 @@
   "cancel": "Abbrechen",
   "resetToDefault": "Auf Standard zurücksetzen",
   "delete": "Löschen",
-
   "dataManagerTitle": "Daten exportieren / importieren",
   "selectAll": "Alle auswählen",
   "exporting": "Exportieren...",
@@ -82,7 +75,6 @@
   "importError": "Importfehler: {error}",
   "invalidJson": "Ungültige JSON-Datei",
   "exportShareText": "Karter-Export — {count} Fahrzeug(e)",
-
   "maintenanceSettingsTitle": "Wartungsintervalle",
   "maintenanceSettingsInstruction": "Aktiviere oder deaktiviere Punkte je nach den Bedürfnissen deines Fahrzeugs. Eigene Intervalle können gelöscht werden.",
   "km": "km",
@@ -162,7 +154,6 @@
   "formattedKm": "{km} km",
   "intervalSubtitleKm": "alle {km}",
   "intervalSubtitleMonths": "{months} Monate",
-
   "maintenanceLogTitleEdit": "Service bearbeiten",
   "maintenanceLogTitleNew": "Neuer Service",
   "date": "Datum: {date}",
@@ -179,7 +170,6 @@
   "share": "Teilen",
   "deleteService": "Service löschen",
   "deleteServiceConfirm": "Bist du sicher, dass du diesen Service löschen möchtest?",
-
   "maintenanceListTitle": "Wartung",
   "maintenanceEmpty": "Keine Services aufgezeichnet",
   "maintenanceHistoryTab": "Verlauf",
@@ -195,7 +185,6 @@
   "maintenanceReportDateHeader": "Datum",
   "maintenanceReportDescHeader": "Beschreibung",
   "maintenanceReportOdometerHeader": "Kilometerstand",
-
   "addDocument": "Dokument hinzufügen",
   "documentType": "Dokumenttyp",
   "selectFile": "Datei auswählen",
@@ -207,7 +196,6 @@
   "takePhoto": "Foto aufnehmen",
   "chooseFromGallery": "Aus Galerie wählen",
   "browseFiles": "Dateien durchsuchen",
-
   "docTypeFine": "Bußgeld",
   "docTypeParkingFee": "Parkgebühr",
   "docTypeInsurance": "Versicherung",
@@ -216,9 +204,7 @@
   "docTypeComplexInsurance": "Komplexe Versicherung",
   "docTypeVehicleRegister": "Fahrzeugzulassung",
   "docTypeOther": "Sonstiges",
-
   "vehicleDocuments": "Dokumente",
-
   "fuelFormTitle": "Neuer Tankvorgang",
   "volume": "Volumen",
   "unitL": "L",
@@ -231,10 +217,8 @@
   "currency": "Währung",
   "cost": "Kosten (optional)",
   "saveFuelUp": "Tankvorgang speichern",
-
   "fuelListTitle": "Tankfüllungen",
   "fuelEmpty": "Keine Tankvorgänge aufgezeichnet",
-
   "moreAbout": "Über Karter",
   "moreDescription": "Karter ist eine lokal gespeicherte, quelloffene Fahrzeugwartungs-App, die deine Privatsphäre respektiert.",
   "moreExport": "Daten exportieren / importieren",
@@ -304,7 +288,6 @@
   "ratePromptMessage": "Gefällt dir Karter? Eine Bewertung hilft anderen, die App zu entdecken!",
   "rate": "Bewerten",
   "moreUrlError": "Konnte {url} nicht öffnen",
-
   "tipProgram": "Trinkgeld-Programm",
   "tipProgramComingSoon": "Diese Funktion wird gerade entwickelt und ist bald verfügbar.",
   "tipBadges": "Abzeichen",
@@ -322,7 +305,6 @@
   "tipBronzeMonthly": "Bronze / Monat",
   "tipSilverMonthly": "Silber / Monat",
   "tipGoldMonthly": "Gold / Monat",
-
   "officialWebsite": "Offizielle Website",
   "communityForums": "Community-Foren",
   "translations": "Übersetzungen",
@@ -333,24 +315,27 @@
   "deviceId": "Geräte-ID",
   "changelog": "Änderungsprotokoll",
   "openSourceLicenses": "Open-Source-Lizenzen",
-
   "language": "Sprache",
   "selectLanguage": "Sprache auswählen",
   "languageSystem": "Systemstandard",
   "english": "Englisch",
   "spanish": "Spanisch",
   "eesti": "Eesti",
-
+  "german": "Deutsch",
+  "portuguese": "Portugiesisch",
+  "russian": "Russisch",
+  "french": "Französisch",
+  "polish": "Polnisch",
+  "italian": "Italienisch",
+  "dutch": "Niederländisch",
   "odometerUpdateTitle": "Kilometerstand aktualisieren",
   "odometerLastReading": "Letzter: {value} {unit}",
   "odometerLowerWarning": "Der Wert ist niedriger als der letzte Eintrag ({value} {unit}).",
   "odometerDeltaWarning": "Du bist seit dem letzten Mal {delta} {unit} gefahren. Ist das korrekt?",
   "odometerSave": "Speichern",
   "odometerCancel": "Abbrechen",
-
   "moreNotifications": "Benachrichtigungen",
   "moreNotificationsSubtitle": "Kilometerstand- und Wartungserinnerungen",
-
   "notificationSettingsTitle": "Benachrichtigungseinstellungen",
   "notificationSettingsSubtitle": "Konfiguriere Erinnerungen für dieses Fahrzeug",
   "notificationOdometerSection": "Kilometerstand-Erinnerung",
@@ -388,7 +373,6 @@
   "@discard": {
     "description": "Discard / discard changes button label"
   },
-
   "moreTemplateSource": "Vorlagenquelle",
   "moreTemplateSourceSubtitle": "Vorlagen von GitHub abrufen oder lokale Assets verwenden",
   "moreTemplateSourceOffline": "Lokal (offline)",
@@ -398,7 +382,6 @@
   "moreTemplateSourceUrlHint": "https://github.com/abrahdev/karter/templates",
   "moreTemplateSourceEditUrl": "URL bearbeiten",
   "moreTemplateSourceUrlSaved": "URL aktualisiert",
-
   "testConnection": "Verbindung testen",
   "catalogDbModifiedAt": "Zuletzt geändert: {date}",
   "@catalogDbModifiedAt": {
@@ -482,7 +465,6 @@
     }
   },
   "importCheckDbLocalFailed": "Die importierte Datenbank konnte nicht gelesen werden",
-
   "onboardingSkip": "Überspringen",
   "onboardingNext": "Weiter",
   "onboardingDone": "Los geht's",
@@ -536,27 +518,33 @@
   "dtcVehicle": "Fahrzeug",
   "dtcVehicleNotFound": "Fahrzeug nicht gefunden",
   "dtcLoadError": "Fehlercodes konnten nicht geladen werden",
-
   "notificationOdometerTitle": "Kilometerstand aktualisieren",
   "notificationOdometerBody": "{name} – {days} Tage seit der letzten Erinnerung.",
   "@notificationOdometerBody": {
     "placeholders": {
-      "name": {"type": "String"},
-      "days": {"type": "int"}
+      "name": {
+        "type": "String"
+      },
+      "days": {
+        "type": "int"
+      }
     }
   },
   "notificationMaintenanceTitle": "Anstehende Wartung",
   "notificationMaintenanceBody": "{name} – prüfe deine Wartungsintervalle.",
   "@notificationMaintenanceBody": {
     "placeholders": {
-      "name": {"type": "String"}
+      "name": {
+        "type": "String"
+      }
     }
   },
-
   "errorGeneric": "Fehler: {error}",
   "@errorGeneric": {
     "placeholders": {
-      "error": {"type": "String"}
+      "error": {
+        "type": "String"
+      }
     }
   },
   "deleteFuelUp": "Tankvorgang löschen",
@@ -579,7 +567,13 @@
   "allMakes": "Alle Marken",
   "noTemplatesFound": "Keine Vorlagen passen zu deiner Suche.",
   "templateItemsCount": "{count} Wartungspunkte",
-  "@templateItemsCount": { "placeholders": { "count": {"type": "int"} } },
+  "@templateItemsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "templateYearsOpen": "heute",
   "templateNotFound": "Vorlage nicht gefunden",
   "templateInfo": "Vorlageninfo",
@@ -590,12 +584,24 @@
   "templateSources": "Quellen",
   "dtcCodesTitle": "Fehlercodes",
   "dtcCount": "{count} Fehlercode(s)",
-  "@dtcCount": { "placeholders": { "count": {"type": "int"} } },
+  "@dtcCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "noPartsFound": "Keine Teile",
   "createCopied": "Vorlagen-JSON in die Zwischenablage kopiert",
   "saveTemplate": "Vorlage speichern",
   "savedAt": "Gespeichert unter {path}",
-  "@savedAt": { "placeholders": { "path": {"type": "String"} } },
+  "@savedAt": {
+    "placeholders": {
+      "path": {
+        "type": "String"
+      }
+    }
+  },
   "createHasErrors": "Behebe die Fehler, um zu exportieren",
   "createMake": "Marke",
   "createModel": "Modell",
@@ -620,7 +626,13 @@
   "createNoItems": "Noch keine Wartungspunkte.",
   "createPreview": "Vorschau",
   "createErrorsFound": "{count} Validierungsfehler",
-  "@createErrorsFound": { "placeholders": { "count": {"type": "int"} } },
+  "@createErrorsFound": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "createCopy": "Kopieren",
   "createShare": "Teilen",
   "createSave": "Speichern",
@@ -653,7 +665,13 @@
   "catalogSourcesTitle": "Verfügbare Kataloge",
   "catalogCannotDelete": "Standardkatalog – kann nicht gelöscht werden",
   "catalogVersionOf": "Version {version}",
-  "@catalogVersionOf": { "placeholders": { "version": {"type": "String"} } },
+  "@catalogVersionOf": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
   "catalogVersionUnknown": "Version nicht verfügbar",
   "catalogRefreshOnline": "Online-Katalog aktualisieren",
   "catalogRefreshed": "Online-Katalog aktualisiert",
@@ -664,13 +682,25 @@
   "catalogImportFailed": "Der Katalog konnte nicht importiert werden",
   "catalogDelete": "Katalog löschen",
   "catalogDeleteConfirm": "{name} löschen? Dies kann nicht rückgängig gemacht werden.",
-  "@catalogDeleteConfirm": { "placeholders": { "name": {"type": "String"} } },
+  "@catalogDeleteConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "catalogOnlineUnavailable": "Der Online-Katalog konnte nicht heruntergeladen werden. Überprüfe deine Verbindung und versuche es erneut.",
   "templateUrlExample": "Beispiel: https://raw.githubusercontent.com/abrahdev/karter/<tag>/templates",
   "templateUrlTagExplanation": "<tag> wird durch die neueste Version dieses Repositories ersetzt. Du kannst jedes GitHub-Repository verwenden oder einen direkten Link einfügen. Wenn der Tag nicht aufgelöst werden kann, wird der Link unverändert verwendet und der Test zeigt den Fehler an.",
   "templateUrlUsage": "Wird verwendet, um den Katalog, den Vorlagenindex und die Übersetzungen (i18n) abzurufen.",
   "templateUrlResolvesTo": "Wird aufgelöst zu: {url}",
-  "@templateUrlResolvesTo": { "placeholders": { "url": {"type": "String"} } },
+  "@templateUrlResolvesTo": {
+    "placeholders": {
+      "url": {
+        "type": "String"
+      }
+    }
+  },
   "templateUrlVersion": "Version",
   "templateUrlLatest": "Neueste (<tag>)",
   "templateUrlVersionsFailed": "Versionen konnten nicht geladen werden",
@@ -678,14 +708,32 @@
   "moreTemplateSourceUrlLabel": "Repo-URL",
   "moreTemplateSourceVersionLatest": "Neueste",
   "catalogDbVersion": "DB-Version: {version}",
-  "@catalogDbVersion": { "placeholders": { "version": {"type": "String"} } },
+  "@catalogDbVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
   "templateSourceRelease": "Release: {version}",
-  "@templateSourceRelease": { "placeholders": { "version": {"type": "String"} } },
+  "@templateSourceRelease": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
   "createInheritedParts": "Geerbte Teile (aus extends)",
   "createInheritedItems": "Geerbte Wartung (aus extends)",
   "templateExtendsNotLoaded": "Einige extends konnten nicht geladen werden",
   "templateRepoLoading": "Lade aus Vorlagen-Repository…",
   "templateRepoError": "Das Vorlagen-Repository konnte nicht erreicht werden",
   "templateBy": "von {author}",
-  "@templateBy": { "placeholders": { "author": {"type": "String"} } }
+  "@templateBy": {
+    "placeholders": {
+      "author": {
+        "type": "String"
+      }
+    }
+  }
 }

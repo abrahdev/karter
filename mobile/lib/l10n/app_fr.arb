@@ -1,21 +1,16 @@
 {
   "@@locale": "fr",
   "@@info": "Traductions françaises pour Karter",
-
   "appTitle": "Karter",
-
   "navDashboard": "Tableau de bord",
   "navVehicles": "Véhicules",
   "navObd": "OBD II",
   "navMore": "Plus",
-
   "homeEmptyTitle": "Aucun véhicule",
   "homeEmptySubtitle": "Ajoute ton premier véhicule",
   "homeError": "Erreur : {error}",
-
   "dashboardTitle": "Tableau de bord",
   "dashboardComingSoon": "Bientôt disponible",
-
   "vehicleDetailTitle": "Véhicule",
   "vehicleNotFound": "Véhicule introuvable",
   "plate": "Plaque",
@@ -39,7 +34,6 @@
   "retry": "Réessayer",
   "overduePerformService": "En retard — effectuer l'entretien",
   "nextIn": "Prochain dans {parts}",
-
   "vehicleFormNew": "Nouveau véhicule",
   "vehicleFormEdit": "Modifier le véhicule",
   "vehicleFormDetails": "Détails",
@@ -66,7 +60,6 @@
   "cancel": "Annuler",
   "resetToDefault": "Rétablir les valeurs par défaut",
   "delete": "Supprimer",
-
   "dataManagerTitle": "Exporter / Importer des données",
   "selectAll": "Tout sélectionner",
   "exporting": "Export en cours…",
@@ -82,7 +75,6 @@
   "importError": "Erreur d'import : {error}",
   "invalidJson": "Fichier JSON invalide",
   "exportShareText": "Export Karter — {count} véhicule(s)",
-
   "maintenanceSettingsTitle": "Intervalles d'entretien",
   "maintenanceSettingsInstruction": "Active ou désactive les éléments selon les besoins de ton véhicule. Les intervalles personnalisés peuvent être supprimés.",
   "km": "km",
@@ -162,7 +154,6 @@
   "formattedKm": "{km} km",
   "intervalSubtitleKm": "tous les {km}",
   "intervalSubtitleMonths": "{months} mois",
-
   "maintenanceLogTitleEdit": "Modifier l'entretien",
   "maintenanceLogTitleNew": "Nouvel entretien",
   "date": "Date : {date}",
@@ -179,7 +170,6 @@
   "share": "Partager",
   "deleteService": "Supprimer l'entretien",
   "deleteServiceConfirm": "Voulez-vous vraiment supprimer cet entretien ?",
-
   "maintenanceListTitle": "Entretien",
   "maintenanceEmpty": "Aucun entretien enregistré",
   "maintenanceHistoryTab": "Historique",
@@ -195,7 +185,6 @@
   "maintenanceReportDateHeader": "Date",
   "maintenanceReportDescHeader": "Description",
   "maintenanceReportOdometerHeader": "Compteur",
-
   "addDocument": "Ajouter un document",
   "documentType": "Type de document",
   "selectFile": "Sélectionner un fichier",
@@ -207,7 +196,6 @@
   "takePhoto": "Prendre une photo",
   "chooseFromGallery": "Choisir depuis la galerie",
   "browseFiles": "Parcourir les fichiers",
-
   "docTypeFine": "Amende",
   "docTypeParkingFee": "Frais de stationnement",
   "docTypeInsurance": "Assurance",
@@ -216,9 +204,7 @@
   "docTypeComplexInsurance": "Assurance tous risques",
   "docTypeVehicleRegister": "Carte grise",
   "docTypeOther": "Autre",
-
   "vehicleDocuments": "Documents",
-
   "fuelFormTitle": "Nouveau plein",
   "volume": "Volume",
   "unitL": "L",
@@ -231,10 +217,8 @@
   "currency": "Devise",
   "cost": "Coût (facultatif)",
   "saveFuelUp": "Enregistrer le plein",
-
   "fuelListTitle": "Pleins de carburant",
   "fuelEmpty": "Aucun plein enregistré",
-
   "moreAbout": "À propos de Karter",
   "moreDescription": "Karter est une application d'entretien de véhicules open source et locale d'abord qui respecte ta vie privée.",
   "moreExport": "Exporter / Importer des données",
@@ -304,7 +288,6 @@
   "ratePromptMessage": "Tu apprécies Karter ? Un avis aide d'autres personnes à découvrir l'application !",
   "rate": "Noter",
   "moreUrlError": "Impossible d'ouvrir {url}",
-
   "tipProgram": "Programme de pourboires",
   "tipProgramComingSoon": "Cette fonctionnalité est en cours de développement et sera bientôt disponible.",
   "tipBadges": "Badges",
@@ -322,7 +305,6 @@
   "tipBronzeMonthly": "Bronze / mois",
   "tipSilverMonthly": "Argent / mois",
   "tipGoldMonthly": "Or / mois",
-
   "officialWebsite": "Site web officiel",
   "communityForums": "Forums de la communauté",
   "translations": "Traductions",
@@ -333,24 +315,27 @@
   "deviceId": "ID de l'appareil",
   "changelog": "Journal des modifications",
   "openSourceLicenses": "Licences open source",
-
   "language": "Langue",
   "selectLanguage": "Sélectionner la langue",
   "languageSystem": "Langue du système",
   "english": "Anglais",
   "spanish": "Espagnol",
   "eesti": "Eesti",
-
+  "german": "Allemand",
+  "portuguese": "Portugais",
+  "russian": "Russe",
+  "french": "Français",
+  "polish": "Polonais",
+  "italian": "Italien",
+  "dutch": "Néerlandais",
   "odometerUpdateTitle": "Mettre à jour le compteur",
   "odometerLastReading": "Dernier : {value} {unit}",
   "odometerLowerWarning": "La valeur est inférieure au dernier relevé ({value} {unit}).",
   "odometerDeltaWarning": "Tu as parcouru {delta} {unit} depuis la dernière fois. Est-ce correct ?",
   "odometerSave": "Enregistrer",
   "odometerCancel": "Annuler",
-
   "moreNotifications": "Notifications",
   "moreNotificationsSubtitle": "Rappels de compteur et d'entretien",
-
   "notificationSettingsTitle": "Paramètres de notification",
   "notificationSettingsSubtitle": "Configure les rappels pour ce véhicule",
   "notificationOdometerSection": "Rappel de compteur",
@@ -388,7 +373,6 @@
   "@discard": {
     "description": "Discard / discard changes button label"
   },
-
   "moreTemplateSource": "Source des modèles",
   "moreTemplateSourceSubtitle": "Récupérer les modèles depuis GitHub ou utiliser les ressources locales",
   "moreTemplateSourceOffline": "Local (hors ligne)",
@@ -398,7 +382,6 @@
   "moreTemplateSourceUrlHint": "https://github.com/abrahdev/karter/templates",
   "moreTemplateSourceEditUrl": "Modifier l'URL",
   "moreTemplateSourceUrlSaved": "URL mise à jour",
-
   "testConnection": "Tester la connexion",
   "catalogDbModifiedAt": "Dernière modification : {date}",
   "@catalogDbModifiedAt": {
@@ -482,7 +465,6 @@
     }
   },
   "importCheckDbLocalFailed": "Impossible de lire la base importée",
-
   "onboardingSkip": "Passer",
   "onboardingNext": "Suivant",
   "onboardingDone": "Commencer",
@@ -536,27 +518,33 @@
   "dtcVehicle": "Véhicule",
   "dtcVehicleNotFound": "Véhicule introuvable",
   "dtcLoadError": "Impossible de charger les codes défaut",
-
   "notificationOdometerTitle": "Mettre à jour le compteur",
   "notificationOdometerBody": "{name} — {days} jours depuis le dernier rappel.",
   "@notificationOdometerBody": {
     "placeholders": {
-      "name": {"type": "String"},
-      "days": {"type": "int"}
+      "name": {
+        "type": "String"
+      },
+      "days": {
+        "type": "int"
+      }
     }
   },
   "notificationMaintenanceTitle": "Entretien en attente",
   "notificationMaintenanceBody": "{name} — vérifie tes intervalles d'entretien.",
   "@notificationMaintenanceBody": {
     "placeholders": {
-      "name": {"type": "String"}
+      "name": {
+        "type": "String"
+      }
     }
   },
-
   "errorGeneric": "Erreur : {error}",
   "@errorGeneric": {
     "placeholders": {
-      "error": {"type": "String"}
+      "error": {
+        "type": "String"
+      }
     }
   },
   "deleteFuelUp": "Supprimer le plein",
@@ -579,7 +567,13 @@
   "allMakes": "Toutes les marques",
   "noTemplatesFound": "Aucun modèle ne correspond à votre recherche.",
   "templateItemsCount": "{count} éléments d'entretien",
-  "@templateItemsCount": { "placeholders": { "count": {"type": "int"} } },
+  "@templateItemsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "templateYearsOpen": "présent",
   "templateNotFound": "Modèle introuvable",
   "templateInfo": "Infos du modèle",
@@ -590,12 +584,24 @@
   "templateSources": "Sources",
   "dtcCodesTitle": "Codes défaut",
   "dtcCount": "{count} code(s) défaut",
-  "@dtcCount": { "placeholders": { "count": {"type": "int"} } },
+  "@dtcCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "noPartsFound": "Aucune pièce",
   "createCopied": "JSON du modèle copié dans le presse-papiers",
   "saveTemplate": "Enregistrer le modèle",
   "savedAt": "Enregistré à l'emplacement {path}",
-  "@savedAt": { "placeholders": { "path": {"type": "String"} } },
+  "@savedAt": {
+    "placeholders": {
+      "path": {
+        "type": "String"
+      }
+    }
+  },
   "createHasErrors": "Corrige les erreurs pour exporter",
   "createMake": "Marque",
   "createModel": "Modèle",
@@ -620,7 +626,13 @@
   "createNoItems": "Aucun élément d'entretien pour l'instant.",
   "createPreview": "Aperçu",
   "createErrorsFound": "{count} erreur(s) de validation",
-  "@createErrorsFound": { "placeholders": { "count": {"type": "int"} } },
+  "@createErrorsFound": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "createCopy": "Copier",
   "createShare": "Partager",
   "createSave": "Enregistrer",
@@ -653,7 +665,13 @@
   "catalogSourcesTitle": "Catalogues disponibles",
   "catalogCannotDelete": "Catalogue par défaut — ne peut pas être supprimé",
   "catalogVersionOf": "Version {version}",
-  "@catalogVersionOf": { "placeholders": { "version": {"type": "String"} } },
+  "@catalogVersionOf": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
   "catalogVersionUnknown": "Version indisponible",
   "catalogRefreshOnline": "Actualiser le catalogue en ligne",
   "catalogRefreshed": "Catalogue en ligne actualisé",
@@ -664,13 +682,25 @@
   "catalogImportFailed": "Impossible d'importer le catalogue",
   "catalogDelete": "Supprimer le catalogue",
   "catalogDeleteConfirm": "Supprimer {name} ? Cette action est irréversible.",
-  "@catalogDeleteConfirm": { "placeholders": { "name": {"type": "String"} } },
+  "@catalogDeleteConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "catalogOnlineUnavailable": "Impossible de télécharger le catalogue en ligne. Vérifiez votre connexion et réessayez.",
   "templateUrlExample": "Exemple : https://raw.githubusercontent.com/abrahdev/karter/<tag>/templates",
   "templateUrlTagExplanation": "<tag> est remplacé par la dernière version de ce dépôt. Vous pouvez utiliser n'importe quel dépôt GitHub ou coller un lien direct. Si le tag ne peut pas être résolu, le lien est utilisé tel quel et le test affichera l'échec.",
   "templateUrlUsage": "Utilisé pour récupérer le catalogue, l'index des modèles et les traductions (i18n).",
   "templateUrlResolvesTo": "Se résout en : {url}",
-  "@templateUrlResolvesTo": { "placeholders": { "url": {"type": "String"} } },
+  "@templateUrlResolvesTo": {
+    "placeholders": {
+      "url": {
+        "type": "String"
+      }
+    }
+  },
   "templateUrlVersion": "Version",
   "templateUrlLatest": "Dernière (<tag>)",
   "templateUrlVersionsFailed": "Impossible de charger les versions",
@@ -678,14 +708,32 @@
   "moreTemplateSourceUrlLabel": "URL du dépôt",
   "moreTemplateSourceVersionLatest": "Dernière",
   "catalogDbVersion": "Version de la base : {version}",
-  "@catalogDbVersion": { "placeholders": { "version": {"type": "String"} } },
+  "@catalogDbVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
   "templateSourceRelease": "Version : {version}",
-  "@templateSourceRelease": { "placeholders": { "version": {"type": "String"} } },
+  "@templateSourceRelease": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
   "createInheritedParts": "Pièces héritées (des extensions)",
   "createInheritedItems": "Entretiens hérités (des extensions)",
   "templateExtendsNotLoaded": "Certaines extensions n'ont pas pu être chargées",
   "templateRepoLoading": "Chargement depuis le dépôt de modèles…",
   "templateRepoError": "Impossible d'atteindre le dépôt de modèles",
   "templateBy": "par {author}",
-  "@templateBy": { "placeholders": { "author": {"type": "String"} } }
+  "@templateBy": {
+    "placeholders": {
+      "author": {
+        "type": "String"
+      }
+    }
+  }
 }

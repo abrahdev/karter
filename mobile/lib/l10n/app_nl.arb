@@ -1,21 +1,16 @@
 {
   "@@locale": "nl",
   "@@info": "Nederlandse vertalingen voor Karter",
-
   "appTitle": "Karter",
-
   "navDashboard": "Dashboard",
   "navVehicles": "Voertuigen",
   "navObd": "OBD II",
   "navMore": "Meer",
-
   "homeEmptyTitle": "Geen voertuigen",
   "homeEmptySubtitle": "Voeg je eerste voertuig toe",
   "homeError": "Fout: {error}",
-
   "dashboardTitle": "Dashboard",
   "dashboardComingSoon": "Binnenkort beschikbaar",
-
   "vehicleDetailTitle": "Voertuig",
   "vehicleNotFound": "Voertuig niet gevonden",
   "plate": "Kenteken",
@@ -39,7 +34,6 @@
   "retry": "Opnieuw proberen",
   "overduePerformService": "Achterstallig — voer onderhoud uit",
   "nextIn": "Volgende in {parts}",
-
   "vehicleFormNew": "Nieuw voertuig",
   "vehicleFormEdit": "Voertuig bewerken",
   "vehicleFormDetails": "Details",
@@ -66,7 +60,6 @@
   "cancel": "Annuleren",
   "resetToDefault": "Herstellen naar standaard",
   "delete": "Verwijderen",
-
   "dataManagerTitle": "Gegevens exporteren / importeren",
   "selectAll": "Alles selecteren",
   "exporting": "Exporteren...",
@@ -82,7 +75,6 @@
   "importError": "Importfout: {error}",
   "invalidJson": "Ongeldig JSON-bestand",
   "exportShareText": "Karter Export — {count} voertuig(en)",
-
   "maintenanceSettingsTitle": "Onderhoudsintervallen",
   "maintenanceSettingsInstruction": "Schakel items in of uit op basis van de behoeften van je voertuig. Aangepaste intervallen kunnen worden verwijderd.",
   "km": "km",
@@ -162,7 +154,6 @@
   "formattedKm": "{km} km",
   "intervalSubtitleKm": "elke {km}",
   "intervalSubtitleMonths": "{months} maanden",
-
   "maintenanceLogTitleEdit": "Service bewerken",
   "maintenanceLogTitleNew": "Nieuwe service",
   "date": "Datum: {date}",
@@ -179,7 +170,6 @@
   "share": "Delen",
   "deleteService": "Service verwijderen",
   "deleteServiceConfirm": "Weet je zeker dat je deze service wilt verwijderen?",
-
   "maintenanceListTitle": "Onderhoud",
   "maintenanceEmpty": "Geen services geregistreerd",
   "maintenanceHistoryTab": "Geschiedenis",
@@ -195,7 +185,6 @@
   "maintenanceReportDateHeader": "Datum",
   "maintenanceReportDescHeader": "Beschrijving",
   "maintenanceReportOdometerHeader": "Kilometerstand",
-
   "addDocument": "Document toevoegen",
   "documentType": "Documenttype",
   "selectFile": "Bestand selecteren",
@@ -207,7 +196,6 @@
   "takePhoto": "Foto maken",
   "chooseFromGallery": "Kiezen uit galerij",
   "browseFiles": "Bestanden doorbladeren",
-
   "docTypeFine": "Boete",
   "docTypeParkingFee": "Parkeerkosten",
   "docTypeInsurance": "Verzekering",
@@ -216,9 +204,7 @@
   "docTypeComplexInsurance": "Allriskverzekering",
   "docTypeVehicleRegister": "Voertuigregister",
   "docTypeOther": "Overig",
-
   "vehicleDocuments": "Documenten",
-
   "fuelFormTitle": "Nieuwe tankbeurt",
   "volume": "Volume",
   "unitL": "L",
@@ -231,10 +217,8 @@
   "currency": "Valuta",
   "cost": "Kosten (optioneel)",
   "saveFuelUp": "Tankbeurt opslaan",
-
   "fuelListTitle": "Tanklogboek",
   "fuelEmpty": "Geen tankbeurten geregistreerd",
-
   "moreAbout": "Over Karter",
   "moreDescription": "Karter is een lokale, open source onderhoudsapp voor voertuigen die je privacy respecteert.",
   "moreExport": "Gegevens exporteren / importeren",
@@ -304,7 +288,6 @@
   "ratePromptMessage": "Bevalt Karter? Een beoordeling helpt anderen de app te ontdekken!",
   "rate": "Beoordelen",
   "moreUrlError": "Kan {url} niet openen",
-
   "tipProgram": "Tip-programma",
   "tipProgramComingSoon": "Deze functie is in ontwikkeling en zal binnenkort beschikbaar zijn.",
   "tipBadges": "Badges",
@@ -322,7 +305,6 @@
   "tipBronzeMonthly": "Brons / maand",
   "tipSilverMonthly": "Zilver / maand",
   "tipGoldMonthly": "Goud / maand",
-
   "officialWebsite": "Officiële website",
   "communityForums": "Communityforums",
   "translations": "Vertalingen",
@@ -333,24 +315,27 @@
   "deviceId": "Apparaat-ID",
   "changelog": "Wijzigingslogboek",
   "openSourceLicenses": "Open-sourcelicenties",
-
   "language": "Taal",
   "selectLanguage": "Taal selecteren",
   "languageSystem": "Systeemstandaard",
   "english": "Engels",
   "spanish": "Spaans",
   "eesti": "Eesti",
-
+  "german": "Duits",
+  "portuguese": "Portugees",
+  "russian": "Russisch",
+  "french": "Frans",
+  "polish": "Pools",
+  "italian": "Italiaans",
+  "dutch": "Nederlands",
   "odometerUpdateTitle": "Kilometerteller bijwerken",
   "odometerLastReading": "Laatste: {value} {unit}",
   "odometerLowerWarning": "De waarde is lager dan de laatste registratie ({value} {unit}).",
   "odometerDeltaWarning": "Je hebt {delta} {unit} gereden sinds de laatste keer. Klopt dit?",
   "odometerSave": "Opslaan",
   "odometerCancel": "Annuleren",
-
   "moreNotifications": "Meldingen",
   "moreNotificationsSubtitle": "Kilometerteller- en onderhoudsherinneringen",
-
   "notificationSettingsTitle": "Meldinginstellingen",
   "notificationSettingsSubtitle": "Configureer herinneringen voor dit voertuig",
   "notificationOdometerSection": "Kilometerteller-herinnering",
@@ -388,7 +373,6 @@
   "@discard": {
     "description": "Discard / discard changes button label"
   },
-
   "moreTemplateSource": "Templatebron",
   "moreTemplateSourceSubtitle": "Templates ophalen van GitHub of lokale assets gebruiken",
   "moreTemplateSourceOffline": "Lokaal (offline)",
@@ -398,7 +382,6 @@
   "moreTemplateSourceUrlHint": "https://github.com/abrahdev/karter/templates",
   "moreTemplateSourceEditUrl": "URL bewerken",
   "moreTemplateSourceUrlSaved": "URL bijgewerkt",
-
   "testConnection": "Verbinding testen",
   "catalogDbModifiedAt": "Laatst gewijzigd: {date}",
   "@catalogDbModifiedAt": {
@@ -482,7 +465,6 @@
     }
   },
   "importCheckDbLocalFailed": "Kan de geïmporteerde database niet lezen",
-
   "onboardingSkip": "Overslaan",
   "onboardingNext": "Volgende",
   "onboardingDone": "Aan de slag",
@@ -536,27 +518,33 @@
   "dtcVehicle": "Voertuig",
   "dtcVehicleNotFound": "Voertuig niet gevonden",
   "dtcLoadError": "Kan foutcodes niet laden",
-
   "notificationOdometerTitle": "Kilometerteller bijwerken",
   "notificationOdometerBody": "{name} — {days} dagen sinds de laatste herinnering.",
   "@notificationOdometerBody": {
     "placeholders": {
-      "name": {"type": "String"},
-      "days": {"type": "int"}
+      "name": {
+        "type": "String"
+      },
+      "days": {
+        "type": "int"
+      }
     }
   },
   "notificationMaintenanceTitle": "Uitstaand onderhoud",
   "notificationMaintenanceBody": "{name} — controleer je onderhoudsintervallen.",
   "@notificationMaintenanceBody": {
     "placeholders": {
-      "name": {"type": "String"}
+      "name": {
+        "type": "String"
+      }
     }
   },
-
   "errorGeneric": "Fout: {error}",
   "@errorGeneric": {
     "placeholders": {
-      "error": {"type": "String"}
+      "error": {
+        "type": "String"
+      }
     }
   },
   "deleteFuelUp": "Tankbeurt verwijderen",
@@ -579,7 +567,13 @@
   "allMakes": "Alle merken",
   "noTemplatesFound": "Geen templates gevonden die overeenkomen met je zoekopdracht.",
   "templateItemsCount": "{count} onderhoudsitems",
-  "@templateItemsCount": { "placeholders": { "count": {"type": "int"} } },
+  "@templateItemsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "templateYearsOpen": "heden",
   "templateNotFound": "Template niet gevonden",
   "templateInfo": "Template-info",
@@ -590,12 +584,24 @@
   "templateSources": "Bronnen",
   "dtcCodesTitle": "Foutcodes",
   "dtcCount": "{count} foutcode(s)",
-  "@dtcCount": { "placeholders": { "count": {"type": "int"} } },
+  "@dtcCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "noPartsFound": "Geen onderdelen",
   "createCopied": "Template-JSON gekopieerd naar klembord",
   "saveTemplate": "Template opslaan",
   "savedAt": "Opgeslagen op {path}",
-  "@savedAt": { "placeholders": { "path": {"type": "String"} } },
+  "@savedAt": {
+    "placeholders": {
+      "path": {
+        "type": "String"
+      }
+    }
+  },
   "createHasErrors": "Los de fouten op om te exporteren",
   "createMake": "Merk",
   "createModel": "Model",
@@ -620,7 +626,13 @@
   "createNoItems": "Nog geen onderhoudsitems.",
   "createPreview": "Voorbeeld",
   "createErrorsFound": "{count} validatiefout(en)",
-  "@createErrorsFound": { "placeholders": { "count": {"type": "int"} } },
+  "@createErrorsFound": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "createCopy": "Kopiëren",
   "createShare": "Delen",
   "createSave": "Opslaan",
@@ -653,7 +665,13 @@
   "catalogSourcesTitle": "Beschikbare catalogi",
   "catalogCannotDelete": "Standaardcatalogus — kan niet worden verwijderd",
   "catalogVersionOf": "Versie {version}",
-  "@catalogVersionOf": { "placeholders": { "version": {"type": "String"} } },
+  "@catalogVersionOf": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
   "catalogVersionUnknown": "Versie niet beschikbaar",
   "catalogRefreshOnline": "Online catalogus vernieuwen",
   "catalogRefreshed": "Online catalogus vernieuwd",
@@ -664,13 +682,25 @@
   "catalogImportFailed": "Kan de catalogus niet importeren",
   "catalogDelete": "Catalogus verwijderen",
   "catalogDeleteConfirm": "{name} verwijderen? Dit kan niet ongedaan worden gemaakt.",
-  "@catalogDeleteConfirm": { "placeholders": { "name": {"type": "String"} } },
+  "@catalogDeleteConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "catalogOnlineUnavailable": "Kan de online catalogus niet downloaden. Controleer je verbinding en probeer het opnieuw.",
   "templateUrlExample": "Voorbeeld: https://raw.githubusercontent.com/abrahdev/karter/<tag>/templates",
   "templateUrlTagExplanation": "<tag> wordt vervangen door de laatste release van die repository. Je kunt elke GitHub-repository gebruiken of een directe link plakken. Als de tag niet kan worden opgelost, wordt de link ongewijzigd gebruikt en toont de test de fout.",
   "templateUrlUsage": "Wordt gebruikt om de catalogus, de template-index en vertalingen (i18n) op te halen.",
   "templateUrlResolvesTo": "Lost op naar: {url}",
-  "@templateUrlResolvesTo": { "placeholders": { "url": {"type": "String"} } },
+  "@templateUrlResolvesTo": {
+    "placeholders": {
+      "url": {
+        "type": "String"
+      }
+    }
+  },
   "templateUrlVersion": "Versie",
   "templateUrlLatest": "Nieuwste (<tag>)",
   "templateUrlVersionsFailed": "Kan versies niet laden",
@@ -678,14 +708,32 @@
   "moreTemplateSourceUrlLabel": "Repo-URL",
   "moreTemplateSourceVersionLatest": "Nieuwste",
   "catalogDbVersion": "DB-versie: {version}",
-  "@catalogDbVersion": { "placeholders": { "version": {"type": "String"} } },
+  "@catalogDbVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
   "templateSourceRelease": "Release: {version}",
-  "@templateSourceRelease": { "placeholders": { "version": {"type": "String"} } },
+  "@templateSourceRelease": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
   "createInheritedParts": "Overgenomen onderdelen (vanuit extends)",
   "createInheritedItems": "Overgenomen onderhoud (vanuit extends)",
   "templateExtendsNotLoaded": "Sommige extends konden niet worden geladen",
   "templateRepoLoading": "Laden vanuit template-repo…",
   "templateRepoError": "Kan de template-repo niet bereiken",
   "templateBy": "door {author}",
-  "@templateBy": { "placeholders": { "author": {"type": "String"} } }
+  "@templateBy": {
+    "placeholders": {
+      "author": {
+        "type": "String"
+      }
+    }
+  }
 }

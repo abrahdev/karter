@@ -2039,6 +2039,48 @@ abstract class AppLocalizations {
   /// **'Eesti'**
   String get eesti;
 
+  /// No description provided for @german.
+  ///
+  /// In en, this message translates to:
+  /// **'Deutsch'**
+  String get german;
+
+  /// No description provided for @portuguese.
+  ///
+  /// In en, this message translates to:
+  /// **'Português'**
+  String get portuguese;
+
+  /// No description provided for @russian.
+  ///
+  /// In en, this message translates to:
+  /// **'Русский'**
+  String get russian;
+
+  /// No description provided for @french.
+  ///
+  /// In en, this message translates to:
+  /// **'Français'**
+  String get french;
+
+  /// No description provided for @polish.
+  ///
+  /// In en, this message translates to:
+  /// **'Polski'**
+  String get polish;
+
+  /// No description provided for @italian.
+  ///
+  /// In en, this message translates to:
+  /// **'Italiano'**
+  String get italian;
+
+  /// No description provided for @dutch.
+  ///
+  /// In en, this message translates to:
+  /// **'Nederlands'**
+  String get dutch;
+
   /// No description provided for @odometerUpdateTitle.
   ///
   /// In en, this message translates to:
