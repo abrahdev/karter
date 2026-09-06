@@ -23,7 +23,7 @@ jobs:
         run: pip install -r templates/tools/requirements.txt
 
       - name: Validate template schema + resolution + catalog build
-        run: python templates/tools/build_catalog.py --check-only --schema-check
+        run: python templates/tools/build_catalog/build_catalog.py --check-only --schema-check
 
   check:
     runs-on: ubuntu-latest
@@ -34,7 +34,7 @@ jobs:
         with:
           python-version: '3.x'
 
-      - run: python templates/tools/build_catalog.py
+      - run: python templates/tools/build_catalog/build_catalog.py
 
       - uses: subosito/flutter-action@v2
         with:

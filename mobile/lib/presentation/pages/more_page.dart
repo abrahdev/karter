@@ -552,6 +552,13 @@ class MorePage extends ConsumerWidget {
     return switch (code) {
       'es' => l.spanish,
       'et' => l.eesti,
+      'pt' => l.portuguese,
+      'de' => l.german,
+      'ru' => l.russian,
+      'fr' => l.french,
+      'pl' => l.polish,
+      'it' => l.italian,
+      'nl' => l.dutch,
       _    => l.english,
     };
   }
@@ -594,6 +601,13 @@ class MorePage extends ConsumerWidget {
                 RadioListTile<String>(title: Text(l.english), value: 'en'),
                 RadioListTile<String>(title: Text(l.spanish), value: 'es'),
                 RadioListTile<String>(title: Text(l.eesti), value: 'et'),
+                RadioListTile<String>(title: Text(l.portuguese), value: 'pt'),
+                RadioListTile<String>(title: Text(l.german), value: 'de'),
+                RadioListTile<String>(title: Text(l.russian), value: 'ru'),
+                RadioListTile<String>(title: Text(l.french), value: 'fr'),
+                RadioListTile<String>(title: Text(l.polish), value: 'pl'),
+                RadioListTile<String>(title: Text(l.italian), value: 'it'),
+                RadioListTile<String>(title: Text(l.dutch), value: 'nl'),
               ],
             ),
           ),

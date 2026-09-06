@@ -14,7 +14,7 @@ Each entry gets a ``desc_i18n_key`` used for localizable descriptions:
 The keys are merged into ``i18n/{en,es,et}.json`` with the English text.
 The merge is idempotent: existing keys (e.g. Weblate translations) are kept.
 
-Run from the repo root:  python3 templates/tools/import_dtc.py
+Run from the repo root:  python3 templates/tools/import_dtc/import_dtc.py
 """
 
 import json
@@ -23,7 +23,7 @@ import sys
 import urllib.request
 from pathlib import Path
 
-TEMPLATES_DIR = Path(__file__).resolve().parent.parent
+TEMPLATES_DIR = Path(__file__).resolve().parent.parent.parent
 DATA_DIR = TEMPLATES_DIR / "data"
 SOURCE_URL = (
     "https://raw.githubusercontent.com/Wal33D/dtc-database/main/data/source-data"

@@ -20,7 +20,7 @@ The source of truth is the `templates/` directory at the repository root. It is 
 | `templates/i18n/` | Community translations (`en.json` generated, `es.json` / `et.json` curated) |
 | `templates/schemas/template-v2.json` | JSON Schema that validates the template format |
 | `templates/index.json` | Generated manifest of every indexable vehicle template |
-| `templates/tools/` | Generation scripts (`build_catalog.py`, `generate_index.py`, `i18n_json.py`, `import_dtc.py`) |
+| `templates/tools/` | Generation scripts (`build_catalog/`, `generate_index/`, `i18n_json/`, `import_dtc/`) |
 | `templates/NOTICE.md` | MIT attribution for the `dtc-database` (Wal33D) that feeds the general OBD codes |
 
 > New to authoring templates? Read the step-by-step guide in [Authoring templates](./authoring) (or the [`templates/README.md`](https://github.com/abrahdev/karter/blob/main/templates/README.md) in the repo): directory layout, `extends`-chain semantics, required vs optional fields per section, i18n keys, and how to run the build tools.
@@ -69,13 +69,13 @@ Localizable text is declared once per language key (`i18n_key`, `desc_i18n_key`)
 
 ## How JSON becomes a database
 
-Three tools in `templates/tools/` turn the source tree into artifacts:
+Three tools in `templates/tools/` turn the source tree into artifacts (each lives in its own subfolder with a README):
 
 | Tool | Input | Output |
 | :--- | :--- | :--- |
-| `generate_index.py` | every `*.json` under `templates/data/` | `templates/index.json` |
-| `i18n_json.py` | every template's `i18n_key` / `desc_i18n_key` defaults | `templates/i18n/en.json` |
-| `build_catalog.py` | `index.json` + `data/**` + `i18n/en.json` | `templates/karter-catalog.db` (symlinked from `mobile/assets/catalog/`) |
+| `generate_index/` | every `*.json` under `templates/data/` | `templates/index.json` |
+| `i18n_json/` | every template's `i18n_key` / `desc_i18n_key` defaults | `templates/i18n/en.json` |
+| `build_catalog/` | `index.json` + `data/**` + `i18n/en.json` | `templates/karter-catalog.db` (symlinked from `mobile/assets/catalog/`) |
 
 `generate_index.py` walks `templates/data/` and emits one `index.json` entry per template that has a `maintenance_items` array (fragments without items are skipped). Entries are sorted `_base` first, then by make/model. The `generated_at` timestamp doubles as the `catalog_version` stored inside the database.
 
@@ -271,7 +271,7 @@ The template source URL is configurable in the More page (`TemplateSourceConfig`
 
 The More page also lets the user pick which **catalog database** to read (`CatalogSourcesNotifier`): the bundled `builtin` catalog, the `online` copy refreshed from the rolling release, or a local `.db` imported by the user. The active source is persisted in `SharedPreferences` and switched via `CatalogService.useFile`. The catalog sheet shows the **DB version** (the `catalog_version` stored in `meta`) and, for the online source, the **Release** tag of the template source being used.
 
-Because the catalog DB is generated (and gitignored), a fresh checkout must run `python templates/tools/build_catalog.py` before building the app; the `build_catalog.py` step creates `templates/karter-catalog.db` and the `mobile/assets/catalog/` symlink. CI and release workflows already do this.
+Because the catalog DB is generated (and gitignored), a fresh checkout must run `python templates/tools/build_catalog/build_catalog.py` before building the app; the `build_catalog.py` step creates `templates/karter-catalog.db` and the `mobile/assets/catalog/` symlink. CI and release workflows already do this.
 
 ```mermaid
 sequenceDiagram

@@ -8,10 +8,10 @@ fork it, add your vehicle, and open a pull request.
 | :--- | :--- |
 | `data/` | Vehicle templates, grouped by manufacturer, plus `_base/` fragments |
 | `data/_base/` | Reusable base fragments (`car-common`, `car-combustion`, `car-diesel`, `car-electric`, `motorcycle-common`, `motorcycle-2t`, `motorcycle-4t`, `motorcycle-ev`) and `dtc.json` (the general OBD-II code set) |
-| `i18n/` | Translations: `en.json` (generated from templates), `es.json` / `et.json` (curated) |
+| `i18n/` | Translations: `en.json` (generated from templates) plus `es.json`, `et.json`, `pt.json`, `de.json`, `ru.json`, `fr.json`, `pl.json`, `it.json`, `nl.json` |
 | `schemas/template-v2.json` | JSON Schema that validates the template format |
 | `index.json` | Generated manifest of every indexable vehicle template |
-| `tools/` | Generation and validation scripts |
+| `tools/` | One folder per generation/translation script, each with its own README (`build_catalog/`, `generate_index/`, `i18n_json/`, `import_dtc/`, `translate_i18n/`) |
 | `NOTICE.md` | MIT attribution for the `dtc-database` (Wal33D) feeding the general OBD codes |
 
 ## Documentation
@@ -28,14 +28,14 @@ Published at <https://karter.abrah.dev/templates/authoring> and
 ## Building the catalog
 
 ```bash
-python templates/tools/generate_index.py   # regenerate index.json
-python templates/tools/i18n_json.py        # regenerate i18n/en.json
-python templates/tools/build_catalog.py    # build templates/karter-catalog.db
+python templates/tools/generate_index/generate_index.py   # regenerate index.json
+python templates/tools/i18n_json/i18n_json.py        # regenerate i18n/en.json
+python templates/tools/build_catalog/build_catalog.py    # build templates/karter-catalog.db
 ```
 
 Validation:
 
 ```bash
-python templates/tools/build_catalog.py --check-only          # post-merge validation
-python templates/tools/build_catalog.py --check-only --schema-check  # + JSON Schema (pip install -r tools/requirements.txt)
+python templates/tools/build_catalog/build_catalog.py --check-only          # post-merge validation
+python templates/tools/build_catalog/build_catalog.py --check-only --schema-check  # + JSON Schema (pip install -r tools/requirements.txt)
 ```

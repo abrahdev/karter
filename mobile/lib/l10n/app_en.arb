@@ -1,21 +1,16 @@
 {
   "@@locale": "en",
   "@@info": "English translations for Karter",
-
   "appTitle": "Karter",
-
   "navDashboard": "Dashboard",
   "navVehicles": "Vehicles",
   "navObd": "OBD II",
   "navMore": "More",
-
   "homeEmptyTitle": "No vehicles",
   "homeEmptySubtitle": "Add your first vehicle",
   "homeError": "Error: {error}",
-
   "dashboardTitle": "Dashboard",
   "dashboardComingSoon": "Coming Soon",
-
   "vehicleDetailTitle": "Vehicle",
   "vehicleNotFound": "Vehicle not found",
   "plate": "Plate",
@@ -39,7 +34,6 @@
   "retry": "Retry",
   "overduePerformService": "Overdue — perform service",
   "nextIn": "Next in {parts}",
-
   "vehicleFormNew": "New vehicle",
   "vehicleFormEdit": "Edit vehicle",
   "vehicleFormDetails": "Details",
@@ -66,7 +60,6 @@
   "cancel": "Cancel",
   "resetToDefault": "Reset to default",
   "delete": "Delete",
-
   "dataManagerTitle": "Export / Import data",
   "selectAll": "Select all",
   "exporting": "Exporting...",
@@ -82,7 +75,6 @@
   "importError": "Import error: {error}",
   "invalidJson": "Invalid JSON file",
   "exportShareText": "Karter Export — {count} vehicle(s)",
-
   "maintenanceSettingsTitle": "Maintenance intervals",
   "maintenanceSettingsInstruction": "Enable or disable items according to your vehicle's needs. Custom intervals can be deleted.",
   "km": "km",
@@ -162,7 +154,6 @@
   "formattedKm": "{km} km",
   "intervalSubtitleKm": "every {km}",
   "intervalSubtitleMonths": "{months} months",
-
   "maintenanceLogTitleEdit": "Edit service",
   "maintenanceLogTitleNew": "New service",
   "date": "Date: {date}",
@@ -179,7 +170,6 @@
   "share": "Share",
   "deleteService": "Delete service",
   "deleteServiceConfirm": "Are you sure you want to delete this service?",
-
   "maintenanceListTitle": "Maintenance",
   "maintenanceEmpty": "No services recorded",
   "maintenanceHistoryTab": "History",
@@ -195,7 +185,6 @@
   "maintenanceReportDateHeader": "Date",
   "maintenanceReportDescHeader": "Description",
   "maintenanceReportOdometerHeader": "Odometer",
-
   "addDocument": "Add document",
   "documentType": "Document type",
   "selectFile": "Select file",
@@ -207,7 +196,6 @@
   "takePhoto": "Take photo",
   "chooseFromGallery": "Choose from gallery",
   "browseFiles": "Browse files",
-
   "docTypeFine": "Fine",
   "docTypeParkingFee": "Parking fee",
   "docTypeInsurance": "Insurance",
@@ -216,9 +204,7 @@
   "docTypeComplexInsurance": "Complex insurance",
   "docTypeVehicleRegister": "Vehicle register",
   "docTypeOther": "Other",
-
   "vehicleDocuments": "Documents",
-
   "fuelFormTitle": "New fuel-up",
   "volume": "Volume",
   "unitL": "L",
@@ -231,10 +217,8 @@
   "currency": "Currency",
   "cost": "Cost (optional)",
   "saveFuelUp": "Save fuel-up",
-
   "fuelListTitle": "Fuel logs",
   "fuelEmpty": "No fuel-ups recorded",
-
   "moreAbout": "About Karter",
   "moreDescription": "Karter is a local-first, open source vehicle maintenance app that respects your privacy.",
   "moreExport": "Export / Import data",
@@ -304,7 +288,6 @@
   "ratePromptMessage": "Enjoying Karter? A review helps others discover the app!",
   "rate": "Rate",
   "moreUrlError": "Could not open {url}",
-
   "tipProgram": "Tip program",
   "tipProgramComingSoon": "This feature is under development and will be available soon.",
   "tipBadges": "Badges",
@@ -322,7 +305,6 @@
   "tipBronzeMonthly": "Bronze / month",
   "tipSilverMonthly": "Silver / month",
   "tipGoldMonthly": "Gold / month",
-
   "officialWebsite": "Official website",
   "communityForums": "Community forums",
   "translations": "Translations",
@@ -333,24 +315,27 @@
   "deviceId": "Device ID",
   "changelog": "Changelog",
   "openSourceLicenses": "Open-source licenses",
-
   "language": "Language",
   "selectLanguage": "Select language",
   "languageSystem": "System default",
   "english": "English",
   "spanish": "Spanish",
   "eesti": "Eesti",
-
+  "german": "Deutsch",
+  "portuguese": "Português",
+  "russian": "Русский",
+  "french": "Français",
+  "polish": "Polski",
+  "italian": "Italiano",
+  "dutch": "Nederlands",
   "odometerUpdateTitle": "Update odometer",
   "odometerLastReading": "Last: {value} {unit}",
   "odometerLowerWarning": "The value is lower than the last record ({value} {unit}).",
   "odometerDeltaWarning": "You drove {delta} {unit} since last time. Is this correct?",
   "odometerSave": "Save",
   "odometerCancel": "Cancel",
-
   "moreNotifications": "Notifications",
   "moreNotificationsSubtitle": "Odometer and maintenance reminders",
-
   "notificationSettingsTitle": "Notification settings",
   "notificationSettingsSubtitle": "Configure reminders for this vehicle",
   "notificationOdometerSection": "Odometer reminder",
@@ -388,7 +373,6 @@
   "@discard": {
     "description": "Discard / discard changes button label"
   },
-
   "moreTemplateSource": "Template source",
   "moreTemplateSourceSubtitle": "Fetch templates from GitHub or use local assets",
   "moreTemplateSourceOffline": "Local (offline)",
@@ -398,7 +382,6 @@
   "moreTemplateSourceUrlHint": "https://github.com/abrahdev/karter/templates",
   "moreTemplateSourceEditUrl": "Edit URL",
   "moreTemplateSourceUrlSaved": "URL updated",
-
   "testConnection": "Test connection",
   "catalogDbModifiedAt": "Last modified: {date}",
   "@catalogDbModifiedAt": {
@@ -482,7 +465,6 @@
     }
   },
   "importCheckDbLocalFailed": "Could not read the imported database",
-
   "onboardingSkip": "Skip",
   "onboardingNext": "Next",
   "onboardingDone": "Get started",
@@ -536,27 +518,33 @@
   "dtcVehicle": "Vehicle",
   "dtcVehicleNotFound": "Vehicle not found",
   "dtcLoadError": "Couldn't load fault codes",
-
   "notificationOdometerTitle": "Update odometer",
   "notificationOdometerBody": "{name} — {days} days since last reminder.",
   "@notificationOdometerBody": {
     "placeholders": {
-      "name": {"type": "String"},
-      "days": {"type": "int"}
+      "name": {
+        "type": "String"
+      },
+      "days": {
+        "type": "int"
+      }
     }
   },
   "notificationMaintenanceTitle": "Pending maintenance",
   "notificationMaintenanceBody": "{name} — check your maintenance intervals.",
   "@notificationMaintenanceBody": {
     "placeholders": {
-      "name": {"type": "String"}
+      "name": {
+        "type": "String"
+      }
     }
   },
-
   "errorGeneric": "Error: {error}",
   "@errorGeneric": {
     "placeholders": {
-      "error": {"type": "String"}
+      "error": {
+        "type": "String"
+      }
     }
   },
   "deleteFuelUp": "Delete fuel-up",
@@ -579,7 +567,13 @@
   "allMakes": "All makes",
   "noTemplatesFound": "No templates match your search.",
   "templateItemsCount": "{count} maintenance items",
-  "@templateItemsCount": { "placeholders": { "count": {"type": "int"} } },
+  "@templateItemsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "templateYearsOpen": "present",
   "templateNotFound": "Template not found",
   "templateInfo": "Template info",
@@ -590,12 +584,24 @@
   "templateSources": "Sources",
   "dtcCodesTitle": "Fault codes",
   "dtcCount": "{count} fault code(s)",
-  "@dtcCount": { "placeholders": { "count": {"type": "int"} } },
+  "@dtcCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "noPartsFound": "No parts",
   "createCopied": "Template JSON copied to clipboard",
   "saveTemplate": "Save template",
   "savedAt": "Saved at {path}",
-  "@savedAt": { "placeholders": { "path": {"type": "String"} } },
+  "@savedAt": {
+    "placeholders": {
+      "path": {
+        "type": "String"
+      }
+    }
+  },
   "createHasErrors": "Fix the errors to export",
   "createMake": "Make",
   "createModel": "Model",
@@ -620,7 +626,13 @@
   "createNoItems": "No maintenance items yet.",
   "createPreview": "Preview",
   "createErrorsFound": "{count} validation error(s)",
-  "@createErrorsFound": { "placeholders": { "count": {"type": "int"} } },
+  "@createErrorsFound": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "createCopy": "Copy",
   "createShare": "Share",
   "createSave": "Save",
@@ -653,7 +665,13 @@
   "catalogSourcesTitle": "Available catalogs",
   "catalogCannotDelete": "Default catalog — cannot be deleted",
   "catalogVersionOf": "Version {version}",
-  "@catalogVersionOf": { "placeholders": { "version": {"type": "String"} } },
+  "@catalogVersionOf": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
   "catalogVersionUnknown": "Version unavailable",
   "catalogRefreshOnline": "Refresh online catalog",
   "catalogRefreshed": "Online catalog refreshed",
@@ -664,13 +682,25 @@
   "catalogImportFailed": "Could not import the catalog",
   "catalogDelete": "Delete catalog",
   "catalogDeleteConfirm": "Delete {name}? This cannot be undone.",
-  "@catalogDeleteConfirm": { "placeholders": { "name": {"type": "String"} } },
+  "@catalogDeleteConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "catalogOnlineUnavailable": "Could not download the online catalog. Check your connection and try again.",
   "templateUrlExample": "Example: https://raw.githubusercontent.com/abrahdev/karter/<tag>/templates",
   "templateUrlTagExplanation": "<tag> is replaced by the latest release of that repository. You can use any GitHub repository or paste a direct link. If the tag cannot be resolved, the link is used as-is and the test will show the failure.",
   "templateUrlUsage": "Used to fetch the catalog, the template index and translations (i18n).",
   "templateUrlResolvesTo": "Resolves to: {url}",
-  "@templateUrlResolvesTo": { "placeholders": { "url": {"type": "String"} } },
+  "@templateUrlResolvesTo": {
+    "placeholders": {
+      "url": {
+        "type": "String"
+      }
+    }
+  },
   "templateUrlVersion": "Version",
   "templateUrlLatest": "Latest (<tag>)",
   "templateUrlVersionsFailed": "Could not load versions",
@@ -678,14 +708,32 @@
   "moreTemplateSourceUrlLabel": "Repo URL",
   "moreTemplateSourceVersionLatest": "Latest",
   "catalogDbVersion": "DB version: {version}",
-  "@catalogDbVersion": { "placeholders": { "version": {"type": "String"} } },
+  "@catalogDbVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
   "templateSourceRelease": "Release: {version}",
-  "@templateSourceRelease": { "placeholders": { "version": {"type": "String"} } },
+  "@templateSourceRelease": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
   "createInheritedParts": "Inherited parts (from extends)",
   "createInheritedItems": "Inherited maintenance (from extends)",
   "templateExtendsNotLoaded": "Some extends could not be loaded",
   "templateRepoLoading": "Loading from template repo…",
   "templateRepoError": "Couldn't reach the template repo",
   "templateBy": "by {author}",
-  "@templateBy": { "placeholders": { "author": {"type": "String"} } }
+  "@templateBy": {
+    "placeholders": {
+      "author": {
+        "type": "String"
+      }
+    }
+  }
 }

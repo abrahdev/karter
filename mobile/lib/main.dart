@@ -19,9 +19,10 @@ import 'package:system_theme/system_theme.dart';
 import 'package:window_manager/window_manager.dart';
 
 String resolveTemplateLocale(String code) {
-  if (code != 'system' && const ['en', 'es', 'et'].contains(code)) return code;
+  const supported = ['en', 'es', 'et', 'pt', 'de', 'ru', 'fr', 'pl', 'it', 'nl'];
+  if (code != 'system' && supported.contains(code)) return code;
   final platform = Platform.localeName.split('_').first;
-  return const ['en', 'es', 'et'].contains(platform) ? platform : 'en';
+  return supported.contains(platform) ? platform : 'en';
 }
 
 Future<void> main() async {
