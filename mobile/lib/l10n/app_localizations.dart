@@ -474,6 +474,24 @@ abstract class AppLocalizations {
   /// **'Export / Import data'**
   String get dataManagerTitle;
 
+  /// No description provided for @dataManagerSelected.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} selected'**
+  String dataManagerSelected(Object count);
+
+  /// No description provided for @dataManagerSelectHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Select vehicles to export'**
+  String get dataManagerSelectHint;
+
+  /// No description provided for @importHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Import vehicles from a Karter JSON backup'**
+  String get importHint;
+
   /// No description provided for @selectAll.
   ///
   /// In en, this message translates to:

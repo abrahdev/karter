@@ -197,6 +197,17 @@ class AppLocalizationsPl extends AppLocalizations {
   String get dataManagerTitle => 'Eksport / import danych';
 
   @override
+  String dataManagerSelected(Object count) {
+    return '$count selected';
+  }
+
+  @override
+  String get dataManagerSelectHint => 'Select vehicles to export';
+
+  @override
+  String get importHint => 'Import vehicles from a Karter JSON backup';
+
+  @override
   String get selectAll => 'Zaznacz wszystko';
 
   @override

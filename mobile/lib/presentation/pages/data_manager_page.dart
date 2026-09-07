@@ -11,6 +11,8 @@ import 'package:mobile/core/theme/app_spacing.dart';
 import 'package:mobile/data/services/export_service.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
+import 'package:mobile/presentation/widgets/grouped_card.dart';
+import 'package:mobile/presentation/widgets/section_header.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -35,82 +37,98 @@ class _DataManagerPageState extends ConsumerState<DataManagerPage> {
     return Scaffold(
       appBar: AppBar(title: Text(l.dataManagerTitle)),
       body: vehiclesAsync.when(
-        data: (vehicles) => Column(
+        data: (vehicles) => ListView(
+          padding: const EdgeInsets.all(AppSpacing.pagePadding),
           children: [
-            Expanded(
-              child: vehicles.isEmpty
-                  ? Center(
-                      child: Text(l.homeEmptyTitle,
-                          style: theme.textTheme.bodyLarge),
-                    )
-                  : ListView.builder(
-                      padding: const EdgeInsets.all(AppSpacing.pagePadding),
-                      itemCount: vehicles.length,
-                      itemBuilder: (_, i) {
-                        final v = vehicles[i];
-                        return CheckboxListTile(
-                          title: Text(v.displayName),
-                          subtitle: Text('${v.brand} ${v.model} ${v.year}'),
-                          value: _selectedIds.contains(v.id),
-                          onChanged: (checked) {
-                            setState(() {
-                              if (checked == true) {
-                                _selectedIds.add(v.id);
-                              } else {
-                                _selectedIds.remove(v.id);
-                              }
-                            });
-                          },
-                        );
+            SectionHeader(title: l.moreExport),
+            GroupedCard(
+              children: [
+                ListTile(
+                  leading: const Icon(Icons.storage),
+                  title: Text(l.dataManagerTitle),
+                  subtitle: Text(l.moreExportSubtitle),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.upload_outlined),
+                  title: Text(l.export),
+                  subtitle: Text(
+                    _selectedIds.isEmpty
+                        ? l.dataManagerSelectHint
+                        : l.dataManagerSelected(_selectedIds.length.toString()),
+                  ),
+                  trailing: _isExporting
+                      ? const M3LoadingIndicator(size: 18)
+                      : const Icon(Icons.chevron_right),
+                  onTap: _selectedIds.isEmpty || _isExporting ? null : _export,
+                ),
+                ListTile(
+                  leading: const Icon(Icons.download_outlined),
+                  title: Text(l.import),
+                  subtitle: Text(l.importHint),
+                  trailing: _isImporting
+                      ? const M3LoadingIndicator(size: 18)
+                      : const Icon(Icons.chevron_right),
+                  onTap: _isImporting ? null : _import,
+                ),
+              ],
+            ),
+            SectionHeader(title: l.navVehicles),
+            if (vehicles.isEmpty)
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 24),
+                child: Center(
+                  child: Text(
+                    l.homeEmptyTitle,
+                    style: theme.textTheme.bodyLarge,
+                  ),
+                ),
+              )
+            else
+              GroupedCard(
+                children: [
+                  ListTile(
+                    leading: const Icon(Icons.checklist),
+                    title: Text(l.selectAll),
+                    trailing: Checkbox(
+                      value: _selectedIds.length == vehicles.length,
+                      onChanged: (checked) {
+                        setState(() {
+                          if (checked == true) {
+                            _selectedIds.addAll(vehicles.map((v) => v.id));
+                          } else {
+                            _selectedIds.clear();
+                          }
+                        });
                       },
                     ),
-            ),
-            if (vehicles.isNotEmpty)
-              CheckboxListTile(
-                title: Text(l.selectAll),
-                value: _selectedIds.length == vehicles.length,
-                onChanged: (checked) {
-                  setState(() {
-                    if (checked == true) {
-                      _selectedIds.addAll(vehicles.map((v) => v.id));
-                    } else {
-                      _selectedIds.clear();
-                    }
-                  });
-                },
-              ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
-              child: Column(
-                children: [
-                  SizedBox(
-                    width: double.infinity,
-                    child: FilledButton.icon(
-                      onPressed: _selectedIds.isEmpty || _isExporting
-                          ? null
-                          : _export,
-                      icon: _isExporting
-                          ? const M3LoadingIndicator(size: 18)
-                          : const Icon(Icons.upload),
-                      label: Text(
-                          _isExporting ? l.exporting : l.export),
-                    ),
+                    onTap: () {
+                      setState(() {
+                        if (_selectedIds.length == vehicles.length) {
+                          _selectedIds.clear();
+                        } else {
+                          _selectedIds.addAll(vehicles.map((v) => v.id));
+                        }
+                      });
+                    },
                   ),
-                  const SizedBox(height: 12),
-                  SizedBox(
-                    width: double.infinity,
-                    child: OutlinedButton.icon(
-                      onPressed: _isImporting ? null : _import,
-                      icon: _isImporting
-                          ? const M3LoadingIndicator(size: 18)
-                          : const Icon(Icons.download),
-                      label: Text(
-                          _isImporting ? l.importing : l.import),
+                  for (final v in vehicles)
+                    CheckboxListTile(
+                      secondary: const Icon(Icons.directions_car_outlined),
+                      title: Text(v.displayName),
+                      subtitle: Text('${v.brand} ${v.model} ${v.year}'),
+                      value: _selectedIds.contains(v.id),
+                      onChanged: (checked) {
+                        setState(() {
+                          if (checked == true) {
+                            _selectedIds.add(v.id);
+                          } else {
+                            _selectedIds.remove(v.id);
+                          }
+                        });
+                      },
                     ),
-                  ),
                 ],
               ),
-            ),
           ],
         ),
         loading: () => const Center(

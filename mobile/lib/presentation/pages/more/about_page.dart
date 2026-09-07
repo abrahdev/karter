@@ -72,7 +72,7 @@ class AboutPage extends ConsumerWidget {
                 title: Text(l.moreRate),
                 subtitle: Text(l.moreRateSubtitle),
                 trailing: const Icon(Icons.chevron_right),
-                onTap: () => showStorePageRating(context),
+                onTap: () => showPlayStoreRating(context),
               ),
             ],
           ),
