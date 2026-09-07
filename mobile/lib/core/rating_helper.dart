@@ -136,6 +136,19 @@ class _RatingSheet extends StatelessWidget {
   }
 }
 
+Future<void> showStorePageRating(BuildContext context) async {
+  final result = await karterShowModalBottomSheet<bool>(
+    context: context,
+    builder: (ctx) => const _RatingSheet(),
+  );
+
+  if (result == true) {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(_hasRatedKey, true);
+    await openStorePage();
+  }
+}
+
 Future<void> openStorePage() async {
   final review = InAppReview.instance;
   if (await review.isAvailable()) {

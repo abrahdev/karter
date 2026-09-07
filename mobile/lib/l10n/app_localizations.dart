@@ -132,11 +132,11 @@ abstract class AppLocalizations {
   /// **'Vehicles'**
   String get navVehicles;
 
-  /// No description provided for @navObd.
+  /// No description provided for @navDiagnosis.
   ///
   /// In en, this message translates to:
-  /// **'OBD II'**
-  String get navObd;
+  /// **'Diagnosis'**
+  String get navDiagnosis;
 
   /// No description provided for @navMore.
   ///
@@ -2128,6 +2128,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Odometer and maintenance reminders'**
   String get moreNotificationsSubtitle;
+
+  /// No description provided for @morePersonalization.
+  ///
+  /// In en, this message translates to:
+  /// **'Personalization'**
+  String get morePersonalization;
+
+  /// No description provided for @morePersonalizationSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Interface, colors, haptics and shake'**
+  String get morePersonalizationSubtitle;
 
   /// No description provided for @notificationSettingsTitle.
   ///

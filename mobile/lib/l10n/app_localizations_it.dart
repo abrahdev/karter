@@ -18,7 +18,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get navVehicles => 'Veicoli';
 
   @override
-  String get navObd => 'OBD II';
+  String get navDiagnosis => 'OBD II';
 
   @override
   String get navMore => 'Altro';
@@ -1102,6 +1102,13 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get moreNotificationsSubtitle =>
       'Promemoria di contachilometri e manutenzione';
+
+  @override
+  String get morePersonalization => 'Personalization';
+
+  @override
+  String get morePersonalizationSubtitle =>
+      'Interface, colors, haptics and shake';
 
   @override
   String get notificationSettingsTitle => 'Impostazioni notifiche';

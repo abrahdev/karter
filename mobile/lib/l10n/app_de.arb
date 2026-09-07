@@ -4,7 +4,7 @@
   "appTitle": "Karter",
   "navDashboard": "Dashboard",
   "navVehicles": "Fahrzeuge",
-  "navObd": "OBD II",
+  "navDiagnosis": "OBD II",
   "navMore": "Mehr",
   "homeEmptyTitle": "Keine Fahrzeuge",
   "homeEmptySubtitle": "Füge dein erstes Fahrzeug hinzu",

@@ -18,7 +18,7 @@ class AppLocalizationsEt extends AppLocalizations {
   String get navVehicles => 'Sõidukid';
 
   @override
-  String get navObd => 'OBD II';
+  String get navDiagnosis => 'OBD II';
 
   @override
   String get navMore => 'Veel';
@@ -1095,6 +1095,13 @@ class AppLocalizationsEt extends AppLocalizations {
   @override
   String get moreNotificationsSubtitle =>
       'Läbisõidumõõdiku ja hoolduse meeldetuletused';
+
+  @override
+  String get morePersonalization => 'Personalization';
+
+  @override
+  String get morePersonalizationSubtitle =>
+      'Interface, colors, haptics and shake';
 
   @override
   String get notificationSettingsTitle => 'Teavituste seaded';

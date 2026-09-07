@@ -76,7 +76,7 @@ class _AppShellState extends State<AppShell> {
                     NavigationRailDestination(
                       icon: Icon(Icons.speed_outlined),
                       selectedIcon: Icon(Icons.speed),
-                      label: Text(l.navObd),
+                      label: Text(l.navDiagnosis),
                     ),
                     NavigationRailDestination(
                       icon: Icon(Icons.more_horiz_outlined),
@@ -111,7 +111,7 @@ class _AppShellState extends State<AppShell> {
               NavigationDestination(
                 icon: Icon(Icons.speed_outlined),
                 selectedIcon: Icon(Icons.speed),
-                label: l.navObd,
+                label: l.navDiagnosis,
               ),
               NavigationDestination(
                 icon: Icon(Icons.more_horiz_outlined),
