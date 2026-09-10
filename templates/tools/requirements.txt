@@ -1,3 +1,5 @@
 jsonschema
 openai
+pymupdf
 rich
+simple-term-menu

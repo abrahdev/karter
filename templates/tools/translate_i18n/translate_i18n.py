@@ -25,7 +25,6 @@ import os
 import sys
 import time
 
-from rich.console import Console
 from rich.panel import Panel
 from rich.progress import (
     BarColumn,
@@ -36,96 +35,36 @@ from rich.progress import (
     TimeElapsedColumn,
     TimeRemainingColumn,
 )
-from rich.table import Table
 
 try:
     from openai import OpenAI
 except ImportError:
     sys.exit("Missing dependency: run  pip install openai  first")
 
-console = Console()
+# Import shared utilities
+sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
+from _shared import (
+    PROVIDERS,
+    ask,
+    confirm,
+    get_api_key,
+    load_env,
+    pick_multi,
+    pick_option,
+    save_env,
+    select_model,
+    select_provider,
+)
+from _shared.ui import console
 
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
 I18N_DIR = os.path.join(REPO_ROOT, "templates", "i18n")
 EN_FILE = os.path.join(I18N_DIR, "en.json")
-ENV_FILE = os.path.join(os.path.dirname(__file__), ".env")
 CKPT_DIR = os.path.join(os.path.dirname(__file__), ".checkpoints")
 
 DEFAULT_BATCH = 600
 MAX_RETRIES = 5
 RETRY_BASE = 3
-
-MODELS_CACHE = os.path.join(os.path.expanduser("~"), ".cache", "opencode", "models.json")
-
-# Curated provider list. Each entry: base_url, model, env var, and per-1M
-# token prices (input/output, USD) used for the cost estimate. Prices are
-# approximations; edit freely. cache_key maps to the provider id used in the
-# local models.json cache (when available) for dynamic prices.
-PROVIDERS = [
-    {
-        "name": "OpenCode Go (deepseek-v4-flash)",
-        "base_url": "https://opencode.ai/zen/go/v1",
-        "model": "deepseek-v4-flash",
-        "env_var": "OPENCODE_API_KEY",
-        "cache_key": "opencode-go",
-        "price_in": 0.2,
-        "price_out": 0.5,
-    },
-    {
-        "name": "DeepSeek (deepseek-chat)",
-        "base_url": "https://api.deepseek.com",
-        "model": "deepseek-chat",
-        "env_var": "DEEPSEEK_API_KEY",
-        "cache_key": "deepseek",
-        "price_in": 0.27,
-        "price_out": 1.10,
-    },
-    {
-        "name": "OpenAI (gpt-4o-mini)",
-        "base_url": "https://api.openai.com/v1",
-        "model": "gpt-4o-mini",
-        "env_var": "OPENAI_API_KEY",
-        "cache_key": "openai",
-        "price_in": 0.15,
-        "price_out": 0.60,
-    },
-    {
-        "name": "Anthropic (claude-haiku)",
-        "base_url": "https://api.anthropic.com/v1",
-        "model": "claude-haiku-4-5-20251001",
-        "env_var": "ANTHROPIC_API_KEY",
-        "cache_key": "anthropic",
-        "price_in": 1.0,
-        "price_out": 5.0,
-    },
-    {
-        "name": "Groq (llama-3.3-70b)",
-        "base_url": "https://api.groq.com/openai/v1",
-        "model": "llama-3.3-70b-versatile",
-        "env_var": "GROQ_API_KEY",
-        "cache_key": "groq",
-        "price_in": 0.59,
-        "price_out": 0.79,
-    },
-    {
-        "name": "Mistral (mistral-small)",
-        "base_url": "https://api.mistral.ai/v1",
-        "model": "mistral-small-latest",
-        "env_var": "MISTRAL_API_KEY",
-        "cache_key": "mistral",
-        "price_in": 0.1,
-        "price_out": 0.3,
-    },
-    {
-        "name": "OpenRouter (auto)",
-        "base_url": "https://openrouter.ai/api/v1",
-        "model": "openrouter/auto",
-        "env_var": "OPENROUTER_API_KEY",
-        "cache_key": "openrouter",
-        "price_in": 0.15,
-        "price_out": 0.60,
-    },
-]
 
 LANG_NAMES = {
     "en": "English",
@@ -146,47 +85,6 @@ TOKENS_PER_KEY = 18
 HEADER = "[bold cyan]▍ karter i18n[/] [dim]translate & maintain catalog[/dim]"
 
 
-# ---------- tiny readline-based prompt (agent-style) ----------
-
-def ask(prompt, default=None, secret=False):
-    suffix = f" [dim]({default})[/dim]" if default is not None else ""
-    console.print(f"[bold]{prompt}[/]{suffix}")
-    try:
-        value = input("> ").strip()
-    except EOFError:
-        sys.exit()
-    if not value and default is not None:
-        value = str(default)
-    return value
-
-
-def confirm(prompt, default="y"):
-    ans = ask(f"{prompt} [dim]Y/n[/dim]", default=default).lower()
-    return ans not in ("n", "no")
-
-
-# ---------- env ----------
-
-def load_env():
-    if not os.path.exists(ENV_FILE):
-        return {}
-    env = {}
-    with open(ENV_FILE, encoding="utf-8") as fh:
-        for line in fh:
-            line = line.strip()
-            if not line or line.startswith("#") or "=" not in line:
-                continue
-            key, _, value = line.partition("=")
-            env[key.strip()] = value.strip().strip('"').strip("'")
-    return env
-
-
-def save_env(env):
-    lines = [f"{k}={v}" for k, v in env.items()]
-    with open(ENV_FILE, "w", encoding="utf-8") as fh:
-        fh.write("\n".join(lines) + "\n")
-
-
 def load_en():
     with open(EN_FILE, encoding="utf-8") as fh:
         return json.load(fh)
@@ -204,191 +102,17 @@ def available_languages():
     return langs
 
 
-# ---------- numbered menu helpers ----------
-
-def pick_option(title, options, default_index=0):
-    """Print a numbered menu and return the chosen option value (string)."""
-    console.print(f"\n[bold]{title}[/]")
-    table = Table(show_header=False, box=None, pad_edge=False)
-    table.add_column(justify="right", style="cyan", width=3)
-    table.add_column(style="white")
-    for i, (value, label) in enumerate(options, 1):
-        marker = "▸" if i == default_index else " "
-        table.add_row(f" {i}", f"{marker} {label}")
-    console.print(table)
-    choice = ask("Select [dim]number[/dim]")
-    if not choice:
-        return options[default_index - 1][0]
-    try:
-        idx = int(choice)
-        if 1 <= idx <= len(options):
-            return options[idx - 1][0]
-    except ValueError:
-        pass
-    console.print("[red]Invalid selection.[/]")
-    sys.exit()
-
-
-def pick_multi(title, options):
-    """Numbered menu with comma/ranges, returns list of values."""
-    console.print(f"\n[bold]{title}[/]")
-    table = Table(show_header=False, box=None, pad_edge=False)
-    table.add_column(justify="right", style="cyan", width=3)
-    table.add_column(style="white")
-    for i, (value, label) in enumerate(options, 1):
-        table.add_row(f" {i}", f" {label}")
-    console.print(table)
-    raw = ask("Select numbers [dim]comma or range, e.g. 1,3,5-7 or all[/dim]")
-    if raw in ("", "all"):
-        return [v for v, _ in options]
-    selected = []
-    for part in raw.split(","):
-        part = part.strip()
-        if not part:
-            continue
-        if "-" in part:
-            a, b = part.split("-", 1)
-            selected.extend(range(int(a), int(b) + 1))
-        else:
-            selected.append(int(part))
-    values = []
-    for idx in selected:
-        if 1 <= idx <= len(options):
-            values.append(options[idx - 1][0])
-    return values
-
-
-# ---------- providers ----------
-
-def select_provider():
-    options = [(f"p{i}", p["name"]) for i, p in enumerate(PROVIDERS)]
-    options.append(("custom", "Custom OpenAI-compatible endpoint"))
-    pick = pick_option("Choose a provider", options, default_index=1)
-    if pick == "custom":
-        base_url = ask("Base URL", "https://api.openai.com/v1")
-        model = ask("Model")
-        if not model:
-            sys.exit("Model required for custom provider")
-        env_var = ask("Environment variable", "API_KEY")
-        return {
-            "name": f"Custom ({model})",
-            "base_url": base_url,
-            "model": model,
-            "env_var": env_var,
-            "cache_key": None,
-            "price_in": 0.0,
-            "price_out": 0.0,
-        }
-    return PROVIDERS[int(pick[1:])]
-
-
-# ---------- model selection ----------
-
-def load_model_prices(cache_key):
-    """Return {model_id: {price_in, price_out}} from the local opencode cache,
-    or {} when the cache is unavailable."""
-    if not cache_key or not os.path.exists(MODELS_CACHE):
-        return {}
-    try:
-        with open(MODELS_CACHE, encoding="utf-8") as fh:
-            data = json.load(fh)
-        provider = data.get(cache_key, {})
-        models = provider.get("models", {})
-        prices = {}
-        for mid, info in models.items():
-            cost = info.get("cost") or {}
-            prices[mid] = {
-                "price_in": cost.get("input", 0.0),
-                "price_out": cost.get("output", 0.0),
-            }
-        return prices
-    except Exception:
-        return {}
-
-
-def price_label(prices, mid):
-    p = prices.get(mid)
-    if not p:
-        return ""
-    return f"  [dim]${p['price_in']:.3f}/M in · ${p['price_out']:.3f}/M out[/dim]"
-
-
-def list_models(provider, api_key):
-    """Fetch available models via the OpenAI-compatible /models endpoint.
-    Returns a list of model ids, or [] on failure."""
-    try:
-        client = OpenAI(api_key=api_key, base_url=provider["base_url"])
-        resp = client.models.list()
-        return sorted({m.id for m in resp.data})
-    except Exception as exc:
-        console.print(
-            f"[dim]Could not list models for {provider['name']}:[/] "
-            f"[yellow]{type(exc).__name__}[/] — will ask manually."
-        )
-        return []
-
-
-def select_model(provider, api_key):
-    """Let the user pick a model for the chosen provider, preferring a dynamic
-    listing from the provider's /models endpoint."""
-    prices = load_model_prices(provider.get("cache_key"))
-    ids = list_models(provider, api_key)
-
-    if ids:
-        options = [(mid, f"[bold]{mid}[/]{price_label(prices, mid)}") for mid in ids]
-        options.append(("__custom__", "[yellow]Type a custom model id[/]"))
-        picked = pick_option(f"Choose a model for {provider['name']}", options,
-                             default_index=1)
-        if picked == "__custom__":
-            picked = ask("Model id")
-        if not picked:
-            sys.exit("No model selected")
-        provider["model"] = picked
-    else:
-        provider["model"] = ask(f"Model id for {provider['name']}", provider["model"])
-
-    if prices and provider["model"] in prices:
-        p = prices[provider["model"]]
-        provider["price_in"] = p["price_in"]
-        provider["price_out"] = p["price_out"]
-    console.print(
-        f"[dim]✓[/] Using [green]{provider['model']}[/] "
-        f"(${provider['price_in']:.3f}/M in · ${provider['price_out']:.3f}/M out)"
-    )
-
-
-# ---------- api key ----------
-
-def get_api_key(provider):
-    env = load_env()
-    env_var = provider["env_var"]
-    if env_var in env and env[env_var]:
-        console.print(f"[dim]✓[/] Using API key from [green]{os.path.relpath(ENV_FILE)}[/] ({env_var})")
-        return env[env_var], env
-    if env_var in os.environ and os.environ[env_var]:
-        console.print(f"[dim]✓[/] Using API key from [green]environment[/] ({env_var})")
-        return os.environ[env_var], env
-    key = ask(f"Paste API key for [bold]{provider['name']}[/]")
-    if not key:
-        sys.exit("No API key provided")
-    if confirm("Save to templates/tools/.env?"):
-        env[env_var] = key
-        save_env(env)
-        console.print(f"[dim]✓[/] Saved [green]{env_var}[/] to {os.path.relpath(ENV_FILE)}")
-    return key, env
-
-
 # ---------- languages / mode ----------
 
 def select_languages(langs):
     codes = list(langs)
-    options = [(c, f"[bold]{c}[/]  {LANG_NAMES.get(c, c)}") for c in codes]
-    options.append(("new", "[yellow]New language code[/]"))
+    options = [(c, f"{c}  {LANG_NAMES.get(c, c)}") for c in codes]
+    options.append(("new", "New language code"))
     picked = pick_multi("Select target language(s)", options)
     if not picked:
         sys.exit("No language selected")
     if "new" in picked:
-        code = ask("New language code [dim]e.g. sv[/dim]")
+        code = ask("New language code (e.g. sv)")
         picked = [c for c in picked if c != "new"] + [code]
     return picked
 
