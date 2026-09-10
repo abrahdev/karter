@@ -18,7 +18,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get navVehicles => 'Vehículos';
 
   @override
-  String get navObd => 'OBD II';
+  String get navDiagnosis => 'OBD II';
 
   @override
   String get navMore => 'Más';
@@ -195,6 +195,17 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get dataManagerTitle => 'Exportar / Importar datos';
+
+  @override
+  String dataManagerSelected(Object count) {
+    return '$count selected';
+  }
+
+  @override
+  String get dataManagerSelectHint => 'Select vehicles to export';
+
+  @override
+  String get importHint => 'Import vehicles from a Karter JSON backup';
 
   @override
   String get selectAll => 'Seleccionar todos';
@@ -1101,6 +1112,13 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get moreNotificationsSubtitle =>
       'Recordatorios de odómetro y mantenimiento';
+
+  @override
+  String get morePersonalization => 'Personalization';
+
+  @override
+  String get morePersonalizationSubtitle =>
+      'Interface, colors, haptics and shake';
 
   @override
   String get notificationSettingsTitle => 'Configuración de notificaciones';

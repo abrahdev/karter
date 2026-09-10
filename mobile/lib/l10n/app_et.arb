@@ -4,7 +4,7 @@
   "appTitle": "Karter",
   "navDashboard": "Juhtpaneel",
   "navVehicles": "Sõidukid",
-  "navObd": "OBD II",
+  "navDiagnosis": "OBD II",
   "navMore": "Veel",
   "homeEmptyTitle": "Sõidukeid pole",
   "homeEmptySubtitle": "Lisa oma esimene sõiduk",

@@ -11,7 +11,7 @@ class ObdPage extends StatelessWidget {
     final l = AppLocalizations.of(context)!;
 
     return Scaffold(
-      appBar: AppBar(title: Text(l.navObd)),
+      appBar: AppBar(title: Text(l.navDiagnosis)),
       body: ListView(
         padding: const EdgeInsets.all(AppSpacing.pagePadding),
         children: [

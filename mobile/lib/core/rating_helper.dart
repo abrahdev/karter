@@ -136,6 +136,15 @@ class _RatingSheet extends StatelessWidget {
   }
 }
 
+Future<void> showPlayStoreRating(BuildContext context) async {
+  final review = InAppReview.instance;
+  if (await review.isAvailable()) {
+    await review.requestReview();
+  } else if (context.mounted) {
+    await openStorePage();
+  }
+}
+
 Future<void> openStorePage() async {
   final review = InAppReview.instance;
   if (await review.isAvailable()) {

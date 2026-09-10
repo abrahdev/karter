@@ -7,6 +7,10 @@ import 'package:mobile/presentation/pages/fuel_log_list_page.dart';
 import 'package:mobile/presentation/pages/home_page.dart';
 import 'package:mobile/presentation/pages/maintenance_log_list_page.dart';
 import 'package:mobile/presentation/pages/maintenance_settings_page.dart';
+import 'package:mobile/presentation/pages/more/about_page.dart';
+import 'package:mobile/presentation/pages/more/backups_page.dart';
+import 'package:mobile/presentation/pages/more/personalization_page.dart';
+import 'package:mobile/presentation/pages/more/template_source_page.dart';
 import 'package:mobile/presentation/pages/more_page.dart';
 import 'package:mobile/presentation/pages/notification_list_page.dart';
 import 'package:mobile/presentation/pages/obd_page.dart';
@@ -91,6 +95,22 @@ final appRouter = GoRouter(
           ],
         ),
       ],
+    ),
+    GoRoute(
+      path: '/more/personalization',
+      builder: (_, _) => const PersonalizationPage(),
+    ),
+    GoRoute(
+      path: '/more/source',
+      builder: (_, _) => const TemplateSourcePage(),
+    ),
+    GoRoute(
+      path: '/more/backups',
+      builder: (_, _) => const BackupsPage(),
+    ),
+    GoRoute(
+      path: '/more/about',
+      builder: (_, _) => const AboutPage(),
     ),
     GoRoute(
       path: '/data',

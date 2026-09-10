@@ -18,7 +18,7 @@ class AppLocalizationsEt extends AppLocalizations {
   String get navVehicles => 'Sõidukid';
 
   @override
-  String get navObd => 'OBD II';
+  String get navDiagnosis => 'OBD II';
 
   @override
   String get navMore => 'Veel';
@@ -195,6 +195,17 @@ class AppLocalizationsEt extends AppLocalizations {
 
   @override
   String get dataManagerTitle => 'Eksport ja import';
+
+  @override
+  String dataManagerSelected(Object count) {
+    return '$count selected';
+  }
+
+  @override
+  String get dataManagerSelectHint => 'Select vehicles to export';
+
+  @override
+  String get importHint => 'Import vehicles from a Karter JSON backup';
 
   @override
   String get selectAll => 'Vali kõik';
@@ -1095,6 +1106,13 @@ class AppLocalizationsEt extends AppLocalizations {
   @override
   String get moreNotificationsSubtitle =>
       'Läbisõidumõõdiku ja hoolduse meeldetuletused';
+
+  @override
+  String get morePersonalization => 'Personalization';
+
+  @override
+  String get morePersonalizationSubtitle =>
+      'Interface, colors, haptics and shake';
 
   @override
   String get notificationSettingsTitle => 'Teavituste seaded';
