@@ -7,7 +7,7 @@ from simple_term_menu import TerminalMenu
 
 console = Console()
 
-HEADER = "[bold cyan]▍ karter[/] [dim]template tools[/dim]"
+HEADER = "[bold yellow]▍ karter[/] [dim]template tools[/dim]"
 
 
 def ask(prompt, default=None, secret=False):
