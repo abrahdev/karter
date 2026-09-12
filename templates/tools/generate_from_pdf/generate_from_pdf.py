@@ -39,6 +39,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 from _shared import (
     ask,
     confirm,
+    create_client,
     get_api_key,
     pick_option,
     select_model,
@@ -52,7 +53,7 @@ from validator import print_errors, validate_all
 
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
 DATA_DIR = os.path.join(REPO_ROOT, "templates", "data")
-HEADER = "[bold cyan]▍ karter template generator[/] [dim]from workshop manual PDF[/dim]"
+HEADER = "[bold yellow]▍ karter template generator[/] [dim]from workshop manual PDF[/dim]"
 
 
 def select_input_mode() -> str:
@@ -67,32 +68,54 @@ def select_input_mode() -> str:
     )
 
 
-def select_pdf() -> str:
-    """Interactive PDF file selection."""
-    pdf_path = ask("PDF file path")
-    if not pdf_path:
-        sys.exit("No PDF path provided")
-    if not os.path.exists(pdf_path):
-        console.print(f"[red]✗ File not found: {pdf_path}[/]")
-        sys.exit(1)
-    if not os.path.isfile(pdf_path):
-        console.print(f"[red]✗ Not a file: {pdf_path}[/]")
-        sys.exit(1)
-    return pdf_path
+def select_pdf() -> str | None:
+    """Interactive PDF file selection with retry loop.
+
+    Returns:
+        Valid file path, or None if the user wants to go back
+        to the input mode selection.
+    """
+    while True:
+        pdf_path = ask("PDF file path")
+        if not pdf_path:
+            console.print("[red]✗ No PDF path provided, try again[/]")
+            continue
+        if not os.path.exists(pdf_path):
+            console.print(f"[red]✗ File not found: {pdf_path}[/]")
+            if confirm("Try again?"):
+                continue
+            return None
+        if not os.path.isfile(pdf_path):
+            console.print(f"[red]✗ Not a file: {pdf_path}[/]")
+            if confirm("Try again?"):
+                continue
+            return None
+        return pdf_path
 
 
-def select_folder() -> str:
-    """Interactive folder selection."""
-    folder_path = ask("Folder path")
-    if not folder_path:
-        sys.exit("No folder path provided")
-    if not os.path.exists(folder_path):
-        console.print(f"[red]✗ Folder not found: {folder_path}[/]")
-        sys.exit(1)
-    if not os.path.isdir(folder_path):
-        console.print(f"[red]✗ Not a folder: {folder_path}[/]")
-        sys.exit(1)
-    return folder_path
+def select_folder() -> str | None:
+    """Interactive folder selection with retry loop.
+
+    Returns:
+        Valid folder path, or None if the user wants to go back
+        to the input mode selection.
+    """
+    while True:
+        folder_path = ask("Folder path")
+        if not folder_path:
+            console.print("[red]✗ No folder path provided, try again[/]")
+            continue
+        if not os.path.exists(folder_path):
+            console.print(f"[red]✗ Folder not found: {folder_path}[/]")
+            if confirm("Try again?"):
+                continue
+            return None
+        if not os.path.isdir(folder_path):
+            console.print(f"[red]✗ Not a folder: {folder_path}[/]")
+            if confirm("Try again?"):
+                continue
+            return None
+        return folder_path
 
 
 def list_pdfs_in_folder(folder_path: str) -> list[str]:
@@ -126,7 +149,7 @@ def select_language(detected: str) -> str:
 def show_extracted_data(data: dict) -> None:
     """Display extracted data in a readable format."""
     console.print("\n" + "=" * 60)
-    console.print("[bold cyan]EXTRACTED DATA[/]")
+    console.print("[bold white]EXTRACTED DATA[/]")
     console.print("=" * 60 + "\n")
 
     # Vehicle info
@@ -259,7 +282,7 @@ def process_single_pdf(
     Returns:
         True if successful, False if skipped or failed
     """
-    console.print(f"\n[bold cyan]Processing:[/] {os.path.basename(pdf_path)}")
+    console.print(f"\n[bold white]Processing:[/] {os.path.basename(pdf_path)}")
 
     try:
         reader = PDFReader(pdf_path)
@@ -295,7 +318,7 @@ def process_single_pdf(
 
     # AI extraction
     console.print("\n[bold]Analyzing with AI...[/]")
-    client = OpenAI(api_key=api_key, base_url=provider["base_url"])
+    client = create_client(provider, api_key)
 
     with progress:
         task = progress.add_task("AI extraction", total=None)
@@ -351,46 +374,55 @@ def process_single_pdf(
 
 
 def main():
-    console.print(Panel(HEADER, border_style="cyan"))
+    console.print(Panel(HEADER, border_style="yellow"))
 
-    # Step 1: Select input mode
-    input_mode = select_input_mode()
-
-    # Step 2: Select AI provider (shared for all PDFs)
+    # Select AI provider (shared for all PDFs)
     provider = select_provider()
     api_key, _ = get_api_key(provider)
     select_model(provider, api_key)
 
-    if input_mode == "file":
-        # Single file mode
-        pdf_path = select_pdf()
-        success = process_single_pdf(pdf_path, provider, api_key)
+    # Loop for input mode selection with retry
+    while True:
+        # Step 1: Select input mode
+        input_mode = select_input_mode()
 
-        if success and confirm("Regenerate index.json and karter-catalog.db?"):
-            regenerate_catalog()
+        if input_mode == "file":
+            # Single file mode
+            pdf_path = select_pdf()
+            if pdf_path is None:
+                continue  # Back to input mode selection
+            success = process_single_pdf(pdf_path, provider, api_key)
 
-    else:
+            if success and confirm("Regenerate index.json and karter-catalog.db?"):
+                regenerate_catalog()
+            break
+
         # Batch mode
         folder_path = select_folder()
+        if folder_path is None:
+            continue  # Back to input mode selection
+
         pdfs = list_pdfs_in_folder(folder_path)
 
         if not pdfs:
             console.print(f"[red]✗ No PDF files found in {folder_path}[/]")
-            sys.exit(1)
+            if confirm("Try again?"):
+                continue
+            break
 
         console.print(f"\n[bold]Found {len(pdfs)} PDF file(s):[/]")
         for i, pdf in enumerate(pdfs, 1):
             console.print(f"  {i}. {os.path.basename(pdf)}")
 
         if not confirm(f"Process all {len(pdfs)} files?"):
-            sys.exit(0)
+            break
 
         # Process each PDF
         successful = 0
         for i, pdf_path in enumerate(pdfs, 1):
-            console.print(f"\n[bold cyan]{'=' * 60}[/]")
-            console.print(f"[bold cyan]File {i}/{len(pdfs)}[/]")
-            console.print(f"[bold cyan]{'=' * 60}[/]")
+            console.print(f"\n[bold white]{'=' * 60}[/]")
+            console.print(f"[bold white]File {i}/{len(pdfs)}[/]")
+            console.print(f"[bold white]{'=' * 60}[/]")
 
             try:
                 success = process_single_pdf(pdf_path, provider, api_key)
@@ -406,6 +438,7 @@ def main():
 
         if successful > 0 and confirm("Regenerate index.json and karter-catalog.db?"):
             regenerate_catalog()
+        break
 
     console.print("\n[bold green]✓ All done![/]")
 

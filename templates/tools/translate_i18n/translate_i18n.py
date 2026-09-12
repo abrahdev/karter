@@ -47,6 +47,7 @@ from _shared import (
     PROVIDERS,
     ask,
     confirm,
+    create_client,
     get_api_key,
     load_env,
     pick_multi,
@@ -61,6 +62,7 @@ REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", 
 I18N_DIR = os.path.join(REPO_ROOT, "templates", "i18n")
 EN_FILE = os.path.join(I18N_DIR, "en.json")
 CKPT_DIR = os.path.join(os.path.dirname(__file__), ".checkpoints")
+PROMPTS_FILE = os.path.join(os.path.dirname(__file__), "PROMPTS.md")
 
 DEFAULT_BATCH = 600
 MAX_RETRIES = 5
@@ -133,17 +135,9 @@ def select_mode():
 
 def build_prompt(lang_code):
     lang_name = LANG_NAMES.get(lang_code, lang_code)
-    return (
-        f"You are a professional automotive translator. Translate the following "
-        f"vehicle maintenance JSON (intervals, parts, and DTC diagnostic trouble "
-        f"codes) into {lang_name}. Rules: "
-        "1) Keep the JSON keys EXACTLY as-is (no rename, add, or remove). "
-        "2) Translate only the values. "
-        "3) Do NOT translate technical acronyms/module labels: ECM, PCM, TCM, OBD, "
-        "RPM, EGR, EVAP, HO2S, NOx, DPF, B+, A, B, C (circuit labels), 2T, 4WD, etc. "
-        "4) Use natural, standard automotive terminology of the target language. "
-        "5) Return ONLY the translated JSON, no explanations, no markdown fences."
-    )
+    with open(PROMPTS_FILE, encoding="utf-8") as fh:
+        template = fh.read()
+    return template.replace("{lang_name}", lang_name)
 
 
 def translate_batch(client, system, items, model):
@@ -306,7 +300,7 @@ def main():
             validate(lang)
         return
 
-    client = OpenAI(api_key=api_key, base_url=provider["base_url"])
+    client = create_client(provider, api_key)
 
     batch_size = ask("Batch size", str(DEFAULT_BATCH))
     try:

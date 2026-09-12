@@ -2,6 +2,7 @@
 
 from .providers import (
     PROVIDERS,
+    create_client,
     get_api_key,
     load_env,
     save_env,
@@ -14,6 +15,7 @@ __all__ = [
     "PROVIDERS",
     "ask",
     "confirm",
+    "create_client",
     "get_api_key",
     "load_env",
     "pick_multi",

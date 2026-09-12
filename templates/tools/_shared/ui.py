@@ -40,8 +40,8 @@ def pick_option(title, options, default_index=0):
     Returns:
         The value of the selected option
     """
-    # Print title in bold with amber/yellow color
-    console.print(f"\n[bold yellow]{title}[/]")
+    # Print title in bold white
+    console.print(f"\n[bold white]{title}[/]")
     
     # Extract labels for the menu
     labels = [label for value, label in options]
@@ -69,8 +69,8 @@ def pick_option(title, options, default_index=0):
 
 def pick_multi(title, options):
     """Menu with arrow keys and multi-select (space to toggle), returns list of values."""
-    # Print title in bold with amber/yellow color
-    console.print(f"\n[bold yellow]{title}[/]")
+    # Print title in bold white
+    console.print(f"\n[bold white]{title}[/]")
     
     # Extract labels for the menu
     labels = [label for value, label in options]

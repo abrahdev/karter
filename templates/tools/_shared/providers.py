@@ -3,6 +3,7 @@
 import json
 import os
 import sys
+import uuid
 
 from rich.console import Console
 
@@ -18,6 +19,10 @@ console = Console()
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
 ENV_FILE = os.path.join(os.path.dirname(__file__), "..", ".env")
 MODELS_CACHE = os.path.join(os.path.expanduser("~"), ".cache", "opencode", "models.json")
+
+# Stable session id reused across all requests in a run, so OpenCode Go can
+# optimize routing and prompt caching (see https://opencode.ai/docs/go).
+_SESSION_ID = uuid.uuid4().hex
 
 # Curated provider list. Each entry: base_url, model, env var, and per-1M
 # token prices (input/output, USD) used for the cost estimate. Prices are
@@ -163,6 +168,22 @@ def price_label(prices, mid):
     if not p:
         return ""
     return f"  ${p['price_in']:.3f}/M in · ${p['price_out']:.3f}/M out"
+
+
+def create_client(provider, api_key):
+    """Create an OpenAI-compatible client for the given provider.
+
+    OpenCode Go requires a stable ``x-opencode-session`` header so requests can
+    be routed efficiently; the header is added automatically for that provider.
+    """
+    headers = {}
+    if "opencode.ai" in provider.get("base_url", ""):
+        headers["x-opencode-session"] = _SESSION_ID
+    return OpenAI(
+        api_key=api_key,
+        base_url=provider["base_url"],
+        default_headers=headers,
+    )
 
 
 def list_models(provider, api_key):

@@ -18,6 +18,9 @@ build/
 __pycache__/
 *.pyc
 
+# Environment files
+.env
+
 # Flatpak build output
 flatpak/build/
 flatpak/repo/
