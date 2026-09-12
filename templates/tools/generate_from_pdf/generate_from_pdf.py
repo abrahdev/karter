@@ -16,33 +16,22 @@ Usage:
 import json
 import os
 import sys
-from pathlib import Path
-
-from rich.console import Console
-from rich.panel import Panel
-from rich.progress import (
-    BarColumn,
-    Progress,
-    SpinnerColumn,
-    TextColumn,
-    TimeElapsedColumn,
-)
-from rich.table import Table
-
-try:
-    from openai import OpenAI
-except ImportError:
-    sys.exit("Missing dependency: run  pip install openai  first")
 
 # Import shared utilities
 sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 from _shared import (
+    STYLE_TITLE,
     ask,
     confirm,
     create_client,
     get_api_key,
+    make_progress,
     pick_option,
+    print_header,
+    print_title,
+    run_cli,
     select_model,
+    select_path,
     select_provider,
 )
 from _shared.ui import console
@@ -53,7 +42,6 @@ from validator import print_errors, validate_all
 
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
 DATA_DIR = os.path.join(REPO_ROOT, "templates", "data")
-HEADER = "[bold yellow]▍ karter template generator[/] [dim]from workshop manual PDF[/dim]"
 
 
 def select_input_mode() -> str:
@@ -75,22 +63,7 @@ def select_pdf() -> str | None:
         Valid file path, or None if the user wants to go back
         to the input mode selection.
     """
-    while True:
-        pdf_path = ask("PDF file path")
-        if not pdf_path:
-            console.print("[red]✗ No PDF path provided, try again[/]")
-            continue
-        if not os.path.exists(pdf_path):
-            console.print(f"[red]✗ File not found: {pdf_path}[/]")
-            if confirm("Try again?"):
-                continue
-            return None
-        if not os.path.isfile(pdf_path):
-            console.print(f"[red]✗ Not a file: {pdf_path}[/]")
-            if confirm("Try again?"):
-                continue
-            return None
-        return pdf_path
+    return select_path(kind="file")
 
 
 def select_folder() -> str | None:
@@ -100,22 +73,7 @@ def select_folder() -> str | None:
         Valid folder path, or None if the user wants to go back
         to the input mode selection.
     """
-    while True:
-        folder_path = ask("Folder path")
-        if not folder_path:
-            console.print("[red]✗ No folder path provided, try again[/]")
-            continue
-        if not os.path.exists(folder_path):
-            console.print(f"[red]✗ Folder not found: {folder_path}[/]")
-            if confirm("Try again?"):
-                continue
-            return None
-        if not os.path.isdir(folder_path):
-            console.print(f"[red]✗ Not a folder: {folder_path}[/]")
-            if confirm("Try again?"):
-                continue
-            return None
-        return folder_path
+    return select_path(kind="folder")
 
 
 def list_pdfs_in_folder(folder_path: str) -> list[str]:
@@ -149,7 +107,7 @@ def select_language(detected: str) -> str:
 def show_extracted_data(data: dict) -> None:
     """Display extracted data in a readable format."""
     console.print("\n" + "=" * 60)
-    console.print("[bold white]EXTRACTED DATA[/]")
+    print_title("EXTRACTED DATA")
     console.print("=" * 60 + "\n")
 
     # Vehicle info
@@ -299,14 +257,7 @@ def process_single_pdf(
 
     # Extract text from PDF
     console.print("\n[bold]Extracting text from PDF...[/]")
-    progress = Progress(
-        SpinnerColumn(),
-        TextColumn("[progress.description]{task.description}"),
-        BarColumn(),
-        TextColumn("[progress.percentage]{task.percentage:>3.0f}%"),
-        TimeElapsedColumn(),
-        console=console,
-    )
+    progress = make_progress()
     with progress:
         task = progress.add_task("Reading pages", total=page_count)
         pdf_text = ""
@@ -374,7 +325,7 @@ def process_single_pdf(
 
 
 def main():
-    console.print(Panel(HEADER, border_style="yellow"))
+    print_header("karter template generator", "from workshop manual PDF")
 
     # Select AI provider (shared for all PDFs)
     provider = select_provider()
@@ -420,9 +371,9 @@ def main():
         # Process each PDF
         successful = 0
         for i, pdf_path in enumerate(pdfs, 1):
-            console.print(f"\n[bold white]{'=' * 60}[/]")
-            console.print(f"[bold white]File {i}/{len(pdfs)}[/]")
-            console.print(f"[bold white]{'=' * 60}[/]")
+            console.print(f"\n[{STYLE_TITLE}]" + "=" * 60 + "[/]")
+            console.print(f"[{STYLE_TITLE}]File {i}/{len(pdfs)}[/]")
+            console.print(f"[{STYLE_TITLE}]" + "=" * 60 + "[/]")
 
             try:
                 success = process_single_pdf(pdf_path, provider, api_key)
@@ -444,8 +395,4 @@ def main():
 
 
 if __name__ == "__main__":
-    try:
-        main()
-    except KeyboardInterrupt:
-        console.print("\n[yellow]Interrupted[/]")
-        sys.exit(130)
+    run_cli(main)

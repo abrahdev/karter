@@ -13,18 +13,15 @@ except ImportError:
 
 from rich.console import Console
 
+sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
+from _shared import load_prompt
+
 console = Console()
 
 MAX_RETRIES = 5
 RETRY_BASE = 3
 
 PROMPTS_FILE = os.path.join(os.path.dirname(__file__), "PROMPTS.md")
-
-
-def load_prompt() -> str:
-    """Load the extraction prompt from PROMPTS.md."""
-    with open(PROMPTS_FILE, encoding="utf-8") as fh:
-        return fh.read()
 
 
 def extract_with_ai(
@@ -46,7 +43,7 @@ def extract_with_ai(
     Returns:
         Extracted data as dictionary
     """
-    system_prompt = load_prompt().replace("{language}", language)
+    system_prompt = load_prompt(PROMPTS_FILE, language=language)
 
     # Truncate text if too long (most models have context limits)
     max_chars = 100000  # ~25k tokens

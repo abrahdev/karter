@@ -26,33 +26,20 @@ import sys
 import time
 
 from rich.panel import Panel
-from rich.progress import (
-    BarColumn,
-    MofNCompleteColumn,
-    Progress,
-    SpinnerColumn,
-    TextColumn,
-    TimeElapsedColumn,
-    TimeRemainingColumn,
-)
-
-try:
-    from openai import OpenAI
-except ImportError:
-    sys.exit("Missing dependency: run  pip install openai  first")
 
 # Import shared utilities
 sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 from _shared import (
-    PROVIDERS,
     ask,
     confirm,
     create_client,
     get_api_key,
-    load_env,
+    load_prompt,
+    make_progress,
     pick_multi,
     pick_option,
-    save_env,
+    print_header,
+    run_cli,
     select_model,
     select_provider,
 )
@@ -83,8 +70,6 @@ LANG_NAMES = {
 
 # Rough tokens per key used only for the cost estimate.
 TOKENS_PER_KEY = 18
-
-HEADER = "[bold cyan]▍ karter i18n[/] [dim]translate & maintain catalog[/dim]"
 
 
 def load_en():
@@ -135,9 +120,7 @@ def select_mode():
 
 def build_prompt(lang_code):
     lang_name = LANG_NAMES.get(lang_code, lang_code)
-    with open(PROMPTS_FILE, encoding="utf-8") as fh:
-        template = fh.read()
-    return template.replace("{lang_name}", lang_name)
+    return load_prompt(PROMPTS_FILE, lang_name=lang_name)
 
 
 def translate_batch(client, system, items, model):
@@ -285,7 +268,7 @@ def translate(lang, mode, client, provider, batch_size, progress):
 # ---------- main ----------
 
 def main():
-    console.print(Panel(HEADER, subtitle=f"source: {os.path.relpath(EN_FILE)}", border_style="cyan"))
+    print_header("karter i18n", "translate & maintain catalog")
 
     provider = select_provider()
     api_key, env = get_api_key(provider)
@@ -331,24 +314,14 @@ def main():
             f"[bold]Estimated tokens:[/] ~{tok_in:,.0f} in / ~{tok_out:,.0f} out\n"
             f"[bold]Estimated cost:[/] [green]${cost:.3f}[/] (approx.)",
             title="Configuration",
-            border_style="cyan",
+            border_style="yellow",
         )
     )
 
     if not confirm("Proceed"):
         sys.exit("Aborted by user")
 
-    progress = Progress(
-        SpinnerColumn(),
-        TextColumn("[progress.description]{task.description}"),
-        BarColumn(),
-        MofNCompleteColumn(),
-        TextColumn("{task.percentage:>3.0f}%"),
-        TextColumn("({task.completed:,.0f} keys)"),
-        TimeElapsedColumn(),
-        TimeRemainingColumn(),
-        console=console,
-    )
+    progress = make_progress(show_total=True, show_remaining=True)
     with progress:
         for lang in targets:
             translate(lang, mode, client, provider, batch_size, progress)
@@ -357,8 +330,4 @@ def main():
 
 
 if __name__ == "__main__":
-    try:
-        main()
-    except KeyboardInterrupt:
-        console.print("\n[yellow]Interrupted. Checkpoints are saved — re-run to resume.[/]")
-        sys.exit(130)
+    run_cli(main, interrupt_message="Interrupted. Checkpoints are saved — re-run to resume.")
