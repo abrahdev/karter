@@ -10,10 +10,18 @@ import translate_i18n as ti
 
 
 def fake_client(content):
-    """OpenAI-compatible client stub returning a fixed JSON string."""
+    """OpenAI-compatible client stub returning a fixed JSON string.
+
+    Supports both streaming and non-streaming create() calls.
+    """
     choice = NS(message=NS(content=content))
 
     def create(**kwargs):
+        if kwargs.get("stream"):
+            def gen():
+                delta = NS(content=content)
+                yield NS(choices=[NS(delta=delta)])
+            return gen()
         return NS(choices=[choice])
 
     return NS(chat=NS(completions=NS(create=create)))

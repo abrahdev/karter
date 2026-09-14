@@ -52,9 +52,14 @@ EN_FILE = os.path.join(I18N_DIR, "en.json")
 CKPT_DIR = os.path.join(os.path.dirname(__file__), ".checkpoints")
 PROMPTS_FILE = os.path.join(os.path.dirname(__file__), "PROMPTS.md")
 
-DEFAULT_BATCH = 600
+DEFAULT_BATCH = 300
 MAX_RETRIES = 5
 RETRY_BASE = 3
+CLIENT_TIMEOUT = 1800.0
+
+# Hard cap for a silent stream: an attempt fails once this passes with no
+# content tokens, so a stuck upstream can never freeze the progress bar.
+FIRST_TOKEN_TIMEOUT = 300.0
 
 LANG_NAMES = {
     "en": "English",
@@ -133,21 +138,41 @@ def build_prompt(lang_code):
     return load_prompt(PROMPTS_FILE, lang_name=lang_name)
 
 
-def translate_batch(client, system, items, model):
+def translate_batch(client, system, items, model, on_live=None):
     payload = {k: v for k, v in items}
     last_error = None
     for attempt in range(MAX_RETRIES):
         try:
-            resp = client.chat.completions.create(
+            chunks = []
+            chars = 0
+            started = time.monotonic()
+            if on_live:
+                on_live(0.0, 0)
+            stream = client.chat.completions.create(
                 model=model,
                 temperature=0.1,
                 response_format={"type": "json_object"},
+                stream=True,
                 messages=[
                     {"role": "system", "content": system},
                     {"role": "user", "content": json.dumps(payload, ensure_ascii=False)},
                 ],
             )
-            out = json.loads(resp.choices[0].message.content)
+            for chunk in stream:
+                if not chunk.choices:
+                    continue
+                delta = chunk.choices[0].delta
+                if delta and delta.content:
+                    chunks.append(delta.content)
+                    chars += len(delta.content)
+                elapsed = time.monotonic() - started
+                if not chunks and elapsed > FIRST_TOKEN_TIMEOUT:
+                    raise TimeoutError(
+                        f"no content received from the model in {elapsed:.0f}s"
+                    )
+                if on_live:
+                    on_live(elapsed, chars)
+            out = json.loads("".join(chunks))
             if not isinstance(out, dict):
                 raise ValueError(f"response is not a JSON object: {type(out).__name__}")
             missing = sorted(set(payload) - set(out))
@@ -266,13 +291,33 @@ def translate(lang, mode, client, provider, batch_size, progress):
     console.print(f"[bold]{lang}:[/] {total} keys to translate (batch={batch_size})")
     system = build_prompt(lang)
     task = progress.add_task(f"[bold]{lang}[/]", total=total)
+    batches = (total + batch_size - 1) // batch_size
     start = time.time()
     for i in range(0, len(todo), batch_size):
         chunk = todo[i:i + batch_size]
-        translated = translate_batch(client, system, chunk, provider["model"])
+        batch_n = i // batch_size + 1
+        progress.update(
+            task,
+            description=f"[bold]{lang}[/] batch {batch_n}/{batches} · {len(chunk)} keys",
+        )
+
+        def on_live(elapsed, chars):
+            progress.update(
+                task,
+                description=(
+                    f"[bold]{lang}[/] batch {batch_n}/{batches} · {len(chunk)} keys · "
+                    f"{elapsed:.0f}s"
+                ),
+            )
+
+        translated = translate_batch(client, system, chunk, provider["model"], on_live)
         result.update(translated)
         save_checkpoint(lang, result)
-        progress.update(task, advance=len(chunk))
+        progress.update(
+            task,
+            advance=len(chunk),
+            description=f"[bold]{lang}[/] batch {batch_n}/{batches} done",
+        )
     elapsed = time.time() - start
 
     missing = [k for k in en_keys if k not in result]
@@ -305,7 +350,7 @@ def main():
             validate(lang)
         return
 
-    client = create_client(provider, api_key)
+    client = create_client(provider, api_key, timeout=CLIENT_TIMEOUT)
 
     batch_size = abort(ask("Batch size", str(DEFAULT_BATCH)))
     try:
