@@ -1,8 +1,11 @@
 import unittest
+from types import SimpleNamespace as NS
+from unittest import mock
 
 import _path  # noqa: F401  (sets up sys.path)
 
-from extractor import clean_extracted_data, _slugify, _strip_code_fences
+import extractor as ex
+from extractor import _slugify, _strip_code_fences, clean_extracted_data
 
 
 class SlugifyTest(unittest.TestCase):
@@ -50,6 +53,61 @@ class CleanExtractedDataTest(unittest.TestCase):
     def test_no_ids_is_noop(self):
         data = {"meta": {"make": "x"}}
         self.assertEqual(clean_extracted_data(data), data)
+
+
+class RenderLiveTest(unittest.TestCase):
+    def test_shows_elapsed_when_empty(self):
+        panel = ex._render_live([], 42)
+        self.assertIn("42s", panel.renderable)
+
+    def test_shows_content_when_available(self):
+        panel = ex._render_live(["hello world"], 3)
+        self.assertIn("hello world", panel.renderable)
+
+
+def _fake_client(stream):
+    def create(**kwargs):
+        return stream
+
+    return NS(chat=NS(completions=NS(create=create)))
+
+
+class _FakeDelta:
+    content = None
+
+
+class _FakeChunk:
+    choices = [NS(delta=_FakeDelta())]
+
+
+class StreamContentTest(unittest.TestCase):
+    def test_returns_joined_content(self):
+        chunks = [NS(choices=[NS(delta=NS(content=t))]) for t in "abc"]
+        out = ex._stream_content(_fake_client(iter(chunks)), {"model": "m"}, timeout=5)
+        self.assertEqual(out, "abc")
+
+    def test_raises_timeout_when_no_first_token(self):
+        # monotonic: start, then per-chunk elapsed values, last one past the cap.
+        times = iter([0.0, 0.0, 0.0, ex.FIRST_TOKEN_TIMEOUT + 1])
+        client = _fake_client((_FakeChunk() for _ in range(3)))
+        with mock.patch.object(
+            ex.time, "monotonic", side_effect=lambda: next(times)
+        ):
+            with self.assertRaises(TimeoutError):
+                ex._stream_content(client, {"model": "m"})
+
+
+class ProbeEndpointTest(unittest.TestCase):
+    def test_success(self):
+        client = NS(chat=NS(completions=NS(create=lambda **kw: NS())))
+        self.assertTrue(ex._probe_endpoint(client, "m"))
+
+    def test_failure(self):
+        def create(**kwargs):
+            raise ConnectionError("boom")
+
+        client = NS(chat=NS(completions=NS(create=create)))
+        self.assertFalse(ex._probe_endpoint(client, "m"))
 
 
 if __name__ == "__main__":

@@ -155,7 +155,7 @@ def show_extracted_data(data: dict) -> None:
     items = data.get("maintenance_items", [])
     if items:
         console.print(f"\n[bold]Maintenance Items ({len(items)}):[/]")
-        for item in items[:10]:  # Show first 10
+        for item in items:
             label = item.get("label", item.get("id", "?"))
             interval = []
             if item.get("interval_km"):
@@ -164,31 +164,25 @@ def show_extracted_data(data: dict) -> None:
                 interval.append(f"{item['interval_months']} months")
             interval_str = " / ".join(interval) if interval else "no interval"
             console.print(f"  • {label}: {interval_str}")
-        if len(items) > 10:
-            console.print(f"  [dim]... and {len(items) - 10} more[/]")
 
     # Parts
     parts = data.get("parts", [])
     if parts:
         console.print(f"\n[bold]Parts ({len(parts)}):[/]")
-        for part in parts[:10]:  # Show first 10
+        for part in parts:
             name = part.get("name", part.get("id", "?"))
             qty = part.get("quantity", 1)
             unit = part.get("unit", "unit")
             console.print(f"  • {name}: {qty} {unit}")
-        if len(parts) > 10:
-            console.print(f"  [dim]... and {len(parts) - 10} more[/]")
 
     # DTC codes
     dtcs = data.get("obd_dtc_definitions", [])
     if dtcs:
         console.print(f"\n[bold]DTC Codes ({len(dtcs)}):[/]")
-        for dtc in dtcs[:5]:  # Show first 5
+        for dtc in dtcs:
             code = dtc.get("code", "?")
-            desc = dtc.get("description", "")[:50]
+            desc = dtc.get("description", "")
             console.print(f"  • {code}: {desc}")
-        if len(dtcs) > 5:
-            console.print(f"  [dim]... and {len(dtcs) - 5} more[/]")
 
     console.print("\n" + "=" * 60 + "\n")
 
@@ -282,6 +276,10 @@ def extract_pdf_text_and_ai(
         progress.update(task, completed=page_count)
 
     console.print(f"[green]✓ Extracted {len(pdf_text):,} characters[/]")
+
+    if confirm("View extracted manual text before sending to AI?", default="n") is True:
+        with console.pager():
+            console.print(pdf_text)
 
     console.print("\n[bold]Analyzing with AI...[/]")
     console.print("[dim]  Streaming the response below; large manuals can take 1-3 minutes.[/]")

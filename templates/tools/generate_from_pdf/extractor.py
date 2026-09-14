@@ -26,6 +26,12 @@ PROMPTS_FILE = os.path.join(os.path.dirname(__file__), "PROMPTS.md")
 # Only the tail of the response is shown live; full outputs can be ~14k tokens.
 LIVE_TAIL = 3000
 
+# Hard cap for a silent stream: an attempt fails once this passes with no
+# content tokens, so a stuck upstream can never hang the tool silently.
+FIRST_TOKEN_TIMEOUT = 180.0
+# Short timeout for the pre-flight liveness probe (a tiny max_tokens=1 call).
+PROBE_TIMEOUT = 30.0
+
 
 def _slugify(text: str) -> str:
     """Normalize an id to a lowercase slug (letters, digits, dashes)."""
@@ -42,21 +48,29 @@ def _strip_code_fences(text: str) -> str:
     return text
 
 
-def _render_live(chunks):
+def _render_live(chunks, elapsed):
     """Renderable for the live streaming window."""
     text = "".join(chunks)
-    body = text[-LIVE_TAIL:] if text else "[dim]waiting for the AI response…[/dim]"
+    if not text:
+        body = f"[dim]waiting for the AI response… {elapsed:.0f}s[/dim]"
+    else:
+        body = text[-LIVE_TAIL:]
     return Panel(body, title="AI response (JSON)", border_style="yellow")
 
 
-def _stream_content(client, kwargs):
+def _stream_content(client, kwargs, timeout=FIRST_TOKEN_TIMEOUT):
     """Stream a chat completion, updating a live window as tokens arrive.
+
+    Shows an elapsed-time counter while waiting for the first token, and
+    raises ``TimeoutError`` if nothing arrives within ``timeout`` seconds so
+    the caller's retry loop can act instead of hanging silently.
 
     Returns:
         The full text content of the response.
     """
     chunks = []
-    live = Live(_render_live(chunks), console=console, refresh_per_second=12)
+    started = time.monotonic()
+    live = Live(_render_live(chunks, 0.0), console=console, refresh_per_second=8)
     with live:
         stream = client.chat.completions.create(**kwargs)
         for chunk in stream:
@@ -65,8 +79,45 @@ def _stream_content(client, kwargs):
             delta = chunk.choices[0].delta
             if delta and delta.content:
                 chunks.append(delta.content)
-            live.update(_render_live(chunks))
+            elapsed = time.monotonic() - started
+            if not chunks and elapsed > timeout:
+                raise TimeoutError(
+                    f"no content received from the model in {elapsed:.0f}s"
+                )
+            live.update(_render_live(chunks, elapsed))
     return "".join(chunks)
+
+
+def _probe_endpoint(client, model, timeout=PROBE_TIMEOUT):
+    """Send a tiny request to confirm the endpoint answers for ``model``.
+
+    Runs once before the heavy request so a dead/unreachable endpoint fails
+    fast with a clear message instead of stalling on the full manual text.
+
+    Returns:
+        True when the probe succeeded, False when it failed (the heavy request
+        is still attempted, since some providers reject tiny pings).
+    """
+    console.print(f"[dim]  Probing endpoint ({model})…[/]")
+    started = time.monotonic()
+    try:
+        client.chat.completions.create(
+            model=model,
+            temperature=0,
+            max_tokens=1,
+            timeout=timeout,
+            messages=[{"role": "user", "content": "ping"}],
+        )
+        console.print(
+            f"[dim]  ✓ endpoint responding ({time.monotonic() - started:.1f}s)[/]"
+        )
+        return True
+    except Exception as exc:
+        console.print(
+            f"[yellow]  ⚠ endpoint probe failed ({type(exc).__name__}: {exc}) — "
+            f"attempting anyway[/]"
+        )
+        return False
 
 
 def extract_with_ai(
@@ -75,12 +126,13 @@ def extract_with_ai(
     pdf_text: str,
     language: str,
     max_tokens: int = 4000,
-    timeout: float = 300.0,
+    timeout: float = FIRST_TOKEN_TIMEOUT,
 ) -> tuple[dict, str]:
     """Extract maintenance data from PDF text using AI.
 
     Streams the response into a live window and returns both the parsed JSON
-    and the raw response text.
+    and the raw response text. A tiny liveness probe runs first so a dead
+    endpoint fails fast instead of stalling on the full manual.
 
     Args:
         client: OpenAI client instance
@@ -88,7 +140,7 @@ def extract_with_ai(
         pdf_text: Extracted text from PDF
         language: Detected or specified language
         max_tokens: Maximum tokens for response
-        timeout: Per-request timeout in seconds (large manuals can be slow).
+        timeout: Per-attempt timeout in seconds (large manuals can be slow).
 
     Returns:
         (data, raw_content) tuple.
@@ -101,11 +153,16 @@ def extract_with_ai(
         pdf_text = pdf_text[:max_chars] + "\n\n[TRUNCATED]"
         console.print("[yellow]⚠ PDF text truncated due to length[/]")
 
+    _probe_endpoint(client, model)
+
     last_error = None
     use_json_format = True
     for attempt in range(MAX_RETRIES):
         try:
-            console.print(f"[dim]  Attempt {attempt + 1}/{MAX_RETRIES}...[/]")
+            console.print(
+                f"[dim]  Attempt {attempt + 1}/{MAX_RETRIES} · {model} · "
+                f"json_object={use_json_format} · {len(pdf_text):,} chars[/]"
+            )
 
             base_kwargs = {
                 "model": model,

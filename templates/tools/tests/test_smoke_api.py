@@ -68,6 +68,11 @@ class SmokeApiTest(unittest.TestCase):
             {"base_url": BASE_URL, "model": MODEL}, key, timeout=120
         )
 
+    def test_probe_endpoint_responds(self):
+        from extractor import _probe_endpoint
+
+        self.assertTrue(_probe_endpoint(self.client, MODEL))
+
     def test_translate_batch_roundtrip(self):
         en = _load_en()
         items = list(en.items())[:4]
@@ -83,6 +88,14 @@ class SmokeApiTest(unittest.TestCase):
         self.assertIn("id", data)
         self.assertIn("meta", data)
         self.assertTrue(raw)
+
+    def test_extract_with_ai_large_text(self):
+        # Reproduces the reported hang: a big manual text through the full
+        # probe + streaming + fail-fast pipeline.
+        big = SYNTHETIC_MANUAL * 40
+        data, raw = extract_with_ai(self.client, MODEL, big, "en", max_tokens=1500)
+        self.assertIn("id", data)
+        self.assertIn("meta", data)
 
 
 if __name__ == "__main__":

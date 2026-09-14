@@ -189,6 +189,10 @@ def create_client(provider, api_key, timeout=300.0):
     be routed efficiently; the header is added automatically for that provider.
     A generous timeout is set because extracting large manuals can take a few
     minutes to complete.
+
+    ``max_retries=0`` disables the SDK's internal retries: they multiply the
+    hang time on a stuck request. Retry/backoff is handled by the tools
+    themselves.
     """
     headers = {}
     if "opencode.ai" in provider.get("base_url", ""):
@@ -198,6 +202,7 @@ def create_client(provider, api_key, timeout=300.0):
         base_url=provider["base_url"],
         default_headers=headers,
         timeout=timeout,
+        max_retries=0,
     )
 
 
