@@ -66,7 +66,8 @@ Rules:
 6. If years are not available, use [2020, null] as placeholder.
 7. Return ONLY valid JSON, no explanations or markdown.
 8. Be conservative: if unsure about a value, omit it rather than guess.
-9. Focus on common maintenance: oil change, filters, brakes, spark plugs, timing belt, etc.
-10. Extract DTC codes only if explicitly listed in the manual.
+9. Never use null. If a value is unknown or not applicable, omit the field entirely.
+10. Focus on common maintenance: oil change, filters, brakes, spark plugs, timing belt, etc.
+11. Extract DTC codes only if explicitly listed in the manual.
 
 Language: {language}

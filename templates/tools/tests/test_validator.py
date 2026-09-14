@@ -62,6 +62,12 @@ class ValidatePostMergeTest(unittest.TestCase):
         self.assertEqual(len(errors), 1)
         self.assertEqual(errors[0]["validator"], "minimum")
 
+    def test_missing_interval_km(self):
+        data = {"maintenance_items": [valid_item(interval_km=None)]}
+        errors = validate_post_merge(data)
+        self.assertEqual(len(errors), 1)
+        self.assertEqual(errors[0]["validator"], "minimum")
+
     def test_interval_months_min(self):
         data = {"maintenance_items": [valid_item(interval_months=0)]}
         errors = validate_post_merge(data)

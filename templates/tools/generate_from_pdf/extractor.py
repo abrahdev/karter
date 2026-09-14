@@ -213,13 +213,28 @@ def extract_with_ai(
     raise RuntimeError(f"Extraction failed after {MAX_RETRIES} attempts: {last_error}")
 
 
+def _drop_nulls(value):
+    """Recursively remove null dict values so optional fields are omitted
+    instead of emitted as ``null`` (the schema rejects ``null`` for string/int
+    types). List contents are preserved as-is, because some schemas allow null
+    elements (e.g. ``meta.years: [2019, null]``)."""
+    if isinstance(value, dict):
+        return {k: _drop_nulls(v) for k, v in value.items() if v is not None}
+    if isinstance(value, list):
+        return [_drop_nulls(v) for v in value]
+    return value
+
+
 def clean_extracted_data(data: dict) -> dict:
     """Clean and normalize extracted data.
 
+    - Omit fields with null values (the schema only allows real values)
     - Ensure IDs are valid slugs
     - Remove empty arrays
     - Normalize field names
     """
+    data = _drop_nulls(data)
+
     # Clean vehicle ID
     if "id" in data:
         data["id"] = _slugify(data["id"])

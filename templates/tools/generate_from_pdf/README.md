@@ -6,9 +6,13 @@ AI-powered tool that extracts maintenance data from workshop manual PDFs and gen
 
 - **PDF Text Extraction**: Reads workshop manuals and extracts text from all pages
 - **Language Detection**: Automatically detects PDF language (English, Spanish, German, French, Italian, Portuguese)
+- **Manual Text Preview**: Optionally view the extracted text before it is sent to the AI
+- **Fail-Fast AI Extraction**: a tiny liveness probe runs first, an attempt fails after 180s without a first token, and SDK auto-retries are disabled — no silent multi-minute hangs
+- **Null Cleanup**: extracted `null` values are omitted automatically (the schema rejects `null` for string/integer fields), so saved JSON validates on the first try
 - **AI Extraction**: Uses multiple AI providers (OpenAI, Anthropic, Groq, Mistral, etc.) to extract structured data
-- **Interactive Review**: Shows extracted data and allows editing before saving
-- **Schema Validation**: Validates against Karter template schema (v2)
+- **Interactive Review**: Shows the complete extracted data (items, parts, DTCs are never truncated) and allows editing before saving
+- **Schema Validation**: Validates against Karter template schema (v2); every maintenance item must have a positive `interval_km`
+- **Duplicate-ID Protection**: Saving refuses to overwrite an existing template id
 - **Catalog Regeneration**: Optionally regenerates index.json and karter-catalog.db
 - **Batch Processing**: Process multiple PDFs from a folder in one run
 
@@ -25,11 +29,12 @@ python3 templates/tools/generate_from_pdf/generate_from_pdf.py
 3. **For each PDF**:
    - Extract text from all pages
    - Detect language (can be changed)
-   - Send text to AI for structured extraction
-   - Review extracted data (vehicle info, maintenance items, parts, DTC codes)
+   - Optionally preview the extracted manual text before sending it
+   - Send text to AI for structured extraction (endpoint probe + streaming timer)
+   - Review the full extracted data (vehicle info, maintenance items, parts, DTC codes)
    - Edit any section if needed
-   - Validate against template schema
-   - Save to `templates/data/{make}/{id}.json`
+   - Validate against the template schema (each item needs a positive `interval_km`)
+   - Save to `templates/data/{make}/{id}.json` (duplicate ids are flagged)
 4. **Regenerate Catalog**: Updates index.json and karter-catalog.db (once after all PDFs)
 
 ## Extracted Data
@@ -93,9 +98,15 @@ Detected language: English
 Select [1]:
 
 Extracting text from PDF... [████████████████] 100%
-✓ Extracted 125,432 characters
+✓ Extracted 125,432 characters (~31,000 tokens)
+View extracted manual text before sending to AI? (y/N): y
 
-Analyzing with AI... [████████████████] 100%
+Analyzing with AI...
+  Streaming the response below; large manuals can take 1-3 minutes.
+  Probing endpoint (deepseek-v4-flash)…
+  ✓ endpoint responding (3.2s)
+  Attempt 1/5 · deepseek-v4-flash · json_object=True · 125,432 chars
+  waiting for the AI response… 12s
 ✓ Extraction complete
 
 ============================================================
@@ -111,19 +122,23 @@ Maintenance Items (8):
   • Oil change: 15,000 km / 12 months
   • Air filter: 30,000 km / 24 months
   • Brake pads (front): 60,000 km
-  ...
+  • ... (all items are listed)
 
 Parts (23):
   • oil-filter: 1 unit
   • engine-oil-5w30: 4.2 L
-  ...
+  • ... (all parts are listed)
 
 ============================================================
 
 [1] Accept and save
 [2] Edit vehicle info
 [3] Edit maintenance items
-...
+[4] Edit parts
+[5] Edit DTC codes
+[6] View raw AI response
+[7] View extracted manual text
+[8] Skip this PDF
 Select [1]:
 
 ✓ Template saved to templates/data/toyota/corolla-e210.json
@@ -159,4 +174,8 @@ When processing a folder with multiple manuals:
 - The tool works best with well-structured workshop manuals
 - Language detection is basic; manual override is available
 - Large PDFs (>100 pages) may be truncated due to AI context limits
+- Every maintenance item must include a positive `interval_km` (the catalog requires it); items with only `interval_months` are rejected at review time
+- Saving refuses to overwrite an existing template id — rename the template or delete the old file
+- Extracted `null` values are omitted automatically before saving; `meta.years` keeps the `[start, null]` form
+- A stuck endpoint no longer hangs silently: the liveness probe warns fast, and an attempt fails after 180s without a first token
 - Generated templates should be manually reviewed for accuracy

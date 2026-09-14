@@ -208,11 +208,48 @@ def edit_section(data: dict, section: str) -> dict:
     return data
 
 
-def save_template(data: dict) -> str:
-    """Save template to templates/data/ directory."""
+def find_template_id(template_id: str) -> str | None:
+    """Return the first templates/data path that already uses ``template_id``.
+
+    Lets the generator avoid silently overwriting an existing template or
+    creating a duplicate id (the catalog requires unique vehicle ids).
+    """
+    for root, _dirs, files in os.walk(DATA_DIR):
+        for name in files:
+            if not name.endswith(".json"):
+                continue
+            path = os.path.join(root, name)
+            try:
+                with open(path, encoding="utf-8") as fh:
+                    data = json.load(fh)
+            except (json.JSONDecodeError, OSError):
+                continue
+            if data.get("id") == template_id:
+                return os.path.relpath(path, REPO_ROOT)
+    return None
+
+
+def save_template(data: dict) -> str | None:
+    """Save template to templates/data/ directory.
+
+    Refuses to overwrite an existing template id unless the user confirms.
+
+    Returns:
+        The saved file path, or None when the save was aborted.
+    """
     make = data.get("meta", {}).get("make", "unknown").lower().replace(" ", "-")
     model = data.get("meta", {}).get("model", "unknown").lower().replace(" ", "-")
     template_id = data.get("id", f"{make}-{model}")
+
+    existing = find_template_id(template_id)
+    if existing:
+        console.print(
+            f"[yellow]⚠ Template id '{template_id}' already exists "
+            f"({existing})[/]"
+        )
+        if confirm("Save anyway (duplicate id)?" ) is not True:
+            console.print("[yellow]Save aborted[/]")
+            return None
 
     # Create directory structure
     make_dir = os.path.join(DATA_DIR, make)
@@ -344,6 +381,8 @@ def run_pdf_flow(pdf_path: str, provider: dict, api_key: str, client) -> str:
                     if confirm2("Save anyway?") is not True:
                         continue
                 file_path = save_template(data)
+                if file_path is None:
+                    continue
                 console.print(f"\n[green]✓ Template saved to {os.path.relpath(file_path)}[/]")
                 return "saved"
             if choice == "skip":

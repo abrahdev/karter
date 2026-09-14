@@ -117,10 +117,10 @@ def validate_post_merge(data: dict) -> list[dict[str, Any]]:
     if "maintenance_items" in data:
         for item in data["maintenance_items"]:
             km = item.get("interval_km")
-            if km is not None and km < 1:
+            if km is None or km < 1:
                 errors.append({
                     "path": f"maintenance_items[{item.get('id', '?')}].interval_km",
-                    "message": "interval_km must be >= 1",
+                    "message": "interval_km is required and must be >= 1 (the catalog requires it)",
                     "validator": "minimum",
                 })
             months = item.get("interval_months")

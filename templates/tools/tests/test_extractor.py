@@ -54,6 +54,22 @@ class CleanExtractedDataTest(unittest.TestCase):
         data = {"meta": {"make": "x"}}
         self.assertEqual(clean_extracted_data(data), data)
 
+    def test_drops_null_fields(self):
+        data = {
+            "id": "Toyota Corolla",
+            "meta": {"make": "Toyota", "generation": None, "years": [2020, None]},
+            "parts": [{"id": "Oil Filter", "oem_number": None, "name": "Filter"}],
+            "maintenance_items": [
+                {"id": "Oil Change", "interval_km": 15000, "interval_months": None}
+            ],
+        }
+        cleaned = clean_extracted_data(data)
+        self.assertNotIn("generation", cleaned["meta"])
+        self.assertEqual(cleaned["meta"]["years"], [2020, None])
+        self.assertNotIn("oem_number", cleaned["parts"][0])
+        self.assertNotIn("interval_months", cleaned["maintenance_items"][0])
+        self.assertEqual(cleaned["maintenance_items"][0]["interval_km"], 15000)
+
 
 class RenderLiveTest(unittest.TestCase):
     def test_shows_elapsed_when_empty(self):
