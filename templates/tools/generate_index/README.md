@@ -1,19 +1,19 @@
 # generate_index
 
-Genera `templates/index.json`, el índice que lista todos los templates
-disponibles (vehículos) que la app descarga desde el repositorio.
+Generates `templates/index.json`, the index that lists all available
+templates (vehicles) that the app downloads from the repository.
 
-## Uso
+## Usage
 
 ```bash
 python templates/tools/generate_index/generate_index.py
 ```
 
-## Qué hace
+## What it does
 
-- Escanea los `*.json` bajo `templates/data/`.
-- Construye un índice plano con los metadatos de cada template.
-- Escribe `templates/index.json`.
+- Scans the `*.json` files under `templates/data/`.
+- Builds a flat index with each template's metadata.
+- Writes `templates/index.json`.
 
-Es un paso previo a `build_catalog`. CI lo ejecuta cuando cambian los JSON
-de templates.
+It is a prerequisite for `build_catalog`. CI runs it when the template JSON
+files change.

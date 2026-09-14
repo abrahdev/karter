@@ -1,21 +1,21 @@
 # build_catalog
 
-Compila los JSON de `templates/data` en la base de datos SQLite del catálogo
-(`templates/karter-catalog.db`) que consume la app.
+Compiles the `templates/data` JSON files into the catalog SQLite database
+(`templates/karter-catalog.db`) consumed by the app.
 
-## Uso
+## Usage
 
 ```bash
-python templates/tools/build_catalog/build_catalog.py            # construir la DB
-python templates/tools/build_catalog/build_catalog.py --check-only          # validar sin escribir
-python templates/tools/build_catalog/build_catalog.py --check-only --schema-check  # + validar JSON Schema
+python templates/tools/build_catalog/build_catalog.py            # build the DB
+python templates/tools/build_catalog/build_catalog.py --check-only          # validate without writing
+python templates/tools/build_catalog/build_catalog.py --check-only --schema-check  # + JSON Schema validation
 ```
 
-## Qué hace
+## What it does
 
-- Resuelve las cadenas de herencia (`extends`) de los templates.
-- Aplana maintenance items, parts, OBD codes y DTC relacionados en tablas SQLite.
-- Valida esquema y resultados post-merge; falla con código distinto de cero si hay errores.
+- Resolves the template inheritance chains (`extends`).
+- Flattens maintenance items, parts, OBD codes and related DTCs into SQLite tables.
+- Validates schema and post-merge results; exits with a non-zero code on any error.
 
-Este paso también crea el symlink `mobile/assets/catalog/karter-catalog.db`.
-CI y el workflow de release lo ejecutan automáticamente.
+This step also creates the symlink `mobile/assets/catalog/karter-catalog.db`.
+CI and the release workflow run it automatically.
