@@ -30,6 +30,7 @@ from rich.panel import Panel
 # Import shared utilities
 sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 from _shared import (
+    BACK,
     ask,
     confirm,
     create_client,
@@ -72,6 +73,13 @@ LANG_NAMES = {
 TOKENS_PER_KEY = 18
 
 
+def abort(value):
+    """Exit with a message when the user navigates back (left arrow)."""
+    if value is BACK:
+        sys.exit("Aborted")
+    return value
+
+
 def load_en():
     with open(EN_FILE, encoding="utf-8") as fh:
         return json.load(fh)
@@ -95,24 +103,26 @@ def select_languages(langs):
     codes = list(langs)
     options = [(c, f"{c}  {LANG_NAMES.get(c, c)}") for c in codes]
     options.append(("new", "New language code"))
-    picked = pick_multi("Select target language(s)", options)
+    picked = abort(pick_multi("Select target language(s)", options))
     if not picked:
         sys.exit("No language selected")
     if "new" in picked:
-        code = ask("New language code (e.g. sv)")
+        code = abort(ask("New language code (e.g. sv)"))
         picked = [c for c in picked if c != "new"] + [code]
     return picked
 
 
 def select_mode():
-    return pick_option(
-        "Choose a mode",
-        [
-            ("full", "Full redo — retranslate everything"),
-            ("missing", "Complete missing keys only (keep existing)"),
-            ("validate", "Validate only — no API call"),
-        ],
-        default_index=2,
+    return abort(
+        pick_option(
+            "Choose a mode",
+            [
+                ("full", "Full redo — retranslate everything"),
+                ("missing", "Complete missing keys only (keep existing)"),
+                ("validate", "Validate only — no API call"),
+            ],
+            default_index=2,
+        )
     )
 
 
@@ -138,16 +148,21 @@ def translate_batch(client, system, items, model):
                 ],
             )
             out = json.loads(resp.choices[0].message.content)
-            if not isinstance(out, dict) or len(out) != len(payload):
+            if not isinstance(out, dict):
+                raise ValueError(f"response is not a JSON object: {type(out).__name__}")
+            missing = sorted(set(payload) - set(out))
+            extra = sorted(set(out) - set(payload))
+            if missing or extra:
                 raise ValueError(
-                    f"response has {len(out) if isinstance(out, dict) else '?'} keys, expected {len(payload)}"
+                    f"response keys mismatch: missing={missing} extra={extra}"
                 )
             return out
         except Exception as exc:
             last_error = exc
-            wait = RETRY_BASE * (2 ** attempt)
-            console.print(f"[yellow]  retry {attempt + 1}/{MAX_RETRIES} in {wait}s[/] ({type(exc).__name__})")
-            time.sleep(wait)
+            if attempt < MAX_RETRIES - 1:
+                wait = RETRY_BASE * (2 ** attempt)
+                console.print(f"[yellow]  retry {attempt + 1}/{MAX_RETRIES} in {wait}s[/] ({type(exc).__name__})")
+                time.sleep(wait)
     raise RuntimeError(f"batch failed after {MAX_RETRIES} retries: {last_error}")
 
 
@@ -218,23 +233,28 @@ def estimate(provider, total_keys):
 
 # ---------- translate ----------
 
-def translate(lang, mode, client, provider, batch_size, progress):
-    en = load_en()
-    en_keys = list(en.keys())
+def load_result(lang, mode):
+    """Load existing translations (missing mode) merged with the checkpoint."""
     dest = os.path.join(I18N_DIR, f"{lang}.json")
-
     if mode == "missing" and os.path.exists(dest):
         with open(dest, encoding="utf-8") as fh:
             result = json.load(fh)
     else:
         result = {}
-
     ckpt = load_checkpoint(lang)
     if ckpt:
-        merged = dict(result)
-        merged.update(ckpt)
-        result = merged
+        result = dict(result)
+        result.update(ckpt)
         console.print(f"[cyan]↻ Resuming[/] {lang} from checkpoint ({len(ckpt)} keys)")
+    return result
+
+
+def translate(lang, mode, client, provider, batch_size, progress):
+    en = load_en()
+    en_keys = list(en.keys())
+    dest = os.path.join(I18N_DIR, f"{lang}.json")
+
+    result = load_result(lang, mode)
 
     todo = [(k, en[k]) for k in en_keys if k not in result]
     total = len(todo)
@@ -270,9 +290,11 @@ def translate(lang, mode, client, provider, batch_size, progress):
 def main():
     print_header("karter i18n", "translate & maintain catalog")
 
-    provider = select_provider()
-    api_key, env = get_api_key(provider)
-    select_model(provider, api_key)
+    provider = abort(select_provider())
+    res = abort(get_api_key(provider))
+    api_key, _ = res
+    if not select_model(provider, api_key):
+        sys.exit("Aborted")
     langs = available_languages()
     targets = select_languages(langs)
     mode = select_mode()
@@ -285,24 +307,19 @@ def main():
 
     client = create_client(provider, api_key)
 
-    batch_size = ask("Batch size", str(DEFAULT_BATCH))
+    batch_size = abort(ask("Batch size", str(DEFAULT_BATCH)))
     try:
         batch_size = int(batch_size)
     except ValueError:
+        batch_size = DEFAULT_BATCH
+    if batch_size < 1:
         batch_size = DEFAULT_BATCH
 
     en = load_en()
     pending = 0
     for lang in targets:
-        dest = os.path.join(I18N_DIR, f"{lang}.json")
-        if mode == "missing" and os.path.exists(dest):
-            with open(dest, encoding="utf-8") as fh:
-                existing = json.load(fh)
-        else:
-            existing = {}
-        ckpt = load_checkpoint(lang)
-        existing.update(ckpt)
-        pending += sum(1 for k in en if k not in existing)
+        result = load_result(lang, mode)
+        pending += sum(1 for k in en if k not in result)
     total_keys = pending
     tok_in, tok_out, cost = estimate(provider, total_keys)
     console.print(
@@ -318,7 +335,7 @@ def main():
         )
     )
 
-    if not confirm("Proceed"):
+    if confirm("Proceed") is not True:
         sys.exit("Aborted by user")
 
     progress = make_progress(show_total=True, show_remaining=True)

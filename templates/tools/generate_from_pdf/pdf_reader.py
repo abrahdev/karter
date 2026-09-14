@@ -1,5 +1,6 @@
 """PDF text extraction for workshop manuals."""
 
+import re
 import sys
 from pathlib import Path
 
@@ -78,12 +79,13 @@ class PDFReader:
             "pt": ["o", "a", "de", "que", "e", "em", "um", "para", "com"],
         }
 
-        scores = {}
-        for lang, words in indicators.items():
-            score = sum(sample_lower.count(word) for word in words)
-            scores[lang] = score
+        # Whole-word counts so e.g. "the" does not match inside "motherboard".
+        scores = {
+            lang: sum(
+                len(re.findall(rf"\b{re.escape(word)}\b", sample_lower))
+                for word in words
+            )
+            for lang, words in indicators.items()
+        }
 
-        # Return language with highest score
-        if scores:
-            return max(scores, key=scores.get)
-        return "en"
+        return max(scores, key=scores.get)

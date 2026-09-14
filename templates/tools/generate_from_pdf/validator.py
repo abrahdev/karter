@@ -48,6 +48,19 @@ def validate_template(data: dict) -> list[dict[str, Any]]:
     return errors
 
 
+def _duplicates(values) -> list[str]:
+    """Return sorted values that appear more than once (None values skipped)."""
+    seen = set()
+    dupes = set()
+    for value in values:
+        if value is None:
+            continue
+        if value in seen:
+            dupes.add(value)
+        seen.add(value)
+    return sorted(dupes)
+
+
 def validate_post_merge(data: dict) -> list[dict[str, Any]]:
     """Perform post-merge validation (business logic checks).
 
@@ -61,34 +74,31 @@ def validate_post_merge(data: dict) -> list[dict[str, Any]]:
 
     # Check unique part IDs
     if "parts" in data:
-        part_ids = [p.get("id") for p in data["parts"] if "id" in p]
-        duplicates = [pid for pid in part_ids if part_ids.count(pid) > 1]
-        if duplicates:
+        dupes = _duplicates(p.get("id") for p in data["parts"])
+        if dupes:
             errors.append({
                 "path": "parts",
-                "message": f"Duplicate part IDs: {set(duplicates)}",
+                "message": f"Duplicate part IDs: {set(dupes)}",
                 "validator": "uniqueItems",
             })
 
     # Check unique maintenance item IDs
     if "maintenance_items" in data:
-        item_ids = [i.get("id") for i in data["maintenance_items"] if "id" in i]
-        duplicates = [iid for iid in item_ids if item_ids.count(iid) > 1]
-        if duplicates:
+        dupes = _duplicates(i.get("id") for i in data["maintenance_items"])
+        if dupes:
             errors.append({
                 "path": "maintenance_items",
-                "message": f"Duplicate maintenance item IDs: {set(duplicates)}",
+                "message": f"Duplicate maintenance item IDs: {set(dupes)}",
                 "validator": "uniqueItems",
             })
 
     # Check unique DTC codes
     if "obd_dtc_definitions" in data:
-        codes = [d.get("code") for d in data["obd_dtc_definitions"] if "code" in d]
-        duplicates = [c for c in codes if codes.count(c) > 1]
-        if duplicates:
+        dupes = _duplicates(d.get("code") for d in data["obd_dtc_definitions"])
+        if dupes:
             errors.append({
                 "path": "obd_dtc_definitions",
-                "message": f"Duplicate DTC codes: {set(duplicates)}",
+                "message": f"Duplicate DTC codes: {set(dupes)}",
                 "validator": "uniqueItems",
             })
 
@@ -106,13 +116,15 @@ def validate_post_merge(data: dict) -> list[dict[str, Any]]:
     # Check maintenance item intervals
     if "maintenance_items" in data:
         for item in data["maintenance_items"]:
-            if "interval_km" in item and item["interval_km"] < 1:
+            km = item.get("interval_km")
+            if km is not None and km < 1:
                 errors.append({
                     "path": f"maintenance_items[{item.get('id', '?')}].interval_km",
                     "message": "interval_km must be >= 1",
                     "validator": "minimum",
                 })
-            if "interval_months" in item and item["interval_months"] < 1:
+            months = item.get("interval_months")
+            if months is not None and months < 1:
                 errors.append({
                     "path": f"maintenance_items[{item.get('id', '?')}].interval_months",
                     "message": "interval_months must be >= 1",

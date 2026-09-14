@@ -12,7 +12,7 @@ try:
 except ImportError:
     sys.exit("Missing dependency: run  pip install openai  first")
 
-from .ui import ask, confirm, pick_option
+from .ui import BACK, ask, confirm, pick_option
 
 console = Console()
 
@@ -118,16 +118,28 @@ def save_env(env):
 
 
 def select_provider():
-    """Interactive provider selection."""
+    """Interactive provider selection.
+
+    Returns:
+        The chosen provider dict, or BACK if the user pressed ←.
+    """
     options = [(f"p{i}", p["name"]) for i, p in enumerate(PROVIDERS)]
     options.append(("custom", "Custom OpenAI-compatible endpoint"))
     pick = pick_option("Choose a provider", options, default_index=1)
+    if pick is BACK:
+        return BACK
     if pick == "custom":
         base_url = ask("Base URL", "https://api.openai.com/v1")
+        if base_url is BACK:
+            return BACK
         model = ask("Model")
+        if model is BACK:
+            return BACK
         if not model:
             sys.exit("Model required for custom provider")
         env_var = ask("Environment variable", "API_KEY")
+        if env_var is BACK:
+            return BACK
         return {
             "name": f"Custom ({model})",
             "base_url": base_url,
@@ -170,11 +182,13 @@ def price_label(prices, mid):
     return f"  ${p['price_in']:.3f}/M in · ${p['price_out']:.3f}/M out"
 
 
-def create_client(provider, api_key):
+def create_client(provider, api_key, timeout=300.0):
     """Create an OpenAI-compatible client for the given provider.
 
     OpenCode Go requires a stable ``x-opencode-session`` header so requests can
     be routed efficiently; the header is added automatically for that provider.
+    A generous timeout is set because extracting large manuals can take a few
+    minutes to complete.
     """
     headers = {}
     if "opencode.ai" in provider.get("base_url", ""):
@@ -183,6 +197,7 @@ def create_client(provider, api_key):
         api_key=api_key,
         base_url=provider["base_url"],
         default_headers=headers,
+        timeout=timeout,
     )
 
 
@@ -203,7 +218,11 @@ def list_models(provider, api_key):
 
 def select_model(provider, api_key):
     """Let the user pick a model for the chosen provider, preferring a dynamic
-    listing from the provider's /models endpoint."""
+    listing from the provider's /models endpoint.
+
+    Returns:
+        True on success, or False if the user navigated back.
+    """
     prices = load_model_prices(provider.get("cache_key"))
     ids = list_models(provider, api_key)
 
@@ -212,13 +231,20 @@ def select_model(provider, api_key):
         options.append(("__custom__", "Type a custom model id"))
         picked = pick_option(f"Choose a model for {provider['name']}", options,
                              default_index=1)
+        if picked is BACK:
+            return False
         if picked == "__custom__":
             picked = ask("Model id")
+            if picked is BACK:
+                return False
         if not picked:
             sys.exit("No model selected")
         provider["model"] = picked
     else:
-        provider["model"] = ask(f"Model id for {provider['name']}", provider["model"])
+        model = ask(f"Model id for {provider['name']}", provider["model"])
+        if model is BACK:
+            return False
+        provider["model"] = model
 
     if prices and provider["model"] in prices:
         p = prices[provider["model"]]
@@ -228,10 +254,15 @@ def select_model(provider, api_key):
         f"[dim]✓[/] Using [green]{provider['model']}[/] "
         f"(${provider['price_in']:.3f}/M in · ${provider['price_out']:.3f}/M out)"
     )
+    return True
 
 
 def get_api_key(provider):
-    """Get API key from .env, environment, or user input."""
+    """Get API key from .env, environment, or user input.
+
+    Returns:
+        (key, env) tuple, or BACK if the user pressed ← while entering the key.
+    """
     env = load_env()
     env_var = provider["env_var"]
     if env_var in env and env[env_var]:
@@ -241,9 +272,11 @@ def get_api_key(provider):
         console.print(f"[dim]✓[/] Using API key from [green]environment[/] ({env_var})")
         return os.environ[env_var], env
     key = ask(f"Paste API key for [bold]{provider['name']}[/]")
+    if key is BACK:
+        return BACK
     if not key:
         sys.exit("No API key provided")
-    if confirm("Save to templates/tools/.env?"):
+    if confirm("Save to templates/tools/.env?") is True:
         env[env_var] = key
         save_env(env)
         console.print(f"[dim]✓[/] Saved [green]{env_var}[/] to {os.path.relpath(ENV_FILE)}")

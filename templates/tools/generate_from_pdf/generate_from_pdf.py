@@ -15,14 +15,17 @@ Usage:
 
 import json
 import os
+import subprocess
 import sys
 
 # Import shared utilities
 sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 from _shared import (
+    BACK,
     STYLE_TITLE,
     ask,
     confirm,
+    confirm2,
     create_client,
     get_api_key,
     make_progress,
@@ -42,6 +45,14 @@ from validator import print_errors, validate_all
 
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
 DATA_DIR = os.path.join(REPO_ROOT, "templates", "data")
+
+# Review menu actions that edit a single section of the extracted data.
+SECTION_ACTIONS = {
+    "edit_meta": "meta",
+    "edit_items": "maintenance_items",
+    "edit_parts": "parts",
+    "edit_dtc": "obd_dtc_definitions",
+}
 
 
 def select_input_mode() -> str:
@@ -99,8 +110,13 @@ def select_language(detected: str) -> str:
         ("other", "Other"),
     ]
     pick = pick_option("Confirm or change language", options, default_index=1)
+    if pick is BACK:
+        return BACK
     if pick == "other":
-        return ask("Language code (e.g., sv, nl)")
+        code = ask("Language code (e.g., sv, nl)")
+        if code is BACK:
+            return BACK
+        return code
     return pick
 
 
@@ -186,6 +202,8 @@ def edit_section(data: dict, section: str) -> dict:
     console.print(f"\n[yellow]Current value:[/]\n{current}\n")
 
     new_value = ask("New value (JSON)")
+    if new_value is BACK:
+        return data
     if new_value:
         try:
             data[section] = json.loads(new_value)
@@ -218,178 +236,260 @@ def regenerate_catalog() -> None:
     """Regenerate index.json and karter-catalog.db."""
     console.print("\n[bold]Regenerating catalog...[/]")
 
-    # Regenerate index.json
-    console.print("[dim]  Running generate_index.py...[/]")
-    os.system(f"python3 {REPO_ROOT}/templates/tools/generate_index/generate_index.py")
-
-    # Regenerate catalog.db
-    console.print("[dim]  Running build_catalog.py...[/]")
-    os.system(f"python3 {REPO_ROOT}/templates/tools/build_catalog/build_catalog.py")
+    scripts = [
+        (
+            "generate_index.py",
+            os.path.join(REPO_ROOT, "templates", "tools", "generate_index", "generate_index.py"),
+        ),
+        (
+            "build_catalog.py",
+            os.path.join(REPO_ROOT, "templates", "tools", "build_catalog", "build_catalog.py"),
+        ),
+    ]
+    for name, script in scripts:
+        console.print(f"[dim]  Running {name}...[/]")
+        proc = subprocess.run([sys.executable, script])
+        if proc.returncode != 0:
+            console.print(f"[red]✗ {name} failed (exit {proc.returncode})[/]")
+            return
 
     console.print("[green]✓ Catalog regenerated[/]")
 
 
-def process_single_pdf(
+def extract_pdf_text_and_ai(
     pdf_path: str,
     provider: dict,
     api_key: str,
-    language: str | None = None,
-) -> bool:
-    """Process a single PDF file.
+    client,
+    language: str,
+) -> tuple[dict, str]:
+    """Read the PDF text and run AI extraction with a live streaming window.
 
     Returns:
-        True if successful, False if skipped or failed
+        (data, raw_content) tuple.
     """
     console.print(f"\n[bold white]Processing:[/] {os.path.basename(pdf_path)}")
 
-    try:
-        reader = PDFReader(pdf_path)
-        page_count = reader.get_page_count()
-        console.print(f"[dim]✓ PDF loaded: {page_count} pages[/]")
-    except Exception as e:
-        console.print(f"[red]✗ Failed to load PDF: {e}[/]")
-        return False
+    reader = PDFReader(pdf_path)
+    page_count = reader.get_page_count()
+    console.print(f"[dim]✓ PDF loaded: {page_count} pages[/]")
 
-    # Detect or use provided language
-    if language is None:
-        detected_lang = reader.detect_language()
-        language = select_language(detected_lang)
-
-    # Extract text from PDF
     console.print("\n[bold]Extracting text from PDF...[/]")
     progress = make_progress()
     with progress:
         task = progress.add_task("Reading pages", total=page_count)
-        pdf_text = ""
-        for i in range(page_count):
-            pdf_text += reader.extract_page(i)
-            progress.update(task, advance=1)
+        pdf_text = reader.extract_text()
+        progress.update(task, completed=page_count)
 
     console.print(f"[green]✓ Extracted {len(pdf_text):,} characters[/]")
 
-    # AI extraction
     console.print("\n[bold]Analyzing with AI...[/]")
-    client = create_client(provider, api_key)
-
-    with progress:
-        task = progress.add_task("AI extraction", total=None)
-        data = extract_with_ai(client, provider["model"], pdf_text, language)
-        progress.update(task, completed=100)
-
-    data = clean_extracted_data(data)
+    console.print("[dim]  Streaming the response below; large manuals can take 1-3 minutes.[/]")
+    data, raw = extract_with_ai(client, provider["model"], pdf_text, language)
     console.print("[green]✓ Extraction complete[/]")
+    return clean_extracted_data(data), raw
 
-    # Interactive review
+
+def review_pdf(data: dict, raw: str) -> str | object:
+    """Show extracted data and let the user review it.
+
+    Returns:
+        One of "accept", "skip", an edit action from SECTION_ACTIONS,
+        "view_raw", or BACK.
+    """
+    show_extracted_data(data)
+    return pick_option(
+        "Review extracted data",
+        [
+            ("accept", "Accept and save"),
+            ("edit_meta", "Edit vehicle info (meta)"),
+            ("edit_items", "Edit maintenance items"),
+            ("edit_parts", "Edit parts"),
+            ("edit_dtc", "Edit DTC codes"),
+            ("view_raw", "View raw AI response"),
+            ("skip", "Skip this PDF"),
+        ],
+    )
+
+
+def run_pdf_flow(pdf_path: str, provider: dict, api_key: str, client) -> str:
+    """Run language → extraction → review → save for a single PDF.
+
+    Each step supports back navigation with the left arrow:
+      language ← model · extraction ← language · review ← extraction
+
+    Returns:
+        "saved", "skipped", or "back" (all the way back to model selection).
+    """
+    language = None
     while True:
-        show_extracted_data(data)
+        if language is None:
+            detected_lang = PDFReader(pdf_path).detect_language()
+            lang = select_language(detected_lang)
+            if lang is BACK:
+                return "back"
+            language = lang
 
-        console.print("[bold]Options:[/]")
-        console.print("  [1] Accept and save")
-        console.print("  [2] Edit vehicle info (meta)")
-        console.print("  [3] Edit maintenance items")
-        console.print("  [4] Edit parts")
-        console.print("  [5] Edit DTC codes")
-        console.print("  [6] Skip this PDF")
+        result = _extract_with_retry(pdf_path, provider, api_key, client, language)
+        if result is None:
+            language = None
+            continue
+        data, raw = result
 
-        choice = ask("Select")
+        while True:
+            choice = review_pdf(data, raw)
+            if choice == "accept":
+                console.print("\n[bold]Validating template...[/]")
+                is_valid, errors = validate_all(data)
+                if not is_valid:
+                    print_errors(errors)
+                    if confirm2("Save anyway?") is not True:
+                        continue
+                file_path = save_template(data)
+                console.print(f"\n[green]✓ Template saved to {os.path.relpath(file_path)}[/]")
+                return "saved"
+            if choice == "skip":
+                console.print("[yellow]Skipped[/]")
+                return "skipped"
+            if choice is BACK:
+                break  # back to extraction (re-run)
+            if choice == "view_raw":
+                with console.pager():
+                    console.print(raw)
+                continue
+            section = SECTION_ACTIONS.get(choice)
+            if section is not None:
+                data = edit_section(data, section)
 
-        if choice == "1":
-            break
-        elif choice == "2":
-            data = edit_section(data, "meta")
-        elif choice == "3":
-            data = edit_section(data, "maintenance_items")
-        elif choice == "4":
-            data = edit_section(data, "parts")
-        elif choice == "5":
-            data = edit_section(data, "obd_dtc_definitions")
-        elif choice == "6":
-            console.print("[yellow]Skipped[/]")
-            return False
-        else:
-            console.print("[red]Invalid choice[/]")
+    return "skipped"
 
-    # Validate
-    console.print("\n[bold]Validating template...[/]")
-    is_valid, errors = validate_all(data)
-    if not is_valid:
-        print_errors(errors)
-        if not confirm("Save anyway?"):
-            return False
 
-    # Save
-    file_path = save_template(data)
-    console.print(f"\n[green]✓ Template saved to {os.path.relpath(file_path)}[/]")
+def _extract_with_retry(pdf_path, provider, api_key, client, language):
+    """Run AI extraction, retrying on failure.
 
-    return True
+    Returns:
+        (data, raw) on success, or None when the retry loop was aborted (the
+        caller re-selects the language).
+    """
+    while True:
+        try:
+            return extract_pdf_text_and_ai(pdf_path, provider, api_key, client, language)
+        except KeyboardInterrupt:
+            console.print("\n[yellow]Extraction aborted[/]")
+            return None
+        except Exception as exc:
+            console.print(f"[red]✗ Extraction failed: {exc}[/]")
+            if confirm2("Try again?") is not True:
+                return None
+
+
+STATE_MODE = "mode"
+STATE_PATH = "path"
+STATE_PROVIDER = "provider"
+STATE_MODEL = "model"
+STATE_PDF = "pdf"
+
+
+def _step_mode():
+    pick = select_input_mode()
+    if pick is BACK:
+        return None, None
+    return STATE_PATH, pick
+
+
+def _step_path(input_mode):
+    p = select_pdf() if input_mode == "file" else select_folder()
+    if p is BACK:
+        return STATE_MODE, None, None
+    if input_mode == "file":
+        pdfs = [p]
+    else:
+        pdfs = list_pdfs_in_folder(p)
+        if not pdfs:
+            console.print(f"[red]✗ No PDF files found in {p}[/]")
+            return STATE_MODE, None, None
+        console.print(f"\n[bold]Found {len(pdfs)} PDF file(s):[/]")
+        for i, pdf in enumerate(pdfs, 1):
+            console.print(f"  {i}. {os.path.basename(pdf)}")
+        if confirm(f"Process all {len(pdfs)} files?") is not True:
+            return STATE_MODE, None, None
+    return STATE_PROVIDER, pdfs, 0
+
+
+def _step_provider():
+    prov = select_provider()
+    if prov is BACK:
+        return STATE_PATH, None, None
+    return STATE_MODEL, prov, None
+
+
+def _step_model(provider, api_key, client):
+    if api_key is None:
+        res = get_api_key(provider)
+        if res is BACK:
+            return STATE_PROVIDER, None, None
+        api_key, _ = res
+        client = create_client(provider, api_key)
+    if not select_model(provider, api_key):
+        return STATE_PROVIDER, api_key, client
+    return STATE_PDF, api_key, client
+
+
+def _step_pdf(pdfs, idx, provider, api_key, client, successful):
+    if idx >= len(pdfs):
+        console.print(f"\n[bold]Summary:[/] {successful}/{len(pdfs)} templates created")
+        if successful > 0 and confirm("Regenerate index.json and karter-catalog.db?") is True:
+            regenerate_catalog()
+        return None, idx, successful
+
+    pdf_path = pdfs[idx]
+    console.print(f"\n[{STYLE_TITLE}]" + "=" * 60 + "[/]")
+    console.print(f"[{STYLE_TITLE}]File {idx + 1}/{len(pdfs)}[/]")
+    console.print(f"[{STYLE_TITLE}]" + "=" * 60 + "[/]")
+    try:
+        status = run_pdf_flow(pdf_path, provider, api_key, client)
+    except KeyboardInterrupt:
+        console.print("\n[yellow]Interrupted by user[/]")
+        return None, idx, successful
+    except Exception as exc:
+        console.print(f"[red]✗ Error processing {pdf_path}: {exc}[/]")
+        status = "skipped"
+
+    if status == "saved":
+        successful += 1
+        idx += 1
+    elif status == "skipped":
+        idx += 1
+    elif status == "back":
+        return STATE_MODEL, idx, successful
+    return STATE_PDF, idx, successful
 
 
 def main():
     print_header("karter template generator", "from workshop manual PDF")
 
-    # Select AI provider (shared for all PDFs)
-    provider = select_provider()
-    api_key, _ = get_api_key(provider)
-    select_model(provider, api_key)
+    input_mode = None
+    pdfs = []
+    idx = 0
+    provider = None
+    api_key = None
+    client = None
+    successful = 0
+    state = STATE_MODE
 
-    # Loop for input mode selection with retry
-    while True:
-        # Step 1: Select input mode
-        input_mode = select_input_mode()
-
-        if input_mode == "file":
-            # Single file mode
-            pdf_path = select_pdf()
-            if pdf_path is None:
-                continue  # Back to input mode selection
-            success = process_single_pdf(pdf_path, provider, api_key)
-
-            if success and confirm("Regenerate index.json and karter-catalog.db?"):
-                regenerate_catalog()
-            break
-
-        # Batch mode
-        folder_path = select_folder()
-        if folder_path is None:
-            continue  # Back to input mode selection
-
-        pdfs = list_pdfs_in_folder(folder_path)
-
-        if not pdfs:
-            console.print(f"[red]✗ No PDF files found in {folder_path}[/]")
-            if confirm("Try again?"):
-                continue
-            break
-
-        console.print(f"\n[bold]Found {len(pdfs)} PDF file(s):[/]")
-        for i, pdf in enumerate(pdfs, 1):
-            console.print(f"  {i}. {os.path.basename(pdf)}")
-
-        if not confirm(f"Process all {len(pdfs)} files?"):
-            break
-
-        # Process each PDF
-        successful = 0
-        for i, pdf_path in enumerate(pdfs, 1):
-            console.print(f"\n[{STYLE_TITLE}]" + "=" * 60 + "[/]")
-            console.print(f"[{STYLE_TITLE}]File {i}/{len(pdfs)}[/]")
-            console.print(f"[{STYLE_TITLE}]" + "=" * 60 + "[/]")
-
-            try:
-                success = process_single_pdf(pdf_path, provider, api_key)
-                if success:
-                    successful += 1
-            except KeyboardInterrupt:
-                console.print("\n[yellow]Interrupted by user[/]")
-                break
-            except Exception as e:
-                console.print(f"[red]✗ Error processing {pdf_path}: {e}[/]")
-
-        console.print(f"\n[bold]Summary:[/] {successful}/{len(pdfs)} templates created")
-
-        if successful > 0 and confirm("Regenerate index.json and karter-catalog.db?"):
-            regenerate_catalog()
-        break
+    while state is not None:
+        if state == STATE_MODE:
+            state, input_mode = _step_mode()
+        elif state == STATE_PATH:
+            state, pdfs, idx = _step_path(input_mode)
+        elif state == STATE_PROVIDER:
+            state, provider, api_key = _step_provider()
+        elif state == STATE_MODEL:
+            state, api_key, client = _step_model(provider, api_key, client)
+        elif state == STATE_PDF:
+            state, idx, successful = _step_pdf(
+                pdfs, idx, provider, api_key, client, successful
+            )
 
     console.print("\n[bold green]✓ All done![/]")
 
