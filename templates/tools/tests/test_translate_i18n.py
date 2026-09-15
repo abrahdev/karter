@@ -517,5 +517,29 @@ class ParallelRunTest(unittest.TestCase):
         self.assertFalse(os.path.exists(self._ckpt_file()))
 
 
+class FormatErrorTest(unittest.TestCase):
+    class ApiError(Exception):
+        def __init__(self, message, status=None):
+            super().__init__(message)
+            if status is not None:
+                self.status_code = status
+
+    def test_includes_status_and_message(self):
+        exc = self.ApiError("Error code: 429 - rate limit reached", status=429)
+        self.assertEqual(
+            ti._format_error(exc), "ApiError 429: Error code: 429 - rate limit reached"
+        )
+
+    def test_without_status(self):
+        self.assertEqual(ti._format_error(ValueError("boom")), "ValueError: boom")
+
+    def test_collapses_and_truncates(self):
+        out = ti._format_error(self.ApiError("a\nb\t" + "x" * 500))
+        self.assertNotIn("\n", out)
+        self.assertNotIn("\t", out)
+        self.assertTrue(out.endswith("…"))
+        self.assertLessEqual(len(out), len("ApiError: ") + 200)
+
+
 if __name__ == "__main__":
     unittest.main()

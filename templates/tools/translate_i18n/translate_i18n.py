@@ -150,6 +150,21 @@ def build_prompt(lang_code):
     return load_prompt(PROMPTS_FILE, lang_name=lang_name)
 
 
+def _format_error(exc):
+    """One-line, bounded description of an API error for retry messages.
+
+    Shows the exception type, the HTTP status (when the SDK exposes it) and
+    the error message, collapsed to a single line and truncated so a long
+    provider body does not flood the terminal.
+    """
+    status = getattr(exc, "status_code", None)
+    detail = " ".join(str(exc).split())
+    if len(detail) > 200:
+        detail = detail[:197] + "…"
+    label = type(exc).__name__ + (f" {status}" if status is not None else "")
+    return f"{label}: {detail}" if detail else label
+
+
 def translate_batch(client, system, items, model, on_live=None):
     payload = {k: v for k, v in items}
     last_error = None
@@ -204,7 +219,7 @@ def translate_batch(client, system, items, model, on_live=None):
             last_error = exc
             if attempt < MAX_RETRIES - 1:
                 wait = RETRY_BASE * (2 ** attempt) + random.uniform(0, 2)
-                console.print(f"[yellow]  retry {attempt + 1}/{MAX_RETRIES} in {wait:.0f}s[/] ({type(exc).__name__})")
+                console.print(f"[yellow]  retry {attempt + 1}/{MAX_RETRIES} in {wait:.0f}s[/] ({_format_error(exc)})")
                 time.sleep(wait)
     raise RuntimeError(f"batch failed after {MAX_RETRIES} retries: {last_error}")
 
@@ -652,7 +667,7 @@ def _qa_batch(client, system, items, model):
             last_error = exc
             if attempt < MAX_RETRIES - 1:
                 wait = RETRY_BASE * (2 ** attempt) + random.uniform(0, 2)
-                console.print(f"[yellow]  retry {attempt + 1}/{MAX_RETRIES} in {wait:.0f}s[/] ({type(exc).__name__})")
+                console.print(f"[yellow]  retry {attempt + 1}/{MAX_RETRIES} in {wait:.0f}s[/] ({_format_error(exc)})")
                 time.sleep(wait)
     raise RuntimeError(f"QA batch failed after {MAX_RETRIES} retries: {last_error}")
 
