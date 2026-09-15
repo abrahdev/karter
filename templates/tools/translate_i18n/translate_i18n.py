@@ -37,6 +37,7 @@ from _shared import (
     BACK,
     ask,
     confirm,
+    confirm2,
     create_client,
     get_api_key,
     load_prompt,
@@ -55,6 +56,7 @@ I18N_DIR = os.path.join(REPO_ROOT, "templates", "i18n")
 EN_FILE = os.path.join(I18N_DIR, "en.json")
 CKPT_DIR = os.path.join(os.path.dirname(__file__), ".checkpoints")
 PROMPTS_FILE = os.path.join(os.path.dirname(__file__), "PROMPTS.md")
+QA_PROMPTS_FILE = os.path.join(os.path.dirname(__file__), "PROMPTS_QA.md")
 
 DEFAULT_BATCH = 300
 MAX_RETRIES = 5
@@ -134,6 +136,7 @@ def select_mode():
                 ("full", "Full redo — retranslate everything"),
                 ("missing", "Complete missing keys only (keep existing)"),
                 ("validate", "Validate only — no API call"),
+                ("qa", "Quality check (detect hallucinations)"),
             ],
             default_index=2,
         )
@@ -576,6 +579,339 @@ def _run_parallel(
     return "done"
 
 
+# ---------- quality check ----------
+
+def _qa_prompt(lang):
+    lang_name = LANG_NAMES.get(lang, lang)
+    return load_prompt(QA_PROMPTS_FILE, lang_name=lang_name)
+
+
+def _qa_batch(client, system, items, model):
+    """Ask the model to flag hallucinated keys in a batch of (key, en, tr).
+
+    The model may return any keys; only keys that belong to this batch are
+    kept (permissive: extras are ignored, not retried). Returns the filtered
+    ``{key: {issue, suggested}}`` dict (possibly empty).
+    """
+    payload = {k: {"en": en, "tr": tr} for k, en, tr in items}
+    last_error = None
+    for attempt in range(MAX_RETRIES):
+        try:
+            chunks = []
+            started = time.monotonic()
+            stream = client.chat.completions.create(
+                model=model,
+                temperature=0.0,
+                response_format={"type": "json_object"},
+                stream=True,
+                messages=[
+                    {"role": "system", "content": system},
+                    {"role": "user", "content": json.dumps(payload, ensure_ascii=False)},
+                ],
+            )
+            for chunk in stream:
+                if not chunk.choices:
+                    continue
+                delta = chunk.choices[0].delta
+                if delta and delta.content:
+                    chunks.append(delta.content)
+                elapsed = time.monotonic() - started
+                if not chunks and elapsed > FIRST_TOKEN_TIMEOUT:
+                    raise TimeoutError(
+                        f"no content received from the model in {elapsed:.0f}s"
+                    )
+            out = json.loads("".join(chunks))
+            if not isinstance(out, dict):
+                raise ValueError(f"response is not a JSON object: {type(out).__name__}")
+            flagged = {}
+            for key, info in out.items():
+                if key in payload and isinstance(info, dict):
+                    flagged[key] = info
+            return flagged
+        except Exception as exc:
+            last_error = exc
+            if attempt < MAX_RETRIES - 1:
+                wait = RETRY_BASE * (2 ** attempt) + random.uniform(0, 2)
+                console.print(f"[yellow]  retry {attempt + 1}/{MAX_RETRIES} in {wait:.0f}s[/] ({type(exc).__name__})")
+                time.sleep(wait)
+    raise RuntimeError(f"QA batch failed after {MAX_RETRIES} retries: {last_error}")
+
+
+def qa_ckpt_path(lang):
+    return os.path.join(CKPT_DIR, f"qa-{lang}.json")
+
+
+def load_qa_checkpoint(lang):
+    """Return (checked_keys, flagged) persisted for ``lang`` by a past QA run."""
+    path = qa_ckpt_path(lang)
+    if os.path.exists(path):
+        with open(path, encoding="utf-8") as fh:
+            data = json.load(fh)
+        return set(data.get("checked") or []), data.get("flagged") or {}
+    return set(), {}
+
+
+def save_qa_checkpoint(lang, checked, flagged):
+    os.makedirs(CKPT_DIR, exist_ok=True)
+    with open(qa_ckpt_path(lang), "w", encoding="utf-8") as fh:
+        json.dump(
+            {"checked": sorted(checked), "flagged": flagged},
+            fh,
+            ensure_ascii=False,
+        )
+
+
+def clear_qa_checkpoint(lang):
+    path = qa_ckpt_path(lang)
+    if os.path.exists(path):
+        os.remove(path)
+
+
+def _report_qa(lang, st):
+    """Print the QA findings for a language."""
+    flagged = st["flagged"] if st else {}
+    if not flagged:
+        console.print(f"[green]✓ {lang}:[/] no strong errors found")
+        return
+    console.print(f"[yellow]✗ {lang}: {len(flagged)} strong error(s) found[/]")
+    for key, info in flagged.items():
+        console.print(f"  [bold]{key}[/]")
+        console.print(f"    EN: {info.get('en', '')}")
+        console.print(f"    TR: {info.get('tr', '')}")
+        console.print(f"    [yellow]issue:[/] {info.get('issue', 'error')}")
+        if info.get("suggested"):
+            console.print(f"    [green]suggested:[/] {info['suggested']}")
+
+
+def _qa_worker(
+    task, state, client, provider, progress, glock, abort_event, dashboard=None
+):
+    """Run a single (lang, batch) QA task, accumulating flagged keys.
+
+    Returns ``None`` when the batch failed after all retries (signals abort),
+    else ``(lang, batch_n)``.
+    """
+    lang, batch_n, total_batches, chunk = task
+    st = state[lang]
+
+    if abort_event.is_set():
+        return None
+
+    slot = None
+    if dashboard is not None:
+        with glock:
+            slot = dashboard.claim_slot(lang, batch_n, total_batches)
+
+    try:
+        try:
+            flagged = _qa_batch(client, st["system"], chunk, provider["model"])
+        except Exception as exc:
+            console.print(f"[red]  {lang} QA batch {batch_n}/{total_batches} failed: {exc}[/]")
+            abort_event.set()
+            return None
+
+        with st["lock"]:
+            for key, info in flagged.items():
+                for k, en_v, tr_v in chunk:
+                    if k == key:
+                        info = dict(info, en=en_v, tr=tr_v)
+                        break
+                st["flagged"][key] = info
+            for key, _en, _tr in chunk:
+                st["checked"].add(key)
+            st["completed"] += 1
+            now = time.monotonic()
+            if (
+                now - st["last_ckpt"] >= CKPT_EVERY_SECONDS
+                or st["completed"] == st["batches"]
+            ):
+                save_qa_checkpoint(lang, st["checked"], st["flagged"])
+                st["last_ckpt"] = now
+        with glock:
+            progress.update(st["task"], advance=len(chunk))
+        return lang, batch_n
+    finally:
+        if dashboard is not None:
+            with glock:
+                dashboard.release_slot(slot)
+
+
+def _apply_qa_fixes(state):
+    """Ask the user and apply the suggested fixes to the language files."""
+    suggested = sum(
+        1 for st in state.values() for info in st["flagged"].values()
+        if info.get("suggested")
+    )
+    if not suggested:
+        return
+    console.print(f"\n[bold]{suggested} fix(es) suggested.[/]")
+    if confirm2("Apply the suggested fixes to the language files?") is not True:
+        return
+    en_keys = list(load_en().keys())
+    for lang, st in state.items():
+        flagged = {k: v for k, v in st["flagged"].items() if v.get("suggested")}
+        if not flagged:
+            continue
+        with open(st["dest"], encoding="utf-8") as fh:
+            result = json.load(fh)
+        for key, info in flagged.items():
+            result[key] = info["suggested"]
+        write_json(st["dest"], result, en_keys)
+        clear_qa_checkpoint(lang)
+        console.print(f"[green]✓ {lang}: applied {len(flagged)} fix(es)[/]")
+
+
+def _run_qa(
+    targets,
+    client,
+    provider,
+    batch_size,
+    workers,
+    progress,
+    dashboard=None,
+    stop_event=None,
+    interactive=False,
+):
+    """Run a hallucination QA pass over the target language files.
+
+    Reads ``en.json`` and each ``<lang>.json``, sends the (original, translated)
+    pairs to the model in parallel batches, and accumulates only strong errors
+    (permissive). Findings are checkpointed under ``.checkpoints/qa-<lang>.json``
+    so the report survives interrupts and already-checked keys are skipped on a
+    re-run.
+
+    Returns ``"done"``, ``"stopped"`` or ``None`` (nothing to check).
+    """
+    en = load_en()
+    en_keys = list(en.keys())
+    state = {}
+    tasks = []
+    for lang in targets:
+        dest = os.path.join(I18N_DIR, f"{lang}.json")
+        if not os.path.exists(dest):
+            console.print(f"[red]✗ {lang}.json does not exist — cannot QA[/]")
+            continue
+        with open(dest, encoding="utf-8") as fh:
+            tr = json.load(fh)
+        checked, flagged = load_qa_checkpoint(lang)
+        checked = set(checked)
+
+        pairs = []
+        for key in en_keys:
+            translated = tr.get(key)
+            if not isinstance(translated, str) or not translated.strip():
+                flagged[key] = {
+                    "en": en[key],
+                    "tr": translated if isinstance(translated, str) else "",
+                    "issue": "missing or empty translation",
+                }
+                continue
+            if key in checked:
+                continue
+            pairs.append((key, en[key], translated))
+
+        if pairs:
+            console.print(
+                f"[bold]{lang}:[/] {len(pairs)} pairs to review (batch={batch_size})"
+            )
+        system = _qa_prompt(lang)
+        task = progress.add_task(f"[bold]{lang}[/]", total=len(pairs) or 1)
+        chunks = [pairs[i:i + batch_size] for i in range(0, len(pairs), batch_size)]
+        state[lang] = {
+            "lang": lang,
+            "checked": checked,
+            "flagged": flagged,
+            "dest": dest,
+            "system": system,
+            "batches": len(chunks),
+            "task": task,
+            "lock": threading.Lock(),
+            "completed": 0,
+            "last_ckpt": 0.0,
+            "start": time.monotonic(),
+        }
+        for n, chunk in enumerate(chunks, 1):
+            tasks.append((lang, n, len(chunks), chunk))
+
+    if not tasks:
+        for st in state.values():
+            with st["lock"]:
+                save_qa_checkpoint(st["lang"], st["checked"], st["flagged"])
+        for lang, st in state.items():
+            progress.remove_task(st["task"])
+            _report_qa(lang, st)
+        _apply_qa_fixes(state)
+        return "done"
+
+    if stop_event is None:
+        stop_event = threading.Event()
+
+    glock = threading.Lock()
+    abort_event = threading.Event()
+    executor = ThreadPoolExecutor(max_workers=workers)
+    futures = [
+        executor.submit(
+            _qa_worker,
+            t,
+            state,
+            client,
+            provider,
+            progress,
+            glock,
+            abort_event,
+            dashboard,
+        )
+        for t in tasks
+    ]
+    aborted = False
+    try:
+        if interactive and sys.stdin.isatty():
+            with raw_keyboard() as fd:
+                listener = threading.Thread(
+                    target=_key_listener, args=(stop_event, fd), daemon=True
+                )
+                listener.start()
+                try:
+                    aborted = _wait_all(futures, stop_event)
+                finally:
+                    stop_event.set()
+                    listener.join(timeout=1.0)
+        else:
+            aborted = _wait_all(futures, stop_event)
+    except KeyboardInterrupt:
+        aborted = True
+        raise
+    finally:
+        for fut in futures:
+            fut.cancel()
+        executor.shutdown(wait=True)
+        for st in state.values():
+            with st["lock"]:
+                save_qa_checkpoint(st["lang"], st["checked"], st["flagged"])
+
+    if aborted:
+        console.print(
+            "\n[yellow]QA aborted: a batch failed. "
+            "Report saved — re-run to resume.[/]"
+        )
+        sys.exit(1)
+
+    for lang, st in state.items():
+        progress.remove_task(st["task"])
+        _report_qa(lang, st)
+    _apply_qa_fixes(state)
+
+    incomplete = [
+        lang for lang, st in state.items() if st["completed"] < st["batches"]
+    ]
+    if incomplete and stop_event.is_set():
+        console.print(
+            "\n[yellow]QA stopped. Report saved — re-run to finish the rest.[/]"
+        )
+        return "stopped"
+    return "done"
+
+
 # ---------- main ----------
 
 def main():
@@ -612,6 +948,60 @@ def main():
     except ValueError:
         workers = DEFAULT_WORKERS
     workers = max(1, min(workers, 16))
+
+    if mode == "qa":
+        en = load_en()
+        pairs = 0
+        for lang in targets:
+            dest = os.path.join(I18N_DIR, f"{lang}.json")
+            if os.path.exists(dest):
+                with open(dest, encoding="utf-8") as fh:
+                    tr = json.load(fh)
+                pairs += sum(1 for k in en if k in tr and str(tr[k]).strip())
+            else:
+                console.print(f"[yellow]! {lang}.json does not exist yet[/]")
+        # QA sends original + translation for every pair (output is tiny).
+        tok_in = pairs * 40
+        tok_out = pairs * 5
+        cost = (tok_in / 1_000_000) * provider["price_in"] + (
+            tok_out / 1_000_000
+        ) * provider["price_out"]
+        console.print(
+            Panel(
+                f"[bold]Provider:[/] {provider['name']}\n"
+                f"[bold]Model:[/] {provider['model']}\n"
+                f"[bold]Languages:[/] {', '.join(targets)}\n"
+                f"[bold]Mode:[/] Quality check (detect hallucinations, permissive)\n"
+                f"[bold]Pairs to review:[/] {pairs:,}\n"
+                f"[bold]Estimated tokens:[/] ~{tok_in:,.0f} in / ~{tok_out:,.0f} out\n"
+                f"[bold]Estimated cost:[/] [green]${cost:.3f}[/] (approx.)\n"
+                f"[bold]Parallel requests:[/] {workers}",
+                title="Configuration",
+                border_style="yellow",
+            )
+        )
+        if confirm("Proceed") is not True:
+            sys.exit("Aborted by user")
+        progress = make_progress(show_total=True, show_remaining=True)
+        dashboard = _Dashboard(progress, workers)
+        with Live(dashboard, console=console, refresh_per_second=8):
+            status = _run_qa(
+                targets,
+                client,
+                provider,
+                batch_size,
+                workers,
+                progress,
+                dashboard,
+                interactive=True,
+            )
+        if status == "stopped":
+            console.print(
+                "[bold yellow]✓ QA stopped. Report saved — re-run to finish the rest.[/]"
+            )
+        else:
+            console.print("\n[bold green]✓ Quality check done.[/]")
+        return
 
     en = load_en()
     pending = 0

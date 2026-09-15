@@ -195,6 +195,34 @@ def echo_client(barrier=None, fail_keys=None, timeout=2.0, on_response=None, del
     return NS(chat=NS(completions=NS(create=create)))
 
 
+def qa_client(flag_keys=None):
+    """OpenAI-compatible stub for QA: flags the given keys and counts calls.
+
+    Exposes ``client.calls["n"]`` (incremented per ``create``).
+    """
+    calls = {"n": 0}
+
+    def create(**kwargs):
+        calls["n"] += 1
+        payload = json.loads(kwargs["messages"][1]["content"])
+
+        def gen():
+            out = {}
+            for key, pair in payload.items():
+                if flag_keys and key in flag_keys:
+                    out[key] = {
+                        "issue": "wrong meaning",
+                        "suggested": "correccion de " + key,
+                    }
+            yield NS(choices=[NS(delta=NS(content=json.dumps(out)))])
+
+        return gen()
+
+    client = NS(chat=NS(completions=NS(create=create)))
+    client.calls = calls
+    return client
+
+
 class ParallelRunTest(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
@@ -203,12 +231,14 @@ class ParallelRunTest(unittest.TestCase):
         self._ckpt = ti.CKPT_DIR
         self._retries = ti.MAX_RETRIES
         self._base = ti.RETRY_BASE
+        self._confirm2 = ti.confirm2
         ti.EN_FILE = os.path.join(self.tmp.name, "en.json")
         ti.I18N_DIR = os.path.join(self.tmp.name, "i18n")
         ti.CKPT_DIR = os.path.join(self.tmp.name, "ckpt")
         os.makedirs(ti.I18N_DIR, exist_ok=True)
         ti.MAX_RETRIES = 2
         ti.RETRY_BASE = 0
+        ti.confirm2 = lambda msg: False
 
     def tearDown(self):
         ti.EN_FILE = self._en
@@ -216,6 +246,7 @@ class ParallelRunTest(unittest.TestCase):
         ti.CKPT_DIR = self._ckpt
         ti.MAX_RETRIES = self._retries
         ti.RETRY_BASE = self._base
+        ti.confirm2 = self._confirm2
         self.tmp.cleanup()
 
     def _write_en(self, n):
@@ -376,6 +407,90 @@ class ParallelRunTest(unittest.TestCase):
                 dashboard=dash,
             )
         self.assertEqual(dash.workers, [None, None])
+
+    def _write_tr(self, lang, values):
+        with open(self._dest(lang), "w", encoding="utf-8") as fh:
+            json.dump(values, fh)
+
+    def test_qa_batch_filters_extra_keys(self):
+        items = [("k0", "one", "uno"), ("k1", "two", "dos")]
+
+        def create(**kwargs):
+            def gen():
+                out = {"k0": {"issue": "bad"}, "k9": {"issue": "extra"}}
+                yield NS(choices=[NS(delta=NS(content=json.dumps(out)))])
+
+            return gen()
+
+        client = NS(chat=NS(completions=NS(create=create)))
+        result = ti._qa_batch(client, "system", items, "m")
+        self.assertEqual(set(result), {"k0"})
+
+    def test_qa_batch_clean_returns_empty(self):
+        items = [("k0", "one", "uno")]
+
+        def create(**kwargs):
+            def gen():
+                yield NS(choices=[NS(delta=NS(content="{}"))])
+
+            return gen()
+
+        client = NS(chat=NS(completions=NS(create=create)))
+        self.assertEqual(ti._qa_batch(client, "system", items, "m"), {})
+
+    def test_run_qa_flags_and_checkpoint(self):
+        en = self._write_en(4)
+        self._write_tr("sv", {k: "tr_" + v for k, v in en.items()})
+        client = qa_client(flag_keys={"k0"})
+        status = ti._run_qa(["sv"], client, {"model": "m"}, 2, 2, ProgressStub())
+        self.assertEqual(status, "done")
+        ck = os.path.join(ti.CKPT_DIR, "qa-sv.json")
+        self.assertTrue(os.path.exists(ck))
+        with open(ck, encoding="utf-8") as fh:
+            data = json.load(fh)
+        self.assertEqual(set(data["checked"]), set(en))
+        self.assertIn("k0", data["flagged"])
+        self.assertEqual(data["flagged"]["k0"]["en"], en["k0"])
+        with open(self._dest("sv"), encoding="utf-8") as fh:
+            self.assertEqual(json.load(fh), {k: "tr_" + v for k, v in en.items()})
+
+    def test_run_qa_missing_keys_flagged(self):
+        en = self._write_en(4)
+        self._write_tr("sv", {"k0": "uno"})  # k1..k3 missing
+        client = qa_client()  # flags nothing via the API
+        ti._run_qa(["sv"], client, {"model": "m"}, 2, 2, ProgressStub())
+        with open(os.path.join(ti.CKPT_DIR, "qa-sv.json"), encoding="utf-8") as fh:
+            data = json.load(fh)
+        self.assertIn("k1", data["flagged"])
+        self.assertEqual(
+            data["flagged"]["k1"]["issue"], "missing or empty translation"
+        )
+        # only k0 was checked via the API; the rest were flagged without a call
+        self.assertEqual(set(data["checked"]), {"k0"})
+
+    def test_run_qa_apply_fixes(self):
+        en = self._write_en(4)
+        self._write_tr("sv", {k: "tr_" + v for k, v in en.items()})
+        client = qa_client(flag_keys={"k0"})
+        ti.confirm2 = lambda msg: True
+        try:
+            ti._run_qa(["sv"], client, {"model": "m"}, 2, 2, ProgressStub())
+        finally:
+            ti.confirm2 = lambda msg: False
+        with open(self._dest("sv"), encoding="utf-8") as fh:
+            out = json.load(fh)
+        self.assertEqual(out["k0"], "correccion de k0")
+        self.assertFalse(os.path.exists(os.path.join(ti.CKPT_DIR, "qa-sv.json")))
+
+    def test_run_qa_skips_checked_on_resume(self):
+        en = self._write_en(4)
+        self._write_tr("sv", {k: "tr_" + v for k, v in en.items()})
+        client = qa_client(flag_keys={"k0"})
+        ti._run_qa(["sv"], client, {"model": "m"}, 2, 2, ProgressStub())
+        calls_after_first = client.calls["n"]
+        self.assertGreater(calls_after_first, 0)
+        ti._run_qa(["sv"], client, {"model": "m"}, 2, 2, ProgressStub())
+        self.assertEqual(client.calls["n"], calls_after_first)
 
     def test_complete_language_is_skipped(self):
         en = self._write_en(3)

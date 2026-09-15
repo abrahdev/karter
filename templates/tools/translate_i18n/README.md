@@ -21,6 +21,13 @@ python templates/tools/translate_i18n/translate_i18n.py
   - `Full redo` — retranslate everything.
   - `Complete missing keys` — fill only the keys absent from a language file.
   - `Validate only` — check parity and divergence without calling the API.
+  - `Quality check` — detect hallucinated translations. Permissive: only
+    strong errors are flagged (wrong meaning, invented content, wrong
+    numbers/make/model), never style or phrasing. Reviews `(original,
+    translated)` pairs in parallel, prints the report and optionally applies
+    the suggested fixes. Findings are checkpointed under
+    `.checkpoints/qa-<lang>.json`, so already-checked keys are skipped on a
+    re-run.
 - **API key**: read from `templates/tools/.env`, from an environment variable,
   or pasted on the fly (optionally saved).
 - **Parallel requests**: a single thread pool runs every `(language, batch)`
