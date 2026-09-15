@@ -1,0 +1,9 @@
+{
+  "id": "citroen-dtc",
+  "meta": {
+    "make": "Citroën",
+    "model": "OBD-II codes",
+    "author": "abrahdev",
+    "version": "1.0.0"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "id": "changan-dtc",
+  "meta": {
+    "make": "Changan",
+    "model": "OBD-II codes",
+    "author": "abrahdev",
+    "version": "1.0.0"
+  }
+}

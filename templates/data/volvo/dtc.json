@@ -1,0 +1,9 @@
+{
+  "id": "volvo-dtc",
+  "meta": {
+    "make": "Volvo",
+    "model": "OBD-II codes",
+    "author": "abrahdev",
+    "version": "1.0.0"
+  }
+}
