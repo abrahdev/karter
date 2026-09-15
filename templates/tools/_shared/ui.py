@@ -5,6 +5,7 @@ import select as _select
 import sys
 import termios
 import tty
+from contextlib import contextmanager
 
 from rich.console import Console
 from rich.panel import Panel
@@ -189,6 +190,32 @@ def read_key():
         return buf
     finally:
         termios.tcsetattr(fd, termios.TCSADRAIN, old)
+
+
+@contextmanager
+def raw_keyboard():
+    """Put stdin in cbreak mode for the duration of the block.
+
+    Restores the previous terminal settings on exit so a background key
+    listener can read single keystrokes without the caller managing termios.
+    Callers should guard with ``sys.stdin.isatty()``.
+    """
+    fd = sys.stdin.fileno()
+    old = termios.tcgetattr(fd)
+    try:
+        tty.setcbreak(fd)
+        yield fd
+    finally:
+        termios.tcsetattr(fd, termios.TCSADRAIN, old)
+
+
+def poll_key(fd, timeout=0.2):
+    """Read a single character from ``fd`` within ``timeout`` seconds.
+
+    Returns:
+        The decoded character, or ``None`` when nothing arrives in time.
+    """
+    return _read_byte(fd, timeout)
 
 
 # ---------- menus ----------

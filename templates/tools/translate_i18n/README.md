@@ -23,9 +23,18 @@ python templates/tools/translate_i18n/translate_i18n.py
   - `Validate only` — check parity and divergence without calling the API.
 - **API key**: read from `templates/tools/.env`, from an environment variable,
   or pasted on the fly (optionally saved).
+- **Parallel requests**: a single thread pool runs every `(language, batch)`
+  task concurrently (configurable, default 4; `1` = sequential). This hides
+  the per-request first-token latency and cuts wall time on large catalogs.
+  A live dashboard shows the language bars plus a global timer and one timer
+  per worker thread.
+- **Graceful stop**: press `q` during a run to stop launching new batches and
+  wait for the in-flight ones to finish. Languages that completed fully are
+  saved; the rest stay in their checkpoints and resume on the next run.
 - **Cost estimate** based on the keys that are actually pending, with a live
   progress bar.
-- **Checkpoints**: if interrupted (Ctrl+C), it resumes on the next run.
+- **Checkpoints**: if interrupted (Ctrl+C) — or if a batch fails and the run
+  aborts — it resumes on the next run, keeping every completed batch.
 
 ## Requirements
 
