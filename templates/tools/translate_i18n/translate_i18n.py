@@ -778,7 +778,9 @@ def _apply_qa_fixes(state):
         with open(st["dest"], encoding="utf-8") as fh:
             result = json.load(fh)
         applied = []
-        for key, info in flagged.items():
+        for i, (key, info) in enumerate(flagged.items()):
+            if i > 0:
+                console.print(f"[dim]    {'─' * 36}[/]")
             console.print(f"  [bold]{key}[/]")
             console.print(f"    EN: {info.get('en', '')}")
             console.print(f"    TR: {info.get('tr', '')}")
@@ -994,7 +996,7 @@ def main():
         workers = int(workers)
     except ValueError:
         workers = DEFAULT_WORKERS
-    workers = max(1, min(workers, 16))
+    workers = max(1, min(workers, 64))
 
     if mode == "qa":
         en = load_en()
