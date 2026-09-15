@@ -24,8 +24,8 @@ python templates/tools/translate_i18n/translate_i18n.py
   - `Quality check` — detect hallucinated translations. Permissive: only
     strong errors are flagged (wrong meaning, invented content, wrong
     numbers/make/model), never style or phrasing. Reviews `(original,
-    translated)` pairs in parallel, prints the report and optionally applies
-    the suggested fixes. Findings are checkpointed under
+    translated)` pairs in parallel, prints the report and lets you review and
+    apply each suggested fix one by one. Findings are checkpointed under
     `.checkpoints/qa-<lang>.json`, so already-checked keys are skipped on a
     re-run.
 - **API key**: read from `templates/tools/.env`, from an environment variable,

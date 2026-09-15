@@ -82,7 +82,10 @@ def run_cli(main, interrupt_message="Interrupted"):
         main()
     except KeyboardInterrupt:
         console.print(f"\n[yellow]{interrupt_message}[/]")
-        sys.exit(130)
+        # os._exit: skip interpreter shutdown so background worker threads
+        # (e.g. a translation thread pool) are killed instead of being joined
+        # (which would hang or print "Exception ignored on threading shutdown").
+        os._exit(130)
 
 
 # ---------- raw keyboard ----------

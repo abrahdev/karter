@@ -238,7 +238,7 @@ class ParallelRunTest(unittest.TestCase):
         os.makedirs(ti.I18N_DIR, exist_ok=True)
         ti.MAX_RETRIES = 2
         ti.RETRY_BASE = 0
-        ti.confirm2 = lambda msg: False
+        ti.confirm2 = lambda msg, default="y": False
 
     def tearDown(self):
         ti.EN_FILE = self._en
@@ -472,15 +472,30 @@ class ParallelRunTest(unittest.TestCase):
         en = self._write_en(4)
         self._write_tr("sv", {k: "tr_" + v for k, v in en.items()})
         client = qa_client(flag_keys={"k0"})
-        ti.confirm2 = lambda msg: True
+        ti.confirm2 = lambda msg, default="y": True
         try:
             ti._run_qa(["sv"], client, {"model": "m"}, 2, 2, ProgressStub())
         finally:
-            ti.confirm2 = lambda msg: False
+            ti.confirm2 = lambda msg, default="y": False
         with open(self._dest("sv"), encoding="utf-8") as fh:
             out = json.load(fh)
         self.assertEqual(out["k0"], "correccion de k0")
         self.assertFalse(os.path.exists(os.path.join(ti.CKPT_DIR, "qa-sv.json")))
+
+    def test_run_qa_apply_one_by_one(self):
+        en = self._write_en(2)
+        self._write_tr("sv", {k: "tr_" + v for k, v in en.items()})
+        client = qa_client(flag_keys={"k0", "k1"})
+        answers = iter([True, False])
+        ti.confirm2 = lambda msg, default="y": next(answers)
+        try:
+            ti._run_qa(["sv"], client, {"model": "m"}, 2, 1, ProgressStub())
+        finally:
+            ti.confirm2 = lambda msg, default="y": False
+        with open(self._dest("sv"), encoding="utf-8") as fh:
+            out = json.load(fh)
+        self.assertEqual(out["k0"], "correccion de k0")
+        self.assertEqual(out["k1"], "tr_value 1")
 
     def test_run_qa_skips_checked_on_resume(self):
         en = self._write_en(4)

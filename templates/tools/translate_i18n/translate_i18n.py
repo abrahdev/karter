@@ -217,8 +217,12 @@ def checkpoint_path(lang):
 
 
 def save_checkpoint(lang, data):
-    with open(checkpoint_path(lang), "w", encoding="utf-8") as fh:
+    os.makedirs(CKPT_DIR, exist_ok=True)
+    path = checkpoint_path(lang)
+    tmp = path + ".tmp"
+    with open(tmp, "w", encoding="utf-8") as fh:
         json.dump(data, fh, ensure_ascii=False)
+    os.replace(tmp, path)
 
 
 def load_checkpoint(lang):
@@ -523,6 +527,7 @@ def _run_parallel(
         for t in tasks
     ]
     aborted = False
+    interrupted = False
     try:
         if interactive and sys.stdin.isatty():
             with raw_keyboard() as fd:
@@ -539,15 +544,30 @@ def _run_parallel(
             aborted = _wait_all(futures, stop_event)
     except KeyboardInterrupt:
         aborted = True
-        raise
-    finally:
-        for fut in futures:
-            fut.cancel()
-        executor.shutdown(wait=True)
+        interrupted = True
+        # Ctrl+C discards in-flight batches without waiting: cancel everything,
+        # keep only the checkpoints of batches that already completed, and let
+        # run_cli exit immediately (os._exit) so no thread is joined at exit.
+        executor.shutdown(wait=False, cancel_futures=True)
         for st in state.values():
             with st["lock"]:
                 if st["completed"]:
                     save_checkpoint(st["lang"], st["result"])
+        raise
+    finally:
+        if not interrupted:
+            for fut in futures:
+                fut.cancel()
+            while True:
+                try:
+                    executor.shutdown(wait=True)
+                    break
+                except KeyboardInterrupt:
+                    continue
+            for st in state.values():
+                with st["lock"]:
+                    if st["completed"]:
+                        save_checkpoint(st["lang"], st["result"])
 
     if aborted:
         console.print(
@@ -653,12 +673,15 @@ def load_qa_checkpoint(lang):
 
 def save_qa_checkpoint(lang, checked, flagged):
     os.makedirs(CKPT_DIR, exist_ok=True)
-    with open(qa_ckpt_path(lang), "w", encoding="utf-8") as fh:
+    path = qa_ckpt_path(lang)
+    tmp = path + ".tmp"
+    with open(tmp, "w", encoding="utf-8") as fh:
         json.dump(
             {"checked": sorted(checked), "flagged": flagged},
             fh,
             ensure_ascii=False,
         )
+    os.replace(tmp, path)
 
 
 def clear_qa_checkpoint(lang):
@@ -737,28 +760,40 @@ def _qa_worker(
 
 
 def _apply_qa_fixes(state):
-    """Ask the user and apply the suggested fixes to the language files."""
-    suggested = sum(
-        1 for st in state.values() for info in st["flagged"].values()
-        if info.get("suggested")
-    )
-    if not suggested:
-        return
-    console.print(f"\n[bold]{suggested} fix(es) suggested.[/]")
-    if confirm2("Apply the suggested fixes to the language files?") is not True:
-        return
+    """Review each suggested fix individually and apply only the accepted ones.
+
+    Every flagged key is shown with its EN/TR/issue/suggested pair and a
+    yes/no prompt (default yes). The left arrow aborts the remaining fixes;
+    the language file is written once with the accepted ones.
+    """
     en_keys = list(load_en().keys())
     for lang, st in state.items():
-        flagged = {k: v for k, v in st["flagged"].items() if v.get("suggested")}
+        flagged = {
+            k: v for k, v in st["flagged"].items()
+            if isinstance(v.get("suggested"), str) and v["suggested"].strip()
+        }
         if not flagged:
             continue
+        console.print(f"\n[bold]{lang}: {len(flagged)} suggested fix(es)[/]")
         with open(st["dest"], encoding="utf-8") as fh:
             result = json.load(fh)
+        applied = []
         for key, info in flagged.items():
-            result[key] = info["suggested"]
-        write_json(st["dest"], result, en_keys)
-        clear_qa_checkpoint(lang)
-        console.print(f"[green]✓ {lang}: applied {len(flagged)} fix(es)[/]")
+            console.print(f"  [bold]{key}[/]")
+            console.print(f"    EN: {info.get('en', '')}")
+            console.print(f"    TR: {info.get('tr', '')}")
+            console.print(f"    [yellow]issue:[/] {info.get('issue', '')}")
+            console.print(f"    [green]suggested:[/] {info['suggested']}")
+            choice = confirm2("Apply this fix?", default="y")
+            if choice is BACK:
+                break
+            if choice is True:
+                result[key] = info["suggested"]
+                applied.append(key)
+        if applied:
+            write_json(st["dest"], result, en_keys)
+            clear_qa_checkpoint(lang)
+            console.print(f"[green]✓ {lang}: applied {len(applied)} fix(es)[/]")
 
 
 def _run_qa(
@@ -864,6 +899,7 @@ def _run_qa(
         for t in tasks
     ]
     aborted = False
+    interrupted = False
     try:
         if interactive and sys.stdin.isatty():
             with raw_keyboard() as fd:
@@ -880,14 +916,25 @@ def _run_qa(
             aborted = _wait_all(futures, stop_event)
     except KeyboardInterrupt:
         aborted = True
-        raise
-    finally:
-        for fut in futures:
-            fut.cancel()
-        executor.shutdown(wait=True)
+        interrupted = True
+        executor.shutdown(wait=False, cancel_futures=True)
         for st in state.values():
             with st["lock"]:
                 save_qa_checkpoint(st["lang"], st["checked"], st["flagged"])
+        raise
+    finally:
+        if not interrupted:
+            for fut in futures:
+                fut.cancel()
+            while True:
+                try:
+                    executor.shutdown(wait=True)
+                    break
+                except KeyboardInterrupt:
+                    continue
+            for st in state.values():
+                with st["lock"]:
+                    save_qa_checkpoint(st["lang"], st["checked"], st["flagged"])
 
     if aborted:
         console.print(
@@ -984,7 +1031,7 @@ def main():
             sys.exit("Aborted by user")
         progress = make_progress(show_total=True, show_remaining=True)
         dashboard = _Dashboard(progress, workers)
-        with Live(dashboard, console=console, refresh_per_second=8):
+        with Live(dashboard, console=console, refresh_per_second=8, transient=True):
             status = _run_qa(
                 targets,
                 client,
@@ -1029,7 +1076,7 @@ def main():
 
     progress = make_progress(show_total=True, show_remaining=True)
     dashboard = _Dashboard(progress, workers)
-    with Live(dashboard, console=console, refresh_per_second=8):
+    with Live(dashboard, console=console, refresh_per_second=8, transient=True):
         status = _run_parallel(
             targets,
             mode,
