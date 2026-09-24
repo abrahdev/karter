@@ -1,18 +1,18 @@
 # import_dtc
 
-Importa definiciones de códigos de diagnóstico OBD-II (DTC) a los templates
-en `templates/data`, normalmente desde una fuente externa.
+Imports OBD-II diagnostic trouble code (DTC) definitions into the templates
+under `templates/data`, usually from an external source.
 
-## Uso
+## Usage
 
 ```bash
 python templates/tools/import_dtc/import_dtc.py
 ```
 
-## Qué hace
+## What it does
 
-- Añade definiciones `obd_dtc_definitions` a los templates base.
-- Asigna `desc_i18n_key` para cada código, que luego alimenta
-  `templates/i18n/en.json` (vía `i18n_json/`).
+- Adds `obd_dtc_definitions` to the base templates.
+- Assigns a `desc_i18n_key` for each code, which later feeds
+  `templates/i18n/en.json` (via `i18n_json/`).
 
-Es una herramienta de ingestión puntual: no se ejecuta en CI.
+It is a one-off ingestion tool: it is not run in CI.

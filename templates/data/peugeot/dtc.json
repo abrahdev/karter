@@ -1,0 +1,9 @@
+{
+  "id": "peugeot-dtc",
+  "meta": {
+    "make": "Peugeot",
+    "model": "OBD-II codes",
+    "author": "abrahdev",
+    "version": "1.0.0"
+  }
+}

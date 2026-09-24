@@ -1,0 +1,9 @@
+{
+  "id": "kawasaki-dtc",
+  "meta": {
+    "make": "Kawasaki",
+    "model": "OBD-II codes",
+    "author": "abrahdev",
+    "version": "1.0.0"
+  }
+}

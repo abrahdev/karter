@@ -1,0 +1,9 @@
+{
+  "id": "fiat-dtc",
+  "meta": {
+    "make": "Fiat",
+    "model": "OBD-II codes",
+    "author": "abrahdev",
+    "version": "1.0.0"
+  }
+}

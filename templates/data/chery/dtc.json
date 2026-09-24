@@ -1,0 +1,9 @@
+{
+  "id": "chery-dtc",
+  "meta": {
+    "make": "Chery",
+    "model": "OBD-II codes",
+    "author": "abrahdev",
+    "version": "1.0.0"
+  }
+}

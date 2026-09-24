@@ -1,0 +1,9 @@
+{
+  "id": "yamaha-dtc",
+  "meta": {
+    "make": "Yamaha",
+    "model": "OBD-II codes",
+    "author": "abrahdev",
+    "version": "1.0.0"
+  }
+}

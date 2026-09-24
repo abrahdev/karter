@@ -22,110 +22,55 @@ Usage:
 
 import json
 import os
+import random
 import sys
+import threading
 import time
+from concurrent.futures import FIRST_COMPLETED, ThreadPoolExecutor, wait
 
-from rich.console import Console
+from rich.live import Live
 from rich.panel import Panel
-from rich.progress import (
-    BarColumn,
-    MofNCompleteColumn,
-    Progress,
-    SpinnerColumn,
-    TextColumn,
-    TimeElapsedColumn,
-    TimeRemainingColumn,
+
+# Import shared utilities
+sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
+from _shared import (
+    BACK,
+    ask,
+    confirm,
+    confirm2,
+    create_client,
+    get_api_key,
+    load_prompt,
+    make_progress,
+    pick_multi,
+    pick_option,
+    print_header,
+    run_cli,
+    select_model,
+    select_provider,
 )
-from rich.table import Table
-
-try:
-    from openai import OpenAI
-except ImportError:
-    sys.exit("Missing dependency: run  pip install openai  first")
-
-console = Console()
+from _shared.ui import console, poll_key, raw_keyboard
 
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
 I18N_DIR = os.path.join(REPO_ROOT, "templates", "i18n")
 EN_FILE = os.path.join(I18N_DIR, "en.json")
-ENV_FILE = os.path.join(os.path.dirname(__file__), ".env")
 CKPT_DIR = os.path.join(os.path.dirname(__file__), ".checkpoints")
+PROMPTS_FILE = os.path.join(os.path.dirname(__file__), "PROMPTS.md")
+QA_PROMPTS_FILE = os.path.join(os.path.dirname(__file__), "PROMPTS_QA.md")
 
-DEFAULT_BATCH = 600
+DEFAULT_BATCH = 300
 MAX_RETRIES = 5
 RETRY_BASE = 3
+CLIENT_TIMEOUT = 1800.0
+DEFAULT_WORKERS = 4
 
-MODELS_CACHE = os.path.join(os.path.expanduser("~"), ".cache", "opencode", "models.json")
+# Hard cap for a silent stream: an attempt fails once this passes with no
+# content tokens, so a stuck upstream can never freeze the progress bar.
+FIRST_TOKEN_TIMEOUT = 300.0
 
-# Curated provider list. Each entry: base_url, model, env var, and per-1M
-# token prices (input/output, USD) used for the cost estimate. Prices are
-# approximations; edit freely. cache_key maps to the provider id used in the
-# local models.json cache (when available) for dynamic prices.
-PROVIDERS = [
-    {
-        "name": "OpenCode Go (deepseek-v4-flash)",
-        "base_url": "https://opencode.ai/zen/go/v1",
-        "model": "deepseek-v4-flash",
-        "env_var": "OPENCODE_API_KEY",
-        "cache_key": "opencode-go",
-        "price_in": 0.2,
-        "price_out": 0.5,
-    },
-    {
-        "name": "DeepSeek (deepseek-chat)",
-        "base_url": "https://api.deepseek.com",
-        "model": "deepseek-chat",
-        "env_var": "DEEPSEEK_API_KEY",
-        "cache_key": "deepseek",
-        "price_in": 0.27,
-        "price_out": 1.10,
-    },
-    {
-        "name": "OpenAI (gpt-4o-mini)",
-        "base_url": "https://api.openai.com/v1",
-        "model": "gpt-4o-mini",
-        "env_var": "OPENAI_API_KEY",
-        "cache_key": "openai",
-        "price_in": 0.15,
-        "price_out": 0.60,
-    },
-    {
-        "name": "Anthropic (claude-haiku)",
-        "base_url": "https://api.anthropic.com/v1",
-        "model": "claude-haiku-4-5-20251001",
-        "env_var": "ANTHROPIC_API_KEY",
-        "cache_key": "anthropic",
-        "price_in": 1.0,
-        "price_out": 5.0,
-    },
-    {
-        "name": "Groq (llama-3.3-70b)",
-        "base_url": "https://api.groq.com/openai/v1",
-        "model": "llama-3.3-70b-versatile",
-        "env_var": "GROQ_API_KEY",
-        "cache_key": "groq",
-        "price_in": 0.59,
-        "price_out": 0.79,
-    },
-    {
-        "name": "Mistral (mistral-small)",
-        "base_url": "https://api.mistral.ai/v1",
-        "model": "mistral-small-latest",
-        "env_var": "MISTRAL_API_KEY",
-        "cache_key": "mistral",
-        "price_in": 0.1,
-        "price_out": 0.3,
-    },
-    {
-        "name": "OpenRouter (auto)",
-        "base_url": "https://openrouter.ai/api/v1",
-        "model": "openrouter/auto",
-        "env_var": "OPENROUTER_API_KEY",
-        "cache_key": "openrouter",
-        "price_in": 0.15,
-        "price_out": 0.60,
-    },
-]
+# How often a language's accumulated result is flushed to its checkpoint
+# while batches complete in parallel (avoids dumping ~1-2 MB per batch).
+CKPT_EVERY_SECONDS = 5.0
 
 LANG_NAMES = {
     "en": "English",
@@ -143,48 +88,12 @@ LANG_NAMES = {
 # Rough tokens per key used only for the cost estimate.
 TOKENS_PER_KEY = 18
 
-HEADER = "[bold cyan]▍ karter i18n[/] [dim]translate & maintain catalog[/dim]"
 
-
-# ---------- tiny readline-based prompt (agent-style) ----------
-
-def ask(prompt, default=None, secret=False):
-    suffix = f" [dim]({default})[/dim]" if default is not None else ""
-    console.print(f"[bold]{prompt}[/]{suffix}")
-    try:
-        value = input("> ").strip()
-    except EOFError:
-        sys.exit()
-    if not value and default is not None:
-        value = str(default)
+def abort(value):
+    """Exit with a message when the user navigates back (left arrow)."""
+    if value is BACK:
+        sys.exit("Aborted")
     return value
-
-
-def confirm(prompt, default="y"):
-    ans = ask(f"{prompt} [dim]Y/n[/dim]", default=default).lower()
-    return ans not in ("n", "no")
-
-
-# ---------- env ----------
-
-def load_env():
-    if not os.path.exists(ENV_FILE):
-        return {}
-    env = {}
-    with open(ENV_FILE, encoding="utf-8") as fh:
-        for line in fh:
-            line = line.strip()
-            if not line or line.startswith("#") or "=" not in line:
-                continue
-            key, _, value = line.partition("=")
-            env[key.strip()] = value.strip().strip('"').strip("'")
-    return env
-
-
-def save_env(env):
-    lines = [f"{k}={v}" for k, v in env.items()]
-    with open(ENV_FILE, "w", encoding="utf-8") as fh:
-        fh.write("\n".join(lines) + "\n")
 
 
 def load_en():
@@ -204,204 +113,33 @@ def available_languages():
     return langs
 
 
-# ---------- numbered menu helpers ----------
-
-def pick_option(title, options, default_index=0):
-    """Print a numbered menu and return the chosen option value (string)."""
-    console.print(f"\n[bold]{title}[/]")
-    table = Table(show_header=False, box=None, pad_edge=False)
-    table.add_column(justify="right", style="cyan", width=3)
-    table.add_column(style="white")
-    for i, (value, label) in enumerate(options, 1):
-        marker = "▸" if i == default_index else " "
-        table.add_row(f" {i}", f"{marker} {label}")
-    console.print(table)
-    choice = ask("Select [dim]number[/dim]")
-    if not choice:
-        return options[default_index - 1][0]
-    try:
-        idx = int(choice)
-        if 1 <= idx <= len(options):
-            return options[idx - 1][0]
-    except ValueError:
-        pass
-    console.print("[red]Invalid selection.[/]")
-    sys.exit()
-
-
-def pick_multi(title, options):
-    """Numbered menu with comma/ranges, returns list of values."""
-    console.print(f"\n[bold]{title}[/]")
-    table = Table(show_header=False, box=None, pad_edge=False)
-    table.add_column(justify="right", style="cyan", width=3)
-    table.add_column(style="white")
-    for i, (value, label) in enumerate(options, 1):
-        table.add_row(f" {i}", f" {label}")
-    console.print(table)
-    raw = ask("Select numbers [dim]comma or range, e.g. 1,3,5-7 or all[/dim]")
-    if raw in ("", "all"):
-        return [v for v, _ in options]
-    selected = []
-    for part in raw.split(","):
-        part = part.strip()
-        if not part:
-            continue
-        if "-" in part:
-            a, b = part.split("-", 1)
-            selected.extend(range(int(a), int(b) + 1))
-        else:
-            selected.append(int(part))
-    values = []
-    for idx in selected:
-        if 1 <= idx <= len(options):
-            values.append(options[idx - 1][0])
-    return values
-
-
-# ---------- providers ----------
-
-def select_provider():
-    options = [(f"p{i}", p["name"]) for i, p in enumerate(PROVIDERS)]
-    options.append(("custom", "Custom OpenAI-compatible endpoint"))
-    pick = pick_option("Choose a provider", options, default_index=1)
-    if pick == "custom":
-        base_url = ask("Base URL", "https://api.openai.com/v1")
-        model = ask("Model")
-        if not model:
-            sys.exit("Model required for custom provider")
-        env_var = ask("Environment variable", "API_KEY")
-        return {
-            "name": f"Custom ({model})",
-            "base_url": base_url,
-            "model": model,
-            "env_var": env_var,
-            "cache_key": None,
-            "price_in": 0.0,
-            "price_out": 0.0,
-        }
-    return PROVIDERS[int(pick[1:])]
-
-
-# ---------- model selection ----------
-
-def load_model_prices(cache_key):
-    """Return {model_id: {price_in, price_out}} from the local opencode cache,
-    or {} when the cache is unavailable."""
-    if not cache_key or not os.path.exists(MODELS_CACHE):
-        return {}
-    try:
-        with open(MODELS_CACHE, encoding="utf-8") as fh:
-            data = json.load(fh)
-        provider = data.get(cache_key, {})
-        models = provider.get("models", {})
-        prices = {}
-        for mid, info in models.items():
-            cost = info.get("cost") or {}
-            prices[mid] = {
-                "price_in": cost.get("input", 0.0),
-                "price_out": cost.get("output", 0.0),
-            }
-        return prices
-    except Exception:
-        return {}
-
-
-def price_label(prices, mid):
-    p = prices.get(mid)
-    if not p:
-        return ""
-    return f"  [dim]${p['price_in']:.3f}/M in · ${p['price_out']:.3f}/M out[/dim]"
-
-
-def list_models(provider, api_key):
-    """Fetch available models via the OpenAI-compatible /models endpoint.
-    Returns a list of model ids, or [] on failure."""
-    try:
-        client = OpenAI(api_key=api_key, base_url=provider["base_url"])
-        resp = client.models.list()
-        return sorted({m.id for m in resp.data})
-    except Exception as exc:
-        console.print(
-            f"[dim]Could not list models for {provider['name']}:[/] "
-            f"[yellow]{type(exc).__name__}[/] — will ask manually."
-        )
-        return []
-
-
-def select_model(provider, api_key):
-    """Let the user pick a model for the chosen provider, preferring a dynamic
-    listing from the provider's /models endpoint."""
-    prices = load_model_prices(provider.get("cache_key"))
-    ids = list_models(provider, api_key)
-
-    if ids:
-        options = [(mid, f"[bold]{mid}[/]{price_label(prices, mid)}") for mid in ids]
-        options.append(("__custom__", "[yellow]Type a custom model id[/]"))
-        picked = pick_option(f"Choose a model for {provider['name']}", options,
-                             default_index=1)
-        if picked == "__custom__":
-            picked = ask("Model id")
-        if not picked:
-            sys.exit("No model selected")
-        provider["model"] = picked
-    else:
-        provider["model"] = ask(f"Model id for {provider['name']}", provider["model"])
-
-    if prices and provider["model"] in prices:
-        p = prices[provider["model"]]
-        provider["price_in"] = p["price_in"]
-        provider["price_out"] = p["price_out"]
-    console.print(
-        f"[dim]✓[/] Using [green]{provider['model']}[/] "
-        f"(${provider['price_in']:.3f}/M in · ${provider['price_out']:.3f}/M out)"
-    )
-
-
-# ---------- api key ----------
-
-def get_api_key(provider):
-    env = load_env()
-    env_var = provider["env_var"]
-    if env_var in env and env[env_var]:
-        console.print(f"[dim]✓[/] Using API key from [green]{os.path.relpath(ENV_FILE)}[/] ({env_var})")
-        return env[env_var], env
-    if env_var in os.environ and os.environ[env_var]:
-        console.print(f"[dim]✓[/] Using API key from [green]environment[/] ({env_var})")
-        return os.environ[env_var], env
-    key = ask(f"Paste API key for [bold]{provider['name']}[/]")
-    if not key:
-        sys.exit("No API key provided")
-    if confirm("Save to templates/tools/.env?"):
-        env[env_var] = key
-        save_env(env)
-        console.print(f"[dim]✓[/] Saved [green]{env_var}[/] to {os.path.relpath(ENV_FILE)}")
-    return key, env
-
-
 # ---------- languages / mode ----------
 
 def select_languages(langs):
     codes = list(langs)
-    options = [(c, f"[bold]{c}[/]  {LANG_NAMES.get(c, c)}") for c in codes]
-    options.append(("new", "[yellow]New language code[/]"))
-    picked = pick_multi("Select target language(s)", options)
+    options = [(c, f"{c}  {LANG_NAMES.get(c, c)}") for c in codes]
+    options.append(("new", "New language code"))
+    picked = abort(pick_multi("Select target language(s)", options))
     if not picked:
         sys.exit("No language selected")
     if "new" in picked:
-        code = ask("New language code [dim]e.g. sv[/dim]")
+        code = abort(ask("New language code (e.g. sv)"))
         picked = [c for c in picked if c != "new"] + [code]
     return picked
 
 
 def select_mode():
-    return pick_option(
-        "Choose a mode",
-        [
-            ("full", "Full redo — retranslate everything"),
-            ("missing", "Complete missing keys only (keep existing)"),
-            ("validate", "Validate only — no API call"),
-        ],
-        default_index=2,
+    return abort(
+        pick_option(
+            "Choose a mode",
+            [
+                ("full", "Full redo — retranslate everything"),
+                ("missing", "Complete missing keys only (keep existing)"),
+                ("validate", "Validate only — no API call"),
+                ("qa", "Quality check (detect hallucinations)"),
+            ],
+            default_index=2,
+        )
     )
 
 
@@ -409,44 +147,80 @@ def select_mode():
 
 def build_prompt(lang_code):
     lang_name = LANG_NAMES.get(lang_code, lang_code)
-    return (
-        f"You are a professional automotive translator. Translate the following "
-        f"vehicle maintenance JSON (intervals, parts, and DTC diagnostic trouble "
-        f"codes) into {lang_name}. Rules: "
-        "1) Keep the JSON keys EXACTLY as-is (no rename, add, or remove). "
-        "2) Translate only the values. "
-        "3) Do NOT translate technical acronyms/module labels: ECM, PCM, TCM, OBD, "
-        "RPM, EGR, EVAP, HO2S, NOx, DPF, B+, A, B, C (circuit labels), 2T, 4WD, etc. "
-        "4) Use natural, standard automotive terminology of the target language. "
-        "5) Return ONLY the translated JSON, no explanations, no markdown fences."
-    )
+    return load_prompt(PROMPTS_FILE, lang_name=lang_name)
 
 
-def translate_batch(client, system, items, model):
+def _format_error(exc):
+    """One-line, bounded description of an API error for retry messages.
+
+    Shows the exception type, the HTTP status (when the SDK exposes it) and
+    the error message, collapsed to a single line and truncated so a long
+    provider body does not flood the terminal.
+    """
+    status = getattr(exc, "status_code", None)
+    detail = " ".join(str(exc).split())
+    if len(detail) > 200:
+        detail = detail[:197] + "…"
+    label = type(exc).__name__ + (f" {status}" if status is not None else "")
+    return f"{label}: {detail}" if detail else label
+
+
+def translate_batch(client, system, items, model, on_live=None):
     payload = {k: v for k, v in items}
     last_error = None
     for attempt in range(MAX_RETRIES):
         try:
-            resp = client.chat.completions.create(
+            chunks = []
+            chars = 0
+            started = time.monotonic()
+            if on_live:
+                on_live(0.0, 0)
+            stream = client.chat.completions.create(
                 model=model,
                 temperature=0.1,
                 response_format={"type": "json_object"},
+                stream=True,
                 messages=[
                     {"role": "system", "content": system},
                     {"role": "user", "content": json.dumps(payload, ensure_ascii=False)},
                 ],
             )
-            out = json.loads(resp.choices[0].message.content)
-            if not isinstance(out, dict) or len(out) != len(payload):
+            for chunk in stream:
+                if not chunk.choices:
+                    continue
+                delta = chunk.choices[0].delta
+                if delta and delta.content:
+                    chunks.append(delta.content)
+                    chars += len(delta.content)
+                elapsed = time.monotonic() - started
+                if not chunks and elapsed > FIRST_TOKEN_TIMEOUT:
+                    raise TimeoutError(
+                        f"no content received from the model in {elapsed:.0f}s"
+                    )
+                if on_live:
+                    on_live(elapsed, chars)
+            out = json.loads("".join(chunks))
+            if not isinstance(out, dict):
+                raise ValueError(f"response is not a JSON object: {type(out).__name__}")
+            missing = sorted(set(payload) - set(out))
+            extra = sorted(set(out) - set(payload))
+            if missing or extra:
                 raise ValueError(
-                    f"response has {len(out) if isinstance(out, dict) else '?'} keys, expected {len(payload)}"
+                    f"response keys mismatch: missing={missing} extra={extra}"
                 )
+            empty = sorted(
+                k for k, v in out.items()
+                if not isinstance(v, str) or not v.strip()
+            )
+            if empty:
+                raise ValueError(f"empty or non-string translations: {empty}")
             return out
         except Exception as exc:
             last_error = exc
-            wait = RETRY_BASE * (2 ** attempt)
-            console.print(f"[yellow]  retry {attempt + 1}/{MAX_RETRIES} in {wait}s[/] ({type(exc).__name__})")
-            time.sleep(wait)
+            if attempt < MAX_RETRIES - 1:
+                wait = RETRY_BASE * (2 ** attempt) + random.uniform(0, 2)
+                console.print(f"[yellow]  retry {attempt + 1}/{MAX_RETRIES} in {wait:.0f}s[/] ({_format_error(exc)})")
+                time.sleep(wait)
     raise RuntimeError(f"batch failed after {MAX_RETRIES} retries: {last_error}")
 
 
@@ -458,8 +232,12 @@ def checkpoint_path(lang):
 
 
 def save_checkpoint(lang, data):
-    with open(checkpoint_path(lang), "w", encoding="utf-8") as fh:
+    os.makedirs(CKPT_DIR, exist_ok=True)
+    path = checkpoint_path(lang)
+    tmp = path + ".tmp"
+    with open(tmp, "w", encoding="utf-8") as fh:
         json.dump(data, fh, ensure_ascii=False)
+    os.replace(tmp, path)
 
 
 def load_checkpoint(lang):
@@ -515,63 +293,699 @@ def estimate(provider, total_keys):
     return tok_in, tok_out, cost
 
 
-# ---------- translate ----------
+# ---------- result loading ----------
 
-def translate(lang, mode, client, provider, batch_size, progress):
-    en = load_en()
-    en_keys = list(en.keys())
+def load_result(lang, mode):
+    """Load existing translations (missing mode) merged with the checkpoint."""
     dest = os.path.join(I18N_DIR, f"{lang}.json")
-
     if mode == "missing" and os.path.exists(dest):
         with open(dest, encoding="utf-8") as fh:
             result = json.load(fh)
     else:
         result = {}
-
     ckpt = load_checkpoint(lang)
     if ckpt:
-        merged = dict(result)
-        merged.update(ckpt)
-        result = merged
+        result = dict(result)
+        result.update(ckpt)
         console.print(f"[cyan]↻ Resuming[/] {lang} from checkpoint ({len(ckpt)} keys)")
+    return result
 
-    todo = [(k, en[k]) for k in en_keys if k not in result]
-    total = len(todo)
-    if not total:
-        console.print(f"[green]✓ {lang}:[/] nothing to translate, already complete")
-        validate(lang)
-        return
 
-    console.print(f"[bold]{lang}:[/] {total} keys to translate (batch={batch_size})")
-    system = build_prompt(lang)
-    task = progress.add_task(f"[bold]{lang}[/]", total=total)
-    start = time.time()
-    for i in range(0, len(todo), batch_size):
-        chunk = todo[i:i + batch_size]
-        translated = translate_batch(client, system, chunk, provider["model"])
-        result.update(translated)
-        save_checkpoint(lang, result)
-        progress.update(task, advance=len(chunk))
-    elapsed = time.time() - start
+# ---------- translate (parallel) ----------
 
-    missing = [k for k in en_keys if k not in result]
+class _Dashboard:
+    """Live renderable: the language progress bars, a global timer and one
+    timer per worker thread.
+
+    ``Progress`` is embedded via its ``__rich__`` hook; the global and per-slot
+    timers read ``time.monotonic()`` at render time, so the ``Live``'s own
+    auto-refresh thread ticks them without any explicit update calls.
+    """
+
+    def __init__(self, progress, worker_count):
+        self.progress = progress
+        self.global_start = time.monotonic()
+        self.workers = [None] * worker_count
+
+    def claim_slot(self, lang, batch, total):
+        for i, slot in enumerate(self.workers):
+            if slot is None:
+                self.workers[i] = {
+                    "lang": lang,
+                    "batch": batch,
+                    "total": total,
+                    "start": time.monotonic(),
+                }
+                return i
+        return 0
+
+    def release_slot(self, slot):
+        if slot is not None and 0 <= slot < len(self.workers):
+            self.workers[slot] = None
+
+    def __rich_console__(self, console, options):
+        yield self.progress
+        yield ""
+        yield f"[bold]Global:[/] {time.monotonic() - self.global_start:.0f}s"
+        for i, slot in enumerate(self.workers):
+            if slot is None:
+                yield f"  worker {i + 1}: idle"
+            else:
+                yield (
+                    f"  [cyan]worker {i + 1}[/] · {slot['lang']} batch "
+                    f"{slot['batch']}/{slot['total']} · "
+                    f"{time.monotonic() - slot['start']:.0f}s"
+                )
+        yield ""
+        yield "[dim]Press q to stop after the in-flight batches finish.[/dim]"
+
+
+def _task_worker(
+    task, state, client, provider, progress, glock, abort_event, dashboard=None
+):
+    """Run a single (lang, batch) translation task.
+
+    Appends the translated keys to the language result and checkpoints them
+    (throttled) under the language lock. Claims a dashboard worker slot so the
+    live view shows a per-thread timer. Returns ``None`` when the batch failed
+    after all retries (signals abort), else ``(lang, batch_n)``.
+    """
+    lang, batch_n, total_batches, chunk = task
+    st = state[lang]
+
+    if abort_event.is_set():
+        return None
+
+    slot = None
+    if dashboard is not None:
+        with glock:
+            slot = dashboard.claim_slot(lang, batch_n, total_batches)
+
+    try:
+        try:
+            translated = translate_batch(
+                client, st["system"], chunk, provider["model"]
+            )
+        except Exception as exc:
+            console.print(
+                f"[red]  {lang} batch {batch_n}/{total_batches} failed: {exc}[/]"
+            )
+            abort_event.set()
+            return None
+
+        with st["lock"]:
+            st["result"].update(translated)
+            st["completed"] += 1
+            now = time.monotonic()
+            if (
+                now - st["last_ckpt"] >= CKPT_EVERY_SECONDS
+                or st["completed"] == st["batches"]
+            ):
+                save_checkpoint(lang, st["result"])
+                st["last_ckpt"] = now
+        with glock:
+            progress.update(st["task"], advance=len(chunk))
+        return lang, batch_n
+    finally:
+        if dashboard is not None:
+            with glock:
+                dashboard.release_slot(slot)
+
+
+def _finalize(lang, st):
+    """Write the final language file and clear its checkpoint."""
+    en_keys = st["en_keys"]
+    missing = [k for k in en_keys if k not in st["result"]]
     if missing:
         raise RuntimeError(f"{lang}: {len(missing)} keys still missing: {missing[:10]}")
-
-    write_json(dest, result, en_keys)
+    write_json(st["dest"], st["result"], en_keys)
     clear_checkpoint(lang)
-    progress.remove_task(task)
-    console.print(f"[green]✓ {lang}: saved[/] {len(result)} keys → {os.path.relpath(dest)} in {elapsed:.0f}s")
+    console.print(
+        f"[green]✓ {lang}: saved[/] {len(st['result'])} keys → "
+        f"{os.path.relpath(st['dest'])} in {time.monotonic() - st['start']:.0f}s"
+    )
+
+
+def _key_listener(stop_event, fd):
+    """Set ``stop_event`` when the user presses ``q`` (graceful stop).
+
+    Runs in a daemon thread while ``raw_keyboard()`` keeps stdin in cbreak
+    mode. Ignores every other key.
+    """
+    while not stop_event.is_set():
+        ch = poll_key(fd, 0.2)
+        if ch in ("q", "Q"):
+            stop_event.set()
+            return
+
+
+def _wait_all(futures, stop_event):
+    """Poll the futures, breaking early on failure or a requested stop.
+
+    Returns:
+        True when a batch failed after all retries (abort).
+    """
+    aborted = False
+    pending = set(futures)
+    while pending:
+        done, pending = wait(pending, timeout=0.2, return_when=FIRST_COMPLETED)
+        for fut in done:
+            if fut.result() is None:
+                aborted = True
+        if aborted or stop_event.is_set():
+            break
+    return aborted
+
+
+def _run_parallel(
+    targets,
+    mode,
+    client,
+    provider,
+    batch_size,
+    workers,
+    progress,
+    dashboard=None,
+    stop_event=None,
+    interactive=False,
+):
+    """Translate all target languages in parallel batches.
+
+    A single global thread pool runs every (lang, batch) task, so both
+    languages and batches run concurrently. Each language keeps its own
+    result and checkpoint behind a per-language lock; the rich progress bar
+    is guarded by a global lock.
+
+    Exit paths:
+    * a batch fails after all retries -> abort: queued tasks are cancelled,
+      in-flight batches are drained (and still checkpointed), exit code 1.
+    * the user presses ``q`` (interactive) or sets ``stop_event`` -> graceful
+      stop: queued tasks are cancelled, in-flight batches are drained,
+      languages that completed fully are finalized, the rest stay in their
+      checkpoints for resume, exit code 0.
+
+    ``workers=1`` behaves exactly like the old sequential loop.
+    Returns ``"done"``, ``"stopped"`` or ``None`` (nothing to translate).
+    """
+    en = load_en()
+    en_keys = list(en.keys())
+    state = {}
+    tasks = []
+    for lang in targets:
+        result = load_result(lang, mode)
+        todo = [(k, en[k]) for k in en_keys if k not in result]
+        if not todo:
+            console.print(f"[green]✓ {lang}:[/] nothing to translate, already complete")
+            validate(lang)
+            continue
+        console.print(f"[bold]{lang}:[/] {len(todo)} keys to translate (batch={batch_size})")
+        system = build_prompt(lang)
+        task = progress.add_task(f"[bold]{lang}[/]", total=len(todo))
+        chunks = [todo[i:i + batch_size] for i in range(0, len(todo), batch_size)]
+        state[lang] = {
+            "lang": lang,
+            "result": result,
+            "en_keys": en_keys,
+            "dest": os.path.join(I18N_DIR, f"{lang}.json"),
+            "system": system,
+            "batches": len(chunks),
+            "task": task,
+            "lock": threading.Lock(),
+            "completed": 0,
+            "last_ckpt": 0.0,
+            "start": time.monotonic(),
+        }
+        for n, chunk in enumerate(chunks, 1):
+            tasks.append((lang, n, len(chunks), chunk))
+
+    if not tasks:
+        return "done"
+
+    if stop_event is None:
+        stop_event = threading.Event()
+
+    glock = threading.Lock()
+    abort_event = threading.Event()
+    executor = ThreadPoolExecutor(max_workers=workers)
+    futures = [
+        executor.submit(
+            _task_worker,
+            t,
+            state,
+            client,
+            provider,
+            progress,
+            glock,
+            abort_event,
+            dashboard,
+        )
+        for t in tasks
+    ]
+    aborted = False
+    interrupted = False
+    try:
+        if interactive and sys.stdin.isatty():
+            with raw_keyboard() as fd:
+                listener = threading.Thread(
+                    target=_key_listener, args=(stop_event, fd), daemon=True
+                )
+                listener.start()
+                try:
+                    aborted = _wait_all(futures, stop_event)
+                finally:
+                    stop_event.set()
+                    listener.join(timeout=1.0)
+        else:
+            aborted = _wait_all(futures, stop_event)
+    except KeyboardInterrupt:
+        aborted = True
+        interrupted = True
+        # Ctrl+C discards in-flight batches without waiting: cancel everything,
+        # keep only the checkpoints of batches that already completed, and let
+        # run_cli exit immediately (os._exit) so no thread is joined at exit.
+        executor.shutdown(wait=False, cancel_futures=True)
+        for st in state.values():
+            with st["lock"]:
+                if st["completed"]:
+                    save_checkpoint(st["lang"], st["result"])
+        raise
+    finally:
+        if not interrupted:
+            for fut in futures:
+                fut.cancel()
+            while True:
+                try:
+                    executor.shutdown(wait=True)
+                    break
+                except KeyboardInterrupt:
+                    continue
+            for st in state.values():
+                with st["lock"]:
+                    if st["completed"]:
+                        save_checkpoint(st["lang"], st["result"])
+
+    if aborted:
+        console.print(
+            "\n[yellow]Aborted: a batch failed. "
+            "Checkpoints saved — re-run to resume.[/]"
+        )
+        sys.exit(1)
+
+    for lang, st in state.items():
+        with st["lock"]:
+            if st["completed"] == st["batches"]:
+                _finalize(lang, st)
+            elif not stop_event.is_set():
+                raise RuntimeError(
+                    f"{lang}: run ended with {st['completed']}/{st['batches']} "
+                    "batches completed"
+                )
+        progress.remove_task(st["task"])
+
+    incomplete = [
+        lang for lang, st in state.items() if st["completed"] < st["batches"]
+    ]
+    if incomplete and stop_event.is_set():
+        console.print(
+            "\n[yellow]Stopped by user. "
+            "Checkpoints saved — re-run to resume.[/]"
+        )
+        return "stopped"
+    return "done"
+
+
+# ---------- quality check ----------
+
+def _qa_prompt(lang):
+    lang_name = LANG_NAMES.get(lang, lang)
+    return load_prompt(QA_PROMPTS_FILE, lang_name=lang_name)
+
+
+def _qa_batch(client, system, items, model):
+    """Ask the model to flag hallucinated keys in a batch of (key, en, tr).
+
+    The model may return any keys; only keys that belong to this batch are
+    kept (permissive: extras are ignored, not retried). Returns the filtered
+    ``{key: {issue, suggested}}`` dict (possibly empty).
+    """
+    payload = {k: {"en": en, "tr": tr} for k, en, tr in items}
+    last_error = None
+    for attempt in range(MAX_RETRIES):
+        try:
+            chunks = []
+            started = time.monotonic()
+            stream = client.chat.completions.create(
+                model=model,
+                temperature=0.0,
+                response_format={"type": "json_object"},
+                stream=True,
+                messages=[
+                    {"role": "system", "content": system},
+                    {"role": "user", "content": json.dumps(payload, ensure_ascii=False)},
+                ],
+            )
+            for chunk in stream:
+                if not chunk.choices:
+                    continue
+                delta = chunk.choices[0].delta
+                if delta and delta.content:
+                    chunks.append(delta.content)
+                elapsed = time.monotonic() - started
+                if not chunks and elapsed > FIRST_TOKEN_TIMEOUT:
+                    raise TimeoutError(
+                        f"no content received from the model in {elapsed:.0f}s"
+                    )
+            out = json.loads("".join(chunks))
+            if not isinstance(out, dict):
+                raise ValueError(f"response is not a JSON object: {type(out).__name__}")
+            flagged = {}
+            for key, info in out.items():
+                if key in payload and isinstance(info, dict):
+                    flagged[key] = info
+            return flagged
+        except Exception as exc:
+            last_error = exc
+            if attempt < MAX_RETRIES - 1:
+                wait = RETRY_BASE * (2 ** attempt) + random.uniform(0, 2)
+                console.print(f"[yellow]  retry {attempt + 1}/{MAX_RETRIES} in {wait:.0f}s[/] ({_format_error(exc)})")
+                time.sleep(wait)
+    raise RuntimeError(f"QA batch failed after {MAX_RETRIES} retries: {last_error}")
+
+
+def qa_ckpt_path(lang):
+    return os.path.join(CKPT_DIR, f"qa-{lang}.json")
+
+
+def load_qa_checkpoint(lang):
+    """Return (checked_keys, flagged) persisted for ``lang`` by a past QA run."""
+    path = qa_ckpt_path(lang)
+    if os.path.exists(path):
+        with open(path, encoding="utf-8") as fh:
+            data = json.load(fh)
+        return set(data.get("checked") or []), data.get("flagged") or {}
+    return set(), {}
+
+
+def save_qa_checkpoint(lang, checked, flagged):
+    os.makedirs(CKPT_DIR, exist_ok=True)
+    path = qa_ckpt_path(lang)
+    tmp = path + ".tmp"
+    with open(tmp, "w", encoding="utf-8") as fh:
+        json.dump(
+            {"checked": sorted(checked), "flagged": flagged},
+            fh,
+            ensure_ascii=False,
+        )
+    os.replace(tmp, path)
+
+
+def clear_qa_checkpoint(lang):
+    path = qa_ckpt_path(lang)
+    if os.path.exists(path):
+        os.remove(path)
+
+
+def _report_qa(lang, st):
+    """Print the QA findings for a language."""
+    flagged = st["flagged"] if st else {}
+    if not flagged:
+        console.print(f"[green]✓ {lang}:[/] no strong errors found")
+        return
+    console.print(f"[yellow]✗ {lang}: {len(flagged)} strong error(s) found[/]")
+    for key, info in flagged.items():
+        console.print(f"  [bold]{key}[/]")
+        console.print(f"    EN: {info.get('en', '')}")
+        console.print(f"    TR: {info.get('tr', '')}")
+        console.print(f"    [yellow]issue:[/] {info.get('issue', 'error')}")
+        if info.get("suggested"):
+            console.print(f"    [green]suggested:[/] {info['suggested']}")
+
+
+def _qa_worker(
+    task, state, client, provider, progress, glock, abort_event, dashboard=None
+):
+    """Run a single (lang, batch) QA task, accumulating flagged keys.
+
+    Returns ``None`` when the batch failed after all retries (signals abort),
+    else ``(lang, batch_n)``.
+    """
+    lang, batch_n, total_batches, chunk = task
+    st = state[lang]
+
+    if abort_event.is_set():
+        return None
+
+    slot = None
+    if dashboard is not None:
+        with glock:
+            slot = dashboard.claim_slot(lang, batch_n, total_batches)
+
+    try:
+        try:
+            flagged = _qa_batch(client, st["system"], chunk, provider["model"])
+        except Exception as exc:
+            console.print(f"[red]  {lang} QA batch {batch_n}/{total_batches} failed: {exc}[/]")
+            abort_event.set()
+            return None
+
+        with st["lock"]:
+            for key, info in flagged.items():
+                for k, en_v, tr_v in chunk:
+                    if k == key:
+                        info = dict(info, en=en_v, tr=tr_v)
+                        break
+                st["flagged"][key] = info
+            for key, _en, _tr in chunk:
+                st["checked"].add(key)
+            st["completed"] += 1
+            now = time.monotonic()
+            if (
+                now - st["last_ckpt"] >= CKPT_EVERY_SECONDS
+                or st["completed"] == st["batches"]
+            ):
+                save_qa_checkpoint(lang, st["checked"], st["flagged"])
+                st["last_ckpt"] = now
+        with glock:
+            progress.update(st["task"], advance=len(chunk))
+        return lang, batch_n
+    finally:
+        if dashboard is not None:
+            with glock:
+                dashboard.release_slot(slot)
+
+
+def _apply_qa_fixes(state):
+    """Review each suggested fix individually and apply only the accepted ones.
+
+    Every flagged key is shown with its EN/TR/issue/suggested pair and a
+    yes/no prompt (default yes). The left arrow aborts the remaining fixes;
+    the language file is written once with the accepted ones.
+    """
+    en_keys = list(load_en().keys())
+    for lang, st in state.items():
+        flagged = {
+            k: v for k, v in st["flagged"].items()
+            if isinstance(v.get("suggested"), str) and v["suggested"].strip()
+        }
+        if not flagged:
+            continue
+        console.print(f"\n[bold]{lang}: {len(flagged)} suggested fix(es)[/]")
+        with open(st["dest"], encoding="utf-8") as fh:
+            result = json.load(fh)
+        applied = []
+        for i, (key, info) in enumerate(flagged.items()):
+            if i > 0:
+                console.print(f"[dim]    {'─' * 36}[/]")
+            console.print(f"  [bold]{key}[/]")
+            console.print(f"    EN: {info.get('en', '')}")
+            console.print(f"    TR: {info.get('tr', '')}")
+            console.print(f"    [yellow]issue:[/] {info.get('issue', '')}")
+            console.print(f"    [green]suggested:[/] {info['suggested']}")
+            choice = confirm2("Apply this fix?", default="y")
+            if choice is BACK:
+                break
+            if choice is True:
+                result[key] = info["suggested"]
+                applied.append(key)
+        if applied:
+            write_json(st["dest"], result, en_keys)
+            clear_qa_checkpoint(lang)
+            console.print(f"[green]✓ {lang}: applied {len(applied)} fix(es)[/]")
+
+
+def _run_qa(
+    targets,
+    client,
+    provider,
+    batch_size,
+    workers,
+    progress,
+    dashboard=None,
+    stop_event=None,
+    interactive=False,
+):
+    """Run a hallucination QA pass over the target language files.
+
+    Reads ``en.json`` and each ``<lang>.json``, sends the (original, translated)
+    pairs to the model in parallel batches, and accumulates only strong errors
+    (permissive). Findings are checkpointed under ``.checkpoints/qa-<lang>.json``
+    so the report survives interrupts and already-checked keys are skipped on a
+    re-run.
+
+    Returns ``"done"``, ``"stopped"`` or ``None`` (nothing to check).
+    """
+    en = load_en()
+    en_keys = list(en.keys())
+    state = {}
+    tasks = []
+    for lang in targets:
+        dest = os.path.join(I18N_DIR, f"{lang}.json")
+        if not os.path.exists(dest):
+            console.print(f"[red]✗ {lang}.json does not exist — cannot QA[/]")
+            continue
+        with open(dest, encoding="utf-8") as fh:
+            tr = json.load(fh)
+        checked, flagged = load_qa_checkpoint(lang)
+        checked = set(checked)
+
+        pairs = []
+        for key in en_keys:
+            translated = tr.get(key)
+            if not isinstance(translated, str) or not translated.strip():
+                flagged[key] = {
+                    "en": en[key],
+                    "tr": translated if isinstance(translated, str) else "",
+                    "issue": "missing or empty translation",
+                }
+                continue
+            if key in checked:
+                continue
+            pairs.append((key, en[key], translated))
+
+        if pairs:
+            console.print(
+                f"[bold]{lang}:[/] {len(pairs)} pairs to review (batch={batch_size})"
+            )
+        system = _qa_prompt(lang)
+        task = progress.add_task(f"[bold]{lang}[/]", total=len(pairs) or 1)
+        chunks = [pairs[i:i + batch_size] for i in range(0, len(pairs), batch_size)]
+        state[lang] = {
+            "lang": lang,
+            "checked": checked,
+            "flagged": flagged,
+            "dest": dest,
+            "system": system,
+            "batches": len(chunks),
+            "task": task,
+            "lock": threading.Lock(),
+            "completed": 0,
+            "last_ckpt": 0.0,
+            "start": time.monotonic(),
+        }
+        for n, chunk in enumerate(chunks, 1):
+            tasks.append((lang, n, len(chunks), chunk))
+
+    if not tasks:
+        for st in state.values():
+            with st["lock"]:
+                save_qa_checkpoint(st["lang"], st["checked"], st["flagged"])
+        for lang, st in state.items():
+            progress.remove_task(st["task"])
+            _report_qa(lang, st)
+        _apply_qa_fixes(state)
+        return "done"
+
+    if stop_event is None:
+        stop_event = threading.Event()
+
+    glock = threading.Lock()
+    abort_event = threading.Event()
+    executor = ThreadPoolExecutor(max_workers=workers)
+    futures = [
+        executor.submit(
+            _qa_worker,
+            t,
+            state,
+            client,
+            provider,
+            progress,
+            glock,
+            abort_event,
+            dashboard,
+        )
+        for t in tasks
+    ]
+    aborted = False
+    interrupted = False
+    try:
+        if interactive and sys.stdin.isatty():
+            with raw_keyboard() as fd:
+                listener = threading.Thread(
+                    target=_key_listener, args=(stop_event, fd), daemon=True
+                )
+                listener.start()
+                try:
+                    aborted = _wait_all(futures, stop_event)
+                finally:
+                    stop_event.set()
+                    listener.join(timeout=1.0)
+        else:
+            aborted = _wait_all(futures, stop_event)
+    except KeyboardInterrupt:
+        aborted = True
+        interrupted = True
+        executor.shutdown(wait=False, cancel_futures=True)
+        for st in state.values():
+            with st["lock"]:
+                save_qa_checkpoint(st["lang"], st["checked"], st["flagged"])
+        raise
+    finally:
+        if not interrupted:
+            for fut in futures:
+                fut.cancel()
+            while True:
+                try:
+                    executor.shutdown(wait=True)
+                    break
+                except KeyboardInterrupt:
+                    continue
+            for st in state.values():
+                with st["lock"]:
+                    save_qa_checkpoint(st["lang"], st["checked"], st["flagged"])
+
+    if aborted:
+        console.print(
+            "\n[yellow]QA aborted: a batch failed. "
+            "Report saved — re-run to resume.[/]"
+        )
+        sys.exit(1)
+
+    for lang, st in state.items():
+        progress.remove_task(st["task"])
+        _report_qa(lang, st)
+    _apply_qa_fixes(state)
+
+    incomplete = [
+        lang for lang, st in state.items() if st["completed"] < st["batches"]
+    ]
+    if incomplete and stop_event.is_set():
+        console.print(
+            "\n[yellow]QA stopped. Report saved — re-run to finish the rest.[/]"
+        )
+        return "stopped"
+    return "done"
 
 
 # ---------- main ----------
 
 def main():
-    console.print(Panel(HEADER, subtitle=f"source: {os.path.relpath(EN_FILE)}", border_style="cyan"))
+    print_header("karter i18n", "translate & maintain catalog")
 
-    provider = select_provider()
-    api_key, env = get_api_key(provider)
-    select_model(provider, api_key)
+    provider = abort(select_provider())
+    res = abort(get_api_key(provider))
+    api_key, _ = res
+    if not select_model(provider, api_key):
+        sys.exit("Aborted")
     langs = available_languages()
     targets = select_languages(langs)
     mode = select_mode()
@@ -582,26 +996,82 @@ def main():
             validate(lang)
         return
 
-    client = OpenAI(api_key=api_key, base_url=provider["base_url"])
+    client = create_client(provider, api_key, timeout=CLIENT_TIMEOUT)
 
-    batch_size = ask("Batch size", str(DEFAULT_BATCH))
+    batch_size = abort(ask("Batch size", str(DEFAULT_BATCH)))
     try:
         batch_size = int(batch_size)
     except ValueError:
         batch_size = DEFAULT_BATCH
+    if batch_size < 1:
+        batch_size = DEFAULT_BATCH
+
+    workers = abort(ask("Parallel requests", str(DEFAULT_WORKERS)))
+    try:
+        workers = int(workers)
+    except ValueError:
+        workers = DEFAULT_WORKERS
+    workers = max(1, min(workers, 64))
+
+    if mode == "qa":
+        en = load_en()
+        pairs = 0
+        for lang in targets:
+            dest = os.path.join(I18N_DIR, f"{lang}.json")
+            if os.path.exists(dest):
+                with open(dest, encoding="utf-8") as fh:
+                    tr = json.load(fh)
+                pairs += sum(1 for k in en if k in tr and str(tr[k]).strip())
+            else:
+                console.print(f"[yellow]! {lang}.json does not exist yet[/]")
+        # QA sends original + translation for every pair (output is tiny).
+        tok_in = pairs * 40
+        tok_out = pairs * 5
+        cost = (tok_in / 1_000_000) * provider["price_in"] + (
+            tok_out / 1_000_000
+        ) * provider["price_out"]
+        console.print(
+            Panel(
+                f"[bold]Provider:[/] {provider['name']}\n"
+                f"[bold]Model:[/] {provider['model']}\n"
+                f"[bold]Languages:[/] {', '.join(targets)}\n"
+                f"[bold]Mode:[/] Quality check (detect hallucinations, permissive)\n"
+                f"[bold]Pairs to review:[/] {pairs:,}\n"
+                f"[bold]Estimated tokens:[/] ~{tok_in:,.0f} in / ~{tok_out:,.0f} out\n"
+                f"[bold]Estimated cost:[/] [green]${cost:.3f}[/] (approx.)\n"
+                f"[bold]Parallel requests:[/] {workers}",
+                title="Configuration",
+                border_style="yellow",
+            )
+        )
+        if confirm("Proceed") is not True:
+            sys.exit("Aborted by user")
+        progress = make_progress(show_total=True, show_remaining=True)
+        dashboard = _Dashboard(progress, workers)
+        with Live(dashboard, console=console, refresh_per_second=8, transient=True):
+            status = _run_qa(
+                targets,
+                client,
+                provider,
+                batch_size,
+                workers,
+                progress,
+                dashboard,
+                interactive=True,
+            )
+        if status == "stopped":
+            console.print(
+                "[bold yellow]✓ QA stopped. Report saved — re-run to finish the rest.[/]"
+            )
+        else:
+            console.print("\n[bold green]✓ Quality check done.[/]")
+        return
 
     en = load_en()
     pending = 0
     for lang in targets:
-        dest = os.path.join(I18N_DIR, f"{lang}.json")
-        if mode == "missing" and os.path.exists(dest):
-            with open(dest, encoding="utf-8") as fh:
-                existing = json.load(fh)
-        else:
-            existing = {}
-        ckpt = load_checkpoint(lang)
-        existing.update(ckpt)
-        pending += sum(1 for k in en if k not in existing)
+        result = load_result(lang, mode)
+        pending += sum(1 for k in en if k not in result)
     total_keys = pending
     tok_in, tok_out, cost = estimate(provider, total_keys)
     console.print(
@@ -611,36 +1081,36 @@ def main():
             f"[bold]Languages:[/] {', '.join(targets)}\n"
             f"[bold]Keys to translate:[/] {total_keys:,} (of {len(en):,} total per language)\n"
             f"[bold]Estimated tokens:[/] ~{tok_in:,.0f} in / ~{tok_out:,.0f} out\n"
-            f"[bold]Estimated cost:[/] [green]${cost:.3f}[/] (approx.)",
+            f"[bold]Estimated cost:[/] [green]${cost:.3f}[/] (approx.)\n"
+            f"[bold]Parallel requests:[/] {workers}",
             title="Configuration",
-            border_style="cyan",
+            border_style="yellow",
         )
     )
 
-    if not confirm("Proceed"):
+    if confirm("Proceed") is not True:
         sys.exit("Aborted by user")
 
-    progress = Progress(
-        SpinnerColumn(),
-        TextColumn("[progress.description]{task.description}"),
-        BarColumn(),
-        MofNCompleteColumn(),
-        TextColumn("{task.percentage:>3.0f}%"),
-        TextColumn("({task.completed:,.0f} keys)"),
-        TimeElapsedColumn(),
-        TimeRemainingColumn(),
-        console=console,
-    )
-    with progress:
-        for lang in targets:
-            translate(lang, mode, client, provider, batch_size, progress)
+    progress = make_progress(show_total=True, show_remaining=True)
+    dashboard = _Dashboard(progress, workers)
+    with Live(dashboard, console=console, refresh_per_second=8, transient=True):
+        status = _run_parallel(
+            targets,
+            mode,
+            client,
+            provider,
+            batch_size,
+            workers,
+            progress,
+            dashboard,
+            interactive=True,
+        )
 
-    console.print("\n[bold green]✓ All done.[/]")
+    if status == "stopped":
+        console.print("[bold yellow]✓ Stopped cleanly. Re-run to finish the rest.[/]")
+    else:
+        console.print("\n[bold green]✓ All done.[/]")
 
 
 if __name__ == "__main__":
-    try:
-        main()
-    except KeyboardInterrupt:
-        console.print("\n[yellow]Interrupted. Checkpoints are saved — re-run to resume.[/]")
-        sys.exit(130)
+    run_cli(main, interrupt_message="Interrupted. Checkpoints are saved — re-run to resume.")
