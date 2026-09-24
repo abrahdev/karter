@@ -80,6 +80,12 @@ class RenderLiveTest(unittest.TestCase):
         panel = ex._render_live(["hello world"], 3)
         self.assertIn("hello world", panel.renderable)
 
+    def test_shows_reasoning_before_content(self):
+        panel = ex._render_live([], 5, reasoning="thinking hard")
+        self.assertIn("reasoning", panel.renderable)
+        self.assertIn("thinking hard", panel.renderable)
+        self.assertNotIn("waiting", panel.renderable)
+
 
 def _fake_client(stream):
     def create(**kwargs):
@@ -96,11 +102,32 @@ class _FakeChunk:
     choices = [NS(delta=_FakeDelta())]
 
 
+class DeltaPromptTest(unittest.TestCase):
+    def test_includes_base_and_schema(self):
+        base = {"parts": [], "maintenance_items": [{"id": "chain", "interval_km": 1000}]}
+        prompt = ex.build_delta_prompt(base, "en")
+        self.assertIn("chain", prompt)
+        self.assertIn("powertrain", prompt)  # schema enum
+        self.assertNotIn("{language}", prompt)
+        self.assertNotIn("{base_json}", prompt)
+        self.assertNotIn("{schema}", prompt)
+
+
 class StreamContentTest(unittest.TestCase):
     def test_returns_joined_content(self):
         chunks = [NS(choices=[NS(delta=NS(content=t))]) for t in "abc"]
         out = ex._stream_content(_fake_client(iter(chunks)), {"model": "m"}, timeout=5)
-        self.assertEqual(out, "abc")
+        self.assertEqual(out.content, "abc")
+
+    def test_captures_reasoning_and_finish_reason(self):
+        chunks = [
+            NS(choices=[NS(delta=NS(reasoning_content="think"), finish_reason=None)]),
+            NS(choices=[NS(delta=NS(content="{}"), finish_reason="stop")]),
+        ]
+        out = ex._stream_content(_fake_client(iter(chunks)), {"model": "m"}, timeout=5)
+        self.assertEqual(out.reasoning, "think")
+        self.assertEqual(out.finish_reason, "stop")
+        self.assertEqual(out.content, "{}")
 
     def test_raises_timeout_when_no_first_token(self):
         # monotonic: start, then per-chunk elapsed values, last one past the cap.

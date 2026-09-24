@@ -15,7 +15,6 @@ Usage:
 
 import json
 import os
-import subprocess
 import sys
 
 # Import shared utilities
@@ -41,7 +40,8 @@ from _shared.ui import console
 
 from extractor import clean_extracted_data, extract_with_ai
 from pdf_reader import PDFReader
-from validator import print_errors, validate_all
+from planner import plan as plan_template, validate_plan as validate_plan_errors
+from validator import build_merged_view, print_errors, validate_all, validate_merged
 
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
 DATA_DIR = os.path.join(REPO_ROOT, "templates", "data")
@@ -208,83 +208,50 @@ def edit_section(data: dict, section: str) -> dict:
     return data
 
 
-def find_template_id(template_id: str) -> str | None:
-    """Return the first templates/data path that already uses ``template_id``.
+def show_plan(plan: dict) -> None:
+    """Display the phase-1 plan for confirmation."""
+    from rich.panel import Panel
 
-    Lets the generator avoid silently overwriting an existing template or
-    creating a duplicate id (the catalog requires unique vehicle ids).
-    """
-    for root, _dirs, files in os.walk(DATA_DIR):
-        for name in files:
-            if not name.endswith(".json"):
-                continue
-            path = os.path.join(root, name)
-            try:
-                with open(path, encoding="utf-8") as fh:
-                    data = json.load(fh)
-            except (json.JSONDecodeError, OSError):
-                continue
-            if data.get("id") == template_id:
-                return os.path.relpath(path, REPO_ROOT)
-    return None
+    base = plan.get("base") or "(standalone)"
+    console.print(
+        Panel(
+            f"[bold]Make:[/] {plan.get('make', '?')}  "
+            f"[bold]Model:[/] {plan.get('model', '?')}\n"
+            f"[bold]Base:[/] {base}\n"
+            f"[bold]Target:[/] {plan.get('target_path', '?')}\n"
+            f"[bold]Duplicate:[/] {plan.get('duplicate', False)}  "
+            f"[bold]Overwrite:[/] {plan.get('overwrite', False)}\n"
+            f"[dim]{plan.get('notes', '')}[/]",
+            title="Plan",
+            border_style="yellow",
+        )
+    )
 
 
-def save_template(data: dict) -> str | None:
-    """Save template to templates/data/ directory.
+def apply_extends(data: dict, plan: dict) -> None:
+    """Add the extends chain to the generated delta (brand dtc is forced)."""
+    if plan.get("base"):
+        make_slug = plan["target_path"].split("/")[0]
+        data["extends"] = [plan["base"], f"{make_slug}/dtc.json"]
+    else:
+        data.pop("extends", None)
 
-    Refuses to overwrite an existing template id unless the user confirms.
+
+def write_template(plan: dict, data: dict) -> str:
+    """Write the generated template to the plan's target path.
 
     Returns:
-        The saved file path, or None when the save was aborted.
+        The saved absolute file path.
     """
-    make = data.get("meta", {}).get("make", "unknown").lower().replace(" ", "-")
-    model = data.get("meta", {}).get("model", "unknown").lower().replace(" ", "-")
-    template_id = data.get("id", f"{make}-{model}")
+    from planner import _data_path
 
-    existing = find_template_id(template_id)
-    if existing:
-        console.print(
-            f"[yellow]⚠ Template id '{template_id}' already exists "
-            f"({existing})[/]"
-        )
-        if confirm("Save anyway (duplicate id)?" ) is not True:
-            console.print("[yellow]Save aborted[/]")
-            return None
-
-    # Create directory structure
-    make_dir = os.path.join(DATA_DIR, make)
-    os.makedirs(make_dir, exist_ok=True)
-
-    # Save file
-    file_path = os.path.join(make_dir, f"{template_id}.json")
-    with open(file_path, "w", encoding="utf-8") as fh:
+    full = _data_path(plan["target_path"])
+    if full is None:
+        raise ValueError(f"unsafe target path: {plan['target_path']!r}")
+    os.makedirs(os.path.dirname(full), exist_ok=True)
+    with open(full, "w", encoding="utf-8") as fh:
         json.dump(data, fh, ensure_ascii=False, indent=2)
-
-    return file_path
-
-
-def regenerate_catalog() -> None:
-    """Regenerate index.json and karter-catalog.db."""
-    console.print("\n[bold]Regenerating catalog...[/]")
-
-    scripts = [
-        (
-            "generate_index.py",
-            os.path.join(REPO_ROOT, "templates", "tools", "generate_index", "generate_index.py"),
-        ),
-        (
-            "build_catalog.py",
-            os.path.join(REPO_ROOT, "templates", "tools", "build_catalog", "build_catalog.py"),
-        ),
-    ]
-    for name, script in scripts:
-        console.print(f"[dim]  Running {name}...[/]")
-        proc = subprocess.run([sys.executable, script])
-        if proc.returncode != 0:
-            console.print(f"[red]✗ {name} failed (exit {proc.returncode})[/]")
-            return
-
-    console.print("[green]✓ Catalog regenerated[/]")
+    return full
 
 
 def extract_pdf_text_and_ai(
@@ -293,11 +260,11 @@ def extract_pdf_text_and_ai(
     api_key: str,
     client,
     language: str,
-) -> tuple[dict, str]:
-    """Read the PDF text and run AI extraction with a live streaming window.
+) -> tuple[dict, str, dict]:
+    """Read the PDF text, run phase-1 planning and phase-2 extraction.
 
     Returns:
-        (data, raw_content) tuple.
+        (data, raw_content, plan) tuple.
     """
     console.print(f"\n[bold white]Processing:[/] {os.path.basename(pdf_path)}")
 
@@ -318,21 +285,46 @@ def extract_pdf_text_and_ai(
         with console.pager():
             console.print(pdf_text)
 
-    console.print("\n[bold]Analyzing with AI...[/]")
+    console.print("\n[bold]Phase 1: planning (choosing base and path)...[/]")
+    plan = plan_template(client, provider["model"], pdf_text, language)
+    plan_errors = validate_plan_errors(plan)
+    if plan_errors:
+        console.print(f"[red]✗ Invalid plan: {', '.join(plan_errors)}[/]")
+        raise RuntimeError(f"invalid plan: {', '.join(plan_errors)}")
+    show_plan(plan)
+    if confirm("Use this plan?") is not True:
+        raise KeyboardInterrupt("Plan not confirmed")
+
+    base = None
+    if plan.get("base"):
+        from planner import resolved_base
+
+        base = resolved_base(plan["base"])
+
+    console.print("\n[bold]Phase 2: analyzing with AI...[/]")
     console.print("[dim]  Streaming the response below; large manuals can take 1-3 minutes.[/]")
-    data, raw = extract_with_ai(client, provider["model"], pdf_text, language)
+    data, raw = extract_with_ai(client, provider["model"], pdf_text, language, base=base)
     console.print("[green]✓ Extraction complete[/]")
-    return clean_extracted_data(data), raw
+    data = clean_extracted_data(data)
+    apply_extends(data, plan)
+    return data, raw, plan
 
 
-def review_pdf(data: dict, raw: str) -> str | object:
-    """Show extracted data and let the user review it.
+def review_pdf(data: dict, raw: str, plan: dict) -> str | object:
+    """Show the merged result and let the user review it.
+
+    Displays the fully-resolved view (base + brand dtc + delta) so inherited
+    defaults are visible, while edits still act on the delta.
 
     Returns:
         One of "accept", "skip", an edit action from SECTION_ACTIONS,
         "view_raw", or BACK.
     """
-    show_extracted_data(data)
+    view = build_merged_view(
+        data, base_path=plan.get("base"), brand_dtc_path=_brand_dtc_path(plan)
+    )
+    console.print("[dim]Merged view (base defaults applied):[/]")
+    show_extracted_data(view)
     return pick_option(
         "Review extracted data",
         [
@@ -348,7 +340,7 @@ def review_pdf(data: dict, raw: str) -> str | object:
 
 
 def run_pdf_flow(pdf_path: str, provider: dict, api_key: str, client) -> str:
-    """Run language → extraction → review → save for a single PDF.
+    """Run language → plan → extract → review → save for a single PDF.
 
     Each step supports back navigation with the left arrow:
       language ← model · extraction ← language · review ← extraction
@@ -369,10 +361,10 @@ def run_pdf_flow(pdf_path: str, provider: dict, api_key: str, client) -> str:
         if result is None:
             language = None
             continue
-        data, raw = result
+        data, raw, plan = result
 
         while True:
-            choice = review_pdf(data, raw)
+            choice = review_pdf(data, raw, plan)
             if choice == "accept":
                 console.print("\n[bold]Validating template...[/]")
                 is_valid, errors = validate_all(data)
@@ -380,9 +372,28 @@ def run_pdf_flow(pdf_path: str, provider: dict, api_key: str, client) -> str:
                     print_errors(errors)
                     if confirm2("Save anyway?") is not True:
                         continue
-                file_path = save_template(data)
-                if file_path is None:
-                    continue
+                merged_errors = validate_merged(
+                    data,
+                    base_path=plan.get("base"),
+                    brand_dtc_path=_brand_dtc_path(plan),
+                )
+                if merged_errors:
+                    console.print(
+                        f"\n[yellow]! {len(merged_errors)} merged validation warning(s):[/]"
+                    )
+                    for err in merged_errors:
+                        console.print(f"  [dim]- {err}[/]")
+                    if confirm2("Save anyway?") is not True:
+                        continue
+                target = os.path.join(DATA_DIR, plan["target_path"])
+                if os.path.exists(target):
+                    console.print(
+                        f"[yellow]⚠ Target already exists: "
+                        f"{plan['target_path']}[/]"
+                    )
+                    if confirm2("Overwrite?") is not True:
+                        continue
+                file_path = write_template(plan, data)
                 console.print(f"\n[green]✓ Template saved to {os.path.relpath(file_path)}[/]")
                 return "saved"
             if choice == "skip":
@@ -401,12 +412,20 @@ def run_pdf_flow(pdf_path: str, provider: dict, api_key: str, client) -> str:
     return "skipped"
 
 
+def _brand_dtc_path(plan: dict) -> str | None:
+    """Brand dtc path for a plan, or None when the template is standalone."""
+    if not plan.get("base"):
+        return None
+    make_slug = plan["target_path"].split("/")[0]
+    return f"{make_slug}/dtc.json"
+
+
 def _extract_with_retry(pdf_path, provider, api_key, client, language):
     """Run AI extraction, retrying on failure.
 
     Returns:
-        (data, raw) on success, or None when the retry loop was aborted (the
-        caller re-selects the language).
+        (data, raw, plan) on success, or None when the retry loop was aborted
+        (the caller re-selects the language).
     """
     while True:
         try:
@@ -475,8 +494,6 @@ def _step_model(provider, api_key, client):
 def _step_pdf(pdfs, idx, provider, api_key, client, successful):
     if idx >= len(pdfs):
         console.print(f"\n[bold]Summary:[/] {successful}/{len(pdfs)} templates created")
-        if successful > 0 and confirm("Regenerate index.json and karter-catalog.db?") is True:
-            regenerate_catalog()
         return None, idx, successful
 
     pdf_path = pdfs[idx]

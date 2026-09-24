@@ -69,5 +69,6 @@ Rules:
 9. Never use null. If a value is unknown or not applicable, omit the field entirely.
 10. Focus on common maintenance: oil change, filters, brakes, spark plugs, timing belt, etc.
 11. Extract DTC codes only if explicitly listed in the manual.
+12. All labels, names and descriptions must be in ENGLISH, regardless of the manual's language.
 
 Language: {language}

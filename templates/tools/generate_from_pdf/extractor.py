@@ -22,6 +22,12 @@ MAX_RETRIES = 5
 RETRY_BASE = 3
 
 PROMPTS_FILE = os.path.join(os.path.dirname(__file__), "PROMPTS.md")
+PROMPTS_DELTA_FILE = os.path.join(os.path.dirname(__file__), "PROMPTS_DELTA.md")
+SCHEMA_PATH = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))),
+    "schemas",
+    "template-v2.json",
+)
 
 # Only the tail of the response is shown live; full outputs can be ~14k tokens.
 LIVE_TAIL = 3000
@@ -48,14 +54,33 @@ def _strip_code_fences(text: str) -> str:
     return text
 
 
-def _render_live(chunks, elapsed):
+def _render_live(chunks, elapsed, reasoning=""):
     """Renderable for the live streaming window."""
     text = "".join(chunks)
-    if not text:
-        body = f"[dim]waiting for the AI response… {elapsed:.0f}s[/dim]"
-    else:
+    if text:
         body = text[-LIVE_TAIL:]
+    elif reasoning:
+        body = f"[dim]reasoning… {elapsed:.0f}s[/dim]\n{reasoning[-LIVE_TAIL:]}"
+    else:
+        body = f"[dim]waiting for the AI response… {elapsed:.0f}s[/dim]"
     return Panel(body, title="AI response (JSON)", border_style="yellow")
+
+
+class StreamResult:
+    """Outcome of a streamed chat completion.
+
+    ``reasoning`` holds the model's chain-of-thought tokens (when the model
+    exposes them, e.g. ``delta.reasoning_content``), and ``finish_reason`` the
+    terminal reason ("stop", "length", ...). A ``content`` that is empty while
+    ``reasoning`` is not means the model reasoned but produced no JSON.
+    """
+
+    __slots__ = ("content", "reasoning", "finish_reason")
+
+    def __init__(self, content, reasoning="", finish_reason=None):
+        self.content = content
+        self.reasoning = reasoning
+        self.finish_reason = finish_reason
 
 
 def _stream_content(client, kwargs, timeout=FIRST_TOKEN_TIMEOUT):
@@ -65,10 +90,15 @@ def _stream_content(client, kwargs, timeout=FIRST_TOKEN_TIMEOUT):
     raises ``TimeoutError`` if nothing arrives within ``timeout`` seconds so
     the caller's retry loop can act instead of hanging silently.
 
+    Reasoning tokens are captured separately and surfaced in the live window.
+
     Returns:
-        The full text content of the response.
+        A ``StreamResult`` with the response text, reasoning text and
+        finish_reason.
     """
     chunks = []
+    reasoning = []
+    finish_reason = None
     started = time.monotonic()
     live = Live(_render_live(chunks, 0.0), console=console, refresh_per_second=8)
     with live:
@@ -76,16 +106,25 @@ def _stream_content(client, kwargs, timeout=FIRST_TOKEN_TIMEOUT):
         for chunk in stream:
             if not chunk.choices:
                 continue
-            delta = chunk.choices[0].delta
-            if delta and delta.content:
-                chunks.append(delta.content)
+            choice = chunk.choices[0]
+            delta = choice.delta
+            if delta:
+                if getattr(delta, "content", None):
+                    chunks.append(delta.content)
+                reason = getattr(delta, "reasoning_content", None) or getattr(
+                    delta, "reasoning", None
+                )
+                if reason:
+                    reasoning.append(reason)
+            if getattr(choice, "finish_reason", None):
+                finish_reason = choice.finish_reason
             elapsed = time.monotonic() - started
-            if not chunks and elapsed > timeout:
+            if not chunks and not reasoning and elapsed > timeout:
                 raise TimeoutError(
                     f"no content received from the model in {elapsed:.0f}s"
                 )
-            live.update(_render_live(chunks, elapsed))
-    return "".join(chunks)
+            live.update(_render_live(chunks, elapsed, "".join(reasoning)))
+    return StreamResult("".join(chunks), "".join(reasoning), finish_reason)
 
 
 def _probe_endpoint(client, model, timeout=PROBE_TIMEOUT):
@@ -120,13 +159,30 @@ def _probe_endpoint(client, model, timeout=PROBE_TIMEOUT):
         return False
 
 
+def _load_schema() -> str:
+    """Content of the template JSON Schema (template-v2.json)."""
+    with open(SCHEMA_PATH, encoding="utf-8") as fh:
+        return fh.read().strip()
+
+
+def build_delta_prompt(base: dict, language: str) -> str:
+    """System prompt for delta generation over a resolved base."""
+    return load_prompt(
+        PROMPTS_DELTA_FILE,
+        language=language,
+        base_json=json.dumps(base, ensure_ascii=False, indent=2),
+        schema=_load_schema(),
+    )
+
+
 def extract_with_ai(
     client: OpenAI,
     model: str,
     pdf_text: str,
     language: str,
-    max_tokens: int = 4000,
+    max_tokens: int = 32000,
     timeout: float = FIRST_TOKEN_TIMEOUT,
+    base: dict | None = None,
 ) -> tuple[dict, str]:
     """Extract maintenance data from PDF text using AI.
 
@@ -141,11 +197,16 @@ def extract_with_ai(
         language: Detected or specified language
         max_tokens: Maximum tokens for response
         timeout: Per-attempt timeout in seconds (large manuals can be slow).
+        base: Resolved base template to generate a delta over. When given, the
+            delta prompt is used and the model emits only overrides/additions.
 
     Returns:
         (data, raw_content) tuple.
     """
-    system_prompt = load_prompt(PROMPTS_FILE, language=language)
+    if base is not None:
+        system_prompt = build_delta_prompt(base, language)
+    else:
+        system_prompt = load_prompt(PROMPTS_FILE, language=language)
 
     # Truncate text if too long (most models have context limits)
     max_chars = 100000  # ~25k tokens
@@ -156,6 +217,7 @@ def extract_with_ai(
     _probe_endpoint(client, model)
 
     last_error = None
+    last_stream = None
     use_json_format = True
     for attempt in range(MAX_RETRIES):
         try:
@@ -185,10 +247,14 @@ def extract_with_ai(
             if use_json_format:
                 kwargs["response_format"] = {"type": "json_object"}
             try:
-                raw = _stream_content(client, kwargs)
+                result = _stream_content(client, kwargs)
+                last_stream = result
+                raw = result.content
             except BadRequestError:
                 use_json_format = False
-                raw = _stream_content(client, base_kwargs)
+                result = _stream_content(client, base_kwargs)
+                last_stream = result
+                raw = result.content
 
             data = json.loads(_strip_code_fences(raw))
 
@@ -200,7 +266,17 @@ def extract_with_ai(
 
         except json.JSONDecodeError as e:
             last_error = e
-            console.print(f"[yellow]  JSON parse error: {e}[/]")
+            if (
+                last_stream is not None
+                and not last_stream.content
+                and last_stream.reasoning
+            ):
+                console.print(
+                    f"[yellow]  Model reasoned but emitted no JSON "
+                    f"(finish_reason={last_stream.finish_reason})[/]"
+                )
+            else:
+                console.print(f"[yellow]  JSON parse error: {e}[/]")
         except Exception as e:
             last_error = e
             console.print(f"[yellow]  Error: {type(e).__name__}: {e}[/]")

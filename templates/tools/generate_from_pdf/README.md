@@ -7,13 +7,13 @@ AI-powered tool that extracts maintenance data from workshop manual PDFs and gen
 - **PDF Text Extraction**: Reads workshop manuals and extracts text from all pages
 - **Language Detection**: Automatically detects PDF language (English, Spanish, German, French, Italian, Portuguese)
 - **Manual Text Preview**: Optionally view the extracted text before it is sent to the AI
+- **Two-Phase AI Generation**: first *plans* (picks the leaf `_base` to extend and the target path, and may inspect existing templates with a `read_file` tool to detect duplicates), then generates a *delta* over that base
+- **Extends-Aware Output**: templates `extends` a `_base/<type>.json` plus the brand `dtc.json`, which is added automatically; existing items are overridden by id and new ones are added
 - **Fail-Fast AI Extraction**: a tiny liveness probe runs first, an attempt fails after 180s without a first token, and SDK auto-retries are disabled — no silent multi-minute hangs
 - **Null Cleanup**: extracted `null` values are omitted automatically (the schema rejects `null` for string/integer fields), so saved JSON validates on the first try
 - **AI Extraction**: Uses multiple AI providers (OpenAI, Anthropic, Groq, Mistral, etc.) to extract structured data
 - **Interactive Review**: Shows the complete extracted data (items, parts, DTCs are never truncated) and allows editing before saving
-- **Schema Validation**: Validates against Karter template schema (v2); every maintenance item must have a positive `interval_km`
-- **Duplicate-ID Protection**: Saving refuses to overwrite an existing template id
-- **Catalog Regeneration**: Optionally regenerates index.json and karter-catalog.db
+- **Schema + Merged Validation**: validates the raw delta against the schema and the merged base+delta result with the same checks as the catalog build (intervals, labels, part references)
 - **Batch Processing**: Process multiple PDFs from a folder in one run
 
 ## Usage
@@ -30,12 +30,12 @@ python3 templates/tools/generate_from_pdf/generate_from_pdf.py
    - Extract text from all pages
    - Detect language (can be changed)
    - Optionally preview the extracted manual text before sending it
-   - Send text to AI for structured extraction (endpoint probe + streaming timer)
-   - Review the full extracted data (vehicle info, maintenance items, parts, DTC codes)
-   - Edit any section if needed
-   - Validate against the template schema (each item needs a positive `interval_km`)
-   - Save to `templates/data/{make}/{id}.json` (duplicate ids are flagged)
-4. **Regenerate Catalog**: Updates index.json and karter-catalog.db (once after all PDFs)
+   - **Phase 1 — plan**: the AI picks the leaf `_base` to extend and the target path (the template JSON Schema is in context), and may `read_file` existing templates to detect duplicates; you confirm the plan
+   - **Phase 2 — generate**: the AI streams a delta over the chosen base (existing items overridden by id reusing the base's labels/i18n keys, new items added, inapplicable items removed)
+   - The tool adds `extends: ["_base/<type>.json", "<make>/dtc.json"]`
+   - Review the **merged result** (base defaults applied), edit any section, and validate (schema + merged)
+   - Write to the plan's target path under `templates/data/<make>/...`
+4. No catalog/db regeneration: run `generate_index`/`build_catalog` yourself when ready
 
 ## Extracted Data
 
