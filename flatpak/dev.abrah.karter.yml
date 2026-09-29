@@ -48,7 +48,7 @@ modules:
       - mkdir -p "$PUB_CACHE"
       - flutter config --no-analytics
       - cd mobile && flutter pub get
-      - cd mobile && flutter build linux --release
+      - cd mobile && flutter build linux --release --dart-define=GOOGLE_DESKTOP_CLIENT_ID="${GOOGLE_DESKTOP_CLIENT_ID:-}" --dart-define=GOOGLE_DESKTOP_CLIENT_SECRET="${GOOGLE_DESKTOP_CLIENT_SECRET:-}"
       # Install the bundle preserving its internal layout: the Flutter Linux
       # runner resolves "data/" and "lib/" relative to the executable.
       - mkdir -p /app/bin /app/lib/karter

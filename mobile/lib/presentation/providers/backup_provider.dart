@@ -1,62 +1,84 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mobile/data/services/backup_providers/backup_provider.dart';
+import 'package:mobile/data/services/backup_providers/backup_provider_registry.dart';
+import 'package:mobile/data/services/backup_providers/webdav_provider.dart';
 import 'package:mobile/data/services/backup_service.dart';
-import 'package:mobile/data/services/google_drive_auth_service.dart';
-import 'package:mobile/data/services/google_drive_service.dart';
+import 'package:mobile/data/services/background_service.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class BackupState {
   final bool loading;
-  final bool signedIn;
-  final String? email;
+  final BackupProviderType providerType;
+  final bool connected;
+  final String? account;
   final String? lastBackupAt;
-  final List<DriveBackupMetadata> driveBackups;
+  final List<RemoteBackup> backups;
   final String? error;
   final bool backingUp;
   final bool restoring;
   final int maxBackups;
+  final bool autoBackupEnabled;
+  final int autoBackupHours;
+  final String? webDavUrl;
+  final String? webDavUser;
 
   const BackupState({
     this.loading = false,
-    this.signedIn = false,
-    this.email,
+    this.providerType = BackupProviderType.googleDrive,
+    this.connected = false,
+    this.account,
     this.lastBackupAt,
-    this.driveBackups = const [],
+    this.backups = const [],
     this.error,
     this.backingUp = false,
     this.restoring = false,
     this.maxBackups = 10,
+    this.autoBackupEnabled = false,
+    this.autoBackupHours = 24,
+    this.webDavUrl,
+    this.webDavUser,
   });
 
   BackupState copyWith({
     bool? loading,
-    bool? signedIn,
-    String? email,
+    BackupProviderType? providerType,
+    bool? connected,
+    String? account,
     String? lastBackupAt,
-    List<DriveBackupMetadata>? driveBackups,
+    List<RemoteBackup>? backups,
     String? error,
     bool? backingUp,
     bool? restoring,
     int? maxBackups,
+    bool? autoBackupEnabled,
+    int? autoBackupHours,
+    String? webDavUrl,
+    String? webDavUser,
   }) {
     return BackupState(
       loading: loading ?? this.loading,
-      signedIn: signedIn ?? this.signedIn,
-      email: email ?? this.email,
+      providerType: providerType ?? this.providerType,
+      connected: connected ?? this.connected,
+      account: account ?? this.account,
       lastBackupAt: lastBackupAt ?? this.lastBackupAt,
-      driveBackups: driveBackups ?? this.driveBackups,
+      backups: backups ?? this.backups,
       error: error,
       backingUp: backingUp ?? this.backingUp,
       restoring: restoring ?? this.restoring,
       maxBackups: maxBackups ?? this.maxBackups,
+      autoBackupEnabled: autoBackupEnabled ?? this.autoBackupEnabled,
+      autoBackupHours: autoBackupHours ?? this.autoBackupHours,
+      webDavUrl: webDavUrl ?? this.webDavUrl,
+      webDavUser: webDavUser ?? this.webDavUser,
     );
   }
 }
 
 class BackupNotifier extends Notifier<BackupState> {
-  final GoogleDriveAuthService _auth = GoogleDriveAuthService();
   final BackupService _backup = BackupService();
-  static const _maxBackupsKey = 'karter_max_backups';
+
+  BackupProvider? _provider;
 
   @override
   BackupState build() {
@@ -64,43 +86,124 @@ class BackupNotifier extends Notifier<BackupState> {
     return const BackupState();
   }
 
+  BackupProvider _activeProvider() {
+    return _provider ??= BackupProviderRegistry.create(state.providerType);
+  }
+
   Future<void> _init() async {
     final prefs = await SharedPreferences.getInstance();
-    final savedMax = prefs.getInt(_maxBackupsKey) ?? 10;
+    final savedMax = prefs.getInt(kMaxBackupsKey) ?? 10;
+    final savedType = backupProviderTypeFromName(
+      prefs.getString(kBackupProviderKey) ?? '',
+    );
+    final autoEnabled = prefs.getBool(kAutoBackupEnabledKey) ?? false;
+    final autoHours = prefs.getInt(kAutoBackupHoursKey) ?? 24;
 
-    await _auth.signInSilently();
-    if (_auth.isSignedIn) {
-      state = BackupState(signedIn: true, email: _auth.email, maxBackups: savedMax);
+    state = BackupState(
+      providerType: savedType,
+      maxBackups: savedMax,
+      autoBackupEnabled: autoEnabled,
+      autoBackupHours: autoHours,
+    );
+    await _restoreSession();
+  }
+
+  Future<void> _restoreSession() async {
+    final provider = _activeProvider();
+    try {
+      await provider.restoreSession();
+    } catch (_) {}
+
+    if (provider.isConnected) {
+      state = state.copyWith(
+        connected: true,
+        account: provider.displayName,
+        error: null,
+      );
       await _loadLastBackup();
       await listBackups();
     } else {
-      state = BackupState(maxBackups: savedMax);
+      state = state.copyWith(connected: false, account: null);
+      if (state.providerType == BackupProviderType.webDav) {
+        final config = await (provider as WebDavProvider).loadConfig();
+        if (config != null && config.isValid) {
+          state = state.copyWith(
+            webDavUrl: config.url,
+            webDavUser: config.user,
+          );
+        }
+      }
     }
   }
 
-  Future<void> signIn() async {
+  Future<void> setProvider(BackupProviderType type) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(kBackupProviderKey, type.name);
+    _provider = null;
+    state = state.copyWith(
+      providerType: type,
+      connected: false,
+      account: null,
+      backups: const [],
+      error: null,
+    );
+    await _restoreSession();
+  }
+
+  Future<void> connectGoogle() async {
     state = state.copyWith(loading: true, error: null);
     try {
-      await _auth.signIn();
-      state = state.copyWith(
-        loading: false,
-        signedIn: _auth.isSignedIn,
-        email: _auth.email,
-      );
-      if (_auth.isSignedIn) {
+      final provider = _activeProvider();
+      await provider.connect();
+      if (provider.isConnected) {
+        state = state.copyWith(
+          loading: false,
+          connected: true,
+          account: provider.displayName,
+          error: null,
+        );
         await _loadLastBackup();
         await listBackups();
+      } else {
+        state = state.copyWith(loading: false, connected: false);
       }
     } catch (e) {
       state = state.copyWith(loading: false, error: e.toString());
     }
   }
 
-  Future<void> signOut() async {
+  Future<void> connectWebDav(WebDavConfig config) async {
     state = state.copyWith(loading: true, error: null);
     try {
-      await _auth.signOut();
-      state = BackupState(maxBackups: state.maxBackups);
+      final provider = _activeProvider() as WebDavProvider;
+      await provider.testConnection(config);
+      await provider.saveConfig(config);
+      await provider.connect();
+      state = state.copyWith(
+        loading: false,
+        connected: true,
+        account: provider.displayName,
+        webDavUrl: config.url.trim(),
+        webDavUser: config.user.trim(),
+        error: null,
+      );
+      await _loadLastBackup();
+      await listBackups();
+    } catch (e) {
+      state = state.copyWith(loading: false, error: e.toString());
+    }
+  }
+
+  Future<void> disconnect() async {
+    state = state.copyWith(loading: true, error: null);
+    try {
+      await _activeProvider().disconnect();
+      state = BackupState(
+        providerType: state.providerType,
+        maxBackups: state.maxBackups,
+        autoBackupEnabled: state.autoBackupEnabled,
+        autoBackupHours: state.autoBackupHours,
+      );
     } catch (e) {
       state = state.copyWith(loading: false, error: e.toString());
     }
@@ -109,37 +212,67 @@ class BackupNotifier extends Notifier<BackupState> {
   Future<void> setMaxBackups(int value) async {
     final clamped = value.clamp(1, 50);
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setInt(_maxBackupsKey, clamped);
+    await prefs.setInt(kMaxBackupsKey, clamped);
     state = state.copyWith(maxBackups: clamped);
   }
 
+  Future<void> setAutoBackup(bool enabled) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(kAutoBackupEnabledKey, enabled);
+    state = state.copyWith(autoBackupEnabled: enabled);
+    if (enabled) {
+      await _scheduleAutoBackup();
+    } else {
+      try {
+        await cancelAutoBackup();
+      } catch (_) {}
+    }
+  }
+
+  Future<void> setAutoBackupHours(int hours) async {
+    final clamped = hours.clamp(6, 24 * 7);
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt(kAutoBackupHoursKey, clamped);
+    state = state.copyWith(autoBackupHours: clamped);
+    if (state.autoBackupEnabled) {
+      await _scheduleAutoBackup();
+    }
+  }
+
+  Future<void> _scheduleAutoBackup() async {
+    try {
+      await scheduleAutoBackup(frequencyHours: state.autoBackupHours);
+    } catch (_) {}
+  }
+
   Future<void> backupNow() async {
-    final client = _auth.client;
-    if (client == null) {
-      state = state.copyWith(backingUp: false, error: 'Not signed in. Please sign in again.');
+    final provider = _activeProvider();
+    if (!provider.isConnected) {
+      state = state.copyWith(
+        backingUp: false,
+        error: 'Not connected. Please connect first.',
+      );
       return;
     }
     state = state.copyWith(backingUp: true, error: null);
     try {
-      final drive = GoogleDriveService(client);
-
-      final backups = await drive.listBackups();
+      final backups = await provider.listBackups();
       if (backups.length >= state.maxBackups) {
         final toDelete = backups.sublist(state.maxBackups - 1);
         for (final b in toDelete) {
-          await drive.deleteBackup(b.id);
+          await provider.deleteBackup(b.id);
         }
       }
 
       final now = DateTime.now();
-      final filename = 'karter_${now.year}${_pad(now.month)}${_pad(now.day)}_${_pad(now.hour)}${_pad(now.minute)}${_pad(now.second)}.db.aes';
+      final filename = backupFilename(now);
 
       final encrypted = await _backup.createEncryptedBackup();
-      final fileId = await drive.uploadBackup(filename, encrypted);
+      await provider.uploadBackup(filename, encrypted);
 
       await _backup.saveLocalMetadata(BackupMetadata(
         fileName: filename,
-        fileId: fileId,
+        fileId: filename,
         sizeBytes: encrypted.length,
         createdAt: now,
       ));
@@ -147,6 +280,7 @@ class BackupNotifier extends Notifier<BackupState> {
       state = state.copyWith(
         backingUp: false,
         lastBackupAt: now.toIso8601String(),
+        error: null,
       );
 
       await listBackups();
@@ -156,34 +290,28 @@ class BackupNotifier extends Notifier<BackupState> {
   }
 
   Future<void> listBackups() async {
-    if (!_auth.isSignedIn) return;
-    final client = _auth.client;
-    if (client == null) {
-      state = state.copyWith(error: 'Not signed in. Please sign in again.');
-      return;
-    }
+    final provider = _activeProvider();
+    if (!provider.isConnected) return;
     try {
-      final drive = GoogleDriveService(client);
-      final backups = await drive.listBackups();
-      state = state.copyWith(driveBackups: backups);
+      final backups = await provider.listBackups();
+      state = state.copyWith(backups: backups, error: null);
     } catch (e) {
       state = state.copyWith(error: e.toString());
     }
   }
 
   Future<void> deleteBackup(String fileId) async {
-    final client = _auth.client;
-    if (client == null) {
-      state = state.copyWith(loading: false, error: 'Not signed in. Please sign in again.');
+    final provider = _activeProvider();
+    if (!provider.isConnected) {
+      state = state.copyWith(loading: false, error: 'Not connected.');
       return;
     }
     state = state.copyWith(loading: true, error: null);
     try {
-      final drive = GoogleDriveService(client);
-      await drive.deleteBackup(fileId);
+      await provider.deleteBackup(fileId);
       state = state.copyWith(
         loading: false,
-        driveBackups: state.driveBackups.where((b) => b.id != fileId).toList(),
+        backups: state.backups.where((b) => b.id != fileId).toList(),
       );
     } catch (e) {
       state = state.copyWith(loading: false, error: e.toString());
@@ -191,19 +319,18 @@ class BackupNotifier extends Notifier<BackupState> {
   }
 
   Future<void> restoreBackup(String fileId) async {
-    final client = _auth.client;
-    if (client == null) {
-      state = state.copyWith(restoring: false, error: 'Not signed in. Please sign in again.');
+    final provider = _activeProvider();
+    if (!provider.isConnected) {
+      state = state.copyWith(restoring: false, error: 'Not connected.');
       return;
     }
     state = state.copyWith(restoring: true, error: null);
     try {
-      final drive = GoogleDriveService(client);
-      final encrypted = await drive.downloadBackup(fileId);
+      final encrypted = await provider.downloadBackup(fileId);
       final restoredPath = await _backup.restoreFromEncrypted(encrypted);
       await _backup.replaceDb(restoredPath);
       ref.invalidate(appDatabaseProvider);
-      state = state.copyWith(restoring: false);
+      state = state.copyWith(restoring: false, error: null);
       await listBackups();
     } catch (e) {
       state = state.copyWith(restoring: false, error: e.toString());
@@ -218,8 +345,6 @@ class BackupNotifier extends Notifier<BackupState> {
       );
     }
   }
-
-  String _pad(int n) => n.toString().padLeft(2, '0');
 }
 
 final backupProvider = NotifierProvider<BackupNotifier, BackupState>(

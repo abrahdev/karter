@@ -1,5 +1,6 @@
 import 'package:mobile/core/database/app_database.dart';
 import 'package:mobile/data/repositories/vehicle_repository_impl.dart';
+import 'package:mobile/data/services/auto_backup.dart';
 import 'package:mobile/data/services/notification_service.dart';
 import 'package:mobile/domain/entities/vehicle.dart';
 import 'package:mobile/domain/repositories/vehicle_repository.dart';
@@ -28,9 +29,28 @@ Future<void> initBackgroundTasks() async {
   );
 }
 
+Future<void> scheduleAutoBackup({required int frequencyHours}) async {
+  await Workmanager().registerPeriodicTask(
+    'karter-backup',
+    'autoBackup',
+    frequency: Duration(hours: frequencyHours),
+    constraints: Constraints(
+      networkType: NetworkType.connected,
+      requiresBatteryNotLow: false,
+    ),
+  );
+}
+
+Future<void> cancelAutoBackup() async {
+  await Workmanager().cancelByUniqueName('karter-backup');
+}
+
 @pragma('vm:entry-point')
 void callbackDispatcher() {
   Workmanager().executeTask((task, inputData) async {
+    if (task == 'autoBackup') {
+      return runAutoBackup();
+    }
     final service = NotificationService();
     await service.init();
 

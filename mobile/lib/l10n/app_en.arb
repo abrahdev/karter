@@ -528,6 +528,23 @@
   "backupDeleteConfirm": "Delete backup {name}?",
   "backupDeleteSuccess": "Backup deleted",
   "backupCount": "Backups: {current}/{max}",
+  "backupProviderLabel": "Backup provider",
+  "backupWebDavUrl": "Server URL",
+  "backupWebDavUrlHint": "e.g. https://nextcloud.example.com/remote.php/dav/files/user/KarterBackups",
+  "backupWebDavUser": "Username",
+  "backupWebDavPassword": "Password",
+  "backupWebDavConnect": "Connect WebDAV",
+  "backupAutoBackup": "Automatic backup",
+  "backupAutoBackupSubtitle": "Back up to the connected provider on a schedule",
+  "backupAutoBackupMobileOnly": "Automatic backup runs only on Android and iOS",
+  "backupAutoBackupEvery": "Every {hours} hours",
+  "@backupAutoBackupEvery": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
   "dtcLookupTitle": "Fault code lookup",
   "dtcSearchHint": "Enter a code, e.g. P0171",
   "dtcEmptyState": "Type a code to look up its description",

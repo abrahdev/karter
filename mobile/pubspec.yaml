@@ -50,6 +50,7 @@ dependencies:
   googleapis_auth: ^1.6.0
   encrypt: ^5.0.3
   flutter_secure_storage: ^10.3.1
+  webdav_client: ^1.2.0
   window_manager: ^0.5.2
 
 dev_dependencies:

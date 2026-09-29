@@ -2825,6 +2825,66 @@ abstract class AppLocalizations {
   /// **'Backups: {current}/{max}'**
   String backupCount(Object current, Object max);
 
+  /// No description provided for @backupProviderLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup provider'**
+  String get backupProviderLabel;
+
+  /// No description provided for @backupWebDavUrl.
+  ///
+  /// In en, this message translates to:
+  /// **'Server URL'**
+  String get backupWebDavUrl;
+
+  /// No description provided for @backupWebDavUrlHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. https://nextcloud.example.com/remote.php/dav/files/user/KarterBackups'**
+  String get backupWebDavUrlHint;
+
+  /// No description provided for @backupWebDavUser.
+  ///
+  /// In en, this message translates to:
+  /// **'Username'**
+  String get backupWebDavUser;
+
+  /// No description provided for @backupWebDavPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get backupWebDavPassword;
+
+  /// No description provided for @backupWebDavConnect.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect WebDAV'**
+  String get backupWebDavConnect;
+
+  /// No description provided for @backupAutoBackup.
+  ///
+  /// In en, this message translates to:
+  /// **'Automatic backup'**
+  String get backupAutoBackup;
+
+  /// No description provided for @backupAutoBackupSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Back up to the connected provider on a schedule'**
+  String get backupAutoBackupSubtitle;
+
+  /// No description provided for @backupAutoBackupMobileOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Automatic backup runs only on Android and iOS'**
+  String get backupAutoBackupMobileOnly;
+
+  /// No description provided for @backupAutoBackupEvery.
+  ///
+  /// In en, this message translates to:
+  /// **'Every {hours} hours'**
+  String backupAutoBackupEvery(int hours);
+
   /// No description provided for @dtcLookupTitle.
   ///
   /// In en, this message translates to:

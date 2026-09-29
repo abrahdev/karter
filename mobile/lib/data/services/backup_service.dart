@@ -7,6 +7,17 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+const kBackupProviderKey = 'karter_backup_provider';
+const kMaxBackupsKey = 'karter_max_backups';
+const kAutoBackupEnabledKey = 'karter_auto_backup';
+const kAutoBackupHoursKey = 'karter_auto_backup_hours';
+
+String backupFilename(DateTime now) {
+  String pad(int n) => n.toString().padLeft(2, '0');
+  return 'karter_${now.year}${pad(now.month)}${pad(now.day)}_'
+      '${pad(now.hour)}${pad(now.minute)}${pad(now.second)}.db.aes';
+}
+
 class BackupMetadata {
   final String fileName;
   final String fileId;

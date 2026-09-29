@@ -136,7 +136,10 @@ jobs:
       - run: flutter pub get
         working-directory: mobile
 
-      - run: flutter build linux --release
+      - run: |
+          flutter build linux --release \
+            --dart-define=GOOGLE_DESKTOP_CLIENT_ID=${{ secrets.GOOGLE_DESKTOP_CLIENT_ID }} \
+            --dart-define=GOOGLE_DESKTOP_CLIENT_SECRET=${{ secrets.GOOGLE_DESKTOP_CLIENT_SECRET }}
         working-directory: mobile
 
       - name: Package Linux bundle
@@ -195,6 +198,9 @@ jobs:
             --install-deps-from=flathub \
             --repo=flatpak/repo \
             flatpak/build flatpak/dev.abrah.karter.yml
+        env:
+          GOOGLE_DESKTOP_CLIENT_ID: ${{ secrets.GOOGLE_DESKTOP_CLIENT_ID }}
+          GOOGLE_DESKTOP_CLIENT_SECRET: ${{ secrets.GOOGLE_DESKTOP_CLIENT_SECRET }}
 
       - name: Create Flatpak bundle
         run: |

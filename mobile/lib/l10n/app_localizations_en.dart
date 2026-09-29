@@ -1501,6 +1501,41 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get backupProviderLabel => 'Backup provider';
+
+  @override
+  String get backupWebDavUrl => 'Server URL';
+
+  @override
+  String get backupWebDavUrlHint =>
+      'e.g. https://nextcloud.example.com/remote.php/dav/files/user/KarterBackups';
+
+  @override
+  String get backupWebDavUser => 'Username';
+
+  @override
+  String get backupWebDavPassword => 'Password';
+
+  @override
+  String get backupWebDavConnect => 'Connect WebDAV';
+
+  @override
+  String get backupAutoBackup => 'Automatic backup';
+
+  @override
+  String get backupAutoBackupSubtitle =>
+      'Back up to the connected provider on a schedule';
+
+  @override
+  String get backupAutoBackupMobileOnly =>
+      'Automatic backup runs only on Android and iOS';
+
+  @override
+  String backupAutoBackupEvery(int hours) {
+    return 'Every $hours hours';
+  }
+
+  @override
   String get dtcLookupTitle => 'Fault code lookup';
 
   @override
