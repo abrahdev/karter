@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:mobile/core/router/route_observer.dart';
 import 'package:mobile/presentation/pages/dashboard_page.dart';
 import 'package:mobile/presentation/pages/data_manager_page.dart';
 import 'package:mobile/presentation/pages/document_list_page.dart';
@@ -27,6 +28,7 @@ import 'package:mobile/presentation/widgets/app_shell.dart';
 
 final appRouter = GoRouter(
   initialLocation: '/',
+  observers: [routeObserver],
   routes: [
     ShellRoute(
       builder: (_, _, child) => AppShell(child: child),

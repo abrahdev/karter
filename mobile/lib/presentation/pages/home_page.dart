@@ -2,17 +2,102 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material3_indicators/material3_indicators.dart';
+import 'package:mobile/core/onboarding_helper.dart';
+import 'package:mobile/core/router/route_observer.dart';
 import 'package:mobile/core/theme/app_spacing.dart';
+import 'package:mobile/domain/entities/vehicle.dart';
 import 'package:mobile/l10n/app_localizations.dart';
 import 'package:mobile/presentation/providers/haptic_provider.dart';
 import 'package:mobile/presentation/providers/vehicle_providers.dart';
+import 'package:mobile/presentation/widgets/coach_marks/coach_mark.dart';
 import 'package:mobile/presentation/widgets/vehicle_card.dart';
 
-class HomePage extends ConsumerWidget {
+class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends ConsumerState<HomePage> with RouteAware {
+  CoachMarksController? _coachController;
+  bool _coachStarted = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final route = ModalRoute.of(context);
+    if (route != null) routeObserver.subscribe(this, route);
+  }
+
+  @override
+  void didPopNext() {
+    super.didPopNext();
+    _maybeStartCoachMarks();
+  }
+
+  @override
+  void dispose() {
+    routeObserver.unsubscribe(this);
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) _maybeStartCoachMarks();
+    });
+  }
+
+  Future<void> _maybeStartCoachMarks() async {
+    if (_coachStarted || !mounted) return;
+    if (!await hasSeenOnboarding()) return;
+    if (await hasSeenCoachMarks()) return;
+
+    final vehicles =
+        ref.read(vehicleListProvider).asData?.value ?? const <Vehicle>[];
+    if (!mounted) return;
+
+    _coachStarted = true;
+    final l = AppLocalizations.of(context)!;
+    final hasBarAnchors = CoachMarkRegistry.rectOf('coach_diag') != null;
+    final steps = <CoachMarkStep>[
+      CoachMarkStep(
+        anchorId: 'coach_fab',
+        icon: Icons.add,
+        title: l.coachMarkFabTitle,
+        description: l.coachMarkFabDesc,
+      ),
+      if (vehicles.isNotEmpty)
+        CoachMarkStep(
+          anchorId: 'coach_vehicle',
+          icon: Icons.directions_car,
+          title: l.coachMarkVehicleTitle,
+          description: l.coachMarkVehicleDesc,
+        ),
+      if (hasBarAnchors) ...[
+        CoachMarkStep(
+          anchorId: 'coach_diag',
+          icon: Icons.speed,
+          title: l.coachMarkNavDiagnosisTitle,
+          description: l.coachMarkNavDiagnosisDesc,
+        ),
+        CoachMarkStep(
+          anchorId: 'coach_more',
+          icon: Icons.more_horiz,
+          title: l.coachMarkNavMoreTitle,
+          description: l.coachMarkNavMoreDesc,
+        ),
+      ],
+    ];
+    _coachController = CoachMarksController(steps);
+    _coachController!.show(context);
+    await markCoachMarksSeen();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final vehiclesAsync = ref.watch(vehicleListProvider);
     final l = AppLocalizations.of(context)!;
 
@@ -51,13 +136,15 @@ class HomePage extends ConsumerWidget {
               itemCount: vehicles.length,
               itemBuilder: (context, index) {
                 final vehicle = vehicles[index];
-                return _StaggeredFadeIn(
+                final card = _StaggeredFadeIn(
                   index: index,
                   child: VehicleCard(
                     vehicle: vehicle,
                     onTap: () => context.push('/vehicle/${vehicle.id}'),
                   ),
                 );
+                if (index != 0) return card;
+                return CoachMarkAnchor(id: 'coach_vehicle', child: card);
               },
             ),
           );
@@ -67,7 +154,10 @@ class HomePage extends ConsumerWidget {
                 contained: true, size: 36, containerSize: 72)),
         error: (error, _) => Center(child: Text(l.homeError(error.toString()))),
       ),
-      floatingActionButton: const _AnimatedFab(),
+      floatingActionButton: const CoachMarkAnchor(
+        id: 'coach_fab',
+        child: _AnimatedFab(),
+      ),
     );
   }
 }

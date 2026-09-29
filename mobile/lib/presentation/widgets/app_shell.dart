@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile/l10n/app_localizations.dart';
+import 'package:mobile/presentation/widgets/coach_marks/coach_mark.dart';
 
 class AppShell extends StatefulWidget {
   final Widget child;
@@ -108,15 +109,21 @@ class _AppShellState extends State<AppShell> {
                 selectedIcon: Icon(Icons.directions_car),
                 label: l.navVehicles,
               ),
-              NavigationDestination(
-                icon: Icon(Icons.speed_outlined),
-                selectedIcon: Icon(Icons.speed),
-                label: l.navDiagnosis,
+              CoachMarkAnchor(
+                id: 'coach_diag',
+                child: NavigationDestination(
+                  icon: Icon(Icons.speed_outlined),
+                  selectedIcon: Icon(Icons.speed),
+                  label: l.navDiagnosis,
+                ),
               ),
-              NavigationDestination(
-                icon: Icon(Icons.more_horiz_outlined),
-                selectedIcon: Icon(Icons.more_horiz),
-                label: l.navMore,
+              CoachMarkAnchor(
+                id: 'coach_more',
+                child: NavigationDestination(
+                  icon: Icon(Icons.more_horiz_outlined),
+                  selectedIcon: Icon(Icons.more_horiz),
+                  label: l.navMore,
+                ),
               ),
             ],
           ),

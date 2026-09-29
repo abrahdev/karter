@@ -1317,6 +1317,9 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die importierte Datenbank konnte nicht gelesen werden';
 
   @override
+  String get back => 'Zurück';
+
+  @override
   String get onboardingSkip => 'Überspringen';
 
   @override
@@ -1359,6 +1362,67 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get onboardingRemindersDesc =>
       'Erhalte Benachrichtigungen, wenn es Zeit für Ölwechsel, Bremsbeläge und jedes Wartungsintervall ist – nach Distanz oder Zeit.';
+
+  @override
+  String get onboardingDashboardTitle => 'Your dashboard at a glance';
+
+  @override
+  String get onboardingDashboardDesc =>
+      'See upcoming maintenance, recent activity, and vehicle health across all your vehicles in one place.';
+
+  @override
+  String get onboardingObdTitle => 'Diagnose with OBD';
+
+  @override
+  String get onboardingObdDesc =>
+      'Plug in an OBD scanner to read live engine data and diagnostic trouble codes, then look them up with the built-in catalog.';
+
+  @override
+  String get onboardingBackupsTitle => 'Keep your data safe';
+
+  @override
+  String get onboardingBackupsDesc =>
+      'Export and import backups, sync to Google Drive or WebDAV, or keep everything offline — encrypted and private.';
+
+  @override
+  String get onboardingAddFirstVehicle => 'Add your first vehicle';
+
+  @override
+  String get onboardingExploreApp => 'Explore the app';
+
+  @override
+  String get coachMarkNext => 'Next';
+
+  @override
+  String get coachMarkDone => 'Got it';
+
+  @override
+  String get coachMarkFabTitle => 'Add a vehicle';
+
+  @override
+  String get coachMarkFabDesc =>
+      'Tap here to add your first vehicle in seconds.';
+
+  @override
+  String get coachMarkVehicleTitle => 'Your vehicles';
+
+  @override
+  String get coachMarkVehicleDesc =>
+      'Long-press or right-click a card to edit, share, or set up maintenance reminders.';
+
+  @override
+  String get coachMarkNavDiagnosisTitle => 'OBD diagnostics';
+
+  @override
+  String get coachMarkNavDiagnosisDesc =>
+      'Connect a scanner here to read live data and error codes.';
+
+  @override
+  String get coachMarkNavMoreTitle => 'More';
+
+  @override
+  String get coachMarkNavMoreDesc =>
+      'Backups, templates, customization, and more live here.';
 
   @override
   String get supporterBadge => 'Du bist ein Karter-Unterstützer!';
