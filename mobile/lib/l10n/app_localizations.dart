@@ -2477,6 +2477,12 @@ abstract class AppLocalizations {
   /// **'Could not read the imported database'**
   String get importCheckDbLocalFailed;
 
+  /// No description provided for @back.
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get back;
+
   /// No description provided for @onboardingSkip.
   ///
   /// In en, this message translates to:
@@ -2554,6 +2560,114 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Get notified when it\'s time for oil changes, brake pads, and every maintenance interval — by distance or time.'**
   String get onboardingRemindersDesc;
+
+  /// No description provided for @onboardingDashboardTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your dashboard at a glance'**
+  String get onboardingDashboardTitle;
+
+  /// No description provided for @onboardingDashboardDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'See upcoming maintenance, recent activity, and vehicle health across all your vehicles in one place.'**
+  String get onboardingDashboardDesc;
+
+  /// No description provided for @onboardingObdTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Diagnose with OBD'**
+  String get onboardingObdTitle;
+
+  /// No description provided for @onboardingObdDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Plug in an OBD scanner to read live engine data and diagnostic trouble codes, then look them up with the built-in catalog.'**
+  String get onboardingObdDesc;
+
+  /// No description provided for @onboardingBackupsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep your data safe'**
+  String get onboardingBackupsTitle;
+
+  /// No description provided for @onboardingBackupsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Export and import backups, sync to Google Drive or WebDAV, or keep everything offline — encrypted and private.'**
+  String get onboardingBackupsDesc;
+
+  /// No description provided for @onboardingAddFirstVehicle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add your first vehicle'**
+  String get onboardingAddFirstVehicle;
+
+  /// No description provided for @onboardingExploreApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Explore the app'**
+  String get onboardingExploreApp;
+
+  /// No description provided for @coachMarkNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get coachMarkNext;
+
+  /// No description provided for @coachMarkDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Got it'**
+  String get coachMarkDone;
+
+  /// No description provided for @coachMarkFabTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a vehicle'**
+  String get coachMarkFabTitle;
+
+  /// No description provided for @coachMarkFabDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap here to add your first vehicle in seconds.'**
+  String get coachMarkFabDesc;
+
+  /// No description provided for @coachMarkVehicleTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your vehicles'**
+  String get coachMarkVehicleTitle;
+
+  /// No description provided for @coachMarkVehicleDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Long-press or right-click a card to edit, share, or set up maintenance reminders.'**
+  String get coachMarkVehicleDesc;
+
+  /// No description provided for @coachMarkNavDiagnosisTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'OBD diagnostics'**
+  String get coachMarkNavDiagnosisTitle;
+
+  /// No description provided for @coachMarkNavDiagnosisDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect a scanner here to read live data and error codes.'**
+  String get coachMarkNavDiagnosisDesc;
+
+  /// No description provided for @coachMarkNavMoreTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'More'**
+  String get coachMarkNavMoreTitle;
+
+  /// No description provided for @coachMarkNavMoreDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Backups, templates, customization, and more live here.'**
+  String get coachMarkNavMoreDesc;
 
   /// No description provided for @supporterBadge.
   ///
