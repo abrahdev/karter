@@ -47,7 +47,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
   Future<void> _addFirstVehicle() async {
     await markOnboardingSeen();
-    if (mounted) context.go('/vehicle/new');
+    if (mounted) context.pushReplacement('/vehicle/new');
   }
 
   Future<void> _explore() async {
