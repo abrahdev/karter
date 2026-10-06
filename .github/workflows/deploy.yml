@@ -65,5 +65,9 @@ jobs:
         env:
           SUPPLY_JSON_KEY_PATH: supply_key.json
         run: |
-          TRACK="${{ github.event.inputs.track || 'internal' }}"
+          if [[ "${{ github.event_name }}" == "push" ]]; then
+            TRACK="production"
+          else
+            TRACK="${{ github.event.inputs.track || 'internal' }}"
+          fi
           bundle exec fastlane android deploy track:$TRACK
