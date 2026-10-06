@@ -1,0 +1,19 @@
+default_platform(:android)
+
+platform :android do
+  desc "Build and deploy AAB to Google Play"
+  lane :deploy do |options|
+    track = options[:track] || "internal"
+
+    sh("flutter build appbundle --release")
+
+    upload_to_play_store(
+      track: track,
+      aab: "../build/app/outputs/bundle/release/app-release.aab",
+      json_key: ENV["SUPPLY_JSON_KEY_PATH"],
+      skip_upload_metadata: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true
+    )
+  end
+end
