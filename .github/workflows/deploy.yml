@@ -49,7 +49,7 @@ jobs:
 
       - name: Restore Keystore & Credentials
         run: |
-          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > android/release.jks
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > android/app/release.jks
           echo '${{ secrets.PLAY_STORE_JSON_KEY }}' > supply_key.json
 
       - name: Configure key.properties (CI)
