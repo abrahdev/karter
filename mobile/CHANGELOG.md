@@ -7,6 +7,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2026.10.0+20] - 2026-10-06
+
+### Added
+
+- Rich onboarding walkthrough with coach marks for first-run users (#109)
+- AI template generator with translation tools (#108)
+- Template creator online feed with catalog sources reactivity (#96)
+- 7 new languages: German, Italian, Dutch, Polish, Portuguese, Russian, French (#98)
+- Custom titlebar with native window menu for Linux (#87)
+
+### Changed
+
+- Refactor More page hub with redesigned import/export and renamed OBD page (#104)
+- Regenerate index.json and karter-catalog.db (#102)
+- Extract main.dart components into dedicated files (#93)
+- Extract shared widgets and reduce code duplication (#84, #85)
+- Refactor router to remove dead routes and unify navigation (#95)
+- Updated translations
+
+### Fixed
+
+- Resolve multiple bugs and security issues (#68, #69, #70, #71, #72, #73, #74, #76, #81) (#88)
+- Resolve issues #82, #77, #79 - dependencies, accessibility, and UX polish (#89)
+- Only fetch templates for current locale (#92)
+- Android lint error + Flatpak cache
+
 ## [2027.08.0+19] - 2027-08-01
 
 ### Added

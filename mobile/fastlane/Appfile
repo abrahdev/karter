@@ -1,1 +1,2 @@
+json_key_file(ENV["SUPPLY_JSON_KEY_PATH"])
 package_name("dev.abrah.karter")
