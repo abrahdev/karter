@@ -22,6 +22,11 @@ finish-args:
   - --system-talk-name=org.freedesktop.portal.*
   - --talk-name=org.freedesktop.secrets
 
+# The Flutter SDK and its pub cache are only needed to compile the app; remove
+# them from the exported app so only the self-contained release bundle remains.
+cleanup:
+  - /lib/flutter
+
 modules:
   - name: flutter
     buildsystem: simple
@@ -47,12 +52,18 @@ modules:
     build-commands:
       - mkdir -p "$PUB_CACHE"
       - flutter config --no-analytics
+      # Drop any locally generated build artifacts copied in via the source,
+      # their CMake cache points at the host paths and breaks the build.
+      - cd mobile && rm -rf build
       - cd mobile && flutter pub get
       - cd mobile && flutter build linux --release
       # Install the bundle preserving its internal layout: the Flutter Linux
       # runner resolves "data/" and "lib/" relative to the executable.
       - mkdir -p /app/bin /app/lib/karter
       - cp -a mobile/build/linux/x64/release/bundle/. /app/lib/karter/
+      # Strip debug/unneeded symbols from native libraries to shrink the export.
+      - find /app/lib/karter/lib -type f -name '*.so*' -exec strip --strip-unneeded {} + || true
+      - strip --strip-unneeded /app/lib/karter/karter || true
       - printf '#!/bin/sh\nexec /app/lib/karter/karter "$@"\n' > /app/bin/karter
       - chmod +x /app/bin/karter
       - install -Dm644 dev.abrah.karter.desktop /app/share/applications/dev.abrah.karter.desktop

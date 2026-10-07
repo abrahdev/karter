@@ -30,6 +30,7 @@ flatpak-builder \
   --user \
   --repo="$REPO_DIR" \
   --force-clean \
+  --disable-rofiles-fuse \
   --install-deps-from=flathub \
   "$BUILD_DIR" "$MANIFEST" 2>&1 | tee "$SCRIPT_DIR/build.log"
 
